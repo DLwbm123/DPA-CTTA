@@ -1,3 +1,5 @@
+> **H1_HOST_MECHANISM_DIAGNOSTIC: BLOCKED_GPU_RESOURCE.** Existing 832-record analysis and 179-test CPU regression completed; GPU smoke/formal were not started (GPU 7 preflight: 2739 MiB free). [H1 report](docs/HOST_MECHANISM_DIAGNOSTIC_REPORT.md) · [resource audit](results/host_mechanism_diagnostic_v1/execution_audit.json). Frozen code `daa95d2`; no GPU execution commit and no automatic continuation.
+
 # DPA-CTTA
 
 **SOURCE_PILOT_COMPLETE.** One receipt-bound run at `1f8f1fab8d7858b89ed2f238d4c48660f48a0265`: 832 formal visits / 624 adaptation updates, plus 72 separate smoke steps, all exits 0. [Results report](docs/SOURCE_PILOT_RUN_REPORT.md) · [machine audit](results/source_pilot_v1/public_aggregate.json) · [public execution record](configs/source_pilot_execution_public.json). No Adapt had the highest overall Dice; the fixed proxy increment was small and the boundary increment negligible. DD/target/search were not run.
