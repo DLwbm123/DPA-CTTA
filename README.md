@@ -1,5 +1,7 @@
 # DPA-CTTA
 
+**SOURCE_PILOT_COMPLETE.** One receipt-bound run at `1f8f1fab8d7858b89ed2f238d4c48660f48a0265`: 832 formal visits / 624 adaptation updates, plus 72 separate smoke steps, all exits 0. [Results report](docs/SOURCE_PILOT_RUN_REPORT.md) · [machine audit](results/source_pilot_v1/public_aggregate.json) · [public execution record](configs/source_pilot_execution_public.json). No Adapt had the highest overall Dice; the fixed proxy increment was small and the boundary increment negligible. DD/target/search were not run.
+
 **Current release branch: `experiment/source-pilot-run-v1`.** See the [release contract](docs/SOURCE_PILOT_RELEASE_CONTRACT.md) and [local regression report](docs/SOURCE_PILOT_RELEASE_LOCAL_REPORT.md). The earlier preparation status below is historical; actual registered execution is tracked separately.
 
 **Current branch: `experiment/source-pilot-io-v1`**, based on `c92b64b2284eb5da0631c00d15cc44af773f4b2d`.

@@ -1,0 +1,30 @@
+{
+  "status": "EXECUTED_ONCE",
+  "executed_commit": "1f8f1fab8d7858b89ed2f238d4c48660f48a0265",
+  "science_config": "configs/source_pilot_v0.json",
+  "science_config_sha256": "e1aeb2454899d024e00934e1f012b5a0fe8cb3bb656f5dd20f73468fdd7a3faf",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "stages": [
+    "registered_input_identity",
+    "mechanical_smoke",
+    "single_formal_pilot"
+  ],
+  "physical_gpu": 7,
+  "device": "cuda:0",
+  "gpu_uuid": "PRIVATE_RECEIPT",
+  "coexistence_authorized": true,
+  "seed": 20260907,
+  "existing_split_seed": 0,
+  "proxy_groups_per_task": 4,
+  "query_groups": {
+    "fundus": 20,
+    "polyp": 32
+  },
+  "formal_visits": 832,
+  "adaptation_updates": 624,
+  "smoke_native_steps": 72,
+  "input_paths_and_digests": "PRIVATE_NAS_ONLY",
+  "authorization": "direct user task for this finite run; not independent signoff or permission for future runs",
+  "receipt_schema_source": "src/dpa_ctta/source_pilot_release.py",
+  "CI": "NOT_CONFIGURED"
+}

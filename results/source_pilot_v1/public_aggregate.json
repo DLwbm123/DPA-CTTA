@@ -1,0 +1,2310 @@
+{
+  "status": "SOURCE_PILOT_COMPLETE",
+  "executed_commit": "1f8f1fab8d7858b89ed2f238d4c48660f48a0265",
+  "branch": "experiment/source-pilot-run-v1",
+  "science_config_sha256": "e1aeb2454899d024e00934e1f012b5a0fe8cb3bb656f5dd20f73468fdd7a3faf",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "verified_utc": "2026-09-07T09:23:41.801653+00:00",
+  "inputs": {
+    "identity_status": "PASS",
+    "selected_rgb_files": 60,
+    "selected_mask_files": 60,
+    "source_checkpoints": 2,
+    "byte_identities_matched": 122,
+    "proxy_groups": {
+      "fundus": 4,
+      "polyp": 4
+    },
+    "query_groups": {
+      "fundus": 20,
+      "polyp": 32
+    },
+    "existing_split_seed": 0,
+    "pilot_seed": 20260907,
+    "checkpoint_training_membership": "UNKNOWN"
+  },
+  "gpu": {
+    "physical_index": 7,
+    "coexistence_explicitly_authorized": true,
+    "uuid_kept_in_private_receipt": true
+  },
+  "environment": {
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "cuda": "12.1",
+    "cudnn": 8902,
+    "device_name": "NVIDIA GeForce RTX 3090",
+    "tf32_matmul": false,
+    "tf32_cudnn": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": false,
+    "seed": 20260907,
+    "gpu_same_device_tolerance": {
+      "rtol": 0.0001,
+      "atol": 1e-05
+    },
+    "seed_is_not_bitwise_determinism_proof": true
+  },
+  "smoke": {
+    "status": "PASS",
+    "native_steps": 72,
+    "evidence": {
+      "fundus": {
+        "native_steps": 34,
+        "first_retrieval": 17,
+        "max_logit_difference": 0.0,
+        "tolerance": {
+          "rtol": 0.0001,
+          "atol": 1e-05
+        },
+        "gpu_memory_history_snapshot": true,
+        "native_elapsed_seconds": 14.29109231790062,
+        "native_peak_bytes": 1499447296,
+        "arms": {
+          "B": {
+            "native_steps": 1,
+            "proxy_K": 4,
+            "prompt_gradient_norm": 0.05922280624508858,
+            "elapsed_seconds": 2.265502398018725,
+            "peak_bytes": 3525201408,
+            "source_unchanged": true
+          },
+          "C": {
+            "native_steps": 1,
+            "proxy_K": 4,
+            "prompt_gradient_norm": 0.05922293663024902,
+            "elapsed_seconds": 2.0922577410237864,
+            "peak_bytes": 3526512128,
+            "source_unchanged": true
+          }
+        }
+      },
+      "polyp": {
+        "native_steps": 34,
+        "first_retrieval": 17,
+        "max_logit_difference": 0.0,
+        "tolerance": {
+          "rtol": 0.0001,
+          "atol": 1e-05
+        },
+        "gpu_memory_history_snapshot": true,
+        "native_elapsed_seconds": 28.510287559009157,
+        "native_peak_bytes": 1001636352,
+        "arms": {
+          "B": {
+            "native_steps": 1,
+            "proxy_K": 4,
+            "prompt_gradient_norm": 0.0236614141613245,
+            "elapsed_seconds": 6.530654078000225,
+            "peak_bytes": 2142731264,
+            "source_unchanged": true
+          },
+          "C": {
+            "native_steps": 1,
+            "proxy_K": 4,
+            "prompt_gradient_norm": 0.023661430925130844,
+            "elapsed_seconds": 0.45058229099959135,
+            "peak_bytes": 2179862528,
+            "source_unchanged": true
+          }
+        }
+      }
+    }
+  },
+  "formal": {
+    "status": "SOURCE_PILOT_COMPLETE",
+    "formal_visits": 832,
+    "adaptation_steps": 624,
+    "smoke_native_steps": 72,
+    "exit_code": 0
+  },
+  "verification": {
+    "recomputed_in_separate_cpu_process_from_all_private_jsonl": true,
+    "recomputed_matches_saved_summary": true,
+    "exact_registered_order_coverage_channels_lifecycle_validated": true,
+    "failure_files": [],
+    "exits": {
+      "register": 0,
+      "smoke": 0,
+      "pilot": 0
+    }
+  },
+  "results": {
+    "fundus": {
+      "summary": {
+        "all": {
+          "arm_metrics": {
+            "N": {
+              "OC": {
+                "dice": 0.8376662764916428,
+                "region": 0.4588092274963856,
+                "boundary": 7.969181381213275e-05,
+                "assd_conditional_mean": 5.074113041255064,
+                "assd_valid": 79,
+                "assd_undefined": 1,
+                "assd_valid_cohort_count": 79,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 1,
+                "pred_full_count": 0,
+                "boundary_defined_count": 80,
+                "visits": 80
+              },
+              "OD": {
+                "dice": 0.9558376441463459,
+                "region": 0.1253768801689148,
+                "boundary": 0.0001496324980053032,
+                "assd_conditional_mean": 3.927282995613396,
+                "assd_valid": 80,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 80,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 80,
+                "visits": 80
+              },
+              "macro": {
+                "dice_fraction": 0.8967519603189942,
+                "dice_percent": 89.67519603189942
+              }
+            },
+            "A": {
+              "OC": {
+                "dice": 0.7314767929450758,
+                "region": 0.5997168987989425,
+                "boundary": 0.0002609270153243415,
+                "assd_conditional_mean": 12.137687463446964,
+                "assd_valid": 80,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 80,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 80,
+                "visits": 80
+              },
+              "OD": {
+                "dice": 0.9535561050921142,
+                "region": 0.11525908932089805,
+                "boundary": 0.00028561598828673594,
+                "assd_conditional_mean": 7.862138507197943,
+                "assd_valid": 80,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 80,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 80,
+                "visits": 80
+              },
+              "macro": {
+                "dice_fraction": 0.8425164490185949,
+                "dice_percent": 84.25164490185949
+              }
+            },
+            "B": {
+              "OC": {
+                "dice": 0.7329403682720865,
+                "region": 0.5886108979582787,
+                "boundary": 0.00025834695893536266,
+                "assd_conditional_mean": 12.0512792035436,
+                "assd_valid": 80,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 80,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 80,
+                "visits": 80
+              },
+              "OD": {
+                "dice": 0.9531792537100969,
+                "region": 0.11427831500768662,
+                "boundary": 0.0002825360764290963,
+                "assd_conditional_mean": 7.692227106950614,
+                "assd_valid": 80,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 80,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 80,
+                "visits": 80
+              },
+              "macro": {
+                "dice_fraction": 0.8430598109910917,
+                "dice_percent": 84.30598109910918
+              }
+            },
+            "C": {
+              "OC": {
+                "dice": 0.7329390568863194,
+                "region": 0.5886118844151497,
+                "boundary": 0.00025834696443780556,
+                "assd_conditional_mean": 12.051632985429928,
+                "assd_valid": 80,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 80,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 80,
+                "visits": 80
+              },
+              "OD": {
+                "dice": 0.9531801028058056,
+                "region": 0.11427763924002647,
+                "boundary": 0.0002825377985573141,
+                "assd_conditional_mean": 7.6926059932697255,
+                "assd_valid": 80,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 80,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 80,
+                "visits": 80
+              },
+              "macro": {
+                "dice_fraction": 0.8430595798460624,
+                "dice_percent": 84.30595798460624
+              }
+            }
+          },
+          "B-A": {
+            "OC": {
+              "dice_delta": 0.0014635753270107001,
+              "dice_delta_percentage_points": 0.14635753270107002,
+              "visits": 80,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.08640825990336394,
+              "assd_same_pair_cohort_count": 80,
+              "assd_valid": {
+                "B": 80,
+                "A": 80
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -0.0003768513820173125,
+              "dice_delta_percentage_points": -0.03768513820173125,
+              "visits": 80,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.16991140024733076,
+              "assd_same_pair_cohort_count": 80,
+              "assd_valid": {
+                "B": 80,
+                "A": 80
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-A": {
+            "OC": {
+              "dice_delta": 0.0014622639412435628,
+              "dice_delta_percentage_points": 0.14622639412435628,
+              "visits": 80,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.08605447801703732,
+              "assd_same_pair_cohort_count": 80,
+              "assd_valid": {
+                "C": 80,
+                "A": 80
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -0.0003760022863086868,
+              "dice_delta_percentage_points": -0.037600228630868676,
+              "visits": 80,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.1695325139282194,
+              "assd_same_pair_cohort_count": 80,
+              "assd_valid": {
+                "C": 80,
+                "A": 80
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-B": {
+            "OC": {
+              "dice_delta": -1.3113857671373519e-06,
+              "dice_delta_percentage_points": -0.0001311385767137352,
+              "visits": 80,
+              "independent_groups": 20,
+              "assd_same_pair_delta": 0.000353781886326604,
+              "assd_same_pair_cohort_count": 80,
+              "assd_valid": {
+                "C": 80,
+                "B": 80
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            },
+            "OD": {
+              "dice_delta": 8.490957086257356e-07,
+              "dice_delta_percentage_points": 8.490957086257356e-05,
+              "visits": 80,
+              "independent_groups": 20,
+              "assd_same_pair_delta": 0.0003788863191113379,
+              "assd_same_pair_cohort_count": 80,
+              "assd_valid": {
+                "C": 80,
+                "B": 80
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            }
+          }
+        },
+        "clean": {
+          "arm_metrics": {
+            "N": {
+              "OC": {
+                "dice": 0.8713939235450872,
+                "region": 0.33500061333179476,
+                "boundary": 5.234448990449891e-05,
+                "assd_conditional_mean": 3.7054731293597185,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9774607344043862,
+                "region": 0.055279079079627993,
+                "boundary": 6.8012360134162e-05,
+                "assd_conditional_mean": 1.77305833623576,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.9244273289747366,
+                "dice_percent": 92.44273289747366
+              }
+            },
+            "A": {
+              "OC": {
+                "dice": 0.7236125265026775,
+                "region": 0.5925373286008835,
+                "boundary": 0.00027695084500010123,
+                "assd_conditional_mean": 12.676950564812177,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9587643720284325,
+                "region": 0.09571145474910736,
+                "boundary": 0.00027393406016926745,
+                "assd_conditional_mean": 7.458771493019748,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8411884492655549,
+                "dice_percent": 84.1188449265555
+              }
+            },
+            "B": {
+              "OC": {
+                "dice": 0.7243658707494908,
+                "region": 0.5870584130287171,
+                "boundary": 0.00027519375707925066,
+                "assd_conditional_mean": 12.656280415892835,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9587233319779305,
+                "region": 0.09419364035129547,
+                "boundary": 0.0002724544741795398,
+                "assd_conditional_mean": 7.284244093729873,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8415446013637107,
+                "dice_percent": 84.15446013637107
+              }
+            },
+            "C": {
+              "OC": {
+                "dice": 0.7243658707494908,
+                "region": 0.5870587825775146,
+                "boundary": 0.00027519382965692787,
+                "assd_conditional_mean": 12.656280415892835,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9587233319779305,
+                "region": 0.09419367611408233,
+                "boundary": 0.0002724541365751065,
+                "assd_conditional_mean": 7.284244093729873,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8415446013637107,
+                "dice_percent": 84.15446013637107
+              }
+            }
+          },
+          "B-A": {
+            "OC": {
+              "dice_delta": 0.000753344246813304,
+              "dice_delta_percentage_points": 0.0753344246813304,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.020670148919338837,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "B": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -4.1040050501961466e-05,
+              "dice_delta_percentage_points": -0.004104005050196147,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.1745273992898743,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "B": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-A": {
+            "OC": {
+              "dice_delta": 0.000753344246813304,
+              "dice_delta_percentage_points": 0.0753344246813304,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.020670148919338837,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -4.1040050501961466e-05,
+              "dice_delta_percentage_points": -0.004104005050196147,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.1745273992898743,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-B": {
+            "OC": {
+              "dice_delta": 0.0,
+              "dice_delta_percentage_points": 0.0,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": 0.0,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "B": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            },
+            "OD": {
+              "dice_delta": 0.0,
+              "dice_delta_percentage_points": 0.0,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": 0.0,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "B": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            }
+          }
+        },
+        "gamma_0.7": {
+          "arm_metrics": {
+            "N": {
+              "OC": {
+                "dice": 0.8246013972072805,
+                "region": 0.48091288805007937,
+                "boundary": 9.651674536144128e-05,
+                "assd_conditional_mean": 6.00789885229536,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.950778968769235,
+                "region": 0.13442277908325195,
+                "boundary": 0.00015003319676907268,
+                "assd_conditional_mean": 4.4104707163793595,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8876901829882577,
+                "dice_percent": 88.76901829882577
+              }
+            },
+            "A": {
+              "OC": {
+                "dice": 0.7276974827349151,
+                "region": 0.4977155327796936,
+                "boundary": 0.0002660423582710791,
+                "assd_conditional_mean": 12.47709248652264,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9556797848719787,
+                "region": 0.09718799293041229,
+                "boundary": 0.0003423801925237058,
+                "assd_conditional_mean": 9.043864378350452,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8416886338034469,
+                "dice_percent": 84.16886338034469
+              }
+            },
+            "B": {
+              "OC": {
+                "dice": 0.7270435296925982,
+                "region": 0.4913265645503998,
+                "boundary": 0.00026667745605664096,
+                "assd_conditional_mean": 12.486042245513593,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9549649824493995,
+                "region": 0.0973282814025879,
+                "boundary": 0.00033463746403867846,
+                "assd_conditional_mean": 8.941492272897786,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8410042560709989,
+                "dice_percent": 84.1004256070999
+              }
+            },
+            "C": {
+              "OC": {
+                "dice": 0.7270412174995811,
+                "region": 0.4913258820772171,
+                "boundary": 0.0002666775941179367,
+                "assd_conditional_mean": 12.487012196474154,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.954962655733912,
+                "region": 0.09732863306999207,
+                "boundary": 0.0003346454850543523,
+                "assd_conditional_mean": 8.943116788937726,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8410019366167466,
+                "dice_percent": 84.10019366167467
+              }
+            }
+          },
+          "B-A": {
+            "OC": {
+              "dice_delta": -0.0006539530423168502,
+              "dice_delta_percentage_points": -0.06539530423168502,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": 0.008949758990952728,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "B": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -0.0007148024225792027,
+              "dice_delta_percentage_points": -0.07148024225792027,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.10237210545266526,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "B": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-A": {
+            "OC": {
+              "dice_delta": -0.0006562652353340068,
+              "dice_delta_percentage_points": -0.06562652353340068,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": 0.009919709951515554,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -0.000717129138066691,
+              "dice_delta_percentage_points": -0.07171291380666911,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.10074758941272392,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-B": {
+            "OC": {
+              "dice_delta": -2.312193017156572e-06,
+              "dice_delta_percentage_points": -0.0002312193017156572,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": 0.0009699509605628265,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "B": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -2.326715487488418e-06,
+              "dice_delta_percentage_points": -0.0002326715487488418,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": 0.001624516039941315,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "B": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            }
+          }
+        },
+        "gamma_1.5": {
+          "arm_metrics": {
+            "N": {
+              "OC": {
+                "dice": 0.7849126900268265,
+                "region": 0.6865945607423782,
+                "boundary": 0.00011439094705565367,
+                "assd_conditional_mean": 6.852283752313214,
+                "assd_valid": 19,
+                "assd_undefined": 1,
+                "assd_valid_cohort_count": 19,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 1,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9241685766765532,
+                "region": 0.24125385284423828,
+                "boundary": 0.0002827900621923618,
+                "assd_conditional_mean": 7.193889175759463,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.85454063335169,
+                "dice_percent": 85.454063335169
+              }
+            },
+            "A": {
+              "OC": {
+                "dice": 0.7278218250211973,
+                "region": 0.7610319942235947,
+                "boundary": 0.0002714775520871626,
+                "assd_conditional_mean": 12.109709163220387,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9378736396176439,
+                "region": 0.17560070157051086,
+                "boundary": 0.000350912731300923,
+                "assd_conditional_mean": 9.771898691412648,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8328477323194207,
+                "dice_percent": 83.28477323194207
+              }
+            },
+            "B": {
+              "OC": {
+                "dice": 0.7315788979829603,
+                "region": 0.7439190566539764,
+                "boundary": 0.0002656784348801011,
+                "assd_conditional_mean": 11.860682072166512,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9372460181414513,
+                "region": 0.17526640594005585,
+                "boundary": 0.00035583427488745657,
+                "assd_conditional_mean": 9.576150308997986,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8344124580622058,
+                "dice_percent": 83.44124580622058
+              }
+            },
+            "C": {
+              "OC": {
+                "dice": 0.7315806404044682,
+                "region": 0.7439170897006988,
+                "boundary": 0.00026567740133032203,
+                "assd_conditional_mean": 11.860808429802105,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9372489270837333,
+                "region": 0.1752641201019287,
+                "boundary": 0.00035583500284701585,
+                "assd_conditional_mean": 9.576048217074762,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.834414783744101,
+                "dice_percent": 83.44147837441011
+              }
+            }
+          },
+          "B-A": {
+            "OC": {
+              "dice_delta": 0.003757072961763151,
+              "dice_delta_percentage_points": 0.3757072961763151,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.24902709105387472,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "B": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -0.0006276214761928467,
+              "dice_delta_percentage_points": -0.06276214761928467,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.19574838241466128,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "B": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-A": {
+            "OC": {
+              "dice_delta": 0.003758815383271079,
+              "dice_delta_percentage_points": 0.3758815383271079,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.24890073341828228,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -0.0006247125339107262,
+              "dice_delta_percentage_points": -0.06247125339107262,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.19585047433788688,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-B": {
+            "OC": {
+              "dice_delta": 1.7424215079275828e-06,
+              "dice_delta_percentage_points": 0.0001742421507927583,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": 0.0001263576355924556,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "B": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            },
+            "OD": {
+              "dice_delta": 2.9089422821204634e-06,
+              "dice_delta_percentage_points": 0.00029089422821204636,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.00010209192322558902,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "B": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            }
+          }
+        },
+        "blur_5_sigma_1": {
+          "arm_metrics": {
+            "N": {
+              "OC": {
+                "dice": 0.8697570951873768,
+                "region": 0.33272884786129,
+                "boundary": 5.551507292693714e-05,
+                "assd_conditional_mean": 3.819704966604868,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.970942296735209,
+                "region": 0.07055180966854095,
+                "boundary": 9.769437292561634e-05,
+                "assd_conditional_mean": 2.3317137540790034,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.9203496959612929,
+                "dice_percent": 92.03496959612929
+              }
+            },
+            "A": {
+              "OC": {
+                "dice": 0.7467753375215135,
+                "region": 0.5475827395915985,
+                "boundary": 0.00022923730593902292,
+                "assd_conditional_mean": 11.286997639232657,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9619066238504013,
+                "region": 0.0925362080335617,
+                "boundary": 0.00017523696915304753,
+                "assd_conditional_mean": 5.174019466008927,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8543409806859575,
+                "dice_percent": 85.43409806859576
+              }
+            },
+            "B": {
+              "OC": {
+                "dice": 0.7487731746632967,
+                "region": 0.5321395576000214,
+                "boundary": 0.00022583818772545783,
+                "assd_conditional_mean": 11.202112080601461,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9617826822716061,
+                "region": 0.09032493233680725,
+                "boundary": 0.0001672180926107103,
+                "assd_conditional_mean": 4.967021752176805,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8552779284674514,
+                "dice_percent": 85.52779284674514
+              }
+            },
+            "C": {
+              "OC": {
+                "dice": 0.7487684988917375,
+                "region": 0.5321457833051682,
+                "boundary": 0.00022583903264603578,
+                "assd_conditional_mean": 11.202430899550613,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "OD": {
+                "dice": 0.9617854964276461,
+                "region": 0.09032412767410278,
+                "boundary": 0.00016721656975278166,
+                "assd_conditional_mean": 4.967014873336535,
+                "assd_valid": 20,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 20,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 20,
+                "visits": 20
+              },
+              "macro": {
+                "dice_fraction": 0.8552769976596917,
+                "dice_percent": 85.52769976596917
+              }
+            }
+          },
+          "B-A": {
+            "OC": {
+              "dice_delta": 0.001997837141783196,
+              "dice_delta_percentage_points": 0.1997837141783196,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.08488555863119487,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "B": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -0.00012394157879523914,
+              "dice_delta_percentage_points": -0.012394157879523913,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.20699771383212218,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "B": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-A": {
+            "OC": {
+              "dice_delta": 0.0019931613702238752,
+              "dice_delta_percentage_points": 0.1993161370223875,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.08456673968204376,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            },
+            "OD": {
+              "dice_delta": -0.00012112742275536825,
+              "dice_delta_percentage_points": -0.012112742275536825,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -0.20700459267239255,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "A": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-B": {
+            "OC": {
+              "dice_delta": -4.675771559320418e-06,
+              "dice_delta_percentage_points": -0.0004675771559320418,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": 0.00031881894915113395,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "B": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            },
+            "OD": {
+              "dice_delta": 2.8141560398708964e-06,
+              "dice_delta_percentage_points": 0.00028141560398708965,
+              "visits": 20,
+              "independent_groups": 20,
+              "assd_same_pair_delta": -6.878840270374554e-06,
+              "assd_same_pair_cohort_count": 20,
+              "assd_valid": {
+                "C": 20,
+                "B": 20
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            }
+          }
+        },
+        "units": {
+          "dice": "fraction_0_1",
+          "dice_percent": "percent",
+          "dice_delta": "fraction",
+          "dice_delta_percentage_points": "percentage_points",
+          "assd": "final_grid_pixels",
+          "pipeline_elapsed_seconds": "end_to_end_seconds",
+          "host_step_elapsed_seconds": "adapt_predict_push_seconds"
+        }
+      },
+      "observations": {
+        "N": {
+          "visits": 80,
+          "adaptation_steps": 0,
+          "prompt_state_delta_norm": {
+            "mean": 0.0,
+            "maximum": 0.0
+          },
+          "optimizer_update_norm": {
+            "mean": 0.0,
+            "maximum": 0.0
+          },
+          "pipeline_elapsed_seconds": {
+            "mean": 0.2888799643580569,
+            "maximum": 0.7267748670419678
+          },
+          "host_step_elapsed_seconds": {
+            "mean": 0.08770625864999601,
+            "maximum": 0.38066870998591185
+          },
+          "peak_cuda_bytes": 408224768
+        },
+        "A": {
+          "visits": 80,
+          "adaptation_steps": 80,
+          "prompt_state_delta_norm": {
+            "mean": 0.07876568005885928,
+            "maximum": 0.4326836168766022
+          },
+          "optimizer_update_norm": {
+            "mean": 0.16884428914636374,
+            "maximum": 0.4326836168766022
+          },
+          "pipeline_elapsed_seconds": {
+            "mean": 0.48416866079642207,
+            "maximum": 0.9720645769266412
+          },
+          "host_step_elapsed_seconds": {
+            "mean": 0.26431877639261075,
+            "maximum": 0.760138374986127
+          },
+          "peak_cuda_bytes": 1113274880
+        },
+        "B": {
+          "visits": 80,
+          "adaptation_steps": 80,
+          "prompt_state_delta_norm": {
+            "mean": 0.07888686144724488,
+            "maximum": 0.4325033724308014
+          },
+          "optimizer_update_norm": {
+            "mean": 0.30101938284933566,
+            "maximum": 0.4325033724308014
+          },
+          "pipeline_elapsed_seconds": {
+            "mean": 0.6699666416607215,
+            "maximum": 0.7467084740055725
+          },
+          "host_step_elapsed_seconds": {
+            "mean": 0.46281382076413136,
+            "maximum": 0.5296312929131091
+          },
+          "peak_cuda_bytes": 4169157632
+        },
+        "C": {
+          "visits": 80,
+          "adaptation_steps": 80,
+          "prompt_state_delta_norm": {
+            "mean": 0.07888205593917519,
+            "maximum": 0.43250277638435364
+          },
+          "optimizer_update_norm": {
+            "mean": 0.30097606368362906,
+            "maximum": 0.43250277638435364
+          },
+          "pipeline_elapsed_seconds": {
+            "mean": 0.6696282917866483,
+            "maximum": 0.9845313049154356
+          },
+          "host_step_elapsed_seconds": {
+            "mean": 0.4689747206037282,
+            "maximum": 0.7681159850908443
+          },
+          "peak_cuda_bytes": 4167846912
+        }
+      }
+    },
+    "polyp": {
+      "summary": {
+        "all": {
+          "arm_metrics": {
+            "N": {
+              "polyp": {
+                "dice": 0.9696814785435888,
+                "region": 0.07748994417488575,
+                "boundary": 1.8767511640760404e-05,
+                "assd_conditional_mean": 0.8415049822257241,
+                "assd_valid": 128,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 128,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 128,
+                "visits": 128
+              },
+              "macro": {
+                "dice_fraction": 0.9696814785435888,
+                "dice_percent": 96.96814785435888
+              }
+            },
+            "A": {
+              "polyp": {
+                "dice": 0.9673090644159004,
+                "region": 0.09443928534165025,
+                "boundary": 1.7706600068834177e-05,
+                "assd_conditional_mean": 0.8952850901272937,
+                "assd_valid": 128,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 128,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 128,
+                "visits": 128
+              },
+              "macro": {
+                "dice_fraction": 0.9673090644159004,
+                "dice_percent": 96.73090644159004
+              }
+            },
+            "B": {
+              "polyp": {
+                "dice": 0.9673143990043342,
+                "region": 0.09450805466622114,
+                "boundary": 1.774502146645318e-05,
+                "assd_conditional_mean": 0.8947796573338187,
+                "assd_valid": 128,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 128,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 128,
+                "visits": 128
+              },
+              "macro": {
+                "dice_fraction": 0.9673143990043342,
+                "dice_percent": 96.73143990043343
+              }
+            },
+            "C": {
+              "polyp": {
+                "dice": 0.9673143990043342,
+                "region": 0.09450816083699465,
+                "boundary": 1.7745020194581684e-05,
+                "assd_conditional_mean": 0.8947796573338187,
+                "assd_valid": 128,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 128,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 128,
+                "visits": 128
+              },
+              "macro": {
+                "dice_fraction": 0.9673143990043342,
+                "dice_percent": 96.73143990043343
+              }
+            }
+          },
+          "B-A": {
+            "polyp": {
+              "dice_delta": 5.334588434004715e-06,
+              "dice_delta_percentage_points": 0.0005334588434004715,
+              "visits": 128,
+              "independent_groups": 32,
+              "assd_same_pair_delta": -0.000505432793475021,
+              "assd_same_pair_cohort_count": 128,
+              "assd_valid": {
+                "B": 128,
+                "A": 128
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-A": {
+            "polyp": {
+              "dice_delta": 5.334588434004715e-06,
+              "dice_delta_percentage_points": 0.0005334588434004715,
+              "visits": 128,
+              "independent_groups": 32,
+              "assd_same_pair_delta": -0.000505432793475021,
+              "assd_same_pair_cohort_count": 128,
+              "assd_valid": {
+                "C": 128,
+                "A": 128
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-B": {
+            "polyp": {
+              "dice_delta": 0.0,
+              "dice_delta_percentage_points": 0.0,
+              "visits": 128,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.0,
+              "assd_same_pair_cohort_count": 128,
+              "assd_valid": {
+                "C": 128,
+                "B": 128
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            }
+          }
+        },
+        "clean": {
+          "arm_metrics": {
+            "N": {
+              "polyp": {
+                "dice": 0.9722135901916715,
+                "region": 0.07702356390655041,
+                "boundary": 1.7601304861614153e-05,
+                "assd_conditional_mean": 0.7708570636265863,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9722135901916715,
+                "dice_percent": 97.22135901916715
+              }
+            },
+            "A": {
+              "polyp": {
+                "dice": 0.9670993242649475,
+                "region": 0.09901903197169304,
+                "boundary": 1.7424362738438504e-05,
+                "assd_conditional_mean": 0.8959008440415143,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9670993242649475,
+                "dice_percent": 96.70993242649475
+              }
+            },
+            "B": {
+              "polyp": {
+                "dice": 0.9670501062756574,
+                "region": 0.09912146255373955,
+                "boundary": 1.7462342668750352e-05,
+                "assd_conditional_mean": 0.8965708531811888,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9670501062756574,
+                "dice_percent": 96.70501062756574
+              }
+            },
+            "C": {
+              "polyp": {
+                "dice": 0.9670501062756574,
+                "region": 0.0991214718669653,
+                "boundary": 1.746234477195685e-05,
+                "assd_conditional_mean": 0.8965708531811888,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9670501062756574,
+                "dice_percent": 96.70501062756574
+              }
+            }
+          },
+          "B-A": {
+            "polyp": {
+              "dice_delta": -4.921798929000479e-05,
+              "dice_delta_percentage_points": -0.004921798929000479,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.0006700091396744691,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "B": 32,
+                "A": 32
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-A": {
+            "polyp": {
+              "dice_delta": -4.921798929000479e-05,
+              "dice_delta_percentage_points": -0.004921798929000479,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.0006700091396744691,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "C": 32,
+                "A": 32
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-B": {
+            "polyp": {
+              "dice_delta": 0.0,
+              "dice_delta_percentage_points": 0.0,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.0,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "C": 32,
+                "B": 32
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            }
+          }
+        },
+        "gamma_0.7": {
+          "arm_metrics": {
+            "N": {
+              "polyp": {
+                "dice": 0.9712838750390105,
+                "region": 0.08068857900798321,
+                "boundary": 1.827807358267819e-05,
+                "assd_conditional_mean": 0.7956628097011336,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9712838750390105,
+                "dice_percent": 97.12838750390105
+              }
+            },
+            "A": {
+              "polyp": {
+                "dice": 0.9673997415994884,
+                "region": 0.09440799802541733,
+                "boundary": 1.72879223612199e-05,
+                "assd_conditional_mean": 0.8846894669316252,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9673997415994884,
+                "dice_percent": 96.73997415994884
+              }
+            },
+            "B": {
+              "polyp": {
+                "dice": 0.9672733090420069,
+                "region": 0.09462647326290607,
+                "boundary": 1.732056549030858e-05,
+                "assd_conditional_mean": 0.8867853990813506,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9672733090420069,
+                "dice_percent": 96.7273309042007
+              }
+            },
+            "C": {
+              "polyp": {
+                "dice": 0.9672733090420069,
+                "region": 0.09462651796638966,
+                "boundary": 1.732055451952874e-05,
+                "assd_conditional_mean": 0.8867853990813506,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9672733090420069,
+                "dice_percent": 96.7273309042007
+              }
+            }
+          },
+          "B-A": {
+            "polyp": {
+              "dice_delta": -0.00012643255748146995,
+              "dice_delta_percentage_points": -0.012643255748146995,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.002095932149725397,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "B": 32,
+                "A": 32
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-A": {
+            "polyp": {
+              "dice_delta": -0.00012643255748146995,
+              "dice_delta_percentage_points": -0.012643255748146995,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.002095932149725397,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "C": 32,
+                "A": 32
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-B": {
+            "polyp": {
+              "dice_delta": 0.0,
+              "dice_delta_percentage_points": 0.0,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.0,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "C": 32,
+                "B": 32
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            }
+          }
+        },
+        "gamma_1.5": {
+          "arm_metrics": {
+            "N": {
+              "polyp": {
+                "dice": 0.9711941223556178,
+                "region": 0.07510938867926598,
+                "boundary": 1.7825885493039095e-05,
+                "assd_conditional_mean": 0.8081122697262815,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9711941223556178,
+                "dice_percent": 97.11941223556178
+              }
+            },
+            "A": {
+              "polyp": {
+                "dice": 0.9693096598321885,
+                "region": 0.08778607100248337,
+                "boundary": 1.7619527255874345e-05,
+                "assd_conditional_mean": 0.8576830869097666,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9693096598321885,
+                "dice_percent": 96.93096598321885
+              }
+            },
+            "B": {
+              "polyp": {
+                "dice": 0.9693121592277059,
+                "region": 0.08804319240152836,
+                "boundary": 1.7716630651420928e-05,
+                "assd_conditional_mean": 0.8603949961562982,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9693121592277059,
+                "dice_percent": 96.93121592277059
+              }
+            },
+            "C": {
+              "polyp": {
+                "dice": 0.9693121592277059,
+                "region": 0.08804326690733433,
+                "boundary": 1.7716621869112714e-05,
+                "assd_conditional_mean": 0.8603949961562982,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.9693121592277059,
+                "dice_percent": 96.93121592277059
+              }
+            }
+          },
+          "B-A": {
+            "polyp": {
+              "dice_delta": 2.499395517420455e-06,
+              "dice_delta_percentage_points": 0.0002499395517420455,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.002711909246531665,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "B": 32,
+                "A": 32
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-A": {
+            "polyp": {
+              "dice_delta": 2.499395517420455e-06,
+              "dice_delta_percentage_points": 0.0002499395517420455,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.002711909246531665,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "C": 32,
+                "A": 32
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-B": {
+            "polyp": {
+              "dice_delta": 0.0,
+              "dice_delta_percentage_points": 0.0,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.0,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "C": 32,
+                "B": 32
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            }
+          }
+        },
+        "blur_5_sigma_1": {
+          "arm_metrics": {
+            "N": {
+              "polyp": {
+                "dice": 0.964034326588056,
+                "region": 0.07713824510574341,
+                "boundary": 2.1364782625710177e-05,
+                "assd_conditional_mean": 0.9913877858488948,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.964034326588056,
+                "dice_percent": 96.4034326588056
+              }
+            },
+            "A": {
+              "polyp": {
+                "dice": 0.965427531966977,
+                "region": 0.09654404036700726,
+                "boundary": 1.8494587919803962e-05,
+                "assd_conditional_mean": 0.9428669626262688,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.965427531966977,
+                "dice_percent": 96.54275319669769
+              }
+            },
+            "B": {
+              "polyp": {
+                "dice": 0.965622021471967,
+                "region": 0.09624109044671059,
+                "boundary": 1.8480547055332863e-05,
+                "assd_conditional_mean": 0.9353673809164371,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.965622021471967,
+                "dice_percent": 96.5622021471967
+              }
+            },
+            "C": {
+              "polyp": {
+                "dice": 0.965622021471967,
+                "region": 0.09624138660728931,
+                "boundary": 1.848055961772843e-05,
+                "assd_conditional_mean": 0.9353673809164371,
+                "assd_valid": 32,
+                "assd_undefined": 0,
+                "assd_valid_cohort_count": 32,
+                "gt_empty_count": 0,
+                "gt_full_count": 0,
+                "pred_empty_count": 0,
+                "pred_full_count": 0,
+                "boundary_defined_count": 32,
+                "visits": 32
+              },
+              "macro": {
+                "dice_fraction": 0.965622021471967,
+                "dice_percent": 96.5622021471967
+              }
+            }
+          },
+          "B-A": {
+            "polyp": {
+              "dice_delta": 0.00019448950499007314,
+              "dice_delta_percentage_points": 0.019448950499007314,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": -0.007499581709831615,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "B": 32,
+                "A": 32
+              },
+              "assd_undefined": {
+                "B": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-A": {
+            "polyp": {
+              "dice_delta": 0.00019448950499007314,
+              "dice_delta_percentage_points": 0.019448950499007314,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": -0.007499581709831615,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "C": 32,
+                "A": 32
+              },
+              "assd_undefined": {
+                "C": 0,
+                "A": 0
+              }
+            }
+          },
+          "C-B": {
+            "polyp": {
+              "dice_delta": 0.0,
+              "dice_delta_percentage_points": 0.0,
+              "visits": 32,
+              "independent_groups": 32,
+              "assd_same_pair_delta": 0.0,
+              "assd_same_pair_cohort_count": 32,
+              "assd_valid": {
+                "C": 32,
+                "B": 32
+              },
+              "assd_undefined": {
+                "C": 0,
+                "B": 0
+              }
+            }
+          }
+        },
+        "units": {
+          "dice": "fraction_0_1",
+          "dice_percent": "percent",
+          "dice_delta": "fraction",
+          "dice_delta_percentage_points": "percentage_points",
+          "assd": "final_grid_pixels",
+          "pipeline_elapsed_seconds": "end_to_end_seconds",
+          "host_step_elapsed_seconds": "adapt_predict_push_seconds"
+        }
+      },
+      "observations": {
+        "N": {
+          "visits": 128,
+          "adaptation_steps": 0,
+          "prompt_state_delta_norm": {
+            "mean": 0.0,
+            "maximum": 0.0
+          },
+          "optimizer_update_norm": {
+            "mean": 0.0,
+            "maximum": 0.0
+          },
+          "pipeline_elapsed_seconds": {
+            "mean": 0.08040204323515354,
+            "maximum": 0.2305923351086676
+          },
+          "host_step_elapsed_seconds": {
+            "mean": 0.027296093027871393,
+            "maximum": 0.18062924104742706
+          },
+          "peak_cuda_bytes": 222472704
+        },
+        "A": {
+          "visits": 128,
+          "adaptation_steps": 128,
+          "prompt_state_delta_norm": {
+            "mean": 0.008324263304530177,
+            "maximum": 0.0533004105091095
+          },
+          "optimizer_update_norm": {
+            "mean": 0.016799491240817588,
+            "maximum": 0.05192839354276657
+          },
+          "pipeline_elapsed_seconds": {
+            "mean": 0.25835506826115306,
+            "maximum": 0.33161721006035805
+          },
+          "host_step_elapsed_seconds": {
+            "mean": 0.19207224765705178,
+            "maximum": 0.2718227789737284
+          },
+          "peak_cuda_bytes": 757432320
+        },
+        "B": {
+          "visits": 128,
+          "adaptation_steps": 128,
+          "prompt_state_delta_norm": {
+            "mean": 0.00796299877220008,
+            "maximum": 0.05195968225598335
+          },
+          "optimizer_update_norm": {
+            "mean": 0.03759229417482857,
+            "maximum": 0.05195968225598335
+          },
+          "pipeline_elapsed_seconds": {
+            "mean": 0.3981739033024496,
+            "maximum": 1.7886740730609745
+          },
+          "host_step_elapsed_seconds": {
+            "mean": 0.3285914367907026,
+            "maximum": 1.724287302000448
+          },
+          "peak_cuda_bytes": 2296648704
+        },
+        "C": {
+          "visits": 128,
+          "adaptation_steps": 128,
+          "prompt_state_delta_norm": {
+            "mean": 0.007962200625115656,
+            "maximum": 0.05195968225598335
+          },
+          "optimizer_update_norm": {
+            "mean": 0.03758534032385796,
+            "maximum": 0.05195968225598335
+          },
+          "pipeline_elapsed_seconds": {
+            "mean": 0.38789417971020157,
+            "maximum": 0.41345590504352003
+          },
+          "host_step_elapsed_seconds": {
+            "mean": 0.318234461911743,
+            "maximum": 0.34247999906074256
+          },
+          "peak_cuda_bytes": 2295489536
+        }
+      }
+    }
+  },
+  "private_output_bytes": 1681569,
+  "privacy": {
+    "sample_ids_paths_row_jsonl_model_and_data_digests": "PRIVATE_NAS_ONLY",
+    "cohort_identifiers": "removed; definition and paired cohort counts retained"
+  },
+  "scope": {
+    "runs": 1,
+    "smoke_native_steps": 72,
+    "source_training": "NOT_RUN",
+    "DD": "NOT_RUN",
+    "target": "NOT_RUN",
+    "search": "NOT_RUN",
+    "CI": "NOT_CONFIGURED",
+    "independent_patients_claim": false,
+    "unseen_generalization_claim": false,
+    "multi_seed_claim": false
+  }
+}
