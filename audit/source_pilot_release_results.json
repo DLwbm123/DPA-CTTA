@@ -1,0 +1,132 @@
+{
+  "status": "CPU_PROCEDURAL_CHECKS_PASS",
+  "baseline_commit": "8d417ca864288136b3b44a4245a241e80d072ea6",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "scipy": "1.16.0",
+  "device": "cpu",
+  "tests_run": 173,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "runner_exception": null,
+  "exit_code": 0,
+  "elapsed_seconds": 366.89550279197283,
+  "blocked_api_attempts": {},
+  "procedural_image_stream_reads": 22,
+  "cuda_initialized": false,
+  "evidence": {
+    "coverage": {
+      "counterexamples_rejected": 11,
+      "normal_mean_and_delta_unchanged": true,
+      "N_required": true
+    },
+    "failure": {
+      "completed_N_A_visits": [
+        8,
+        8
+      ],
+      "B_prefix": 1,
+      "B_failing_visit": 2,
+      "C_not_started": true,
+      "exception_propagated_to_nonzero_entry": true
+    },
+    "observation": {
+      "initialization_state_delta": 4,
+      "actual_adam_update": 0,
+      "no_extra_step": true
+    },
+    "fundus_hooks": {
+      "full_native_four_steps": true,
+      "output_prompt_adam_memory_rng_equal": true
+    },
+    "polyp_hooks": {
+      "full_native_four_steps": true,
+      "output_prompt_adam_memory_rng_equal": true
+    },
+    "receipt": {
+      "unauthorized_io_attempts": 0,
+      "mismatched_commit_config_source_summary_rejected": true,
+      "no_old_guard_bypass": true
+    }
+  },
+  "prior_host_regressions": {
+    "fundus_disabled": {
+      "images": 4,
+      "max_abs_logit_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prompt_adam_counters_memory_buffers_rng_equal": true,
+      "native_sample_counts": [
+        4
+      ],
+      "memory_entries": 4,
+      "adam_steps": 4,
+      "source_weights_buffers_unchanged": true,
+      "native_source_gradient_tensors": 134,
+      "neighbor": 2,
+      "default_neighbor": 16,
+      "reference": "unchanged pinned VPTTA.run image-block AST, native model/AdaBN/Prompt/Memory"
+    },
+    "polyp_disabled": {
+      "images": 4,
+      "max_abs_logit_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prompt_adam_counters_memory_buffers_rng_equal": true,
+      "native_sample_counts": [
+        4
+      ],
+      "memory_entries": 4,
+      "adam_steps": 4,
+      "source_weights_buffers_unchanged": true,
+      "native_source_gradient_tensors": 259,
+      "neighbor": 2,
+      "default_neighbor": 16,
+      "reference": "unchanged pinned VPTTA.run image-block AST, native model/AdaBN/Prompt/Memory"
+    },
+    "fundus_proxy": {
+      "mask_gradient_difference_norm": 0.037899382412433624,
+      "gradient_norms": [
+        0.021257899701595306,
+        0.017193874344229698
+      ],
+      "native_visible_state_unchanged_by_auxiliary_forward": true,
+      "native_hooks_unchanged_by_auxiliary_forward": true,
+      "source_weights_buffers_unchanged": true,
+      "combined_update_adam_steps": 2,
+      "native_sample_count": 2,
+      "source_clone_parameters": 22554570
+    },
+    "polyp_proxy": {
+      "mask_gradient_difference_norm": 0.06934764236211777,
+      "gradient_norms": [
+        0.035967595875263214,
+        0.033848416060209274
+      ],
+      "native_visible_state_unchanged_by_auxiliary_forward": true,
+      "native_hooks_unchanged_by_auxiliary_forward": true,
+      "source_weights_buffers_unchanged": true,
+      "combined_update_adam_steps": 2,
+      "native_sample_count": 2,
+      "source_clone_parameters": 32547319
+    }
+  },
+  "real_checkpoint": "NOT_RUN",
+  "real_source_registration": "NOT_RUN",
+  "real_image_io": "NOT_RUN",
+  "cuda_device_and_memory_semantics": "NOT_RUN",
+  "source_pilot": "NOT_RUN",
+  "server": "NOT_RUN",
+  "DD": "NOT_RUN",
+  "target": "NOT_RUN",
+  "CI": "NOT_CONFIGURED",
+  "runner_independent_review": "PENDING_EXACT_COMMIT_CONFIG_REVIEW",
+  "command": "PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' DPA_CTTA_BASE_ROOT=$REFERENCE $PYTHON -P audit/run_source_pilot_release_checks.py"
+}

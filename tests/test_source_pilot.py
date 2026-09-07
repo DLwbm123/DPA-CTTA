@@ -157,13 +157,15 @@ class SourceIOTests(unittest.TestCase):
         empty=evaluate_after_step(logits,torch.zeros_like(mask),'polyp')[0]
         self.assertIsNone(empty['assd']); self.assertFalse(empty['boundary_defined'])
         row=dict(group_id='PROCEDURAL_G',sample_id='PROCEDURAL_S',segment='clean',metrics=[met])
-        results={a:[copy.deepcopy(row)] for a in ('A','B','C')}
+        results={a:[copy.deepcopy(row)] for a in ('N','A','B','C')}
         # All four segments must be present for complete comparisons.
         for arm in results:
             results[arm]=[dict(copy.deepcopy(row),segment=s) for s in ('clean','gamma_0.7','gamma_1.5','blur_5_sigma_1')]
-        summary=summarize(results)
-        self.assertEqual(summary['all']['C-B']['polyp']['visits'],4)
-        self.assertEqual(summary['all']['C-B']['polyp']['independent_groups'],1)
+        from test_source_pilot_release import complete_fixture
+        results, expected=complete_fixture()
+        summary=summarize(results,expected,'polyp')
+        self.assertEqual(summary['all']['C-B']['polyp']['visits'],8)
+        self.assertEqual(summary['all']['C-B']['polyp']['independent_groups'],2)
 
     def test_every_real_entry_rejects_before_config_or_io(self):
         with patch('builtins.print'), patch('torch.load',side_effect=AssertionError('checkpoint read')):
@@ -177,7 +179,7 @@ class SourceIOTests(unittest.TestCase):
         from types import SimpleNamespace
         for nonfinite in (True, False):
             step = unittest.mock.Mock(return_value=torch.full((1,1,5,7),float('nan') if nonfinite else 0.))
-            host = SimpleNamespace(device=torch.device('cpu'), step=step)
+            host = SimpleNamespace(device=torch.device('cpu'), step=step, model=torch.nn.Identity())
             evaluator = unittest.mock.Mock(side_effect=lambda pred,row: evaluate_after_step(pred,torch.zeros(1,2,5,7),'polyp'))
             with self.assertRaises(ValueError):
                 _run_arm(host,[dict(group_id='PROCEDURAL_1',sample_id='PROCEDURAL_1'),dict(group_id='PROCEDURAL_2',sample_id='PROCEDURAL_2')],

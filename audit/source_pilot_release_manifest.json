@@ -1,0 +1,27 @@
+{
+  "status": "LOCAL_RELEASE_CHECKS_PASS",
+  "baseline": "8d417ca864288136b3b44a4245a241e80d072ea6",
+  "branch": "experiment/source-pilot-run-v1",
+  "science_config_sha256": "e1aeb2454899d024e00934e1f012b5a0fe8cb3bb656f5dd20f73468fdd7a3faf",
+  "changed_files": [
+    "README.md",
+    "audit/run_source_pilot_release_checks.py",
+    "audit/source_pilot_release_cpu.log",
+    "audit/source_pilot_release_results.json",
+    "docs/SOURCE_PILOT_RELEASE_CONTRACT.md",
+    "docs/SOURCE_PILOT_RELEASE_LOCAL_REPORT.md",
+    "scripts/run_source_pilot_once.py",
+    "src/dpa_ctta/source_pilot.py",
+    "src/dpa_ctta/source_pilot_release.py",
+    "tests/test_source_pilot.py",
+    "tests/test_source_pilot_release.py"
+  ],
+  "public_safety_scan": "PASS",
+  "native_scientific_sources_unchanged": true,
+  "tests_run": 173,
+  "test_exit_code": 0,
+  "local_only": true,
+  "server": "NOT_RUN_AT_LOCAL_RELEASE",
+  "real_run": "NOT_RUN_AT_LOCAL_RELEASE",
+  "CI": "NOT_CONFIGURED"
+}

@@ -1,5 +1,7 @@
 # DPA-CTTA
 
+**Current release branch: `experiment/source-pilot-run-v1`.** See the [release contract](docs/SOURCE_PILOT_RELEASE_CONTRACT.md) and [local regression report](docs/SOURCE_PILOT_RELEASE_LOCAL_REPORT.md). The earlier preparation status below is historical; actual registered execution is tracked separately.
+
 **Current branch: `experiment/source-pilot-io-v1`**, based on `c92b64b2284eb5da0631c00d15cc44af773f4b2d`.
 **SOURCE_PILOT_PREPARED — AWAITING EXACT COMMIT/CONFIG REVIEW**.
 

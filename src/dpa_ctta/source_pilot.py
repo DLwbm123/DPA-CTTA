@@ -125,50 +125,147 @@ def evaluate_after_step(logits, mask, task):
     return result
 
 
-def _run_arm(host, rows, pixel_reader, evaluator, *, capture=None):
-    """Shared sequential loop; failures end this arm and the enclosing pilot immediately."""
-    records = []
+class ArmFailure(ValueError):
+    def __init__(self, details):
+        self.details = details
+        super().__init__('INCOMPLETE: ' + details['exception_type'])
+
+
+def expected_visits(rows):
+    identities = [(r['sample_id'], r['group_id']) for r in rows]
+    if not rows or len({s for s,g in identities}) != len(rows) or len({g for s,g in identities}) != len(rows):
+        raise ValueError('query registration requires distinct samples/groups')
+    return [dict(visit=i+1, sample_id=r['sample_id'], group_id=r['group_id'], segment=segment)
+            for i,(segment,r) in enumerate((s,r) for s in SEGMENTS for r in rows)]
+
+
+def validate_arm(records, expected, task, arm):
+    channels = ['OD','OC'] if task == 'fundus' else ['polyp']
+    if arm not in ARMS or not expected or len(records) != len(expected):
+        raise ValueError('arm coverage mismatch')
+    seen = set()
+    for row, wanted in zip(records, expected):
+        if any(row.get(k) != v for k,v in wanted.items()):
+            raise ValueError('visit identity/order mismatch')
+        key = (row['sample_id'],row['group_id'],row['segment'])
+        if key in seen:
+            raise ValueError('duplicate visit')
+        seen.add(key)
+        metrics = row['metrics']
+        if [m['channel'] for m in metrics] != channels:
+            raise ValueError('missing/duplicate/wrong metric channel')
+        for m in metrics:
+            for field in ('dice','region','boundary'):
+                if type(m[field]) not in (int,float) or not np.isfinite(m[field]):
+                    raise ValueError('nonfinite metric')
+            if not 0 <= m['dice'] <= 1 or (m['assd'] is not None and
+                    (type(m['assd']) not in (int,float) or not np.isfinite(m['assd']) or m['assd'] < 0)):
+                raise ValueError('metric range mismatch')
+            for flag in ('boundary_defined','gt_empty','gt_full','pred_empty','pred_full'):
+                if type(m[flag]) is not bool:
+                    raise ValueError('metric flag must be explicit bool')
+            if m['gt_empty'] and m['gt_full'] or m['pred_empty'] and m['pred_full']:
+                raise ValueError('contradictory empty/full flags')
+            if m['boundary_defined'] != (not m['gt_empty'] and not m['gt_full']):
+                raise ValueError('boundary definition mismatch')
+            if (m['assd'] is None) != (m['gt_empty'] or m['pred_empty']):
+                raise ValueError('ASSD definition mismatch')
+        for field in ('prompt_state_delta_norm','optimizer_update_norm','pipeline_elapsed_seconds','host_step_elapsed_seconds'):
+            if not np.isfinite(row[field]) or row[field] < 0:
+                raise ValueError('nonfinite/negative observation')
+        if row['source_versions_unchanged'] is not True or row['optimizer_state_finite'] is not True:
+            raise ValueError('invalid source/optimizer state')
+        if arm == 'N':
+            if row['adam_step'] != 0 or row['native_counts'] != [] or row['memory_size'] != 0 or row['optimizer_steps_this_visit'] != 0 or row['optimizer_update_norm'] != 0 or row['prompt_state_delta_norm'] != 0:
+                raise ValueError('No Adapt unexpectedly adapted')
+        elif (row['adam_step'] != wanted['visit'] or row['native_counts'] != [wanted['visit']]
+              or row['optimizer_steps_this_visit'] != 1 or not 1 <= row['memory_size'] <= min(41,wanted['visit'])):
+            raise ValueError('native lifecycle mismatch')
+    return True
+
+
+def _run_arm(host, rows, pixel_reader, evaluator, *, capture=None, record_sink=None, task=None, arm=None):
+    """One sequential stream; a sink persists only completed scalar records."""
+    records, handles = [], []
+    observed = {'updates':0, 'norm':0.}
+    source = {n:(t,t._version) for n,t in host.model.state_dict(keep_vars=True).items()}
+    if hasattr(host,'optimizer'):
+        def pre(opt,args,kwargs):
+            observed['before'] = host.prompt.data_prompt.detach().clone()
+        def post(opt,args,kwargs):
+            observed['norm'] += float((host.prompt.data_prompt.detach()-observed.pop('before')).norm())
+            observed['updates'] += 1
+        handles = [host.optimizer.register_step_pre_hook(pre), host.optimizer.register_step_post_hook(post)]
+    stage, visit, segment = 'initialization', 0, None
     if host.device.type == 'cuda':
         torch.cuda.reset_peak_memory_stats(host.device)
-    for segment in SEGMENTS:
-        for row in rows:
-            if host.device.type == 'cuda':
-                torch.cuda.synchronize(host.device)
-            start = time.perf_counter()
-            image = transform_pixels(pixel_reader(row), segment)
-            before = host.prompt.data_prompt.detach().clone() if hasattr(host, 'prompt') else None
-            prediction = host.step(image)
-            if not torch.isfinite(prediction).all():
-                raise ValueError('nonfinite prediction')
-            update, counts, adam, memory, proxy_loss = 0., [], 0, 0, None
-            if before is not None:
-                p = host.prompt.data_prompt
-                if not torch.isfinite(p).all() or p.grad is None or not torch.isfinite(p.grad).all():
-                    raise ValueError('nonfinite/missing prompt update')
-                update = float((p.detach() - before).norm())
-                counts = sorted({m.sample_num for m in host.model.modules() if isinstance(m, host.adabn)})
-                adam = int(host.optimizer.state[p]['step'])
-                memory = host.memory_bank.get_size()
-                if host.last_proxy_loss is not None:
-                    loss = host.last_proxy_loss
-                    proxy_loss = dict(region=float(loss.region.detach()), boundary=float(loss.boundary.detach()))
-                    if not all(np.isfinite(v) for v in proxy_loss.values()):
-                        raise ValueError('nonfinite proxy loss')
-            if capture is not None:  # tests only; production records contain no pixel predictions
-                capture(prediction.detach().cpu(), host)
-            metrics = evaluator(prediction, row)  # FIRST query label read, after complete native update/predict/push
-            if host.device.type == 'cuda':
-                torch.cuda.synchronize(host.device)
-            elapsed = time.perf_counter() - start
-            records.append(dict(group_id=row['group_id'], sample_id=row['sample_id'], segment=segment,
-                                metrics=metrics, prompt_update_norm=update, native_counts=counts,
-                                adam_step=adam, memory_size=memory, proxy_loss=proxy_loss,
-                                elapsed_seconds=elapsed, peak_cuda_bytes=torch.cuda.max_memory_allocated(host.device) if host.device.type == 'cuda' else 'NOT_RUN'))
+    try:
+        for segment in SEGMENTS:
+            for row in rows:
+                visit += 1
+                stage = 'image_and_transform'
+                if host.device.type == 'cuda': torch.cuda.synchronize(host.device)
+                start = time.perf_counter()
+                image = transform_pixels(pixel_reader(row), segment)
+                before = host.prompt.data_prompt.detach().clone() if hasattr(host,'prompt') else None
+                observed.update(updates=0,norm=0.)
+                stage = 'host_step'
+                if host.device.type == 'cuda': torch.cuda.synchronize(host.device)
+                step_start = time.perf_counter()
+                prediction = host.step(image)
+                if host.device.type == 'cuda': torch.cuda.synchronize(host.device)
+                step_elapsed = time.perf_counter()-step_start
+                stage = 'state_validation'
+                if not torch.isfinite(prediction).all(): raise ValueError('nonfinite prediction')
+                current = host.model.state_dict(keep_vars=True)
+                if current.keys() != source.keys() or any(current[n] is not t or t._version != version for n,(t,version) in source.items()):
+                    raise ValueError('source parameter/buffer mutation')
+                update, counts, adam, memory, proxy_loss = 0., [], 0, 0, None
+                if before is not None:
+                    p = host.prompt.data_prompt
+                    if not torch.isfinite(p).all() or p.grad is None or not torch.isfinite(p.grad).all():
+                        raise ValueError('nonfinite/missing prompt update')
+                    if any(isinstance(t,torch.Tensor) and not torch.isfinite(t).all()
+                           for state in host.optimizer.state.values() for t in state.values()):
+                        raise ValueError('nonfinite Adam state')
+                    update = float((p.detach()-before).norm())
+                    counts = sorted({m.sample_num for m in host.model.modules() if isinstance(m,host.adabn)})
+                    adam = int(host.optimizer.state.get(p,{}).get('step',0))
+                    memory = host.memory_bank.get_size()
+                    if host.last_proxy_loss is not None:
+                        loss = host.last_proxy_loss
+                        proxy_loss = dict(region=float(loss.region.detach()),boundary=float(loss.boundary.detach()),defined_boundary_pairs=loss.defined_boundary_pairs)
+                        if not all(np.isfinite(v) for v in proxy_loss.values()): raise ValueError('nonfinite proxy loss')
+                if capture is not None: capture(prediction.detach().cpu(),host)
+                stage = 'query_evaluator'
+                metrics = evaluator(prediction,row)  # First query label read after native step/push.
+                if host.device.type == 'cuda': torch.cuda.synchronize(host.device)
+                record = dict(visit=visit,group_id=row['group_id'],sample_id=row['sample_id'],segment=segment,
+                    metrics=metrics,prompt_state_delta_norm=update,optimizer_update_norm=observed['norm'],
+                    optimizer_steps_this_visit=observed['updates'],native_counts=counts,adam_step=adam,memory_size=memory,
+                    proxy_loss=proxy_loss,source_versions_unchanged=True,optimizer_state_finite=True,
+                    pipeline_elapsed_seconds=time.perf_counter()-start,host_step_elapsed_seconds=step_elapsed,
+                    peak_cuda_bytes=torch.cuda.max_memory_allocated(host.device) if host.device.type=='cuda' else 'NOT_RUN')
+                stage = 'record_validation'
+                if task is not None:
+                    validate_arm([record],[dict(visit=visit,sample_id=row['sample_id'],group_id=row['group_id'],segment=segment)],task,arm)
+                stage = 'record_sink'
+                if record_sink is not None: record_sink(record)
+                records.append(record)
+    except Exception as error:
+        raise ArmFailure(dict(task=task,arm=arm,visit=visit,segment=segment,stage=stage,
+                              exception_type=type(error).__name__,private_reason=str(error),completed_records=len(records))) from error
+    finally:
+        for handle in handles: handle.remove()
     return records
 
 
-def summarize(results):
+def summarize(results, expected=None, task=None):
     """Paired comparisons retain per-channel cohorts and every observed negative delta."""
+    if expected is None or task not in SOURCES or set(results) != set(ARMS):
+        raise ValueError('complete N/A/B/C and preregistered expected stream required')
+    for arm, records in results.items():
+        validate_arm(records, expected, task, arm)
     output = {}
     for segment in ('all', *SEGMENTS):
         output[segment] = {'arm_metrics': {}}
@@ -182,7 +279,11 @@ def summarize(results):
                     **{key:float(np.mean([m[key] for _, m in pairs])) for key in ('dice','region','boundary')},
                     assd_conditional_mean=float(np.mean([m['assd'] for _, m in valid])) if valid else None,
                     assd_valid=len(valid), assd_undefined=len(pairs)-len(valid),
-                    assd_valid_cohort=[[r['group_id'],r['segment']] for r, _ in valid])
+                    assd_valid_cohort=[[r['group_id'],r['segment']] for r, _ in valid],
+                    **{flag+'_count':sum(m[flag] for _,m in pairs) for flag in ('gt_empty','gt_full','pred_empty','pred_full','boundary_defined')},
+                    visits=len(pairs))
+            output[segment]['arm_metrics'][arm]['macro'] = dict(dice_fraction=float(np.mean([m['dice'] for _,m in measurements])),
+                dice_percent=100*float(np.mean([m['dice'] for _,m in measurements])))
         for left, right in (('B', 'A'), ('C', 'A'), ('C', 'B')):
             a = {(r['group_id'], r['segment'], m['channel']): m for r in results[left]
                  if segment in ('all', r['segment']) for m in r['metrics']}
@@ -195,40 +296,20 @@ def summarize(results):
                 keys = [k for k in a if k[2] == channel]
                 both = [k for k in keys if a[k]['assd'] is not None and b[k]['assd'] is not None]
                 compared[channel] = dict(dice_delta=float(np.mean([a[k]['dice'] - b[k]['dice'] for k in keys])),
+                    dice_delta_percentage_points=100*float(np.mean([a[k]['dice']-b[k]['dice'] for k in keys])),
                     visits=len(keys), independent_groups=len({k[0] for k in keys}),
                     assd_same_pair_delta=float(np.mean([a[k]['assd'] - b[k]['assd'] for k in both])) if both else None,
                     assd_same_pair_cohort=[list(k) for k in both],
                     assd_valid={left: sum(a[k]['assd'] is not None for k in keys), right: sum(b[k]['assd'] is not None for k in keys)},
                     assd_undefined={left: sum(a[k]['assd'] is None for k in keys), right: sum(b[k]['assd'] is None for k in keys)})
             output[segment][left + '-' + right] = compared
+    output['units'] = dict(dice='fraction_0_1',dice_percent='percent',dice_delta='fraction',dice_delta_percentage_points='percentage_points',assd='final_grid_pixels',pipeline_elapsed_seconds='end_to_end_seconds',host_step_elapsed_seconds='adapt_predict_push_seconds')
     return output
 
 
 def run_registered(config):
     """Future real entry: cannot read roots, metadata, images or weights before approval."""
     require_pilot_approval()
-    results = {}
-    try:
-        validate_config(config)
-        for task, spec in config['tasks'].items():
-            registration = registered_source(os.environ[spec['manifest_env']], os.environ[spec['split_env']],
-                                             spec['csv_specs'], os.environ[spec['data_root_env']], task, config['seed'])
-            state = torch.load(os.environ[spec['checkpoint_env']], weights_only=True, map_location='cpu')
-            proxy = source_proxy(registration['proxy'], task)
-            task_results = {}
-            for arm in ARMS:
-                host = assemble(task, arm, state, proxy, device=config['device'], seed=config['seed'])
-                task_results[arm] = _run_arm(host, registration['query'],
-                    lambda r: read_pixels(r['image_path'], task, r['image_size']),
-                    lambda pred, r: evaluate_after_step(pred, read_mask(r['mask_path'], task, r['image_size']), task))
-                if any(not torch.equal(t.cpu(), state[k].cpu()) for k, t in host.model.state_dict().items()):
-                    raise ValueError('source weights/buffers changed')
-                del host
-            results[task] = dict(arms=task_results, comparisons=summarize(task_results))
-    except Exception as error:
-        # Discard mutable host state. Never continue with a polluted optimizer/memory.
-        return dict(status='INCOMPLETE', reason=type(error).__name__, completed_tasks=results)
-    return dict(status='COMPLETE', tasks=results)
 
 
 def main(argv=None):
