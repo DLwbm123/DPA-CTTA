@@ -1,0 +1,155 @@
+{
+  "status": "CPU_PROCEDURAL_CHECKS_PASS",
+  "baseline_commit": "e147497b2cc51c5ced92793dbe9ef66b1dcbda16",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "scipy": "1.16.0",
+  "device": "cpu",
+  "tests_run": 179,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "runner_exception": null,
+  "exit_code": 0,
+  "elapsed_seconds": 374.472978875041,
+  "blocked_api_attempts": {},
+  "procedural_image_stream_reads": 22,
+  "cuda_initialized": false,
+  "evidence": {
+    "fundus": {
+      "identity": {
+        "max_abs_error": 4.172325134277344e-07,
+        "within_tolerance": true,
+        "interpretation": "normalization"
+      },
+      "native_equivalent": true,
+      "labels_isolated": true,
+      "branch_isolation": true,
+      "future_equivalent": true,
+      "counts": {
+        "reference_steps": 2,
+        "watched_steps": 2,
+        "counterfactual_steps": 12,
+        "reference_pushes": 2,
+        "watched_pushes": 2,
+        "gradient_calls": 8,
+        "reference_model_forwards": 4,
+        "reference_prompt_forwards": 4,
+        "watched_model_forwards": 4,
+        "watched_prompt_forwards": 4,
+        "diagnostic_model_forwards": 22,
+        "diagnostic_prompt_forwards": 25,
+        "N_model_forwards": 3,
+        "proxy_model_forwards": 2,
+        "proxy_images": 8
+      }
+    },
+    "polyp": {
+      "identity": {
+        "max_abs_error": 1.1920928955078125e-06,
+        "within_tolerance": true,
+        "interpretation": "normalization"
+      },
+      "native_equivalent": true,
+      "labels_isolated": true,
+      "branch_isolation": true,
+      "future_equivalent": true,
+      "counts": {
+        "reference_steps": 2,
+        "watched_steps": 2,
+        "counterfactual_steps": 12,
+        "reference_pushes": 2,
+        "watched_pushes": 2,
+        "gradient_calls": 8,
+        "reference_model_forwards": 4,
+        "reference_prompt_forwards": 4,
+        "watched_model_forwards": 4,
+        "watched_prompt_forwards": 4,
+        "diagnostic_model_forwards": 22,
+        "diagnostic_prompt_forwards": 25,
+        "N_model_forwards": 3,
+        "proxy_model_forwards": 2,
+        "proxy_images": 8
+      }
+    }
+  },
+  "prior_host_regressions": {
+    "fundus_disabled": {
+      "images": 4,
+      "max_abs_logit_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prompt_adam_counters_memory_buffers_rng_equal": true,
+      "native_sample_counts": [
+        4
+      ],
+      "memory_entries": 4,
+      "adam_steps": 4,
+      "source_weights_buffers_unchanged": true,
+      "native_source_gradient_tensors": 134,
+      "neighbor": 2,
+      "default_neighbor": 16,
+      "reference": "unchanged pinned VPTTA.run image-block AST, native model/AdaBN/Prompt/Memory"
+    },
+    "polyp_disabled": {
+      "images": 4,
+      "max_abs_logit_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prompt_adam_counters_memory_buffers_rng_equal": true,
+      "native_sample_counts": [
+        4
+      ],
+      "memory_entries": 4,
+      "adam_steps": 4,
+      "source_weights_buffers_unchanged": true,
+      "native_source_gradient_tensors": 259,
+      "neighbor": 2,
+      "default_neighbor": 16,
+      "reference": "unchanged pinned VPTTA.run image-block AST, native model/AdaBN/Prompt/Memory"
+    },
+    "fundus_proxy": {
+      "mask_gradient_difference_norm": 0.037899382412433624,
+      "gradient_norms": [
+        0.021257899701595306,
+        0.017193874344229698
+      ],
+      "native_visible_state_unchanged_by_auxiliary_forward": true,
+      "native_hooks_unchanged_by_auxiliary_forward": true,
+      "source_weights_buffers_unchanged": true,
+      "combined_update_adam_steps": 2,
+      "native_sample_count": 2,
+      "source_clone_parameters": 22554570
+    },
+    "polyp_proxy": {
+      "mask_gradient_difference_norm": 0.06934764236211777,
+      "gradient_norms": [
+        0.035967595875263214,
+        0.033848416060209274
+      ],
+      "native_visible_state_unchanged_by_auxiliary_forward": true,
+      "native_hooks_unchanged_by_auxiliary_forward": true,
+      "source_weights_buffers_unchanged": true,
+      "combined_update_adam_steps": 2,
+      "native_sample_count": 2,
+      "source_clone_parameters": 32547319
+    }
+  },
+  "real_checkpoint": "NOT_RUN",
+  "real_source_registration": "NOT_RUN",
+  "real_image_io": "NOT_RUN",
+  "cuda_device_and_memory_semantics": "NOT_RUN",
+  "source_pilot": "NOT_RUN",
+  "server": "NOT_RUN",
+  "DD": "NOT_RUN",
+  "target": "NOT_RUN",
+  "CI": "NOT_CONFIGURED",
+  "runner_independent_review": "NOT_CLAIMED_DIRECT_USER_AUTHORIZATION",
+  "command": "PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' DPA_CTTA_BASE_ROOT=$REFERENCE $PYTHON -P audit/run_host_diagnostic_checks.py"
+}
