@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "scope": "changed and newly added publication files; inherited payload was previously published",
+  "files_screened": 27,
+  "bytes_screened": 140315,
+  "findings": [],
+  "active_workflow_files": 0,
+  "binary_image_mask_weight_payloads": 0,
+  "protected_worktrees": {
+    "publication_baseline": {
+      "head": "54911f9e1aff4cc0338dfac0264e67456024d503",
+      "clean": true
+    },
+    "original_implementation": {
+      "head": "617f67464df37d6e49972c4932a85f56d210ccab",
+      "clean": true
+    },
+    "pinned_reference": {
+      "head": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+      "clean": true
+    }
+  },
+  "files": [
+    "README.md",
+    "audit/independent_review_probe_results_54911f9.json",
+    "audit/review_baseline_probe_replay.json",
+    "audit/review_baseline_probe_replay.log",
+    "audit/review_fix_cpu.log",
+    "audit/review_fix_results.json",
+    "audit/review_probes_54911f9.py",
+    "audit/run_review_fix_checks.py",
+    "configs/method_v1.json",
+    "docs/HOST_CONTRACT.md",
+    "docs/INDEPENDENT_REVIEW_RESOLUTION.md",
+    "docs/MEDICAL_LOSS_CONTRACT.md",
+    "scripts/pretraining_audit.py",
+    "src/dpa_ctta/config.py",
+    "src/dpa_ctta/descriptors.py",
+    "src/dpa_ctta/hosts/__init__.py",
+    "src/dpa_ctta/hosts/vptta.py",
+    "src/dpa_ctta/integrations/ctta_suite.py",
+    "src/dpa_ctta/medical_losses.py",
+    "src/dpa_ctta/offline/oracle.py",
+    "src/dpa_ctta/online.py",
+    "src/dpa_ctta/proximal.py",
+    "src/dpa_ctta/proxy_loss.py",
+    "tests/test_config_and_hooks.py",
+    "tests/test_medical_losses.py",
+    "tests/test_review_regressions.py",
+    "tests/test_vptta_host.py"
+  ],
+  "limitations": "pattern/manual payload review, not a general credential detector or privacy proof",
+  "publication_note": "Optional duplicate review Markdown omitted after whitespace check; original attachment and all baseline reports unchanged."
+}

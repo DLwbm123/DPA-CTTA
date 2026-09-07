@@ -56,8 +56,10 @@ class DPAOnlineAdapter(nn.Module):
         update = closed_form_update(
             self.z_prev, atlas_result, self.temporal_lambda, self.precision_floor
         )
+        logits = _logits(self.injected_model(image, update.state))
+        if not isinstance(logits, torch.Tensor) or not torch.isfinite(logits).all():
+            raise FloatingPointError("nonfinite final prediction; history not committed")
         self.z_prev.copy_(update.state)
-        logits = _logits(self.injected_model(image, self.z_prev))
         return OnlineResult(
             logits=logits,
             state=self.z_prev.clone(),

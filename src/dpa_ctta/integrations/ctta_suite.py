@@ -2,12 +2,14 @@
 
 from contextlib import contextmanager
 import importlib
+import io
 import json
 import os
 from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import tarfile
 
 import torch
 from torch import nn
@@ -42,9 +44,68 @@ def checkout_root(root=None, require_pinned=True):
 
 def _load_models(root):
     suite_src = root / REFERENCE_PACKAGE / "src"
-    if str(suite_src) not in sys.path:
-        sys.path.insert(0, str(suite_src))
-    return importlib.import_module("ctta_suite.models")
+    verify_tracked_files(root, [f"{REFERENCE_PACKAGE}/src/ctta_suite/{name}.py"
+                                for name in ("__init__", "models", "data", "metrics")])
+    check_module_origins(("ctta_suite",), suite_src)
+    sys.path.insert(0, str(suite_src))
+    try:
+        models = importlib.import_module("ctta_suite.models")
+        check_module_origins(("ctta_suite",), suite_src)
+        return models
+    finally:
+        sys.path.remove(str(suite_src))
+
+
+def verify_tracked_files(root, paths):
+    """Compare the actual critical source bytes with HEAD, even with index skip flags."""
+    archive = subprocess.run(["git", "-C", str(root), "archive", "HEAD", "--", *paths],
+                             capture_output=True, check=True).stdout
+    tracked = set()
+    with tarfile.open(fileobj=io.BytesIO(archive)) as stream:
+        for member in stream.getmembers():
+            if not member.isfile() or not member.name.endswith(".py"):
+                continue
+            path = root / member.name
+            if path.is_symlink() or not path.is_file() or path.read_bytes() != stream.extractfile(member).read():
+                raise RuntimeError(f"dirty pinned scientific source: {member.name}")
+            tracked.add(path)
+    for relative in paths:
+        path = root / relative
+        candidates = path.rglob("*.py") if path.is_dir() else [path]
+        if any(p not in tracked for p in candidates):
+            raise RuntimeError("untracked/missing Python source in dependency import scope")
+
+
+def check_module_origins(prefixes, directory):
+    for name, module in tuple(sys.modules.items()):
+        if any(name == p or name.startswith(p + ".") for p in prefixes):
+            file = getattr(module, "__file__", None)
+            stem = directory / name.replace(".", "/")
+            expected = (stem.with_suffix(".py").resolve(), (stem / "__init__.py").resolve())
+            if not file or Path(file).resolve() not in expected:
+                raise RuntimeError(f"foreign module cache: {name}; use a fresh interpreter")
+
+
+@contextmanager
+def native_imports(root, task):
+    """Scoped upstream absolute imports; never evict an existing user module."""
+    folder = "OPTIC" if task == "fundus" else "POLYP"
+    directory = root / "VPTTA" / folder
+    verify_tracked_files(root, [f"VPTTA/{folder}/{p}" for p in ("networks", "utils", "vptta.py", "dataloaders")])
+    prefixes = ("networks", "utils", "dataloaders", "config")
+    if any(name.split(".")[0] in prefixes for name in sys.modules):
+        raise RuntimeError("foreign native module cache; use a fresh interpreter")
+    old_path = sys.path[:]
+    sys.path.insert(0, str(directory))
+    try:
+        yield directory
+        check_module_origins(prefixes, directory)
+    finally:
+        # Only these aliases created in this context can exist; preexisting ones were rejected.
+        for name in tuple(sys.modules):
+            if name.split(".")[0] in prefixes:
+                del sys.modules[name]
+        sys.path[:] = old_path
 
 
 def load_reference_interfaces(root=None):
@@ -52,6 +113,7 @@ def load_reference_interfaces(root=None):
     models = _load_models(root)
     data = importlib.import_module("ctta_suite.data")
     metrics = importlib.import_module("ctta_suite.metrics")
+    check_module_origins(("ctta_suite",), root / REFERENCE_PACKAGE / "src")
     return models, data, metrics
 
 
@@ -59,14 +121,6 @@ def load_reference_interfaces(root=None):
 def _dependency_view(root, models):
     """Map the public monorepo VPTTA tree to ctta_suite's omitted third_party view."""
     suite = root / REFERENCE_PACKAGE
-    if (suite / "third_party").is_dir():
-        old_root = models.ROOT
-        models.ROOT = suite
-        try:
-            yield
-        finally:
-            models.ROOT = old_root
-        return
     with tempfile.TemporaryDirectory(prefix="dpa_ctta_deps_") as temporary:
         view = Path(temporary)
         upstream = view / "third_party" / "BIBM2025-MGIPT"
@@ -91,7 +145,7 @@ def build_reference_model(task, root=None):
         raise ValueError("task must be 'fundus' or 'polyp'")
     root, _commit = checkout_root(root)
     models = _load_models(root)
-    with _dependency_view(root, models):
+    with _dependency_view(root, models), native_imports(root, task):
         model = models.build_model(task, "mgipt", source_only=True).cpu().eval().requires_grad_(False)
     return model, models.model_logits
 

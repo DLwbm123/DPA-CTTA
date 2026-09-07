@@ -1,0 +1,114 @@
+{
+  "environment": {
+    "python": "3.12.9",
+    "torch": "2.6.0"
+  },
+  "probes": {
+    "finite_proximal": {
+      "max_solve_error": 2.220446049250313e-16,
+      "history_lipschitz_ratio": 0.7074900969950029,
+      "bound": 0.9990009990009991,
+      "bound_satisfied": true
+    },
+    "descriptor_projection_rank": {
+      "32": {
+        "shape": [
+          8,
+          64
+        ],
+        "singular_values": [
+          2.017349578364286,
+          1.9824986269434024,
+          3.71673743655134e-08,
+          3.553552556517067e-08,
+          3.302786617612827e-08,
+          2.9265579018253405e-08,
+          2.776601458477513e-08,
+          2.398123456388709e-08
+        ],
+        "rank_at_relative_1e-5": 2
+      },
+      "64": {
+        "shape": [
+          8,
+          128
+        ],
+        "singular_values": [
+          2.0295230499347174,
+          1.9700346157882502,
+          3.5936094538314e-08,
+          3.077960966564706e-08,
+          2.9264182893083506e-08,
+          2.8859498666075148e-08,
+          2.691728004447427e-08,
+          2.342973469441355e-08
+        ],
+        "rank_at_relative_1e-5": 2
+      }
+    },
+    "polyp_scalar_modulation_bound": {
+      "coefficient_shape": [
+        6,
+        16
+      ],
+      "rank": 6,
+      "latent_dim": 16,
+      "null_dimension_at_least": 10,
+      "null_vector_coefficient_max_abs": 4.336808689942018e-19,
+      "scope": "mathematical bound from the published one-channel injection config; not a pretrained PraNet run"
+    },
+    "proximal_invalid_inputs": {
+      "rhs": {
+        "rejected": false,
+        "returned_state_finite": false
+      },
+      "previous": {
+        "rejected": false,
+        "returned_state_finite": false
+      },
+      "broadcast_rhs": {
+        "rejected": false,
+        "returned_shape": [
+          1,
+          16
+        ]
+      }
+    },
+    "final_prediction_exception": {
+      "exception": "REVIEW_INJECTED_FINAL_FORWARD_FAILURE",
+      "forward_count": 4,
+      "state_unchanged": false,
+      "state_delta_norm": 0.3432372808456421
+    },
+    "nan_center_online": {
+      "rejected": false,
+      "state_finite": false,
+      "logits_finite": false
+    },
+    "frozen_anchor_forward_count": {
+      "K": 8,
+      "first_step_source_forwards": 10,
+      "second_step_source_forwards": 10,
+      "note": "forward call count, not latency or full-size FLOPs"
+    },
+    "oracle_gradient_accumulation": {
+      "basis_tensors_with_nonzero_grad": 6,
+      "basis_tensor_count": 6,
+      "weights_unchanged": true,
+      "second_to_first_gradient_norm_ratios": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "same_initial_state_same_result": true,
+      "scope": "two two-step synthetic unit probes, not source training"
+    },
+    "history_independent_descriptor": {
+      "maximum_difference": 0.0
+    }
+  },
+  "cuda_initialized": false
+}

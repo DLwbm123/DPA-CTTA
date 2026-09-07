@@ -21,6 +21,6 @@ def optimize_oracle_state(model, image, source_label, initial_state=None, steps=
     for _ in range(steps):
         optimizer.zero_grad(set_to_none=True)
         loss = worst_class_segmentation_loss(_logits(model(image, state)), source_label)
-        loss.backward()
+        state.grad, = torch.autograd.grad(loss, state)
         optimizer.step()
     return state.detach()

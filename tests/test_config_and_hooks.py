@@ -51,7 +51,7 @@ class ConfigTests(unittest.TestCase):
             self.assertEqual(DPAConfig.from_json(path), expected)
 
     def test_repository_method_config_is_valid(self):
-        path = Path(__file__).resolve().parents[1] / "configs" / "method_v0.json"
+        path = Path(__file__).resolve().parents[1] / "configs" / "method_v1.json"
         self.assertEqual(DPAConfig.from_json(path).latent_dim, 16)
 
 

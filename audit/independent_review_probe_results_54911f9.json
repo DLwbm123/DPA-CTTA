@@ -1,0 +1,167 @@
+{
+  "reviewed_commit": "54911f9e1aff4cc0338dfac0264e67456024d503",
+  "scope": "11 blob-verified files; synthetic CPU probes, not the 143-test or real-model integration suite",
+  "environment": {
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu"
+  },
+  "same_environment_as_publication": false,
+  "server_accessed": false,
+  "real_data_accessed": false,
+  "checkpoint_loaded": false,
+  "research_training_started": false,
+  "source_subset": [
+    {
+      "path": "src/dpa_ctta/types.py",
+      "git_blob_sha1": "f761848717b82f38d2f0d392efca21c3b91f47e7"
+    },
+    {
+      "path": "src/dpa_ctta/proximal.py",
+      "git_blob_sha1": "a2884f75dc6b06886f575928239a588ce3ebd876"
+    },
+    {
+      "path": "src/dpa_ctta/manifold.py",
+      "git_blob_sha1": "008cadf9d9fb192a91498faa2be190c95081d181"
+    },
+    {
+      "path": "src/dpa_ctta/online.py",
+      "git_blob_sha1": "64eeb379828e5ba9c7270879075c8d83313d996b"
+    },
+    {
+      "path": "src/dpa_ctta/hooks.py",
+      "git_blob_sha1": "b9ebf6d76910296415891b6163ad47250033616d"
+    },
+    {
+      "path": "src/dpa_ctta/losses.py",
+      "git_blob_sha1": "a8c3ac5e5c07d2a94bdc93eb5942be0c92b0ccfd"
+    },
+    {
+      "path": "src/dpa_ctta/offline/oracle.py",
+      "git_blob_sha1": "aa20d573f9910277e8158768933a45f96fe632fc"
+    },
+    {
+      "path": "src/dpa_ctta/descriptors.py",
+      "git_blob_sha1": "c1e8481a7f65caa614da97bd2d28583d4ef2f875"
+    },
+    {
+      "path": "src/dpa_ctta/anchors.py",
+      "git_blob_sha1": "a1739f72826ff93d3e2720ccf6c04cacc3ba0b2f"
+    },
+    {
+      "path": "src/dpa_ctta/atlas.py",
+      "git_blob_sha1": "0213e30e3b569f0b73f1cf7c681f88c98d11677b"
+    },
+    {
+      "path": "tests/common.py",
+      "git_blob_sha1": "f1d86e6e4fa83e7a4dd188d355d7d4d597b2da3f"
+    }
+  ],
+  "probes": {
+    "finite_proximal": {
+      "max_solve_error": 0.0,
+      "history_lipschitz_ratio": 0.7074900969950029,
+      "bound": 0.9990009990009991,
+      "bound_satisfied": true
+    },
+    "descriptor_projection_rank": {
+      "32": {
+        "shape": [
+          8,
+          64
+        ],
+        "singular_values": [
+          2.0173495428112904,
+          1.9824986157431181,
+          4.035603819629347e-08,
+          3.6168487899694617e-08,
+          3.492892170728306e-08,
+          3.167021890601874e-08,
+          2.6123126147200822e-08,
+          2.2017575860360494e-08
+        ],
+        "rank_at_relative_1e-5": 2
+      },
+      "64": {
+        "shape": [
+          8,
+          128
+        ],
+        "singular_values": [
+          2.0295230223910656,
+          1.9700346068093368,
+          3.5122145086257016e-08,
+          3.070485286364567e-08,
+          2.972916192747722e-08,
+          2.7479748258174598e-08,
+          2.6032950014728205e-08,
+          2.31677857791927e-08
+        ],
+        "rank_at_relative_1e-5": 2
+      }
+    },
+    "polyp_scalar_modulation_bound": {
+      "coefficient_shape": [
+        6,
+        16
+      ],
+      "rank": 6,
+      "latent_dim": 16,
+      "null_dimension_at_least": 10,
+      "null_vector_coefficient_max_abs": 4.336808689942018e-19,
+      "scope": "mathematical bound from the published one-channel injection config; not a pretrained PraNet run"
+    },
+    "proximal_invalid_inputs": {
+      "rhs": {
+        "rejected": false,
+        "returned_state_finite": false
+      },
+      "previous": {
+        "rejected": false,
+        "returned_state_finite": false
+      },
+      "broadcast_rhs": {
+        "rejected": false,
+        "returned_shape": [
+          1,
+          16
+        ]
+      }
+    },
+    "final_prediction_exception": {
+      "exception": "REVIEW_INJECTED_FINAL_FORWARD_FAILURE",
+      "forward_count": 4,
+      "state_unchanged": false,
+      "state_delta_norm": 0.3432372808456421
+    },
+    "nan_center_online": {
+      "rejected": false,
+      "state_finite": false,
+      "logits_finite": false
+    },
+    "frozen_anchor_forward_count": {
+      "K": 8,
+      "first_step_source_forwards": 10,
+      "second_step_source_forwards": 10,
+      "note": "forward call count, not latency or full-size FLOPs"
+    },
+    "oracle_gradient_accumulation": {
+      "basis_tensors_with_nonzero_grad": 6,
+      "basis_tensor_count": 6,
+      "weights_unchanged": true,
+      "second_to_first_gradient_norm_ratios": [
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0,
+        2.0
+      ],
+      "same_initial_state_same_result": true,
+      "scope": "two two-step synthetic unit probes, not source training"
+    },
+    "history_independent_descriptor": {
+      "maximum_difference": 0.0
+    }
+  },
+  "cuda_initialized": false
+}

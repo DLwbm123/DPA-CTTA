@@ -5,7 +5,22 @@ from torch import nn
 import torch.nn.functional as F
 
 
-class DescriptorScaler(nn.Module):
+DESCRIPTOR_SCHEMA_VERSION = 2
+
+
+class _DescriptorSchema(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.register_buffer("descriptor_schema_version", torch.tensor(DESCRIPTOR_SCHEMA_VERSION))
+
+    def _load_from_state_dict(self, state_dict, prefix, *args, **kwargs):
+        version = state_dict.get(prefix + "descriptor_schema_version")
+        if not isinstance(version, torch.Tensor) or version.ndim != 0 or version.item() != DESCRIPTOR_SCHEMA_VERSION:
+            raise RuntimeError("descriptor schema mismatch; rebuild old descriptors/scalers and caches")
+        super()._load_from_state_dict(state_dict, prefix, *args, **kwargs)
+
+
+class DescriptorScaler(_DescriptorSchema):
     """Source-statistics interface; defaults to an unfitted identity transform."""
 
     def __init__(self, dim):
@@ -32,21 +47,26 @@ class DescriptorScaler(nn.Module):
         return (descriptor - self.center) / self.scale
 
 
-class FrozenDescriptor(nn.Module):
+class FrozenDescriptor(_DescriptorSchema):
     def __init__(self, task, feature_channels, projection_dim=8, eps=1e-6):
         super().__init__()
         if task not in {"fundus", "polyp"}:
             raise ValueError("unsupported task")
-        if feature_channels <= 0 or projection_dim <= 0:
-            raise ValueError("feature_channels and projection_dim must be positive")
+        if (type(feature_channels) is not int or type(projection_dim) is not int
+                or feature_channels <= 0 or not 0 < projection_dim <= 2 * feature_channels):
+            raise ValueError("integer projection_dim must be in [1, 2 * feature_channels]")
         self.task = task
         self.num_classes = 2 if task == "fundus" else 1
         self.feature_channels = feature_channels
         self.projection_dim = projection_dim
         self.eps = eps
-        values = torch.arange(1, projection_dim * feature_channels * 2 + 1, dtype=torch.float32)
-        projection = torch.sin(values).reshape(projection_dim, feature_channels * 2)
-        projection = F.normalize(projection, dim=1)
+        generator = torch.Generator(device="cpu").manual_seed(20260907)
+        matrix = torch.randn(feature_channels * 2, projection_dim, generator=generator, dtype=torch.float64)
+        projection = torch.linalg.qr(matrix, mode="reduced").Q.T.float().contiguous()
+        if (not torch.isfinite(projection).all()
+                or torch.linalg.matrix_rank(projection) != projection_dim
+                or not torch.allclose(projection @ projection.T, torch.eye(projection_dim), atol=1e-6)):
+            raise RuntimeError("invalid orthogonal descriptor projection")
         self.register_buffer("feature_projection", projection)
 
     @property

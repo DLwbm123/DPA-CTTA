@@ -2,11 +2,13 @@
 
 from dataclasses import asdict, dataclass
 import json
+import math
 from pathlib import Path
 
 
 @dataclass(frozen=True)
 class DPAConfig:
+    descriptor_schema_version: int = 2
     task: str = "fundus"
     latent_dim: int = 16
     precision_floor: float = 1e-3
@@ -18,12 +20,14 @@ class DPAConfig:
     reference_package: str = "ctta-repro-suite"
 
     def __post_init__(self):
+        if self.descriptor_schema_version != 2:
+            raise ValueError("descriptor schema 2 required; old artifacts must be rebuilt")
         if self.task not in {"fundus", "polyp"}:
             raise ValueError("task must be 'fundus' or 'polyp'")
         if self.latent_dim != 16:
             raise ValueError("DPA-CTTA v0 fixes latent_dim=16")
         for name in ("precision_floor", "temporal_lambda", "temperature"):
-            if getattr(self, name) <= 0:
+            if not math.isfinite(getattr(self, name)) or getattr(self, name) <= 0:
                 raise ValueError(f"{name} must be positive")
         if self.feature_projection_dim <= 0:
             raise ValueError("feature_projection_dim must be positive")
@@ -46,6 +50,8 @@ class DPAConfig:
 
     @classmethod
     def from_dict(cls, values):
+        if values.get("descriptor_schema_version") != 2:
+            raise ValueError("explicit descriptor_schema_version=2 required")
         unknown = set(values) - set(cls.__dataclass_fields__)
         if unknown:
             raise ValueError(f"unknown config keys: {sorted(unknown)}")

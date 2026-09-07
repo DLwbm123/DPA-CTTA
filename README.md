@@ -1,5 +1,32 @@
 # DPA-CTTA
 
+**Second-review branch: `review/minimal-host-core-v1`.**
+Baseline: `54911f9e1aff4cc0338dfac0264e67456024d503`.
+Status: **IMPLEMENTED_FOR_SECOND_REVIEW — NO REAL-DATA TRAINING STARTED**.
+
+Start with [F1–F10 resolution](docs/INDEPENDENT_REVIEW_RESOLUTION.md),
+[host contract](docs/HOST_CONTRACT.md), [medical loss contract](docs/MEDICAL_LOSS_CONTRACT.md),
+and [observed CPU results](audit/review_fix_results.json).
+The new host supports `base` and fixed-proxy `proxy_rehearsal` on synthetic CPU inputs.
+It imports the pinned native VPTTA model/Prompt/AdaBN/Memory and image-step code;
+no dataset, checkpoint, or DD training pipeline is included. CI: **NOT_CONFIGURED**.
+
+```bash
+PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' \
+DPA_CTTA_BASE_ROOT="$REFERENCE" "$PYTHON" -P audit/run_review_fix_checks.py
+```
+
+Use the existing supported Python/PyTorch environment and the pinned CTTA checkout.
+Descriptor/scaler state schema is now **2**, with `configs/method_v1.json`;
+old descriptor artifacts/configs must be rebuilt, not silently loaded.
+The old Atlas remains a research control, with documented score-map/rank/forward-cost limitations.
+All real source pilots, M0/M1/DD, target evaluation and server jobs remain unrun.
+
+## Historical first-publication overview (54911f9)
+
+The text and audit links below describe the preserved first-publication snapshot;
+the unchanged-source claims apply to that earlier commit, not this review-fix branch.
+
 **Publication for independent review, 2026-09-07: CODE_REVIEW_PENDING.**
 This snapshot preserves the original Atlas scientific code from
 `617f67464df37d6e49972c4932a85f56d210ccab`. It does not implement the revised

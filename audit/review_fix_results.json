@@ -1,0 +1,114 @@
+{
+  "status": "PASS_FOR_SECOND_REVIEW",
+  "baseline_commit": "54911f9e1aff4cc0338dfac0264e67456024d503",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "device": "cpu",
+  "tests_run": 158,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "skip_reasons": [],
+  "runner_exception": null,
+  "exit_code": 0,
+  "elapsed_seconds": 38.84499637503177,
+  "cuda_initialized": false,
+  "blocked_api_attempts": {},
+  "access_evidence": "Image.open, torch.load, Torch downloads, CUDA lazy init and in-process socket connects were blocked; subprocess tests only exercise inspected CLI guards/local synthetic Git fixtures.",
+  "real_data_training": "NOT_RUN",
+  "server_access": "NOT_RUN",
+  "checkpoint_integration": "NOT_RUN",
+  "real_data_io": "NOT_OBSERVED_IN_INSTRUMENTED_APIS",
+  "independent_signoff": "PENDING",
+  "ci": "NOT_CONFIGURED",
+  "host_checks": {
+    "fundus_disabled": {
+      "images": 4,
+      "max_abs_logit_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prompt_adam_counters_memory_buffers_rng_equal": true,
+      "native_sample_counts": [
+        4
+      ],
+      "memory_entries": 4,
+      "adam_steps": 4,
+      "source_weights_buffers_unchanged": true,
+      "native_source_gradient_tensors": 134,
+      "neighbor": 2,
+      "default_neighbor": 16,
+      "reference": "unchanged pinned VPTTA.run image-block AST, native model/AdaBN/Prompt/Memory"
+    },
+    "polyp_disabled": {
+      "images": 4,
+      "max_abs_logit_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prompt_adam_counters_memory_buffers_rng_equal": true,
+      "native_sample_counts": [
+        4
+      ],
+      "memory_entries": 4,
+      "adam_steps": 4,
+      "source_weights_buffers_unchanged": true,
+      "native_source_gradient_tensors": 259,
+      "neighbor": 2,
+      "default_neighbor": 16,
+      "reference": "unchanged pinned VPTTA.run image-block AST, native model/AdaBN/Prompt/Memory"
+    },
+    "fundus_proxy": {
+      "mask_gradient_difference_norm": 0.037899382412433624,
+      "gradient_norms": [
+        0.021257899701595306,
+        0.017193874344229698
+      ],
+      "native_visible_state_unchanged_by_auxiliary_forward": true,
+      "native_hooks_unchanged_by_auxiliary_forward": true,
+      "source_weights_buffers_unchanged": true,
+      "combined_update_adam_steps": 2,
+      "native_sample_count": 2,
+      "source_clone_parameters": 22554570
+    },
+    "polyp_proxy": {
+      "mask_gradient_difference_norm": 0.06934764236211777,
+      "gradient_norms": [
+        0.035967595875263214,
+        0.033848416060209274
+      ],
+      "native_visible_state_unchanged_by_auxiliary_forward": true,
+      "native_hooks_unchanged_by_auxiliary_forward": true,
+      "source_weights_buffers_unchanged": true,
+      "combined_update_adam_steps": 2,
+      "native_sample_count": 2,
+      "source_clone_parameters": 32547319
+    }
+  },
+  "full_model_focused_checks": {
+    "descriptor_z_prev_max_abs_difference": 0.0,
+    "fundus": {
+      "input_gradient_norm": 2.2644035198027268e-05,
+      "zero_latent_gradient_norm": 0.0007135490886867046,
+      "source_parameters_and_registered_buffers_unchanged": true,
+      "scope": "random CPU source_only model; custom BN replaced by standard BN upstream"
+    },
+    "polyp": {
+      "input_gradient_norm": 59737.0546875,
+      "zero_latent_gradient_norm": 34.961273193359375,
+      "source_parameters_and_registered_buffers_unchanged": true,
+      "scope": "random CPU source_only model; custom BN replaced by standard BN upstream"
+    }
+  },
+  "not_implemented": [
+    "DD trainer",
+    "real source/target loader",
+    "style transfer",
+    "real distance-map generator"
+  ],
+  "command": "PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' DPA_CTTA_BASE_ROOT=$REFERENCE $PYTHON -P audit/run_review_fix_checks.py"
+}
