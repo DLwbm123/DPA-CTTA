@@ -1,5 +1,23 @@
 # DPA-CTTA
 
+**Current branch: `experiment/source-pilot-io-v1`**, based on `c92b64b2284eb5da0631c00d15cc44af773f4b2d`.
+**SOURCE_PILOT_PREPARED — AWAITING EXACT COMMIT/CONFIG REVIEW**.
+
+Read the [I/O contract](docs/SOURCE_PILOT_IO_CONTRACT.md),
+[prepare report and changed-file table](docs/SOURCE_PILOT_PREPARE_REPORT.md),
+[disabled draft config](configs/source_pilot_v0.json), [runner](src/dpa_ctta/source_pilot.py),
+and [machine audit](audit/source_pilot_prepare_audit.json).
+Only local CPU/procedural checks ran. Real source/checkpoint/device registration and pilot are NOT_RUN.
+All real `run` entries reject `PILOT_COMMIT_CONFIG_APPROVAL_REQUIRED`. CI is NOT_CONFIGURED.
+
+```bash
+PYTHONPATH=src "$PYTHON" -P -m dpa_ctta.source_pilot prepare
+```
+
+## Historical minimal-core review (c92b64b)
+
+The following section and old audit files describe the previous scope and are retained as history.
+
 **Second-review branch: `review/minimal-host-core-v1`.**
 Baseline: `54911f9e1aff4cc0338dfac0264e67456024d503`.
 Status: **IMPLEMENTED_FOR_SECOND_REVIEW — NO REAL-DATA TRAINING STARTED**.

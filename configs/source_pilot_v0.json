@@ -1,0 +1,110 @@
+{
+  "schema_version": "source-pilot-io-v1",
+  "status": "draft",
+  "enabled": false,
+  "device": "cpu",
+  "seed": 20260907,
+  "baseline_commit": "c92b64b2284eb5da0631c00d15cc44af773f4b2d",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "arms": {
+    "N": {
+      "method": "source_only_standard_bn"
+    },
+    "A": {
+      "method": "native_vptta",
+      "extra_weight": 0.0,
+      "beta_boundary": 0.0
+    },
+    "B": {
+      "method": "proxy_rehearsal",
+      "extra_weight": 0.1,
+      "beta_boundary": 0.0
+    },
+    "C": {
+      "method": "proxy_rehearsal",
+      "extra_weight": 0.1,
+      "beta_boundary": 0.1
+    }
+  },
+  "native": {
+    "lr": {
+      "fundus": 0.05,
+      "polyp": 0.01
+    },
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "iters": 1,
+    "warm_n": 5,
+    "neighbor": 16,
+    "memory_size": 40,
+    "prompt_alpha": 0.01
+  },
+  "proxy": {
+    "K": 4,
+    "split": "basis_train",
+    "selection": "SHA256(str(seed)+\":\"+existing_group_id), then group_id; first 4; smallest sample_id representative",
+    "input": "clean",
+    "batch": "full"
+  },
+  "query": {
+    "split": "critic_validation",
+    "order": "existing group_ids order; smallest sample_id representative",
+    "segments": [
+      "clean",
+      "gamma_0.7",
+      "gamma_1.5",
+      "blur_5_sigma_1"
+    ],
+    "blur_padding": "reflect",
+    "reset_between_segments": false
+  },
+  "tasks": {
+    "fundus": {
+      "source": "RIM_ONE_r3",
+      "query_groups": 20,
+      "data_root_env": "DPA_CTTA_FUNDUS_SOURCE_ROOT",
+      "manifest_env": "DPA_CTTA_FUNDUS_SOURCE_MANIFEST",
+      "split_env": "DPA_CTTA_FUNDUS_SOURCE_SPLIT",
+      "checkpoint_env": "DPA_CTTA_FUNDUS_SOURCE_CHECKPOINT",
+      "csv_specs": [
+        {
+          "name": "RIM_ONE_r3_train.csv",
+          "split": "train"
+        },
+        {
+          "name": "RIM_ONE_r3_test.csv",
+          "split": "test"
+        }
+      ]
+    },
+    "polyp": {
+      "source": "BKAI",
+      "query_groups": 32,
+      "data_root_env": "DPA_CTTA_POLYP_SOURCE_ROOT",
+      "manifest_env": "DPA_CTTA_POLYP_SOURCE_MANIFEST",
+      "split_env": "DPA_CTTA_POLYP_SOURCE_SPLIT",
+      "checkpoint_env": "DPA_CTTA_POLYP_SOURCE_CHECKPOINT",
+      "csv_specs": [
+        {
+          "name": "BKAI_train.csv",
+          "split": "train"
+        },
+        {
+          "name": "BKAI_test.csv",
+          "split": "test"
+        }
+      ]
+    }
+  },
+  "interpretation": {
+    "checkpoint_training_membership": "UNKNOWN",
+    "query": "previously used source development groups",
+    "repeated_transforms_are_independent_patients": false,
+    "dd": "NOT_RUN",
+    "target": "NOT_RUN",
+    "sota_claim": false
+  }
+}

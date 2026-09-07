@@ -1,0 +1,381 @@
+{
+  "status": "CPU_PROCEDURAL_CHECKS_PASS",
+  "baseline_commit": "c92b64b2284eb5da0631c00d15cc44af773f4b2d",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "scipy": "1.16.0",
+  "device": "cpu",
+  "tests_run": 166,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "runner_exception": null,
+  "exit_code": 0,
+  "elapsed_seconds": 315.7050428329967,
+  "blocked_api_attempts": {},
+  "procedural_image_stream_reads": 6,
+  "cuda_initialized": false,
+  "evidence": {
+    "fundus_assembly": {
+      "in_memory_synthetic_state": "noninitial conv and running stats",
+      "strict_keys_shapes_dtype_finite": true,
+      "clone_equal_disjoint_frozen": true,
+      "load_only_live_rejected": true,
+      "source_only_standard_bn_reference": true,
+      "optimizer_current_cpu_prompt": true,
+      "cuda": "NOT_RUN"
+    },
+    "polyp_assembly": {
+      "in_memory_synthetic_state": "noninitial conv and running stats",
+      "strict_keys_shapes_dtype_finite": true,
+      "clone_equal_disjoint_frozen": true,
+      "load_only_live_rejected": true,
+      "source_only_standard_bn_reference": true,
+      "optimizer_current_cpu_prompt": true,
+      "cuda": "NOT_RUN"
+    },
+    "fundus_45_native": {
+      "images": 45,
+      "distinct_low_frequency_keys": 45,
+      "neighbor": 16,
+      "retrieval_steps": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "eviction_steps": [
+        42,
+        43,
+        44,
+        45
+      ],
+      "milestones": {
+        "1": {
+          "counts": [
+            1
+          ],
+          "memory": 1
+        },
+        "5": {
+          "counts": [
+            5
+          ],
+          "memory": 5
+        },
+        "6": {
+          "counts": [
+            6
+          ],
+          "memory": 6
+        },
+        "16": {
+          "counts": [
+            16
+          ],
+          "memory": 16
+        },
+        "17": {
+          "counts": [
+            17
+          ],
+          "memory": 17
+        },
+        "40": {
+          "counts": [
+            40
+          ],
+          "memory": 40
+        },
+        "41": {
+          "counts": [
+            41
+          ],
+          "memory": 41
+        },
+        "42": {
+          "counts": [
+            42
+          ],
+          "memory": 41
+        },
+        "45": {
+          "counts": [
+            45
+          ],
+          "memory": 41
+        }
+      },
+      "direct_wrapper_logits_state_rng_equal_each_step": true,
+      "source_unchanged": true,
+      "adam_steps": 45,
+      "capacity_parameter": 40,
+      "observed_final_size": 41
+    },
+    "polyp_45_native": {
+      "images": 45,
+      "distinct_low_frequency_keys": 45,
+      "neighbor": 16,
+      "retrieval_steps": [
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45
+      ],
+      "eviction_steps": [
+        42,
+        43,
+        44,
+        45
+      ],
+      "milestones": {
+        "1": {
+          "counts": [
+            1
+          ],
+          "memory": 1
+        },
+        "5": {
+          "counts": [
+            5
+          ],
+          "memory": 5
+        },
+        "6": {
+          "counts": [
+            6
+          ],
+          "memory": 6
+        },
+        "16": {
+          "counts": [
+            16
+          ],
+          "memory": 16
+        },
+        "17": {
+          "counts": [
+            17
+          ],
+          "memory": 17
+        },
+        "40": {
+          "counts": [
+            40
+          ],
+          "memory": 40
+        },
+        "41": {
+          "counts": [
+            41
+          ],
+          "memory": 41
+        },
+        "42": {
+          "counts": [
+            42
+          ],
+          "memory": 41
+        },
+        "45": {
+          "counts": [
+            45
+          ],
+          "memory": 41
+        }
+      },
+      "direct_wrapper_logits_state_rng_equal_each_step": true,
+      "source_unchanged": true,
+      "adam_steps": 45,
+      "capacity_parameter": 40,
+      "observed_final_size": 41
+    },
+    "fundus_fixture_replay": {
+      "visits_per_replay": 4,
+      "replays": 2,
+      "same_order_predictions_prompt_adam": true,
+      "changed_fake_labels_changed_metrics_only": true,
+      "B_C_nonzero_prompt_gradients": true,
+      "source_weights_unchanged": true,
+      "B_auxiliary_no_live_count_step_push": true,
+      "C_counts_and_adam": 4,
+      "NOT_REAL_DATA": true
+    },
+    "polyp_fixture_replay": {
+      "visits_per_replay": 4,
+      "replays": 2,
+      "same_order_predictions_prompt_adam": true,
+      "changed_fake_labels_changed_metrics_only": true,
+      "B_C_nonzero_prompt_gradients": true,
+      "source_weights_unchanged": true,
+      "B_auxiliary_no_live_count_step_push": true,
+      "C_counts_and_adam": 4,
+      "NOT_REAL_DATA": true
+    },
+    "real_entry": {
+      "prepare_exit": 0,
+      "dry_run_exit": 0,
+      "run_exit": 2,
+      "direct_run_registered": "PILOT_COMMIT_CONFIG_APPROVAL_REQUIRED"
+    },
+    "registration": "two temporary procedural manifests, deterministic selection; role/content/path/overlap mismatch rejected; no real data registration",
+    "decode": {
+      "RGB": "BICUBIC fundus / BILINEAR polyp",
+      "GT": "NEAREST",
+      "channels": [
+        "OD<255",
+        "OC==0",
+        "polyp>127"
+      ],
+      "real_files_read": 0
+    },
+    "sdf": {
+      "reference": "independent brute opposite-class pixel-center distance",
+      "shapes": [
+        [
+          3,
+          5
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "nested_channels": true,
+      "empty_full_zero_undefined": true
+    }
+  },
+  "prior_host_regressions": {
+    "fundus_disabled": {
+      "images": 4,
+      "max_abs_logit_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prompt_adam_counters_memory_buffers_rng_equal": true,
+      "native_sample_counts": [
+        4
+      ],
+      "memory_entries": 4,
+      "adam_steps": 4,
+      "source_weights_buffers_unchanged": true,
+      "native_source_gradient_tensors": 134,
+      "neighbor": 2,
+      "default_neighbor": 16,
+      "reference": "unchanged pinned VPTTA.run image-block AST, native model/AdaBN/Prompt/Memory"
+    },
+    "polyp_disabled": {
+      "images": 4,
+      "max_abs_logit_differences": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "prompt_adam_counters_memory_buffers_rng_equal": true,
+      "native_sample_counts": [
+        4
+      ],
+      "memory_entries": 4,
+      "adam_steps": 4,
+      "source_weights_buffers_unchanged": true,
+      "native_source_gradient_tensors": 259,
+      "neighbor": 2,
+      "default_neighbor": 16,
+      "reference": "unchanged pinned VPTTA.run image-block AST, native model/AdaBN/Prompt/Memory"
+    },
+    "fundus_proxy": {
+      "mask_gradient_difference_norm": 0.037899382412433624,
+      "gradient_norms": [
+        0.021257899701595306,
+        0.017193874344229698
+      ],
+      "native_visible_state_unchanged_by_auxiliary_forward": true,
+      "native_hooks_unchanged_by_auxiliary_forward": true,
+      "source_weights_buffers_unchanged": true,
+      "combined_update_adam_steps": 2,
+      "native_sample_count": 2,
+      "source_clone_parameters": 22554570
+    },
+    "polyp_proxy": {
+      "mask_gradient_difference_norm": 0.06934764236211777,
+      "gradient_norms": [
+        0.035967595875263214,
+        0.033848416060209274
+      ],
+      "native_visible_state_unchanged_by_auxiliary_forward": true,
+      "native_hooks_unchanged_by_auxiliary_forward": true,
+      "source_weights_buffers_unchanged": true,
+      "combined_update_adam_steps": 2,
+      "native_sample_count": 2,
+      "source_clone_parameters": 32547319
+    }
+  },
+  "real_checkpoint": "NOT_RUN",
+  "real_source_registration": "NOT_RUN",
+  "real_image_io": "NOT_RUN",
+  "cuda_device_and_memory_semantics": "NOT_RUN",
+  "source_pilot": "NOT_RUN",
+  "server": "NOT_RUN",
+  "DD": "NOT_RUN",
+  "target": "NOT_RUN",
+  "CI": "NOT_CONFIGURED",
+  "runner_independent_review": "PENDING_EXACT_COMMIT_CONFIG_REVIEW",
+  "command": "PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' DPA_CTTA_BASE_ROOT=$REFERENCE $PYTHON -P audit/run_source_pilot_checks.py"
+}

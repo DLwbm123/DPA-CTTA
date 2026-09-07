@@ -1,0 +1,141 @@
+{
+  "status": "CPU_PROCEDURAL_CHECKS_PASS",
+  "baseline_commit": "c92b64b2284eb5da0631c00d15cc44af773f4b2d",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "scipy": "1.16.0",
+  "device": "cpu",
+  "tests_run": 9,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "runner_exception": null,
+  "exit_code": 0,
+  "elapsed_seconds": 60.73158591694664,
+  "blocked_api_attempts": {},
+  "procedural_image_stream_reads": 6,
+  "cuda_initialized": false,
+  "evidence": {
+    "real_entry": {
+      "prepare_exit": 0,
+      "dry_run_exit": 0,
+      "run_exit": 2,
+      "direct_run_registered": "PILOT_COMMIT_CONFIG_APPROVAL_REQUIRED"
+    },
+    "registration": "two temporary procedural manifests, deterministic selection; role/content/path/overlap mismatch rejected; no real data registration",
+    "failure_stop": "nonfinite skips labels; mismatched labels stop after first completed step; no second query",
+    "decode": {
+      "RGB": "BICUBIC fundus / BILINEAR polyp",
+      "GT": "NEAREST",
+      "channels": [
+        "OD<255",
+        "OC==0",
+        "polyp>127"
+      ],
+      "real_files_read": 0
+    },
+    "sdf": {
+      "reference": "independent brute opposite-class pixel-center distance",
+      "shapes": [
+        [
+          3,
+          5
+        ],
+        [
+          7,
+          4
+        ],
+        [
+          9,
+          11
+        ]
+      ],
+      "nested_channels": true,
+      "empty_full_zero_undefined": true
+    },
+    "fundus_assembly": {
+      "in_memory_synthetic_state": "noninitial conv and running stats",
+      "strict_keys_shapes_dtype_finite": true,
+      "clone_equal_disjoint_frozen": true,
+      "load_only_live_rejected": true,
+      "source_only_standard_bn_reference": true,
+      "optimizer_current_cpu_prompt": true,
+      "cuda": "NOT_RUN"
+    },
+    "polyp_assembly": {
+      "in_memory_synthetic_state": "noninitial conv and running stats",
+      "strict_keys_shapes_dtype_finite": true,
+      "clone_equal_disjoint_frozen": true,
+      "load_only_live_rejected": true,
+      "source_only_standard_bn_reference": true,
+      "optimizer_current_cpu_prompt": true,
+      "cuda": "NOT_RUN"
+    },
+    "fundus_B_K4": {
+      "proxy_forward_batches": [
+        4
+      ],
+      "prompt_gradient_norm": 0.24381616711616516,
+      "native_count": 1,
+      "adam_step": 1
+    },
+    "fundus_C_K4": {
+      "proxy_forward_batches": [
+        4
+      ],
+      "prompt_gradient_norm": 0.24382111430168152,
+      "native_count": 1,
+      "adam_step": 1
+    },
+    "polyp_B_K4": {
+      "proxy_forward_batches": [
+        4
+      ],
+      "prompt_gradient_norm": 0.20478598773479462,
+      "native_count": 1,
+      "adam_step": 1
+    },
+    "polyp_C_K4": {
+      "proxy_forward_batches": [
+        4
+      ],
+      "prompt_gradient_norm": 0.20478196442127228,
+      "native_count": 1,
+      "adam_step": 1
+    },
+    "fundus_fixture_replay": {
+      "visits_per_replay": 4,
+      "replays": 2,
+      "same_order_predictions_prompt_adam": true,
+      "changed_fake_labels_changed_metrics_only": true,
+      "B_C_nonzero_prompt_gradients": true,
+      "source_weights_unchanged": true,
+      "B_auxiliary_no_live_count_step_push": true,
+      "C_counts_and_adam": 4,
+      "NOT_REAL_DATA": true
+    },
+    "polyp_fixture_replay": {
+      "visits_per_replay": 4,
+      "replays": 2,
+      "same_order_predictions_prompt_adam": true,
+      "changed_fake_labels_changed_metrics_only": true,
+      "B_C_nonzero_prompt_gradients": true,
+      "source_weights_unchanged": true,
+      "B_auxiliary_no_live_count_step_push": true,
+      "C_counts_and_adam": 4,
+      "NOT_REAL_DATA": true
+    }
+  },
+  "prior_host_regressions": {},
+  "real_checkpoint": "NOT_RUN",
+  "real_source_registration": "NOT_RUN",
+  "real_image_io": "NOT_RUN",
+  "cuda_device_and_memory_semantics": "NOT_RUN",
+  "source_pilot": "NOT_RUN",
+  "server": "NOT_RUN",
+  "DD": "NOT_RUN",
+  "target": "NOT_RUN",
+  "CI": "NOT_CONFIGURED",
+  "runner_independent_review": "PENDING_EXACT_COMMIT_CONFIG_REVIEW",
+  "command": "PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' DPA_CTTA_BASE_ROOT=$REFERENCE $PYTHON -P audit/run_source_pilot_checks.py --follow-up"
+}

@@ -1,0 +1,49 @@
+{
+  "status": "CPU_PROCEDURAL_CHECKS_PASS",
+  "baseline_commit": "c92b64b2284eb5da0631c00d15cc44af773f4b2d",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "scipy": "1.16.0",
+  "device": "cpu",
+  "tests_run": 1,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "runner_exception": null,
+  "exit_code": 0,
+  "elapsed_seconds": 0.44545041606761515,
+  "blocked_api_attempts": {},
+  "procedural_image_stream_reads": 16,
+  "cuda_initialized": false,
+  "evidence": {
+    "fundus_registered_proxy_io": {
+      "fixture_only": true,
+      "basis_groups": 4,
+      "image_reads": 4,
+      "mask_reads": 4,
+      "final_grid_sdf_matches": true,
+      "query_reads": 0
+    },
+    "polyp_registered_proxy_io": {
+      "fixture_only": true,
+      "basis_groups": 4,
+      "image_reads": 4,
+      "mask_reads": 4,
+      "final_grid_sdf_matches": true,
+      "query_reads": 0
+    },
+    "registration": "two temporary procedural manifests, deterministic selection; role/content/path/overlap mismatch rejected; no real data registration"
+  },
+  "prior_host_regressions": {},
+  "real_checkpoint": "NOT_RUN",
+  "real_source_registration": "NOT_RUN",
+  "real_image_io": "NOT_RUN",
+  "cuda_device_and_memory_semantics": "NOT_RUN",
+  "source_pilot": "NOT_RUN",
+  "server": "NOT_RUN",
+  "DD": "NOT_RUN",
+  "target": "NOT_RUN",
+  "CI": "NOT_CONFIGURED",
+  "runner_independent_review": "PENDING_EXACT_COMMIT_CONFIG_REVIEW",
+  "command": "PYTHONDONTWRITEBYTECODE=1 CUDA_VISIBLE_DEVICES='' DPA_CTTA_BASE_ROOT=$REFERENCE $PYTHON -P audit/run_source_pilot_checks.py --source-io-follow-up"
+}

@@ -67,7 +67,7 @@ def native_step_from_source(path, adabn, *, proxy=False):
 
 class VPTTAHost:
     def __init__(self, task, *, root=None, mode="base", extra_weight=0.0,
-                 proxy_factory=None, beta_boundary=0.1, neighbor=16):
+                 proxy_factory=None, beta_boundary=0.1, neighbor=16, source_state=None, device="cpu"):
         if task not in INPUT_SIZES or mode not in {"base", "proxy_rehearsal"}:
             raise ValueError("task/mode outside the minimal host contract")
         if not math.isfinite(extra_weight) or extra_weight < 0 or (mode == "base" and extra_weight != 0):
@@ -94,9 +94,10 @@ class VPTTAHost:
             self._proxy_step = native_step_from_source(directory / "vptta.py", self.adabn, proxy=True) if extra_weight else None
             self.memory_bank = Memory(size=40, dimension=self.prompt.data_prompt.numel())
         self.model.eval()
-        # Preserve native base .grad behavior; only prompt parameters enter Adam.
-        self.optimizer = torch.optim.Adam(self.prompt.parameters(), lr=.05 if task == "fundus" else .01,
-                                          betas=(.9, .99), weight_decay=0)
+        if source_state is not None:
+            load_source_state(self.model, source_state)
+        self.device = torch.device(device)
+        self._started = False
         if extra_weight:
             if not callable(proxy_factory):
                 raise ValueError("enabled proxy branch requires a prepared-proxy factory")
@@ -109,6 +110,46 @@ class VPTTAHost:
             # ponytail: one full frozen source clone isolates native hooks/buffers; replace
             # with a reviewed functional forward only if this extra model memory matters.
             self._proxy_model = copy.deepcopy(self.model).eval().requires_grad_(False)
+            self._proxy_model.to(self.device)
+            self._proxy_input = self._proxy_input.to(self.device)
+            self.proxy = FixedProxy(self.proxy.pixel_rgb.to(self.device), self.proxy.mask.to(self.device),
+                                    None if self.proxy.signed_distance is None else self.proxy.signed_distance.to(self.device),
+                                    self.proxy.provenance)
+        self.model.to(self.device)
+        self.prompt.to(self.device)
+        self.device = self.prompt.data_prompt.device  # Resolve unindexed CUDA / CPU:0 to actual tensor device.
+        # Preserve native base .grad behavior; Adam owns final-device prompt objects only.
+        self.optimizer = torch.optim.Adam(self.prompt.parameters(), lr=.05 if task == "fundus" else .01,
+                                          betas=(.9, .99), weight_decay=0)
+        self.audit_initial_state()
+        def before_first_forward(_model, _args):
+            self.audit_initial_state()
+            self._started = True
+            self._initial_hook.remove()
+        self._initial_hook = self.model.register_forward_pre_hook(before_first_forward)
+
+    def audit_initial_state(self):
+        """First-forward guard catches the known load-only-live integration error."""
+        if self._started or self.optimizer.state or self.memory_bank.get_size():
+            raise RuntimeError("initial-state audit must precede all forwards")
+        params = [p for group in self.optimizer.param_groups for p in group['params']]
+        if [id(p) for p in params] != [id(p) for p in self.prompt.parameters()]:
+            raise RuntimeError("optimizer does not own current prompt parameters")
+        if any(m.sample_num != 0 for m in self.model.modules() if isinstance(m, self.adabn)):
+            raise RuntimeError("native counters already advanced")
+        for model in (self.model, self.prompt):
+            if any(t.device != self.device for t in model.state_dict().values()):
+                raise RuntimeError("final device mismatch")
+        if self.extra_weight:
+            live, clone = self.model.state_dict(), self._proxy_model.state_dict()
+            if live.keys() != clone.keys() or any(
+                not torch.equal(t, clone[k]) or t.data_ptr() == clone[k].data_ptr()
+                or clone[k].device != self.device for k, t in live.items()
+            ) or any(p.requires_grad for p in self._proxy_model.parameters()):
+                raise RuntimeError("SOURCE_CLONE_STATE_MISMATCH")
+            if any(t.device != self.device or t.dtype != torch.float32 for t in
+                   (self._proxy_input, self.proxy.pixel_rgb, self.proxy.mask, self.proxy.signed_distance) if t is not None):
+                raise RuntimeError("prepared proxy device/dtype mismatch")
 
     def _proxy_term(self):
         native = dict(self.model.named_modules())
@@ -126,7 +167,19 @@ class VPTTAHost:
         if (not isinstance(pixel_rgb, torch.Tensor) or pixel_rgb.ndim != 4
                 or pixel_rgb.shape[0] != 1 or pixel_rgb.requires_grad):
             raise ValueError("one fixed current pixel_rgb image required; no online labels")
-        model_input = model_input_from_pixels(pixel_rgb, self.task)
+        model_input = model_input_from_pixels(pixel_rgb, self.task).to(self.device)
         if self.extra_weight == 0:
             return self.native_step(self, model_input)
         return self._proxy_step(self, model_input)
+
+
+def load_source_state(model, source_state):
+    """Strict tensor-only in-memory state. Disk deserialization belongs to the runner."""
+    own = model.state_dict()
+    if not isinstance(source_state, dict) or own.keys() != source_state.keys():
+        raise ValueError("source state keys mismatch")
+    for key, value in source_state.items():
+        if (not isinstance(value, torch.Tensor) or value.shape != own[key].shape
+                or value.dtype != own[key].dtype or not torch.isfinite(value).all()):
+            raise ValueError("source state shape/dtype/nonfinite mismatch: " + key)
+    model.load_state_dict(source_state, strict=True)
