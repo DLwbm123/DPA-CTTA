@@ -1,0 +1,67 @@
+{
+  "cuda_initialized": false,
+  "descriptor_feature": {
+    "order": 0,
+    "output_type": "Tensor",
+    "path": "res.conv1",
+    "shape": [
+      1,
+      64,
+      256,
+      256
+    ]
+  },
+  "injection_points": [
+    {
+      "jvp_finite": true,
+      "jvp_norm": 1.5237574577331543,
+      "order": 132,
+      "output_type": "Tensor",
+      "path": "up1",
+      "shape": [
+        1,
+        256,
+        32,
+        32
+      ]
+    },
+    {
+      "jvp_finite": true,
+      "jvp_norm": 19.588422775268555,
+      "order": 140,
+      "output_type": "Tensor",
+      "path": "up3",
+      "shape": [
+        1,
+        256,
+        128,
+        128
+      ]
+    },
+    {
+      "jvp_finite": true,
+      "jvp_norm": 53.933834075927734,
+      "order": 147,
+      "output_type": "Tensor",
+      "path": "seg_head",
+      "shape": [
+        1,
+        2,
+        512,
+        512
+      ]
+    }
+  ],
+  "input_shape": [
+    1,
+    3,
+    512,
+    512
+  ],
+  "model": "ResUNet34",
+  "nonzero_state_logits_change": true,
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "reference_repo": "DLwbm123/CTTA",
+  "task": "fundus",
+  "zero_state_bitwise_identity": true
+}

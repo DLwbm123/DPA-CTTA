@@ -1,0 +1,28 @@
+{
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "tests_run": 143,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "focused_checks": {
+    "descriptor_z_prev_max_abs_difference": 0.0,
+    "fundus": {
+      "input_gradient_norm": 2.2644035198027268e-05,
+      "zero_latent_gradient_norm": 0.0007135490886867046,
+      "source_parameters_and_registered_buffers_unchanged": true,
+      "scope": "random CPU source_only model; custom BN replaced by standard BN upstream"
+    },
+    "polyp": {
+      "input_gradient_norm": 59737.0546875,
+      "zero_latent_gradient_norm": 34.961273193359375,
+      "source_parameters_and_registered_buffers_unchanged": true,
+      "scope": "random CPU source_only model; custom BN replaced by standard BN upstream"
+    }
+  },
+  "cuda_initialized": false,
+  "training_executed": false,
+  "real_data_accessed": false,
+  "source_checkpoint_loaded": false,
+  "note": "Existing synthetic oracle unit checks and M0 CLI rejection checks are not experiment runs."
+}

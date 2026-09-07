@@ -1,0 +1,58 @@
+{
+  "status": "PASS",
+  "screened_files": 53,
+  "screened_bytes": 197657,
+  "private_payload_findings": [],
+  "active_workflows": 0,
+  "scan_scope": "all publication text payload before Git initialization; manual review plus private-path/private-IP/key patterns, no binary or oversized files",
+  "commands": [
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "origin"
+      ],
+      "cwd": "original",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "git",
+        "init",
+        "-b",
+        "main"
+      ],
+      "cwd": "publication",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "git",
+        "remote",
+        "add",
+        "origin",
+        "https://github.com/DLwbm123/DPA-CTTA.git"
+      ],
+      "cwd": "publication",
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "git",
+        "config",
+        "user.name",
+        "<existing user identity>"
+      ],
+      "exit_code": 0
+    },
+    {
+      "command": [
+        "git",
+        "config",
+        "user.email",
+        "<existing user identity>"
+      ],
+      "exit_code": 0
+    }
+  ]
+}

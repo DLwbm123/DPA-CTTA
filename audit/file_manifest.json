@@ -1,0 +1,221 @@
+{
+  "algorithm": "sha256",
+  "files": [
+    {
+      "bytes": 464,
+      "path": ".github/workflows/unit-tests.yml",
+      "sha256": "c2b7b0c16947c08c90ee888097772eef64fedddec240de4501dd11fbb0ee0c98"
+    },
+    {
+      "bytes": 135,
+      "path": ".gitignore",
+      "sha256": "6b2b9940511ad750b6c66a504b6ca1507a9402a814db19cafbbf78df04cd8345"
+    },
+    {
+      "bytes": 11351,
+      "path": "LICENSE",
+      "sha256": "5409076031889dcba59fa34669359d2410b340763f76e5de14451b79e8f7181b"
+    },
+    {
+      "bytes": 2253,
+      "path": "README.md",
+      "sha256": "c46c7fdc78dae7af10887a20c95fa6ed59433f14e8b16ef0a099acd1c51befd5"
+    },
+    {
+      "bytes": 1172,
+      "path": "configs/fundus_integration.json",
+      "sha256": "c9b0b2dedd12a58de1f00577e065598af4dfa971cdbed725565e26a97bab48ad"
+    },
+    {
+      "bytes": 276,
+      "path": "configs/method_v0.json",
+      "sha256": "d2c8c70bda7f83f879ffa6a711651afe7995b712592ca2e1fd10615de9b06635"
+    },
+    {
+      "bytes": 1177,
+      "path": "configs/polyp_integration.json",
+      "sha256": "ffc8881e95cf3436a1aa57fd00a40a87ea17cb6cc99c2962b37964a49fd48952"
+    },
+    {
+      "bytes": 1530,
+      "path": "docs/IMPLEMENTATION_CONTRACT.md",
+      "sha256": "3c3ae25131a08be05dddbf943fa8d50ce853f9348780bab019483fecb1cc92bf"
+    },
+    {
+      "bytes": 2292,
+      "path": "docs/INJECTION_CONTRACT.md",
+      "sha256": "07e8fd88423a21b820853fee978d1b5ebe51f3f34293e8706e5081fbd175c3c5"
+    },
+    {
+      "bytes": 1846,
+      "path": "docs/METHOD.md",
+      "sha256": "4dfb57d2e14db59d4409de2b84b1e5428d6f1c669fd55d3c11d3e89e13d618af"
+    },
+    {
+      "bytes": 1224,
+      "path": "docs/PRETRAINING_AUDIT.md",
+      "sha256": "72b3438eb77fb85ae6cf85492d64b184ca9d7b6fbb049f5a3c06096b3ec4fa52"
+    },
+    {
+      "bytes": 644,
+      "path": "docs/REFERENCES.md",
+      "sha256": "45e935af911d91b8edf507983e9bc0aef595369ff74123c63f4234848b3d44d8"
+    },
+    {
+      "bytes": 360,
+      "path": "pyproject.toml",
+      "sha256": "667a9dfa2f4ef6e3f2627e3a809dd0e91393ae3b201da482ab33d78fd9098947"
+    },
+    {
+      "bytes": 1054,
+      "path": "scripts/discover_injection_points.py",
+      "sha256": "57bf7c1b24b0379aa5663eecab4cbf19dee505afe3a507bdbb22d6a9e8f47ed2"
+    },
+    {
+      "bytes": 541,
+      "path": "scripts/dry_run.py",
+      "sha256": "f5b709a1bc440d0b57c5fab82d88ea4ff8a179c5364786a437e041b0627f5001"
+    },
+    {
+      "bytes": 887,
+      "path": "scripts/m0_oracle.py",
+      "sha256": "785b1f7e3dea2f0b2471916c664041a6d4c084c0f7fd842a8832fd1e87c99ff2"
+    },
+    {
+      "bytes": 4362,
+      "path": "scripts/pretraining_audit.py",
+      "sha256": "b20e032d74ac0c241724decd988b658ebc844217cd2658fd267ea9c0c578b6fe"
+    },
+    {
+      "bytes": 599,
+      "path": "src/dpa_ctta/__init__.py",
+      "sha256": "382229c5ac3b2ecc5f9fa120e3fc7975a0c35e3bdb2ef5f322fb7a6ea85fd1e6"
+    },
+    {
+      "bytes": 2313,
+      "path": "src/dpa_ctta/anchors.py",
+      "sha256": "3a7fe6e16e4df059a485c26b21cf80ae29428f635ec3f4ddf224dc4a8864ceaf"
+    },
+    {
+      "bytes": 2418,
+      "path": "src/dpa_ctta/atlas.py",
+      "sha256": "2770655c3c81207b16c053ad09105239c6e4f0a802cd55c2848d068fd3425c4b"
+    },
+    {
+      "bytes": 3031,
+      "path": "src/dpa_ctta/audit.py",
+      "sha256": "03c69a9b95edf47a2f3dccc36b6b7124d214e795bfcd7a57b8aa24e81a22dae4"
+    },
+    {
+      "bytes": 2033,
+      "path": "src/dpa_ctta/config.py",
+      "sha256": "25655a2001594807e180507d18bc8473982e79b830be128f83704fffa24ff33f"
+    },
+    {
+      "bytes": 5847,
+      "path": "src/dpa_ctta/descriptors.py",
+      "sha256": "266c71fe713a7925aa24bb1b8f10d20f9c355698af9132cfb0bad8c627518498"
+    },
+    {
+      "bytes": 2459,
+      "path": "src/dpa_ctta/hooks.py",
+      "sha256": "075f138fa90e0b571fe8d28e747adf23c6c5a746e470eefacf303c991d160eab"
+    },
+    {
+      "bytes": 68,
+      "path": "src/dpa_ctta/integrations/__init__.py",
+      "sha256": "53d9f1bf9eab4c36d0a8b7ddba079d17241bf8cc271b56378cf1a26ea6665fa9"
+    },
+    {
+      "bytes": 6962,
+      "path": "src/dpa_ctta/integrations/ctta_suite.py",
+      "sha256": "14e04b2b9cffc33184b461f27e79cfbfcef28e33938d3ae8bbb55b4ca0633287"
+    },
+    {
+      "bytes": 3273,
+      "path": "src/dpa_ctta/losses.py",
+      "sha256": "27c57b4db85b061dfc2216089ab686b7c335af1c8d11faf42a96abb4e83ecee5"
+    },
+    {
+      "bytes": 3691,
+      "path": "src/dpa_ctta/manifold.py",
+      "sha256": "08c6a0835b7b07a746d1085c522e38076abe003a8dd500686d4afb6ced21fc87"
+    },
+    {
+      "bytes": 81,
+      "path": "src/dpa_ctta/offline/__init__.py",
+      "sha256": "10ab8c6d3e7e6e606ec51c87855a86a3cc220a334d43e8bd2f69d382d467e583"
+    },
+    {
+      "bytes": 138,
+      "path": "src/dpa_ctta/offline/distill.py",
+      "sha256": "a6cb4f11832b4ba92a1675c35a3bab0ef8c45155dc829cf275391245ab73c410"
+    },
+    {
+      "bytes": 1070,
+      "path": "src/dpa_ctta/offline/oracle.py",
+      "sha256": "1f9f89aaa2bc501f9443045e1b8ff4c775e956537671f2adce04483075003196"
+    },
+    {
+      "bytes": 259,
+      "path": "src/dpa_ctta/offline/trajectories.py",
+      "sha256": "7bd2bca2248ccf8ce14ea0329741b35aba4e873e001d5e1757d6dfdde574b2e1"
+    },
+    {
+      "bytes": 2750,
+      "path": "src/dpa_ctta/online.py",
+      "sha256": "0f56c59d753a80df54e464bbaae12018a50474240cd25e463bece574929caf92"
+    },
+    {
+      "bytes": 1118,
+      "path": "src/dpa_ctta/proximal.py",
+      "sha256": "e08549ed12c559ef64e1ba10c420dd6c702d8022f78961a3d7a68ba87ae9bd68"
+    },
+    {
+      "bytes": 692,
+      "path": "src/dpa_ctta/types.py",
+      "sha256": "0fe35975581ed4b2a9a670c365d63cf57179a4c35ec76a8c3e10f487d0804e2b"
+    },
+    {
+      "bytes": 2611,
+      "path": "tests/common.py",
+      "sha256": "3668a2f93ed45c82dbad4a2c5feff7df14f586030c64a0416544663dc2d3ad93"
+    },
+    {
+      "bytes": 8398,
+      "path": "tests/test_atlas_and_proximal.py",
+      "sha256": "5f6b44f1c6256eb7bdce5aa460e7569f4a64bc9ec51f7bdfa9d5418a93e211db"
+    },
+    {
+      "bytes": 4157,
+      "path": "tests/test_config_and_hooks.py",
+      "sha256": "4b7742f638b480bd8b9cf7f9f13d731bfe001bbf89dd650a4e1f6ccdd58ccf9a"
+    },
+    {
+      "bytes": 5578,
+      "path": "tests/test_descriptors.py",
+      "sha256": "4b0b5d41ee6f6a62e70b44a174c70b43260846aa69a12867902db69692619d8c"
+    },
+    {
+      "bytes": 5839,
+      "path": "tests/test_losses_and_offline.py",
+      "sha256": "6985895ccd6e17e2cfaf067f08da2a08d231c197408e2a5a1c1b285eb30967e4"
+    },
+    {
+      "bytes": 5806,
+      "path": "tests/test_manifold.py",
+      "sha256": "bb7ab87a7046a53ccc16451aa7c802fe06d321421a11bb17d67ab461d3d9aa69"
+    },
+    {
+      "bytes": 6943,
+      "path": "tests/test_online_contract.py",
+      "sha256": "d6f410ac0ec9956846bf67cd6a6eb5bdabce8f35bd11ea78c02229ab6f703e00"
+    },
+    {
+      "bytes": 5404,
+      "path": "tests/test_real_integration.py",
+      "sha256": "f1e47199414473d2e781159ab278b7585045e995c367af5e66e57154adbace41"
+    }
+  ],
+  "scope": "repository files excluding generated audit JSON files and Git metadata"
+}
