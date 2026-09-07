@@ -1,8 +1,8 @@
 # Publication audit — 2026-09-07
 
 Scientific status: **CODE_REVIEW_PENDING**. This is publication for independent
-review, not permission to train. Publication/remote receipts are recorded separately
-in DELIVERY_RECEIPT.md after a successful push; the current commit is identified
+review, not permission to train. The root push and anonymous verification succeeded; receipts are recorded in
+[DELIVERY_RECEIPT.md](DELIVERY_RECEIPT.md). The current commit is identified
 by Git, never by substituting the historical audit hash.
 
 ## Provenance and scope

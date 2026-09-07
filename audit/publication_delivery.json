@@ -1,0 +1,181 @@
+{
+  "status": "PUBLISHED_FOR_REVIEW — NO TRAINING STARTED",
+  "original_audited_sha": "617f67464df37d6e49972c4932a85f56d210ccab",
+  "publication_root_sha": "0dc9072d0f433753603dcf55362ae76e7f38880c",
+  "root_commit_has_no_parents": true,
+  "publication_source_tree_hash": "7180103d06310cea32d70c05e24da3028047bffc87a7a086a474c0899adb2ca3",
+  "root_git_commands": [
+    {
+      "command": [
+        "git",
+        "add",
+        "--all"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--name-only"
+      ],
+      "exit_code": 0,
+      "stdout": ".gitignore\nLICENSE\nREADME.md\naudit/file_manifest.json\naudit/pretraining_audit.json\naudit/publication_checks.json\naudit/publication_cpu_tests.log\naudit/publication_preflight.json\naudit/publication_source_manifest.json\naudit/run_publication_checks.py\nci_templates/unit-tests.yml.disabled\nconfigs/fundus_integration.json\nconfigs/method_v0.json\nconfigs/polyp_integration.json\ndocs/CODE_REVIEW_INDEX.md\ndocs/IMPLEMENTATION_CONTRACT.md\ndocs/INJECTION_CONTRACT.md\ndocs/METHOD.md\ndocs/PRETRAINING_AUDIT.md\ndocs/PUBLICATION_AUDIT.md\ndocs/REFERENCES.md\ndocs/RESEARCH_DECISION_20260907.md\ndocs/REVISED_EXPERIMENT_PLAN.md\npyproject.toml\nscripts/discover_injection_points.py\nscripts/dry_run.py\nscripts/m0_oracle.py\nscripts/pretraining_audit.py\nsrc/dpa_ctta/__init__.py\nsrc/dpa_ctta/anchors.py\nsrc/dpa_ctta/atlas.py\nsrc/dpa_ctta/audit.py\nsrc/dpa_ctta/config.py\nsrc/dpa_ctta/descriptors.py\nsrc/dpa_ctta/hooks.py\nsrc/dpa_ctta/integrations/__init__.py\nsrc/dpa_ctta/integrations/ctta_suite.py\nsrc/dpa_ctta/losses.py\nsrc/dpa_ctta/manifold.py\nsrc/dpa_ctta/offline/__init__.py\nsrc/dpa_ctta/offline/distill.py\nsrc/dpa_ctta/offline/oracle.py\nsrc/dpa_ctta/offline/trajectories.py\nsrc/dpa_ctta/online.py\nsrc/dpa_ctta/proximal.py\nsrc/dpa_ctta/types.py\ntests/common.py\ntests/test_atlas_and_proximal.py\ntests/test_config_and_hooks.py\ntests/test_descriptors.py\ntests/test_losses_and_offline.py\ntests/test_manifold.py\ntests/test_online_contract.py\ntests/test_real_integration.py",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "commit",
+        "-m",
+        "Publish preserved Atlas implementation and independent review evidence"
+      ],
+      "exit_code": 0,
+      "stdout": "[main (root-commit) 0dc9072] Publish preserved Atlas implementation and independent review evidence\n 54 files changed, 4407 insertions(+)\n create mode 100644 .gitignore\n create mode 100644 LICENSE\n create mode 100644 README.md\n create mode 100644 audit/file_manifest.json\n create mode 100644 audit/pretraining_audit.json\n create mode 100644 audit/publication_checks.json\n create mode 100644 audit/publication_cpu_tests.log\n create mode 100644 audit/publication_preflight.json\n create mode 100644 audit/publication_source_manifest.json\n create mode 100644 audit/run_publication_checks.py\n create mode 100644 ci_templates/unit-tests.yml.disabled\n create mode 100644 configs/fundus_integration.json\n create mode 100644 configs/method_v0.json\n create mode 100644 configs/polyp_integration.json\n create mode 100644 docs/CODE_REVIEW_INDEX.md\n create mode 100644 docs/IMPLEMENTATION_CONTRACT.md\n create mode 100644 docs/INJECTION_CONTRACT.md\n create mode 100644 docs/METHOD.md\n create mode 100644 docs/PRETRAINING_AUDIT.md\n create mode 100644 docs/PUBLICATION_AUDIT.md\n create mode 100644 docs/REFERENCES.md\n create mode 100644 docs/RESEARCH_DECISION_20260907.md\n create mode 100644 docs/REVISED_EXPERIMENT_PLAN.md\n create mode 100644 pyproject.toml\n create mode 100644 scripts/discover_injection_points.py\n create mode 100644 scripts/dry_run.py\n create mode 100644 scripts/m0_oracle.py\n create mode 100644 scripts/pretraining_audit.py\n create mode 100644 src/dpa_ctta/__init__.py\n create mode 100644 src/dpa_ctta/anchors.py\n create mode 100644 src/dpa_ctta/atlas.py\n create mode 100644 src/dpa_ctta/audit.py\n create mode 100644 src/dpa_ctta/config.py\n create mode 100644 src/dpa_ctta/descriptors.py\n create mode 100644 src/dpa_ctta/hooks.py\n create mode 100644 src/dpa_ctta/integrations/__init__.py\n create mode 100644 src/dpa_ctta/integrations/ctta_suite.py\n create mode 100644 src/dpa_ctta/losses.py\n create mode 100644 src/dpa_ctta/manifold.py\n create mode 100644 src/dpa_ctta/offline/__init__.py\n create mode 100644 src/dpa_ctta/offline/distill.py\n create mode 100644 src/dpa_ctta/offline/oracle.py\n create mode 100644 src/dpa_ctta/offline/trajectories.py\n create mode 100644 src/dpa_ctta/online.py\n create mode 100644 src/dpa_ctta/proximal.py\n create mode 100644 src/dpa_ctta/types.py\n create mode 100644 tests/common.py\n create mode 100644 tests/test_atlas_and_proximal.py\n create mode 100644 tests/test_config_and_hooks.py\n create mode 100644 tests/test_descriptors.py\n create mode 100644 tests/test_losses_and_offline.py\n create mode 100644 tests/test_manifold.py\n create mode 100644 tests/test_online_contract.py\n create mode 100644 tests/test_real_integration.py",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "rev-list",
+        "--parents",
+        "-1",
+        "HEAD"
+      ],
+      "exit_code": 0,
+      "stdout": "0dc9072d0f433753603dcf55362ae76e7f38880c",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "origin"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "push",
+        "-u",
+        "origin",
+        "main"
+      ],
+      "exit_code": 0,
+      "stdout": "branch 'main' set up to track 'origin/main'.",
+      "stderr": "To https://github.com/DLwbm123/DPA-CTTA.git\n * [new branch]      main -> main"
+    },
+    {
+      "command": [
+        "git",
+        "ls-remote",
+        "--heads",
+        "origin",
+        "main"
+      ],
+      "exit_code": 0,
+      "stdout": "0dc9072d0f433753603dcf55362ae76e7f38880c\trefs/heads/main",
+      "stderr": ""
+    }
+  ],
+  "root_remote_verification": {
+    "publication_root_sha": "0dc9072d0f433753603dcf55362ae76e7f38880c",
+    "anonymous_access": [
+      {
+        "url": "https://raw.githubusercontent.com/DLwbm123/DPA-CTTA/0dc9072d0f433753603dcf55362ae76e7f38880c/README.md",
+        "http_status": 200,
+        "bytes": 3126,
+        "authorization_header_sent": false
+      },
+      {
+        "url": "https://raw.githubusercontent.com/DLwbm123/DPA-CTTA/0dc9072d0f433753603dcf55362ae76e7f38880c/docs/METHOD.md",
+        "http_status": 200,
+        "bytes": 1846,
+        "authorization_header_sent": false
+      },
+      {
+        "url": "https://raw.githubusercontent.com/DLwbm123/DPA-CTTA/0dc9072d0f433753603dcf55362ae76e7f38880c/docs/CODE_REVIEW_INDEX.md",
+        "http_status": 200,
+        "bytes": 10273,
+        "authorization_header_sent": false
+      },
+      {
+        "url": "https://raw.githubusercontent.com/DLwbm123/DPA-CTTA/0dc9072d0f433753603dcf55362ae76e7f38880c/docs/PUBLICATION_AUDIT.md",
+        "http_status": 200,
+        "bytes": 9128,
+        "authorization_header_sent": false
+      },
+      {
+        "url": "https://raw.githubusercontent.com/DLwbm123/DPA-CTTA/0dc9072d0f433753603dcf55362ae76e7f38880c/src/dpa_ctta/online.py",
+        "http_status": 200,
+        "bytes": 2750,
+        "authorization_header_sent": false
+      },
+      {
+        "url": "https://api.github.com/repos/DLwbm123/DPA-CTTA",
+        "http_status": 200,
+        "bytes": 5117,
+        "authorization_header_sent": false,
+        "private": false
+      },
+      {
+        "url": "https://api.github.com/repos/DLwbm123/DPA-CTTA/actions/workflows",
+        "http_status": 200,
+        "bytes": 32,
+        "authorization_header_sent": false,
+        "active_workflow_count": 0
+      }
+    ],
+    "original_workspace_checks": [
+      {
+        "command": [
+          "git",
+          "status",
+          "--short"
+        ],
+        "cwd": "original",
+        "exit_code": 0,
+        "stdout": ""
+      },
+      {
+        "command": [
+          "git",
+          "rev-parse",
+          "HEAD"
+        ],
+        "cwd": "original",
+        "exit_code": 0,
+        "stdout": "617f67464df37d6e49972c4932a85f56d210ccab"
+      }
+    ],
+    "ci": "NOT_CONFIGURED"
+  },
+  "receipt_commit_scope": "Documentation/evidence only; the containing commit is identified by Git and must not be confused with publication_root_sha."
+}
