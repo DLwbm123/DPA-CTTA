@@ -1,0 +1,296 @@
+{
+  "status": "M1_RUNNING",
+  "snapshot_utc": "2026-09-08T05:37:12.089700+00:00",
+  "experiment_execution_commit": "d92ed88e603eb68aea97a57493c96a084e98d91c",
+  "publication_commit": "Git commit containing this file; distinct from clean execution commit",
+  "CPU_validation": {
+    "supported_full_regression": {
+      "tests": 184,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "exit_code": 0,
+      "python": "3.12.9",
+      "torch": "2.6.0",
+      "seconds": 393.417
+    },
+    "deployment_M1_tests": {
+      "tests": 7,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "exit_code": 0,
+      "python": "3.10.6",
+      "torch": "2.2.1+cu121",
+      "seconds": 1.158
+    },
+    "note": "The seven deployment tests include five in the full suite plus two subsequent targeted checks; not 191 unique tests."
+  },
+  "registration": {
+    "status": "PASS",
+    "selected_file_identities_verified": 906,
+    "source_training_queries": {
+      "fundus": 40,
+      "polyp": 64
+    },
+    "source_query_groups": {
+      "fundus": 20,
+      "polyp": 32
+    },
+    "target_groups": 224,
+    "each_target_domain": 32,
+    "target_manifest_roles": 3759,
+    "target_role": "exploratory_target_development",
+    "missing_patient_video_links": "UNKNOWN",
+    "historical_target_exposure": "documented_previous_evaluation",
+    "untouched_final_test_claim": false,
+    "ETIS_candidates_before_after_dedup": [
+      196,
+      190
+    ]
+  },
+  "smoke": {
+    "status": "M1_SMOKE_PASS",
+    "exit_code": 0,
+    "updates": {
+      "online": 74,
+      "outer": 4,
+      "inner": 2
+    },
+    "gpu_seconds": 38.794146533939056,
+    "evidence": {
+      "fundus": {
+        "base_max_error": 0.0,
+        "base_counts": [
+          {
+            "model_forwards": 34,
+            "prompt_forwards": 35,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 17,
+            "backward_calls": 17,
+            "memory_pushes": 17,
+            "retrievals": 1
+          },
+          {
+            "model_forwards": 34,
+            "prompt_forwards": 35,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 17,
+            "backward_calls": 17,
+            "memory_pushes": 17,
+            "retrievals": 1
+          }
+        ],
+        "native_adam_options": {
+          "lr": 0.05,
+          "betas": [
+            0.9,
+            0.99
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0,
+          "amsgrad": false,
+          "maximize": false,
+          "foreach": null,
+          "capturable": false,
+          "differentiable": false,
+          "fused": null
+        },
+        "R_counts": {
+          "model_forwards": 2,
+          "prompt_forwards": 3,
+          "proxy_forwards": 1,
+          "proxy_images": 4,
+          "online_adam": 1,
+          "backward_calls": 1,
+          "memory_pushes": 1,
+          "retrievals": 0
+        },
+        "D_counts": {
+          "model_forwards": 2,
+          "prompt_forwards": 3,
+          "proxy_forwards": 1,
+          "proxy_images": 4,
+          "online_adam": 1,
+          "backward_calls": 1,
+          "memory_pushes": 1,
+          "retrievals": 0
+        },
+        "O_counts": {
+          "model_forwards": 2,
+          "prompt_forwards": 3,
+          "proxy_forwards": 1,
+          "proxy_images": 4,
+          "online_adam": 1,
+          "backward_calls": 1,
+          "memory_pushes": 1,
+          "retrievals": 0
+        },
+        "N_counts": {
+          "model_forwards": 1,
+          "prompt_forwards": 0,
+          "proxy_forwards": 0,
+          "proxy_images": 0,
+          "online_adam": 0,
+          "backward_calls": 0,
+          "memory_pushes": 0,
+          "retrievals": 0
+        },
+        "D_meta": {
+          "loss": 0.11368310451507568,
+          "image_gradient_norm": 3.0972189903259277,
+          "image_update_norm": 17.690311431884766
+        },
+        "O_meta": {
+          "loss": 5.759821891784668,
+          "image_gradient_norm": 0.001781586674042046,
+          "image_update_norm": 15.776297569274902
+        },
+        "offline_counts": {
+          "live_forwards": 3,
+          "proxy_forwards": 2,
+          "proxy_images": 8,
+          "prompt_forwards": 5,
+          "gradient_calls": 4,
+          "differentiable_inner": 1
+        },
+        "peak_allocated_bytes": 4957076992
+      },
+      "polyp": {
+        "base_max_error": 0.0,
+        "base_counts": [
+          {
+            "model_forwards": 34,
+            "prompt_forwards": 35,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 17,
+            "backward_calls": 17,
+            "memory_pushes": 17,
+            "retrievals": 1
+          },
+          {
+            "model_forwards": 34,
+            "prompt_forwards": 35,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 17,
+            "backward_calls": 17,
+            "memory_pushes": 17,
+            "retrievals": 1
+          }
+        ],
+        "native_adam_options": {
+          "lr": 0.01,
+          "betas": [
+            0.9,
+            0.99
+          ],
+          "eps": 1e-08,
+          "weight_decay": 0,
+          "amsgrad": false,
+          "maximize": false,
+          "foreach": null,
+          "capturable": false,
+          "differentiable": false,
+          "fused": null
+        },
+        "R_counts": {
+          "model_forwards": 2,
+          "prompt_forwards": 3,
+          "proxy_forwards": 1,
+          "proxy_images": 4,
+          "online_adam": 1,
+          "backward_calls": 1,
+          "memory_pushes": 1,
+          "retrievals": 0
+        },
+        "D_counts": {
+          "model_forwards": 2,
+          "prompt_forwards": 3,
+          "proxy_forwards": 1,
+          "proxy_images": 4,
+          "online_adam": 1,
+          "backward_calls": 1,
+          "memory_pushes": 1,
+          "retrievals": 0
+        },
+        "O_counts": {
+          "model_forwards": 2,
+          "prompt_forwards": 3,
+          "proxy_forwards": 1,
+          "proxy_images": 4,
+          "online_adam": 1,
+          "backward_calls": 1,
+          "memory_pushes": 1,
+          "retrievals": 0
+        },
+        "N_counts": {
+          "model_forwards": 1,
+          "prompt_forwards": 0,
+          "proxy_forwards": 0,
+          "proxy_images": 0,
+          "online_adam": 0,
+          "backward_calls": 0,
+          "memory_pushes": 0,
+          "retrievals": 0
+        },
+        "D_meta": {
+          "loss": 0.9930197596549988,
+          "image_gradient_norm": 494.659912109375,
+          "image_update_norm": 12.167823791503906
+        },
+        "O_meta": {
+          "loss": 6.385158061981201,
+          "image_gradient_norm": 0.18262088298797607,
+          "image_update_norm": 10.77682876586914
+        },
+        "offline_counts": {
+          "live_forwards": 3,
+          "proxy_forwards": 2,
+          "proxy_images": 8,
+          "prompt_forwards": 5,
+          "gradient_calls": 4,
+          "differentiable_inner": 1
+        },
+        "peak_allocated_bytes": 2910537728
+      }
+    }
+  },
+  "formal_run": {
+    "status": "RUNNING_AT_STARTUP_CHECK",
+    "pipeline_pid": 3055924,
+    "GPU_physical_index": 7,
+    "GPU_UUID": "GPU-885f8cbc-d6bd-3ba9-f65d-a34373a93c0c",
+    "completed_history_visits_at_check": {
+      "fundus": 32,
+      "polyp": 0
+    },
+    "completed_training_episodes_at_check": {
+      "fundus_D": 13,
+      "fundus_O": 0,
+      "polyp_D": 0,
+      "polyp_O": 0
+    },
+    "score_records_at_check": 0,
+    "failure_files_at_check": [],
+    "independent_CPU_recompute": "PENDING",
+    "detached_process": true,
+    "automatic_resume": false,
+    "scheduled_monitor": false
+  },
+  "budgets": {
+    "online_Adam_total_nominal": 1242,
+    "image_outer_Adam_total": 2404,
+    "differentiable_inner_total": 1202,
+    "source_score_records": 260,
+    "target_score_records": 1120,
+    "GPU_stage_wall_seconds": 21600,
+    "private_output_bytes": 2147483648
+  },
+  "scientific_conclusion": "NOT_EVALUATED",
+  "public_scope": "source, configuration, tests, procedural smoke metrics and deidentified registration/startup summary",
+  "private_only": "real images/masks, synthetic tensors, optimizers, historical state library, identities, receipts and per-visit logs"
+}

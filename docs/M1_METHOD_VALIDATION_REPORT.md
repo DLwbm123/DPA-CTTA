@@ -1,6 +1,8 @@
 # M1 adaptation-oriented DD validation
 
-Five-arm source and target results: **NOT_RUN at this implementation commit**. No performance conclusion is available. This report will be updated from actual execution evidence; implementation and registration do not establish method effectiveness.
+Five-arm source and target results: **PENDING — M1_RUNNING**. The formal process started successfully; at the one-time startup check, Fundus Base history completed 32 visits and Fundus GM-DD recorded 13 episodes. No scoring or scientific conclusion is available. This is a timestamped startup delivery, not a completed experiment.
+
+Clean execution commit: `d92ed88e603eb68aea97a57493c96a084e98d91c`. Publication commit is the Git commit containing this report. The execution checkout remains frozen at the former commit. Branch: `experiment/m1-adaptation-dd-validation-v1`. Physical GPU 7, UUID `GPU-885f8cbc-d6bd-3ba9-f65d-a34373a93c0c`. The detached finite pipeline continues without SSH and stops on failure or its budget; no scheduled monitoring or automatic resume is installed.
 
 ## Frozen protocol and implementation
 
@@ -22,6 +24,10 @@ Nominal budgets are 1,242 real online prompt Adam calls, 2,404 image outer Adam 
 
 ## Verification status at this commit
 
-Five new small CPU tests passed for image gradients/isolation, empty/existing Adam state and zero moments, double-precision optimizer reference, deterministic registration negatives, and stopped GM reference gradients. An additional aggregation test passed for unequal domain sizes and ASSD adverse-tail direction. The full supported regression run is recorded separately when complete; this document does not predeclare its result. GPU smoke and real training have not run at this commit.
+The supported full CPU regression passed **184 tests, 0 failures/errors/skips, exit 0**, in 393.417 seconds using local Python 3.12.9 / PyTorch 2.6.0. The deployment environment (Python 3.10.6 / PyTorch 2.2.1+cu121) passed all **7 M1-specific tests**, exit 0, including the two later checks for equal-domain aggregation and task-specific history retrieval. Five overlap the full regression; these counts must not be summed as unique tests.
+
+The single GPU smoke passed both tasks in 38.794 GPU-stage wall seconds: **74 real online Adam calls, 4 image outer calls, 2 differentiable inner calculations**, exit 0. Both Base streams agreed across 17 visits including retrieval, initial R/D/O predictions and states agreed, and D/O produced finite nonzero synthetic-image gradients on procedural inputs. Observed peak allocated memory was 4,957,076,992 bytes for Fundus and 2,910,537,728 bytes for Polyp; these are smoke peaks, not predictions of final training cost. Native Adam epsilon was verified as 1e-8 with unchanged options. Detailed procedural evidence is in `results/m1_method_validation_v1/execution_audit.json`.
+
+At startup check, no failure file existed, the detached process was alive and training JSONL records were being appended. Final source/target metrics, common ASSD cohorts, tails, training costs and scientific signals remain pending. The runner is scheduled internally to freeze all four step-600 artifacts, evaluate all five arms and independently reconstruct results in CPU-only mode, with no performance-triggered gate.
 
 After execution, an independent CPU process validates registry order, all scoring channels and lifecycle events, exact training sequences and counts, final artifact bindings, and completion/source-state checks. It produces public aggregate and execution audit JSON without sample IDs or private paths. Missing tasks/domains or an incomplete method cannot be described as a complete M1 comparison.
