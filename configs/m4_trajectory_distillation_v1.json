@@ -126,7 +126,7 @@
     "T4": "same L4 values; retain within-window Adam and memory value graphs, including host gradient",
     "native_numeric_rules": {
       "Adam": "CUDA native foreach dispatch with graph-preserving operations; CPU single-tensor",
-      "spatial_std": "native unbiased forward and first gradient; avoid division by zero before masking; zero Hessian convention at exactly zero spatial std, native derivatives elsewhere; offline AdaBN only; no epsilon or forward/statistics change"
+      "spatial_std": "native unbiased forward and first gradient; factored analytic double backward avoids squared/cubed tiny-std denominators; zero Hessian convention at exactly zero; offline AdaBN only; no epsilon or precision/statistics change"
     }
   },
   "evaluation": {

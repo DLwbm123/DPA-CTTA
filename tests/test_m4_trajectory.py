@@ -205,3 +205,19 @@ class M4Tests(unittest.TestCase):
         nonconstant=torch.randn(1,2,3,4,dtype=torch.double,requires_grad=True)
         self.assertTrue(torch.autograd.gradcheck(FiniteSpatialStd.apply,(nonconstant,)))
         self.assertTrue(torch.autograd.gradgradcheck(FiniteSpatialStd.apply,(nonconstant,)))
+
+    def test_tiny_positive_std_float32_hessian(self):
+        from dpa_ctta.offline.finite_std import FiniteSpatialStd
+        torch.manual_seed(19)
+        x=(torch.randn(1,2,8,8)*1e-20).requires_grad_()
+        v=torch.randn_like(x)
+        actual=FiniteSpatialStd.apply(x);reference=x.std((2,3),keepdim=True)
+        ga,=torch.autograd.grad(actual.sum(),x,create_graph=True)
+        gr,=torch.autograd.grad(reference.sum(),x,create_graph=True)
+        self.assertTrue(torch.equal(actual,reference));self.assertTrue(torch.equal(ga,gr))
+        ha,=torch.autograd.grad((ga*v).sum(),x)
+        xd=x.detach().double().requires_grad_()
+        gd,=torch.autograd.grad(xd.std((2,3),keepdim=True).sum(),xd,create_graph=True)
+        hd,=torch.autograd.grad((gd*v.double()).sum(),xd)
+        self.assertTrue(torch.isfinite(ha).all())
+        torch.testing.assert_close(ha.double(),hd,rtol=2e-4,atol=1e13)
