@@ -6,6 +6,7 @@ import torch
 from torch.func import functional_call
 from .adaptation_dd import OfflineEpisode, FiniteSqrt, preprocess, cpu_tree
 from .prompt_gradient_matching import cosine_objective
+from .finite_std import install_finite_std
 from ..medical_losses import medical_loss
 
 
@@ -58,6 +59,8 @@ def detach_state(state):
 class TrajectoryEpisode(OfflineEpisode):
     def __init__(self,task,source_state,device='cpu'):
         super().__init__(task,source_state,device)
+        install_finite_std(self.host.model,self.host.adabn)
+        install_finite_std(self.clone,self.host.adabn)
         self.memory=copy.deepcopy(self.host.memory_bank)
         self.memory._prepare_batch=MethodType(tensor_batch,self.memory)
         self.counts.update(memory_pushes=0,retrievals=0,source_visits=0)

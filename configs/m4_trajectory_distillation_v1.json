@@ -123,7 +123,11 @@
     "history": "own evolving prompt/Adam/memory; empty each 120-visit stream; detach every window",
     "D4": "mean local prompt GM; label-free joint inner trajectory",
     "L4": "mean post-adaptation query region; state detached each image",
-    "T4": "same L4 values; retain within-window Adam and memory value graphs, including host gradient"
+    "T4": "same L4 values; retain within-window Adam and memory value graphs, including host gradient",
+    "native_numeric_rules": {
+      "Adam": "CUDA native foreach dispatch with graph-preserving operations; CPU single-tensor",
+      "spatial_std": "native unbiased forward and first gradient; avoid division by zero before masking; zero Hessian convention at exactly zero spatial std, native derivatives elsewhere; offline AdaBN only; no epsilon or forward/statistics change"
+    }
   },
   "evaluation": {
     "source_new": 156,

@@ -186,3 +186,22 @@ class M4Tests(unittest.TestCase):
         p.grad=g.detach().clone();opt.step()
         close(q,p)
         for k in ['exp_avg','exp_avg_sq']:close(updated[k],opt.state[p][k])
+
+    def test_native_std_exact_values_first_gradient_and_finite_zero_hessian(self):
+        from dpa_ctta.offline.finite_std import FiniteSpatialStd
+        torch.manual_seed(8)
+        x=torch.randn(2,3,5,7,dtype=torch.double);x[:,0]=0;x.requires_grad_()
+        weight=torch.tensor([.3,.7,1.2],dtype=torch.double).reshape(1,3,1,1)
+        reference=x.std((2,3),keepdim=True);actual=FiniteSpatialStd.apply(x)
+        self.assertTrue(torch.equal(reference,actual))
+        gr,=torch.autograd.grad((reference*weight).sum(),x,create_graph=True)
+        ga,=torch.autograd.grad((actual*weight).sum(),x,create_graph=True)
+        self.assertTrue(torch.equal(gr,ga))
+        direction=torch.randn_like(x)
+        hr,=torch.autograd.grad((gr*direction).sum(),x)
+        ha,=torch.autograd.grad((ga*direction).sum(),x)
+        self.assertTrue(torch.isfinite(ha).all());self.assertTrue(torch.equal(ha[:,0],torch.zeros_like(ha[:,0])))
+        close(hr[:,1:],ha[:,1:])
+        nonconstant=torch.randn(1,2,3,4,dtype=torch.double,requires_grad=True)
+        self.assertTrue(torch.autograd.gradcheck(FiniteSpatialStd.apply,(nonconstant,)))
+        self.assertTrue(torch.autograd.gradgradcheck(FiniteSpatialStd.apply,(nonconstant,)))
