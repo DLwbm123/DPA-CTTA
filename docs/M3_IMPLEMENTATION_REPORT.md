@@ -1,6 +1,6 @@
 # M3 conditioned proxy — implementation checkpoint
 
-NOT_RUN at this implementation checkpoint. This is one finite user-authorized M3 experiment, not an independent reviewer signoff or evidence of effectiveness.
+Implementation checkpoint followed by a verified passing smoke and formal launch: [current M3 report](../results/m3_conditioned_proxy_v1/M3_EXPERIMENT_REPORT.md). This is one finite user-authorized M3 experiment, not an independent reviewer signoff or evidence of effectiveness.
 
 Start: M2 release `bc9d622d69d01bf4d1387de1c28cc4aa6f2e5983`; branch `experiment/m3-conditioned-proxy-v1`. External dependency remains `dbff0d985c6c95345d9fb78f5b1daef57b392564`. M1/M2 scientific files and configurations are unchanged.
 
@@ -24,7 +24,7 @@ GPU scope is one physical GPU 4–7, prefer 7 if sufficient free memory; coexist
 
 ## Verification so far
 
-31 selected local tests passed (1.199 seconds, exit 0), including eight M3 tests plus the relevant M1/M2/data/score tests. They cover symmetry/band boundaries, no-FFT identity, donor isolation, zero-spectrum gradient, finite meta-gradients, functional/actual Adam, immutable proxy/mask, new donor use, exact inherited math at identity, same algorithm for four arms, frozen-list reuse, score completeness and report generation. Full historical regressions are REUSED evidence and were not rerun. Deployment checks and the one GPU smoke are pending.
+31 selected local tests passed (1.199 seconds, exit 0), including eight M3 tests plus the relevant M1/M2/data/score tests. They cover symmetry/band boundaries, no-FFT identity, donor isolation, zero-spectrum gradient, finite meta-gradients, functional/actual Adam, immutable proxy/mask, new donor use, exact inherited math at identity, same algorithm for four arms, frozen-list reuse, score completeness and report generation. Full historical regressions are REUSED evidence and were not rerun. Deployment checks also passed all 31 tests (exit 0); the single GPU smoke passed 16/4/2 updates (exit 0). Formal execution is running; details are in the current report.
 
 ## Attribution and interpretation
 
