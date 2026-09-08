@@ -1,0 +1,206 @@
+{
+  "status": "M2_PARTIAL",
+  "execution_commit": "8f038d8d3821145375adf4492d7fcc8842c3c808",
+  "m1_release_commit": "2e6738e31708249902368333b882897c57280405",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "stage_exit_codes": {
+    "registration": 0,
+    "selected_CPU_tests": 0,
+    "smoke": 1,
+    "formal_run": null,
+    "independent_score_recompute": null
+  },
+  "CPU_validation": {
+    "selected_tests": 22,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "exit_code": 0,
+    "seconds": 2.167,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "full_M1_regression": "REUSED_HISTORICAL_184_TEST_EVIDENCE_NOT_RERUN"
+  },
+  "environment": {
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "cuda": "12.1",
+    "cudnn": 8902,
+    "device_name": "NVIDIA GeForce RTX 3090",
+    "tf32_matmul": false,
+    "tf32_cudnn": false,
+    "cudnn_benchmark": false,
+    "cudnn_deterministic": true,
+    "deterministic_algorithms": false,
+    "seed": 20260907,
+    "gpu_same_device_tolerance": {
+      "rtol": 0.0001,
+      "atol": 1e-05
+    },
+    "seed_is_not_bitwise_determinism_proof": true
+  },
+  "environment_comparison": {
+    "differences": {},
+    "compatible": true
+  },
+  "registration": {
+    "assets_metadata_checked": 906,
+    "changed_assets": 0,
+    "asset_rehashes": 0,
+    "history_files_reused": 2,
+    "history_steps_rebuilt": 0,
+    "old_score_logs_anchored": 20,
+    "old_records_available": 1380,
+    "old_scores_rerun": 0
+  },
+  "smoke": {
+    "status": "M2_PARTIAL",
+    "task": "polyp",
+    "arm": "D2",
+    "updates": {
+      "online": 6,
+      "outer": 3,
+      "inner": 1
+    },
+    "current_counts": {
+      "reference": {
+        "model_forwards": 2,
+        "prompt_forwards": 3,
+        "proxy_forwards": 1,
+        "proxy_images": 4,
+        "online_adam": 1,
+        "backward_calls": 1,
+        "memory_pushes": 1,
+        "retrievals": 0
+      },
+      "new": {
+        "model_forwards": 2,
+        "prompt_forwards": 3,
+        "proxy_forwards": 1,
+        "proxy_images": 4,
+        "online_adam": 1,
+        "backward_calls": 1,
+        "memory_pushes": 1,
+        "retrievals": 0
+      }
+    },
+    "evidence": {
+      "fundus": {
+        "D2": {
+          "loss": 0.961044430732727,
+          "image_gradient_norm": 74.89250946044922,
+          "pixel_update_norm": 17.667415618896484,
+          "offline_counts": {
+            "live_forwards": 1,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "prompt_forwards": 3,
+            "gradient_calls": 2,
+            "differentiable_inner": 0
+          },
+          "max_logit_difference": 0.0,
+          "online_counts": [
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            },
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            }
+          ]
+        },
+        "O2": {
+          "loss": 5.625827789306641,
+          "image_gradient_norm": 0.3965001702308655,
+          "pixel_update_norm": 17.592485427856445,
+          "offline_counts": {
+            "live_forwards": 2,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "prompt_forwards": 4,
+            "gradient_calls": 2,
+            "differentiable_inner": 1
+          },
+          "max_logit_difference": 0.0,
+          "online_counts": [
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            },
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            }
+          ]
+        },
+        "peak_allocated_bytes": 7806945792
+      },
+      "polyp": {}
+    },
+    "reason": "Tensor-likes are not close!\n\nMismatched elements: 2299 / 123904 (1.9%)\nGreatest absolute difference: 0.0003592967987060547 at index (0, 0, 276, 248) (up to 1e-05 allowed)\nGreatest relative difference: 0.12090007960796356 at index (0, 0, 182, 231) (up to 0.0001 allowed)",
+    "exception": "AssertionError",
+    "exit_code": 1
+  },
+  "training_steps": {
+    "fundus": {
+      "D2": 0,
+      "O2": 0
+    },
+    "polyp": {
+      "D2": 0,
+      "O2": 0
+    }
+  },
+  "new_scores": {
+    "source": 0,
+    "target": 0,
+    "total": 0,
+    "expected": 552
+  },
+  "resources": {
+    "physical_GPU": 7,
+    "smoke_GPU_wall_seconds": null,
+    "environment_file_to_failure_file_seconds": 14.488999843597412,
+    "interval_is_file_timestamp_observation_not_GPU_timer": true,
+    "fundus_peak_allocated_bytes": 7806945792,
+    "polyp_peak_allocated_bytes": null,
+    "private_job_files": 12,
+    "private_job_file_bytes_including_source_bundle": 807077,
+    "private_bytes_excludes_execution_checkout_and_reused_M1_assets": true
+  },
+  "stop": {
+    "formal_training_and_scoring": "NOT_RUN_INCOMPLETE_SHARED_SMOKE",
+    "auto_retry": false,
+    "tolerance_changed": false,
+    "independent_score_recompute": "NOT_RUN_NO_NEW_SCORE_JSONL",
+    "cause": "Numerical equivalence failed; root cause not established",
+    "remaining_polyp_D2_checks": "NOT_EXECUTED_AFTER_LOGIT_ASSERTION",
+    "polyp_D2_outer_gradient_and_pixel_checks": "PASSED_BEFORE_ASSERTION; values not persisted",
+    "polyp_O2": "NOT_RUN"
+  }
+}

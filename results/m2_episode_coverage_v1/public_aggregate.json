@@ -1,0 +1,544 @@
+{
+  "status": "M2_PARTIAL",
+  "execution_commit": "8f038d8d3821145375adf4492d7fcc8842c3c808",
+  "scientific_conclusion": "NOT_AVAILABLE: formal training and scoring were not started",
+  "old_evidence_commit": "2e6738e31708249902368333b882897c57280405",
+  "old_evidence_file": "results/m1_method_validation_v1/public_aggregate.json",
+  "old_statistics_provenance": "REUSED_PUBLISHED_M1_AGGREGATES_NOT_RECOMPUTED_IN_M2",
+  "new_score_records": 0,
+  "old_score_records_available": 1380,
+  "old_scores_rerun": 0,
+  "coverage": {
+    "fundus": {
+      "old": {
+        "episodes": 600,
+        "query_index_exposure_distribution": {
+          "15": 40
+        },
+        "state_index_exposure_distribution": {
+          "18": 8,
+          "19": 24
+        },
+        "transform_exposure_distribution": {
+          "150": 4
+        },
+        "query_index_distinct_transforms_distribution": {
+          "1": 40
+        },
+        "query_index_transform_quota_patterns": {
+          "(0, 0, 0, 15)": 40
+        },
+        "query_distinct_states_distribution": {
+          "4": 40
+        },
+        "state_index_distinct_transforms_distribution": {
+          "1": 32
+        },
+        "state_index_transform_quota_patterns": {
+          "(0, 0, 0, 18)": 8,
+          "(0, 0, 0, 19)": 24
+        },
+        "unique_triples": 160,
+        "maximum_triple_repeat": 4,
+        "triple_repeat_distribution": {
+          "3": 40,
+          "4": 120
+        }
+      },
+      "new": {
+        "episodes": 600,
+        "query_index_exposure_distribution": {
+          "15": 40
+        },
+        "state_index_exposure_distribution": {
+          "18": 8,
+          "19": 24
+        },
+        "transform_exposure_distribution": {
+          "150": 4
+        },
+        "query_index_distinct_transforms_distribution": {
+          "4": 40
+        },
+        "query_index_transform_quota_patterns": {
+          "(3, 4, 4, 4)": 40
+        },
+        "query_distinct_states_distribution": {
+          "12": 1,
+          "13": 2,
+          "14": 4,
+          "15": 33
+        },
+        "state_index_distinct_transforms_distribution": {
+          "4": 32
+        },
+        "state_index_transform_quota_patterns": {
+          "(4, 4, 5, 5)": 8,
+          "(4, 5, 5, 5)": 24
+        },
+        "unique_triples": 600,
+        "maximum_triple_repeat": 1,
+        "triple_repeat_distribution": {
+          "1": 600
+        }
+      }
+    },
+    "polyp": {
+      "old": {
+        "episodes": 600,
+        "query_index_exposure_distribution": {
+          "9": 40,
+          "10": 24
+        },
+        "state_index_exposure_distribution": {
+          "18": 8,
+          "19": 24
+        },
+        "transform_exposure_distribution": {
+          "150": 4
+        },
+        "query_index_distinct_transforms_distribution": {
+          "1": 64
+        },
+        "query_index_transform_quota_patterns": {
+          "(0, 0, 0, 9)": 40,
+          "(0, 0, 0, 10)": 24
+        },
+        "query_distinct_states_distribution": {
+          "1": 64
+        },
+        "state_index_distinct_transforms_distribution": {
+          "1": 32
+        },
+        "state_index_transform_quota_patterns": {
+          "(0, 0, 0, 18)": 8,
+          "(0, 0, 0, 19)": 24
+        },
+        "unique_triples": 64,
+        "maximum_triple_repeat": 10,
+        "triple_repeat_distribution": {
+          "9": 40,
+          "10": 24
+        }
+      },
+      "new": {
+        "episodes": 600,
+        "query_index_exposure_distribution": {
+          "9": 40,
+          "10": 24
+        },
+        "state_index_exposure_distribution": {
+          "18": 8,
+          "19": 24
+        },
+        "transform_exposure_distribution": {
+          "150": 4
+        },
+        "query_index_distinct_transforms_distribution": {
+          "4": 64
+        },
+        "query_index_transform_quota_patterns": {
+          "(2, 2, 2, 3)": 40,
+          "(2, 2, 3, 3)": 24
+        },
+        "query_distinct_states_distribution": {
+          "8": 3,
+          "9": 39,
+          "10": 22
+        },
+        "state_index_distinct_transforms_distribution": {
+          "4": 32
+        },
+        "state_index_transform_quota_patterns": {
+          "(4, 4, 5, 5)": 8,
+          "(4, 5, 5, 5)": 24
+        },
+        "unique_triples": 600,
+        "maximum_triple_repeat": 1,
+        "triple_repeat_distribution": {
+          "1": 600
+        }
+      }
+    }
+  },
+  "source": {
+    "fundus": {
+      "domains": {
+        "RIM_ONE_r3": {
+          "dice_mean_percent": {
+            "OD": {
+              "N": 97.74607344043861,
+              "A": 95.87643720284325,
+              "R": 95.87233319779304,
+              "D1": 95.90799057405619,
+              "O1": 95.90869858138046,
+              "D2": null,
+              "O2": null
+            },
+            "OC": {
+              "N": 87.13939235450871,
+              "A": 72.36125265026774,
+              "R": 72.43658707494907,
+              "D1": 72.49893123230424,
+              "O1": 72.55017740273608,
+              "D2": null,
+              "O2": null
+            },
+            "macro": {
+              "N": 92.44273289747365,
+              "A": 84.11884492655551,
+              "R": 84.15446013637106,
+              "D1": 84.20346090318021,
+              "O1": 84.22943799205827,
+              "D2": null,
+              "O2": null
+            }
+          },
+          "M2_comparisons": {
+            "O2-D2": null,
+            "O2-O1": null,
+            "D2-D1": null,
+            "(O2-D2)-(O1-D1)": null,
+            "O2-N": null,
+            "O2-A": null,
+            "O2-R": null,
+            "D2-N": null,
+            "D2-A": null
+          },
+          "M2_direction": "NOT_AVAILABLE",
+          "M2_paired_statistics_and_ASSD": "NOT_AVAILABLE_NO_NEW_RECORDS"
+        }
+      },
+      "task_domain_macro_dice_percent": {
+        "N": 92.44273289747365,
+        "A": 84.11884492655551,
+        "R": 84.15446013637106,
+        "D1": 84.20346090318021,
+        "O1": 84.22943799205827,
+        "D2": null,
+        "O2": null
+      }
+    },
+    "polyp": {
+      "domains": {
+        "BKAI": {
+          "dice_mean_percent": {
+            "polyp": {
+              "N": 97.22135901916715,
+              "A": 96.70993242649473,
+              "R": 96.70501062756574,
+              "D1": 96.7130622585738,
+              "O1": 96.71725986801442,
+              "D2": null,
+              "O2": null
+            }
+          },
+          "M2_comparisons": {
+            "O2-D2": null,
+            "O2-O1": null,
+            "D2-D1": null,
+            "(O2-D2)-(O1-D1)": null,
+            "O2-N": null,
+            "O2-A": null,
+            "O2-R": null,
+            "D2-N": null,
+            "D2-A": null
+          },
+          "M2_direction": "NOT_AVAILABLE",
+          "M2_paired_statistics_and_ASSD": "NOT_AVAILABLE_NO_NEW_RECORDS"
+        }
+      },
+      "task_domain_macro_dice_percent": {
+        "N": 97.22135901916715,
+        "A": 96.70993242649473,
+        "R": 96.70501062756574,
+        "D1": 96.7130622585738,
+        "O1": 96.71725986801442,
+        "D2": null,
+        "O2": null
+      }
+    }
+  },
+  "target": {
+    "fundus": {
+      "domains": {
+        "REFUGE": {
+          "dice_mean_percent": {
+            "OD": {
+              "N": 86.47507006050715,
+              "A": 87.25106423215297,
+              "R": 87.25306570551662,
+              "D1": 87.49408360261671,
+              "O1": 87.5174964760842,
+              "D2": null,
+              "O2": null
+            },
+            "OC": {
+              "N": 78.81832612457868,
+              "A": 82.26669650499957,
+              "R": 82.35279338986084,
+              "D1": 82.44788739214867,
+              "O1": 82.39550042422466,
+              "D2": null,
+              "O2": null
+            },
+            "macro": {
+              "N": 82.64669809254292,
+              "A": 84.75888036857627,
+              "R": 84.80292954768873,
+              "D1": 84.9709854973827,
+              "O1": 84.95649845015443,
+              "D2": null,
+              "O2": null
+            }
+          },
+          "M2_comparisons": {
+            "O2-D2": null,
+            "O2-O1": null,
+            "D2-D1": null,
+            "(O2-D2)-(O1-D1)": null,
+            "O2-N": null,
+            "O2-A": null,
+            "O2-R": null,
+            "D2-N": null,
+            "D2-A": null
+          },
+          "M2_direction": "NOT_AVAILABLE",
+          "M2_paired_statistics_and_ASSD": "NOT_AVAILABLE_NO_NEW_RECORDS"
+        },
+        "ORIGA": {
+          "dice_mean_percent": {
+            "OD": {
+              "N": 70.72651935362573,
+              "A": 79.9099557379389,
+              "R": 79.77130782423174,
+              "D1": 80.24151549895485,
+              "O1": 79.81580431395913,
+              "D2": null,
+              "O2": null
+            },
+            "OC": {
+              "N": 42.8254797248837,
+              "A": 64.2905804303102,
+              "R": 64.23373828868174,
+              "D1": 65.2088615550798,
+              "O1": 64.50870086581777,
+              "D2": null,
+              "O2": null
+            },
+            "macro": {
+              "N": 56.77599953925471,
+              "A": 72.10026808412454,
+              "R": 72.00252305645675,
+              "D1": 72.72518852701734,
+              "O1": 72.16225258988845,
+              "D2": null,
+              "O2": null
+            }
+          },
+          "M2_comparisons": {
+            "O2-D2": null,
+            "O2-O1": null,
+            "D2-D1": null,
+            "(O2-D2)-(O1-D1)": null,
+            "O2-N": null,
+            "O2-A": null,
+            "O2-R": null,
+            "D2-N": null,
+            "D2-A": null
+          },
+          "M2_direction": "NOT_AVAILABLE",
+          "M2_paired_statistics_and_ASSD": "NOT_AVAILABLE_NO_NEW_RECORDS"
+        },
+        "REFUGE_Valid": {
+          "dice_mean_percent": {
+            "OD": {
+              "N": 73.35517354223677,
+              "A": 83.4085145378506,
+              "R": 82.85104447672097,
+              "D1": 82.49214123521546,
+              "O1": 82.44078935994521,
+              "D2": null,
+              "O2": null
+            },
+            "OC": {
+              "N": 51.31975578413862,
+              "A": 66.04121405738033,
+              "R": 64.7776074873248,
+              "D1": 61.7614510333086,
+              "O1": 61.39536539641229,
+              "D2": null,
+              "O2": null
+            },
+            "macro": {
+              "N": 62.3374646631877,
+              "A": 74.72486429761548,
+              "R": 73.8143259820229,
+              "D1": 72.12679613426202,
+              "O1": 71.91807737817875,
+              "D2": null,
+              "O2": null
+            }
+          },
+          "M2_comparisons": {
+            "O2-D2": null,
+            "O2-O1": null,
+            "D2-D1": null,
+            "(O2-D2)-(O1-D1)": null,
+            "O2-N": null,
+            "O2-A": null,
+            "O2-R": null,
+            "D2-N": null,
+            "D2-A": null
+          },
+          "M2_direction": "NOT_AVAILABLE",
+          "M2_paired_statistics_and_ASSD": "NOT_AVAILABLE_NO_NEW_RECORDS"
+        },
+        "Drishti_GS": {
+          "dice_mean_percent": {
+            "OD": {
+              "N": 83.47806979604077,
+              "A": 85.26659717164554,
+              "R": 85.58899936515807,
+              "D1": 86.16876277627547,
+              "O1": 86.17831899944265,
+              "D2": null,
+              "O2": null
+            },
+            "OC": {
+              "N": 65.74474522056803,
+              "A": 64.41563829218867,
+              "R": 65.66475123094736,
+              "D1": 68.66872571672221,
+              "O1": 69.02845802684782,
+              "D2": null,
+              "O2": null
+            },
+            "macro": {
+              "N": 74.6114075083044,
+              "A": 74.84111773191711,
+              "R": 75.62687529805271,
+              "D1": 77.41874424649885,
+              "O1": 77.60338851314523,
+              "D2": null,
+              "O2": null
+            }
+          },
+          "M2_comparisons": {
+            "O2-D2": null,
+            "O2-O1": null,
+            "D2-D1": null,
+            "(O2-D2)-(O1-D1)": null,
+            "O2-N": null,
+            "O2-A": null,
+            "O2-R": null,
+            "D2-N": null,
+            "D2-A": null
+          },
+          "M2_direction": "NOT_AVAILABLE",
+          "M2_paired_statistics_and_ASSD": "NOT_AVAILABLE_NO_NEW_RECORDS"
+        }
+      },
+      "task_domain_macro_dice_percent": {
+        "N": 69.09289245082243,
+        "A": 76.60628262055835,
+        "R": 76.56166347105528,
+        "D1": 76.81042860129023,
+        "O1": 76.6600542328417,
+        "D2": null,
+        "O2": null
+      }
+    },
+    "polyp": {
+      "domains": {
+        "CVC-ClinicDB": {
+          "dice_mean_percent": {
+            "polyp": {
+              "N": 78.48158958538124,
+              "A": 70.49208540634157,
+              "R": 70.28189050199182,
+              "D1": 70.32164493669592,
+              "O1": 70.37350691552322,
+              "D2": null,
+              "O2": null
+            }
+          },
+          "M2_comparisons": {
+            "O2-D2": null,
+            "O2-O1": null,
+            "D2-D1": null,
+            "(O2-D2)-(O1-D1)": null,
+            "O2-N": null,
+            "O2-A": null,
+            "O2-R": null,
+            "D2-N": null,
+            "D2-A": null
+          },
+          "M2_direction": "NOT_AVAILABLE",
+          "M2_paired_statistics_and_ASSD": "NOT_AVAILABLE_NO_NEW_RECORDS"
+        },
+        "ETIS-LaribPolypDB": {
+          "dice_mean_percent": {
+            "polyp": {
+              "N": 68.82956017001712,
+              "A": 81.53251763301587,
+              "R": 81.7457626117654,
+              "D1": 81.57695632989484,
+              "O1": 81.64577462646787,
+              "D2": null,
+              "O2": null
+            }
+          },
+          "M2_comparisons": {
+            "O2-D2": null,
+            "O2-O1": null,
+            "D2-D1": null,
+            "(O2-D2)-(O1-D1)": null,
+            "O2-N": null,
+            "O2-A": null,
+            "O2-R": null,
+            "D2-N": null,
+            "D2-A": null
+          },
+          "M2_direction": "NOT_AVAILABLE",
+          "M2_paired_statistics_and_ASSD": "NOT_AVAILABLE_NO_NEW_RECORDS"
+        },
+        "Kvasir-SEG": {
+          "dice_mean_percent": {
+            "polyp": {
+              "N": 88.07298492111786,
+              "A": 83.28925498945421,
+              "R": 83.28839436737867,
+              "D1": 83.05214133266821,
+              "O1": 83.46955448282381,
+              "D2": null,
+              "O2": null
+            }
+          },
+          "M2_comparisons": {
+            "O2-D2": null,
+            "O2-O1": null,
+            "D2-D1": null,
+            "(O2-D2)-(O1-D1)": null,
+            "O2-N": null,
+            "O2-A": null,
+            "O2-R": null,
+            "D2-N": null,
+            "D2-A": null
+          },
+          "M2_direction": "NOT_AVAILABLE",
+          "M2_paired_statistics_and_ASSD": "NOT_AVAILABLE_NO_NEW_RECORDS"
+        }
+      },
+      "task_domain_macro_dice_percent": {
+        "N": 78.46137822550541,
+        "A": 78.43795267627054,
+        "R": 78.43868249371197,
+        "D1": 78.31691419975299,
+        "O1": 78.4962786749383,
+        "D2": null,
+        "O2": null
+      }
+    }
+  }
+}
