@@ -1,5 +1,5 @@
 {
-  "status": "REPAIR_IMPLEMENTED_SMOKE_PENDING",
+  "status": "REPAIR_SMOKE_PASS_FORMAL_LAUNCHED",
   "authorization": "User requested diagnosis, repair and experiment report after the stopped M2 attempt",
   "diagnostic_execution_base_commit": "8f038d8d3821145375adf4492d7fcc8842c3c808",
   "diagnostic_scope": "procedural Polyp query with original registered Real proxy and history index 16; no source/target score",
@@ -193,5 +193,211 @@
   "interpretation": "Native CUDA backward reduction order can differ despite matching state, forward outputs and RNG. Deterministic paired execution removes the observed gradient difference. Native bilinear CUDA backward independently rejects strict determinism; PyTorch functional.interpolate selects its deterministic decomposition when enabled. The exact first divergent operator of the original failed attempt was not captured.",
   "environment_note": "Diagnostic environment snapshots were captured before the mode switch; mode=deterministic enabled strict deterministic algorithms during both online steps. The first strict probe stopped at the cuBLAS workspace requirement before any optimizer update.",
   "fix_scope": "Strict deterministic algorithms and cuBLAS workspace only in smoke comparison process; flags restored after paired checks. M1 formal run environment, objectives, seed and tolerances unchanged.",
-  "budget_note": "Previous failed smoke and authorized repair diagnostics are separate from the fresh corrected M2 run budget."
+  "budget_note": "Previous failed smoke and authorized repair diagnostics are separate from the fresh corrected M2 run budget.",
+  "corrected_execution_commit": "fef00f5bb1ea9c557054215ebe00ca5ee932ab81",
+  "CPU_validation": {
+    "tests": 23,
+    "failures": 0,
+    "errors": 0,
+    "seconds": 3.242568311979994,
+    "torch": "2.2.1+cu121",
+    "exit_code": 0,
+    "full_M1_regression": "REUSED_HISTORICAL_184_TEST_EVIDENCE_NOT_RERUN",
+    "prior_collection_error": "Corrected test_source_io to existing test_source_pilot; initial loader error retained separately"
+  },
+  "corrected_smoke": {
+    "status": "M2_SMOKE_PASS",
+    "updates": {
+      "online": 8,
+      "outer": 4,
+      "inner": 2
+    },
+    "evidence": {
+      "fundus": {
+        "D2": {
+          "loss": 0.961044430732727,
+          "image_gradient_norm": 74.89250946044922,
+          "pixel_update_norm": 17.667415618896484,
+          "offline_counts": {
+            "live_forwards": 1,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "prompt_forwards": 3,
+            "gradient_calls": 2,
+            "differentiable_inner": 0
+          },
+          "status": "PASS",
+          "max_logit_difference": 0.0,
+          "online_counts": [
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            },
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            }
+          ]
+        },
+        "O2": {
+          "loss": 5.625827789306641,
+          "image_gradient_norm": 0.3965001702308655,
+          "pixel_update_norm": 17.592485427856445,
+          "offline_counts": {
+            "live_forwards": 2,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "prompt_forwards": 4,
+            "gradient_calls": 2,
+            "differentiable_inner": 1
+          },
+          "status": "PASS",
+          "max_logit_difference": 0.0,
+          "online_counts": [
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            },
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            }
+          ]
+        },
+        "peak_allocated_bytes": 7854393856
+      },
+      "polyp": {
+        "D2": {
+          "loss": 0.7956063151359558,
+          "image_gradient_norm": 3.175964832305908,
+          "pixel_update_norm": 11.918108940124512,
+          "offline_counts": {
+            "live_forwards": 1,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "prompt_forwards": 3,
+            "gradient_calls": 2,
+            "differentiable_inner": 0
+          },
+          "status": "PASS",
+          "max_logit_difference": 0.0,
+          "online_counts": [
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            },
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            }
+          ]
+        },
+        "O2": {
+          "loss": 6.1932573318481445,
+          "image_gradient_norm": 0.48421385884284973,
+          "pixel_update_norm": 11.877546310424805,
+          "offline_counts": {
+            "live_forwards": 2,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "prompt_forwards": 4,
+            "gradient_calls": 2,
+            "differentiable_inner": 1
+          },
+          "status": "PASS",
+          "max_logit_difference": 0.0,
+          "online_counts": [
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            },
+            {
+              "model_forwards": 2,
+              "prompt_forwards": 3,
+              "proxy_forwards": 1,
+              "proxy_images": 4,
+              "online_adam": 1,
+              "backward_calls": 1,
+              "memory_pushes": 1,
+              "retrievals": 0
+            }
+          ]
+        },
+        "peak_allocated_bytes": 5231086592
+      }
+    },
+    "paired_comparison_backend": {
+      "deterministic_algorithms": true,
+      "cublas_workspace_config": ":4096:8",
+      "scope": "paired online smoke only",
+      "restored_deterministic_algorithms": false
+    },
+    "gpu_seconds": 20.96196043503005,
+    "exit_code": 0
+  },
+  "formal_run": {
+    "status": "RUNNING_VERIFIED_AT_STARTUP",
+    "training_steps_expected_each": 600,
+    "methods": [
+      "D2",
+      "O2"
+    ],
+    "tasks": [
+      "fundus",
+      "polyp"
+    ],
+    "new_scores_expected": 552,
+    "independent_CPU_recompute": "queued after successful formal run",
+    "markdown_report": "queued after successful independent recompute",
+    "startup_snapshot": {
+      "fundus_D2_completed_episodes": 47,
+      "last_loss": 0.41203469038009644,
+      "last_gradient_norm": 0.8634083271026611,
+      "failure_files": 0,
+      "M1_environment_differences": {},
+      "detached_launcher_alive": true
+    }
+  }
 }

@@ -1,5 +1,7 @@
 # M2 episode coverage comparison — stopped smoke report
 
+Historical first attempt. The later user-authorized repair passed all four smoke pairs and launched formal execution: [repair and launch report](M2_NUMERICAL_REPAIR_REPORT.md). The first-attempt evidence below is preserved.
+
 **M2_PARTIAL.** Polyp D2 failed the fixed same-device logit comparison during the single GPU smoke. Formal training and scoring were not started. No D2/O2 segmentation result is available. M1 remains a valid completed experiment with mixed results; improving index coverage does not prove improved adaptation.
 
 ## Fixed change and reused assets
