@@ -10,4 +10,6 @@ If H fixes source normalization statistics, explicitly define its adaptation obj
 
 Report per-domain/channel Dice, Fundus macro, paired A−N/B−A/H−A/H−B, empty/full counts, jointly defined ASSD differences and denominators, adaptation behavior and actual compute. Preserve every negative result and distinguish content groups from independent patients. Do not require a method to exceed N on source before entering genuinely shifted development data. Freeze all success/failure/coverage rules and the finite run budget in the next task; no score-triggered extension or automatic recovery.
 
+H1 now supports exactly one priority candidate, **H_source_stats**, based on the dominant G−N source-clean deficit. This is a proposal, not an implemented or validated target method. Its future specification must preserve a nonconstant differentiable BN-matching objective with tested prompt gradients; fixed normalization alone must not silently zero that objective.
+
 Current status: DRAFT_ONLY. Execution authority, target asset identities, exact budget and the optional H choice are pending a future task; this document authorizes none of them.

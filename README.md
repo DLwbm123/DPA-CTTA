@@ -1,4 +1,4 @@
-> **H1_HOST_MECHANISM_DIAGNOSTIC: BLOCKED_GPU_RESOURCE.** Existing 832-record analysis and 179-test CPU regression completed; GPU smoke/formal were not started (GPU 7 preflight: 2739 MiB free). [H1 report](docs/HOST_MECHANISM_DIAGNOSTIC_REPORT.md) · [resource audit](results/host_mechanism_diagnostic_v1/execution_audit.json). Frozen code `daa95d2`; no GPU execution commit and no automatic continuation.
+> **H1_DIAGNOSTIC_COMPLETE (2026-09-08).** GPU 7 completed 80 smoke + 200 formal Adam calls; all exits 0 and independent JSONL recomputation passed. Frozen execution `daa95d2`. [H1 report](docs/HOST_MECHANISM_DIAGNOSTIC_REPORT.md) · [execution audit](results/host_mechanism_diagnostic_v1/execution_20260908.json). Normalization-path change dominates source-clean loss; H_source_stats is a next-round draft only.
 
 # DPA-CTTA
 

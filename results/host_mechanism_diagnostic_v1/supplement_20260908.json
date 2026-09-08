@@ -1,0 +1,282 @@
+{
+  "fundus": {
+    "visits": 20,
+    "counterfactual_positions": 8,
+    "branches": {
+      "A_cf": {
+        "OD": {
+          "before_mean": {
+            "region": 0.11645108461380005,
+            "dice": 0.9447386250808434,
+            "pred_foreground_pixels": 25033.125
+          },
+          "after_mean": {
+            "region": 0.11938350647687912,
+            "dice": 0.9447143432715284,
+            "pred_foreground_pixels": 24928.25
+          }
+        },
+        "OC": {
+          "before_mean": {
+            "region": 0.6991191357374191,
+            "dice": 0.6672357356444774,
+            "pred_foreground_pixels": 8051.75
+          },
+          "after_mean": {
+            "region": 0.7043537721037865,
+            "dice": 0.6667094482655302,
+            "pred_foreground_pixels": 8004.125
+          }
+        }
+      },
+      "B_cf": {
+        "OD": {
+          "before_mean": {
+            "region": 0.11645108461380005,
+            "dice": 0.9447386250808434,
+            "pred_foreground_pixels": 25033.125
+          },
+          "after_mean": {
+            "region": 0.11863625049591064,
+            "dice": 0.9448603159887409,
+            "pred_foreground_pixels": 24934.125
+          }
+        },
+        "OC": {
+          "before_mean": {
+            "region": 0.6991191357374191,
+            "dice": 0.6672357356444774,
+            "pred_foreground_pixels": 8051.75
+          },
+          "after_mean": {
+            "region": 0.701546236872673,
+            "dice": 0.6673163790367292,
+            "pred_foreground_pixels": 8018.75
+          }
+        }
+      },
+      "C_cf": {
+        "OD": {
+          "before_mean": {
+            "region": 0.11645108461380005,
+            "dice": 0.9447386250808434,
+            "pred_foreground_pixels": 25033.125
+          },
+          "after_mean": {
+            "region": 0.11863624304533005,
+            "dice": 0.9448603159887409,
+            "pred_foreground_pixels": 24934.125
+          }
+        },
+        "OC": {
+          "before_mean": {
+            "region": 0.6991191357374191,
+            "dice": 0.6672357356444774,
+            "pred_foreground_pixels": 8051.75
+          },
+          "after_mean": {
+            "region": 0.7015461623668671,
+            "dice": 0.6673163790367292,
+            "pred_foreground_pixels": 8018.75
+          }
+        }
+      },
+      "A_small": {
+        "OD": {
+          "before_mean": {
+            "region": 0.11645108461380005,
+            "dice": 0.9447386250808434,
+            "pred_foreground_pixels": 25033.125
+          },
+          "after_mean": {
+            "region": 0.11669319868087769,
+            "dice": 0.9447993302280538,
+            "pred_foreground_pixels": 25024
+          }
+        },
+        "OC": {
+          "before_mean": {
+            "region": 0.6991191357374191,
+            "dice": 0.6672357356444774,
+            "pred_foreground_pixels": 8051.75
+          },
+          "after_mean": {
+            "region": 0.6995497718453407,
+            "dice": 0.6671850683631707,
+            "pred_foreground_pixels": 8047.375
+          }
+        }
+      },
+      "O_native": {
+        "OD": {
+          "before_mean": {
+            "region": 0.11645108461380005,
+            "dice": 0.9447386250808434,
+            "pred_foreground_pixels": 25033.125
+          },
+          "after_mean": {
+            "region": 0.11284498125314713,
+            "dice": 0.9458790489129661,
+            "pred_foreground_pixels": 25037.75
+          }
+        },
+        "OC": {
+          "before_mean": {
+            "region": 0.6991191357374191,
+            "dice": 0.6672357356444774,
+            "pred_foreground_pixels": 8051.75
+          },
+          "after_mean": {
+            "region": 0.6852231845259666,
+            "dice": 0.6706873964147855,
+            "pred_foreground_pixels": 8071.625
+          }
+        }
+      },
+      "O_small": {
+        "OD": {
+          "before_mean": {
+            "region": 0.11645108461380005,
+            "dice": 0.9447386250808434,
+            "pred_foreground_pixels": 25033.125
+          },
+          "after_mean": {
+            "region": 0.11612744629383087,
+            "dice": 0.9448216045178339,
+            "pred_foreground_pixels": 25034
+          }
+        },
+        "OC": {
+          "before_mean": {
+            "region": 0.6991191357374191,
+            "dice": 0.6672357356444774,
+            "pred_foreground_pixels": 8051.75
+          },
+          "after_mean": {
+            "region": 0.6977295055985451,
+            "dice": 0.6675264742217566,
+            "pred_foreground_pixels": 8053.75
+          }
+        }
+      }
+    },
+    "C_minus_B": {
+      "OD": {
+        "dice_mean_pp": 0.0,
+        "positive": 0,
+        "zero": 8,
+        "negative": 0
+      },
+      "OC": {
+        "dice_mean_pp": 0.0,
+        "positive": 0,
+        "zero": 8,
+        "negative": 0
+      }
+    },
+    "native_update_norm_mean": 0.19953568354249002,
+    "visit_elapsed_seconds_mean": 2.003691030992195,
+    "diagnostics_elapsed_seconds_mean": 1.3338640992471482
+  },
+  "polyp": {
+    "visits": 32,
+    "counterfactual_positions": 8,
+    "branches": {
+      "A_cf": {
+        "polyp": {
+          "before_mean": {
+            "region": 0.08432283997535706,
+            "dice": 0.9751830935980385,
+            "pred_foreground_pixels": 7338.75
+          },
+          "after_mean": {
+            "region": 0.08425462245941162,
+            "dice": 0.9751206936091387,
+            "pred_foreground_pixels": 7338.875
+          }
+        }
+      },
+      "B_cf": {
+        "polyp": {
+          "before_mean": {
+            "region": 0.08432283997535706,
+            "dice": 0.9751830935980385,
+            "pred_foreground_pixels": 7338.75
+          },
+          "after_mean": {
+            "region": 0.08444947004318237,
+            "dice": 0.9751131817269661,
+            "pred_foreground_pixels": 7338.625
+          }
+        }
+      },
+      "C_cf": {
+        "polyp": {
+          "before_mean": {
+            "region": 0.08432283997535706,
+            "dice": 0.9751830935980385,
+            "pred_foreground_pixels": 7338.75
+          },
+          "after_mean": {
+            "region": 0.08444948494434357,
+            "dice": 0.9751131817269661,
+            "pred_foreground_pixels": 7338.625
+          }
+        }
+      },
+      "A_small": {
+        "polyp": {
+          "before_mean": {
+            "region": 0.08432283997535706,
+            "dice": 0.9751830935980385,
+            "pred_foreground_pixels": 7338.75
+          },
+          "after_mean": {
+            "region": 0.08431646227836609,
+            "dice": 0.9751830935980385,
+            "pred_foreground_pixels": 7338.75
+          }
+        }
+      },
+      "O_native": {
+        "polyp": {
+          "before_mean": {
+            "region": 0.08432283997535706,
+            "dice": 0.9751830935980385,
+            "pred_foreground_pixels": 7338.75
+          },
+          "after_mean": {
+            "region": 0.08377251029014587,
+            "dice": 0.9751342853447504,
+            "pred_foreground_pixels": 7340.5
+          }
+        }
+      },
+      "O_small": {
+        "polyp": {
+          "before_mean": {
+            "region": 0.08432283997535706,
+            "dice": 0.9751830935980385,
+            "pred_foreground_pixels": 7338.75
+          },
+          "after_mean": {
+            "region": 0.08426525443792343,
+            "dice": 0.9751697375106998,
+            "pred_foreground_pixels": 7338.875
+          }
+        }
+      }
+    },
+    "C_minus_B": {
+      "polyp": {
+        "dice_mean_pp": 0.0,
+        "positive": 0,
+        "zero": 8,
+        "negative": 0
+      }
+    },
+    "native_update_norm_mean": 0.017054134892532602,
+    "visit_elapsed_seconds_mean": 1.2952500265673734,
+    "diagnostics_elapsed_seconds_mean": 0.443252816414315
+  }
+}
