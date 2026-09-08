@@ -1,0 +1,173 @@
+{
+  "schema_version": "m3-conditioned-proxy-v1",
+  "baseline_commit": "bc9d622d69d01bf4d1387de1c28cc4aa6f2e5983",
+  "M2_execution_commit": "fef00f5bb1ea9c557054215ebe00ca5ee932ab81",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "seed": 20260907,
+  "new_arms": [
+    "R3",
+    "D3",
+    "O3",
+    "O2T"
+  ],
+  "training_order": [
+    "fundus_D3",
+    "fundus_O3",
+    "polyp_D3",
+    "polyp_O3"
+  ],
+  "inherited": {
+    "models": {
+      "fundus": "native ResUNet34 512x512",
+      "polyp": "native PraNet 352x352"
+    },
+    "native": {
+      "lr": {
+        "fundus": 0.05,
+        "polyp": 0.01
+      },
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0,
+      "iters": 1,
+      "warm_n": 5,
+      "neighbor": 16,
+      "memory_size": 40,
+      "prompt_alpha": 0.01
+    },
+    "proxy": {
+      "K": 4,
+      "lambda": 0.1,
+      "beta_boundary": 0,
+      "transform": "M3 condition_proxy before original task preprocessing",
+      "mask": "original basis_train fixed dense masks shared R/D/O",
+      "initialization": "same original RGB [0,1] pixels",
+      "online": "fixed full K=4 with original independent source clone"
+    },
+    "outer": {
+      "episodes": 600,
+      "optimizer": "Adam",
+      "lr": 0.01,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0,
+      "projection": [
+        0,
+        1
+      ],
+      "save_steps": [
+        0,
+        100,
+        300,
+        600
+      ],
+      "evaluation_step": 600,
+      "query_batch": 1
+    },
+    "objectives": {
+      "D": "1-cosine(g_syn,stopgrad(g_real)); prompt gradients; squared-norm epsilon 1e-24",
+      "O": "post-one-native-Adam source query region loss; host+0.1*proxy inner; original moments and counters",
+      "region": "existing balanced BCE + soft Dice",
+      "zero_second_moment_derivative": "sqrt forward exact, derivative zero at exactly zero; native derivative elsewhere",
+      "native_adabn": "unchanged including stop-gradient statistics"
+    },
+    "tolerance": {
+      "rtol": 0.0001,
+      "atol": 1e-05,
+      "discrete": "exact"
+    }
+  },
+  "condition": {
+    "strength": 0.5,
+    "band_fraction": 0.01,
+    "eps": 1e-08,
+    "fft_norm": "backward",
+    "frequency_window": "unshifted conjugate symmetric cyclic distance <= floor(beta*min(H,W)), DC included",
+    "radius": {
+      "fundus": 5,
+      "polyp": 3
+    },
+    "padding": "none",
+    "clamp": "final hard [0,1]",
+    "donor": "detach current RGB after registered query transform, before task preprocessing",
+    "mask": "unchanged",
+    "cumulative": false,
+    "cache": false
+  },
+  "assets": "reuse M2 exact episode paths/order; M1 data/history; original Real initialization; sealed M2 O2-600 for O2T only",
+  "history_recovery_default": 0,
+  "evaluation": {
+    "source": 208,
+    "target": 896,
+    "new_records": 1104,
+    "reused_records": 1932,
+    "combined_display_records": 3036,
+    "order": "M1 source/target split, fresh host per stream; no between-domain reset",
+    "scoring_after_all_four_finals_frozen": true,
+    "pairs": [
+      "O3-D3",
+      "O3-R3",
+      "O3-O2T",
+      "O2T-O2",
+      "R3-R",
+      "O3-A",
+      "O3-N",
+      "D3-D2",
+      "O3-O2"
+    ]
+  },
+  "smoke": {
+    "online": 16,
+    "outer": 4,
+    "inner": 2,
+    "history_index": 16,
+    "procedural_query_index": 0,
+    "deterministic_scope": "paired rho0 and O3 shared functional/actual results; restored outside scope"
+  },
+  "budget": {
+    "online": 1120,
+    "outer": 2404,
+    "inner": 1202,
+    "history_recovery_max": 64,
+    "gpu_seconds": 21600,
+    "private_bytes": 2147483648
+  },
+  "gpu": {
+    "allowed_physical": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "preferred": 7,
+    "simultaneous_devices": 1,
+    "coexist": true,
+    "background_waiter": false
+  },
+  "inherited_file_sha256": {
+    "src/dpa_ctta/offline/adaptation_dd.py": "5e79c11ee6f9354156b65a9d79af44459ac83a6656064b978e8ed73a31736ee0",
+    "src/dpa_ctta/offline/prompt_gradient_matching.py": "7c5f6c7ff48286e1c4aa5c8965f6b50bb3d2b2edbb0b7492217eb9d924fa7c9d",
+    "src/dpa_ctta/hosts/vptta.py": "ecdc8f5421175417a481831a5a077048874a4dbd0f35ff86dd4e841a998f8043",
+    "src/dpa_ctta/source_io.py": "4b928646273a0213af42ef94154b0863c22906a3b87716478e8e03aaaf736a1f",
+    "src/dpa_ctta/source_pilot.py": "3b1d4c58d63de4569fab72b831c317075284939b838c0446892fa59e8416d4ad",
+    "src/dpa_ctta/source_pilot_release.py": "0e3d8565bf4908e1482ee67bd75d9ffe75ccf230dbadb8e59f16c943d07bbc1c",
+    "src/dpa_ctta/proxy_loss.py": "03fb15aa593ceb05c33b299db4d23e6f290692f24b81cd282c7c285d86267b44",
+    "src/dpa_ctta/medical_losses.py": "8d3a7a34bf24ff3d95c22c5754e5228ac7976f93c2a82c43b70aae86be608219",
+    "src/dpa_ctta/m1_run.py": "d86950e076674e1b59474922c9ebd6c00dcc52b0356c2527863c71158143f3f8",
+    "src/dpa_ctta/m1_analysis.py": "44113d73bcdf4b09199b73944cfb26dc2b9d9fdde1b3f4de024684b7fc85d1b1",
+    "src/dpa_ctta/host_diagnostic.py": "420188ff151b11e7927ec614452f3e695f961dd40d877367f0d85508b47e539e",
+    "src/dpa_ctta/host_diagnostic_run.py": "c23db9da70c8785a474f54d4031d9e43fef851359fe9e8821d687c019b5daff7",
+    "src/dpa_ctta/integrations/ctta_suite.py": "0df6c9fed34256cf6031a76471f029abacb69981dc6b113d6b9467fa266e1e53",
+    "src/dpa_ctta/m2_run.py": "31b9b1a8c93d43f637a3a89be28fd9db618322966ee38b82e409d1cb5cc0da05",
+    "src/dpa_ctta/m2_registration.py": "7759a6e8187f39842ab2b4ed5dd1e8da2d740e41587fde5951a0a562cce95dfe",
+    "src/dpa_ctta/m2_episodes.py": "528de331bffc915779dc7dc1b4e8f60bd2368ee7fbc33082d0bbec91d9b8b126"
+  },
+  "stop": "identity/implementation/nonfinite/OOM/budget; no performance gate or automatic restart",
+  "limitations": "exploratory previously exposed targets; UNKNOWN patient/video; single seed/order; fixed off-policy history; no SOTA/semantic/privacy guarantee"
+}
