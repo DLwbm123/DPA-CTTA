@@ -1,16 +1,229 @@
 {
-  "status": "M3_RUNNING",
-  "execution_commit": "00d1da5b3a333e53b20d869ac9fcbbdcb8b67a8f",
-  "CPU_validation": {
-    "tests": 31,
-    "failures": 0,
-    "errors": 0,
-    "skips": 0,
-    "seconds": 4.836084367940202,
-    "python": "3.10.6",
-    "torch": "2.2.1+cu121",
-    "exit_code": 0,
-    "full_historical_regression": "REUSED_NOT_RERUN"
+  "status": "M3_CONDITIONED_PROXY_COMPLETE",
+  "experiment_execution_commit": "00d1da5b3a333e53b20d869ac9fcbbdcb8b67a8f",
+  "updates_and_new_records": {
+    "online": 1120,
+    "outer": 2404,
+    "inner": 1202,
+    "records": 1104
+  },
+  "reused_M1_M2_records": 1932,
+  "combined_display_records": 3036,
+  "history_rebuilt_online_steps": 0,
+  "history_reused": true,
+  "actual_compute": {
+    "train_fundus_D3": {
+      "live_forwards": 600,
+      "proxy_forwards": 600,
+      "proxy_images": 2400,
+      "prompt_forwards": 1499,
+      "gradient_calls": 1200,
+      "differentiable_inner": 0,
+      "condition_transforms": 600
+    },
+    "train_fundus_O3": {
+      "live_forwards": 1200,
+      "proxy_forwards": 600,
+      "proxy_images": 2400,
+      "prompt_forwards": 2099,
+      "gradient_calls": 1200,
+      "differentiable_inner": 600,
+      "condition_transforms": 600
+    },
+    "source_fundus_R3": {
+      "model_forwards": 40,
+      "prompt_forwards": 64,
+      "proxy_forwards": 20,
+      "proxy_images": 80,
+      "online_adam": 20,
+      "backward_calls": 20,
+      "memory_pushes": 20,
+      "retrievals": 4,
+      "condition_transforms": 20
+    },
+    "source_fundus_D3": {
+      "model_forwards": 40,
+      "prompt_forwards": 64,
+      "proxy_forwards": 20,
+      "proxy_images": 80,
+      "online_adam": 20,
+      "backward_calls": 20,
+      "memory_pushes": 20,
+      "retrievals": 4,
+      "condition_transforms": 20
+    },
+    "source_fundus_O3": {
+      "model_forwards": 40,
+      "prompt_forwards": 64,
+      "proxy_forwards": 20,
+      "proxy_images": 80,
+      "online_adam": 20,
+      "backward_calls": 20,
+      "memory_pushes": 20,
+      "retrievals": 4,
+      "condition_transforms": 20
+    },
+    "source_fundus_O2T": {
+      "model_forwards": 40,
+      "prompt_forwards": 64,
+      "proxy_forwards": 20,
+      "proxy_images": 80,
+      "online_adam": 20,
+      "backward_calls": 20,
+      "memory_pushes": 20,
+      "retrievals": 4,
+      "condition_transforms": 20
+    },
+    "target_fundus_R3": {
+      "model_forwards": 256,
+      "prompt_forwards": 496,
+      "proxy_forwards": 128,
+      "proxy_images": 512,
+      "online_adam": 128,
+      "backward_calls": 128,
+      "memory_pushes": 128,
+      "retrievals": 112,
+      "condition_transforms": 128
+    },
+    "target_fundus_D3": {
+      "model_forwards": 256,
+      "prompt_forwards": 496,
+      "proxy_forwards": 128,
+      "proxy_images": 512,
+      "online_adam": 128,
+      "backward_calls": 128,
+      "memory_pushes": 128,
+      "retrievals": 112,
+      "condition_transforms": 128
+    },
+    "target_fundus_O3": {
+      "model_forwards": 256,
+      "prompt_forwards": 496,
+      "proxy_forwards": 128,
+      "proxy_images": 512,
+      "online_adam": 128,
+      "backward_calls": 128,
+      "memory_pushes": 128,
+      "retrievals": 112,
+      "condition_transforms": 128
+    },
+    "target_fundus_O2T": {
+      "model_forwards": 256,
+      "prompt_forwards": 496,
+      "proxy_forwards": 128,
+      "proxy_images": 512,
+      "online_adam": 128,
+      "backward_calls": 128,
+      "memory_pushes": 128,
+      "retrievals": 112,
+      "condition_transforms": 128
+    },
+    "train_polyp_D3": {
+      "live_forwards": 600,
+      "proxy_forwards": 600,
+      "proxy_images": 2400,
+      "prompt_forwards": 1499,
+      "gradient_calls": 1200,
+      "differentiable_inner": 0,
+      "condition_transforms": 600
+    },
+    "train_polyp_O3": {
+      "live_forwards": 1200,
+      "proxy_forwards": 600,
+      "proxy_images": 2400,
+      "prompt_forwards": 2099,
+      "gradient_calls": 1200,
+      "differentiable_inner": 600,
+      "condition_transforms": 600
+    },
+    "source_polyp_R3": {
+      "model_forwards": 64,
+      "prompt_forwards": 112,
+      "proxy_forwards": 32,
+      "proxy_images": 128,
+      "online_adam": 32,
+      "backward_calls": 32,
+      "memory_pushes": 32,
+      "retrievals": 16,
+      "condition_transforms": 32
+    },
+    "source_polyp_D3": {
+      "model_forwards": 64,
+      "prompt_forwards": 112,
+      "proxy_forwards": 32,
+      "proxy_images": 128,
+      "online_adam": 32,
+      "backward_calls": 32,
+      "memory_pushes": 32,
+      "retrievals": 16,
+      "condition_transforms": 32
+    },
+    "source_polyp_O3": {
+      "model_forwards": 64,
+      "prompt_forwards": 112,
+      "proxy_forwards": 32,
+      "proxy_images": 128,
+      "online_adam": 32,
+      "backward_calls": 32,
+      "memory_pushes": 32,
+      "retrievals": 16,
+      "condition_transforms": 32
+    },
+    "source_polyp_O2T": {
+      "model_forwards": 64,
+      "prompt_forwards": 112,
+      "proxy_forwards": 32,
+      "proxy_images": 128,
+      "online_adam": 32,
+      "backward_calls": 32,
+      "memory_pushes": 32,
+      "retrievals": 16,
+      "condition_transforms": 32
+    },
+    "target_polyp_R3": {
+      "model_forwards": 192,
+      "prompt_forwards": 368,
+      "proxy_forwards": 96,
+      "proxy_images": 384,
+      "online_adam": 96,
+      "backward_calls": 96,
+      "memory_pushes": 96,
+      "retrievals": 80,
+      "condition_transforms": 96
+    },
+    "target_polyp_D3": {
+      "model_forwards": 192,
+      "prompt_forwards": 368,
+      "proxy_forwards": 96,
+      "proxy_images": 384,
+      "online_adam": 96,
+      "backward_calls": 96,
+      "memory_pushes": 96,
+      "retrievals": 80,
+      "condition_transforms": 96
+    },
+    "target_polyp_O3": {
+      "model_forwards": 192,
+      "prompt_forwards": 368,
+      "proxy_forwards": 96,
+      "proxy_images": 384,
+      "online_adam": 96,
+      "backward_calls": 96,
+      "memory_pushes": 96,
+      "retrievals": 80,
+      "condition_transforms": 96
+    },
+    "target_polyp_O2T": {
+      "model_forwards": 192,
+      "prompt_forwards": 368,
+      "proxy_forwards": 96,
+      "proxy_images": 384,
+      "online_adam": 96,
+      "backward_calls": 96,
+      "memory_pushes": 96,
+      "retrievals": 80,
+      "condition_transforms": 96
+    }
   },
   "smoke": {
     "status": "M3_SMOKE_PASS",
@@ -358,6 +571,123 @@
     "gpu_seconds": 31.3279892350547,
     "exit_code": 0
   },
+  "scoring_cost": {
+    "source_fundus_R3": {
+      "records": 20,
+      "pipeline_seconds": 12.800028704572469,
+      "host_step_seconds": 7.965449819690548,
+      "peak_allocated_bytes": 4194536960
+    },
+    "source_fundus_D3": {
+      "records": 20,
+      "pipeline_seconds": 13.418503760010935,
+      "host_step_seconds": 9.064786478527822,
+      "peak_allocated_bytes": 4194536960
+    },
+    "source_fundus_O3": {
+      "records": 20,
+      "pipeline_seconds": 12.749586851219647,
+      "host_step_seconds": 9.037430524127558,
+      "peak_allocated_bytes": 4194536960
+    },
+    "source_fundus_O2T": {
+      "records": 20,
+      "pipeline_seconds": 13.212046106695198,
+      "host_step_seconds": 9.104245986323804,
+      "peak_allocated_bytes": 4194536960
+    },
+    "target_fundus_R3": {
+      "records": 128,
+      "pipeline_seconds": 81.86053138319403,
+      "host_step_seconds": 56.40701569314115,
+      "peak_allocated_bytes": 4200828416
+    },
+    "target_fundus_D3": {
+      "records": 128,
+      "pipeline_seconds": 80.46860369644128,
+      "host_step_seconds": 56.756830355501734,
+      "peak_allocated_bytes": 4200828416
+    },
+    "target_fundus_O3": {
+      "records": 128,
+      "pipeline_seconds": 77.51313741423655,
+      "host_step_seconds": 51.58486651012208,
+      "peak_allocated_bytes": 4200828416
+    },
+    "target_fundus_O2T": {
+      "records": 128,
+      "pipeline_seconds": 80.74287862202618,
+      "host_step_seconds": 53.82870694284793,
+      "peak_allocated_bytes": 4200828416
+    },
+    "source_polyp_R3": {
+      "records": 32,
+      "pipeline_seconds": 12.767802800866775,
+      "host_step_seconds": 10.426875804085284,
+      "peak_allocated_bytes": 2259566080
+    },
+    "source_polyp_D3": {
+      "records": 32,
+      "pipeline_seconds": 12.08092745859176,
+      "host_step_seconds": 10.328862017719075,
+      "peak_allocated_bytes": 2259566080
+    },
+    "source_polyp_O3": {
+      "records": 32,
+      "pipeline_seconds": 12.09106714068912,
+      "host_step_seconds": 10.324514734558761,
+      "peak_allocated_bytes": 2259566080
+    },
+    "source_polyp_O2T": {
+      "records": 32,
+      "pipeline_seconds": 11.36166480218526,
+      "host_step_seconds": 9.667626323876902,
+      "peak_allocated_bytes": 2259566080
+    },
+    "target_polyp_R3": {
+      "records": 96,
+      "pipeline_seconds": 35.99494019057602,
+      "host_step_seconds": 29.042601548484527,
+      "peak_allocated_bytes": 2261477888
+    },
+    "target_polyp_D3": {
+      "records": 96,
+      "pipeline_seconds": 35.760449175024405,
+      "host_step_seconds": 29.681860157987103,
+      "peak_allocated_bytes": 2261477888
+    },
+    "target_polyp_O3": {
+      "records": 96,
+      "pipeline_seconds": 35.995585718075745,
+      "host_step_seconds": 29.90376632695552,
+      "peak_allocated_bytes": 2261477888
+    },
+    "target_polyp_O2T": {
+      "records": 96,
+      "pipeline_seconds": 34.63317060144618,
+      "host_step_seconds": 28.67773780610878,
+      "peak_allocated_bytes": 2261477888
+    }
+  },
+  "gpu_seconds": 3756.985489679035,
+  "environment_comparison": {
+    "differences": {},
+    "compatible": true
+  },
+  "private_output_bytes": 374120436,
+  "independent_CPU_recompute": true,
+  "exit_code": 0,
+  "CPU_validation": {
+    "tests": 31,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 4.836084367940202,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "exit_code": 0,
+    "full_historical_regression": "REUSED_NOT_RERUN"
+  },
   "registration": {
     "M1_M2_assets_reused": true,
     "episode_lists_reused_without_generation": true,
@@ -365,37 +695,12 @@
     "O2T_sealed_artifacts_verified": 2,
     "old_records_expected": 1932
   },
-  "formal": {
-    "status": "STARTED_PENDING_COMPLETION",
-    "training_expected": {
-      "fundus": {
-        "D3": 600,
-        "O3": 600
-      },
-      "polyp": {
-        "D3": 600,
-        "O3": 600
-      }
-    },
-    "new_scores_expected": {
-      "source": 208,
-      "target": 896,
-      "total": 1104
-    },
-    "online_total_expected": 1120,
-    "outer_total_expected": 2404,
-    "inner_total_expected": 1202,
-    "independent_CPU_recompute_and_report": "queued after successful run",
-    "startup_snapshot": {
-      "fundus_D3_completed_episodes": 41,
-      "loss": 0.8715745210647583,
-      "gradient_norm": 0.29154470562934875,
-      "clipping_fraction": 0.0026607513427734375,
-      "condition_change_l2": 93.60167694091797,
-      "failure_files": 0,
-      "M2_environment_differences": {},
-      "detached_launcher_alive": true
-    }
+  "stage_exit_codes": {
+    "CPU_validation": 0,
+    "smoke": 0,
+    "run": 0,
+    "independent_CPU_recompute": 0,
+    "launcher": 0
   },
-  "scientific_conclusion": "NOT_AVAILABLE_WHILE_RUNNING"
+  "scientific_conclusion": "Mixed Fundus results and Polyp degradation; no clear cross-task incremental benefit. Current configuration stopped after planned completion; no M4 started."
 }
