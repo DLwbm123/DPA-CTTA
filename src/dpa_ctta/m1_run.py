@@ -47,7 +47,13 @@ def new_log(path): return os.fdopen(os.open(path,os.O_WRONLY|os.O_CREAT|os.O_EXC
 
 
 def make_host(task,arm,state,proxy=None,device='cuda:0'):
-    return assemble(task,'B' if arm in ('R','D','O') else arm,state,proxy,device=device)
+    host=assemble(task,'B' if arm in ('R','D','O') else arm,state,proxy,device=device)
+    if arm!='N':
+        group=host.optimizer.param_groups[0]
+        if (group['lr']!=(.05 if task=='fundus' else .01) or group['betas']!=(.9,.99) or group['eps']!=1e-8
+            or group['weight_decay']!=0 or any(group[k] for k in ('amsgrad','maximize','capturable','differentiable'))):
+            raise ValueError('native Adam options differ from frozen contract')
+    return host
 
 
 class Observed:
@@ -139,7 +145,8 @@ def smoke(receipt,out,registration):
                 source_unchanged(h,state);o.verify()
                 if o.counts['online_adam']!=17 or o.counts['memory_pushes']!=17 or o.counts['retrievals']!=1: raise ValueError('Base smoke lifecycle')
                 o.release()
-            task_ev={'base_max_error':max(diffs),'base_counts':[o.counts for o in observations]}
+            task_ev={'base_max_error':max(diffs),'base_counts':[o.counts for o in observations],
+                'native_adam_options':{k:v for k,v in base.optimizer.param_groups[0].items() if k!='params'}}
             del ref,base,observations,a,b;gc.collect()
             reference_prediction=None;reference_snapshot=None
             for arm in ('R','D','O'):

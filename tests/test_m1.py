@@ -100,3 +100,15 @@ class M1Tests(unittest.TestCase):
         values=paired([dict(dice=.5,assd=9.),dict(dice=.5,assd=1.)],[dict(dice=.5,assd=2.),dict(dice=.5,assd=None)])
         self.assertEqual(values['assd_common_valid'],1)
         self.assertEqual(values['assd_adverse_upper_decile_mean_px'],7.)
+
+    def test_history_query_retrieval_preserves_task_specific_native_return(self):
+        for task in ('fundus','polyp'):
+            prompt=TinyPrompt();model=nn.Sequential(TinyBN())
+            expected=torch.full_like(prompt.data_prompt,.4)
+            memory=SimpleNamespace(memory={},get_size=lambda:16,get_neighbours=lambda *a: (expected,0.7) if task=='fundus' else expected)
+            h=SimpleNamespace(prompt=prompt,model=model,adabn=TinyBN,memory_bank=memory,neighbor=16,
+                optimizer=torch.optim.Adam(prompt.parameters(),lr=.01,betas=(.9,.99)))
+            ep=OfflineEpisode.__new__(OfflineEpisode);ep.host=h;ep.device=torch.device('cpu');ep.task=task;ep.counts={'prompt_forwards':0}
+            state=history_state(h);_,phi,opt=ep.initialize(torch.rand(1,3,8,8),state)
+            self.assertTrue(torch.equal(phi,expected));self.assertEqual(ep.count,1)
+            self.assertFalse(opt);self.assertFalse(state['memory'])

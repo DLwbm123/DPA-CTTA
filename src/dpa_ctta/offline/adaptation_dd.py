@@ -79,7 +79,8 @@ class OfflineEpisode:
         if h.memory_bank.get_size()>=h.neighbor:
             with torch.no_grad(): _,low=h.prompt(x)
             self.counts['prompt_forwards']+=1
-            init,_=h.memory_bank.get_neighbours(low.cpu().numpy(),h.neighbor)
+            retrieved=h.memory_bank.get_neighbours(low.cpu().numpy(),h.neighbor)
+            init=retrieved[0] if self.task=='fundus' else retrieved
         else: init=torch.ones_like(h.prompt.data_prompt)
         h.prompt.update(init)
         phi=h.prompt.data_prompt.detach().clone().requires_grad_(True)

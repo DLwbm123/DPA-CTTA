@@ -44,6 +44,10 @@ def select_targets(rows, task, source_images):
         selected.extend(dict(r,experiment_role='M1_TARGET_DEV') for r in chosen)
         roles.extend(dict(sample_id=r['sample_id'],group_id=r['group_id'],role='M1_TARGET_DEV' if r['group_id'] in keys else 'NOT_USED_IN_M1') for r in pool)
         counts[domain]=dict(eligible=len(pool),selected=len(chosen))
+    selected_ids={r['sample_id'] for r in selected}
+    roles=[dict(sample_id=r['sample_id'],group_id=r['image_sha256'],original_split=r['split'],
+        role='M1_TARGET_DEV' if r['sample_id'] in selected_ids else 'NOT_USED_IN_M1')
+        for r in rows if r['domain'] in DOMAINS[task]]
     return selected,roles,excluded,counts
 
 
