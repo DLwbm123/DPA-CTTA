@@ -340,5 +340,189 @@
       "seed_is_not_bitwise_determinism_proof": true
     },
     "exit_code": 0
+  },
+  "four_step_R1_failure": {
+    "task": "fundus",
+    "arm": "D4",
+    "position": 19,
+    "updates": {
+      "online": 3,
+      "outer": 3,
+      "inner": 12
+    },
+    "comparisons": [
+      {
+        "task": "fundus",
+        "arm": "D4",
+        "position": 17,
+        "errors": {
+          "initial_prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "gradient": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prediction": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          }
+        }
+      },
+      {
+        "task": "fundus",
+        "arm": "L4",
+        "position": 17,
+        "errors": {
+          "initial_prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "gradient": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prediction": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          }
+        }
+      },
+      {
+        "task": "fundus",
+        "arm": "T4",
+        "position": 17,
+        "errors": {
+          "initial_prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "gradient": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prediction": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          }
+        }
+      },
+      {
+        "task": "fundus",
+        "arm": "D4",
+        "position": 18,
+        "errors": {
+          "initial_prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "gradient": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prediction": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          }
+        }
+      },
+      {
+        "task": "fundus",
+        "arm": "L4",
+        "position": 18,
+        "errors": {
+          "initial_prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "gradient": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prediction": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          }
+        }
+      },
+      {
+        "task": "fundus",
+        "arm": "T4",
+        "position": 18,
+        "errors": {
+          "initial_prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "gradient": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prediction": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          }
+        }
+      },
+      {
+        "task": "fundus",
+        "arm": "D4",
+        "position": 19,
+        "errors": {
+          "initial_prompt": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "gradient": {
+            "max_abs": 0.0,
+            "outside_tolerance": 0
+          },
+          "prompt": {
+            "max_abs": 1.1920928955078125e-07,
+            "outside_tolerance": 0
+          },
+          "prediction": {
+            "max_abs": 3.0040740966796875e-05,
+            "outside_tolerance": 44
+          }
+        }
+      }
+    ],
+    "gpu_seconds": 59.42087008594535,
+    "peak_allocated_bytes": 15104082432,
+    "exit_code": 1
+  },
+  "step19_arithmetic_isolation": {
+    "scope": "CUDA arithmetic on saved 75-element prompt/gradient/moments; no new images or predictions",
+    "optimizer_primitive_checks": 2,
+    "pointwise_vs_native_foreach_max_abs": 1.1920928955078125e-07,
+    "foreach_functional_vs_native_foreach_max_abs": 0.0,
+    "pointwise_vs_native_single_tensor_max_abs": 0.0,
+    "timing": "not independently measured; charge a conservative 60 seconds against the resource cap"
   }
 }

@@ -120,7 +120,7 @@ def smoke(receipt,out,overlay,registration):
                     del pred
                 source_unchanged(h,source);watch.release()
                 ev['native_reference']=dict(counts=watch.counts,max_prediction_difference=max(max_errors),positions=[17,18,19,20],comparisons=[c for c in comparisons if c['task']==task])
-                del h,watch,traces;gc.collect()
+                del h,watch;traces={};gc.collect()
             ev['peak_allocated_bytes']=torch.cuda.max_memory_allocated()
             print(json.dumps(dict(stage='smoke',task=task,status='PASS',updates=updates)),flush=True)
             del source,real,history,queries;gc.collect()

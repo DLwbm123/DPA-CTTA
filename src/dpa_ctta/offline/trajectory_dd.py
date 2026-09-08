@@ -9,18 +9,34 @@ from .prompt_gradient_matching import cosine_objective
 from ..medical_losses import medical_loss
 
 
-def native_adam(phi,gradient,state,lr):
-    """M4 functional Adam with native addcmul/addcdiv arithmetic ordering.
+class ForeachFiniteSqrt(FiniteSqrt):
+    @staticmethod
+    def forward(ctx,x):
+        y=torch._foreach_sqrt([x])[0];ctx.save_for_backward(y);return y
 
-    The historical M1/M2 primitive is left immutable. Avoid decomposing fused
-    pointwise operations: one-ULP prompt differences can feed the next retrieval.
+
+def native_adam(phi,gradient,state,lr,foreach=None):
+    """Functional native dispatcher: CUDA foreach, CPU single-tensor by default.
+
+    Scalar-list division in CUDA foreach is observably different from the
+    single-tensor expression at step 19. Keep the actual native operation order,
+    while inheriting the validated zero-second-moment derivative convention.
+    The optional flag only permits primitive tests to exercise both backends.
     """
     step=int(state.get('step',0))+1
-    m=state.get('exp_avg',torch.zeros_like(phi)).lerp(gradient,1-.9)
-    v=torch.addcmul(state.get('exp_avg_sq',torch.zeros_like(phi))*.99,
-                   gradient,gradient,value=1-.99)
-    denominator=FiniteSqrt.apply(v)/(1-.99**step)**.5+1e-8
-    plus=torch.addcdiv(phi,m,denominator,value=-lr/(1-.9**step))
+    old_m=state.get('exp_avg',torch.zeros_like(phi))
+    old_v=state.get('exp_avg_sq',torch.zeros_like(phi))
+    foreach=phi.device.type=='cuda' if foreach is None else foreach
+    if foreach:
+        m=torch._foreach_lerp([old_m],[gradient],1-.9)[0]
+        v=torch._foreach_addcmul(torch._foreach_mul([old_v],.99),[gradient],[gradient],1-.99)[0]
+        denominator=torch._foreach_add(torch._foreach_div([ForeachFiniteSqrt.apply(v)],[(1-.99**step)**.5]),1e-8)
+        plus=torch._foreach_addcdiv([phi],[m],denominator,[-lr/(1-.9**step)])[0]
+    else:
+        m=old_m.lerp(gradient,1-.9)
+        v=torch.addcmul(old_v*.99,gradient,gradient,value=1-.99)
+        denominator=FiniteSqrt.apply(v)/(1-.99**step)**.5+1e-8
+        plus=torch.addcdiv(phi,m,denominator,value=-lr/(1-.9**step))
     return plus,dict(step=step,exp_avg=m,exp_avg_sq=v)
 
 

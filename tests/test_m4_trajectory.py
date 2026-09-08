@@ -171,3 +171,18 @@ class M4Tests(unittest.TestCase):
         p.grad=g.detach().clone();opt.step()
         self.assertTrue(torch.equal(q,p))
         for k in ['exp_avg','exp_avg_sq']:self.assertTrue(torch.equal(state[k],opt.state[p][k]))
+
+    def test_foreach_Adam_has_finite_first_and_second_derivatives(self):
+        from dpa_ctta.offline.trajectory_dd import native_adam
+        phi=torch.tensor([.8,-.3,1.],dtype=torch.double)
+        g=torch.tensor([.3,.6,0.],dtype=torch.double,requires_grad=True)
+        state=dict(step=18,exp_avg=torch.tensor([.2,.4,0.],dtype=torch.double),exp_avg_sq=torch.tensor([.5,.2,0.],dtype=torch.double))
+        q,updated=native_adam(phi,g,state,.05,foreach=True)
+        grad,=torch.autograd.grad(q.sum(),g,create_graph=True)
+        second,=torch.autograd.grad(grad.sum(),g)
+        self.assertTrue(torch.isfinite(grad).all());self.assertTrue(torch.isfinite(second).all())
+        p=torch.nn.Parameter(phi.clone());opt=torch.optim.Adam([p],lr=.05,betas=(.9,.99),eps=1e-8,foreach=True)
+        opt.state[p]={k:torch.tensor(float(v)) if k=='step' else v.clone() for k,v in state.items()}
+        p.grad=g.detach().clone();opt.step()
+        close(q,p)
+        for k in ['exp_avg','exp_avg_sq']:close(updated[k],opt.state[p][k])
