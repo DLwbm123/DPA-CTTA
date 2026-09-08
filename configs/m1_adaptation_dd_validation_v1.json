@@ -1,0 +1,177 @@
+{
+  "schema_version": "m1-adaptation-dd-validation-v1",
+  "baseline_commit": "348f13ade87e4f7b7197ac6638bd38f4b528bdd0",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "seed": 20260907,
+  "arms": [
+    "N",
+    "A",
+    "R",
+    "D",
+    "O"
+  ],
+  "models": {
+    "fundus": "native ResUNet34 512x512",
+    "polyp": "native PraNet 352x352"
+  },
+  "native": {
+    "lr": {
+      "fundus": 0.05,
+      "polyp": 0.01
+    },
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "iters": 1,
+    "warm_n": 5,
+    "neighbor": 16,
+    "memory_size": 40,
+    "prompt_alpha": 0.01
+  },
+  "proxy": {
+    "K": 4,
+    "lambda": 0.1,
+    "beta_boundary": 0,
+    "transform": "identity",
+    "mask": "original basis_train fixed dense masks shared R/D/O",
+    "initialization": "same original RGB [0,1] pixels",
+    "online": "fixed full K=4 with original independent source clone"
+  },
+  "outer": {
+    "episodes": 600,
+    "optimizer": "Adam",
+    "lr": 0.01,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "projection": [
+      0,
+      1
+    ],
+    "save_steps": [
+      0,
+      100,
+      300,
+      600
+    ],
+    "evaluation_step": 600,
+    "query_batch": 1
+  },
+  "objectives": {
+    "D": "1-cosine(g_syn,stopgrad(g_real)); prompt gradients; squared-norm epsilon 1e-24",
+    "O": "post-one-native-Adam source query region loss; host+0.1*proxy inner; original moments and counters",
+    "region": "existing balanced BCE + soft Dice",
+    "zero_second_moment_derivative": "sqrt forward exact, derivative zero at exactly zero; native derivative elsewhere",
+    "native_adabn": "unchanged including stop-gradient statistics"
+  },
+  "source": {
+    "query_role": "critic_train",
+    "query_cap": 64,
+    "query_sort": "SHA256(M1:20260907:task:critic_train:group_id), group_id",
+    "history_role": "basis_train excluding original K4; fallback critic_train only if empty",
+    "history_sort": "SHA256(M1:20260907:task:history:group_id), group_id; cycle to 32",
+    "history_updates": 32,
+    "score_role": "original 20/32 critic_validation; after all training only",
+    "proxy_test": "unused",
+    "checkpoint_training_membership": "UNKNOWN"
+  },
+  "episode_sequence": "seeded shuffled state indices cyclic to600 (counts18/19), shuffled query indices cyclic, transforms clean/gamma0.7/gamma1.5/blur5sigma1 cyclic; same D/O sequence",
+  "target": {
+    "domains": {
+      "fundus": [
+        "REFUGE",
+        "ORIGA",
+        "REFUGE_Valid",
+        "Drishti_GS"
+      ],
+      "polyp": [
+        "CVC-ClinicDB",
+        "ETIS-LaribPolypDB",
+        "Kvasir-SEG"
+      ]
+    },
+    "max_per_domain": 32,
+    "role": "exploratory_target_development",
+    "original_splits": [
+      "train",
+      "test",
+      "combined"
+    ],
+    "historical_target_exposure": "documented_previous_evaluation",
+    "missing_linkage": "UNKNOWN",
+    "untouched_final_claim": false,
+    "exclude": "explicit sealed assets, image-mask conflicts, full-source image overlap, known source-target association overlap, later-domain duplicate",
+    "selection": "SHA256(M1:20260907:task:domain:image_sha256), image_sha256; smallest sample_id alias",
+    "playback": "restore original manifest order",
+    "empty_domain": "record missing and evaluate other domains",
+    "label_access": "only evaluator after prediction; raw-byte/container identity checks during registration"
+  },
+  "evaluation": {
+    "arms_fresh": true,
+    "source_target_fresh": true,
+    "cross_domain_reset": false,
+    "metrics": "existing final-grid Dice and ASSD; nearest masks; Fundus OD<255/OC0, Polyp>127",
+    "task_aggregation": "equal-domain mean; Fundus OD/OC macro; no cross-task average",
+    "paired": [
+      "O-D",
+      "O-R",
+      "O-A",
+      "O-N",
+      "D-R",
+      "R-A",
+      "A-N"
+    ],
+    "statistics": "mean, median, unrounded sign counts, ascending worst ceil(0.1*n) Dice difference; ASSD common valid cohort, empty/full/undefined counts; pixel units"
+  },
+  "budget": {
+    "smoke_online": 74,
+    "smoke_outer": 4,
+    "smoke_inner": 2,
+    "history_online": 64,
+    "training_outer": 2400,
+    "training_inner": 1200,
+    "source_online": 208,
+    "source_records": 260,
+    "target_online_nominal": 896,
+    "target_records_nominal": 1120,
+    "online_total_nominal": 1242,
+    "outer_total": 2404,
+    "inner_total": 1202,
+    "gpu_wall_seconds": 21600,
+    "private_bytes": 2147483648
+  },
+  "gpu": {
+    "allowed_physical": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "preferred": 7,
+    "simultaneous_devices": 1,
+    "coexist": true,
+    "background_waiter": false
+  },
+  "tolerance": {
+    "rtol": 0.0001,
+    "atol": 1e-05,
+    "discrete": "exact"
+  },
+  "receipt": [
+    "clean commit",
+    "config digest",
+    "registration digest",
+    "dependency",
+    "GPU UUID",
+    "smoke evidence digest",
+    "final proxy digests"
+  ],
+  "stop": "identity, encoding, gradients, nonfinite, source mutation, OOM, budget; retain prefix; no formal rerun or automatic resume",
+  "interpretation": "exploratory single seed/order, off-policy Base history truncated one-step; GM is prompt-space adaptation baseline; no SOTA/clinical/privacy claim; no score gate or automatic extensions"
+}
