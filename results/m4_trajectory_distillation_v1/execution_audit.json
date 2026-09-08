@@ -1,0 +1,134 @@
+{
+  "status": "M4_SMOKE_FAILED_STOPPED",
+  "execution_commit": "956662e94cc4c2b66109acf4075652fd9f29aa55",
+  "baseline_release": "538a768363a79a5dca27de186e2b776c858c5e2b",
+  "CPU_validation": {
+    "tests": 22,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 3.1202783280750737,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "exit_code": 0,
+    "full_historical_regression": "REUSED_NOT_RERUN"
+  },
+  "stage_exit_codes": {
+    "CPU_validation": 0,
+    "registration": 0,
+    "smoke": 1,
+    "formal_run": null,
+    "independent_CPU_result_recompute": null
+  },
+  "smoke_failure": {
+    "status": "M4_PARTIAL",
+    "task": "fundus",
+    "arm": "D4",
+    "updates": {
+      "online": 2,
+      "outer": 3,
+      "inner": 12
+    },
+    "current_counts": {
+      "model_forwards": 4,
+      "prompt_forwards": 8,
+      "proxy_forwards": 2,
+      "proxy_images": 8,
+      "online_adam": 2,
+      "backward_calls": 2,
+      "memory_pushes": 2,
+      "retrievals": 2
+    },
+    "evidence": {
+      "fundus": {
+        "D4": {
+          "loss": 0.7856887578964233,
+          "gradient_norm": 10.848612785339355,
+          "image_delta_norm": 17.676843643188477,
+          "counts": {
+            "live_forwards": 8,
+            "proxy_forwards": 4,
+            "proxy_images": 16,
+            "prompt_forwards": 16,
+            "gradient_calls": 12,
+            "differentiable_inner": 4,
+            "memory_pushes": 4,
+            "retrievals": 4,
+            "source_visits": 4
+          }
+        },
+        "L4": {
+          "loss": 5.218537330627441,
+          "gradient_norm": 0.1038665771484375,
+          "image_delta_norm": 17.47284507751465,
+          "counts": {
+            "live_forwards": 8,
+            "proxy_forwards": 4,
+            "proxy_images": 16,
+            "prompt_forwards": 16,
+            "gradient_calls": 8,
+            "differentiable_inner": 4,
+            "memory_pushes": 4,
+            "retrievals": 4,
+            "source_visits": 4
+          }
+        },
+        "T4": {
+          "loss": 5.218537330627441,
+          "gradient_norm": 0.11489642411470413,
+          "image_delta_norm": 17.498281478881836,
+          "counts": {
+            "live_forwards": 8,
+            "proxy_forwards": 4,
+            "proxy_images": 16,
+            "prompt_forwards": 16,
+            "gradient_calls": 8,
+            "differentiable_inner": 4,
+            "memory_pushes": 4,
+            "retrievals": 4,
+            "source_visits": 4
+          }
+        }
+      }
+    },
+    "reason": "Tensor-likes are not close!\n\nMismatched elements: 1673 / 524288 (0.3%)\nGreatest absolute difference: 0.0003333091735839844 at index (0, 0, 248, 328) (up to 1e-05 allowed)\nGreatest relative difference: 0.06829499453306198 at index (0, 0, 255, 329) (up to 0.0001 allowed)",
+    "exception": "AssertionError",
+    "gpu_seconds": 23.107255089911632,
+    "exit_code": 1
+  },
+  "environment_comparison": {
+    "differences": {},
+    "compatible": true
+  },
+  "actual_updates": {
+    "online": 2,
+    "outer": 3,
+    "inner": 12
+  },
+  "formal_training_visits": 0,
+  "formal_outer_updates": 0,
+  "new_scoring_records": 0,
+  "six_formal_fits": {
+    "fundus": {
+      "D4": "NOT_STARTED",
+      "L4": "NOT_STARTED",
+      "T4": "NOT_STARTED"
+    },
+    "polyp": {
+      "D4": "NOT_STARTED",
+      "L4": "NOT_STARTED",
+      "T4": "NOT_STARTED"
+    }
+  },
+  "physical_gpu": 7,
+  "gpu_stage_seconds": 23.107255089911632,
+  "peak_allocated_bytes": null,
+  "peak_memory_note": "Not persisted by the failure handler; cannot reconstruct the peak from post-exit GPU occupancy.",
+  "retry_count": 0,
+  "formal_launcher_started": false,
+  "scientific_result": "NOT_AVAILABLE; numerical implementation acceptance failed, not a method-performance negative result",
+  "private_output_bytes_at_stop": 322182,
+  "private_file_count_at_stop": 13,
+  "smoke_process_exited": true,
+  "formal_scoring_log_count": 0
+}

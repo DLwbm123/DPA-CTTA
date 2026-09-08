@@ -311,3 +311,8 @@ The score-blind sequence uses one SHA-256 ordering of the fixed seed/task/origin
 Local affected validation: 22 tests passed (exit 0, 1.445 seconds), including seven M4 tests and 15 relevant M1/M2 regressions. Cold/warm four-step comparisons use a CPU procedural model with native memory and actual torch Adam; deployed full-resolution/source-model parity is checked by the single budgeted GPU smoke. The local CPU tests are not a substitute for that GPU result. Full historical suites are reused evidence, not rerun. Runtime status is recorded separately; this implementation checkpoint does not claim formal completion or scientific benefit.
 
 The user's current long-experiment convention applies: once smoke passes and a reliable detached formal pipeline is verified started, the session may end without keeping an SSH connection or automatically monitoring. Actual completion, independent reconstruction and public result delivery remain separate from successful startup.
+
+
+## Runtime outcome
+
+Full-model GPU smoke failed at the second Fundus native reference prediction under the unchanged tolerance. Formal training and scoring were not started. See [failure report](../results/m4_trajectory_distillation_v1/M4_EXPERIMENT_REPORT.md) for the actual 2 online / 3 outer / 12 functional inner updates and exact stopping boundary. No GPU retry was performed.
