@@ -1,5 +1,6 @@
 """Finite M2 orchestration. M1 scientific primitives and online hosts are unchanged."""
 import argparse
+from contextlib import contextmanager
 import gc
 import json
 import os
@@ -32,6 +33,22 @@ def base_method(arm):
 
 def m2_host(task,arm,state,proxy,device='cuda:0'):
     return make_host(task,base_method(arm),state,proxy,device)
+
+
+@contextmanager
+def deterministic_smoke_pair():
+    """Control CUDA reduction order only for the two-host equivalence check.
+
+    cuDNN deterministic alone does not cover native CUDA interpolation backward.
+    Restore both flags even on failure; formal M1-compatible execution is unchanged.
+    """
+    enabled=torch.are_deterministic_algorithms_enabled()
+    warn_only=torch.is_deterministic_algorithms_warn_only_enabled()
+    try:
+        torch.use_deterministic_algorithms(True,warn_only=False)
+        yield
+    finally:
+        torch.use_deterministic_algorithms(enabled,warn_only=warn_only)
 
 
 def validate_new_arm(records,expected,task,arm):
@@ -91,33 +108,36 @@ def smoke(receipt,out,overlay,registration):
                 if arm=='O2':updates['inner']+=1
                 with torch.no_grad():S.clamp_(0,1)
                 if not torch.isfinite(S).all() or torch.equal(S,before):raise ValueError('smoke pixels unchanged/nonfinite')
-                item=dict(loss=float(loss.detach()),image_gradient_norm=float(g.norm()),pixel_update_norm=float((S-before).norm()),offline_counts=dict(ep.counts))
+                item=dict(loss=float(loss.detach()),image_gradient_norm=float(g.norm()),pixel_update_norm=float((S-before).norm()),offline_counts=dict(ep.counts),status='OUTER_PASS_ONLINE_PENDING')
+                evidence[task][arm]=item
                 payload=FixedProxy(S.detach().cpu(),real.mask,real.signed_distance,ProxyProvenance.SOURCE)
                 source_unchanged(ep.host,state)
                 for n,v in ep.clone.state_dict().items():
                     if not torch.equal(v.cpu(),state[n]):raise ValueError('offline clone changed')
                 ep.clear_graphs();del ep,S,opt,loss,g,before;gc.collect()
-                direct=make_host(task,base_method(arm),state,payload);wrapped=m2_host(task,arm,state,payload)
-                wa,wb=Observed(direct),Observed(wrapped);current_counts={'reference':wa.counts,'new':wb.counts}
-                initial=rng();a=direct.step(pixels(task));updates['online']+=1;after=rng()
-                restore(initial);b=wrapped.step(pixels(task));updates['online']+=1
-                close(a,b);close(after,rng(),exact=True);close(snapshot(direct),snapshot(wrapped))
-                # Counters and memory keys/values are discrete identity/state observations.
-                close(history_state_discrete(direct),history_state_discrete(wrapped),exact=True)
-                for pa,pb in zip(direct.model.parameters(),wrapped.model.parameters()):close(pa.grad,pb.grad)
-                item.update(max_logit_difference=float((a-b).abs().max()),online_counts=[dict(wa.counts),dict(wb.counts)])
-                for h,w in ((direct,wa),(wrapped,wb)):
-                    w.verify();source_unchanged(h,state)
-                    if w.counts['online_adam']!=1 or w.counts['memory_pushes']!=1:raise ValueError('smoke lifecycle')
-                    w.release()
-                evidence[task][arm]=item;del direct,wrapped,wa,wb,a,b,payload;gc.collect()
+                with deterministic_smoke_pair():
+                    direct=make_host(task,base_method(arm),state,payload);wrapped=m2_host(task,arm,state,payload)
+                    wa,wb=Observed(direct),Observed(wrapped);current_counts={'reference':wa.counts,'new':wb.counts}
+                    initial=rng();a=direct.step(pixels(task));updates['online']+=1;after=rng()
+                    restore(initial);b=wrapped.step(pixels(task));updates['online']+=1
+                    close(a,b);close(after,rng(),exact=True);close(snapshot(direct),snapshot(wrapped))
+                    # Counters and memory keys/values are discrete identity/state observations.
+                    close(history_state_discrete(direct),history_state_discrete(wrapped),exact=True)
+                    for pa,pb in zip(direct.model.parameters(),wrapped.model.parameters()):close(pa.grad,pb.grad)
+                    item.update(status='PASS',max_logit_difference=float((a-b).abs().max()),online_counts=[dict(wa.counts),dict(wb.counts)])
+                    for h,w in ((direct,wa),(wrapped,wb)):
+                        w.verify();source_unchanged(h,state)
+                        if w.counts['online_adam']!=1 or w.counts['memory_pushes']!=1:raise ValueError('smoke lifecycle')
+                        w.release()
+                    evidence[task][arm]=item;del direct,wrapped,wa,wb,a,b,payload;gc.collect()
             evidence[task]['peak_allocated_bytes']=torch.cuda.max_memory_allocated()
             del state,real,library;gc.collect()
         if updates!=dict(online=8,outer=4,inner=2):raise ValueError('smoke budget mismatch')
         private_json(out/'smoke.completion.json',dict(status='M2_SMOKE_PASS',updates=updates,evidence=evidence,
-            **{k:receipt[k] for k in ('commit','config_sha256','registration_sha256','gpu_uuid')},gpu_seconds=budget.seconds(),exit_code=0))
+            **{k:receipt[k] for k in ('commit','config_sha256','registration_sha256','gpu_uuid')},
+            paired_comparison_backend=dict(deterministic_algorithms=True,cublas_workspace_config=os.environ.get('CUBLAS_WORKSPACE_CONFIG'),scope='paired online smoke only',restored_deterministic_algorithms=torch.are_deterministic_algorithms_enabled()),gpu_seconds=budget.seconds(),exit_code=0))
     except Exception as error:
-        private_json(out/'smoke.failure.json',dict(status='M2_PARTIAL',task=task,arm=arm,updates=updates,current_counts=current_counts,evidence=evidence,reason=str(error),exception=type(error).__name__,exit_code=1))
+        private_json(out/'smoke.failure.json',dict(status='M2_PARTIAL',task=task,arm=arm,updates=updates,current_counts=current_counts,evidence=evidence,reason=str(error),exception=type(error).__name__,gpu_seconds=budget.seconds(),peak_allocated_bytes=torch.cuda.max_memory_allocated(),exit_code=1))
         raise
 
 
@@ -246,7 +266,11 @@ def run(receipt,out,overlay,registration):
 
 def main(argv=None):
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('stage',choices=['smoke','run','recompute']);p.add_argument('--receipt',type=Path,required=True);a=p.parse_args(argv)
-    os.umask(0o077);receipt=json.loads(a.receipt.read_text());out,overlay,registration=validate(receipt,a.stage)
+    os.umask(0o077)
+    if a.stage=='smoke':
+        if torch.cuda.is_initialized():raise ValueError('smoke workspace must be configured before CUDA initialization')
+        os.environ['CUBLAS_WORKSPACE_CONFIG']=':4096:8'
+    receipt=json.loads(a.receipt.read_text());out,overlay,registration=validate(receipt,a.stage)
     if a.stage=='recompute':
         from .m2_analysis import recompute
         recompute(out,overlay,registration,receipt)

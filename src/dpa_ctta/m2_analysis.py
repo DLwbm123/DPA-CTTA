@@ -117,7 +117,7 @@ def recompute(out,overlay,registration,receipt):
         actual_compute=compute,smoke=smoke,scoring_cost=scoring,gpu_seconds=done['gpu_seconds'],environment_comparison=env,
         private_output_bytes=sum(p.stat().st_size for p in out.iterdir() if p.is_file()),independent_CPU_recompute=True,exit_code=0)
     # Receipt binding stays private. Public smoke evidence omits the private registration digest.
-    audit['smoke']={k:smoke[k] for k in ['status','updates','evidence','gpu_seconds','exit_code']}
+    audit['smoke']={k:smoke[k] for k in ['status','updates','evidence','paired_comparison_backend','gpu_seconds','exit_code']}
     public.update(status=status,environment_comparison=env,scientific_interpretation='Assess O2-D2 and method-specific changes per task/domain; no automatic next experiment')
     private_json(out/'public_aggregate.json',public);private_json(out/'execution_audit.json',audit)
     private_json(out/'verification.json',dict(status=status,counts=measured,reused_M1_records=reused,exit_code=0))

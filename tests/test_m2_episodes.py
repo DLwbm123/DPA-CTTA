@@ -103,3 +103,20 @@ class EpisodeTests(unittest.TestCase):
         partial=summarize({k:arms[k] for k in ['D2','O2']},'polyp')
         self.assertIsNone(partial['task_comparisons_pp']['O2-O1'])
         self.assertEqual(partial['pooled_content_paired']['O2-O1'],'NOT_AVAILABLE')
+
+    def test_smoke_determinism_scope_restores_flags_on_success_and_failure(self):
+        from dpa_ctta.m2_run import deterministic_smoke_pair
+        initial=(torch.are_deterministic_algorithms_enabled(),torch.is_deterministic_algorithms_warn_only_enabled())
+        try:
+            for enabled,warn in [(False,False),(True,True)]:
+                torch.use_deterministic_algorithms(enabled,warn_only=warn)
+                for fail in [False,True]:
+                    try:
+                        with deterministic_smoke_pair():
+                            self.assertTrue(torch.are_deterministic_algorithms_enabled())
+                            self.assertFalse(torch.is_deterministic_algorithms_warn_only_enabled())
+                            if fail:raise RuntimeError('fixture failure')
+                    except RuntimeError:
+                        self.assertTrue(fail)
+                    self.assertEqual((torch.are_deterministic_algorithms_enabled(),torch.is_deterministic_algorithms_warn_only_enabled()),(enabled,warn))
+        finally:torch.use_deterministic_algorithms(initial[0],warn_only=initial[1])

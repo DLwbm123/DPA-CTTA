@@ -1,0 +1,197 @@
+{
+  "status": "REPAIR_IMPLEMENTED_SMOKE_PENDING",
+  "authorization": "User requested diagnosis, repair and experiment report after the stopped M2 attempt",
+  "diagnostic_execution_base_commit": "8f038d8d3821145375adf4492d7fcc8842c3c808",
+  "diagnostic_scope": "procedural Polyp query with original registered Real proxy and history index 16; no source/target score",
+  "diagnostics": {
+    "baseline": {
+      "mode": "baseline",
+      "environment": {
+        "python": "3.10.6",
+        "torch": "2.2.1+cu121",
+        "cuda": "12.1",
+        "cudnn": 8902,
+        "device_name": "NVIDIA GeForce RTX 3090",
+        "tf32_matmul": false,
+        "tf32_cudnn": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": false,
+        "seed": 20260907,
+        "gpu_same_device_tolerance": {
+          "rtol": 0.0001,
+          "atol": 1e-05
+        },
+        "seed_is_not_bitwise_determinism_proof": true
+      },
+      "online": 2,
+      "outer": 1,
+      "inner": 0,
+      "initial_state_exact": true,
+      "warnings": [],
+      "comparisons": {
+        "live": [
+          {
+            "max_abs": 0.0,
+            "norm_a": 3875.94921875,
+            "norm_b": 3875.94921875,
+            "exact": true,
+            "within_tolerance": true
+          },
+          {
+            "max_abs": 0.0,
+            "norm_a": 3875.399169921875,
+            "norm_b": 3875.399169921875,
+            "exact": true,
+            "within_tolerance": true
+          }
+        ],
+        "proxy": [
+          {
+            "max_abs": 0.0,
+            "norm_a": 12194.4248046875,
+            "norm_b": 12194.4248046875,
+            "exact": true,
+            "within_tolerance": true
+          }
+        ],
+        "gradient": [
+          {
+            "max_abs": 6.05359673500061e-09,
+            "norm_a": 0.014594159089028835,
+            "norm_b": 0.014594159089028835,
+            "exact": false,
+            "within_tolerance": true
+          }
+        ],
+        "prompt_after": [
+          {
+            "max_abs": 0.0,
+            "norm_a": 5.1867828369140625,
+            "norm_b": 5.1867828369140625,
+            "exact": true,
+            "within_tolerance": true
+          }
+        ]
+      },
+      "state_rng_match": true,
+      "seconds": 7.722162542049773,
+      "peak_allocated_bytes": 3050017280
+    },
+    "deterministic_cublas_preflight": {
+      "mode": "deterministic",
+      "environment": {
+        "python": "3.10.6",
+        "torch": "2.2.1+cu121",
+        "cuda": "12.1",
+        "cudnn": 8902,
+        "device_name": "NVIDIA GeForce RTX 3090",
+        "tf32_matmul": false,
+        "tf32_cudnn": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": false,
+        "seed": 20260907,
+        "gpu_same_device_tolerance": {
+          "rtol": 0.0001,
+          "atol": 1e-05
+        },
+        "seed_is_not_bitwise_determinism_proof": true
+      },
+      "online": 0,
+      "outer": 0,
+      "inner": 0,
+      "initial_state_exact": true,
+      "exception": "Deterministic behavior was enabled with either `torch.use_deterministic_algorithms(True)` or `at::Context::setDeterministicAlgorithms(true)`, but this operation is not deterministic because it uses CuBLAS and you have CUDA >= 10.2. To enable deterministic behavior in this case, you must set an environment variable before running your PyTorch application: CUBLAS_WORKSPACE_CONFIG=:4096:8 or CUBLAS_WORKSPACE_CONFIG=:16:8. For more information, go to https://docs.nvidia.com/cuda/cublas/index.html#cublasApi_reproducibility",
+      "seconds": 4.662769705988467,
+      "peak_allocated_bytes": 1012311040
+    },
+    "deterministic": {
+      "mode": "deterministic",
+      "environment": {
+        "python": "3.10.6",
+        "torch": "2.2.1+cu121",
+        "cuda": "12.1",
+        "cudnn": 8902,
+        "device_name": "NVIDIA GeForce RTX 3090",
+        "tf32_matmul": false,
+        "tf32_cudnn": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": false,
+        "seed": 20260907,
+        "gpu_same_device_tolerance": {
+          "rtol": 0.0001,
+          "atol": 1e-05
+        },
+        "seed_is_not_bitwise_determinism_proof": true
+      },
+      "online": 2,
+      "outer": 0,
+      "inner": 0,
+      "initial_state_exact": true,
+      "warnings": [],
+      "comparisons": {
+        "live": [
+          {
+            "max_abs": 0.0,
+            "norm_a": 3875.94921875,
+            "norm_b": 3875.94921875,
+            "exact": true,
+            "within_tolerance": true
+          },
+          {
+            "max_abs": 0.0,
+            "norm_a": 3875.399169921875,
+            "norm_b": 3875.399169921875,
+            "exact": true,
+            "within_tolerance": true
+          }
+        ],
+        "proxy": [
+          {
+            "max_abs": 0.0,
+            "norm_a": 12194.423828125,
+            "norm_b": 12194.423828125,
+            "exact": true,
+            "within_tolerance": true
+          }
+        ],
+        "gradient": [
+          {
+            "max_abs": 0.0,
+            "norm_a": 0.014594159089028835,
+            "norm_b": 0.014594159089028835,
+            "exact": true,
+            "within_tolerance": true
+          }
+        ],
+        "prompt_after": [
+          {
+            "max_abs": 0.0,
+            "norm_a": 5.1867828369140625,
+            "norm_b": 5.1867828369140625,
+            "exact": true,
+            "within_tolerance": true
+          }
+        ]
+      },
+      "state_rng_match": true,
+      "seconds": 6.457105923094787,
+      "peak_allocated_bytes": 3103242240
+    },
+    "native_operator": {
+      "native_bilinear_backward_error": "upsample_bilinear2d_backward_out_cuda does not have a deterministic implementation, but you set 'torch.use_deterministic_algorithms(True)'. You can turn off determinism just for this operation, or you can use the 'warn_only=True' option, if that's acceptable for your application. You can also file an issue at https://github.com/pytorch/pytorch/issues to help us prioritize adding deterministic support for this operation.",
+      "scope": "single procedural native operator; no model step, optimizer update or score"
+    }
+  },
+  "additional_diagnostic_updates": {
+    "online": 4,
+    "outer": 1,
+    "inner": 0
+  },
+  "interpretation": "Native CUDA backward reduction order can differ despite matching state, forward outputs and RNG. Deterministic paired execution removes the observed gradient difference. Native bilinear CUDA backward independently rejects strict determinism; PyTorch functional.interpolate selects its deterministic decomposition when enabled. The exact first divergent operator of the original failed attempt was not captured.",
+  "environment_note": "Diagnostic environment snapshots were captured before the mode switch; mode=deterministic enabled strict deterministic algorithms during both online steps. The first strict probe stopped at the cuBLAS workspace requirement before any optimizer update.",
+  "fix_scope": "Strict deterministic algorithms and cuBLAS workspace only in smoke comparison process; flags restored after paired checks. M1 formal run environment, objectives, seed and tolerances unchanged.",
+  "budget_note": "Previous failed smoke and authorized repair diagnostics are separate from the fresh corrected M2 run budget."
+}
