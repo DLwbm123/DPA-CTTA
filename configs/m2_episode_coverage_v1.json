@@ -157,5 +157,20 @@
     "background_waiter": false
   },
   "stop": "identity/gradient/nonfinite/OOM/source mutation/budget; prefix retained, no automatic retry or score gate",
-  "interpretation": "exploratory; joint coverage and training order effects not separated; unknown patient/video linkage; same off-policy 32 Base states and one-step objective; no SOTA/significance/clinical/privacy claim"
+  "interpretation": "exploratory; joint coverage and training order effects not separated; unknown patient/video linkage; same off-policy 32 Base states and one-step objective; no SOTA/significance/clinical/privacy claim",
+  "inherited_file_sha256": {
+    "src/dpa_ctta/offline/adaptation_dd.py": "5e79c11ee6f9354156b65a9d79af44459ac83a6656064b978e8ed73a31736ee0",
+    "src/dpa_ctta/offline/prompt_gradient_matching.py": "7c5f6c7ff48286e1c4aa5c8965f6b50bb3d2b2edbb0b7492217eb9d924fa7c9d",
+    "src/dpa_ctta/hosts/vptta.py": "ecdc8f5421175417a481831a5a077048874a4dbd0f35ff86dd4e841a998f8043",
+    "src/dpa_ctta/source_io.py": "4b928646273a0213af42ef94154b0863c22906a3b87716478e8e03aaaf736a1f",
+    "src/dpa_ctta/source_pilot.py": "3b1d4c58d63de4569fab72b831c317075284939b838c0446892fa59e8416d4ad",
+    "src/dpa_ctta/source_pilot_release.py": "0e3d8565bf4908e1482ee67bd75d9ffe75ccf230dbadb8e59f16c943d07bbc1c",
+    "src/dpa_ctta/proxy_loss.py": "03fb15aa593ceb05c33b299db4d23e6f290692f24b81cd282c7c285d86267b44",
+    "src/dpa_ctta/medical_losses.py": "8d3a7a34bf24ff3d95c22c5754e5228ac7976f93c2a82c43b70aae86be608219",
+    "src/dpa_ctta/m1_run.py": "d86950e076674e1b59474922c9ebd6c00dcc52b0356c2527863c71158143f3f8",
+    "src/dpa_ctta/m1_analysis.py": "44113d73bcdf4b09199b73944cfb26dc2b9d9fdde1b3f4de024684b7fc85d1b1",
+    "src/dpa_ctta/host_diagnostic.py": "420188ff151b11e7927ec614452f3e695f961dd40d877367f0d85508b47e539e",
+    "src/dpa_ctta/host_diagnostic_run.py": "c23db9da70c8785a474f54d4031d9e43fef851359fe9e8821d687c019b5daff7",
+    "src/dpa_ctta/integrations/ctta_suite.py": "0df6c9fed34256cf6031a76471f029abacb69981dc6b113d6b9467fa266e1e53"
+  }
 }
