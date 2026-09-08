@@ -28,6 +28,15 @@ CONFIG=ROOT/'configs/m4_trajectory_distillation_v1.json'
 TRAIN_ARMS=('D4','L4','T4')
 
 
+class M4Budget(Budget):
+    def __init__(self,out,previous_seconds=0,prior_bytes=0):
+        super().__init__(out,previous_seconds);self.prior_bytes=prior_bytes
+    def check(self):
+        super().check()
+        if self.prior_bytes+sum(p.stat().st_size for p in self.out.iterdir() if p.is_file())>=2*1024**3:
+            raise BudgetExhausted('M4 cumulative private output including failed attempt/diagnostics reaches 2 GiB')
+
+
 def validate_new_arm(records,expected,task,arm):
     if arm not in (*TRAIN_ARMS,'A','D2','O2'):raise ValueError('M4 scoring arm')
     validate_arm(records,expected,task,'A' if arm=='A' else 'B')
@@ -53,7 +62,7 @@ def validate(receipt,stage):
     if stage!='recompute':
         lines=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid','--format=csv,noheader'],text=True)
         devices={int(s.split(',')[0]):s.split(',')[1].strip() for s in lines.splitlines()}
-        if receipt['physical_gpu'] not in range(4,8) or devices.get(receipt['physical_gpu'])!=receipt['gpu_uuid'] or os.environ.get('CUDA_VISIBLE_DEVICES')!=receipt['gpu_uuid']:raise ValueError('GPU binding')
+        if receipt['physical_gpu'] not in range(3,8) or devices.get(receipt['physical_gpu'])!=receipt['gpu_uuid'] or os.environ.get('CUDA_VISIBLE_DEVICES')!=receipt['gpu_uuid']:raise ValueError('GPU binding')
     if stage in ['run','recompute']:
         smoke=json.loads((out/'smoke.completion.json').read_text())
         if digest(out/'smoke.completion.json')!=receipt['smoke_sha256'] or smoke['status']!='M4_SMOKE_PASS' or smoke['updates']!=dict(online=8,outer=6,inner=24):raise ValueError('smoke not bound/passed')
@@ -69,7 +78,7 @@ def check_source(ep,state):
 def smoke(receipt,out,overlay,registration):
     sys.path.insert(0,str(ROOT/'tests'))
     from test_vptta_host import pixels,proxy as fixture
-    budget=Budget(out);updates=dict(online=0,outer=0,inner=0);evidence={};current_counts={};task=None;arm=None
+    budget=M4Budget(out,receipt.get("prior_gpu_seconds",0),receipt.get("prior_private_bytes",0));updates=dict(online=0,outer=0,inner=0);evidence={};current_counts={};task=None;arm=None;traces={};comparisons=[];position=None
     try:
         for task,reg in registration['tasks'].items():
             seed_all(20260907);budget.check();torch.cuda.reset_peak_memory_stats()
@@ -93,9 +102,14 @@ def smoke(receipt,out,overlay,registration):
                 h=make_host(task,'R',source,real);h._initial_hook.remove();h._started=True;restore_history(h,history)
                 watch=Observed(h);current_counts=watch.counts;max_errors=[]
                 for i,(x,y) in enumerate(queries):
+                    position=17+i
                     pred=h.step(x);updates['online']+=1;watch.verify()
                     for arm in TRAIN_ARMS:
-                        got=traces[arm][i];close(got['prediction'],pred.cpu());s=got['state']
+                        got=traces[arm][i];s=got['state']
+                        expected=dict(initial_prompt=watch.init.detach().cpu(),gradient=h.prompt.data_prompt.grad.detach().cpu(),prompt=h.prompt.data_prompt.detach().cpu(),prediction=pred.cpu())
+                        actual=dict(initial_prompt=got['inner']['initial_prompt'],gradient=got['inner']['gradient'],prompt=s['prompt'],prediction=got['prediction'])
+                        comparisons.append(dict(task=task,arm=arm,position=position,errors={k:dict(max_abs=float((actual[k]-v).abs().max()),outside_tolerance=int(((actual[k]-v).abs()>1e-5+1e-4*v.abs()).sum())) for k,v in expected.items()}))
+                        for k,v in expected.items():close(actual[k],v)
                         close(s['prompt'],h.prompt.data_prompt.detach().cpu())
                         opt=h.optimizer.state[h.prompt.data_prompt]
                         for k in ['exp_avg','exp_avg_sq']:close(s['adam'][k],opt[k].cpu())
@@ -105,7 +119,7 @@ def smoke(receipt,out,overlay,registration):
                         max_errors.append(float((got['prediction']-pred.cpu()).abs().max()))
                     del pred
                 source_unchanged(h,source);watch.release()
-                ev['native_reference']=dict(counts=watch.counts,max_prediction_difference=max(max_errors),positions=[17,18,19,20])
+                ev['native_reference']=dict(counts=watch.counts,max_prediction_difference=max(max_errors),positions=[17,18,19,20],comparisons=[c for c in comparisons if c['task']==task])
                 del h,watch,traces;gc.collect()
             ev['peak_allocated_bytes']=torch.cuda.max_memory_allocated()
             print(json.dumps(dict(stage='smoke',task=task,status='PASS',updates=updates)),flush=True)
@@ -115,7 +129,8 @@ def smoke(receipt,out,overlay,registration):
             **{k:receipt[k] for k in ['commit','config_sha256','registration_sha256','gpu_uuid']},gpu_seconds=budget.seconds(),exit_code=0,
             paired_comparison_backend=dict(deterministic_algorithms=True,restored_deterministic_algorithms=torch.are_deterministic_algorithms_enabled(),cublas_workspace_config=os.environ.get('CUBLAS_WORKSPACE_CONFIG'))))
     except Exception as error:
-        private_json(out/'smoke.failure.json',dict(status='M4_PARTIAL',task=task,arm=arm,updates=updates,current_counts=current_counts,evidence=evidence,reason=str(error),exception=type(error).__name__,gpu_seconds=budget.seconds(),exit_code=1))
+        if traces:tensor_save(out/'smoke.failure.traces.pt',traces)
+        private_json(out/'smoke.failure.json',dict(status='M4_PARTIAL',task=task,arm=arm,position=position,updates=updates,current_counts=current_counts,evidence=evidence,comparisons=comparisons,reason=str(error),exception=type(error).__name__,gpu_seconds=budget.seconds(),peak_allocated_bytes=torch.cuda.max_memory_allocated(),exit_code=1))
         raise
 
 
@@ -198,7 +213,7 @@ def evaluate_all(out,registration,budget,progress,overlay):
 
 
 def run(receipt,out,overlay,reg):
-    smoke=json.loads((out/'smoke.completion.json').read_text());budget=Budget(out,smoke['gpu_seconds'])
+    smoke=json.loads((out/'smoke.completion.json').read_text());budget=M4Budget(out,smoke['gpu_seconds'],receipt.get('prior_private_bytes',0))
     progress=dict(stage='start',online=0,outer=0,inner=0,source_visits=0,records=0)
     private_json(out/'run.start.json',dict(commit=receipt['commit'],status='M4_RUNNING'))
     try:

@@ -88,6 +88,7 @@
   },
   "gpu": {
     "allowed_physical": [
+      3,
       4,
       5,
       6,
@@ -171,5 +172,6 @@
     "private_bytes": 2147483648
   },
   "stop": "implementation/identity/nonfinite/OOM/resource failure; no score gates, automatic retries or M5",
-  "limitations": "single seed, exposed target-dev, UNKNOWN patient/video; two orders same contents; source check is not post-target forgetting; M2 contrast changes history/order/aggregation as well as derivatives"
+  "limitations": "single seed, exposed target-dev, UNKNOWN patient/video; two orders same contents; source check is not post-target forgetting; M2 contrast changes history/order/aggregation as well as derivatives",
+  "repair_authorization": "direct user: resolve numerical parity and run M4 on any sufficient-memory GPU 3-7; retain single-device scientific protocol"
 }

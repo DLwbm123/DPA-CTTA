@@ -4,9 +4,24 @@ from types import MethodType
 import numpy as np
 import torch
 from torch.func import functional_call
-from .adaptation_dd import OfflineEpisode, native_adam, preprocess, cpu_tree
+from .adaptation_dd import OfflineEpisode, FiniteSqrt, preprocess, cpu_tree
 from .prompt_gradient_matching import cosine_objective
 from ..medical_losses import medical_loss
+
+
+def native_adam(phi,gradient,state,lr):
+    """M4 functional Adam with native addcmul/addcdiv arithmetic ordering.
+
+    The historical M1/M2 primitive is left immutable. Avoid decomposing fused
+    pointwise operations: one-ULP prompt differences can feed the next retrieval.
+    """
+    step=int(state.get('step',0))+1
+    m=state.get('exp_avg',torch.zeros_like(phi)).lerp(gradient,1-.9)
+    v=torch.addcmul(state.get('exp_avg_sq',torch.zeros_like(phi))*.99,
+                   gradient,gradient,value=1-.99)
+    denominator=FiniteSqrt.apply(v)/(1-.99**step)**.5+1e-8
+    plus=torch.addcdiv(phi,m,denominator,value=-lr/(1-.9**step))
+    return plus,dict(step=step,exp_avg=m,exp_avg_sq=v)
 
 
 def tensor_batch(self, samples, attention):
@@ -41,7 +56,7 @@ class TrajectoryEpisode(OfflineEpisode):
             memory={k:torch.as_tensor(v.copy(),device=self.device) for k,v in history['memory'].items()},
             count=next(iter(history['counters'].values()))[0])
 
-    def step(self,method,S,masks,pixels,label,state):
+    def step(self,method,S,masks,pixels,label,state,capture=False):
         if method not in ('D4','L4','T4'):raise ValueError('M4 objective')
         if method!='T4':state=detach_state(state)
         h=self.host;x=preprocess(pixels.to(self.device),self.task)
@@ -63,15 +78,21 @@ class TrajectoryEpisode(OfflineEpisode):
         if method=='D4':
             reference,=torch.autograd.grad(medical_loss(logits,label.to(self.device),beta_boundary=0).region,phi,retain_graph=True)
             reference=reference.detach();self.counts['gradient_calls']+=1
-        host_gradient,=torch.autograd.grad(host_loss,phi,create_graph=method=='T4')
-        self.counts['gradient_calls']+=1
-        if method!='T4':host_gradient=host_gradient.detach()
         syn=self.forward(self.clone,preprocess(S,self.task),phi,True)
-        proxy_gradient=self.gradient(medical_loss(syn,masks.to(self.device),beta_boundary=0).region,phi,True)
-        loss=cosine_objective(proxy_gradient,reference) if method=='D4' else None
-        update_gradient=host_gradient+.1*(proxy_gradient.detach() if method=='D4' else proxy_gradient)
+        proxy_loss=medical_loss(syn,masks.to(self.device),beta_boundary=0).region
+        loss=None
+        if method=='D4':
+            proxy_gradient=self.gradient(proxy_loss,phi,True)
+            loss=cosine_objective(proxy_gradient,reference)
+        # Native scales the proxy loss before backward, not its resulting gradient.
+        # L4's incoming state was detached, so keeping this graph introduces no
+        # cross-image path; T4 retains the host Hessian path through that state.
+        update_gradient,=torch.autograd.grad(host_loss+.1*proxy_loss,phi,
+            create_graph=method!='D4',retain_graph=True)
+        self.counts['gradient_calls']+=1
         plus,adam=native_adam(phi,update_gradient,state['adam'],h.optimizer.param_groups[0]['lr'])
         self.counts['differentiable_inner']+=1
+        if capture:self.last_inner=cpu_tree(dict(initial_prompt=phi,gradient=update_gradient,input_adam=state['adam']))
         if method=='D4':
             with torch.no_grad():prediction=self.forward(h.model,x,plus)
         else:
@@ -88,6 +109,6 @@ class TrajectoryEpisode(OfflineEpisode):
         if len(queries) not in (1,4):raise ValueError('four-image window or unit single-step check required')
         state=detach_state(state);losses=[];trace=[]
         for pixels,label in queries:
-            loss,state,pred=self.step(method,S,masks,pixels,label,state);losses.append(loss)
-            if capture:trace.append(dict(state=cpu_tree(state),prediction=pred.detach().cpu(),loss=loss.detach().cpu()))
+            loss,state,pred=self.step(method,S,masks,pixels,label,state,capture=capture);losses.append(loss)
+            if capture:trace.append(dict(state=cpu_tree(state),prediction=pred.detach().cpu(),loss=loss.detach().cpu(),inner=self.last_inner))
         return torch.stack(losses).mean(),state,trace

@@ -103,6 +103,9 @@ def recompute(out,overlay,registration,receipt):
     audit=dict(status=public['status'],execution_commit=receipt['commit'],updates_and_new_records=measured,reused_records_display_occurrences=reused,actual_compute=compute,scoring_cost=scoring,
         smoke={k:smoke[k] for k in ['status','updates','evidence','paired_comparison_backend','gpu_seconds','exit_code']},gpu_seconds=done['gpu_seconds'],environment_comparison=env,
         private_output_bytes=sum(p.stat().st_size for p in out.iterdir() if p.is_file()),independent_CPU_recompute=True,exit_code=0)
+    audit['prior_attempts_and_repair']=receipt.get('prior_accounting',{})
+    audit['cumulative_updates_including_prior_attempts']={k:measured[k]+receipt.get('prior_updates',{}).get(k,0) for k in ['online','outer','inner']}
+    audit['prior_private_bytes']=receipt.get('prior_private_bytes',0)
     public['scientific_interpretation']='Assess T4-L4/D4 across both tasks and orders, strong historical controls and tails jointly; positive means alone do not establish useful or stable gain; no automatic M5.'
     private_json(out/'public_aggregate.json',public);private_json(out/'execution_audit.json',audit);render_report(out,public,audit)
     private_json(out/'verification.json',dict(status=public['status'],counts=measured,reused_records_display_occurrences=reused,exit_code=0))
@@ -133,7 +136,8 @@ def render_report(out,public,audit):
     lines+=['','## Incremental scoring cost','','| Stream | Visits | Host seconds/image | Pipeline seconds | Peak allocated bytes |','| --- | ---: | ---: | ---: | ---: |']
     for name,v in audit['scoring_cost'].items():lines.append(f"| {name} | {v['records']} | {v['host_step_seconds']/v['records']:.6f} | {v['pipeline_seconds']:.3f} | {v['peak_allocated_bytes']} |")
     lines+=['','## Evidence and interpretation limits','',
-        'Update counts including smoke: '+json.dumps(audit['updates_and_new_records'])+'.',
+        'Successful-attempt update counts including smoke: '+json.dumps(audit['updates_and_new_records'])+'.',
+        'Cumulative updates including prior failure and repair diagnostics: '+json.dumps(audit.get('cumulative_updates_including_prior_attempts',{}))+'. Prior private bytes: '+str(audit.get('prior_private_bytes',0))+'. GPU-stage time includes those prior attempts when bound in the repair receipt.',
         f"GPU-stage wall seconds: {audit['gpu_seconds']:.3f}; private bytes measured at recompute: {audit['private_output_bytes']}. Old records reused for display: {audit['reused_records_display_occurrences']} (includes reverse-order stateless N reuse).",
         'The [aggregate](public_aggregate.json) contains OD/OC, all per-domain paired means/medians/signs/worst-decile and worst-single Dice differences, ASSD common-valid/missing counts/adverse tails and empty/full outcomes. ASSD is in pixels; no macro ASSD or zero imputation. The [audit](execution_audit.json) separates native online, outer, functional inner, forwards, memory and incremental runtime.',
         'T4-L4 is the matched derivative comparison. L4-O2 and T4-O2 also change collected history, sequence organization and aggregation frequency; they cannot isolate on-policy effects or cross-step derivatives. Own evolving histories use earlier S versions and four-step truncation, not a fully recomputed on-policy prefix or 120-step BPTT.',

@@ -158,3 +158,16 @@ class M4Tests(unittest.TestCase):
             render_report(Path(tmp),public,audit)
             text=(Path(tmp)/'M4_EXPERIMENT_REPORT.md').read_text()
             self.assertIn('T4-L4',text);self.assertIn('order1',text)
+
+    def test_aligned_adam_operation_order_and_finite_meta_gradient(self):
+        from dpa_ctta.offline.trajectory_dd import native_adam
+        p=torch.nn.Parameter(torch.linspace(.7,1.3,75).reshape(1,3,5,5))
+        g=torch.linspace(-.37,.29,75).reshape_as(p).requires_grad_()
+        opt=torch.optim.Adam([p],lr=.05,betas=(.9,.99),eps=1e-8,foreach=False)
+        opt.state[p]=dict(step=torch.tensor(16.),exp_avg=torch.linspace(-.13,.17,75).reshape_as(p),exp_avg_sq=torch.linspace(.001,.05,75).reshape_as(p))
+        q,state=native_adam(p,g,opt.state[p],.05)
+        derivative,=torch.autograd.grad(q.sum(),g)
+        self.assertTrue(torch.isfinite(derivative).all())
+        p.grad=g.detach().clone();opt.step()
+        self.assertTrue(torch.equal(q,p))
+        for k in ['exp_avg','exp_avg_sq']:self.assertTrue(torch.equal(state[k],opt.state[p][k]))

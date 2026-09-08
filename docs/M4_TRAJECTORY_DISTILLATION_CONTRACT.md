@@ -316,3 +316,13 @@ The user's current long-experiment convention applies: once smoke passes and a r
 ## Runtime outcome
 
 Full-model GPU smoke failed at the second Fundus native reference prediction under the unchanged tolerance. Formal training and scoring were not started. See [failure report](../results/m4_trajectory_distillation_v1/M4_EXPERIMENT_REPORT.md) for the actual 2 online / 3 outer / 12 functional inner updates and exact stopping boundary. No GPU retry was performed.
+
+## Authorized repair R1
+
+The user subsequently authorized fixing the parity failure and running on any GPU 3–7 with adequate free memory. This supersedes the original 4–7 admission range and permits the bounded repair diagnostics and a new smoke attempt. Single-device training, fixed data/sequence/seed/K/resolution/precision/tolerances and six-fit/two-order budgets are unchanged. Existing failed receipts and the historical Adam implementation remain immutable.
+
+Two registered Fundus fixture images reproduced the failure: first-step initialization and input moments were identical; separate-backward gradient differed by 7.45e-9, prompt update by 1.19e-7. The next retrieval differed by 1.19e-7, then next gradient by 1.98e-5 and prediction by 3.333e-4. Keys and insertion order matched. Joint-loss autograd and native-order addcmul/addcdiv Adam operations removed all observed differences across both images, including prompt, moments, memory values and logits. Memory arithmetic was not changed. This verifies the combined numerical fix on the failing prefix, not a universal bitwise GPU claim or formal method benefit.
+
+The two repair diagnostics used a total of 4 native online / 0 outer / 4 functional inner updates. The original failed smoke used 2/3/12; these are recorded separately from the fresh smoke (8/6/24) and formal run (2172/900/3600). Cumulative GPU time and private bytes are charged against the original resource caps. Local affected validation now passes 23 tests, including a native-operation-order Adam regression. Full-model four-step smoke remains the admission check before training.
+
+`diagnose_m4_parity.py OUTPUT_DIRECTORY FAILED_REGISTRATION_DIRECTORY` reproduces the bounded mechanical comparison under the configured dependency root and visible single GPU; raw tensors remain private. The final smoke now captures initialization and gradients, writes per-position comparison errors, and preserves diagnostic tensors and peak memory if a failure occurs. This adds no optimizer steps or target scoring.
