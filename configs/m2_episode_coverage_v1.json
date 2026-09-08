@@ -1,0 +1,161 @@
+{
+  "schema_version": "m2-episode-coverage-v1",
+  "baseline_commit": "2e6738e31708249902368333b882897c57280405",
+  "M1_execution_commit": "d92ed88e603eb68aea97a57493c96a084e98d91c",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "seed": 20260907,
+  "only_scientific_change": "joint episode pairing and playback order; exact identity-wise query/state/transform marginals retained",
+  "new_arms": [
+    "D2",
+    "O2"
+  ],
+  "reused_arms": [
+    "N",
+    "A",
+    "R",
+    "D1",
+    "O1"
+  ],
+  "training_order": [
+    "fundus_D2",
+    "fundus_O2",
+    "polyp_D2",
+    "polyp_O2"
+  ],
+  "inherited": {
+    "models": {
+      "fundus": "native ResUNet34 512x512",
+      "polyp": "native PraNet 352x352"
+    },
+    "native": {
+      "lr": {
+        "fundus": 0.05,
+        "polyp": 0.01
+      },
+      "betas": [
+        0.9,
+        0.99
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0,
+      "iters": 1,
+      "warm_n": 5,
+      "neighbor": 16,
+      "memory_size": 40,
+      "prompt_alpha": 0.01
+    },
+    "proxy": {
+      "K": 4,
+      "lambda": 0.1,
+      "beta_boundary": 0,
+      "transform": "identity",
+      "mask": "original basis_train fixed dense masks shared R/D/O",
+      "initialization": "same original RGB [0,1] pixels",
+      "online": "fixed full K=4 with original independent source clone"
+    },
+    "outer": {
+      "episodes": 600,
+      "optimizer": "Adam",
+      "lr": 0.01,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0,
+      "projection": [
+        0,
+        1
+      ],
+      "save_steps": [
+        0,
+        100,
+        300,
+        600
+      ],
+      "evaluation_step": 600,
+      "query_batch": 1
+    },
+    "objectives": {
+      "D": "1-cosine(g_syn,stopgrad(g_real)); prompt gradients; squared-norm epsilon 1e-24",
+      "O": "post-one-native-Adam source query region loss; host+0.1*proxy inner; original moments and counters",
+      "region": "existing balanced BCE + soft Dice",
+      "zero_second_moment_derivative": "sqrt forward exact, derivative zero at exactly zero; native derivative elsewhere",
+      "native_adabn": "unchanged including stop-gradient statistics"
+    },
+    "tolerance": {
+      "rtol": 0.0001,
+      "atol": 1e-05,
+      "discrete": "exact"
+    }
+  },
+  "assets": "exact M1 source/checkpoint/proxy/query/history/target maps, no selector call",
+  "history": "reuse original index-to-state mapping; per-task 32-step exact recovery only if missing, never random replacement",
+  "sampler": "Appendix A deterministic quota matching, SHA256 M2:seed:task keys, no model RNG or seed search",
+  "coverage": {
+    "episodes": 600,
+    "unique_triples": 600,
+    "query_min_distinct_states": 4,
+    "each_query_and_state_transforms": 4,
+    "per_identity_transform_quota_spread_max": 1,
+    "all_marginals": "exactly equal to actual M1 lists"
+  },
+  "init": "original Real pixels, empty outer Adam, seed_all(20260907) before each method; never D1/O1 continuation",
+  "evaluation": {
+    "new_source_records": 104,
+    "new_target_records": 448,
+    "new_total_records": 552,
+    "reused_M1_records": 1380,
+    "combined_display_records": 1932,
+    "labels": "M1 independent evaluator after prediction",
+    "order": "exact M1 target order; fresh arm/task/source-target hosts, no domain reset",
+    "metrics": "existing final-grid Dice and ASSD; nearest masks; Fundus OD<255/OC0, Polyp>127",
+    "aggregation": "equal-domain mean; Fundus OD/OC macro; no cross-task average",
+    "paired": [
+      "O2-D2",
+      "O2-O1",
+      "D2-D1",
+      "(O2-D2)-(O1-D1)",
+      "O2-A",
+      "O2-R",
+      "O2-N",
+      "D2-A",
+      "D2-N"
+    ],
+    "statistics": "mean, median, unrounded sign counts, ascending worst ceil(0.1*n) Dice difference; ASSD common valid cohort, empty/full/undefined counts; pixel units"
+  },
+  "smoke": {
+    "state_index": 16,
+    "procedural_query_index": 0,
+    "online": 8,
+    "outer": 4,
+    "inner": 2,
+    "initial_pixels": "original Real RGB",
+    "labels": "procedural query label; original source proxy masks",
+    "compare": "same temporary updated proxy on M1 and M2 hosts, logits/prompt/Adam/counters/memory/RNG"
+  },
+  "budget": {
+    "default_online_total": 560,
+    "max_history_recovery_online": 64,
+    "outer_total": 2404,
+    "inner_total": 1202,
+    "training_outer": 2400,
+    "training_inner": 1200,
+    "gpu_seconds": 21600,
+    "private_bytes": 2147483648
+  },
+  "gpu": {
+    "allowed_physical": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "preferred": 7,
+    "simultaneous_devices": 1,
+    "coexist": true,
+    "background_waiter": false
+  },
+  "stop": "identity/gradient/nonfinite/OOM/source mutation/budget; prefix retained, no automatic retry or score gate",
+  "interpretation": "exploratory; joint coverage and training order effects not separated; unknown patient/video linkage; same off-policy 32 Base states and one-step objective; no SOTA/significance/clinical/privacy claim"
+}
