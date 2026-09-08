@@ -1,0 +1,102 @@
+{
+  "status": "BLOCKED_TARGET_REGISTRATION",
+  "observed_at_utc": "2026-09-08T03:05:32.990897+00:00",
+  "baseline_commit": "b42d38aef009de62a145b207ae30685a8c0ebf37",
+  "experiment_execution_commit": null,
+  "metadata_inspected_checkout_commit": "b42d38aef009de62a145b207ae30685a8c0ebf37",
+  "delivery_commit": "resolve the Git commit containing this file; no H2 execution commit exists",
+  "configuration_state": "DRAFT_PROTOCOL_ONLY_NOT_EXECUTABLE_OR_ASSET_FROZEN",
+  "stages": {
+    "metadata_commands": {
+      "status": "COMPLETED",
+      "exit_code": 0
+    },
+    "source_registration": {
+      "status": "PASS_REUSED_METADATA_CHECK",
+      "exit_code": 0,
+      "identities_checked": 122,
+      "checks": [
+        "existing registration digest matched existing receipt",
+        "registered sizes and mtimes"
+      ],
+      "fresh_full_byte_equality_claim": false
+    },
+    "target_registration": {
+      "status": "BLOCKED_TARGET_REGISTRATION",
+      "exit_code": null,
+      "note": "preflight decision; no executable H2 runner invoked"
+    },
+    "CPU_regression": {
+      "status": "NOT_RUN",
+      "exit_code": null
+    },
+    "GPU_smoke": {
+      "status": "NOT_RUN",
+      "exit_code": null
+    },
+    "source_N_H": {
+      "status": "NOT_RUN",
+      "exit_code": null
+    },
+    "target_N_A_B_H": {
+      "status": "NOT_RUN",
+      "exit_code": null
+    },
+    "independent_CPU_recompute": {
+      "status": "NOT_RUN",
+      "exit_code": null
+    }
+  },
+  "current_CPU_regression_tests_run": 0,
+  "H_implementation_and_entry": "NOT_IMPLEMENTED_REGISTRATION_HARD_STOP",
+  "target_registration_digest": null,
+  "GPU_UUID": null,
+  "GPU_admission": "NOT_ATTEMPTED_REGISTRATION_MUST_PRECEDE_GPU",
+  "counts": {
+    "selected_target_groups": 0,
+    "source_records": 0,
+    "target_records": 0,
+    "smoke_adam": 0,
+    "source_adam": 0,
+    "target_adam": 0,
+    "total_gpu_adam": 0,
+    "gpu_adam_budget": 830,
+    "model_forwards": 0,
+    "prompt_forwards": 0,
+    "proxy_forwards": 0,
+    "proxy_images": 0,
+    "backwards": 0,
+    "memory_pushes": 0
+  },
+  "resources": {
+    "experiment_pipeline_seconds": null,
+    "host_step_seconds": null,
+    "peak_allocated_bytes": null,
+    "private_metadata_evidence_bytes": 4764,
+    "private_disk_budget_bytes": 268435456,
+    "private_directory_mode": "0700",
+    "private_file_mode": "0600"
+  },
+  "source_retention_conditions": {
+    "N_A_H": "same original source checkpoint; no source samples in online target step; source query images used only by separate source check",
+    "B": "original source checkpoint plus retained original K=4 source images and labels, full proxy batch; not a source-sample-free deployment"
+  },
+  "registration_blockers": [
+    "no explicit eligible target-development versus reserved-evaluation role mapping in inspected registrations",
+    "manifest has CSV split labels but no registered patient/video association or availability declaration",
+    "existing content-group IDs and representative/association rule not established for target registration"
+  ],
+  "search_scope": {
+    "manifests": "historical whole-dataset audits and relocated current manifests for both tasks",
+    "additional_metadata_files_checked": 175,
+    "bounded_search_result": "No applicable role registry found in inspected contracts/configs/private evidence and job103/job104 metadata; not an exhaustive NAS absence claim"
+  },
+  "provenance_limits": [
+    "zero reported source-target image overlap uses preexisting manifest digest strings only",
+    "historical full-target usage is exposure evidence, not an eligible-dev role assignment",
+    "unknown patient/video association is not proof that no relationship exists",
+    "original train/test names alone do not establish H2 development/reserved roles, especially combined REFUGE_Valid"
+  ],
+  "background_work": false,
+  "automatic_resume": false
+}

@@ -1,0 +1,266 @@
+{
+  "schema_version": "h2-source-stats-target-dev-v1",
+  "status": "BLOCKED_TARGET_REGISTRATION",
+  "enabled": false,
+  "configuration_state": "DRAFT_PROTOCOL_ONLY_NOT_EXECUTABLE_OR_ASSET_FROZEN",
+  "baseline_commit": "b42d38aef009de62a145b207ae30685a8c0ebf37",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "original_config": "configs/source_pilot_v0.json",
+  "original_config_sha256": "e1aeb2454899d024e00934e1f012b5a0fe8cb3bb656f5dd20f73468fdd7a3faf",
+  "seed": 20260907,
+  "tasks": {
+    "fundus": {
+      "source": "RIM_ONE_r3",
+      "model": "Res_Unet",
+      "checkpoint": "original registered source checkpoint",
+      "source_query_groups": 20,
+      "channels": [
+        "OD",
+        "OC"
+      ],
+      "target_domains": [
+        "REFUGE",
+        "ORIGA",
+        "REFUGE_Valid",
+        "Drishti_GS"
+      ],
+      "learning_rate": 0.05
+    },
+    "polyp": {
+      "source": "BKAI",
+      "model": "PraNet",
+      "checkpoint": "original registered source checkpoint",
+      "source_query_groups": 32,
+      "channels": [
+        "foreground"
+      ],
+      "target_domains": [
+        "CVC-ClinicDB",
+        "ETIS-LaribPolypDB",
+        "Kvasir-SEG"
+      ],
+      "learning_rate": 0.01
+    }
+  },
+  "target": {
+    "groups_per_domain": 32,
+    "eligible_pool": null,
+    "reserved_evaluation_role": null,
+    "registration_digest": null,
+    "selected_groups": 0,
+    "identity_and_linkage_status": "UNRESOLVED",
+    "selection": "first 32 by (SHA256(UTF8(str(seed)+\":\"+existing_group_id)), existing_group_id), after role and overlap validation",
+    "representative": "lexicographically smallest existing sample_id",
+    "playback": "original manifest order, retaining known video relative order",
+    "grouping": "use existing content groups; absent group IDs require an explicitly justified registration rule before selection",
+    "prohibited_selection_inputs": [
+      "model score",
+      "loss",
+      "mask area",
+      "difficulty",
+      "expected H advantage"
+    ]
+  },
+  "arms": {
+    "N": "source standard BN; no prompt or adaptation",
+    "A": "native VPTTA unchanged",
+    "B": "native A + 0.1 * original full K=4 source proxy region loss",
+    "H": "H_source_stats"
+  },
+  "H": {
+    "normalization": "gamma * (z - frozen source_mean) / sqrt(frozen source_var + eps) + beta on every original AdaBN layer in adaptation and prediction",
+    "loss": "native warm-up reference construction, sample count, estimators, reduction dimensions, detach, epsilon, bn_loss and task layer aggregation; computed from H own activations",
+    "updates": "native prompt only",
+    "standard_bn": "unchanged",
+    "proxy": false,
+    "boundary": false,
+    "style_transfer": false,
+    "implementation_status": "NOT_IMPLEMENTED_REGISTRATION_HARD_STOP"
+  },
+  "native": {
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "weight_decay": 0,
+    "iters": 1,
+    "warm_n": 5,
+    "neighbor": 16,
+    "memory_size": 40,
+    "memory_capacity_semantics": "retain native observable behavior, including capacity 41",
+    "prompt_alpha": 0.01,
+    "A_B_source_requires_grad_and_grad": "unchanged"
+  },
+  "proxy": {
+    "K": 4,
+    "selection": "reuse original registration without reselection",
+    "batch": "full",
+    "B_clone": "independent frozen original clone"
+  },
+  "io": {
+    "preprocessing": "reuse confirmed source-pilot task-specific RGB and final grid protocol",
+    "mask_resize": "nearest",
+    "fundus_encoding": "OD<255; OC=0; independent nested channels",
+    "polyp_encoding": "foreground>127; no legacy bilinear GT substitution",
+    "target_masks": "independent evaluator only after final prediction is fixed",
+    "source_whitelist": "unchanged; separate target registration and reader required",
+    "online_step_input": "current image only; no future images, domain identity or boundary signals"
+  },
+  "lifecycle": {
+    "fresh_start": "each task and arm, independent model/prompt/Adam/memory/counter/RNG from same source state and seed",
+    "cross_domain_reset": false,
+    "visits_per_target_image": 1,
+    "source_to_target": "release all source hosts, create fresh target hosts",
+    "updates_per_adapted_visit": 1,
+    "native_memory_pushes_per_adapted_visit": 1
+  },
+  "tolerance": {
+    "rtol": 0.0001,
+    "atol": 1e-05,
+    "exact": [
+      "counters",
+      "steps",
+      "identity",
+      "RNG"
+    ]
+  },
+  "execution_order": [
+    "configuration_and_all_asset_registration",
+    "CPU_regression",
+    "GPU_smoke",
+    "source_N_H",
+    "target_N_A_B_H",
+    "independent_CPU_recompute",
+    "public_delivery",
+    "stop"
+  ],
+  "gpu": {
+    "physical_index": 7,
+    "uuid": null,
+    "sharing_allowed": true,
+    "fallback_gpu": false,
+    "background_waiter": false,
+    "automatic_retry": false
+  },
+  "receipt_required": [
+    "clean_execution_commit",
+    "config_digest",
+    "fixed_dependency",
+    "source_registration_digest",
+    "target_registration_digest",
+    "GPU_UUID",
+    "private_output_directory",
+    "smoke_digest_and_matching_identity_and_step_coverage"
+  ],
+  "budget": {
+    "smoke_adam_per_task": {
+      "native_A_reference": 17,
+      "H2_A": 17,
+      "original_B_reference": 1,
+      "H2_B": 1,
+      "H": 17
+    },
+    "smoke_adam": 106,
+    "source_adam": 52,
+    "target_adam": 672,
+    "total_gpu_adam": 830,
+    "source_records": 104,
+    "target_records": 896,
+    "non_smoke_records": 1000,
+    "target_groups": 224,
+    "identity_forwards": "additional N/H identity checks with zero optimizer calls; count separately",
+    "other_compute": "separate actual model/prompt/proxy forwards, proxy images, backwards, optimizer calls and pushes"
+  },
+  "metrics": {
+    "dice_storage": "fraction 0-1",
+    "dice_display": "percent; differences in percentage points",
+    "fundus_task": "equal-domain mean of within-domain OD/OC channel macro",
+    "polyp_task": "equal-domain mean Dice",
+    "tasks_and_source_target": "report separately",
+    "paired": [
+      "H-N",
+      "H-A",
+      "A-N",
+      "B-N",
+      "B-A",
+      "H-B"
+    ],
+    "paired_summaries": [
+      "mean",
+      "median",
+      "unrounded positive/zero/negative counts",
+      "worst 10 percent Dice mean"
+    ],
+    "quantiles": "linear interpolation",
+    "worst_dice_tail": "ascending first max(1,ceil(0.1*n)) differences",
+    "assd": "lower is better; pairwise common defined cohort; undefined counts; no OD/OC macro ASSD; adverse tail is increasing side",
+    "empty_full": "retain in Dice; report counts",
+    "segments": "first 5 domain visits versus remainder descriptive only"
+  },
+  "screening": {
+    "Delta_H": "task_domain_macro(H)-max(task_domain_macro(N),task_domain_macro(A))",
+    "minimum_delta_pp": 0.5,
+    "minimum_positive_H_N_domains": {
+      "fundus": 3,
+      "polyp": 2
+    },
+    "domain_warning_H_N_below_pp": -1,
+    "meaning": "research resource filter only; no significance or clinical threshold; no automatic follow-up"
+  },
+  "observability": [
+    "host_loss",
+    "B_proxy_loss",
+    "prompt_initialization_change_norm",
+    "full_prompt_state_change_norm",
+    "actual_Adam_update_norm",
+    "Adam_step",
+    "native_counters",
+    "actual_retrieval_and_push",
+    "memory_size",
+    "source_state_checks",
+    "pipeline_time",
+    "host_step_time",
+    "peak_allocated_memory"
+  ],
+  "private_output": {
+    "directory_mode": "0700",
+    "file_mode": "0600",
+    "max_bytes": 268435456,
+    "allowed": "scalars, configuration/environment/identity/completion metadata, aggregate reports",
+    "forbidden": [
+      "images",
+      "masks",
+      "logits",
+      "features",
+      "gradient vectors",
+      "model snapshots",
+      "optimizer snapshots"
+    ],
+    "append": "validate identity, finite values and lifecycle before append, flush and fsync; completion only after exact coverage and final full source state verification"
+  },
+  "hard_stops": [
+    "missing legitimate development role",
+    "unresolved identity or role overlap or known patient/video conflict",
+    "fewer than 32 valid content groups in any domain",
+    "unknown mask encoding",
+    "unsupported environment or failed CPU tests",
+    "insufficient GPU7 memory",
+    "smoke identity/digest/coverage mismatch",
+    "missing asset or wrong label",
+    "nonfinite value",
+    "OOM",
+    "source state change",
+    "execution exception"
+  ],
+  "failure": "preserve completed arms and successful prefix; record private location and actual counts; nonzero execution exit, no skip, substitution, continuation or automatic rerun; poor scientific scores alone do not stop the fixed flow",
+  "independent_recompute": "CPU only, registry order, exact 104 source and 896 target records, channels/lifecycle/completions/source state, actual 52+672 updates plus 106 smoke, compare saved aggregates",
+  "interpretation": {
+    "checkpoint_training_membership": "UNKNOWN",
+    "source_query": "previously used development groups",
+    "target_prior_exposure": "historical full-target experiments documented; no untouched-final-test claim",
+    "independent_patients": false,
+    "multi_order_robustness": false,
+    "significance": false,
+    "sota": false
+  }
+}

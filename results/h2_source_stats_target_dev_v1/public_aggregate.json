@@ -1,0 +1,100 @@
+{
+  "status": "BLOCKED_TARGET_REGISTRATION",
+  "scientific_outcome": "NOT_EVALUATED",
+  "inventory_basis": "existing manifest digest metadata, not freshly validated eligible content groups",
+  "inventory": [
+    {
+      "task": "fundus",
+      "domain": "REFUGE",
+      "manifest_rows": 400,
+      "distinct_recorded_image_mask_pairs": 400,
+      "csv_split_counts": {
+        "train": 320,
+        "test": 80
+      },
+      "source_image_and_pair_overlap_in_manifest": 0,
+      "selected_groups": 0
+    },
+    {
+      "task": "fundus",
+      "domain": "ORIGA",
+      "manifest_rows": 650,
+      "distinct_recorded_image_mask_pairs": 650,
+      "csv_split_counts": {
+        "train": 500,
+        "test": 150
+      },
+      "source_image_and_pair_overlap_in_manifest": 0,
+      "selected_groups": 0
+    },
+    {
+      "task": "fundus",
+      "domain": "REFUGE_Valid",
+      "manifest_rows": 800,
+      "distinct_recorded_image_mask_pairs": 800,
+      "csv_split_counts": {
+        "combined": 800
+      },
+      "source_image_and_pair_overlap_in_manifest": 0,
+      "selected_groups": 0
+    },
+    {
+      "task": "fundus",
+      "domain": "Drishti_GS",
+      "manifest_rows": 101,
+      "distinct_recorded_image_mask_pairs": 101,
+      "csv_split_counts": {
+        "train": 50,
+        "test": 51
+      },
+      "source_image_and_pair_overlap_in_manifest": 0,
+      "selected_groups": 0
+    },
+    {
+      "task": "polyp",
+      "domain": "CVC-ClinicDB",
+      "manifest_rows": 612,
+      "distinct_recorded_image_mask_pairs": 612,
+      "csv_split_counts": {
+        "train": 478,
+        "test": 134
+      },
+      "source_image_and_pair_overlap_in_manifest": 0,
+      "selected_groups": 0
+    },
+    {
+      "task": "polyp",
+      "domain": "ETIS-LaribPolypDB",
+      "manifest_rows": 196,
+      "distinct_recorded_image_mask_pairs": 196,
+      "csv_split_counts": {
+        "train": 152,
+        "test": 44
+      },
+      "source_image_and_pair_overlap_in_manifest": 0,
+      "selected_groups": 0
+    },
+    {
+      "task": "polyp",
+      "domain": "Kvasir-SEG",
+      "manifest_rows": 1000,
+      "distinct_recorded_image_mask_pairs": 1000,
+      "csv_split_counts": {
+        "train": 800,
+        "test": 200
+      },
+      "source_image_and_pair_overlap_in_manifest": 0,
+      "selected_groups": 0
+    }
+  ],
+  "source_N_H": null,
+  "target_domain_channel_metrics": null,
+  "target_task_macro": null,
+  "paired_metrics": null,
+  "empty_full_counts": null,
+  "ASSD_cohorts": null,
+  "negative_tails": null,
+  "domain_warnings": null,
+  "screening_result": null,
+  "note": "Null means not measured, never zero performance. All 3759 target rows are historical inventory, not H2 visits."
+}
