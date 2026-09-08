@@ -1,5 +1,5 @@
 {
-  "status": "REPAIR_SMOKE_PASS_FORMAL_LAUNCHED",
+  "status": "M2_EPISODE_COVERAGE_COMPARISON_COMPLETE",
   "authorization": "User requested diagnosis, repair and experiment report after the stopped M2 attempt",
   "diagnostic_execution_base_commit": "8f038d8d3821145375adf4492d7fcc8842c3c808",
   "diagnostic_scope": "procedural Polyp query with original registered Real proxy and history index 16; no source/target score",
@@ -378,7 +378,7 @@
     "exit_code": 0
   },
   "formal_run": {
-    "status": "RUNNING_VERIFIED_AT_STARTUP",
+    "status": "COMPLETE",
     "training_steps_expected_each": 600,
     "methods": [
       "D2",
@@ -389,8 +389,8 @@
       "polyp"
     ],
     "new_scores_expected": 552,
-    "independent_CPU_recompute": "queued after successful formal run",
-    "markdown_report": "queued after successful independent recompute",
+    "independent_CPU_recompute": "PASS",
+    "markdown_report": "M2_EXPERIMENT_REPORT.md",
     "startup_snapshot": {
       "fundus_D2_completed_episodes": 47,
       "last_loss": 0.41203469038009644,
@@ -398,6 +398,27 @@
       "failure_files": 0,
       "M1_environment_differences": {},
       "detached_launcher_alive": true
-    }
-  }
+    },
+    "training_steps_each": 600,
+    "new_scores_completed": 552,
+    "startup_snapshot_is_historical": true
+  },
+  "final_stage_exit_codes": {
+    "run": 0,
+    "recompute": 0,
+    "report": 0
+  },
+  "corrected_run_counts": {
+    "online": 560,
+    "outer": 2404,
+    "inner": 1202,
+    "records": 552
+  },
+  "all_M2_attempts_and_authorized_repair_counts": {
+    "online": 570,
+    "outer": 2408,
+    "inner": 1203,
+    "new_scores": 552
+  },
+  "count_scope": "Corrected run plus first failed smoke (6/3/1) and authorized repair diagnostics (4/1/0); old M1 computation excluded; native operator and cuBLAS preflight have no optimizer update."
 }
