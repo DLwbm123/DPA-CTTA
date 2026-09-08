@@ -945,5 +945,54 @@
       "source_visits": 4
     },
     "peak_allocated_bytes": 10241542144
+  },
+  "R1_failed_smoke": {
+    "status": "M4_PARTIAL",
+    "task": "fundus",
+    "arm": "D4",
+    "updates": {
+      "online": 3,
+      "outer": 3,
+      "inner": 12
+    },
+    "reason": "Tensor-likes are not close!\n\nMismatched elements: 44 / 524288 (0.0%)\nGreatest absolute difference: 2.4497509002685547e-05 at index (0, 0, 317, 327) (up to 1e-05 allowed)\nGreatest relative difference: 0.008158586919307709 at index (0, 0, 227, 87) (up to 0.0001 allowed)",
+    "gpu_seconds": 59.42087008594535,
+    "exit_code": 1
+  },
+  "R2_failed_smoke": {
+    "status": "M4_PARTIAL",
+    "task": "polyp",
+    "arm": "T4",
+    "updates": {
+      "online": 4,
+      "outer": 5,
+      "inner": 24
+    },
+    "reason": "fixture meta-gradient nonfinite/zero",
+    "gpu_seconds": 157.01282601291314,
+    "exit_code": 1
+  },
+  "R3_failed_smoke": {
+    "status": "M4_PARTIAL",
+    "task": "polyp",
+    "arm": "T4",
+    "updates": {
+      "online": 4,
+      "outer": 5,
+      "inner": 24
+    },
+    "reason": "fixture meta-gradient nonfinite/zero",
+    "gpu_seconds": 210.70182480791118,
+    "exit_code": 1
+  },
+  "tiny_std_diagnostic": {
+    "updates": {
+      "online": 0,
+      "outer": 0,
+      "inner": 4
+    },
+    "seconds": 9.982713144971058,
+    "peak_allocated_bytes": 10241542144,
+    "minimum_positive_std": 3.743392066509216e-23
   }
 }

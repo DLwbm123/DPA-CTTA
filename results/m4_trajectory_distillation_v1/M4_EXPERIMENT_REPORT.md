@@ -1,58 +1,47 @@
-# M4 execution report — smoke failed, formal experiment not started
+# M4 repair report — numerical acceptance passed, formal experiment running
 
-Status: **M4_SMOKE_FAILED_STOPPED**. This is an engineering failure report, not `M4_TRAJECTORY_COMPARISON_COMPLETE` and not evidence that trajectory distillation is ineffective.
+Status: **M4_RUNNING**, verified at 2026-09-08T23:30:14+08:00. The formal experiment is not complete; no method-effectiveness conclusion is available.
 
-Execution commit: `956662e94cc4c2b66109acf4075652fd9f29aa55`.
-Starting M3 release: `538a768363a79a5dca27de186e2b776c858c5e2b`.
-Fixed external reference: `dbff0d985c6c95345d9fb78f5b1daef57b392564`.
-The Git commit containing this report is a separate report release; it was not used to execute the failed smoke.
+Execution commit: `f88e99d212e914b74a7c521bac8c418fc73e5d6c`. The report release is a separate commit. Baseline M3 release: `538a768363a79a5dca27de186e2b776c858c5e2b`; pinned external implementation: `dbff0d985c6c95345d9fb78f5b1daef57b392564`.
 
-## 已完成与停止点
+## 修复结论
 
-独立 M4 分支、无条件化四步 D4/L4/T4 训练实现、确定性 source 序列、两种域序评分与独立 CPU 重算入口已实现。M1–M3 科学代码、配置、历史记录和固定外部依赖未修改。部署前已冻结每任务 600 条 source 访问序列，并绑定新 receipt；未重建 Base 历史。
+最初失败来自功能化轨迹与原生数值计算的差异；修复后暴露了 Polyp T4 的标准差二阶导数问题。本次确认并修复三处：
 
-本地相关 CPU 测试 22/22 通过（1.445 秒），服务器相关 CPU 测试 22/22 通过（3.120 秒），无失败、错误或跳过。测试覆盖单步 M2 目标/梯度、冷启动和已有 memory 的四步数值、L4/T4 值一致性、可控跨步梯度、标签隔离、窗口 detach、120 次访问延续，以及原生 memory 的选择/覆盖/容量。CPU 程序化通过不能替代完整模型 GPU 前向验收。
+1. Prompt 梯度采用原生 host + 0.1 × proxy 联合 loss 一次求导，消除分开求导后相加的浮点累加差异。
+2. M4 功能化 Adam 对齐实际 CUDA foreach 分派及运算顺序。第三步原先出现一个 float32 ULP 的 prompt 差异，会经后续模型前向放大。原生在线 Adam 与 M1–M3 实现保持不变。
+3. 离线 AdaBN 的空间标准差使用原生前向及原生一阶导数运算顺序，并对二阶导数采用等价的解析 Hessian-vector product。PyTorch 2.2.1 的除法二阶反传在 std=0 或极小正值（诊断最小约 3.743392e-23）处产生非有限中间值。新计算避免 std 平方/立方分母；没有 epsilon、正值截断或精度更换。std 恰为 0 时明确采用零 Hessian 延拓；该点没有经典二阶导数，此约定是方法实现的公开边界。[原生 std_backward](https://github.com/pytorch/pytorch/blob/v2.2.1/torch/csrc/autograd/FunctionsManual.cpp#L1724)
 
-GPU smoke 使用原始 Real 代理和程序化四图窗口，以原有 history index 16 为起点。Fundus D4/L4/T4 各完成四次功能化内层与一次外层更新。L4 与 T4 的四步前向/损失比较通过，两者窗口 loss 均为 5.218537330627441；image meta-gradient norm 分别为 0.1038665771484375 和 0.11489642411470413。这仅是机械 smoke 证据，不能作为源域或目标域效果。
+Memory 邻居选择、权重和组合未因本次故障改变；诊断不支持把它认定为根因。完整 host Hessian、窗口内 Adam/memory 梯度和既有 BN stop-gradient 语义均保留。没有修改数据、种子、K=4、分辨率、窗口长度、容差或效果门槛。
 
-随后原生 host 实际参考走到第二张图（history position 18）时，**D4 功能化预测与原生预测超出固定容差**：
+## 验收证据
 
-- rtol = 1e-4，atol = 1e-5，未修改。
-- 524,288 个元素中 1,673 个不满足比较（约 0.319%）。
-- 不满足比较元素中的最大绝对差 0.0003333091735839844。
-- 异常类型 AssertionError；smoke 退出码 1。
+本地与服务器均通过 26 项相关 CPU 检查，无失败、错误或跳过。覆盖原生 Adam 运算顺序、四步冷/热轨迹、标签隔离、跨步梯度、状态截断，以及标准差的一阶精确性、零通道二阶约定、正常输入 gradgradcheck、极小 float32 输入的有限 Hessian 与 double 参考比较。服务器沿用 Python 3.10.6 / Torch 2.2.1+cu121，环境比较 M2 无差异。
 
-第一张图的三个臂与原生预测/prompt/Adam/memory/counter 比较已走完；第二张图在 D4 预测比较处停止，不能推断该位置 L4/T4 或后续位置也通过。Polyp GPU smoke 尚未执行。
+完整模型 GPU smoke 已完成 Fundus、Polyp × D4/L4/T4 × 四步：原生参考预测最大绝对差均为 **0.0**；初始 prompt、梯度、更新后 prompt 也均精确一致，Adam moments、memory、counter 通过原有固定容差/离散比较。L4/T4 前向轨迹一致；全部六个 meta-gradient 有限且非零，外层更新有效。实际 smoke 为 **8 online / 6 outer / 24 inner**，退出码 0。机械验收损失与梯度不作为源域/目标域效果指标。
 
-## 实际计数和资源
+## 已启动的正式实验
 
-| 项目 | 本次实际值 | 完整计划值（含 smoke） |
-| --- | ---: | ---: |
-| 真实 online Adam | 2 | 2,180 |
-| outer 图像 Adam | 3 | 906 |
-| 功能化 inner Adam | 12 | 3,624 |
-| 正式 source 训练访问 | 0 | 3,600 |
-| 新 source/target 评分记录 | 0 | 2,172 |
+使用 GPU 3，允许与已有进程共存。正式启动前空闲 23,238 MiB；成功 smoke 峰值 14,301,518,336 bytes，对应加 25% 与 512 MiB 余量的准入要求 17,561 MiB。GPU 4–7 当次空闲不足要求，未启动其他副本。遵守原计划单卡执行六套训练。
 
-六套正式训练均为 NOT_STARTED；没有正式代理、源域/目标域 Dice、配对增量或 ASSD 结果。没有启动正式后台 launcher，未生成 formal run/recompute 退出码；这些值为 null，不能写为成功 0。CPU validation/registration 退出码为 0，GPU smoke 为 1。
+后台 launcher 已启动且首次检查存活，日志可读；Fundus D4 已完成第 3 个窗口（12 次 source 访问），梯度有限，没有即时失败。随后按固定顺序执行六套各 600 次 source 访问 / 150 次 outer 更新的训练，再生成 2,172 条新评分，并执行独立 CPU 重算。当前 formal run/recompute 退出码为 null，训练结果及 source/target 指标保持 pending。
 
-使用 GPU 7，启动时可用显存 24,124 MiB，未修改其他进程。已记录 GPU smoke 阶段时间 23.107 秒。失败处理器未保存峰值 allocated memory，因此峰值为 unavailable；事后空闲显存不能替代峰值测量。NAS 挂载、容量和写入/读取探针在执行前通过。停止后运行目录为 13 个文件、322,182 字节（含执行 bundle 和私有登记，不含独立代码检出及只读旧资产）；确认 smoke 进程已退出且没有正式评分日志。运行使用既有 Python 3.10.6 / Torch 2.2.1+cu121，环境对比 M2 无差异；配对阶段按约定启用严格确定性，无容差调整。
+运行不依赖 SSH 或当前会话持续开启。阶段失败会保存错误并停止，不自动重跑；未创建持续监测或额外实验。
 
-## 差异定位的当前证据与边界
+## 修复前缀与预算
 
-失败位于新增功能化轨迹对原生在线轨迹的数值验收，而非训练效果门槛、数据缺失、OOM 或模型性能负结果。现有日志没有保存失败位置全部中间张量，尚不能唯一确认根因。
+用户明确授权修复和重新验收；保留原始失败及 R1–R3 的独立提交、目录与 receipt，没有覆盖旧失败。原始失败报告保存在 [历史提交](https://github.com/DLwbm123/DPA-CTTA/blob/51c5b9cc80eb0ff437f63e0d7d2bf0e88f50a0f7/results/m4_trajectory_distillation_v1/M4_EXPERIMENT_REPORT.md)。
 
-源码中两个应优先核对的数值路径是：
+| 阶段 | Online | Outer | Inner |
+| --- | ---: | ---: | ---: |
+| 原始失败、R1–R3 失败及图像诊断合计 | 17 | 16 | 84 |
+| 本次通过的 smoke | 8 | 6 | 24 |
+| 正式实验计划（未完成） | 2172 | 900 | 3600 |
 
-1. `offline/trajectory_dd.py` 分别求 host/proxy prompt gradient 后相加；原生 image-step 对联合 loss 一次 backward。二者数学等价不保证 CUDA 浮点累加完全一致，微小更新差可通过后续 Adam/memory 放大。
-2. 功能化 memory 使用原生 NumPy 邻居/权重，但 tensor prompt 值在设备上组合；原生值在 NumPy 中组合。CPU fixture 通过并不能单独证明真实 GPU 多步路径在固定 logit 容差内。
+另外有两次 75 元素 CUDA Adam 算术检查，无图像或模型调用；未单独计时，单列保守 60 秒预算扣除。成功 smoke 结束时累计预算扣除 267.739 秒，其中已测量阶段时间 207.739 秒。历史前缀文件累计 51,406,714 bytes；这些时间和空间继续计入原六小时 / 2 GiB 上限。实际失败前缀不伪装成计划内成功步骤。
 
-这两点是源码级候选，**未被本次证据证明为根因**。不能用“不确定性噪声”“只有零点几毫”的解释跳过失败，也不能删掉 memory 梯度、降成一步、改精度/分辨率或扩大容差来改写验收。
+## 公开范围与后续结果
 
-按执行计划第 10/15 节的实现/数值错误停止规则，本轮已停止，保留失败前缀；没有自动重跑 smoke、没有启动六套训练或额外诊断轨迹，也没有 M5。修复与重新 GPU 验收应作为明确的新续行范围，使用新干净执行提交和新的记录，不覆盖本次失败 receipt。
+本提交公开 M4 修复源码、配置、测试、数值证据及启动审核；[execution audit](execution_audit.json) 与 [repair evidence](repair_parity_evidence.json) 给出详细计数。公开 aggregate 明确标记运行中，不填造效果指标。原始图像/标注、模型、合成代理、历史张量、身份与路径清单、私有 receipt 均留在 NAS。
 
-## 公开范围
-
-公开提交包含 M4 源码、固定配置、测试、执行/重算入口、本失败报告、无效果结果的显式状态 JSON，以及去标识实际计数和错误摘要。原始数据/标注、路径和身份清单、封存代理、历史状态及私有 receipt 留在 NAS；未发布患者信息或模型资产。
-
-[Execution audit](execution_audit.json) 保留可核对的 smoke 更新计数、CPU 结果和环境比较。[Public aggregate status](public_aggregate.json) 明确 source/target/training 结果为空，不伪造实验指标。
+完成后仍需校验全部覆盖、独立重算和公开结果交付，才可写 `M4_TRAJECTORY_COMPARISON_COMPLETE`。单 seed、已暴露 target-dev、未知 patient/video 分组等原有限制不变。

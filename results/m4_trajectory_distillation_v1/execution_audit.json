@@ -1,13 +1,13 @@
 {
-  "status": "M4_SMOKE_FAILED_STOPPED",
-  "execution_commit": "956662e94cc4c2b66109acf4075652fd9f29aa55",
+  "status": "M4_RUNNING",
+  "execution_commit": "f88e99d212e914b74a7c521bac8c418fc73e5d6c",
   "baseline_release": "538a768363a79a5dca27de186e2b776c858c5e2b",
   "CPU_validation": {
-    "tests": 22,
+    "tests": 26,
     "failures": 0,
     "errors": 0,
     "skips": 0,
-    "seconds": 3.1202783280750737,
+    "seconds": 2.923845440032892,
     "python": "3.10.6",
     "torch": "2.2.1+cu121",
     "exit_code": 0,
@@ -16,35 +16,23 @@
   "stage_exit_codes": {
     "CPU_validation": 0,
     "registration": 0,
-    "smoke": 1,
+    "smoke": 0,
     "formal_run": null,
     "independent_CPU_result_recompute": null
   },
-  "smoke_failure": {
-    "status": "M4_PARTIAL",
-    "task": "fundus",
-    "arm": "D4",
+  "smoke": {
+    "status": "M4_SMOKE_PASS",
     "updates": {
-      "online": 2,
-      "outer": 3,
-      "inner": 12
-    },
-    "current_counts": {
-      "model_forwards": 4,
-      "prompt_forwards": 8,
-      "proxy_forwards": 2,
-      "proxy_images": 8,
-      "online_adam": 2,
-      "backward_calls": 2,
-      "memory_pushes": 2,
-      "retrievals": 2
+      "online": 8,
+      "outer": 6,
+      "inner": 24
     },
     "evidence": {
       "fundus": {
         "D4": {
-          "loss": 0.7856887578964233,
-          "gradient_norm": 10.848612785339355,
-          "image_delta_norm": 17.676843643188477,
+          "loss": 0.7847532033920288,
+          "gradient_norm": 10.775533676147461,
+          "image_delta_norm": 17.677927017211914,
           "counts": {
             "live_forwards": 8,
             "proxy_forwards": 4,
@@ -58,15 +46,15 @@
           }
         },
         "L4": {
-          "loss": 5.218537330627441,
-          "gradient_norm": 0.1038665771484375,
-          "image_delta_norm": 17.47284507751465,
+          "loss": 5.2185378074646,
+          "gradient_norm": 0.10363371670246124,
+          "image_delta_norm": 17.472522735595703,
           "counts": {
             "live_forwards": 8,
             "proxy_forwards": 4,
             "proxy_images": 16,
             "prompt_forwards": 16,
-            "gradient_calls": 8,
+            "gradient_calls": 4,
             "differentiable_inner": 4,
             "memory_pushes": 4,
             "retrievals": 4,
@@ -74,61 +62,750 @@
           }
         },
         "T4": {
-          "loss": 5.218537330627441,
-          "gradient_norm": 0.11489642411470413,
-          "image_delta_norm": 17.498281478881836,
+          "loss": 5.2185378074646,
+          "gradient_norm": 0.11446166783571243,
+          "image_delta_norm": 17.49789047241211,
           "counts": {
             "live_forwards": 8,
             "proxy_forwards": 4,
             "proxy_images": 16,
             "prompt_forwards": 16,
-            "gradient_calls": 8,
+            "gradient_calls": 4,
             "differentiable_inner": 4,
             "memory_pushes": 4,
             "retrievals": 4,
             "source_visits": 4
           }
-        }
+        },
+        "native_reference": {
+          "counts": {
+            "model_forwards": 8,
+            "prompt_forwards": 16,
+            "proxy_forwards": 4,
+            "proxy_images": 16,
+            "online_adam": 4,
+            "backward_calls": 4,
+            "memory_pushes": 4,
+            "retrievals": 4
+          },
+          "max_prediction_difference": 0.0,
+          "positions": [
+            17,
+            18,
+            19,
+            20
+          ],
+          "comparisons": [
+            {
+              "task": "fundus",
+              "arm": "D4",
+              "position": 17,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "L4",
+              "position": 17,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "T4",
+              "position": 17,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "D4",
+              "position": 18,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "L4",
+              "position": 18,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "T4",
+              "position": 18,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "D4",
+              "position": 19,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "L4",
+              "position": 19,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "T4",
+              "position": 19,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "D4",
+              "position": 20,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "L4",
+              "position": 20,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "fundus",
+              "arm": "T4",
+              "position": 20,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            }
+          ]
+        },
+        "peak_allocated_bytes": 14301518336
+      },
+      "polyp": {
+        "D4": {
+          "loss": 0.9760115146636963,
+          "gradient_norm": 2.378816604614258,
+          "image_delta_norm": 11.916316032409668,
+          "counts": {
+            "live_forwards": 8,
+            "proxy_forwards": 4,
+            "proxy_images": 16,
+            "prompt_forwards": 16,
+            "gradient_calls": 12,
+            "differentiable_inner": 4,
+            "memory_pushes": 4,
+            "retrievals": 4,
+            "source_visits": 4
+          }
+        },
+        "L4": {
+          "loss": 5.937598705291748,
+          "gradient_norm": 0.13216596841812134,
+          "image_delta_norm": 11.777556419372559,
+          "counts": {
+            "live_forwards": 8,
+            "proxy_forwards": 4,
+            "proxy_images": 16,
+            "prompt_forwards": 16,
+            "gradient_calls": 4,
+            "differentiable_inner": 4,
+            "memory_pushes": 4,
+            "retrievals": 4,
+            "source_visits": 4
+          }
+        },
+        "T4": {
+          "loss": 5.937598705291748,
+          "gradient_norm": 0.11217983067035675,
+          "image_delta_norm": 11.757493019104004,
+          "counts": {
+            "live_forwards": 8,
+            "proxy_forwards": 4,
+            "proxy_images": 16,
+            "prompt_forwards": 16,
+            "gradient_calls": 4,
+            "differentiable_inner": 4,
+            "memory_pushes": 4,
+            "retrievals": 4,
+            "source_visits": 4
+          }
+        },
+        "native_reference": {
+          "counts": {
+            "model_forwards": 8,
+            "prompt_forwards": 16,
+            "proxy_forwards": 4,
+            "proxy_images": 16,
+            "online_adam": 4,
+            "backward_calls": 4,
+            "memory_pushes": 4,
+            "retrievals": 4
+          },
+          "max_prediction_difference": 0.0,
+          "positions": [
+            17,
+            18,
+            19,
+            20
+          ],
+          "comparisons": [
+            {
+              "task": "polyp",
+              "arm": "D4",
+              "position": 17,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "L4",
+              "position": 17,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "T4",
+              "position": 17,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "D4",
+              "position": 18,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "L4",
+              "position": 18,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "T4",
+              "position": 18,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "D4",
+              "position": 19,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "L4",
+              "position": 19,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "T4",
+              "position": 19,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "D4",
+              "position": 20,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "L4",
+              "position": 20,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            },
+            {
+              "task": "polyp",
+              "arm": "T4",
+              "position": 20,
+              "errors": {
+                "initial_prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "gradient": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prompt": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                },
+                "prediction": {
+                  "max_abs": 0.0,
+                  "outside_tolerance": 0
+                }
+              }
+            }
+          ]
+        },
+        "peak_allocated_bytes": 9604766720
       }
     },
-    "reason": "Tensor-likes are not close!\n\nMismatched elements: 1673 / 524288 (0.3%)\nGreatest absolute difference: 0.0003333091735839844 at index (0, 0, 248, 328) (up to 1e-05 allowed)\nGreatest relative difference: 0.06829499453306198 at index (0, 0, 255, 329) (up to 0.0001 allowed)",
-    "exception": "AssertionError",
-    "gpu_seconds": 23.107255089911632,
-    "exit_code": 1
+    "paired_comparison_backend": {
+      "deterministic_algorithms": true,
+      "restored_deterministic_algorithms": false,
+      "cublas_workspace_config": ":4096:8"
+    },
+    "gpu_seconds": 267.73939592787065,
+    "exit_code": 0
   },
   "environment_comparison": {
     "differences": {},
     "compatible": true
   },
-  "actual_updates": {
-    "online": 2,
-    "outer": 3,
-    "inner": 12
+  "physical_gpu": 3,
+  "admission": {
+    "free_mib": 23238,
+    "required_mib": 17561,
+    "smoke_peak_allocated_bytes": 14301518336
   },
-  "formal_training_visits": 0,
-  "formal_outer_updates": 0,
-  "new_scoring_records": 0,
-  "six_formal_fits": {
-    "fundus": {
-      "D4": "NOT_STARTED",
-      "L4": "NOT_STARTED",
-      "T4": "NOT_STARTED"
+  "prior_updates": {
+    "online": 17,
+    "outer": 16,
+    "inner": 84
+  },
+  "prior_accounting": {
+    "original_failed_smoke": {
+      "online": 2,
+      "outer": 3,
+      "inner": 12
     },
-    "polyp": {
-      "D4": "NOT_STARTED",
-      "L4": "NOT_STARTED",
-      "T4": "NOT_STARTED"
+    "repair_diagnostics": {
+      "online": 4,
+      "outer": 0,
+      "inner": 4
+    },
+    "R1_failed_smoke": {
+      "online": 3,
+      "outer": 3,
+      "inner": 12
+    },
+    "CUDA_scalar_optimizer_primitive_checks": 2,
+    "known_measured_seconds": 160.68453795288224,
+    "conservative_untimed_arithmetic_budget_charge_seconds": 60,
+    "prior_execution_commits": [
+      "956662e94cc4c2b66109acf4075652fd9f29aa55",
+      "0f88445c6b216f6f6cb9a52a2984cf6053f17add",
+      "fada7438ab30a7dbe4f0071944dfd97adf3c3f2c",
+      "b22a58199709ad1304bfc338e77841efbdcfc6dd"
+    ],
+    "R2_failed_smoke": {
+      "online": 4,
+      "outer": 5,
+      "inner": 24
+    },
+    "polyp_anomaly": {
+      "online": 0,
+      "outer": 0,
+      "inner": 4
+    },
+    "R3_failed_smoke": {
+      "online": 4,
+      "outer": 5,
+      "inner": 24
+    },
+    "polyp_anomaly2": {
+      "online": 0,
+      "outer": 0,
+      "inner": 4
     }
   },
-  "physical_gpu": 7,
-  "gpu_stage_seconds": 23.107255089911632,
-  "peak_allocated_bytes": null,
-  "peak_memory_note": "Not persisted by the failure handler; cannot reconstruct the peak from post-exit GPU occupancy.",
-  "retry_count": 0,
-  "formal_launcher_started": false,
-  "scientific_result": "NOT_AVAILABLE; numerical implementation acceptance failed, not a method-performance negative result",
-  "private_output_bytes_at_stop": 322182,
-  "private_file_count_at_stop": 13,
-  "smoke_process_exited": true,
-  "formal_scoring_log_count": 0
+  "prior_gpu_seconds": 220.68453795288224,
+  "prior_private_bytes": 51406714,
+  "formal_launcher_started": true,
+  "startup_check": {
+    "checked_unix": 1788881414.8753643,
+    "launcher_alive": true,
+    "training_log_readable": true,
+    "first_fit": "fundus_D4",
+    "last_window": 3,
+    "loss": 1.3450586795806885,
+    "gradient_norm": 0.3796502649784088,
+    "source_visits": 12
+  },
+  "scientific_result": "PENDING; successful numerical acceptance is not method-performance evidence"
 }

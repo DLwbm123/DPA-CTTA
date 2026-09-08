@@ -313,7 +313,7 @@ Local affected validation: 22 tests passed (exit 0, 1.445 seconds), including se
 The user's current long-experiment convention applies: once smoke passes and a reliable detached formal pipeline is verified started, the session may end without keeping an SSH connection or automatically monitoring. Actual completion, independent reconstruction and public result delivery remain separate from successful startup.
 
 
-## Runtime outcome
+## Historical initial runtime outcome (before repair authorization)
 
 Full-model GPU smoke failed at the second Fundus native reference prediction under the unchanged tolerance. Formal training and scoring were not started. See [failure report](../results/m4_trajectory_distillation_v1/M4_EXPERIMENT_REPORT.md) for the actual 2 online / 3 outer / 12 functional inner updates and exact stopping boundary. No GPU retry was performed.
 
@@ -350,3 +350,7 @@ R3 repeated exact four-position Fundus parity, but the Polyp T4 derivative still
 The custom first-gradient forward keeps the exact native arithmetic. Its backward now supplies the complete analytic Hessian-vector product using z=(x-mean(x))/std and n=HW-1: g*(v-mean(v)-z*sum(z*v)/n)/(n*std). The derivative with respect to upstream g is sum(z*v)/n. This avoids intermediate std squared/cubed; no small-positive clamp, epsilon, higher precision, detached host Hessian or altered forward is used. The saved std's dependence is already included in this complete Hessian and is not counted a second time. The zero-channel convention remains explicit; third derivatives are not required or validated by M4.
 
 All 26 affected CPU tests pass, including double-precision gradgradcheck and a float32 1e-20 activation regression with exact native first-gradient values and a finite Hessian consistent with a double reference. Full-model smoke is still required. Before the next attempt, actual earlier image updates total 17 online / 16 outer / 84 inner, plus two tiny optimizer arithmetic checks. Measured and conservative time charges remain separately accounted for; no formal training or target scoring has run.
+
+### R4 accepted execution
+
+Execution f88e99d212e914b74a7c521bac8c418fc73e5d6c passed all 26 CPU checks on the deployed environment and complete two-task three-arm four-step native GPU smoke (8/6/24). All captured initial prompts, first gradients, updated prompts and predictions matched exactly; moments/memory/counters passed unchanged checks. The detached formal pipeline was verified started on GPU 3. Current runtime status and scientific-result availability are in the repair report; acceptance is not experimental completion.
