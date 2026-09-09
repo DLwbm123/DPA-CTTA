@@ -1,13 +1,141 @@
 {
-  "status": "INCOMPLETE",
-  "stage": "smoke_interface_failure_before_first_optimizer_call",
-  "failed_execution_commit": "91fc1178ee1ade6335e36dae39e2f4a398e182e5",
-  "repair_commit": "029a79340057b58b8074ccf86c7b5671b5fdbd1c",
-  "baseline_commit": "2fcbc0a69645e34da42b97830935f0e290e488aa",
-  "grata_commit": "33ae20d664f305af34739ec54a5bec7da53ffa0b",
-  "physical_gpu": 7,
-  "free_mib_before_smoke": 16668,
-  "required_free_mib": 12288,
+  "status": "B1_RUNNING",
+  "checked_utc": 1788956083.8983364,
+  "execution_commit": "029a79340057b58b8074ccf86c7b5671b5fdbd1c",
+  "cpu": {
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 45.75652377004735,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "exit_code": 0
+  },
+  "smoke": {
+    "status": "B1_SMOKE_PASS",
+    "base_adam": 16,
+    "evidence": {
+      "C": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "lr": 0.0001,
+            "state_and_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "lr": 0.0001,
+            "state_and_RNG_match": true
+          },
+          {
+            "visit": 3,
+            "max_logits_difference": 0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "lr": 0.0001,
+            "state_and_RNG_match": true
+          },
+          {
+            "visit": 4,
+            "max_logits_difference": 0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "lr": 0.0001,
+            "state_and_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 615612928
+      },
+      "G": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0,
+            "counts": {
+              "forwards": 9,
+              "backwards": 2,
+              "base_adam": 1,
+              "perturb": 1,
+              "restore": 1
+            },
+            "lr": 0.000027256119210505858,
+            "state_and_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0,
+            "counts": {
+              "forwards": 9,
+              "backwards": 2,
+              "base_adam": 1,
+              "perturb": 1,
+              "restore": 1
+            },
+            "lr": 0.00002773904998321086,
+            "state_and_RNG_match": true
+          },
+          {
+            "visit": 3,
+            "max_logits_difference": 0,
+            "counts": {
+              "forwards": 9,
+              "backwards": 2,
+              "base_adam": 1,
+              "perturb": 1,
+              "restore": 1
+            },
+            "lr": 0.000020949166355421767,
+            "state_and_RNG_match": true
+          },
+          {
+            "visit": 4,
+            "max_logits_difference": 0,
+            "counts": {
+              "forwards": 9,
+              "backwards": 2,
+              "base_adam": 1,
+              "perturb": 1,
+              "restore": 1
+            },
+            "lr": 0.000027561321985558607,
+            "state_and_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 615775744
+      }
+    },
+    "gpu_seconds": 15.920768267009407,
+    "source_parity": 0,
+    "extra_source_parity_forwards": 2,
+    "exit_code": 0
+  },
   "registration": {
     "status": "B1_REGISTERED",
     "groups": 1951,
@@ -49,50 +177,181 @@
     },
     "exit_code": 0
   },
-  "initial_CPU": {
-    "tests": 6,
-    "failures": 0,
-    "errors": 0,
-    "skips": 0,
-    "seconds": 6.164829515968449,
-    "python": "3.10.6",
-    "torch": "2.2.1+cu121",
-    "exit_code": 0
+  "trainable": {
+    "names": [
+      "res.bn1.weight",
+      "res.bn1.bias",
+      "res.layer1.0.bn1.weight",
+      "res.layer1.0.bn1.bias",
+      "res.layer1.0.bn2.weight",
+      "res.layer1.0.bn2.bias",
+      "res.layer1.1.bn1.weight",
+      "res.layer1.1.bn1.bias",
+      "res.layer1.1.bn2.weight",
+      "res.layer1.1.bn2.bias",
+      "res.layer1.2.bn1.weight",
+      "res.layer1.2.bn1.bias",
+      "res.layer1.2.bn2.weight",
+      "res.layer1.2.bn2.bias",
+      "res.layer2.0.bn1.weight",
+      "res.layer2.0.bn1.bias",
+      "res.layer2.0.bn2.weight",
+      "res.layer2.0.bn2.bias",
+      "res.layer2.0.downsample.1.weight",
+      "res.layer2.0.downsample.1.bias",
+      "res.layer2.1.bn1.weight",
+      "res.layer2.1.bn1.bias",
+      "res.layer2.1.bn2.weight",
+      "res.layer2.1.bn2.bias",
+      "res.layer2.2.bn1.weight",
+      "res.layer2.2.bn1.bias",
+      "res.layer2.2.bn2.weight",
+      "res.layer2.2.bn2.bias",
+      "res.layer2.3.bn1.weight",
+      "res.layer2.3.bn1.bias",
+      "res.layer2.3.bn2.weight",
+      "res.layer2.3.bn2.bias",
+      "res.layer3.0.bn1.weight",
+      "res.layer3.0.bn1.bias",
+      "res.layer3.0.bn2.weight",
+      "res.layer3.0.bn2.bias",
+      "res.layer3.0.downsample.1.weight",
+      "res.layer3.0.downsample.1.bias",
+      "res.layer3.1.bn1.weight",
+      "res.layer3.1.bn1.bias",
+      "res.layer3.1.bn2.weight",
+      "res.layer3.1.bn2.bias",
+      "res.layer3.2.bn1.weight",
+      "res.layer3.2.bn1.bias",
+      "res.layer3.2.bn2.weight",
+      "res.layer3.2.bn2.bias",
+      "res.layer3.3.bn1.weight",
+      "res.layer3.3.bn1.bias",
+      "res.layer3.3.bn2.weight",
+      "res.layer3.3.bn2.bias",
+      "res.layer3.4.bn1.weight",
+      "res.layer3.4.bn1.bias",
+      "res.layer3.4.bn2.weight",
+      "res.layer3.4.bn2.bias",
+      "res.layer3.5.bn1.weight",
+      "res.layer3.5.bn1.bias",
+      "res.layer3.5.bn2.weight",
+      "res.layer3.5.bn2.bias",
+      "res.layer4.0.bn1.weight",
+      "res.layer4.0.bn1.bias",
+      "res.layer4.0.bn2.weight",
+      "res.layer4.0.bn2.bias",
+      "res.layer4.0.downsample.1.weight",
+      "res.layer4.0.downsample.1.bias",
+      "res.layer4.1.bn1.weight",
+      "res.layer4.1.bn1.bias",
+      "res.layer4.1.bn2.weight",
+      "res.layer4.1.bn2.bias",
+      "res.layer4.2.bn1.weight",
+      "res.layer4.2.bn1.bias",
+      "res.layer4.2.bn2.weight",
+      "res.layer4.2.bn2.bias",
+      "up1.bn.weight",
+      "up1.bn.bias",
+      "up2.bn.weight",
+      "up2.bn.bias",
+      "up3.bn.weight",
+      "up3.bn.bias",
+      "up4.bn.weight",
+      "up4.bn.bias",
+      "bnout.weight",
+      "bnout.bias"
+    ],
+    "layers": [
+      "res.bn1",
+      "res.layer1.0.bn1",
+      "res.layer1.0.bn2",
+      "res.layer1.1.bn1",
+      "res.layer1.1.bn2",
+      "res.layer1.2.bn1",
+      "res.layer1.2.bn2",
+      "res.layer2.0.bn1",
+      "res.layer2.0.bn2",
+      "res.layer2.0.downsample.1",
+      "res.layer2.1.bn1",
+      "res.layer2.1.bn2",
+      "res.layer2.2.bn1",
+      "res.layer2.2.bn2",
+      "res.layer2.3.bn1",
+      "res.layer2.3.bn2",
+      "res.layer3.0.bn1",
+      "res.layer3.0.bn2",
+      "res.layer3.0.downsample.1",
+      "res.layer3.1.bn1",
+      "res.layer3.1.bn2",
+      "res.layer3.2.bn1",
+      "res.layer3.2.bn2",
+      "res.layer3.3.bn1",
+      "res.layer3.3.bn2",
+      "res.layer3.4.bn1",
+      "res.layer3.4.bn2",
+      "res.layer3.5.bn1",
+      "res.layer3.5.bn2",
+      "res.layer4.0.bn1",
+      "res.layer4.0.bn2",
+      "res.layer4.0.downsample.1",
+      "res.layer4.1.bn1",
+      "res.layer4.1.bn2",
+      "res.layer4.2.bn1",
+      "res.layer4.2.bn2",
+      "up1.bn",
+      "up2.bn",
+      "up3.bn",
+      "up4.bn",
+      "bnout"
+    ],
+    "parameters": 19136,
+    "parameter_tensors": 82,
+    "state_mapping": "identity: strict full P2 segmentation state; no auxiliary heads"
   },
-  "repaired_CPU": {
-    "tests": 7,
-    "failures": 0,
-    "errors": 0,
-    "skips": 0,
-    "seconds": 45.75652377004735,
-    "python": "3.10.6",
-    "torch": "2.2.1+cu121",
-    "exit_code": 0
+  "startup": {
+    "pid": 621353,
+    "started_utc": 1788956044.804467,
+    "execution_commit": "029a79340057b58b8074ccf86c7b5671b5fdbd1c",
+    "physical_gpu": 7,
+    "free_mib_before_launch": 16666,
+    "required_free_mib": 12288,
+    "mount_probe": "PASS",
+    "status": "B1_LAUNCH_DISPATCHED",
+    "launcher_alive": true,
+    "completed_C_order0_records": 42,
+    "last_adam_step": 42,
+    "last_counts": {
+      "forwards": 8,
+      "backwards": 1,
+      "base_adam": 1,
+      "perturb": 0,
+      "restore": 0
+    },
+    "peak_allocated_bytes": 617054208,
+    "immediate_failure": false,
+    "environment_matches_P2": true
   },
-  "smoke": {
+  "continuation_authorization": "Explicit user approval to execute the repaired version.",
+  "previous_attempt": {
     "status": "INCOMPLETE",
-    "stage": "smoke",
-    "reason": "too many values to unpack (expected 2)",
-    "exit_code": 1
+    "execution_commit": "91fc1178ee1ade6335e36dae39e2f4a398e182e5",
+    "completed_GPU_base_adam": 0,
+    "source_parity_forwards": 2,
+    "failed_reference_weak_forward": 1,
+    "forward_provenance": "Reconstructed from control flow and traceback.",
+    "report_commit": "ee4b434f016ce121e835359a7427931d151e72b4",
+    "failure_preserved": true
   },
-  "completed_GPU_base_adam": 0,
-  "formal_records": 0,
-  "formal_started": false,
-  "GPU_forward_accounting": {
-    "source_parity": 2,
-    "first_reference_weak": 1,
-    "provenance": "Reconstructed from executed control flow and traceback, not a persisted forward hook."
-  },
-  "repaired_GPU_smoke_executed": false,
-  "protocol_stop": "Plan section 12: engineering faults remain INCOMPLETE; no automatic continuation.",
   "stage_exit_codes": {
     "registration": 0,
-    "initial_CPU": 0,
-    "smoke": 1,
-    "repaired_CPU": 0,
+    "CPU": 0,
+    "smoke": 0,
     "formal": null,
     "recompute": null
   },
-  "new_target_results": null
+  "scientific_result": "PENDING",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "grata_commit": "33ae20d664f305af34739ec54a5bec7da53ffa0b",
+  "baseline_commit": "2fcbc0a69645e34da42b97830935f0e290e488aa"
 }
-
