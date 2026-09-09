@@ -55,6 +55,7 @@ def smoke(receipt,out,reg):
     sys.path.insert(0,str(ROOT/'tests'))
     from test_vptta_host import pixels
     budget=P2Budget(out);calls=0;ev={};state=torch.load(reg['tasks']['fundus']['checkpoint']['path'],map_location='cpu',weights_only=True)
+    call_log=new_log(out/'smoke.calls.jsonl')
     with deterministic_smoke_pair():
         seed_all(20260907);n=SourceOnlyHost('fundus',state,'cuda:0');candidate=SourceOnlyHost('fundus',state,'cuda:0');x=pixels('fundus',0)
         q=n.step(x);z=candidate.model(model_input_from_pixels(x,'fundus').to('cuda:0'))[0];close(q,z)
@@ -68,12 +69,15 @@ def smoke(receipt,out,reg):
                     base=torch.optim.Adam(params,lr=1e-4,betas=(.9,.999),eps=1e-8,weight_decay=0);opt=official().GraTa(params,base,model,device='cuda:0')
                 else:
                     host=Host(arm,state,'cuda:0');model,params,base,opt=host.model,host.params,host.base,host.opt
+                def count_call(optimizer,args,kwargs):
+                    nonlocal calls
+                    calls+=1;append(call_log,dict(arm=arm,path=path,visit=i+1,completed_base_adam=calls))
+                count_hook=base.register_step_post_hook(count_call)
                 torch.cuda.reset_peak_memory_stats()
                 for i in range(4):
                     x=pixels('fundus',i)
                     if path=='reference':logits=reference_step(model,opt,arm,model_input_from_pixels(x,'fundus'))
                     else:logits,meta=host.step(x)
-                    calls+=1
                     snapshot=dict(logits=logits.cpu(),affine=[p.detach().cpu().clone() for p in params],adam=cpu_tree(copy.deepcopy(base.state_dict())),aux_state=cpu_tree(copy.deepcopy(opt.state_dict())),rng=rng())
                     if path=='reference':saved.append(snapshot)
                     else:
@@ -81,13 +85,14 @@ def smoke(receipt,out,reg):
                         for key in ['logits','affine','adam','aux_state']:close(snapshot[key],saved[i][key])
                         e.append(dict(visit=i+1,max_logits_difference=float((snapshot['logits']-saved[i]['logits']).abs().max()),counts=meta['counts'],lr=meta['lr'],state_and_RNG_match=True))
                     del logits,snapshot
-                peak=max(peak,torch.cuda.max_memory_allocated())
+                peak=max(peak,torch.cuda.max_memory_allocated());count_hook.remove()
                 if path=='new':host.finish(state);del host
                 else:
                     for key,value in model.state_dict().items():
                         if key not in names and not torch.equal(value.cpu(),state[key]):raise ValueError('reference changed frozen state')
                 del model,params,base,opt;gc.collect()
             ev[arm]=dict(visits=e,peak_allocated_bytes=peak);print(json.dumps(dict(stage='smoke',arm=arm,status='PASS',base_adam=calls)),flush=True)
+    call_log.close()
     if calls!=16:raise ValueError('smoke budget')
     private_json(out/'smoke.completion.json',dict(status='B1_SMOKE_PASS',base_adam=calls,evidence=ev,gpu_seconds=budget.seconds(),source_parity=parity,extra_source_parity_forwards=2,exit_code=0,**{k:receipt[k] for k in ['commit','config_sha256','registration_sha256','gpu_uuid']}))
 
@@ -151,7 +156,8 @@ def main():
         if a.stage!='recompute':
             env=environment();private_json(out/(a.stage+'.environment.json'),env)
             if env!=json.loads((Path(reg['p2_directory'])/'run.environment.json').read_text()):raise ValueError('P2 environment drift')
-        {'smoke':smoke,'run':run,'recompute':recompute}[a.stage](r,out,reg) if a.stage!='recompute' else recompute(out,reg,r)
+        if a.stage=='recompute':recompute(out,reg,r)
+        else:{'smoke':smoke,'run':run}[a.stage](r,out,reg)
     except Exception as e:
         f=out/(a.stage+'.failure.json')
         if not f.exists():private_json(f,dict(status='INCOMPLETE',stage=a.stage,reason=str(e),exit_code=1))
