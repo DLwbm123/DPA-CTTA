@@ -170,6 +170,8 @@ def validate(receipt,stage):
     if out.is_relative_to(ROOT) or out.stat().st_uid!=os.getuid() or out.stat().st_mode&0o077:raise ValueError('private output directory')
     if digest(out/'registration.json')!=receipt['registration_sha256']:raise ValueError('registration drift')
     reg=json.loads((out/'registration.json').read_text());check_registered_files(reg)
+    cfg=json.loads(CONFIG.read_text())
+    if reg['budget']!=cfg['expected_budget'] or sum(len(t['target']) for t in reg['tasks'].values())!=reg['budget']['groups']:raise ValueError('registered budget drift')
     if stage!='recompute':
         devices=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid','--format=csv,noheader'],text=True)
         mapping={int(p[0]):p[1].strip() for p in [s.split(',') for s in devices.splitlines()]}

@@ -65,7 +65,14 @@
     "reverse blocks; unchanged within-domain order"
   ],
   "primary": "extension_dev; report legacy_dev and combined separately",
-  "expected_budget": "frozen actual registration budget; at most 448 groups, 7168 new records, 4480 formal Adam",
+  "expected_budget": {
+    "groups": 448,
+    "records": 7168,
+    "online": 4480,
+    "smoke_online": 12,
+    "outer": 0,
+    "inner": 0
+  },
   "smoke_online": 12,
   "outer_updates": 0,
   "differentiable_inner_training": 0,
@@ -93,5 +100,46 @@
     "discrete": "exact"
   },
   "stop": "engineering/resource failure only; preserve prefix; no automatic retry, parameter search, or P2",
-  "storage": "scalar records only, no target image/mask/logit/probability files"
+  "storage": "scalar records only, no target image/mask/logit/probability files",
+  "registered_groups": {
+    "fundus": {
+      "REFUGE": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "combined": 64
+      },
+      "ORIGA": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "combined": 64
+      },
+      "REFUGE_Valid": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "combined": 64
+      },
+      "Drishti_GS": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "combined": 64
+      }
+    },
+    "polyp": {
+      "CVC-ClinicDB": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "combined": 64
+      },
+      "ETIS-LaribPolypDB": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "combined": 64
+      },
+      "Kvasir-SEG": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "combined": 64
+      }
+    }
+  }
 }
