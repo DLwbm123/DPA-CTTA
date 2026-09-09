@@ -1,0 +1,107 @@
+{
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "seed": 20260907,
+  "host": {
+    "lr": {
+      "fundus": 0.05,
+      "polyp": 0.01
+    },
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "iters": 1,
+    "warm_n": 5,
+    "neighbor": 16,
+    "memory_size": 40,
+    "prompt_alpha": 0.01
+  },
+  "models": {
+    "fundus": "native ResUNet34 512x512",
+    "polyp": "native PraNet 352x352"
+  },
+  "teacher": "same source checkpoint, standard BN eval, unprompted N preprocessing, frozen params/buffers",
+  "ensemble": {
+    "weight": 0.5,
+    "space": "probability",
+    "threshold": ">=0.5",
+    "independent_state": false
+  },
+  "tolerance": {
+    "rtol": 0.0001,
+    "atol": 1e-05,
+    "discrete": "exact"
+  },
+  "schema_version": "p2-frozen-factorial-full-stream-v1",
+  "baseline_release": "18b8f32186678e8930a6c540f96941365fd511b9",
+  "parents": [
+    "A",
+    "O2",
+    "D4"
+  ],
+  "views": {
+    "EA": "A",
+    "EO2": "O2",
+    "ED4": "D4"
+  },
+  "arms": [
+    "N",
+    "A",
+    "EA",
+    "O2",
+    "EO2",
+    "D4",
+    "ED4"
+  ],
+  "proxy": {
+    "O2_step": 600,
+    "D4_step": 150,
+    "K": 4,
+    "weight": 0.1,
+    "boundary": 0,
+    "transform": "identity"
+  },
+  "scheduler": "shared_current_visit",
+  "subsets": [
+    "remaining_dev",
+    "legacy_dev",
+    "p1_extension_dev",
+    "all_dev"
+  ],
+  "primary": "remaining_dev",
+  "selection": "all legal existing manifest groups; earlier domain then smallest sample_id representative; restore manifest order",
+  "orders": [
+    "original domain blocks",
+    "reverse blocks; unchanged within-domain order"
+  ],
+  "expected_budget": "TO_BE_FROZEN_AFTER_REGISTRATION",
+  "limits": {
+    "gpu_seconds": 21600,
+    "private_bytes": 1073741824
+  },
+  "gpu": {
+    "allowed": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "preferred": 7,
+    "simultaneous_devices": 1,
+    "coexist": true
+  },
+  "new_training": {
+    "source": 0,
+    "proxy": 0,
+    "selector": 0,
+    "outer": 0,
+    "inner": 0
+  },
+  "smoke_online": 12,
+  "pixel_table": "count[GT,N_hard,parent_hard,ensemble_hard] flattened C-order 16 integers per channel; stored on view rows only",
+  "stop": "engineering/resource failure only, preserve prefix; no automatic retry/search/P3",
+  "storage": "scalar records only; no target images/masks/logits/probability maps"
+}
