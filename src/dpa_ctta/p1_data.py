@@ -58,7 +58,7 @@ def register(m4,spec_path,manifests,out):
     if receipt['commit']!='f88e99d212e914b74a7c521bac8c418fc73e5d6c' or digest(m4/'registration.json')!=receipt['registration_sha256']:raise ValueError('M4 identity')
     spec=json.loads(Path(spec_path).read_text());reg=dict(tasks={},identities=[],m4_directory=str(m4),limitations=['exploratory development; extension unused by M1-M4, not project-wide untouched','UNKNOWN patient/video linkage','single seed; same contents across orders'])
     m1=json.loads((Path(old['old_directory'])/'registration.json').read_text());seen=set()
-    for task,r in registered.items():
+    for task,r in registered['tasks'].items():
         entry=spec['tasks'][task];manifest=Path(manifests[task]);source=json.loads(Path(entry['manifest']).read_text());rows=json.loads(manifest.read_text())
         target,counts,excluded=select_extension(rows,task,source,r['target'],m1['tasks'][task]['target_exclusions'],m1['tasks'][task]['target_roles'])
         for row in target:
