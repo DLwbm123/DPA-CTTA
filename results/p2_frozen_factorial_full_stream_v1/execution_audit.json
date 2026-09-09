@@ -1,0 +1,229 @@
+{
+  "status": "P2_RUNNING",
+  "checked_utc": 1788929702.5772798,
+  "execution_commit": "d3ee6901379be293f47abd1687808caaf5b04266",
+  "cpu": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 2.984220747021027,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "exit_code": 0
+  },
+  "smoke": {
+    "status": "P2_SMOKE_PASS",
+    "online": 12,
+    "evidence": {
+      "fundus": {
+        "A": {
+          "max_logits_difference": 0,
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 3,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1
+          },
+          "native_state_and_rng_equal": true
+        },
+        "O2": {
+          "max_logits_difference": 0,
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 4,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1
+          },
+          "native_state_and_rng_equal": true
+        },
+        "D4": {
+          "max_logits_difference": 0,
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 4,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1
+          },
+          "native_state_and_rng_equal": true
+        },
+        "teacher_frozen": true,
+        "peak_allocated_bytes": 3631961600
+      },
+      "polyp": {
+        "A": {
+          "max_logits_difference": 0,
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 3,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1
+          },
+          "native_state_and_rng_equal": true
+        },
+        "O2": {
+          "max_logits_difference": 0,
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 4,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1
+          },
+          "native_state_and_rng_equal": true
+        },
+        "D4": {
+          "max_logits_difference": 0,
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 4,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1
+          },
+          "native_state_and_rng_equal": true
+        },
+        "teacher_frozen": true,
+        "peak_allocated_bytes": 2314573824
+      }
+    },
+    "gpu_seconds": 19.938997082062997,
+    "exit_code": 0
+  },
+  "registration": {
+    "budget": {
+      "groups": 3753,
+      "records": 52542,
+      "online": 22518,
+      "teacher_forwards": 7506,
+      "smoke_online": 12,
+      "outer": 0,
+      "inner": 0
+    },
+    "checks": {
+      "reused_P1_files": 896,
+      "new_verified_files": 6610
+    },
+    "tasks": {
+      "fundus": {
+        "counts": {
+          "REFUGE": {
+            "remaining_dev": 336,
+            "legacy_dev": 32,
+            "p1_extension_dev": 32,
+            "all_dev": 400
+          },
+          "ORIGA": {
+            "remaining_dev": 586,
+            "legacy_dev": 32,
+            "p1_extension_dev": 32,
+            "all_dev": 650
+          },
+          "REFUGE_Valid": {
+            "remaining_dev": 736,
+            "legacy_dev": 32,
+            "p1_extension_dev": 32,
+            "all_dev": 800
+          },
+          "Drishti_GS": {
+            "remaining_dev": 37,
+            "legacy_dev": 32,
+            "p1_extension_dev": 32,
+            "all_dev": 101
+          }
+        },
+        "missing_P1_groups": 0,
+        "exclusions": {}
+      },
+      "polyp": {
+        "counts": {
+          "CVC-ClinicDB": {
+            "remaining_dev": 548,
+            "legacy_dev": 32,
+            "p1_extension_dev": 32,
+            "all_dev": 612
+          },
+          "ETIS-LaribPolypDB": {
+            "remaining_dev": 126,
+            "legacy_dev": 32,
+            "p1_extension_dev": 32,
+            "all_dev": 190
+          },
+          "Kvasir-SEG": {
+            "remaining_dev": 936,
+            "legacy_dev": 32,
+            "p1_extension_dev": 32,
+            "all_dev": 1000
+          }
+        },
+        "missing_P1_groups": 0,
+        "exclusions": {
+          "mask_conflict": 3
+        }
+      }
+    }
+  },
+  "startup": {
+    "launcher_pid": 439239,
+    "started_utc": 1788929678.2731018,
+    "physical_gpu": 7,
+    "free_mib_before_launch": 24124,
+    "required_free_mib": 12288,
+    "nas_probe": "PASS",
+    "launcher_alive": true,
+    "record_counts": {
+      "fundus_0_N": 14,
+      "fundus_0_A": 14,
+      "fundus_0_EA": 14,
+      "fundus_0_O2": 14,
+      "fundus_0_EO2": 14,
+      "fundus_0_D4": 14,
+      "fundus_0_ED4": 14
+    },
+    "parent_adam_steps": {
+      "fundus_0_N": 0,
+      "fundus_0_A": 14,
+      "fundus_0_EA": 14,
+      "fundus_0_O2": 14,
+      "fundus_0_EO2": 14,
+      "fundus_0_D4": 14,
+      "fundus_0_ED4": 14
+    },
+    "immediate_failure": false,
+    "environment_matches_P1": true
+  },
+  "baseline_release_commit": "18b8f32186678e8930a6c540f96941365fd511b9",
+  "p1_execution_commit": "f65e119016f2d6a32cd0cffbee2bb2e94f570c2d",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "stage_exit_codes": {
+    "registration": 0,
+    "cpu": 0,
+    "smoke": 0,
+    "run": null,
+    "recompute": null
+  },
+  "scientific_result": "PENDING"
+}
+
