@@ -1,24 +1,21 @@
 {
-  "status": "P2_RUNNING",
-  "checked_utc": 1788929702.5772798,
+  "status": "P2_FROZEN_FULL_STREAM_COMPLETE",
   "execution_commit": "d3ee6901379be293f47abd1687808caaf5b04266",
-  "cpu": {
-    "tests": 6,
-    "failures": 0,
-    "errors": 0,
-    "skips": 0,
-    "seconds": 2.984220747021027,
-    "python": "3.10.6",
-    "torch": "2.2.1+cu121",
-    "exit_code": 0
+  "formal": {
+    "records": 52542,
+    "online": 22518,
+    "teacher_forwards": 7506,
+    "outer": 0,
+    "inner": 0
   },
+  "online_including_smoke": 22530,
   "smoke": {
     "status": "P2_SMOKE_PASS",
     "online": 12,
     "evidence": {
       "fundus": {
         "A": {
-          "max_logits_difference": 0,
+          "max_logits_difference": 0.0,
           "counts": {
             "model_forwards": 2,
             "prompt_forwards": 3,
@@ -32,7 +29,7 @@
           "native_state_and_rng_equal": true
         },
         "O2": {
-          "max_logits_difference": 0,
+          "max_logits_difference": 0.0,
           "counts": {
             "model_forwards": 2,
             "prompt_forwards": 4,
@@ -46,7 +43,7 @@
           "native_state_and_rng_equal": true
         },
         "D4": {
-          "max_logits_difference": 0,
+          "max_logits_difference": 0.0,
           "counts": {
             "model_forwards": 2,
             "prompt_forwards": 4,
@@ -64,7 +61,7 @@
       },
       "polyp": {
         "A": {
-          "max_logits_difference": 0,
+          "max_logits_difference": 0.0,
           "counts": {
             "model_forwards": 2,
             "prompt_forwards": 3,
@@ -78,7 +75,7 @@
           "native_state_and_rng_equal": true
         },
         "O2": {
-          "max_logits_difference": 0,
+          "max_logits_difference": 0.0,
           "counts": {
             "model_forwards": 2,
             "prompt_forwards": 4,
@@ -92,7 +89,7 @@
           "native_state_and_rng_equal": true
         },
         "D4": {
-          "max_logits_difference": 0,
+          "max_logits_difference": 0.0,
           "counts": {
             "model_forwards": 2,
             "prompt_forwards": 4,
@@ -110,6 +107,587 @@
       }
     },
     "gpu_seconds": 19.938997082062997,
+    "exit_code": 0
+  },
+  "cost": {
+    "fundus_0_N": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 1951,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 1951
+      },
+      "host_step_elapsed_seconds": 0.0,
+      "teacher_seconds": 100.22937089868356,
+      "deployment_step_seconds": 100.22937089868356,
+      "pipeline_elapsed_seconds": 1691.9046873120824,
+      "shared_peak_allocated_bytes": 6775056896,
+      "resident_models": 1
+    },
+    "fundus_0_A": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 3902,
+        "prompt_forwards": 5837,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 1951,
+        "backward_calls": 1951,
+        "memory_pushes": 1951,
+        "retrievals": 1935,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 297.1622589593753,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 297.1622589593753,
+      "pipeline_elapsed_seconds": 1793.0661399298115,
+      "shared_peak_allocated_bytes": 6775056896,
+      "resident_models": 1
+    },
+    "fundus_0_EA": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 297.1622589593753,
+      "teacher_seconds": 100.22937089868356,
+      "deployment_step_seconds": 397.3916298580589,
+      "pipeline_elapsed_seconds": 1928.4081779014086,
+      "shared_peak_allocated_bytes": 6775056896,
+      "resident_models": 2
+    },
+    "fundus_0_O2": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 3902,
+        "prompt_forwards": 7788,
+        "proxy_forwards": 1951,
+        "proxy_images": 7804,
+        "online_adam": 1951,
+        "backward_calls": 1951,
+        "memory_pushes": 1951,
+        "retrievals": 1935,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 539.0463791735237,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 539.0463791735237,
+      "pipeline_elapsed_seconds": 2030.3846954163164,
+      "shared_peak_allocated_bytes": 6775056896,
+      "resident_models": 2
+    },
+    "fundus_0_EO2": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 539.0463791735237,
+      "teacher_seconds": 100.22937089868356,
+      "deployment_step_seconds": 639.2757500722073,
+      "pipeline_elapsed_seconds": 2155.758779208176,
+      "shared_peak_allocated_bytes": 6775056896,
+      "resident_models": 3
+    },
+    "fundus_0_D4": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 3902,
+        "prompt_forwards": 7788,
+        "proxy_forwards": 1951,
+        "proxy_images": 7804,
+        "online_adam": 1951,
+        "backward_calls": 1951,
+        "memory_pushes": 1951,
+        "retrievals": 1935,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 538.9458496053703,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 538.9458496053703,
+      "pipeline_elapsed_seconds": 2258.1295989115024,
+      "shared_peak_allocated_bytes": 6775056896,
+      "resident_models": 2
+    },
+    "fundus_0_ED4": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 538.9458496053703,
+      "teacher_seconds": 100.22937089868356,
+      "deployment_step_seconds": 639.1752205040539,
+      "pipeline_elapsed_seconds": 2383.7007047020597,
+      "shared_peak_allocated_bytes": 6775056896,
+      "resident_models": 3
+    },
+    "fundus_1_N": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 1951,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 1951
+      },
+      "host_step_elapsed_seconds": 0.0,
+      "teacher_seconds": 92.2232935342472,
+      "deployment_step_seconds": 92.2232935342472,
+      "pipeline_elapsed_seconds": 1551.198077362962,
+      "shared_peak_allocated_bytes": 6779464192,
+      "resident_models": 1
+    },
+    "fundus_1_A": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 3902,
+        "prompt_forwards": 5837,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 1951,
+        "backward_calls": 1951,
+        "memory_pushes": 1951,
+        "retrievals": 1935,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 277.950952513027,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 277.950952513027,
+      "pipeline_elapsed_seconds": 1647.6248166258447,
+      "shared_peak_allocated_bytes": 6779464192,
+      "resident_models": 1
+    },
+    "fundus_1_EA": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 277.950952513027,
+      "teacher_seconds": 92.2232935342472,
+      "deployment_step_seconds": 370.1742460472742,
+      "pipeline_elapsed_seconds": 1764.4715543567436,
+      "shared_peak_allocated_bytes": 6779464192,
+      "resident_models": 2
+    },
+    "fundus_1_O2": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 3902,
+        "prompt_forwards": 7788,
+        "proxy_forwards": 1951,
+        "proxy_images": 7804,
+        "online_adam": 1951,
+        "backward_calls": 1951,
+        "memory_pushes": 1951,
+        "retrievals": 1935,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 507.5753917110851,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 507.5753917110851,
+      "pipeline_elapsed_seconds": 1860.9582866489654,
+      "shared_peak_allocated_bytes": 6779464192,
+      "resident_models": 2
+    },
+    "fundus_1_EO2": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 507.5753917110851,
+      "teacher_seconds": 92.2232935342472,
+      "deployment_step_seconds": 599.7986852453323,
+      "pipeline_elapsed_seconds": 1978.8170034759678,
+      "shared_peak_allocated_bytes": 6779464192,
+      "resident_models": 3
+    },
+    "fundus_1_D4": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 3902,
+        "prompt_forwards": 7788,
+        "proxy_forwards": 1951,
+        "proxy_images": 7804,
+        "online_adam": 1951,
+        "backward_calls": 1951,
+        "memory_pushes": 1951,
+        "retrievals": 1935,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 507.41545482806396,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 507.41545482806396,
+      "pipeline_elapsed_seconds": 2075.357709886506,
+      "shared_peak_allocated_bytes": 6779464192,
+      "resident_models": 2
+    },
+    "fundus_1_ED4": {
+      "records": 1951,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 507.41545482806396,
+      "teacher_seconds": 92.2232935342472,
+      "deployment_step_seconds": 599.6387483623112,
+      "pipeline_elapsed_seconds": 2192.952291408088,
+      "shared_peak_allocated_bytes": 6779464192,
+      "resident_models": 3
+    },
+    "polyp_0_N": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 1802,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 1802
+      },
+      "host_step_elapsed_seconds": 0.0,
+      "teacher_seconds": 38.953478081850335,
+      "deployment_step_seconds": 38.953478081850335,
+      "pipeline_elapsed_seconds": 1269.3914987638127,
+      "shared_peak_allocated_bytes": 3537037824,
+      "resident_models": 1
+    },
+    "polyp_0_A": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 3604,
+        "prompt_forwards": 5390,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 1802,
+        "backward_calls": 1802,
+        "memory_pushes": 1802,
+        "retrievals": 1786,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 279.6857987610856,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 279.6857987610856,
+      "pipeline_elapsed_seconds": 1288.9457719131606,
+      "shared_peak_allocated_bytes": 3537037824,
+      "resident_models": 1
+    },
+    "polyp_0_EA": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 279.6857987610856,
+      "teacher_seconds": 38.953478081850335,
+      "deployment_step_seconds": 318.63927684293594,
+      "pipeline_elapsed_seconds": 1313.6474580833456,
+      "shared_peak_allocated_bytes": 3537037824,
+      "resident_models": 2
+    },
+    "polyp_0_O2": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 3604,
+        "prompt_forwards": 7192,
+        "proxy_forwards": 1802,
+        "proxy_images": 7208,
+        "online_adam": 1802,
+        "backward_calls": 1802,
+        "memory_pushes": 1802,
+        "retrievals": 1786,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 441.2944618012989,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 441.2944618012989,
+      "pipeline_elapsed_seconds": 1332.847381765605,
+      "shared_peak_allocated_bytes": 3537037824,
+      "resident_models": 2
+    },
+    "polyp_0_EO2": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 441.2944618012989,
+      "teacher_seconds": 38.953478081850335,
+      "deployment_step_seconds": 480.24793988314923,
+      "pipeline_elapsed_seconds": 1357.0885698260972,
+      "shared_peak_allocated_bytes": 3537037824,
+      "resident_models": 3
+    },
+    "polyp_0_D4": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 3604,
+        "prompt_forwards": 7192,
+        "proxy_forwards": 1802,
+        "proxy_images": 7208,
+        "online_adam": 1802,
+        "backward_calls": 1802,
+        "memory_pushes": 1802,
+        "retrievals": 1786,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 420.0692338333465,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 420.0692338333465,
+      "pipeline_elapsed_seconds": 1375.9588733513374,
+      "shared_peak_allocated_bytes": 3537037824,
+      "resident_models": 2
+    },
+    "polyp_0_ED4": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 420.0692338333465,
+      "teacher_seconds": 38.953478081850335,
+      "deployment_step_seconds": 459.02271191519685,
+      "pipeline_elapsed_seconds": 1399.5192382391542,
+      "shared_peak_allocated_bytes": 3537037824,
+      "resident_models": 3
+    },
+    "polyp_1_N": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 1802,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 1802
+      },
+      "host_step_elapsed_seconds": 0.0,
+      "teacher_seconds": 38.446290639578365,
+      "deployment_step_seconds": 38.446290639578365,
+      "pipeline_elapsed_seconds": 1257.5464005472604,
+      "shared_peak_allocated_bytes": 3537764864,
+      "resident_models": 1
+    },
+    "polyp_1_A": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 3604,
+        "prompt_forwards": 5390,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 1802,
+        "backward_calls": 1802,
+        "memory_pushes": 1802,
+        "retrievals": 1786,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 279.72654899943154,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 279.72654899943154,
+      "pipeline_elapsed_seconds": 1277.3580315518193,
+      "shared_peak_allocated_bytes": 3537764864,
+      "resident_models": 1
+    },
+    "polyp_1_EA": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 279.72654899943154,
+      "teacher_seconds": 38.446290639578365,
+      "deployment_step_seconds": 318.1728396390099,
+      "pipeline_elapsed_seconds": 1302.020532568451,
+      "shared_peak_allocated_bytes": 3537764864,
+      "resident_models": 2
+    },
+    "polyp_1_O2": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 3604,
+        "prompt_forwards": 7192,
+        "proxy_forwards": 1802,
+        "proxy_images": 7208,
+        "online_adam": 1802,
+        "backward_calls": 1802,
+        "memory_pushes": 1802,
+        "retrievals": 1786,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 441.721129114856,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 441.721129114856,
+      "pipeline_elapsed_seconds": 1321.0747700479114,
+      "shared_peak_allocated_bytes": 3537764864,
+      "resident_models": 2
+    },
+    "polyp_1_EO2": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 441.721129114856,
+      "teacher_seconds": 38.446290639578365,
+      "deployment_step_seconds": 480.1674197544344,
+      "pipeline_elapsed_seconds": 1345.2335990085267,
+      "shared_peak_allocated_bytes": 3537764864,
+      "resident_models": 3
+    },
+    "polyp_1_D4": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 3604,
+        "prompt_forwards": 7192,
+        "proxy_forwards": 1802,
+        "proxy_images": 7208,
+        "online_adam": 1802,
+        "backward_calls": 1802,
+        "memory_pushes": 1802,
+        "retrievals": 1786,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 419.4258576410357,
+      "teacher_seconds": 0.0,
+      "deployment_step_seconds": 419.4258576410357,
+      "pipeline_elapsed_seconds": 1364.006171266432,
+      "shared_peak_allocated_bytes": 3537764864,
+      "resident_models": 2
+    },
+    "polyp_1_ED4": {
+      "records": 1802,
+      "counts": {
+        "model_forwards": 0,
+        "prompt_forwards": 0,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 0,
+        "backward_calls": 0,
+        "memory_pushes": 0,
+        "retrievals": 0,
+        "teacher_forwards": 0
+      },
+      "host_step_elapsed_seconds": 419.4258576410357,
+      "teacher_seconds": 38.446290639578365,
+      "deployment_step_seconds": 457.87214828061406,
+      "pipeline_elapsed_seconds": 1387.4856116777519,
+      "shared_peak_allocated_bytes": 3537764864,
+      "resident_models": 3
+    }
+  },
+  "gpu_seconds": 7434.392882713117,
+  "scalar_recompute": true,
+  "pixel_inference_repeated": false,
+  "cell_marginals_verified": true,
+  "private_bytes_at_recompute": 81674494,
+  "teacher_accounting": "q0 shared once per visit; each independent ensemble charged teacher forward and residency",
+  "memory_accounting": "measured peak is shared schedule; resident_models excludes prompt and counts proxy clone when present",
+  "pipeline_accounting": "Each pipeline_elapsed_seconds is shared-visit elapsed through that output; do not sum arms as physical wall time. Standalone deployment_step_seconds adds parent host and required source forward, excluding evaluator.",
+  "exit_code": 0,
+  "cpu": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 2.984220747021027,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
     "exit_code": 0
   },
   "registration": {
@@ -185,35 +763,6 @@
       }
     }
   },
-  "startup": {
-    "launcher_pid": 439239,
-    "started_utc": 1788929678.2731018,
-    "physical_gpu": 7,
-    "free_mib_before_launch": 24124,
-    "required_free_mib": 12288,
-    "nas_probe": "PASS",
-    "launcher_alive": true,
-    "record_counts": {
-      "fundus_0_N": 14,
-      "fundus_0_A": 14,
-      "fundus_0_EA": 14,
-      "fundus_0_O2": 14,
-      "fundus_0_EO2": 14,
-      "fundus_0_D4": 14,
-      "fundus_0_ED4": 14
-    },
-    "parent_adam_steps": {
-      "fundus_0_N": 0,
-      "fundus_0_A": 14,
-      "fundus_0_EA": 14,
-      "fundus_0_O2": 14,
-      "fundus_0_EO2": 14,
-      "fundus_0_D4": 14,
-      "fundus_0_ED4": 14
-    },
-    "immediate_failure": false,
-    "environment_matches_P1": true
-  },
   "baseline_release_commit": "18b8f32186678e8930a6c540f96941365fd511b9",
   "p1_execution_commit": "f65e119016f2d6a32cd0cffbee2bb2e94f570c2d",
   "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
@@ -221,9 +770,10 @@
     "registration": 0,
     "cpu": 0,
     "smoke": 0,
-    "run": null,
-    "recompute": null
+    "run": 0,
+    "recompute": 0
   },
-  "scientific_result": "PENDING"
+  "launcher_exit_code": 0,
+  "started_utc": 1788929678.3063266,
+  "finished_utc": 1788937113.6994636
 }
-
