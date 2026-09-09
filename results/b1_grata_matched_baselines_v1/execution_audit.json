@@ -1,0 +1,98 @@
+{
+  "status": "INCOMPLETE",
+  "stage": "smoke_interface_failure_before_first_optimizer_call",
+  "failed_execution_commit": "91fc1178ee1ade6335e36dae39e2f4a398e182e5",
+  "repair_commit": "029a79340057b58b8074ccf86c7b5671b5fdbd1c",
+  "baseline_commit": "2fcbc0a69645e34da42b97830935f0e290e488aa",
+  "grata_commit": "33ae20d664f305af34739ec54a5bec7da53ffa0b",
+  "physical_gpu": 7,
+  "free_mib_before_smoke": 16668,
+  "required_free_mib": 12288,
+  "registration": {
+    "status": "B1_REGISTERED",
+    "groups": 1951,
+    "counts": {
+      "REFUGE": {
+        "remaining_dev": 336,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "all_dev": 400
+      },
+      "ORIGA": {
+        "remaining_dev": 586,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "all_dev": 650
+      },
+      "REFUGE_Valid": {
+        "remaining_dev": 736,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "all_dev": 800
+      },
+      "Drishti_GS": {
+        "remaining_dev": 37,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "all_dev": 101
+      }
+    },
+    "reused_P2_targets": 1951,
+    "old_controls_CPU_validated": true,
+    "formal_budget": {
+      "records": 7804,
+      "forwards": 66334,
+      "backwards": 11706,
+      "base_adam": 7804,
+      "perturb": 3902,
+      "restore": 3902
+    },
+    "exit_code": 0
+  },
+  "initial_CPU": {
+    "tests": 6,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 6.164829515968449,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "exit_code": 0
+  },
+  "repaired_CPU": {
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 45.75652377004735,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "exit_code": 0
+  },
+  "smoke": {
+    "status": "INCOMPLETE",
+    "stage": "smoke",
+    "reason": "too many values to unpack (expected 2)",
+    "exit_code": 1
+  },
+  "completed_GPU_base_adam": 0,
+  "formal_records": 0,
+  "formal_started": false,
+  "GPU_forward_accounting": {
+    "source_parity": 2,
+    "first_reference_weak": 1,
+    "provenance": "Reconstructed from executed control flow and traceback, not a persisted forward hook."
+  },
+  "repaired_GPU_smoke_executed": false,
+  "protocol_stop": "Plan section 12: engineering faults remain INCOMPLETE; no automatic continuation.",
+  "stage_exit_codes": {
+    "registration": 0,
+    "initial_CPU": 0,
+    "smoke": 1,
+    "repaired_CPU": 0,
+    "formal": null,
+    "recompute": null
+  },
+  "new_target_results": null
+}
+

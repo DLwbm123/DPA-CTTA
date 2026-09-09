@@ -1,0 +1,42 @@
+{
+  "status": "INCOMPLETE",
+  "registered_groups": 1951,
+  "coverage": {
+    "REFUGE": {
+      "remaining_dev": 336,
+      "legacy_dev": 32,
+      "p1_extension_dev": 32,
+      "all_dev": 400
+    },
+    "ORIGA": {
+      "remaining_dev": 586,
+      "legacy_dev": 32,
+      "p1_extension_dev": 32,
+      "all_dev": 650
+    },
+    "REFUGE_Valid": {
+      "remaining_dev": 736,
+      "legacy_dev": 32,
+      "p1_extension_dev": 32,
+      "all_dev": 800
+    },
+    "Drishti_GS": {
+      "remaining_dev": 37,
+      "legacy_dev": 32,
+      "p1_extension_dev": 32,
+      "all_dev": 101
+    }
+  },
+  "target": null,
+  "reason": "GPU smoke interface failure before first base Adam; CPU-validated repair has not been GPU-tested.",
+  "planned_formal_budget": {
+    "records": 7804,
+    "forwards": 66334,
+    "backwards": 11706,
+    "base_adam": 7804,
+    "perturb": 3902,
+    "restore": 3902
+  },
+  "completed_formal_records": 0
+}
+
