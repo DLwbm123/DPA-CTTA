@@ -76,7 +76,15 @@
     "original domain blocks",
     "reverse blocks; unchanged within-domain order"
   ],
-  "expected_budget": "TO_BE_FROZEN_AFTER_REGISTRATION",
+  "expected_budget": {
+    "groups": 3753,
+    "records": 52542,
+    "online": 22518,
+    "teacher_forwards": 7506,
+    "smoke_online": 12,
+    "outer": 0,
+    "inner": 0
+  },
   "limits": {
     "gpu_seconds": 21600,
     "private_bytes": 1073741824
@@ -103,5 +111,53 @@
   "smoke_online": 12,
   "pixel_table": "count[GT,N_hard,parent_hard,ensemble_hard] flattened C-order 16 integers per channel; stored on view rows only",
   "stop": "engineering/resource failure only, preserve prefix; no automatic retry/search/P3",
-  "storage": "scalar records only; no target images/masks/logits/probability maps"
+  "storage": "scalar records only; no target images/masks/logits/probability maps",
+  "registered_groups": {
+    "fundus": {
+      "REFUGE": {
+        "all_dev": 400,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "remaining_dev": 336
+      },
+      "ORIGA": {
+        "all_dev": 650,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "remaining_dev": 586
+      },
+      "REFUGE_Valid": {
+        "all_dev": 800,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "remaining_dev": 736
+      },
+      "Drishti_GS": {
+        "all_dev": 101,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "remaining_dev": 37
+      }
+    },
+    "polyp": {
+      "CVC-ClinicDB": {
+        "all_dev": 612,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "remaining_dev": 548
+      },
+      "ETIS-LaribPolypDB": {
+        "all_dev": 190,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "remaining_dev": 126
+      },
+      "Kvasir-SEG": {
+        "all_dev": 1000,
+        "legacy_dev": 32,
+        "p1_extension_dev": 32,
+        "remaining_dev": 936
+      }
+    }
+  }
 }

@@ -282,3 +282,7 @@ results/p2_frozen_factorial_full_stream_v1/execution_audit.json
 相关 CPU 测试覆盖完整选择/冲突/保护角色/三标签、冷轨迹 label/view 隔离、七输出错序/缺失/重复/父绑定/错误计数拒绝、16格及 Dice/ASSD 边界、完整标量重算和确定性异常恢复。无新 DD 二阶诊断。CPU 首次夹具中的 alias mask 与原图不符、以及将 legacy 标签改成相同值的问题已纠正，无 GPU 消耗或数值容差放宽。
 
 长期实验遵守用户当前运行约定：单次 smoke 通过后可靠后台执行，确认正常日志前缀后可结束会话；不持续轮询或自动重启，完成后查询时再校验与公开交付。
+
+成本口径补充：pipeline_elapsed_seconds 是共享访视开始至当前输出评分的累计时延，不可跨臂相加充当物理墙钟。独立部署时延使用 parent host-step 加所需 source 前向，评价器时间单列在共享 pipeline 中。
+
+实际登记：G=3753（Fundus 1951，Polyp 1802），remaining_dev=3305，legacy_dev=224，p1_extension_dev=224。旧 P1 448 组均完整保留。正式 records=52542、online=22518、teacher forwards=7506；含 smoke online=22530。ETIS 合法组为190，其余域与历史清单上限相符。复用 P1 字节验证记录896个文件，新验证6610个文件；具体排除与关联信息仅存私有 registration。
