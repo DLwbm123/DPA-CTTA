@@ -230,3 +230,11 @@ Strong augmentation uses batchgenerators 0.25.2 in an isolated dependency direct
 Scheduling is one arm at a time, order0 C/G then order1 C/G. RNG is privately restored/saved by each host; each starts seed 20260907. Across-domain host/Adam state is continuous. Six-hour budget includes smoke and formal active-stage wall time. Long run uses a detached one-shot launcher; run failure stops, no retries or watcher.
 
 Official dependency: https://github.com/Chen-Ziyang/GraTa/tree/33ae20d664f305af34739ec54a5bec7da53ffa0b . MIT copyright/license reproduced in docs/GRATA_LICENSE.txt. Upstream model/augmentation/update sources remain in an external pinned checkout.
+
+## First smoke stop and interface correction
+
+Execution 91fc1178ee1ade6335e36dae39e2f4a398e182e5 stopped during the first C reference weak forward, before any base Adam call. The canonical P2 source model returns (logits, skips, head_input); the published GraTa loss destructures exactly two values. The original toy test exposed only two values and missed this integration mismatch.
+
+The repair adds OutputPair around the official optimizer's model interface for both reference and production callers. It returns the unchanged logits and skips without an extra forward, new parameters, auxiliary heads, checkpoint mapping changes, or normalization changes. The core model remains the optimizer-ownership/state-audit source, preserving all names. The toy now returns three values, and an additional CPU regression executes the actual full segmentation model through C/G official losses and both entry paths, checking logits, gradients, Adam, RNG and frozen parameters.
+
+The original execution checkout, receipt and failed prefix remain intact. Engineering status is INCOMPLETE; no repaired GPU smoke or formal stream is automatically launched. Plan section 12 prohibits automatic continuation after an engineering fault. Repaired CPU validation is separate from the failed GPU execution and does not constitute GPU parity.

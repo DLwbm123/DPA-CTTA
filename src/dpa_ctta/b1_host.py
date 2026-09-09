@@ -56,6 +56,19 @@ def finite(value):
         for v in value:finite(v)
 
 
+class OutputPair(torch.nn.Module):
+    """Narrow P2's (logits, skips, head_input) to the published two-value interface.
+
+    Canonical model parameter names and forwards stay intact; no auxiliary head.
+    """
+    def __init__(self,model):
+        super().__init__();self.model=model
+    def forward(self,x):
+        output=self.model(x)
+        if not isinstance(output,(tuple,list)) or len(output) not in (2,3):raise ValueError('segmentation output interface')
+        return output[0],output[1]
+
+
 class Host:
     def __init__(self,arm,state=None,device='cpu',model=None):
         if arm not in ['C','G']:raise ValueError('B1 arm')
@@ -63,7 +76,7 @@ class Host:
         self.model=SourceOnlyHost('fundus',state,device).model if model is None else model.to(device)
         self.names,self.params=configure(self.model)
         self.base=torch.optim.Adam(self.params,lr=1e-4,betas=(.9,.999),eps=1e-8,weight_decay=0)
-        self.opt=official().GraTa(self.params,self.base,self.model,device=str(self.device))
+        self.opt=official().GraTa(self.params,self.base,OutputPair(self.model),device=str(self.device))
         self.counts=dict(forwards=0,backwards=0,base_adam=0,perturb=0,restore=0)
         self.last={};self.steps=0;self.handles=[]
         self.frozen={n:(p,p._version) for n,p in self.model.named_parameters() if not p.requires_grad}

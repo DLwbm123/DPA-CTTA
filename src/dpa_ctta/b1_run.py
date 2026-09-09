@@ -8,7 +8,7 @@ from pathlib import Path
 import subprocess
 import time
 import torch
-from .b1_host import Host,official,configure,reference_step,GRATA_COMMIT
+from .b1_host import Host,OutputPair,official,configure,reference_step,GRATA_COMMIT
 from .b1_analysis import old_records,evaluate,recompute
 from .p2_data import expected
 from .p2_run import P2Budget
@@ -58,7 +58,7 @@ def smoke(receipt,out,reg):
     call_log=new_log(out/'smoke.calls.jsonl')
     with deterministic_smoke_pair():
         seed_all(20260907);n=SourceOnlyHost('fundus',state,'cuda:0');candidate=SourceOnlyHost('fundus',state,'cuda:0');x=pixels('fundus',0)
-        q=n.step(x);z=candidate.model(model_input_from_pixels(x,'fundus').to('cuda:0'))[0];close(q,z)
+        q=n.step(x);z=OutputPair(candidate.model)(model_input_from_pixels(x,'fundus').to('cuda:0'))[0];close(q,z)
         parity=float((q-z).abs().max());del n,candidate,q,z;gc.collect()
         for arm in ['C','G']:
             saved=[];e=[];peak=0
@@ -66,7 +66,7 @@ def smoke(receipt,out,reg):
                 budget.check();seed_all(20260907)
                 if path=='reference':
                     model=SourceOnlyHost('fundus',state,'cuda:0').model;names,params=configure(model)
-                    base=torch.optim.Adam(params,lr=1e-4,betas=(.9,.999),eps=1e-8,weight_decay=0);opt=official().GraTa(params,base,model,device='cuda:0')
+                    base=torch.optim.Adam(params,lr=1e-4,betas=(.9,.999),eps=1e-8,weight_decay=0);opt=official().GraTa(params,base,OutputPair(model),device='cuda:0')
                 else:
                     host=Host(arm,state,'cuda:0');model,params,base,opt=host.model,host.params,host.base,host.opt
                 def count_call(optimizer,args,kwargs):

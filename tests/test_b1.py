@@ -4,7 +4,7 @@ import unittest
 from pathlib import Path
 import torch
 from torch import nn
-from dpa_ctta.b1_host import Host,official,configure,reference_step,finite
+from dpa_ctta.b1_host import Host,OutputPair,official,configure,reference_step,finite
 from dpa_ctta.host_diagnostic import rng,restore,close
 from dpa_ctta.source_pilot import seed_all,SourceOnlyHost
 from dpa_ctta.integrations.ctta_suite import build_reference_model
@@ -17,7 +17,7 @@ class Tiny(nn.Module):
     def __init__(self):
         super().__init__();self.conv=nn.Conv2d(3,4,1);self.bn=nn.BatchNorm2d(4);self.head=nn.Conv2d(4,2,1)
     def forward(self,x):
-        feature=self.bn(self.conv(x)).relu();return self.head(feature),feature
+        feature=self.bn(self.conv(x)).relu();return self.head(feature),[feature],feature
 
 
 class B1Tests(unittest.TestCase):
@@ -28,7 +28,8 @@ class B1Tests(unittest.TestCase):
         model,_=build_reference_model('fundus');state=copy.deepcopy(model.state_dict())
         source=SourceOnlyHost('fundus',state);x=torch.rand(1,3,512,512)
         from dpa_ctta.hosts.vptta import model_input_from_pixels
-        with torch.no_grad():close(source.step(x),model(model_input_from_pixels(x,'fundus'))[0],exact=True)
+        with torch.no_grad():
+            pair=OutputPair(model)(model_input_from_pixels(x,'fundus'));self.assertEqual(len(pair),2);close(source.step(x),pair[0],exact=True)
         broken=state.copy();broken.pop(next(iter(broken)))
         with self.assertRaises(ValueError):SourceOnlyHost('fundus',broken)
 
@@ -38,10 +39,23 @@ class B1Tests(unittest.TestCase):
             v=aug(x,f);self.assertTrue(torch.equal(aug.inverse(v,f),x));views.append(v)
         self.assertEqual(len({tuple(v.flatten().tolist()) for v in views}),6)
 
+    def test_real_segmentation_model_official_loss_interface(self):
+        from dpa_ctta.hosts.vptta import model_input_from_pixels
+        seed_all(20260907);template,_=build_reference_model('fundus');state=copy.deepcopy(template.state_dict());del template
+        x=torch.linspace(.01,.99,3*512*512).reshape(1,3,512,512)
+        for arm in ['C','G']:
+            seed_all(20260907);model=SourceOnlyHost('fundus',state).model;names,params=configure(model)
+            base=torch.optim.Adam(params,lr=1e-4,betas=(.9,.999),eps=1e-8,weight_decay=0);opt=official().GraTa(params,base,OutputPair(model),device='cpu')
+            ref=reference_step(model,opt,arm,model_input_from_pixels(x,'fundus'));ref_rng=rng()
+            seed_all(20260907);h=Host(arm,state);pred,meta=h.step(x)
+            close(pred,ref);close(h.base.state_dict(),base.state_dict());close(h.rng,ref_rng,exact=True)
+            close([p.grad for p in h.params],[p.grad for p in params]);self.assertEqual(meta['counts']['base_adam'],1)
+            h.finish(state)
+
     def test_published_paths_gradients_state_and_label_isolation(self):
         for arm in ['C','G']:
             seed_all(20260907);model=Tiny();initial=copy.deepcopy(model.state_dict());h=Host(arm,model=copy.deepcopy(model));other=Host(arm,model=copy.deepcopy(model))
-            names,params=configure(model);base=torch.optim.Adam(params,lr=1e-4,betas=(.9,.999),eps=1e-8,weight_decay=0);opt=official().GraTa(params,base,model,device='cpu');ref_rng=rng()
+            names,params=configure(model);base=torch.optim.Adam(params,lr=1e-4,betas=(.9,.999),eps=1e-8,weight_decay=0);opt=official().GraTa(params,base,OutputPair(model),device='cpu');ref_rng=rng()
             self.assertEqual(h.names,['bn.weight','bn.bias'])
             for i in range(4):
                 x=torch.linspace(.01,.99,3*12*12).reshape(1,3,12,12).roll(i,-1)
