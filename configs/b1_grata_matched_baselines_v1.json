@@ -1,0 +1,53 @@
+{
+  "name": "B1_GRATA_MATCHED_BASELINES",
+  "baseline_commit": "2fcbc0a69645e34da42b97830935f0e290e488aa",
+  "grata_commit": "33ae20d664f305af34739ec54a5bec7da53ffa0b",
+  "task": "fundus",
+  "arms": [
+    "C",
+    "G"
+  ],
+  "old_controls": [
+    "N",
+    "A",
+    "EA",
+    "O2",
+    "D4"
+  ],
+  "seed": 20260907,
+  "batch_size": 1,
+  "lr": 0.0001,
+  "betas": [
+    0.9,
+    0.999
+  ],
+  "eps": 1e-08,
+  "weight_decay": 0,
+  "aux": "ent",
+  "pse": "consis",
+  "batchgenerators": "0.25.2",
+  "scheduler": "sequential_arm_with_isolated_RNG",
+  "gpu_allowed": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "gpu_preferred": 7,
+  "formal_budget": {
+    "records": 7804,
+    "forwards": 66334,
+    "backwards": 11706,
+    "base_adam": 7804,
+    "perturb": 3902,
+    "restore": 3902
+  },
+  "smoke_base_adam": 16,
+  "extra_source_parity_forwards": 2,
+  "smoke_tolerance": {
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "max_active_seconds": 21600,
+  "max_private_bytes": 1073741824
+}
