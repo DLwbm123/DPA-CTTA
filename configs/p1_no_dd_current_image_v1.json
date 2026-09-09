@@ -1,0 +1,97 @@
+{
+  "schema_version": "p1-no-dd-current-image-v1",
+  "baseline_release": "fab4ce4f7733e54258d577fe5e22cea8a562b6d6",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "seed": 20260907,
+  "host": {
+    "lr": {
+      "fundus": 0.05,
+      "polyp": 0.01
+    },
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "iters": 1,
+    "warm_n": 5,
+    "neighbor": 16,
+    "memory_size": 40,
+    "prompt_alpha": 0.01
+  },
+  "models": {
+    "fundus": "native ResUNet34 512x512",
+    "polyp": "native PraNet 352x352"
+  },
+  "teacher": "same source checkpoint, standard BN eval, unprompted N preprocessing, frozen params/buffers",
+  "anchor": {
+    "coefficient": 0.1,
+    "loss": "mean BCEWithLogits(z_pre,q0)-mean Bernoulli entropy(q0)",
+    "teacher_detached": true,
+    "student_forward": "reuse first native current-image forward",
+    "joint_backward": true
+  },
+  "ensemble": {
+    "weight": 0.5,
+    "space": "probability",
+    "threshold": ">=0.5",
+    "independent_state": false
+  },
+  "arms": [
+    "N",
+    "A",
+    "ENS_A",
+    "SA",
+    "ENS_SA",
+    "O2",
+    "D4",
+    "L4"
+  ],
+  "proxy_steps": {
+    "O2": 600,
+    "D4": 150,
+    "L4": 150
+  },
+  "extension": {
+    "legacy": "unchanged M1 groups",
+    "per_domain_new_max": 32,
+    "ranking": "SHA256(P1:20260907:task:domain:image_sha256), tie image_sha256",
+    "restore_order": "original manifest index within domain",
+    "UNKNOWN": "disclosed development limitation, not a blocker"
+  },
+  "orders": [
+    "original domain blocks",
+    "reverse blocks; unchanged within-domain order"
+  ],
+  "primary": "extension_dev; report legacy_dev and combined separately",
+  "expected_budget": "frozen actual registration budget; at most 448 groups, 7168 new records, 4480 formal Adam",
+  "smoke_online": 12,
+  "outer_updates": 0,
+  "differentiable_inner_training": 0,
+  "proxy_training": 0,
+  "source_training": 0,
+  "gpu": {
+    "allowed": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "preferred": 7,
+    "simultaneous_devices": 1,
+    "coexist": true
+  },
+  "limits": {
+    "gpu_seconds": 21600,
+    "new_private_bytes": 268435456
+  },
+  "tolerance": {
+    "rtol": 0.0001,
+    "atol": 1e-05,
+    "discrete": "exact"
+  },
+  "stop": "engineering/resource failure only; preserve prefix; no automatic retry, parameter search, or P2",
+  "storage": "scalar records only, no target image/mask/logit/probability files"
+}
