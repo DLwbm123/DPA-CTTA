@@ -1,0 +1,318 @@
+{
+  "status": "P1_RUNNING",
+  "execution_commit": "f65e119016f2d6a32cd0cffbee2bb2e94f570c2d",
+  "physical_gpu": 7,
+  "admission": {
+    "free_mib": 24124,
+    "required_mib": 8192
+  },
+  "CPU_validation": {
+    "tests": 7,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 2.6371402299264446,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "exit_code": 0
+  },
+  "smoke": {
+    "status": "P1_SMOKE_PASS",
+    "online": 12,
+    "evidence": {
+      "fundus": {
+        "A": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 3,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": null,
+          "finite": true
+        },
+        "SA0": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 3,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": {
+            "kl": 1.2103590965270996,
+            "bce": 1.2574442625045776,
+            "entropy": 0.0470852255821228
+          },
+          "finite": true,
+          "max_native_prediction_difference": 0.0
+        },
+        "SA": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 3,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": {
+            "kl": 1.2103590965270996,
+            "bce": 1.2574442625045776,
+            "entropy": 0.0470852255821228
+          },
+          "finite": true
+        },
+        "O2": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 4,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": null,
+          "finite": true
+        },
+        "D4": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 4,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": null,
+          "finite": true
+        },
+        "L4": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 4,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": null,
+          "finite": true
+        },
+        "teacher_frozen": true,
+        "peak_allocated_bytes": 3628422656
+      },
+      "polyp": {
+        "A": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 3,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": null,
+          "finite": true
+        },
+        "SA0": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 3,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": {
+            "kl": 0.008746970444917679,
+            "bce": 0.010367772541940212,
+            "entropy": 0.0016208020970225334
+          },
+          "finite": true,
+          "max_native_prediction_difference": 0.0
+        },
+        "SA": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 3,
+            "proxy_forwards": 0,
+            "proxy_images": 0,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": {
+            "kl": 0.008746970444917679,
+            "bce": 0.010367772541940212,
+            "entropy": 0.0016208020970225334
+          },
+          "finite": true
+        },
+        "O2": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 4,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": null,
+          "finite": true
+        },
+        "D4": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 4,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": null,
+          "finite": true
+        },
+        "L4": {
+          "counts": {
+            "model_forwards": 2,
+            "prompt_forwards": 4,
+            "proxy_forwards": 1,
+            "proxy_images": 4,
+            "online_adam": 1,
+            "backward_calls": 1,
+            "memory_pushes": 1,
+            "retrievals": 1,
+            "teacher_forwards": 0
+          },
+          "anchor": null,
+          "finite": true
+        },
+        "teacher_frozen": true,
+        "peak_allocated_bytes": 2315915264
+      }
+    },
+    "gpu_seconds": 19.48029347800184,
+    "exit_code": 0
+  },
+  "registered_groups": {
+    "fundus": {
+      "REFUGE": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "eligible_extension": 368,
+        "combined": 64
+      },
+      "ORIGA": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "eligible_extension": 618,
+        "combined": 64
+      },
+      "REFUGE_Valid": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "eligible_extension": 768,
+        "combined": 64
+      },
+      "Drishti_GS": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "eligible_extension": 69,
+        "combined": 64
+      }
+    },
+    "polyp": {
+      "CVC-ClinicDB": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "eligible_extension": 580,
+        "combined": 64
+      },
+      "ETIS-LaribPolypDB": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "eligible_extension": 158,
+        "combined": 64
+      },
+      "Kvasir-SEG": {
+        "legacy_dev": 32,
+        "extension_dev": 32,
+        "eligible_extension": 968,
+        "combined": 64
+      }
+    }
+  },
+  "budget": {
+    "groups": 448,
+    "records": 7168,
+    "online": 4480,
+    "smoke_online": 12,
+    "outer": 0,
+    "inner": 0
+  },
+  "preparation_failure": {
+    "stage": "registration",
+    "execution_commit": "efb014a",
+    "reason": "KeyError: tasks; inherited registration envelope iterated instead of tasks member",
+    "online": 0,
+    "outer": 0,
+    "inner": 0,
+    "fix": "read registered tasks mapping; no selected-target bytes or GPU updates before exception"
+  },
+  "startup_check": {
+    "checked_unix": 1788918477.8681595,
+    "launcher_alive": true,
+    "stream": "fundus/order0",
+    "records_by_output": {
+      "N": 52,
+      "A": 52,
+      "ENS_A": 52,
+      "SA": 52,
+      "ENS_SA": 52
+    },
+    "last_completed_adam": {
+      "A": 52,
+      "SA": 52
+    },
+    "no_immediate_failure": true
+  },
+  "formal_exit_code": null,
+  "recompute_exit_code": null,
+  "scientific_result": "PENDING"
+}
