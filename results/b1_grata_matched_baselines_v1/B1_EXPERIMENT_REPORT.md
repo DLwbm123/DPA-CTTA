@@ -1,58 +1,117 @@
-# B1 GraTa matched baselines：修复版启动报告
+# B1 matched GraTa continuous-stream baseline comparison
 
-**B1_RUNNING：正式运行已启动，完整评分及 CPU 汇总尚未完成。**
-快照时间：2026-09-09T12:14:43.898Z。
-执行提交：029a79340057b58b8074ccf86c7b5671b5fdbd1c；发布分支：experiment/b1-grata-matched-baselines-v1。
-P2 基线：2fcbc0a69645e34da42b97830935f0e290e488aa；CTTA 依赖：dbff0d985c6c95345d9fb78f5b1daef57b392564；GraTa 依赖：33ae20d664f305af34739ec54a5bec7da53ffa0b。
-运行期间执行 checkout 保持不变。
+B1_MATCHED_BASELINE_COMPARISON_COMPLETE
 
-## 修复、授权与验收
+Execution commit: 029a79340057b58b8074ccf86c7b5671b5fdbd1c
 
-首轮在第一个 C 参考弱前向后因返回值接口不匹配停止，完成 GPU base Adam=0。
-失败 checkout、receipt 和前缀保留；[首轮报告](https://github.com/DLwbm123/DPA-CTTA/blob/ee4b434f016ce121e835359a7427931d151e72b4/results/b1_grata_matched_baselines_v1/B1_EXPERIMENT_REPORT.md)仍可访问。
-用户随后明确批准“允许修复版执行”；本次使用独立目录及新 receipt。
+C/G are C-CTTA/G-CTTA on the P2 segmentation checkpoint and continuous protocol, not a complete original-paper reproduction.
 
-修复将 P2 的 (logits, skips, head_input) 包装为官方需要的 (logits, feature)，不增加参数、辅助 head 或前向，不改变 logits、BN、增强、目标、扰动及 Adam。
-7 项相关 CPU 回归本地及服务器通过，包含实际完整模型的 C/G 官方参考、梯度/状态/RNG、标签隔离、严格加载、几何变换及错误前缀检查。本次复用修复提交上已通过的 CPU 记录。
+## 完成后的结果解释
 
-修复版 GPU smoke **16 次 base Adam 全部通过**；C/G 各四个访问的配对 logits 最大差均为 0，affine、Adam、LR、RNG 比较通过，source 对齐差也为 0。
-耗时 15.921 秒，C/G allocated 峰值分别为 615612928 / 615775744 bytes。
-容差固定 rtol=1e-4、atol=1e-5，离散状态和 RNG 精确比较。
-正式阶段恢复 P2 backend 设置，不宣称正式 CUDA 路径全部逐比特确定。
+本轮得到一个均值更强的外部适配参考：**简单一致性 C-CTTA 的域等权 Dice 优于 A，且优于 G-CTTA；但存在明显逐域退化和顺序依赖，不能作为所有域统一替代 A 的依据。**
 
-## 冻结协议与预算
+在主要子集 remaining_dev 上，C−A 为 +4.844977 / +3.463403 pp，G−A 为 +3.112821 / +2.544341 pp；G−C 为 −1.732156 / −0.919063 pp。C 在 legacy_dev、p1_extension_dev、all_dev 两序的任务均值也最高。G 的发布版扰动与动态 LR 组合没有带来整体增量，不能因其机制复杂就优先选择 G。
 
-仅 Fundus，复用 1951 组：REFUGE=400、ORIGA=650、REFUGE_Valid=800、Drishti_GS=101。
-remaining_dev=1695、legacy_dev=128、p1_extension_dev=128。
-旧 P2 七输出的身份/顺序/覆盖/父视图/计数/Dice 已复核，本轮复用 N/A/EA/O2/D4 五个冻结对照，不重新推理。
+收益主要来自 ORIGA：C−A 为 +18.482492 / +17.949022 pp；但 REFUGE_Valid 为 −9.559154 / −5.169503 pp。该域的 OC Dice 分别下降14.585200 / 9.211466 pp，OC ASSD 在各自736个共同有效内容中增加8.619837 / 5.048136 px，说明退化并非只表现为细小的均值换位。C−A 的该域最差10%宏Dice配对差为 −22.184945 / −16.132152 pp。
 
-C：六弱视图软目标 + 一强视图 BCE，一次固定 lr=1e-4 Adam。
-G：发布版 ent 辅助梯度、直接减梯度扰动、consis 梯度、恢复参数、cosine 动态 LR，一次 base Adam。
-保留发布版不完整 Bernoulli 熵，不修改算法公式。
-顺序为 C/order0 → G/order0 → C/order1 → G/order1。每条轨迹从相同 source 状态、seed=20260907 开始，跨域不重置，各自隔离 RNG；预测固定后读取 mask。
+G 在 REFUGE_Valid 相比 C 提高6.264363 / 2.560639 pp，缓和了这部分退化，但仍低于 A；同时在 ORIGA 相比 C 下降6.726974 / 6.655344 pp。G 是不同取舍，而非在所有域都无效。Drishti_GS 的 C−A 从顺序0的 +9.195009 翻转到顺序1的 −1.193137，不能忽视持续历史和域序。
 
-实际更新 **19136 个标量参数**，来自 **41 层 BN / 82 个 affine 张量**，完整名称见 execution_audit.json。
-其他卷积、decoder/head 参数冻结，source 文件只读复用。
+按预登记规则，保留 C 为较简单的强参考，并保留 A 以展示其优势域；当前没有必要强推 G 的额外更新规则。成本是否适合实际用途仍取决于部署延迟预算。本轮结束，不自动开启 LR/norm/loss 搜索、逐域真值选择器或接回 DD。
 
-正式计划：**7804 条新评分、7804 次 base Adam、66334 次前向、11706 次反向**；G 扰动和恢复各3902次。
-加本次 smoke 后计划 base Adam 总计7820；新 source/DD/outer 训练均为0。
-本次 smoke 另有2次 source 对齐前向；首轮失败的2次 source对齐与1次弱前向单独保留，不计作正式方法效率。
-6小时活跃阶段、1GiB新私有输出是配额，不是预计耗时。
-C/G 每图分别8/9次前向、1/2次反向；不能因一次 Adam 就声称与原 A 同等成本。
-旧 O2/D4 需要凝缩图像及源 mask，C/G 不使用源样本 rehearsal。
+C/G 对 A 的比较同时改变可更新参数、归一化规则、目标和状态机制，不能据此把收益因果归于“BN参数更多”或某个单独组件；G−C 也未拆分扰动与动态LR的独立作用。
 
-## 已确认启动状态与剩余工作
 
-GPU 7 启动前可用16666MiB，准入要求12288MiB；NAS 挂载、容量和写读探针通过。
-后台 launcher PID=621353，不依赖 SSH/Codex 会话持续开启。
-快照时 C/order0 已写入 **42 条记录**，Adam step=42，每图8次前向/1次反向/1次Adam；
-allocated 峰值=617054208 bytes，运行环境与 P2 一致，未见立即失败。
-上述仅为启动快照；完整 C/G 结果仍待定。
+### 主要子集：逐域宏 Dice 配对差（pp）
 
-四条轨迹结束后由后台启动独立 CPU 重算，核验完整记录及旧对照配对，生成聚合与报告。
-失败即停止并保留前缀，不自动重试、不创建持续监测器、不自动开启下一实验。
-当前不能写 B1_MATCHED_BASELINE_COMPARISON_COMPLETE 或方法有效性结论。
+| 域序 | 域 | C−A | G−A | G−C | C−A负向数量/组数 | C−A最差10%均值 |
+|---|---|---:|---:|---:|---:|---:|
+| order0 | REFUGE | +1.261561 | +0.769483 | -0.492078 | 94/336 | -3.105783 |
+| order0 | ORIGA | +18.482492 | +11.755518 | -6.726974 | 39/586 | -2.197270 |
+| order0 | REFUGE_Valid | -9.559154 | -3.294790 | +6.264363 | 653/736 | -22.184945 |
+| order0 | Drishti_GS | +9.195009 | +3.221074 | -5.973935 | 1/37 | +0.561517 |
+| order1 | Drishti_GS | -1.193137 | -1.658582 | -0.465445 | 27/37 | -4.914477 |
+| order1 | REFUGE_Valid | -5.169503 | -2.608863 | +2.560639 | 616/736 | -16.132152 |
+| order1 | ORIGA | +17.949022 | +11.293678 | -6.655344 | 45/586 | -2.529298 |
+| order1 | REFUGE | +2.267232 | +3.151130 | +0.883898 | 123/336 | -8.556490 |
 
-公开源代码、配置、许可证和去标识启动审计；私有 registration、资产身份/路径、图像、mask、checkpoint、概率图和逐图原始记录不公开。
-ASSD 保留共同有效 cohort 与未定义计数，不构造 OD/OC macro ASSD，CPU 标量复算不冒充像素 ASSD 重算。
-这是同权重连续协议的 G-CTTA 移植，不是原论文完整复现、原创方法或未见泛化/临床结论。
+最差10%按各自配对差排序，取ceil(10%×n)；不是同一个预设难例集合。小域在主指标中与大域等权，不能将域等权收益解释为每张图或每个患者的统一收益。
+
+### 运行代价与学习率
+
+| 方法/顺序 | 前向/图 | 反向/图 | Adam/图 | host秒/图 | 观测allocated峰值 MiB | 平均LR |
+|---|---:|---:|---:|---:|---:|---:|
+| C/0 | 8 | 1 | 1 | 0.706948 | 588.469 | 0.000100000 |
+| C/1 | 8 | 1 | 1 | 0.719909 | 585.094 | 0.000100000 |
+| G/0 | 9 | 2 | 1 | 0.928069 | 585.249 | 0.000024670 |
+| G/1 | 9 | 2 | 1 | 1.065513 | 585.249 | 0.000024554 |
+
+两序合计 C/G host 平均约0.713429 / 0.996791秒/图；G在各序比C耗时约31.3% / 48.0%。host时间包含更新和最终预测、排除evaluator；这是共存GPU上的本次观测，不是隔离硬件下的受控速度基准。前向8/9次、反向1/2次则是已核对的实际调用数。
+
+两方法均更新41层BN的19136个affine标量（82个参数张量），源文件及其余网络参数不变。C固定LR=1e−4；G两序平均LR约2.46e−5，没有零LR访问。此现象不证明G劣势由LR单独造成，未运行LR扫描。
+
+旧A的P2实测host时间约0.152313 / 0.142466秒/图，但来自不同运行和共享调度，只作历史成本参考，不给出受控加速比。旧P2的显存峰值是多父方法共享峰值，不能与本轮单轨迹峰值直接作方法显存优劣比较。旧O2/D4还需要凝缩图像与源mask；C/G没有源样本rehearsal。
+
+### 完成及历史审计
+
+正式记录7804条、base Adam7804次、网络前向66334次、反向11706次、G扰动与恢复各3902次，全部与计划一致。含已通过smoke共7820次base Adam；新source/DD/outer训练=0。GPU活跃阶段计时7395.097秒，约2.054小时（包含本次smoke与正式阶段的评分/等待，不是纯kernel时间）。后台run和独立CPU recompute退出码均为0，完成时间2026-09-09T14:17:18.097372+00:00。
+
+首轮返回值错误发生于任何GPU Adam之前；零更新失败记录保留在ee4b434发布版本。用户明确批准后，修复版本029a79340057b58b8074ccf86c7b5671b5fdbd1c通过7项CPU回归及16次GPU配对smoke，随后完整执行本次四条轨迹。修复只包装模型返回值，没有修改发布更新规则或目标。完整结果的发布提交与执行提交分开。
+
+独立CPU重读新记录和P2旧记录，验证内容身份、顺序、子集、计数、Adam步数、cosine/LR关系及由像素标量计数还原的Dice。ASSD只复核标量及有效cohort，不声称重新计算已丢弃的像素距离图。全部域/OD/OC/子集的分布、正零负、最差单图和ASSD共同有效cohort见public_aggregate.json。
+
+所有内容均为开发用途，单seed、两个相同内容的域序不能作为患者独立重复或统计显著性。仅Fundus；没有Polyp移植、source遗忘测量、原创方法/SOTA/临床安全声明。公开代码、配置、许可证与去标识聚合；原始图像、mask、checkpoint、概率图、逐图身份及路径不公开。
+
+## remaining_dev
+
+| Order | Groups | N | A | EA | O2 | D4 | C | G |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| order0 | 1695 | 68.200582 | 74.259279 | 73.426605 | 72.891721 | 72.686550 | 79.104256 | 77.372100 |
+| order1 | 1695 | 68.200582 | 74.542945 | 73.813586 | 75.423504 | 74.305555 | 78.006348 | 77.087285 |
+
+| Order | G-C | C-A | G-A | C-N | G-N | G-O2 | G-D4 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| order0 | -1.732156 | +4.844977 | +3.112821 | +10.903674 | +9.171519 | +4.480380 | +4.685551 |
+| order1 | -0.919063 | +3.463403 | +2.544341 | +9.805766 | +8.886704 | +1.663781 | +2.781730 |
+
+## legacy_dev
+
+| Order | Groups | N | A | EA | O2 | D4 | C | G |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| order0 | 128 | 69.092892 | 74.538998 | 73.801632 | 73.653989 | 73.009535 | 79.306413 | 77.579453 |
+| order1 | 128 | 69.092892 | 75.140702 | 74.439300 | 75.885483 | 74.336631 | 77.919338 | 77.059848 |
+
+| Order | G-C | C-A | G-A | C-N | G-N | G-O2 | G-D4 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| order0 | -1.726960 | +4.767415 | +3.040455 | +10.213521 | +8.486561 | +3.925464 | +4.569918 |
+| order1 | -0.859490 | +2.778636 | +1.919146 | +8.826445 | +7.966955 | +1.174364 | +2.723217 |
+
+## p1_extension_dev
+
+| Order | Groups | N | A | EA | O2 | D4 | C | G |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| order0 | 128 | 66.452389 | 73.796285 | 72.745511 | 72.436336 | 71.836462 | 79.497100 | 77.709793 |
+| order1 | 128 | 66.452389 | 74.506257 | 73.700675 | 76.426326 | 74.433735 | 78.551758 | 77.384891 |
+
+| Order | G-C | C-A | G-A | C-N | G-N | G-O2 | G-D4 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| order0 | -1.787308 | +5.700816 | +3.913508 | +13.044711 | +11.257403 | +5.273456 | +5.873331 |
+| order1 | -1.166867 | +4.045501 | +2.878634 | +12.099369 | +10.932502 | +0.958565 | +2.951156 |
+
+## all_dev
+
+| Order | Groups | N | A | EA | O2 | D4 | C | G |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| order0 | 1951 | 67.964224 | 74.328553 | 73.338857 | 72.983086 | 72.604889 | 79.230033 | 77.622550 |
+| order1 | 1951 | 67.964224 | 74.691960 | 73.806501 | 75.548687 | 74.372899 | 78.241148 | 77.283082 |
+
+| Order | G-C | C-A | G-A | C-N | G-N | G-O2 | G-D4 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| order0 | -1.607483 | +4.901480 | +3.293998 | +11.265809 | +9.658326 | +4.639465 | +5.017661 |
+| order1 | -0.958066 | +3.549188 | +2.591122 | +10.276923 | +9.318858 | +1.734395 | +2.910183 |
+
+All domain/channel paired distributions, signs, worst decile/single and ASSD common-valid cohorts are in public_aggregate.json. No OD/OC macro ASSD. No patient independence, statistical significance, novelty, clinical safety or untouched-test claim.
+C/G change the full adaptation scheme relative to A. G-C measures the combined published perturbation and dynamic-LR rule, not either component separately. Published entropy omits the Bernoulli complement term; preserved deliberately.
+Old P2 controls bind the exact checkpoint, evaluator, content and order. Old proxy arms require condensed images/source masks at deployment; C/G do not rehearse source samples. No new proxy/source training. C/G do not use fixed source ensembling.
+Cost includes 8 C / 9 G model forwards per image, 1 / 2 backwards and one base Adam; G perturb and restore are counted separately. Old P2 peaks are shared-schedule measurements, not isolated per-arm peaks.
+CPU reconstruction rereads every scalar record and restores Dice from pixel counts; it cannot recompute discarded pixel ASSD. Source file unchanged and only registered BN affine parameters adapt.
+Engineering completion does not establish usefulness. No automatic further run, parameter search or DD continuation.
