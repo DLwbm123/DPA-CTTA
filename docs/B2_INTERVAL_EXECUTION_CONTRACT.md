@@ -1,0 +1,17 @@
+# B2 interval consistency execution contract
+
+User-authorized finite experiment based on `DPA_CTTA_B2_INTERVAL_CONSISTENCY_PLAN.md` (2026-09-10). Baseline release fd40597; B1 execution 029a793. Existing B1/P2 source, assets, checkpoints and trajectories remain read-only.
+
+Only new U/S/I Fundus trajectories: 1,951 groups per arm/order, two block orders, six sequential trajectories, seed 20260907. Reuse identity-matched C/G and P2 N/A/EA/O2/D4 scalars. Keep 41 standard BN layers, 19,136 affine scalars, original Adam and augmentation. Six independently forwarded weak logits are inverse-transformed, detached to CPU and sigmoid/averaged in B1 order. Population standard deviation uses divisor six. U replaces radii by partition means; S shuffles within each channel's q>=0.5 partition using a private CPU generator with the first eight SHA256 bytes parsed unsigned big endian (one-based visit, zero-based channel). I preserves positions. Zero radius is smoke-only.
+
+Use detached interval projection and Bernoulli KL with the B1 all-pixel mean. Exactly zero direct loss/gradient inside bounds. Point BCE is diagnostic only. Native Adam runs once even with zero gradient. No epsilon target clamp. Log raw KL minimum for float32 cancellation. Final output is the eighth, post-update original-image forward. Read labels only after targets and prediction are fixed. Optional q-error dispersion bins are omitted, as allowed; no extra inference.
+
+CPU tests: mathematics, global RNG independence, partition matching, real segmentation-model zero-radius/C equivalence, label/future-state isolation, frozen parameters, scalar validation and summary. Tests run in both local CPU and existing remote Torch environment; only remote results constitute runtime acceptance. GPU smoke runs exactly 4 images each for C/zero/U/S/I, 20 Adam/160 forwards/20 backwards, scoped strict determinism. No extra source parity forwards. Frozen checks exclude the allowed affine parameters.
+
+Formal budget: 11,706 Adam/records/backwards and 93,648 forwards. Total including smoke: 11,726 Adam/backwards and 93,808 forwards. One GPU from 4–7, prefer 7. Six-hour active and 1 GiB private-output caps. No retry, continuation or additional scientific arm on error. Detached launcher runs once then CPU scalar reconstruction. Execution checkout remains frozen; later public reports have separate publication commits.
+
+Private receipts bind code/config, inherited metadata, B1 registration and GPU UUID; no duplicate NAS scans or checkpoint hashing. Directories 0700/files 0600. Scalar logs and identity mappings stay private; no maps, model or optimizer snapshots. Public artifacts contain code/config and aggregate statistics only.
+
+All data are development data. Intervals are neither calibrated confidence nor conformal sets. Compare I-C, I-U, I-S and all declared historical pairs, with full domain/channel tails and joint-valid ASSD; numerical reference scales are descriptive, not execution gates. No radius/LR search, DD, source training, Polyp or automatic next experiment.
+
+Execution entrypoints: `scripts/check_b2_cpu.py`, `dpa_ctta.b2_run.register`, `scripts/run_b2_interval.py {smoke,run,recompute}`, `scripts/launch_b2_once.py`. Reuse the B1 environment roots and registered source. Supply a private receipt; scientific execution refuses dirty/wrong code, source dependency, config, asset metadata, GPU UUID, smoke or budget drift.

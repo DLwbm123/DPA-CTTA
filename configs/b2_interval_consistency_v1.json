@@ -1,0 +1,70 @@
+{
+  "name": "B2_INTERVAL_CONSISTENCY",
+  "baseline_commit": "fd40597ba05d6333a3fb4f41cebf466eeb9ee063",
+  "grata_commit": "33ae20d664f305af34739ec54a5bec7da53ffa0b",
+  "task": "fundus",
+  "arms": [
+    "U",
+    "S",
+    "I"
+  ],
+  "old_controls": [
+    "N",
+    "A",
+    "EA",
+    "O2",
+    "D4",
+    "C",
+    "G"
+  ],
+  "seed": 20260907,
+  "batch_size": 1,
+  "lr": 0.0001,
+  "betas": [
+    0.9,
+    0.999
+  ],
+  "eps": 1e-08,
+  "weight_decay": 0,
+  "pse": "Bernoulli interval KL; mean over all pixels and both channels",
+  "batchgenerators": "0.25.2",
+  "scheduler": "sequential_arm_with_isolated_RNG",
+  "gpu_allowed": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "gpu_preferred": 7,
+  "formal_budget": {
+    "records": 11706,
+    "forwards": 93648,
+    "backwards": 11706,
+    "base_adam": 11706,
+    "perturb": 0,
+    "restore": 0
+  },
+  "smoke_base_adam": 20,
+  "extra_source_parity_forwards": 0,
+  "smoke_tolerance": {
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "max_active_seconds": 21600,
+  "max_private_bytes": 1073741824,
+  "b1_execution_commit": "029a79340057b58b8074ccf86c7b5671b5fdbd1c",
+  "smoke_forwards": 160,
+  "smoke_backwards": 20,
+  "radius_multiplier": 1,
+  "population_variance_divisor": 6,
+  "permutation_seed": "SHA256(\"B2:20260907:{visit}:{channel}:{b}\") first 8 bytes, unsigned big endian; visit 1-based, channel 0-based, b 0/1; local CPU torch.Generator",
+  "trajectory_order": [
+    "0_U",
+    "0_S",
+    "0_I",
+    "1_U",
+    "1_S",
+    "1_I"
+  ],
+  "optional_q_error_bins": false
+}
