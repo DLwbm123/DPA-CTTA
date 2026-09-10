@@ -1,0 +1,1423 @@
+{
+  "status": "B2_RUNNING",
+  "snapshot_utc": "2026-09-10T13:33:46Z",
+  "execution_commit": "35d9d26c5554a23d81713f610d6ae53d93f54774",
+  "launcher_pid": 1202410,
+  "launcher_alive": true,
+  "run_id": "b2_interval_consistency_20260910",
+  "formal_record_counts": {
+    "fundus_0_U": 63
+  },
+  "formal_records_at_snapshot": 63,
+  "last_adam_step": 63,
+  "host_seconds": 34.921684412518516,
+  "pipeline_seconds": 41.69788764999248,
+  "peak_allocated_bytes": 606647296,
+  "failures": [],
+  "cpu": {
+    "commit": "35d9d26c5554a23d81713f610d6ae53d93f54774",
+    "tests": 9,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 21.254827826982364,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "exit_code": 0
+  },
+  "smoke": {
+    "status": "B2_SMOKE_PASS",
+    "physical": {
+      "forwards": 160,
+      "backwards": 20,
+      "base_adam": 20,
+      "perturb": 0,
+      "restore": 0
+    },
+    "base_adam": 20,
+    "gpu_seconds": 16.197516625048593,
+    "evidence": {
+      "C": {
+        "visits": [
+          {
+            "visit": 1,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "cal_consis_loss": 0.8024470806121826
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 2,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "cal_consis_loss": 0.25098717212677
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 3,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "cal_consis_loss": 0.4003978371620178
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 4,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "cal_consis_loss": 0.5101647973060608
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          }
+        ],
+        "peak_allocated_bytes": 617054208,
+        "active_total": 0
+      },
+      "zero": {
+        "visits": [
+          {
+            "visit": 1,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.6701636910438538,
+              "point_bce": 0.8024470806121826,
+              "minimum_raw_kl": -7.812195690348744e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 22688,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.0,
+                  "crosses_half": 1,
+                  "partitions": {
+                    "0": {
+                      "active": 239456,
+                      "denominator": 239456
+                    },
+                    "1": {
+                      "active": 22688,
+                      "denominator": 22688
+                    }
+                  },
+                  "s": {
+                    "mean": 0.14267420768737793,
+                    "p50": 0.0043197800405323505,
+                    "p90": 0.46091535687446594,
+                    "max": 0.49998462200164795
+                  },
+                  "r": {
+                    "mean": 0.0,
+                    "p50": 0.0,
+                    "p90": 0.0,
+                    "max": 0.0
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 2,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.0,
+                  "crosses_half": 0,
+                  "partitions": {
+                    "0": {
+                      "active": 262142,
+                      "denominator": 262142
+                    },
+                    "1": {
+                      "active": 2,
+                      "denominator": 2
+                    }
+                  },
+                  "s": {
+                    "mean": 0.03470947593450546,
+                    "p50": 3.1673429475631565e-05,
+                    "p90": 0.14118221402168274,
+                    "max": 0.47677895426750183
+                  },
+                  "r": {
+                    "mean": 0.0,
+                    "p50": 0.0,
+                    "p90": 0.0,
+                    "max": 0.0
+                  }
+                }
+              ],
+              "bn_gradient_l2": 3.4701238945798396,
+              "adam_update_l2": 0.01381908926501932,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": true,
+            "max_logits_difference": 0.0
+          },
+          {
+            "visit": 2,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.1663660705089569,
+              "point_bce": 0.25098717212677,
+              "minimum_raw_kl": -7.870694389566779e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 25015,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.0,
+                  "crosses_half": 0,
+                  "partitions": {
+                    "0": {
+                      "active": 237129,
+                      "denominator": 237129
+                    },
+                    "1": {
+                      "active": 24980,
+                      "denominator": 25015
+                    }
+                  },
+                  "s": {
+                    "mean": 0.08276975154876709,
+                    "p50": 0.0007511285366490483,
+                    "p90": 0.37062063813209534,
+                    "max": 0.49992287158966064
+                  },
+                  "r": {
+                    "mean": 0.0,
+                    "p50": 0.0,
+                    "p90": 0.0,
+                    "max": 0.0
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 1919,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.0,
+                  "crosses_half": 0,
+                  "partitions": {
+                    "0": {
+                      "active": 260225,
+                      "denominator": 260225
+                    },
+                    "1": {
+                      "active": 1919,
+                      "denominator": 1919
+                    }
+                  },
+                  "s": {
+                    "mean": 0.025270260870456696,
+                    "p50": 2.6037731004180387e-05,
+                    "p90": 0.038347456604242325,
+                    "max": 0.4675334095954895
+                  },
+                  "r": {
+                    "mean": 0.0,
+                    "p50": 0.0,
+                    "p90": 0.0,
+                    "max": 0.0
+                  }
+                }
+              ],
+              "bn_gradient_l2": 1.4688385996963371,
+              "adam_update_l2": 0.009744423672946846,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": true,
+            "max_logits_difference": 0.0
+          },
+          {
+            "visit": 3,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.29759663343429565,
+              "point_bce": 0.4003978371620178,
+              "minimum_raw_kl": -7.812050171196461e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 22588,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.0,
+                  "crosses_half": 0,
+                  "partitions": {
+                    "0": {
+                      "active": 239556,
+                      "denominator": 239556
+                    },
+                    "1": {
+                      "active": 22331,
+                      "denominator": 22588
+                    }
+                  },
+                  "s": {
+                    "mean": 0.10817113518714905,
+                    "p50": 0.002060301136225462,
+                    "p90": 0.4048101007938385,
+                    "max": 0.4999203681945801
+                  },
+                  "r": {
+                    "mean": 0.0,
+                    "p50": 0.0,
+                    "p90": 0.0,
+                    "max": 0.0
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 3162,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.0,
+                  "crosses_half": 0,
+                  "partitions": {
+                    "0": {
+                      "active": 258982,
+                      "denominator": 258982
+                    },
+                    "1": {
+                      "active": 3162,
+                      "denominator": 3162
+                    }
+                  },
+                  "s": {
+                    "mean": 0.02628469094634056,
+                    "p50": 2.9439110221574083e-05,
+                    "p90": 0.010260920971632004,
+                    "max": 0.49820995330810547
+                  },
+                  "r": {
+                    "mean": 0.0,
+                    "p50": 0.0,
+                    "p90": 0.0,
+                    "max": 0.0
+                  }
+                }
+              ],
+              "bn_gradient_l2": 5.788259360342766,
+              "adam_update_l2": 0.008257296617995366,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": true,
+            "max_logits_difference": 0.0
+          },
+          {
+            "visit": 4,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.3952476382255554,
+              "point_bce": 0.5101647973060608,
+              "minimum_raw_kl": -7.862472557462752e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 16967,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.0,
+                  "crosses_half": 0,
+                  "partitions": {
+                    "0": {
+                      "active": 245177,
+                      "denominator": 245177
+                    },
+                    "1": {
+                      "active": 16483,
+                      "denominator": 16967
+                    }
+                  },
+                  "s": {
+                    "mean": 0.12627153098583221,
+                    "p50": 0.003340894589200616,
+                    "p90": 0.39874476194381714,
+                    "max": 0.4999876022338867
+                  },
+                  "r": {
+                    "mean": 0.0,
+                    "p50": 0.0,
+                    "p90": 0.0,
+                    "max": 0.0
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 1786,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.0,
+                  "crosses_half": 0,
+                  "partitions": {
+                    "0": {
+                      "active": 260358,
+                      "denominator": 260358
+                    },
+                    "1": {
+                      "active": 1786,
+                      "denominator": 1786
+                    }
+                  },
+                  "s": {
+                    "mean": 0.027102578431367874,
+                    "p50": 3.418254345888272e-05,
+                    "p90": 0.03689739480614662,
+                    "max": 0.4933187961578369
+                  },
+                  "r": {
+                    "mean": 0.0,
+                    "p50": 0.0,
+                    "p90": 0.0,
+                    "max": 0.0
+                  }
+                }
+              ],
+              "bn_gradient_l2": 3.5446935224072167,
+              "adam_update_l2": 0.0074804953278093216,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": true,
+            "max_logits_difference": 0.0
+          }
+        ],
+        "peak_allocated_bytes": 607302656,
+        "active_total": 2096376
+      },
+      "U": {
+        "visits": [
+          {
+            "visit": 1,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.4017724096775055,
+              "point_bce": 0.8024470806121826,
+              "minimum_raw_kl": -8.208862709579989e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 22688,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.20479321479797363,
+                  "crosses_half": 33574,
+                  "partitions": {
+                    "0": {
+                      "active": 70724,
+                      "denominator": 239456
+                    },
+                    "1": {
+                      "active": 14820,
+                      "denominator": 22688
+                    }
+                  },
+                  "s": {
+                    "mean": 0.14267420768737793,
+                    "p50": 0.0043197800405323505,
+                    "p90": 0.46091535687446594,
+                    "max": 0.49998462200164795
+                  },
+                  "r": {
+                    "mean": 0.14267420768737793,
+                    "p50": 0.11678631603717804,
+                    "p90": 0.11678631603717804,
+                    "max": 0.4159027636051178
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 2,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.039646804332733154,
+                  "crosses_half": 15,
+                  "partitions": {
+                    "0": {
+                      "active": 36133,
+                      "denominator": 262142
+                    },
+                    "1": {
+                      "active": 2,
+                      "denominator": 2
+                    }
+                  },
+                  "s": {
+                    "mean": 0.03470947593450546,
+                    "p50": 3.1673429475631565e-05,
+                    "p90": 0.14118221402168274,
+                    "max": 0.47677895426750183
+                  },
+                  "r": {
+                    "mean": 0.03470948338508606,
+                    "p50": 0.0347064770758152,
+                    "p90": 0.0347064770758152,
+                    "max": 0.4284891188144684
+                  }
+                }
+              ],
+              "bn_gradient_l2": 2.8869236356401196,
+              "adam_update_l2": 0.01381893158211668,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 2,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.07284755259752274,
+              "point_bce": 0.25092267990112305,
+              "minimum_raw_kl": -8.142123988363892e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 25024,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.10847485810518265,
+                  "crosses_half": 11952,
+                  "partitions": {
+                    "0": {
+                      "active": 38916,
+                      "denominator": 237120
+                    },
+                    "1": {
+                      "active": 7874,
+                      "denominator": 25024
+                    }
+                  },
+                  "s": {
+                    "mean": 0.0827469676733017,
+                    "p50": 0.0007508548442274332,
+                    "p90": 0.37061020731925964,
+                    "max": 0.4999227821826935
+                  },
+                  "r": {
+                    "mean": 0.0827469527721405,
+                    "p50": 0.0641794353723526,
+                    "p90": 0.0641794353723526,
+                    "max": 0.2586873173713684
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 1921,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.030355095863342285,
+                  "crosses_half": 2209,
+                  "partitions": {
+                    "0": {
+                      "active": 22562,
+                      "denominator": 260223
+                    },
+                    "1": {
+                      "active": 131,
+                      "denominator": 1921
+                    }
+                  },
+                  "s": {
+                    "mean": 0.025258848443627357,
+                    "p50": 2.602644235594198e-05,
+                    "p90": 0.038245655596256256,
+                    "max": 0.46748602390289307
+                  },
+                  "r": {
+                    "mean": 0.02525884099304676,
+                    "p50": 0.022689588367938995,
+                    "p90": 0.022689588367938995,
+                    "max": 0.3732966184616089
+                  }
+                }
+              ],
+              "bn_gradient_l2": 1.0751486251459406,
+              "adam_update_l2": 0.009717200086653964,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 3,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.15911667048931122,
+              "point_bce": 0.40029874444007874,
+              "minimum_raw_kl": -8.142123988363892e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 22585,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.14727634191513062,
+                  "crosses_half": 18572,
+                  "partitions": {
+                    "0": {
+                      "active": 53255,
+                      "denominator": 239559
+                    },
+                    "1": {
+                      "active": 10428,
+                      "denominator": 22585
+                    }
+                  },
+                  "s": {
+                    "mean": 0.10816800594329834,
+                    "p50": 0.0020594452507793903,
+                    "p90": 0.40470483899116516,
+                    "max": 0.49992039799690247
+                  },
+                  "r": {
+                    "mean": 0.10816799104213715,
+                    "p50": 0.08881092816591263,
+                    "p90": 0.08881092816591263,
+                    "max": 0.3134883940219879
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 3163,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.03260105103254318,
+                  "crosses_half": 3946,
+                  "partitions": {
+                    "0": {
+                      "active": 18169,
+                      "denominator": 258981
+                    },
+                    "1": {
+                      "active": 1766,
+                      "denominator": 3163
+                    }
+                  },
+                  "s": {
+                    "mean": 0.0262919832020998,
+                    "p50": 2.942690480267629e-05,
+                    "p90": 0.010276022367179394,
+                    "max": 0.49820974469184875
+                  },
+                  "r": {
+                    "mean": 0.0262919832020998,
+                    "p50": 0.021765053272247314,
+                    "p90": 0.021765053272247314,
+                    "max": 0.39694932103157043
+                  }
+                }
+              ],
+              "bn_gradient_l2": 4.67411933792732,
+              "adam_update_l2": 0.008273011248804377,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 4,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.2312919944524765,
+              "point_bce": 0.5099475383758545,
+              "minimum_raw_kl": -8.150018402375281e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 16952,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.17193840444087982,
+                  "crosses_half": 14154,
+                  "partitions": {
+                    "0": {
+                      "active": 68526,
+                      "denominator": 245192
+                    },
+                    "1": {
+                      "active": 7891,
+                      "denominator": 16952
+                    }
+                  },
+                  "s": {
+                    "mean": 0.12624812126159668,
+                    "p50": 0.003334576729685068,
+                    "p90": 0.3985596001148224,
+                    "max": 0.4999876022338867
+                  },
+                  "r": {
+                    "mean": 0.1262480914592743,
+                    "p50": 0.11633887887001038,
+                    "p90": 0.11633887887001038,
+                    "max": 0.26957419514656067
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 1784,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.032316870987415314,
+                  "crosses_half": 2259,
+                  "partitions": {
+                    "0": {
+                      "active": 24663,
+                      "denominator": 260360
+                    },
+                    "1": {
+                      "active": 754,
+                      "denominator": 1784
+                    }
+                  },
+                  "s": {
+                    "mean": 0.027111254632472992,
+                    "p50": 3.417070547584444e-05,
+                    "p90": 0.037012554705142975,
+                    "max": 0.49325060844421387
+                  },
+                  "r": {
+                    "mean": 0.02711125649511814,
+                    "p50": 0.024721259251236916,
+                    "p90": 0.024721259251236916,
+                    "max": 0.3759107291698456
+                  }
+                }
+              ],
+              "bn_gradient_l2": 2.9111804284026648,
+              "adam_update_l2": 0.007428368779265265,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          }
+        ],
+        "peak_allocated_bytes": 607302656,
+        "active_total": 376614
+      },
+      "S": {
+        "visits": [
+          {
+            "visit": 1,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.4477316439151764,
+              "point_bce": 0.8024470806121826,
+              "minimum_raw_kl": -8.21206413093023e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 22688,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.1911928653717041,
+                  "crosses_half": 41569,
+                  "partitions": {
+                    "0": {
+                      "active": 118597,
+                      "denominator": 239456
+                    },
+                    "1": {
+                      "active": 14818,
+                      "denominator": 22688
+                    }
+                  },
+                  "s": {
+                    "mean": 0.14267420768737793,
+                    "p50": 0.0043197800405323505,
+                    "p90": 0.46091535687446594,
+                    "max": 0.49998462200164795
+                  },
+                  "r": {
+                    "mean": 0.14267419278621674,
+                    "p50": 0.0043197800405323505,
+                    "p90": 0.46091535687446594,
+                    "max": 0.49998462200164795
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 2,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.03708448261022568,
+                  "crosses_half": 1270,
+                  "partitions": {
+                    "0": {
+                      "active": 129439,
+                      "denominator": 262142
+                    },
+                    "1": {
+                      "active": 2,
+                      "denominator": 2
+                    }
+                  },
+                  "s": {
+                    "mean": 0.03470947593450546,
+                    "p50": 3.1673429475631565e-05,
+                    "p90": 0.14118221402168274,
+                    "max": 0.47677895426750183
+                  },
+                  "r": {
+                    "mean": 0.03470947965979576,
+                    "p50": 3.1673429475631565e-05,
+                    "p90": 0.14118221402168274,
+                    "max": 0.47677895426750183
+                  }
+                }
+              ],
+              "bn_gradient_l2": 2.934737782110547,
+              "adam_update_l2": 0.013818887259525531,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 2,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.10392166674137115,
+              "point_bce": 0.2509725093841553,
+              "minimum_raw_kl": -7.991620805114508e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 25016,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.1002504974603653,
+                  "crosses_half": 15383,
+                  "partitions": {
+                    "0": {
+                      "active": 106351,
+                      "denominator": 237128
+                    },
+                    "1": {
+                      "active": 9711,
+                      "denominator": 25016
+                    }
+                  },
+                  "s": {
+                    "mean": 0.08276797831058502,
+                    "p50": 0.0007511359872296453,
+                    "p90": 0.37061530351638794,
+                    "max": 0.4999227523803711
+                  },
+                  "r": {
+                    "mean": 0.08276798576116562,
+                    "p50": 0.0007511359872296453,
+                    "p90": 0.37061530351638794,
+                    "max": 0.4999227523803711
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 1919,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.02915375307202339,
+                  "crosses_half": 2529,
+                  "partitions": {
+                    "0": {
+                      "active": 114593,
+                      "denominator": 260225
+                    },
+                    "1": {
+                      "active": 140,
+                      "denominator": 1919
+                    }
+                  },
+                  "s": {
+                    "mean": 0.02526596561074257,
+                    "p50": 2.604028668429237e-05,
+                    "p90": 0.03826281800866127,
+                    "max": 0.4675157368183136
+                  },
+                  "r": {
+                    "mean": 0.02526596561074257,
+                    "p50": 2.604028668429237e-05,
+                    "p90": 0.03826281800866127,
+                    "max": 0.4675157368183136
+                  }
+                }
+              ],
+              "bn_gradient_l2": 1.0661418391741246,
+              "adam_update_l2": 0.009697627143748881,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 3,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.19335176050662994,
+              "point_bce": 0.4005821943283081,
+              "minimum_raw_kl": -8.192673703888431e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 22585,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.13581886887550354,
+                  "crosses_half": 24120,
+                  "partitions": {
+                    "0": {
+                      "active": 111551,
+                      "denominator": 239559
+                    },
+                    "1": {
+                      "active": 10147,
+                      "denominator": 22585
+                    }
+                  },
+                  "s": {
+                    "mean": 0.10819177329540253,
+                    "p50": 0.002059430815279484,
+                    "p90": 0.40479639172554016,
+                    "max": 0.4999206066131592
+                  },
+                  "r": {
+                    "mean": 0.10819177329540253,
+                    "p50": 0.002059430815279484,
+                    "p90": 0.40479639172554016,
+                    "max": 0.4999206066131592
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 3161,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.031609974801540375,
+                  "crosses_half": 3827,
+                  "partitions": {
+                    "0": {
+                      "active": 120226,
+                      "denominator": 258983
+                    },
+                    "1": {
+                      "active": 1734,
+                      "denominator": 3161
+                    }
+                  },
+                  "s": {
+                    "mean": 0.02629699371755123,
+                    "p50": 2.944885636679828e-05,
+                    "p90": 0.010308563709259033,
+                    "max": 0.49821364879608154
+                  },
+                  "r": {
+                    "mean": 0.026296991854906082,
+                    "p50": 2.944885636679828e-05,
+                    "p90": 0.010308563709259033,
+                    "max": 0.49821364879608154
+                  }
+                }
+              ],
+              "bn_gradient_l2": 4.655861980322305,
+              "adam_update_l2": 0.008242456617755972,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 4,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.2798333764076233,
+              "point_bce": 0.5101045370101929,
+              "minimum_raw_kl": -8.170736691681668e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 16949,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.15584662556648254,
+                  "crosses_half": 26518,
+                  "partitions": {
+                    "0": {
+                      "active": 111791,
+                      "denominator": 245195
+                    },
+                    "1": {
+                      "active": 8973,
+                      "denominator": 16949
+                    }
+                  },
+                  "s": {
+                    "mean": 0.12631265819072723,
+                    "p50": 0.0033441835548728704,
+                    "p90": 0.3988080322742462,
+                    "max": 0.49998757243156433
+                  },
+                  "r": {
+                    "mean": 0.12631265819072723,
+                    "p50": 0.0033441835548728704,
+                    "p90": 0.3988080322742462,
+                    "max": 0.49998757243156433
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 1784,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.030911441892385483,
+                  "crosses_half": 2643,
+                  "partitions": {
+                    "0": {
+                      "active": 118797,
+                      "denominator": 260360
+                    },
+                    "1": {
+                      "active": 749,
+                      "denominator": 1784
+                    }
+                  },
+                  "s": {
+                    "mean": 0.02711293287575245,
+                    "p50": 3.4207554563181475e-05,
+                    "p90": 0.03699073567986488,
+                    "max": 0.49324584007263184
+                  },
+                  "r": {
+                    "mean": 0.0271129310131073,
+                    "p50": 3.4207554563181475e-05,
+                    "p90": 0.03699073567986488,
+                    "max": 0.49324584007263184
+                  }
+                }
+              ],
+              "bn_gradient_l2": 2.9403272950998476,
+              "adam_update_l2": 0.007437761683499026,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          }
+        ],
+        "peak_allocated_bytes": 607302656,
+        "active_total": 977619
+      },
+      "I": {
+        "visits": [
+          {
+            "visit": 1,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.18348541855812073,
+              "point_bce": 0.8024470806121826,
+              "minimum_raw_kl": -8.720344339963049e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 22688,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.24478115141391754,
+                  "crosses_half": 75416,
+                  "partitions": {
+                    "0": {
+                      "active": 76845,
+                      "denominator": 239456
+                    },
+                    "1": {
+                      "active": 13131,
+                      "denominator": 22688
+                    }
+                  },
+                  "s": {
+                    "mean": 0.14267420768737793,
+                    "p50": 0.0043197800405323505,
+                    "p90": 0.46091535687446594,
+                    "max": 0.49998462200164795
+                  },
+                  "r": {
+                    "mean": 0.14267420768737793,
+                    "p50": 0.0043197800405323505,
+                    "p90": 0.46091535687446594,
+                    "max": 0.49998462200164795
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 2,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.05518580973148346,
+                  "crosses_half": 14254,
+                  "partitions": {
+                    "0": {
+                      "active": 93566,
+                      "denominator": 262142
+                    },
+                    "1": {
+                      "active": 2,
+                      "denominator": 2
+                    }
+                  },
+                  "s": {
+                    "mean": 0.03470947593450546,
+                    "p50": 3.1673429475631565e-05,
+                    "p90": 0.14118221402168274,
+                    "max": 0.47677895426750183
+                  },
+                  "r": {
+                    "mean": 0.03470947593450546,
+                    "p50": 3.1673429475631565e-05,
+                    "p90": 0.14118221402168274,
+                    "max": 0.47677895426750183
+                  }
+                }
+              ],
+              "bn_gradient_l2": 2.674994082471343,
+              "adam_update_l2": 0.013818983940518866,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 2,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.0048227328807115555,
+              "point_bce": 0.25089168548583984,
+              "minimum_raw_kl": -8.473361958749592e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 25007,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.1367773711681366,
+                  "crosses_half": 40601,
+                  "partitions": {
+                    "0": {
+                      "active": 50157,
+                      "denominator": 237137
+                    },
+                    "1": {
+                      "active": 2080,
+                      "denominator": 25007
+                    }
+                  },
+                  "s": {
+                    "mean": 0.082766592502594,
+                    "p50": 0.0007513834862038493,
+                    "p90": 0.3706079423427582,
+                    "max": 0.49992334842681885
+                  },
+                  "r": {
+                    "mean": 0.082766592502594,
+                    "p50": 0.0007513834862038493,
+                    "p90": 0.3706079423427582,
+                    "max": 0.49992334842681885
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 1924,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.04378889501094818,
+                  "crosses_half": 10316,
+                  "partitions": {
+                    "0": {
+                      "active": 72853,
+                      "denominator": 260220
+                    },
+                    "1": {
+                      "active": 114,
+                      "denominator": 1924
+                    }
+                  },
+                  "s": {
+                    "mean": 0.025282710790634155,
+                    "p50": 2.5983241357607767e-05,
+                    "p90": 0.03838248923420906,
+                    "max": 0.46765702962875366
+                  },
+                  "r": {
+                    "mean": 0.025282710790634155,
+                    "p50": 2.5983241357607767e-05,
+                    "p90": 0.03838248923420906,
+                    "max": 0.46765702962875366
+                  }
+                }
+              ],
+              "bn_gradient_l2": 0.19755698125676682,
+              "adam_update_l2": 0.009421454174373739,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 3,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.04349580407142639,
+              "point_bce": 0.39925315976142883,
+              "minimum_raw_kl": -8.160441211657599e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 22600,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.1805240511894226,
+                  "crosses_half": 54767,
+                  "partitions": {
+                    "0": {
+                      "active": 56296,
+                      "denominator": 239544
+                    },
+                    "1": {
+                      "active": 5193,
+                      "denominator": 22600
+                    }
+                  },
+                  "s": {
+                    "mean": 0.10815475881099701,
+                    "p50": 0.002057054080069065,
+                    "p90": 0.4047189950942993,
+                    "max": 0.4999208450317383
+                  },
+                  "r": {
+                    "mean": 0.10815475881099701,
+                    "p50": 0.002057054080069065,
+                    "p90": 0.4047189950942993,
+                    "max": 0.4999208450317383
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 3170,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.04700244218111038,
+                  "crosses_half": 13225,
+                  "partitions": {
+                    "0": {
+                      "active": 84138,
+                      "denominator": 258974
+                    },
+                    "1": {
+                      "active": 1928,
+                      "denominator": 3170
+                    }
+                  },
+                  "s": {
+                    "mean": 0.02628921903669834,
+                    "p50": 2.931883864221163e-05,
+                    "p90": 0.010235188528895378,
+                    "max": 0.498250275850296
+                  },
+                  "r": {
+                    "mean": 0.02628921903669834,
+                    "p50": 2.931883864221163e-05,
+                    "p90": 0.010235188528895378,
+                    "max": 0.498250275850296
+                  }
+                }
+              ],
+              "bn_gradient_l2": 3.121158568779064,
+              "adam_update_l2": 0.00812027434677877,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          },
+          {
+            "visit": 4,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "diagnostics": {
+              "interval_loss": 0.06742367148399353,
+              "point_bce": 0.509435772895813,
+              "minimum_raw_kl": -8.165934559656307e-07,
+              "channels": [
+                {
+                  "channel": "OD",
+                  "q_foreground": 16954,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.206443190574646,
+                  "crosses_half": 67885,
+                  "partitions": {
+                    "0": {
+                      "active": 57753,
+                      "denominator": 245190
+                    },
+                    "1": {
+                      "active": 6005,
+                      "denominator": 16954
+                    }
+                  },
+                  "s": {
+                    "mean": 0.12627577781677246,
+                    "p50": 0.003332902444526553,
+                    "p90": 0.3984032869338989,
+                    "max": 0.49998757243156433
+                  },
+                  "r": {
+                    "mean": 0.12627577781677246,
+                    "p50": 0.003332902444526553,
+                    "p90": 0.3984032869338989,
+                    "max": 0.49998757243156433
+                  }
+                },
+                {
+                  "channel": "OC",
+                  "q_foreground": 1782,
+                  "pixels": 262144,
+                  "interval_width_mean": 0.046893466264009476,
+                  "crosses_half": 12497,
+                  "partitions": {
+                    "0": {
+                      "active": 77028,
+                      "denominator": 260362
+                    },
+                    "1": {
+                      "active": 741,
+                      "denominator": 1782
+                    }
+                  },
+                  "s": {
+                    "mean": 0.02708408236503601,
+                    "p50": 3.4067314118146896e-05,
+                    "p90": 0.03671875596046448,
+                    "max": 0.4932935833930969
+                  },
+                  "r": {
+                    "mean": 0.02708408236503601,
+                    "p50": 3.4067314118146896e-05,
+                    "p90": 0.03671875596046448,
+                    "max": 0.4932935833930969
+                  }
+                }
+              ],
+              "bn_gradient_l2": 2.0728411982016914,
+              "adam_update_l2": 0.007378577082575343,
+              "zero_gradient": false
+            },
+            "zero_C_state_RNG_match": null,
+            "max_logits_difference": null
+          }
+        ],
+        "peak_allocated_bytes": 607302656,
+        "active_total": 597830
+      }
+    },
+    "exit_code": 0
+  },
+  "formal_budget": {
+    "records": 11706,
+    "forwards": 93648,
+    "backwards": 11706,
+    "base_adam": 11706,
+    "perturb": 0,
+    "restore": 0
+  },
+  "gpu": 7,
+  "completion_verified": false
+}
