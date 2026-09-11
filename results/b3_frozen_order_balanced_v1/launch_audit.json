@@ -1,0 +1,231 @@
+{
+  "status": "B3_RUNNING",
+  "snapshot_utc": "2026-09-11T04:37:03Z",
+  "execution_commit": "0fac9b2b1e762ed57b624953edf95058cb1f0380",
+  "launcher_pid": 2140630,
+  "launcher_alive": true,
+  "formal_record_counts": {
+    "fundus_2_A": 149
+  },
+  "formal_records_at_snapshot": 149,
+  "host_seconds": 32.10130407195538,
+  "pipeline_seconds": 44.40285747987218,
+  "peak_allocated_bytes": 1111833088,
+  "failures": [],
+  "neutral_ps_verified": true,
+  "neutral_nvidia_process_verified": true,
+  "cpu": {
+    "commit": "0fac9b2b1e762ed57b624953edf95058cb1f0380",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 74.87028880906291,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "exit_code": 0
+  },
+  "smoke": {
+    "status": "B3_SMOKE_PASS",
+    "base_adam": 20,
+    "physical": {
+      "forwards": 136,
+      "backwards": 20,
+      "base_adam": 20,
+      "perturb": 0,
+      "restore": 0
+    },
+    "evidence": {
+      "A": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 2,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 4,
+              "backwards": 2,
+              "base_adam": 2,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 1103313408
+      },
+      "C": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 16,
+              "backwards": 2,
+              "base_adam": 2,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 615612416
+      },
+      "U": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 16,
+              "backwards": 2,
+              "base_adam": 2,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 607302656
+      },
+      "S": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 16,
+              "backwards": 2,
+              "base_adam": 2,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 607302656
+      },
+      "I": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 16,
+              "backwards": 2,
+              "base_adam": 2,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 607302656
+      }
+    },
+    "gpu_seconds": 25.35695229494013,
+    "A_prompt_forwards": 8,
+    "A_fft2_calls": 8,
+    "A_ifft2_calls": 8,
+    "FFT_accounting": "one fft2 and ifft2 per observed pinned Prompt.forward",
+    "exit_code": 0
+  },
+  "order_balance": {
+    "domain_position_balance": true,
+    "directed_adjacent_pairs": 12,
+    "orders": {
+      "0": [
+        "REFUGE",
+        "ORIGA",
+        "REFUGE_Valid",
+        "Drishti_GS"
+      ],
+      "1": [
+        "Drishti_GS",
+        "REFUGE_Valid",
+        "ORIGA",
+        "REFUGE"
+      ],
+      "2": [
+        "ORIGA",
+        "Drishti_GS",
+        "REFUGE",
+        "REFUGE_Valid"
+      ],
+      "3": [
+        "REFUGE_Valid",
+        "REFUGE",
+        "Drishti_GS",
+        "ORIGA"
+      ]
+    }
+  },
+  "formal_budget": {
+    "records": 19510,
+    "forwards": 132668,
+    "backwards": 19510,
+    "base_adam": 19510,
+    "perturb": 0,
+    "restore": 0
+  },
+  "completion_verified": false
+}
