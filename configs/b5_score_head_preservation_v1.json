@@ -1,0 +1,98 @@
+{
+  "task": "B5_SCORE_HEAD_PRESERVATION",
+  "baseline": "8bbbc1f914223d5fdc7c9dbbf055323148b563f5",
+  "B4_execution_commit": "e3c8f5ff80e626ee7e77bcbf75ebd99c71ffd1cb",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "grata_commit": "33ae20d664f305af34739ec54a5bec7da53ffa0b",
+  "score_head_BN": [
+    "ra4_conv5.bn",
+    "ra3_conv4.bn",
+    "ra2_conv4.bn"
+  ],
+  "formal_budget": {
+    "records": 9010,
+    "forwards": 59466,
+    "backwards": 7208,
+    "base_adam": 7208,
+    "perturb": 0,
+    "restore": 0
+  },
+  "smoke_budget": {
+    "forwards": 100,
+    "backwards": 12,
+    "base_adam": 12,
+    "perturb": 0,
+    "restore": 0
+  },
+  "stages": [
+    "H0_canonical",
+    "order0_F",
+    "order0_H",
+    "order1_F",
+    "order1_H"
+  ],
+  "optimizer": {
+    "type": "Adam",
+    "lr": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0
+  },
+  "seed": 20260907,
+  "updating_inventory": {
+    "BN_layers": 150,
+    "affine_scalars": 66212,
+    "parameter_tensors": 300
+  },
+  "policies": {
+    "F": "three head affine frozen, all BN current statistics",
+    "H": "three head affine and source buffers frozen, heads eval; other 150 BN current statistics and updating affine",
+    "H0": "H statistics policy, all source parameters frozen, one original forward, no optimizer"
+  },
+  "step": "Unchanged B4 PolypC.step: six separate weak-view forwards, detached probability mean, official independent RGB strong style, CPU min-max then one ImageNet normalization, mean BCE, one backward and Adam, final original forward",
+  "telemetry": {
+    "head_mean_std": "three head outputs on final original forward; spatial population standard deviation",
+    "gradient": "loss gradient at input to each fixed BN; zero is permitted on real data",
+    "affine_gradient": "B4 BN gradient L2",
+    "adam_update": "actual affine after-before L2",
+    "foreground": "final sigmoid >=0.5 fraction; not an objective"
+  },
+  "runtime": {
+    "allowed_physical_gpus": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "preferred_gpu": 7,
+    "concurrent_gpus": 1,
+    "active_seconds_cap": 21600,
+    "private_bytes_cap": 536870912,
+    "automatic_retry": false
+  },
+  "CPU_tests": {
+    "new": 7,
+    "reused_B4_normalization": 1,
+    "total_current": 8
+  },
+  "canonical_groups": 1802,
+  "H0_reference_positions": 3604,
+  "closed": [
+    "Fundus_new_runs",
+    "DD",
+    "SA",
+    "G",
+    "U",
+    "S",
+    "I",
+    "fusion",
+    "radius_search",
+    "LR_search",
+    "layer_search",
+    "new_domain_orders"
+  ]
+}
