@@ -1,0 +1,94 @@
+{
+  "task": "B4_FROZEN_C_TRANSFER",
+  "baseline": "de492dc16dba58884b119fb1945e67c011939303",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "grata_commit": "33ae20d664f305af34739ec54a5bec7da53ffa0b",
+  "seed": 20260907,
+  "stages": [
+    "fundus_C0_canonical",
+    "polyp_C0_canonical",
+    "polyp_C_order0",
+    "polyp_C_order1"
+  ],
+  "formal_budget": {
+    "records": 7357,
+    "forwards": 32585,
+    "backwards": 3604,
+    "base_adam": 3604,
+    "perturb": 0,
+    "restore": 0
+  },
+  "smoke_budget": {
+    "forwards": 76,
+    "backwards": 8,
+    "base_adam": 8
+  },
+  "C0": {
+    "forwards_per_image": 1,
+    "optimizer": null,
+    "source_weights": true,
+    "current_BN": true,
+    "stateless_canonical": true
+  },
+  "polyp_C": {
+    "input_shape": [
+      1,
+      3,
+      352,
+      352
+    ],
+    "output_shape": [
+      1,
+      1,
+      352,
+      352
+    ],
+    "BN_layers": 153,
+    "affine_scalars": 66218,
+    "optimizer": "Adam",
+    "lr": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "loss": "single_channel_mean_BCEWithLogits",
+    "weak_views": 6,
+    "normalization_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "normalization_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "strong_space": "independent RGB numpy copy; official style and CPU min-max; CPU ImageNet normalization once"
+  },
+  "runtime": {
+    "allowed_physical_gpus": [
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "gpu_authorization": "latest direct user request extends plan GPU range to 3-7",
+    "concurrent_gpus": 1,
+    "active_seconds_cap": 21600,
+    "private_bytes_cap": 268435456,
+    "retry": false
+  },
+  "closed_series": [
+    "U",
+    "S",
+    "I",
+    "G",
+    "DD",
+    "radius_search",
+    "lr_search",
+    "new_domain_orders"
+  ]
+}
