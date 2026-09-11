@@ -1,0 +1,115 @@
+{
+  "name": "B3_FROZEN_ORDER_BALANCED_COMPARISON",
+  "baseline_commit": "3a6418b9f83485aa2f304484c17bfa42dfb6e231",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "grata_commit": "33ae20d664f305af34739ec54a5bec7da53ffa0b",
+  "arms": [
+    "A",
+    "C",
+    "U",
+    "S",
+    "I"
+  ],
+  "new_orders": [
+    2,
+    3
+  ],
+  "seed": 20260907,
+  "groups": 1951,
+  "primary": "remaining_dev: image then channel/domain equal weights",
+  "orders": {
+    "0": [
+      "REFUGE",
+      "ORIGA",
+      "REFUGE_Valid",
+      "Drishti_GS"
+    ],
+    "1": [
+      "Drishti_GS",
+      "REFUGE_Valid",
+      "ORIGA",
+      "REFUGE"
+    ],
+    "2": [
+      "ORIGA",
+      "Drishti_GS",
+      "REFUGE",
+      "REFUGE_Valid"
+    ],
+    "3": [
+      "REFUGE_Valid",
+      "REFUGE",
+      "Drishti_GS",
+      "ORIGA"
+    ]
+  },
+  "A": {
+    "lr": 0.05,
+    "betas": [
+      0.9,
+      0.99
+    ],
+    "host": "frozen native make_host A; source grad preserved"
+  },
+  "BN_arms": {
+    "layers": 41,
+    "affine_parameters": 19136,
+    "lr": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0
+  },
+  "radius_multiplier": 1,
+  "population_variance_divisor": 6,
+  "S_seed_prefix": "B2:20260907:{visit}:{channel}:{b}",
+  "smoke": {
+    "base_adam": 20,
+    "backwards": 20,
+    "forwards": 136,
+    "A_prompt_forwards": 8,
+    "images_per_path": 2,
+    "paths": [
+      "direct",
+      "entry"
+    ],
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "formal_budget": {
+    "records": 19510,
+    "forwards": 132668,
+    "backwards": 19510,
+    "base_adam": 19510,
+    "perturb": 0,
+    "restore": 0
+  },
+  "max_active_seconds": 28800,
+  "max_private_bytes": 1073741824,
+  "gpu_allowed": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "gpu_preferred": 7,
+  "trajectory_order": [
+    "2_A",
+    "2_C",
+    "2_U",
+    "2_S",
+    "2_I",
+    "3_A",
+    "3_C",
+    "3_U",
+    "3_S",
+    "3_I"
+  ],
+  "old_orders_reused": [
+    0,
+    1
+  ],
+  "new_source_DD_selector_outer_inner": 0
+}
