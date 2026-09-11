@@ -1,0 +1,751 @@
+{
+  "status": "B3_FROZEN_ORDER_COMPARISON_COMPLETE",
+  "execution_commit": "0fac9b2b1e762ed57b624953edf95058cb1f0380",
+  "formal": {
+    "records": 19510,
+    "forwards": 132668,
+    "backwards": 19510,
+    "base_adam": 19510,
+    "perturb": 0,
+    "restore": 0
+  },
+  "total_including_smoke": {
+    "forwards": 132804,
+    "backwards": 19530,
+    "base_adam": 19530,
+    "perturb": 0,
+    "restore": 0
+  },
+  "smoke": {
+    "status": "B3_SMOKE_PASS",
+    "base_adam": 20,
+    "physical": {
+      "forwards": 136,
+      "backwards": 20,
+      "base_adam": 20,
+      "perturb": 0,
+      "restore": 0
+    },
+    "evidence": {
+      "A": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 2,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 4,
+              "backwards": 2,
+              "base_adam": 2,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 1103313408
+      },
+      "C": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 16,
+              "backwards": 2,
+              "base_adam": 2,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 615612416
+      },
+      "U": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 16,
+              "backwards": 2,
+              "base_adam": 2,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 607302656
+      },
+      "S": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 16,
+              "backwards": 2,
+              "base_adam": 2,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 607302656
+      },
+      "I": {
+        "visits": [
+          {
+            "visit": 1,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 8,
+              "backwards": 1,
+              "base_adam": 1,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          },
+          {
+            "visit": 2,
+            "max_logits_difference": 0.0,
+            "counts": {
+              "forwards": 16,
+              "backwards": 2,
+              "base_adam": 2,
+              "perturb": 0,
+              "restore": 0
+            },
+            "state_RNG_match": true
+          }
+        ],
+        "peak_allocated_bytes": 607302656
+      }
+    },
+    "A_prompt_forwards": 8,
+    "A_fft2_calls": 8,
+    "A_ifft2_calls": 8,
+    "FFT_accounting": "one fft2 and ifft2 per observed pinned Prompt.forward",
+    "gpu_seconds": 25.35695229494013,
+    "exit_code": 0,
+    "commit": "0fac9b2b1e762ed57b624953edf95058cb1f0380",
+    "config_sha256": "fbe205b633d2616bcaa871b5ccf8cbd5c277bf1035f9dfc5a45d7c6ce463b2b8",
+    "registration_sha256": "61895f422fdc89c86faaf01f665d9f595c42ff59ac0b4978ec4dc68b60e94d9f",
+    "gpu_uuid": "GPU-885f8cbc-d6bd-3ba9-f65d-a34373a93c0c"
+  },
+  "cpu": {
+    "commit": "0fac9b2b1e762ed57b624953edf95058cb1f0380",
+    "tests": 5,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 74.87028880906291,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "exit_code": 0
+  },
+  "trainable": {
+    "A": {
+      "optimizer_parameters": [
+        "prompt.data_prompt"
+      ],
+      "parameters": 75,
+      "source_grad_behavior": "native preserved",
+      "lr": 0.05,
+      "betas": [
+        0.9,
+        0.99
+      ]
+    },
+    "C": {
+      "optimizer_parameters": [
+        "res.bn1.weight",
+        "res.bn1.bias",
+        "res.layer1.0.bn1.weight",
+        "res.layer1.0.bn1.bias",
+        "res.layer1.0.bn2.weight",
+        "res.layer1.0.bn2.bias",
+        "res.layer1.1.bn1.weight",
+        "res.layer1.1.bn1.bias",
+        "res.layer1.1.bn2.weight",
+        "res.layer1.1.bn2.bias",
+        "res.layer1.2.bn1.weight",
+        "res.layer1.2.bn1.bias",
+        "res.layer1.2.bn2.weight",
+        "res.layer1.2.bn2.bias",
+        "res.layer2.0.bn1.weight",
+        "res.layer2.0.bn1.bias",
+        "res.layer2.0.bn2.weight",
+        "res.layer2.0.bn2.bias",
+        "res.layer2.0.downsample.1.weight",
+        "res.layer2.0.downsample.1.bias",
+        "res.layer2.1.bn1.weight",
+        "res.layer2.1.bn1.bias",
+        "res.layer2.1.bn2.weight",
+        "res.layer2.1.bn2.bias",
+        "res.layer2.2.bn1.weight",
+        "res.layer2.2.bn1.bias",
+        "res.layer2.2.bn2.weight",
+        "res.layer2.2.bn2.bias",
+        "res.layer2.3.bn1.weight",
+        "res.layer2.3.bn1.bias",
+        "res.layer2.3.bn2.weight",
+        "res.layer2.3.bn2.bias",
+        "res.layer3.0.bn1.weight",
+        "res.layer3.0.bn1.bias",
+        "res.layer3.0.bn2.weight",
+        "res.layer3.0.bn2.bias",
+        "res.layer3.0.downsample.1.weight",
+        "res.layer3.0.downsample.1.bias",
+        "res.layer3.1.bn1.weight",
+        "res.layer3.1.bn1.bias",
+        "res.layer3.1.bn2.weight",
+        "res.layer3.1.bn2.bias",
+        "res.layer3.2.bn1.weight",
+        "res.layer3.2.bn1.bias",
+        "res.layer3.2.bn2.weight",
+        "res.layer3.2.bn2.bias",
+        "res.layer3.3.bn1.weight",
+        "res.layer3.3.bn1.bias",
+        "res.layer3.3.bn2.weight",
+        "res.layer3.3.bn2.bias",
+        "res.layer3.4.bn1.weight",
+        "res.layer3.4.bn1.bias",
+        "res.layer3.4.bn2.weight",
+        "res.layer3.4.bn2.bias",
+        "res.layer3.5.bn1.weight",
+        "res.layer3.5.bn1.bias",
+        "res.layer3.5.bn2.weight",
+        "res.layer3.5.bn2.bias",
+        "res.layer4.0.bn1.weight",
+        "res.layer4.0.bn1.bias",
+        "res.layer4.0.bn2.weight",
+        "res.layer4.0.bn2.bias",
+        "res.layer4.0.downsample.1.weight",
+        "res.layer4.0.downsample.1.bias",
+        "res.layer4.1.bn1.weight",
+        "res.layer4.1.bn1.bias",
+        "res.layer4.1.bn2.weight",
+        "res.layer4.1.bn2.bias",
+        "res.layer4.2.bn1.weight",
+        "res.layer4.2.bn1.bias",
+        "res.layer4.2.bn2.weight",
+        "res.layer4.2.bn2.bias",
+        "up1.bn.weight",
+        "up1.bn.bias",
+        "up2.bn.weight",
+        "up2.bn.bias",
+        "up3.bn.weight",
+        "up3.bn.bias",
+        "up4.bn.weight",
+        "up4.bn.bias",
+        "bnout.weight",
+        "bnout.bias"
+      ],
+      "parameters": 19136,
+      "layers": 41,
+      "lr": 0.0001,
+      "betas": [
+        0.9,
+        0.999
+      ]
+    },
+    "U": {
+      "optimizer_parameters": [
+        "res.bn1.weight",
+        "res.bn1.bias",
+        "res.layer1.0.bn1.weight",
+        "res.layer1.0.bn1.bias",
+        "res.layer1.0.bn2.weight",
+        "res.layer1.0.bn2.bias",
+        "res.layer1.1.bn1.weight",
+        "res.layer1.1.bn1.bias",
+        "res.layer1.1.bn2.weight",
+        "res.layer1.1.bn2.bias",
+        "res.layer1.2.bn1.weight",
+        "res.layer1.2.bn1.bias",
+        "res.layer1.2.bn2.weight",
+        "res.layer1.2.bn2.bias",
+        "res.layer2.0.bn1.weight",
+        "res.layer2.0.bn1.bias",
+        "res.layer2.0.bn2.weight",
+        "res.layer2.0.bn2.bias",
+        "res.layer2.0.downsample.1.weight",
+        "res.layer2.0.downsample.1.bias",
+        "res.layer2.1.bn1.weight",
+        "res.layer2.1.bn1.bias",
+        "res.layer2.1.bn2.weight",
+        "res.layer2.1.bn2.bias",
+        "res.layer2.2.bn1.weight",
+        "res.layer2.2.bn1.bias",
+        "res.layer2.2.bn2.weight",
+        "res.layer2.2.bn2.bias",
+        "res.layer2.3.bn1.weight",
+        "res.layer2.3.bn1.bias",
+        "res.layer2.3.bn2.weight",
+        "res.layer2.3.bn2.bias",
+        "res.layer3.0.bn1.weight",
+        "res.layer3.0.bn1.bias",
+        "res.layer3.0.bn2.weight",
+        "res.layer3.0.bn2.bias",
+        "res.layer3.0.downsample.1.weight",
+        "res.layer3.0.downsample.1.bias",
+        "res.layer3.1.bn1.weight",
+        "res.layer3.1.bn1.bias",
+        "res.layer3.1.bn2.weight",
+        "res.layer3.1.bn2.bias",
+        "res.layer3.2.bn1.weight",
+        "res.layer3.2.bn1.bias",
+        "res.layer3.2.bn2.weight",
+        "res.layer3.2.bn2.bias",
+        "res.layer3.3.bn1.weight",
+        "res.layer3.3.bn1.bias",
+        "res.layer3.3.bn2.weight",
+        "res.layer3.3.bn2.bias",
+        "res.layer3.4.bn1.weight",
+        "res.layer3.4.bn1.bias",
+        "res.layer3.4.bn2.weight",
+        "res.layer3.4.bn2.bias",
+        "res.layer3.5.bn1.weight",
+        "res.layer3.5.bn1.bias",
+        "res.layer3.5.bn2.weight",
+        "res.layer3.5.bn2.bias",
+        "res.layer4.0.bn1.weight",
+        "res.layer4.0.bn1.bias",
+        "res.layer4.0.bn2.weight",
+        "res.layer4.0.bn2.bias",
+        "res.layer4.0.downsample.1.weight",
+        "res.layer4.0.downsample.1.bias",
+        "res.layer4.1.bn1.weight",
+        "res.layer4.1.bn1.bias",
+        "res.layer4.1.bn2.weight",
+        "res.layer4.1.bn2.bias",
+        "res.layer4.2.bn1.weight",
+        "res.layer4.2.bn1.bias",
+        "res.layer4.2.bn2.weight",
+        "res.layer4.2.bn2.bias",
+        "up1.bn.weight",
+        "up1.bn.bias",
+        "up2.bn.weight",
+        "up2.bn.bias",
+        "up3.bn.weight",
+        "up3.bn.bias",
+        "up4.bn.weight",
+        "up4.bn.bias",
+        "bnout.weight",
+        "bnout.bias"
+      ],
+      "parameters": 19136,
+      "layers": 41,
+      "lr": 0.0001,
+      "betas": [
+        0.9,
+        0.999
+      ]
+    },
+    "S": {
+      "optimizer_parameters": [
+        "res.bn1.weight",
+        "res.bn1.bias",
+        "res.layer1.0.bn1.weight",
+        "res.layer1.0.bn1.bias",
+        "res.layer1.0.bn2.weight",
+        "res.layer1.0.bn2.bias",
+        "res.layer1.1.bn1.weight",
+        "res.layer1.1.bn1.bias",
+        "res.layer1.1.bn2.weight",
+        "res.layer1.1.bn2.bias",
+        "res.layer1.2.bn1.weight",
+        "res.layer1.2.bn1.bias",
+        "res.layer1.2.bn2.weight",
+        "res.layer1.2.bn2.bias",
+        "res.layer2.0.bn1.weight",
+        "res.layer2.0.bn1.bias",
+        "res.layer2.0.bn2.weight",
+        "res.layer2.0.bn2.bias",
+        "res.layer2.0.downsample.1.weight",
+        "res.layer2.0.downsample.1.bias",
+        "res.layer2.1.bn1.weight",
+        "res.layer2.1.bn1.bias",
+        "res.layer2.1.bn2.weight",
+        "res.layer2.1.bn2.bias",
+        "res.layer2.2.bn1.weight",
+        "res.layer2.2.bn1.bias",
+        "res.layer2.2.bn2.weight",
+        "res.layer2.2.bn2.bias",
+        "res.layer2.3.bn1.weight",
+        "res.layer2.3.bn1.bias",
+        "res.layer2.3.bn2.weight",
+        "res.layer2.3.bn2.bias",
+        "res.layer3.0.bn1.weight",
+        "res.layer3.0.bn1.bias",
+        "res.layer3.0.bn2.weight",
+        "res.layer3.0.bn2.bias",
+        "res.layer3.0.downsample.1.weight",
+        "res.layer3.0.downsample.1.bias",
+        "res.layer3.1.bn1.weight",
+        "res.layer3.1.bn1.bias",
+        "res.layer3.1.bn2.weight",
+        "res.layer3.1.bn2.bias",
+        "res.layer3.2.bn1.weight",
+        "res.layer3.2.bn1.bias",
+        "res.layer3.2.bn2.weight",
+        "res.layer3.2.bn2.bias",
+        "res.layer3.3.bn1.weight",
+        "res.layer3.3.bn1.bias",
+        "res.layer3.3.bn2.weight",
+        "res.layer3.3.bn2.bias",
+        "res.layer3.4.bn1.weight",
+        "res.layer3.4.bn1.bias",
+        "res.layer3.4.bn2.weight",
+        "res.layer3.4.bn2.bias",
+        "res.layer3.5.bn1.weight",
+        "res.layer3.5.bn1.bias",
+        "res.layer3.5.bn2.weight",
+        "res.layer3.5.bn2.bias",
+        "res.layer4.0.bn1.weight",
+        "res.layer4.0.bn1.bias",
+        "res.layer4.0.bn2.weight",
+        "res.layer4.0.bn2.bias",
+        "res.layer4.0.downsample.1.weight",
+        "res.layer4.0.downsample.1.bias",
+        "res.layer4.1.bn1.weight",
+        "res.layer4.1.bn1.bias",
+        "res.layer4.1.bn2.weight",
+        "res.layer4.1.bn2.bias",
+        "res.layer4.2.bn1.weight",
+        "res.layer4.2.bn1.bias",
+        "res.layer4.2.bn2.weight",
+        "res.layer4.2.bn2.bias",
+        "up1.bn.weight",
+        "up1.bn.bias",
+        "up2.bn.weight",
+        "up2.bn.bias",
+        "up3.bn.weight",
+        "up3.bn.bias",
+        "up4.bn.weight",
+        "up4.bn.bias",
+        "bnout.weight",
+        "bnout.bias"
+      ],
+      "parameters": 19136,
+      "layers": 41,
+      "lr": 0.0001,
+      "betas": [
+        0.9,
+        0.999
+      ]
+    },
+    "I": {
+      "optimizer_parameters": [
+        "res.bn1.weight",
+        "res.bn1.bias",
+        "res.layer1.0.bn1.weight",
+        "res.layer1.0.bn1.bias",
+        "res.layer1.0.bn2.weight",
+        "res.layer1.0.bn2.bias",
+        "res.layer1.1.bn1.weight",
+        "res.layer1.1.bn1.bias",
+        "res.layer1.1.bn2.weight",
+        "res.layer1.1.bn2.bias",
+        "res.layer1.2.bn1.weight",
+        "res.layer1.2.bn1.bias",
+        "res.layer1.2.bn2.weight",
+        "res.layer1.2.bn2.bias",
+        "res.layer2.0.bn1.weight",
+        "res.layer2.0.bn1.bias",
+        "res.layer2.0.bn2.weight",
+        "res.layer2.0.bn2.bias",
+        "res.layer2.0.downsample.1.weight",
+        "res.layer2.0.downsample.1.bias",
+        "res.layer2.1.bn1.weight",
+        "res.layer2.1.bn1.bias",
+        "res.layer2.1.bn2.weight",
+        "res.layer2.1.bn2.bias",
+        "res.layer2.2.bn1.weight",
+        "res.layer2.2.bn1.bias",
+        "res.layer2.2.bn2.weight",
+        "res.layer2.2.bn2.bias",
+        "res.layer2.3.bn1.weight",
+        "res.layer2.3.bn1.bias",
+        "res.layer2.3.bn2.weight",
+        "res.layer2.3.bn2.bias",
+        "res.layer3.0.bn1.weight",
+        "res.layer3.0.bn1.bias",
+        "res.layer3.0.bn2.weight",
+        "res.layer3.0.bn2.bias",
+        "res.layer3.0.downsample.1.weight",
+        "res.layer3.0.downsample.1.bias",
+        "res.layer3.1.bn1.weight",
+        "res.layer3.1.bn1.bias",
+        "res.layer3.1.bn2.weight",
+        "res.layer3.1.bn2.bias",
+        "res.layer3.2.bn1.weight",
+        "res.layer3.2.bn1.bias",
+        "res.layer3.2.bn2.weight",
+        "res.layer3.2.bn2.bias",
+        "res.layer3.3.bn1.weight",
+        "res.layer3.3.bn1.bias",
+        "res.layer3.3.bn2.weight",
+        "res.layer3.3.bn2.bias",
+        "res.layer3.4.bn1.weight",
+        "res.layer3.4.bn1.bias",
+        "res.layer3.4.bn2.weight",
+        "res.layer3.4.bn2.bias",
+        "res.layer3.5.bn1.weight",
+        "res.layer3.5.bn1.bias",
+        "res.layer3.5.bn2.weight",
+        "res.layer3.5.bn2.bias",
+        "res.layer4.0.bn1.weight",
+        "res.layer4.0.bn1.bias",
+        "res.layer4.0.bn2.weight",
+        "res.layer4.0.bn2.bias",
+        "res.layer4.0.downsample.1.weight",
+        "res.layer4.0.downsample.1.bias",
+        "res.layer4.1.bn1.weight",
+        "res.layer4.1.bn1.bias",
+        "res.layer4.1.bn2.weight",
+        "res.layer4.1.bn2.bias",
+        "res.layer4.2.bn1.weight",
+        "res.layer4.2.bn1.bias",
+        "res.layer4.2.bn2.weight",
+        "res.layer4.2.bn2.bias",
+        "up1.bn.weight",
+        "up1.bn.bias",
+        "up2.bn.weight",
+        "up2.bn.bias",
+        "up3.bn.weight",
+        "up3.bn.bias",
+        "up4.bn.weight",
+        "up4.bn.bias",
+        "bnout.weight",
+        "bnout.bias"
+      ],
+      "parameters": 19136,
+      "layers": 41,
+      "lr": 0.0001,
+      "betas": [
+        0.9,
+        0.999
+      ]
+    }
+  },
+  "cost": {
+    "2_A": {
+      "records": 1951,
+      "counts": {
+        "forwards": 3902,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "host_seconds": 420.7518018030096,
+      "pipeline_seconds": 613.5558981813956,
+      "peak_allocated_bytes": 1114192384,
+      "native_counts": {
+        "model_forwards": 3902,
+        "prompt_forwards": 5837,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 1951,
+        "backward_calls": 1951,
+        "memory_pushes": 1951,
+        "retrievals": 1935
+      }
+    },
+    "2_C": {
+      "records": 1951,
+      "counts": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "host_seconds": 1807.4427812620997,
+      "pipeline_seconds": 1971.1278045580257,
+      "peak_allocated_bytes": 615612416,
+      "native_counts": null
+    },
+    "2_U": {
+      "records": 1951,
+      "counts": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "host_seconds": 1666.9667441083584,
+      "pipeline_seconds": 1829.1410261509009,
+      "peak_allocated_bytes": 607302656,
+      "native_counts": null
+    },
+    "2_S": {
+      "records": 1951,
+      "counts": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "host_seconds": 1655.9857334885746,
+      "pipeline_seconds": 1821.9624494432937,
+      "peak_allocated_bytes": 607302656,
+      "native_counts": null
+    },
+    "2_I": {
+      "records": 1951,
+      "counts": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "host_seconds": 1609.4873258192092,
+      "pipeline_seconds": 1769.2344479530584,
+      "peak_allocated_bytes": 607302656,
+      "native_counts": null
+    },
+    "3_A": {
+      "records": 1951,
+      "counts": {
+        "forwards": 3902,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "host_seconds": 406.1892706125509,
+      "pipeline_seconds": 559.9810656821355,
+      "peak_allocated_bytes": 1115896320,
+      "native_counts": {
+        "model_forwards": 3902,
+        "prompt_forwards": 5837,
+        "proxy_forwards": 0,
+        "proxy_images": 0,
+        "online_adam": 1951,
+        "backward_calls": 1951,
+        "memory_pushes": 1951,
+        "retrievals": 1935
+      }
+    },
+    "3_C": {
+      "records": 1951,
+      "counts": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "host_seconds": 1442.3215305178892,
+      "pipeline_seconds": 1594.3821799561847,
+      "peak_allocated_bytes": 615612416,
+      "native_counts": null
+    },
+    "3_U": {
+      "records": 1951,
+      "counts": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "host_seconds": 1465.2082388282288,
+      "pipeline_seconds": 1613.1387504839804,
+      "peak_allocated_bytes": 607302656,
+      "native_counts": null
+    },
+    "3_S": {
+      "records": 1951,
+      "counts": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "host_seconds": 1587.457424270222,
+      "pipeline_seconds": 1737.1659060542006,
+      "peak_allocated_bytes": 607302656,
+      "native_counts": null
+    },
+    "3_I": {
+      "records": 1951,
+      "counts": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "host_seconds": 1461.1778264846653,
+      "pipeline_seconds": 1609.6356858508661,
+      "peak_allocated_bytes": 607302656,
+      "native_counts": null
+    }
+  },
+  "FFT_accounting": "A pinned Prompt.forward contains one fft2 and one ifft2 per observed prompt call; not segmentation network forwards",
+  "gpu_seconds": 15230.076490715845,
+  "private_bytes_at_recompute": 56809541,
+  "scalar_recompute": true,
+  "ASSD_pixel_recomputed": false,
+  "new_source_DD_selector_outer_inner": 0,
+  "exit_code": 0
+}
