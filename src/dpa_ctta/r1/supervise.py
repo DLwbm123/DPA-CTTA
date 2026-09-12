@@ -48,12 +48,13 @@ def supervise(out,packet,start_process,caps=None,poll_seconds=.2):
     slots=len(packet['devices']);jobs={j['job_id']:j for j in packet['jobs']}
     queues={i:[jobs[a['job_id']] for a in packet['schedule']['assignments'] if a['worker']==i] for i in range(slots)}
     active={};history=[];stopped=False;phase='smoke';smoked=set();started=time.monotonic();last=started;seconds=0.;caught=None
-    handlers={};spawning=False;pending_signal=None
+    handlers={};pending_signal=None
 
     def interrupt(signum,frame):
         nonlocal pending_signal
-        if spawning:pending_signal=signum
-        else:raise Interrupted('parent signal '+str(signum))
+        # Raising inside an interrupted mkstemp/open can orphan a live fd on NFS.
+        # Finish the current atomic IO/spawn, then unwind at a safe loop boundary.
+        pending_signal=signum
     def halt(reason):
         nonlocal stopped
         if not stopped:
@@ -76,8 +77,10 @@ def supervise(out,packet,start_process,caps=None,poll_seconds=.2):
     try:
         for sig in (signal.SIGINT,signal.SIGTERM):handlers[sig]=signal.signal(sig,interrupt)
         while True:
+            if pending_signal is not None:raise Interrupted('parent signal '+str(pending_signal))
             now=time.monotonic();seconds+=(now-last)*len(active);last=now
             write(out/'usage.json',dict(seconds=seconds,wall_seconds=now-started,active_workers=len(active)),replace=True)
+            if pending_signal is not None:raise Interrupted('parent signal '+str(pending_signal))
             # Poll every owned child before any new dispatch, independent of creation order.
             for slot,rec in list(active.items()):
                 code=rec['process'].poll()
@@ -102,6 +105,7 @@ def supervise(out,packet,start_process,caps=None,poll_seconds=.2):
                 halt('private output cap')
                 for slot in list(active):finish(slot,'private output cap')
             if phase=='smoke' and len(smoked)==slots and not active and not stopped:phase='formal'
+            if pending_signal is not None:raise Interrupted('parent signal '+str(pending_signal))
             if not stopped:
                 for slot in range(slots):
                     if slot in active:continue
@@ -111,7 +115,6 @@ def supervise(out,packet,start_process,caps=None,poll_seconds=.2):
                     if phase=='formal' and job is None:continue
                     key='device'+str(slot) if job is None else job['job_id']
                     spec=dict(phase=phase,worker=slot,job=job,key=key,binding=binding(packet,slot,job))
-                    spawning=True
                     try:
                         with (out/(key+'.log')).open('x') as log:p=start_process(spec,log)
                         rec=dict(spec,process=p,pid=p.pid,pgid=p.pid,started=time.monotonic(),started_seconds=time.monotonic()-started,status='RUNNING')
@@ -119,7 +122,6 @@ def supervise(out,packet,start_process,caps=None,poll_seconds=.2):
                     except BaseException:
                         failure(spec,'process creation failed')
                         raise
-                    finally:spawning=False
                     if pending_signal is not None:raise Interrupted('parent signal '+str(pending_signal))
                     write(out/'processes.started.json',dict(binding=binding(packet),processes=[{k:r[k] for k in ('pid','pgid','binding','phase','key')} for r in history]),replace=True)
             if not active and (stopped or phase=='formal' and not any(queues.values())):break

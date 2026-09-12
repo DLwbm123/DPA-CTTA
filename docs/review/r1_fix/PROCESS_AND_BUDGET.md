@@ -25,7 +25,7 @@ flowchart TD
 
 所有子进程使用新的process group，创建后记录PID/PGID。父进程每轮检查所有子进程，及时发现后启动worker的失败。首次失败后禁止新派发；普通轨迹失败允许已经活跃且独立的轨迹结束。登记资产内容故障及共享不变量错误标明scope，停止本批共享这些资产/代码的活跃进程；不会查找或终止其他批次/用户的进程。保存已有JSONL前缀，写INCOMPLETE/TIMEOUT，不重试。
 
-启动中途失败、SIGINT、SIGTERM或父进程异常进入finally收尾。若信号在Popen返回与登记PID之间到达，先登记所有权再处理；清理期间忽略第二次中断，避免再次打断收尾。仅对仍由本次调用拥有的process group发送TERM，经过短暂宽限后KILL并回收；不会在24小时后按旧PID历史再次发信号。操作系统不可中断内核IO仍可能延迟实际回收；清理异常不得产生COMPLETE。
+启动中途失败、SIGINT、SIGTERM或父进程异常进入finally收尾。信号handler只记录请求，在当前原子IO或Popen登记完成后的安全边界处理，避免在mkstemp/open中异步抛异常造成NFS活跃句柄遗留；清理期间忽略第二次中断。仅对仍由本次调用拥有的process group发送TERM，经过短暂宽限后KILL并回收；不会在24小时后按旧PID历史再次发信号。操作系统不可中断内核IO仍可能延迟实际回收；清理异常不得产生COMPLETE。
 
 | 上限 | 实现 |
 |---|---|

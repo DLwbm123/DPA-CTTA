@@ -288,12 +288,37 @@ class ProcessChecks(unittest.TestCase):
                 process=start(spec,log);os.kill(os.getpid(),signal.SIGTERM);return process
             with self.assertRaises(Interrupted):supervise(out,self.packet(),interrupted_start,self.caps(),.01)
             self.assertEqual(len(created),1);self.assertIsNotNone(created[0][1].poll())
+    def test_signal_during_mkstemp_does_not_leak_output_descriptor(self):
+        from dpa_ctta.r1 import evidence
+        original=evidence.tempfile.mkstemp;opened=[]
+        def interrupted_open(*args,**kw):
+            fd,name=original(*args,**kw)
+            if not opened:
+                opened.append(fd);os.kill(os.getpid(),signal.SIGTERM)
+            return fd,name
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);start,created=self.spawner(out,lambda s,n:{})
+            try:
+                with patch.object(evidence.tempfile,'mkstemp',side_effect=interrupted_open):
+                    with self.assertRaises(Interrupted):supervise(out,self.packet(),start,self.caps(),.01)
+                self.assertEqual(created,[])
+                with self.assertRaises(OSError):os.fstat(opened[0])
+            finally:
+                for fd in opened:
+                    try:os.close(fd)
+                    except OSError:pass
     def test_parent_SIGINT_SIGTERM_clean_up_own_groups(self):
         for sig in (signal.SIGINT,signal.SIGTERM):
             with self.subTest(signal=sig),tempfile.TemporaryDirectory() as tmp:
                 out=Path(tmp);start,created=self.spawner(out,lambda s,n:dict(delay=5,signal=sig,grandchild=True))
                 with self.assertRaises(Interrupted):supervise(out,self.packet(1),start,self.caps(),.01)
                 self.assertTrue(all(p.poll() is not None for s,p in created));self.assertEqual(json.loads((out/'matrix.processes.json').read_text())['status'],'INCOMPLETE')
+                if Path('/proc/self/fd').exists():
+                    open_paths=[]
+                    for fd in Path('/proc/self/fd').iterdir():
+                        try:open_paths.append(os.readlink(fd))
+                        except FileNotFoundError:pass
+                    self.assertFalse(any(str(out) in path for path in open_paths),'owned output descriptor leaked after signal cleanup')
     def test_shared_failure_cancels_only_this_batch_and_output_cap(self):
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp);start,created=self.spawner(out,lambda s,n:{} if s['phase']=='smoke' else dict(delay=5 if s['worker']==0 else .02,exit=0 if s['worker']==0 else 1,scope='shared_assets' if s['worker']==1 else None))
