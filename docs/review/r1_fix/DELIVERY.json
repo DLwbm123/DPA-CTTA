@@ -1,0 +1,16 @@
+{
+  "task": "R1_RECOVERY_TARGET_SUBSPACE_REVIEW_FIX",
+  "status": "R1_REVIEW_FIXES_READY",
+  "review_baseline": "f67a4d91c4337fe53e350cc2cf621ab703b9d2c1",
+  "implementation_commit": "c93018c0edca2bbe2475117ab0edf6adeece6ff2",
+  "branch": "experiment/r1-recovery-target-subspace-v1",
+  "science_sha256": "e23fb6de3e55f704ec2036d82777b29a78643ebc7e1ae1e89328f22f56de51e2",
+  "previous_registration_digest": "8620ed1b0d225ad921d33998123dd322a30c9ed67c2d3de65521100f429c5d4e",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "cpu_tests": {"tests": 35, "failures": 0, "errors": 0, "skips": 0, "exit_code": 0, "original_test_methods_retained": 17, "added_test_methods": 18, "cuda_initialized": false, "checkpoint_mode": "programmatic_random_weights"},
+  "initial_server_check": {"implementation_commit": "1a777a8920ee33ef04f132ad596061273df2c012", "tests": 34, "failures": 0, "errors": 2, "resolved": true, "cause": "signal_handler_raised_during_mkstemp_and_leaked_output_descriptor"},
+  "current_stage": {"gpu_jobs": 0, "formal_records": 0, "real_target_content_reads": 0, "source_images_masks_proxies_prototypes_accessed": 0, "background_waiters_created": 0},
+  "execution_authorized": false,
+  "external_review_status": "PENDING_DIFF_REVIEW",
+  "artifacts": ["IMPLEMENTATION_REPORT.md", "REVIEW_INDEX.md", "REGISTRATION_SCHEMA.md", "PROCESS_AND_BUDGET.md", "SCIENCE_DIGEST.json", "ASSET_RESOLUTION.json", "DRY_RUN_MATRIX.json", "implementation.patch", "DIFF_STAT.txt", "r1_fix_source.zip", "CPU_TEST_LOG.txt", "CPU_TEST_RESULTS.json", "CPU_INITIAL_FAILURE_LOG.txt", "FD_ROOT_CAUSE.json"]
+}

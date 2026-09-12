@@ -1,0 +1,25 @@
+ docs/review/r1/ASSET_RESOLUTION.json      |   14 +
+ docs/review/r1/CPU_TEST_LOG.txt           |   34 +
+ docs/review/r1/CPU_TEST_RESULTS.json      |   12 +
+ docs/review/r1/DELIVERY.json              |   28 +
+ docs/review/r1/DIFF_STAT.txt              |   19 +
+ docs/review/r1/IMPLEMENTATION_REPORT.md   |   97 ++
+ docs/review/r1/REVIEW_INDEX.md            |   47 +
+ docs/review/r1/SCIENCE_DIGEST.json        |   23 +
+ docs/review/r1/implementation.patch       | 1683 +++++++++++++++++++++++++++++
+ docs/review/r1/r1_source.zip              |  Bin 0 -> 35651 bytes
+ docs/review/r1_fix/DRY_RUN_MATRIX.json    |  806 ++++++++++++++
+ docs/review/r1_fix/PROCESS_AND_BUDGET.md  |   58 +
+ docs/review/r1_fix/REGISTRATION_SCHEMA.md |   22 +
+ docs/review/r1_fix/SCIENCE_DIGEST.json    |   10 +
+ scripts/check_r1_cpu.py                   |    2 +-
+ src/dpa_ctta/r1/analyze.py                |  164 ++-
+ src/dpa_ctta/r1/assets.py                 |   43 +
+ src/dpa_ctta/r1/evidence.py               |   46 +
+ src/dpa_ctta/r1/plan.py                   |   40 +-
+ src/dpa_ctta/r1/run.py                    |  131 ++-
+ src/dpa_ctta/r1/streaming_pca.py          |    2 +-
+ src/dpa_ctta/r1/supervise.py              |  146 +++
+ tests/test_r1.py                          |   25 +-
+ tests/test_r1_fixes.py                    |  330 ++++++
+ 24 files changed, 3682 insertions(+), 100 deletions(-)
