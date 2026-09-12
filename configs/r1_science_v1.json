@@ -1,0 +1,140 @@
+{
+  "task": "R1_RECOVERY_TARGET_SUBSPACE",
+  "schema_status": "proposed_for_code_review",
+  "baseline_commit": "0ef9d593a196e18f38295edc5b919372e297671b",
+  "task_scope": [
+    "fundus"
+  ],
+  "arms": [
+    "C",
+    "C_PER256",
+    "C_SENS",
+    "C_PCA_GLOBAL",
+    "C_PCA_SHUFFLED",
+    "C_PCA_REGION"
+  ],
+  "seed": 20260907,
+  "groups": 1951,
+  "primary_subset": "remaining_dev",
+  "primary_subset_groups": 1695,
+  "orders": [
+    [
+      "REFUGE",
+      "ORIGA",
+      "REFUGE_Valid",
+      "Drishti_GS"
+    ],
+    [
+      "Drishti_GS",
+      "REFUGE_Valid",
+      "ORIGA",
+      "REFUGE"
+    ],
+    [
+      "ORIGA",
+      "Drishti_GS",
+      "REFUGE",
+      "REFUGE_Valid"
+    ],
+    [
+      "REFUGE_Valid",
+      "REFUGE",
+      "Drishti_GS",
+      "ORIGA"
+    ]
+  ],
+  "C": {
+    "bn_layers": 41,
+    "affine_scalars": 19136,
+    "optimizer": "Adam",
+    "lr": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "weak_views": 6,
+    "base_forwards": 8,
+    "base_adam_per_visit": 1
+  },
+  "recovery": {
+    "period": 256,
+    "levels": [
+      0,
+      0.1,
+      0.2
+    ],
+    "zeta": 0.9,
+    "horizon": 50,
+    "D": 6.0,
+    "sensitivity_floor": 1e-06,
+    "min_pixels_per_region": 16,
+    "segmentation_entropy": "independent_Bernoulli_bits",
+    "comparison_pixels": "complement_of_nested_largest_erasure",
+    "reseed_global_rng_on_reset": false,
+    "clear_optimizer_on_reset": true,
+    "reset_controller_after_recovery": true,
+    "quantile_gate": false,
+    "extra_probe_forwards_per_visit": 3
+  },
+  "memory": {
+    "feature": "seg_head_input_after_relu",
+    "dim": 32,
+    "grid": [
+      32,
+      32
+    ],
+    "rank_cap": 8,
+    "lambda_sub": 0.05,
+    "reliable_q_bounds": [
+      0.1,
+      0.9
+    ],
+    "require_all_six_hard_agree": true,
+    "max_points_per_region": 32,
+    "min_contributing_images": 16,
+    "min_vectors": 128,
+    "refresh_every_contributing_images": 16,
+    "eigenvalue_floor": 1e-10,
+    "vector_norm_eps": 1e-06,
+    "loss_denominator_eps": 1e-06,
+    "statistics": "CPU_float64_streaming_mean_M2",
+    "bank_counts": {
+      "global": 1,
+      "shuffled": 4,
+      "region": 4
+    },
+    "statistics_updated_after_prediction": true,
+    "current_item_in_own_basis": false,
+    "raw_vector_retention_between_visits": false
+  },
+  "formal_budget": {
+    "trajectories": 24,
+    "records": 46824,
+    "forwards": 398004,
+    "backwards": 46824,
+    "adam": 46824,
+    "offline_updates": 0
+  },
+  "per_gpu_smoke_budget": {
+    "adam": 14,
+    "backwards": 14,
+    "forwards": 118
+  },
+  "runtime_proposed_caps": {
+    "max_workers": 3,
+    "max_worker_cpu_threads": 2,
+    "total_gpu_active_hours": 24,
+    "wall_hours": 24,
+    "trajectory_hours": 2,
+    "private_output_bytes": 2147483648
+  },
+  "method_selection_not_execution_gate": {
+    "mean_gain_over_C_pp": 0.5,
+    "positive_orders_at_least": 3,
+    "domain_mean_degradation_warning_pp": -2.0,
+    "worst_order_degradation_warning_pp": -0.5
+  },
+  "authority": "01_IMPLEMENTATION_PROMPT.md; discrepancy must be reported before review, not silently reconciled"
+}
