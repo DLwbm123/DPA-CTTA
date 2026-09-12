@@ -86,4 +86,4 @@ def projection_residual(raw_features: torch.Tensor, center: torch.Tensor,
 
 def bank_audit(bank):
     tensors=[v for v in vars(bank).values() if isinstance(v,torch.Tensor)]
-    return dict(n=bank.n,contributing_images=bank.images,version=bank.version,ready=bank.U is not None,rank=0 if bank.U is None else bank.U.shape[1],merges=bank.merges,eigh_calls=bank.eigh_calls,state_bytes=sum(t.numel()*t.element_size() for t in tensors))
+    return dict(n=bank.n,contributing_images=bank.images,version=bank.version,last_visit=bank.last_visit,ready=bank.U is not None,rank=0 if bank.U is None else bank.U.shape[1],merges=bank.merges,eigh_calls=bank.eigh_calls,state_bytes=sum(t.numel()*t.element_size() for t in tensors))

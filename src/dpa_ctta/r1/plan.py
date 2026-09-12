@@ -1,5 +1,5 @@
 """Metadata-only registration, immutable science and explicit execution opt-in."""
-import hashlib,json,subprocess
+import hashlib,json,re,subprocess
 from collections import Counter
 from pathlib import Path
 
@@ -26,9 +26,22 @@ def registration_digest(reg):return hashlib.sha256(json.dumps(reg,sort_keys=True
 def from_b3(path):
     # Never traverse identities/proxy/history or call historical file validators.
     old=json.loads(Path(path).read_text());f=old['tasks']['fundus']
-    keys=('sample_id','group_id','domain','subset','image_path','mask_path','image_size','manifest_index','patient_linkage','video_linkage')
-    reg=dict(checkpoint={k:f['checkpoint'][k] for k in ('path','sha256','bytes','mtime_ns')},target=[{k:r.get(k,'UNKNOWN') for k in keys} for r in f['target']],metadata_origin='B3_registered_Fundus',checkpoint_only=True)
+    keys=('sample_id','group_id','domain','subset','image_path','mask_path','image_sha256','mask_sha256','image_size','manifest_index','patient_linkage','video_linkage','original_split','split')
+    reg=dict(checkpoint={k:f['checkpoint'][k] for k in ('path','sha256','bytes','mtime_ns')},target=[{k:r.get(k,'UNKNOWN') for k in keys} for r in f['target']],metadata_origin='B3_registered_Fundus',checkpoint_only=True,schema_version=2)
     reg['historical_scalars']={str(o):dict(A=str(Path(old['p2_directory'])/f'fundus_{o}_A.jsonl') if o<2 else str(Path(path).parent/f'fundus_{o}_A.jsonl'),C0=str(Path(path).parent.parent/'b4_frozen_c_transfer_20260911/fundus_canonical_C0.jsonl')) for o in range(4)}
+    reg['historical_bindings']={};receipts={}
+    for order,entries in reg['historical_scalars'].items():
+        reg['historical_bindings'][order]={}
+        for name,scalar in entries.items():
+            receipt=Path(scalar).parent/'receipt.run.json'
+            if receipt not in receipts:
+                entry=dict(receipt_path=str(receipt),registration_path=str(receipt.parent/'registration.json'))
+                if receipt.is_file():
+                    data=receipt.read_bytes();value=json.loads(data)
+                    entry.update(receipt_sha256=hashlib.sha256(data).hexdigest(),receipt_binding={k:value[k] for k in ('commit','config_sha256','registration_sha256','gpu_uuid')})
+                receipts[receipt]=entry
+            entry=receipts[receipt]
+            reg['historical_bindings'][order][name]=entry
     for o in range(4):stream(reg,o)
     return reg
 
@@ -39,6 +52,7 @@ def stream(reg,order):
     if len(rs)!=1951 or len({r['group_id'] for r in rs})!=1951 or len({r['sample_id'] for r in rs})!=1951 or Counter(r['domain'] for r in rs)!=COUNTS:raise ValueError('target metadata coverage')
     if Counter(r['subset'] for r in rs)!=Counter(remaining_dev=1695,legacy_dev=128,p1_extension_dev=128):raise ValueError('subset counts')
     if any(r['image_size'] is None or len(r['image_size'])!=2 for r in rs):raise ValueError('grid metadata')
+    if any(not re.fullmatch('[0-9a-f]{64}',str(r.get(k,''))) for r in rs for k in ('image_sha256','mask_sha256')):raise ValueError('registered target content digests required')
     for d in COUNTS:
         inds=[r['manifest_index'] for r in rs if r['domain']==d]
         if inds!=sorted(inds) or len(set(inds))!=len(inds):raise ValueError('within-domain manifest order')
@@ -50,7 +64,25 @@ def matrix():
     for o,domains in enumerate(cfg['orders']):
         for i,arm in enumerate(cfg['arms']):
             jobs.append(dict(job_id=f'o{o}a{i}',arm=arm,order=o,domains=domains,records=1951,forwards=1951*(11 if arm=='C_SENS' else 8),backwards=1951,adam=1951,periodic_resets=7 if arm=='C_PER256' else None,status='NOT_RUN',gpu=None))
-    return dict(status='DRY_RUN_ONLY',science_sha256=digest(SCIENCE),jobs=jobs,formal_budget=cfg['formal_budget'],GPU_requests_issued=0,per_gpu_smoke=cfg['per_gpu_smoke_budget'],allowed_gpu_list=[],resource_plan=dict(max_workers=3,trajectory_hours_cap=2,total_gpu_hours_cap=24,wall_hours_cap=24,private_bytes_cap=2*1024**3,estimate='NOT_MEASURED: actual per-device smoke/memory readiness pending Stage II',reduced_concurrency_preserves_24_jobs=True))
+    return dict(status='DRY_RUN_ONLY',science_sha256=digest(SCIENCE),jobs=jobs,rotation_examples={str(k):allocation(jobs,k) for k in (1,2,3)},formal_budget=cfg['formal_budget'],GPU_requests_issued=0,per_gpu_smoke=cfg['per_gpu_smoke_budget'],allowed_gpu_list=[],resource_plan=dict(max_workers=3,trajectory_hours_cap=2,total_gpu_hours_cap=24,wall_hours_cap=24,private_bytes_cap=2*1024**3,estimate='NOT_MEASURED: actual per-device smoke/memory readiness pending Stage II',reduced_concurrency_preserves_24_jobs=True))
+
+
+def allocation(jobs,workers):
+    if type(workers) is not int or workers not in (1,2,3):raise ValueError('one to three worker slots')
+    arms=science()['arms']
+    assigned=[dict(job_id=j['job_id'],worker=(arms.index(j['arm'])+j['order'])%workers) for j in jobs]
+    return dict(rule='(arm_index + order_index) % workers',assignments=assigned,loads=[dict(worker=i,jobs=sum(a['worker']==i for a in assigned),forwards=sum(j['forwards'] for j,a in zip(jobs,assigned) if a['worker']==i)) for i in range(workers)],physical_devices='NOT_ASSIGNED_UNTIL_EXPLICIT_AUTHORIZATION')
+
+
+def binding(packet,worker=None,job=None):
+    value=dict(packet['binding'])
+    if worker is not None:value.update(worker=worker,device_uuid=packet['devices'][worker]['uuid'])
+    if job is not None:value.update(job_id=job['job_id'],arm=job['arm'],order=job['order'])
+    return value
+
+
+def bound(value,expected):
+    if value.get('binding')!=expected:raise ValueError('run/code/science/registration/device/job binding mismatch')
 
 
 def authorize(auth,reg,current_sha=None,science_sha=None):

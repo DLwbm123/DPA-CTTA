@@ -156,22 +156,13 @@ class CloseoutChecks(unittest.TestCase):
             with self.assertRaises(PermissionError):main()
         self.assertFalse(torch.cuda.is_initialized())
     def test_complete_scalar_matrix_and_truncation(self):
-        from dpa_ctta.r1.plan import COUNTS
-        cfg=copy.deepcopy(science());cfg['formal_budget'].update(records=288,forwards=2448,backwards=288,adam=288)
-        jobs=matrix()['jobs'];canonical=[dict(group_id=str(i*3+j),sample_id=str(i*3+j),domain=d,subset=s) for i,d in enumerate(COUNTS) for j,s in enumerate(('remaining_dev','legacy_dev','p1_extension_dev'))]
-        def ordered(reg,o):return [r for d in cfg['orders'][o] for r in canonical if r['domain']==d]
-        metric=evaluate(torch.zeros(1,2,3,3),torch.zeros(1,2,3,3),'fundus')
+        from test_r1_fixes import complete_fixture
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp)
-            for job in jobs:
-                p=claim(out,job['job_id']);(p/'completion.json').write_text(json.dumps(dict(status='TRAJECTORY_COMPLETE')));rows=[]
-                for i,e in enumerate(ordered({},job['order']),1):
-                    pca=None
-                    if 'PCA' in job['arm']:pca=dict(basis_versions_used=[None if i==1 else i-1],subloss=0.,banks=[dict(state_bytes=100,ready=True,rank=8)])
-                    rows.append(dict(e,arm=job['arm'],order=job['order'],global_visit=i,reset_count=0,total_adam_calls=i,optimizer_steps_since_reset=i,segment_age=i,reset_before_current=False,counts=dict(forwards=11 if job['arm']=='C_SENS' else 8,backwards=1,base_adam=1,perturb=0,restore=0),prediction_fixed_before_label=True,metrics=metric,pca=pca,host_seconds=.1,peak_allocated_bytes=1))
-                (p/'records.jsonl').write_text('\n'.join(json.dumps(r) for r in rows))
-            with patch('dpa_ctta.r1.analyze.stream',side_effect=ordered),patch('dpa_ctta.r1.analyze.science',return_value=cfg):result=recompute(out,{})
-            self.assertEqual(result['status'],'R1_EXPERIMENT_COMPLETE');self.assertEqual(result['physical']['records'],288)
-            (out/'o3a5/records.jsonl').write_text('')
-            with patch('dpa_ctta.r1.analyze.stream',side_effect=ordered),patch('dpa_ctta.r1.analyze.science',return_value=cfg):
-                with self.assertRaises(ValueError):recompute(out,{})
+            with complete_fixture(out) as (reg,packet,ordered):
+                result=recompute(out,reg)
+                self.assertEqual(result['status'],'R1_EXPERIMENT_COMPLETE');self.assertEqual(result['physical']['records'],288)
+                (out/'o3a5/records.jsonl').write_text('')
+                with self.assertRaises(ValueError):recompute(out,reg)
+                self.assertFalse((out/'public_aggregate.json').exists())
+                self.assertFalse(json.loads((out/'current_result.json').read_text())['valid'])

@@ -1,0 +1,806 @@
+{
+  "status": "DRY_RUN_ONLY",
+  "science_sha256": "e23fb6de3e55f704ec2036d82777b29a78643ebc7e1ae1e89328f22f56de51e2",
+  "jobs": [
+    {
+      "job_id": "o0a0",
+      "arm": "C",
+      "order": 0,
+      "domains": [
+        "REFUGE",
+        "ORIGA",
+        "REFUGE_Valid",
+        "Drishti_GS"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a1",
+      "arm": "C_PER256",
+      "order": 0,
+      "domains": [
+        "REFUGE",
+        "ORIGA",
+        "REFUGE_Valid",
+        "Drishti_GS"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": 7,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a2",
+      "arm": "C_SENS",
+      "order": 0,
+      "domains": [
+        "REFUGE",
+        "ORIGA",
+        "REFUGE_Valid",
+        "Drishti_GS"
+      ],
+      "records": 1951,
+      "forwards": 21461,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a3",
+      "arm": "C_PCA_GLOBAL",
+      "order": 0,
+      "domains": [
+        "REFUGE",
+        "ORIGA",
+        "REFUGE_Valid",
+        "Drishti_GS"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a4",
+      "arm": "C_PCA_SHUFFLED",
+      "order": 0,
+      "domains": [
+        "REFUGE",
+        "ORIGA",
+        "REFUGE_Valid",
+        "Drishti_GS"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a5",
+      "arm": "C_PCA_REGION",
+      "order": 0,
+      "domains": [
+        "REFUGE",
+        "ORIGA",
+        "REFUGE_Valid",
+        "Drishti_GS"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a0",
+      "arm": "C",
+      "order": 1,
+      "domains": [
+        "Drishti_GS",
+        "REFUGE_Valid",
+        "ORIGA",
+        "REFUGE"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a1",
+      "arm": "C_PER256",
+      "order": 1,
+      "domains": [
+        "Drishti_GS",
+        "REFUGE_Valid",
+        "ORIGA",
+        "REFUGE"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": 7,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a2",
+      "arm": "C_SENS",
+      "order": 1,
+      "domains": [
+        "Drishti_GS",
+        "REFUGE_Valid",
+        "ORIGA",
+        "REFUGE"
+      ],
+      "records": 1951,
+      "forwards": 21461,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a3",
+      "arm": "C_PCA_GLOBAL",
+      "order": 1,
+      "domains": [
+        "Drishti_GS",
+        "REFUGE_Valid",
+        "ORIGA",
+        "REFUGE"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a4",
+      "arm": "C_PCA_SHUFFLED",
+      "order": 1,
+      "domains": [
+        "Drishti_GS",
+        "REFUGE_Valid",
+        "ORIGA",
+        "REFUGE"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a5",
+      "arm": "C_PCA_REGION",
+      "order": 1,
+      "domains": [
+        "Drishti_GS",
+        "REFUGE_Valid",
+        "ORIGA",
+        "REFUGE"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a0",
+      "arm": "C",
+      "order": 2,
+      "domains": [
+        "ORIGA",
+        "Drishti_GS",
+        "REFUGE",
+        "REFUGE_Valid"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a1",
+      "arm": "C_PER256",
+      "order": 2,
+      "domains": [
+        "ORIGA",
+        "Drishti_GS",
+        "REFUGE",
+        "REFUGE_Valid"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": 7,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a2",
+      "arm": "C_SENS",
+      "order": 2,
+      "domains": [
+        "ORIGA",
+        "Drishti_GS",
+        "REFUGE",
+        "REFUGE_Valid"
+      ],
+      "records": 1951,
+      "forwards": 21461,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a3",
+      "arm": "C_PCA_GLOBAL",
+      "order": 2,
+      "domains": [
+        "ORIGA",
+        "Drishti_GS",
+        "REFUGE",
+        "REFUGE_Valid"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a4",
+      "arm": "C_PCA_SHUFFLED",
+      "order": 2,
+      "domains": [
+        "ORIGA",
+        "Drishti_GS",
+        "REFUGE",
+        "REFUGE_Valid"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a5",
+      "arm": "C_PCA_REGION",
+      "order": 2,
+      "domains": [
+        "ORIGA",
+        "Drishti_GS",
+        "REFUGE",
+        "REFUGE_Valid"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a0",
+      "arm": "C",
+      "order": 3,
+      "domains": [
+        "REFUGE_Valid",
+        "REFUGE",
+        "Drishti_GS",
+        "ORIGA"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a1",
+      "arm": "C_PER256",
+      "order": 3,
+      "domains": [
+        "REFUGE_Valid",
+        "REFUGE",
+        "Drishti_GS",
+        "ORIGA"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": 7,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a2",
+      "arm": "C_SENS",
+      "order": 3,
+      "domains": [
+        "REFUGE_Valid",
+        "REFUGE",
+        "Drishti_GS",
+        "ORIGA"
+      ],
+      "records": 1951,
+      "forwards": 21461,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a3",
+      "arm": "C_PCA_GLOBAL",
+      "order": 3,
+      "domains": [
+        "REFUGE_Valid",
+        "REFUGE",
+        "Drishti_GS",
+        "ORIGA"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a4",
+      "arm": "C_PCA_SHUFFLED",
+      "order": 3,
+      "domains": [
+        "REFUGE_Valid",
+        "REFUGE",
+        "Drishti_GS",
+        "ORIGA"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a5",
+      "arm": "C_PCA_REGION",
+      "order": 3,
+      "domains": [
+        "REFUGE_Valid",
+        "REFUGE",
+        "Drishti_GS",
+        "ORIGA"
+      ],
+      "records": 1951,
+      "forwards": 15608,
+      "backwards": 1951,
+      "adam": 1951,
+      "periodic_resets": null,
+      "status": "NOT_RUN",
+      "gpu": null
+    }
+  ],
+  "rotation_examples": {
+    "1": {
+      "rule": "(arm_index + order_index) % workers",
+      "assignments": [
+        {
+          "job_id": "o0a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a5",
+          "worker": 0
+        }
+      ],
+      "loads": [
+        {
+          "worker": 0,
+          "jobs": 24,
+          "forwards": 398004
+        }
+      ],
+      "physical_devices": "NOT_ASSIGNED_UNTIL_EXPLICIT_AUTHORIZATION"
+    },
+    "2": {
+      "rule": "(arm_index + order_index) % workers",
+      "assignments": [
+        {
+          "job_id": "o0a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a1",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a3",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a5",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a0",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a2",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a4",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a1",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a3",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a5",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a0",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a2",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a4",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a5",
+          "worker": 0
+        }
+      ],
+      "loads": [
+        {
+          "worker": 0,
+          "jobs": 12,
+          "forwards": 199002
+        },
+        {
+          "worker": 1,
+          "jobs": 12,
+          "forwards": 199002
+        }
+      ],
+      "physical_devices": "NOT_ASSIGNED_UNTIL_EXPLICIT_AUTHORIZATION"
+    },
+    "3": {
+      "rule": "(arm_index + order_index) % workers",
+      "assignments": [
+        {
+          "job_id": "o0a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a1",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a2",
+          "worker": 2
+        },
+        {
+          "job_id": "o0a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a4",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a5",
+          "worker": 2
+        },
+        {
+          "job_id": "o1a0",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a1",
+          "worker": 2
+        },
+        {
+          "job_id": "o1a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a3",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a4",
+          "worker": 2
+        },
+        {
+          "job_id": "o1a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a0",
+          "worker": 2
+        },
+        {
+          "job_id": "o2a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a2",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a3",
+          "worker": 2
+        },
+        {
+          "job_id": "o2a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a5",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a1",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a2",
+          "worker": 2
+        },
+        {
+          "job_id": "o3a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a4",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a5",
+          "worker": 2
+        }
+      ],
+      "loads": [
+        {
+          "worker": 0,
+          "jobs": 8,
+          "forwards": 130717
+        },
+        {
+          "worker": 1,
+          "jobs": 8,
+          "forwards": 130717
+        },
+        {
+          "worker": 2,
+          "jobs": 8,
+          "forwards": 136570
+        }
+      ],
+      "physical_devices": "NOT_ASSIGNED_UNTIL_EXPLICIT_AUTHORIZATION"
+    }
+  },
+  "formal_budget": {
+    "trajectories": 24,
+    "records": 46824,
+    "forwards": 398004,
+    "backwards": 46824,
+    "adam": 46824,
+    "offline_updates": 0
+  },
+  "GPU_requests_issued": 0,
+  "per_gpu_smoke": {
+    "adam": 14,
+    "backwards": 14,
+    "forwards": 118
+  },
+  "allowed_gpu_list": [],
+  "resource_plan": {
+    "max_workers": 3,
+    "trajectory_hours_cap": 2,
+    "total_gpu_hours_cap": 24,
+    "wall_hours_cap": 24,
+    "private_bytes_cap": 2147483648,
+    "estimate": "NOT_MEASURED: actual per-device smoke/memory readiness pending Stage II",
+    "reduced_concurrency_preserves_24_jobs": true
+  }
+}
