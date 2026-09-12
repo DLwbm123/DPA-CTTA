@@ -1,5 +1,6 @@
 """Engineering regressions: procedural assets/scalars and owned short CPU children."""
 import copy
+import errno
 import hashlib
 import json
 import os
@@ -225,6 +226,51 @@ time.sleep(s.get('delay',.01));sys.exit(s.get('exit',0))
 '''
 
 
+def io_failure_probe(mode):
+    """Real CPU supervisor process; observe ownership before fallback cleanup."""
+    from dpa_ctta.r1 import supervise as module
+    created=[];caught=None
+    outsider=subprocess.Popen([sys.executable,'-c','import time;time.sleep(20)'],start_new_session=True)
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            out=Path(tmp);case=ProcessChecks();packet=case.packet()
+            def spawn(spec,log):
+                code='pass' if spec['phase']=='smoke' else 'import time;time.sleep(20)'
+                process=subprocess.Popen([sys.executable,'-c',code],stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+                created.append((spec,process));return process
+            def writer(path,value,replace=False):
+                if mode=='ENOSPC' and Path(path).name=='supervisor.failure.json':
+                    raise OSError(errno.ENOSPC,'programmatic failure-record write')
+                if mode=='EIO' and sum(s['phase']=='formal' for s,p in created)>=2:
+                    raise OSError(errno.EIO,'programmatic persistent evidence write')
+                return write(path,value,replace=replace)
+            with patch.object(module,'write',side_effect=writer):
+                try:module.supervise(out,packet,spawn,case.caps(trajectory_seconds=.12),.01)
+                except BaseException as exc:caught=exc
+            reaped=[]
+            for spec,process in created:
+                try:os.waitpid(process.pid,os.WNOHANG)
+                except ChildProcessError:reaped.append(process.pid)
+            summary=out/'matrix.processes.json'
+            result=dict(probe=mode,observed_error=None if caught is None else type(caught).__name__,
+                observed_errno=getattr(caught,'errno',None),created=len(created),
+                formal_children=sum(s['phase']=='formal' for s,p in created),
+                all_owned_returned=all(p.returncode is not None for s,p in created),
+                all_owned_reaped=len(reaped)==len(created),outsider_alive=outsider.poll() is None,
+                summary_status=json.loads(summary.read_text())['status'] if summary.exists() else None)
+            print(json.dumps(result),flush=True)
+    finally:
+        # Test failure must never leave either an owned or a control child alive.
+        for process in [p for s,p in created]+[outsider]:
+            if process.poll() is None:
+                try:os.killpg(process.pid,signal.SIGTERM)
+                except ProcessLookupError:pass
+            try:process.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                os.killpg(process.pid,signal.SIGKILL);process.wait(timeout=2)
+    if caught is not None:raise caught
+
+
 class ProcessChecks(unittest.TestCase):
     def packet(self,workers=2):
         jobs=matrix()['jobs'][:6]
@@ -239,6 +285,21 @@ class ProcessChecks(unittest.TestCase):
             created.append((copy.deepcopy(spec),p));return p
         return start,created
     def caps(self,**kw):return dict(dict(trajectory_seconds=4.,wall_seconds=10.,active_seconds=20.,bytes=1024**2),**kw)
+    def check_io_failure(self,mode):
+        env=dict(os.environ,CUDA_VISIBLE_DEVICES='',PROBE_MODULE=__name__,PROBE_FUNCTION='io_failure_probe',PROBE_MODE=mode)
+        code='import importlib,os;getattr(importlib.import_module(os.environ["PROBE_MODULE"]),os.environ["PROBE_FUNCTION"])(os.environ["PROBE_MODE"])'
+        result=subprocess.run([sys.executable,'-c',code],env=env,text=True,capture_output=True,timeout=30)
+        observed=json.loads(result.stdout);observed['supervisor_exit_code']=result.returncode
+        print(json.dumps(observed),flush=True)
+        self.assertNotEqual(result.returncode,0)
+        self.assertEqual(observed['observed_error'],'OSError');self.assertEqual(observed['observed_errno'],getattr(errno,mode))
+        self.assertEqual(observed['created'],4);self.assertEqual(observed['formal_children'],2)
+        self.assertTrue(observed['all_owned_returned']);self.assertTrue(observed['all_owned_reaped']);self.assertTrue(observed['outsider_alive'])
+        self.assertEqual(observed['summary_status'],'INCOMPLETE' if mode=='ENOSPC' else None)
+    def test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch(self):
+        self.check_io_failure('ENOSPC')
+    def test_persistent_EIO_reaps_all_owned_and_exits_nonzero(self):
+        self.check_io_failure('EIO')
     def test_rotation_one_two_three_slots_has_no_arm_device_lock(self):
         jobs=matrix()['jobs']
         for k in (1,2,3):
