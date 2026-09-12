@@ -1,0 +1,19 @@
+ configs/r1_execution.defaults.json      |  11 +
+ configs/r1_science_v1.json              | 140 ++++++++++
+ docs/R1_METHOD_PROVENANCE.md            |   3 +
+ docs/review/r1/DRY_RUN_MATRIX.json      | 462 ++++++++++++++++++++++++++++++++
+ docs/review/r1/EXECUTION_AND_RECORDS.md |  26 ++
+ docs/review/r1/METHOD_PROVENANCE.md     |  22 ++
+ docs/review/r1/STATE_LIFECYCLE.md       |  42 +++
+ scripts/check_r1_cpu.py                 |  16 ++
+ scripts/run_r1_matrix.py                |   4 +
+ src/dpa_ctta/r1/__init__.py             |   1 +
+ src/dpa_ctta/r1/analyze.py              | 104 +++++++
+ src/dpa_ctta/r1/host.py                 |  94 +++++++
+ src/dpa_ctta/r1/plan.py                 |  67 +++++
+ src/dpa_ctta/r1/recovery.py             |  90 +++++++
+ src/dpa_ctta/r1/region_memory.py        |  60 +++++
+ src/dpa_ctta/r1/run.py                  | 167 ++++++++++++
+ src/dpa_ctta/r1/streaming_pca.py        |  89 ++++++
+ tests/test_r1.py                        | 177 ++++++++++++
+ 18 files changed, 1575 insertions(+)

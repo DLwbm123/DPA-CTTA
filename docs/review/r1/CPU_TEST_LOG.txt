@@ -1,0 +1,34 @@
+test_actual_default_CLI_refuses_before_weight_or_GPU_access (test_r1.CloseoutChecks) ... ok
+test_complete_scalar_matrix_and_truncation (test_r1.CloseoutChecks) ... ok
+test_disabled_digest_commit_and_matrix (test_r1.ExecutionChecks) ... ok
+test_duplicate_claim_and_incomplete_closeout (test_r1.ExecutionChecks) ... ok
+test_prefix_wrong_identity_counts_and_reset (test_r1.ExecutionChecks) ... ok
+test_all_six_hosts_physical_and_state_independence (test_r1.HostChecks) ... ok
+test_full_model_old_C_equivalence (test_r1.HostChecks) ... ok
+test_labels_source_readers_private_rng_and_zero_extra_loss (test_r1.HostChecks) ... ok
+test_real_feature_interface_and_PCA_ready_backward (test_r1.HostChecks) ... ok
+test_recovery_affine_adam_rng_and_period (test_r1.HostChecks) ... ok
+test_controller_exact_threshold_floor_reset (test_r1.MathChecks) ... ok
+test_covariance_ready_snapshot_and_projector (test_r1.MathChecks) ... ok
+test_entropy_shared_region_and_empty (test_r1.MathChecks) ... ok
+test_grid_alignment_and_projection_gradient (test_r1.MathChecks) ... ok
+test_nested_masks_rng (test_r1.MathChecks) ... ok
+test_tokens_overlap_reliable_and_shuffle_quota (test_r1.MathChecks) ... ok
+test_zero_rank_rank_cap_and_eigh_failure (test_r1.MathChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 17 tests in 69.482s
+
+OK
+{
+  "tests": 17,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "seconds": 69.69067093799822,
+  "python": "3.10.6",
+  "torch": "2.2.1+cu121",
+  "cuda_initialized": false,
+  "checkpoint_mode": "registered_weights",
+  "exit_code": 0
+}

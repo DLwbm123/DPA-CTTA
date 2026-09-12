@@ -1,0 +1,1683 @@
+diff --git a/configs/r1_execution.defaults.json b/configs/r1_execution.defaults.json
+new file mode 100644
+index 0000000..d1aaff6
+--- /dev/null
++++ b/configs/r1_execution.defaults.json
+@@ -0,0 +1,11 @@
++{
++  "enabled": false,
++  "approved_code_sha": null,
++  "approved_science_sha256": null,
++  "approved_registration_digest": null,
++  "external_review_reference": null,
++  "allowed_physical_gpu_ids": [],
++  "max_workers": 0,
++  "background_allowed": false,
++  "note": "默认拒绝执行；阶段II真实用户授权另行提供，不改science配置。"
++}
+diff --git a/configs/r1_science_v1.json b/configs/r1_science_v1.json
+new file mode 100644
+index 0000000..0d5f93c
+--- /dev/null
++++ b/configs/r1_science_v1.json
+@@ -0,0 +1,140 @@
++{
++  "task": "R1_RECOVERY_TARGET_SUBSPACE",
++  "schema_status": "proposed_for_code_review",
++  "baseline_commit": "0ef9d593a196e18f38295edc5b919372e297671b",
++  "task_scope": [
++    "fundus"
++  ],
++  "arms": [
++    "C",
++    "C_PER256",
++    "C_SENS",
++    "C_PCA_GLOBAL",
++    "C_PCA_SHUFFLED",
++    "C_PCA_REGION"
++  ],
++  "seed": 20260907,
++  "groups": 1951,
++  "primary_subset": "remaining_dev",
++  "primary_subset_groups": 1695,
++  "orders": [
++    [
++      "REFUGE",
++      "ORIGA",
++      "REFUGE_Valid",
++      "Drishti_GS"
++    ],
++    [
++      "Drishti_GS",
++      "REFUGE_Valid",
++      "ORIGA",
++      "REFUGE"
++    ],
++    [
++      "ORIGA",
++      "Drishti_GS",
++      "REFUGE",
++      "REFUGE_Valid"
++    ],
++    [
++      "REFUGE_Valid",
++      "REFUGE",
++      "Drishti_GS",
++      "ORIGA"
++    ]
++  ],
++  "C": {
++    "bn_layers": 41,
++    "affine_scalars": 19136,
++    "optimizer": "Adam",
++    "lr": 0.0001,
++    "betas": [
++      0.9,
++      0.999
++    ],
++    "eps": 1e-08,
++    "weight_decay": 0,
++    "weak_views": 6,
++    "base_forwards": 8,
++    "base_adam_per_visit": 1
++  },
++  "recovery": {
++    "period": 256,
++    "levels": [
++      0,
++      0.1,
++      0.2
++    ],
++    "zeta": 0.9,
++    "horizon": 50,
++    "D": 6.0,
++    "sensitivity_floor": 1e-06,
++    "min_pixels_per_region": 16,
++    "segmentation_entropy": "independent_Bernoulli_bits",
++    "comparison_pixels": "complement_of_nested_largest_erasure",
++    "reseed_global_rng_on_reset": false,
++    "clear_optimizer_on_reset": true,
++    "reset_controller_after_recovery": true,
++    "quantile_gate": false,
++    "extra_probe_forwards_per_visit": 3
++  },
++  "memory": {
++    "feature": "seg_head_input_after_relu",
++    "dim": 32,
++    "grid": [
++      32,
++      32
++    ],
++    "rank_cap": 8,
++    "lambda_sub": 0.05,
++    "reliable_q_bounds": [
++      0.1,
++      0.9
++    ],
++    "require_all_six_hard_agree": true,
++    "max_points_per_region": 32,
++    "min_contributing_images": 16,
++    "min_vectors": 128,
++    "refresh_every_contributing_images": 16,
++    "eigenvalue_floor": 1e-10,
++    "vector_norm_eps": 1e-06,
++    "loss_denominator_eps": 1e-06,
++    "statistics": "CPU_float64_streaming_mean_M2",
++    "bank_counts": {
++      "global": 1,
++      "shuffled": 4,
++      "region": 4
++    },
++    "statistics_updated_after_prediction": true,
++    "current_item_in_own_basis": false,
++    "raw_vector_retention_between_visits": false
++  },
++  "formal_budget": {
++    "trajectories": 24,
++    "records": 46824,
++    "forwards": 398004,
++    "backwards": 46824,
++    "adam": 46824,
++    "offline_updates": 0
++  },
++  "per_gpu_smoke_budget": {
++    "adam": 14,
++    "backwards": 14,
++    "forwards": 118
++  },
++  "runtime_proposed_caps": {
++    "max_workers": 3,
++    "max_worker_cpu_threads": 2,
++    "total_gpu_active_hours": 24,
++    "wall_hours": 24,
++    "trajectory_hours": 2,
++    "private_output_bytes": 2147483648
++  },
++  "method_selection_not_execution_gate": {
++    "mean_gain_over_C_pp": 0.5,
++    "positive_orders_at_least": 3,
++    "domain_mean_degradation_warning_pp": -2.0,
++    "worst_order_degradation_warning_pp": -0.5
++  },
++  "authority": "01_IMPLEMENTATION_PROMPT.md; discrepancy must be reported before review, not silently reconciled"
++}
+diff --git a/docs/R1_METHOD_PROVENANCE.md b/docs/R1_METHOD_PROVENANCE.md
+new file mode 100644
+index 0000000..5efe835
+--- /dev/null
++++ b/docs/R1_METHOD_PROVENANCE.md
+@@ -0,0 +1,3 @@
++# R1 method provenance
++
++完整来源与移植表见 [METHOD_PROVENANCE](review/r1/METHOD_PROVENANCE.md)。
+diff --git a/docs/review/r1/DRY_RUN_MATRIX.json b/docs/review/r1/DRY_RUN_MATRIX.json
+new file mode 100644
+index 0000000..0328b85
+--- /dev/null
++++ b/docs/review/r1/DRY_RUN_MATRIX.json
+@@ -0,0 +1,462 @@
++{
++  "status": "DRY_RUN_ONLY",
++  "science_sha256": "e23fb6de3e55f704ec2036d82777b29a78643ebc7e1ae1e89328f22f56de51e2",
++  "jobs": [
++    {
++      "job_id": "o0a0",
++      "arm": "C",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o0a1",
++      "arm": "C_PER256",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": 7,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o0a2",
++      "arm": "C_SENS",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 21461,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o0a3",
++      "arm": "C_PCA_GLOBAL",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o0a4",
++      "arm": "C_PCA_SHUFFLED",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o0a5",
++      "arm": "C_PCA_REGION",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a0",
++      "arm": "C",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a1",
++      "arm": "C_PER256",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": 7,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a2",
++      "arm": "C_SENS",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 21461,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a3",
++      "arm": "C_PCA_GLOBAL",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a4",
++      "arm": "C_PCA_SHUFFLED",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a5",
++      "arm": "C_PCA_REGION",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a0",
++      "arm": "C",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a1",
++      "arm": "C_PER256",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": 7,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a2",
++      "arm": "C_SENS",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 21461,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a3",
++      "arm": "C_PCA_GLOBAL",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a4",
++      "arm": "C_PCA_SHUFFLED",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a5",
++      "arm": "C_PCA_REGION",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a0",
++      "arm": "C",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a1",
++      "arm": "C_PER256",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": 7,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a2",
++      "arm": "C_SENS",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 21461,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a3",
++      "arm": "C_PCA_GLOBAL",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a4",
++      "arm": "C_PCA_SHUFFLED",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a5",
++      "arm": "C_PCA_REGION",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "periodic_resets": null,
++      "status": "NOT_RUN",
++      "gpu": null
++    }
++  ],
++  "formal_budget": {
++    "trajectories": 24,
++    "records": 46824,
++    "forwards": 398004,
++    "backwards": 46824,
++    "adam": 46824,
++    "offline_updates": 0
++  },
++  "GPU_requests_issued": 0,
++  "per_gpu_smoke": {
++    "adam": 14,
++    "backwards": 14,
++    "forwards": 118
++  },
++  "allowed_gpu_list": [],
++  "resource_plan": {
++    "max_workers": 3,
++    "trajectory_hours_cap": 2,
++    "total_gpu_hours_cap": 24,
++    "wall_hours_cap": 24,
++    "private_bytes_cap": 2147483648,
++    "estimate": "NOT_MEASURED: actual per-device smoke/memory readiness pending Stage II",
++    "reduced_concurrency_preserves_24_jobs": true
++  }
++}
+diff --git a/docs/review/r1/EXECUTION_AND_RECORDS.md b/docs/review/r1/EXECUTION_AND_RECORDS.md
+new file mode 100644
+index 0000000..f41e6dd
+--- /dev/null
++++ b/docs/review/r1/EXECUTION_AND_RECORDS.md
+@@ -0,0 +1,26 @@
++# R1 可审阅入口与未执行项
++
++阶段 I 只允许CPU程序化测试和metadata读取。没有GPU授权文件，也不生成外部review结论。所有GPU smoke、目标预测和正式分数均为 NOT_RUN。
++
++使用已有环境设置 PYTHONPATH、DPA_CTTA_BASE_ROOT、DPA_GRATA_ROOT。命令形式：
++
++```sh
++python scripts/run_r1_matrix.py
++# 默认只输出24条任务的JSON；不读取目标或checkpoint，不查询/初始化GPU。
++python scripts/run_r1_matrix.py --run
++# 默认 execution.enabled=false；立即拒绝，先于权重和GPU访问。
++```
++
++未来阶段II：显式 --run --authorization --assets --output。真实运行在中性 python -c + 环境变量入口下，主/子进程不携带项目/方法路径参数。私有assets提供唯一checkpoint与过滤后的target metadata；原旧登记proxy/history/identities/source query不进入新schema。路径缺失只影响未来执行，不能阻止当前实现。
++
++授权检查是防误运行，并非密码学签名或审阅真实性证明；用户转发的真实review和新执行指令仍是必要条件。科学配置保留任务包原始字节，enabled/GPU/并发完全分离。例行测试中的TEST_FIXTURE_ONLY和假SHA只是函数测试，不是GPU授权。
++
++每GPU未来smoke：旧C两步、新六臂各两步=118前向/14 backward/14 Adam。程序化controller输入fixture触发恢复，程序化PCA统计预置ready；fixture随测试host销毁，正式状态从空开始。C四类状态对齐用旧确定性作用域，正式backend使用新进程。现在没有运行它。
++
++固定正式矩阵=24×1951条。前向398004；backward/Adam各46824。每worker两CPU线程；GPU列表必须重新显式给定，最多三卡；临时保守内存要求4GiB free属于可执行资源预留，不是科学筛选。实际延迟/显存未测量，不承诺符合24小时预算；阶段II按既定smoke和真实资源核验，不缩减矩阵或调科学参数。
++
++每条成功记录保存：opaque身份、域/序/子集（仅runner）、global_visit、segment_age、reset标量、physical counts、原C loss、实际affine更新L2、PCA输入配额/版本/rank/计数/字节/subloss、OD/OC计数Dice、ASSD/empty/full、host/pipeline时长和allocated peak。不持久化真实图像、mask、预测图、checkpoint副本或PCA状态。
++
++CPU closeout：所有24条完成且覆盖/身份/时序/调用数/GT像素计数一致才生成报告。Dice由计数还原，ASSD仅用保存标量；逐域/通道/四子集的paired分布与尾部保留。A/C0旧标量只在指定历史文件存在且身份匹配时作为次要参照，缺失明确UNAVAILABLE，不补跑。
++
++预登记0.5pp/3序/域损失2pp/最差序0.5pp只生成解释标记；不能中断、追加、选GT最优臂或启动组合。候选建议仍需审阅全部负向尾部，不等于显著性、临床获益或独立泛化。
+diff --git a/docs/review/r1/METHOD_PROVENANCE.md b/docs/review/r1/METHOD_PROVENANCE.md
+new file mode 100644
+index 0000000..cd6cd77
+--- /dev/null
++++ b/docs/review/r1/METHOD_PROVENANCE.md
+@@ -0,0 +1,22 @@
++# R1 方法来源与移植边界
++
++依据是用户附带的具体 PDF 和任务包冻结说明。没有用网页更新版替代附件，也没有将作者公式/理论直接归于本项目。PDF 不进入公开仓库。
++
++| 论文原机制 | 本项目移植 | 主动省略 | 未确定项与限制 |
++|---|---|---|---|
++| SEGA 附件 p.3–5，式1–3与 Algorithm 1：多级空间擦除后的分类熵敏感性、EMA 相对历史最佳的趋势恢复 | 独立 OD/OC Bernoulli bits；嵌套正方形；比较区域固定为最大擦除区补集；四伪分区有效项等权；三次独立 no_grad 探测；zeta=.9、T=50、D=6；恢复后重建趋势基线 | 原熵目标、erasing-consistency loss、quantile skip、原分类优化器及原性能数字 | 不能保证检测所有坍塌；论文未充分规定 Adam/RNG/恢复后趋势的全部生命周期，本任务明确补充；不是完整 SEGA 复现 |
++| SEGA p.6、8 的恢复/筛选消融：趋势控制与筛选有不同作用，恢复信号属于启发式 | C_PER256 控制恢复本身；敏感性与固定周期都保留每图恰好一次 C 更新 | 不从消融分数选择参数，不降低阈值补触发 | 两臂恢复频率不匹配，差异不是精确检测能力的单因果证据；周期256为本项目预设 |
++| SaTeen p.4–5 §3.2，式9–15：可靠目标特征形成在线子空间；增量 SVD 与重建残差约束；原可靠性基于 L1<tau | 既有 ResUNet 32维 head_input；32×32中心网格；独立 Bernoulli 区域 token；q置信度和六视图一致性；CPU float64充分统计与精确 eigh；rank≤8；归一化残差，lambda=.05；仅过去快照作用于当前样本 | 图像级 patch-shuffle 负交叉熵、原样本加权和L1门控、原rank64及SGD设置、冻结teacher和源原型 | 当前表示坐标随C更新，不能声称源坐标稳定或继承原理论保证；.05恰与论文某系数同值，不意味着不同目标下同作用 |
++| SaTeen p.6 的分类实验使用多种规范化骨干及分类目标 | 只处理已登记 Fundus/ResUNet；41 BN、19,136 affine；原 C Adam与强增强完全保留 | 不运行 Polyp，不混入 B5 三头保护 | 医学分割移植及 all/global/shuffled/region 控制均是任务提出的设计，未证明新颖性或有效性 |
++| 任务包关于 GOLD/DAS/DO-ALL 的资源说明 | 在 only-checkpoint 边界下排除这些路线，不创建适配器或资产入口 | 源类别原型、生成/标注知识、蒸馏源数据、额外预训练组件 | 这四篇可选背景 PDF 未提供给本阶段且未独立核读；排除依据标明来自任务包，不冒称已验证其全部设定 |
++
++附件版本已按任务包明确要求核对 SHA256：
++
++- SEGA，10页：`8f8a8c573eb1e6738378a7ea5afd72de158b57b97fc33b59a47cc9244010f0fb`。已读 p.3–6、8。
++- SaTeen，26页：`2e43c7544f9e6cc6f5d6348edf95caa6f2bc6e657fec1f852046685bf5a9ea57`。已读 p.4–6。
++
++数学代码复用了任务包 `reference_math.py` 的 seed/entropy/controller/streaming-statistics/projection参考，并补充实际 host、时序、故障、配额与资源检查。包内原有五项自测不计入当前集成测试。没有复制论文PDF或作者整套训练实现。
++
++本项目精确选择：SHA前8字节按 big-endian解释；采样盐为 sample_0..3，memory_shuffle 与 loss_shuffle 分离；先按区域最多32个可靠token采样，再排除零向量，SHUFFLED按相同非零配额分段；分解、分区、q和统计均detach，学生fs保留梯度。上述是冻结数学说明内的显式实现细节，不是效果搜索。
++
++旧 B4/B5 负结果保持原义。本轮无真实分数、无效果准入 gate，也没有新的方法有效性声明。
+diff --git a/docs/review/r1/STATE_LIFECYCLE.md b/docs/review/r1/STATE_LIFECYCLE.md
+new file mode 100644
+index 0000000..eb503e3
+--- /dev/null
++++ b/docs/review/r1/STATE_LIFECYCLE.md
+@@ -0,0 +1,42 @@
++# R1 状态生命周期
++
++Host 只接当前 RGB tensor；身份、域名、数据路径、mask 均由外部 runner 持有。各臂/序独立模型、Adam、随机流、控制器与 bank；唯一共享是只读 checkpoint 和登记元数据。
++
++```mermaid
++sequenceDiagram
++    participant R as Runner
++    participant H as Host
++    participant M as Past PCA snapshot
++    participant E as Evaluator
++    R->>H: current RGB only
++    H->>H: advance global visit; isolated probes if SENS
++    H->>H: optional restore before teacher
++    M-->>H: detached center/U from earlier visit
++    H->>H: six separate weak views; q + pre-update f0
++    H->>H: strong input; BCE + optional subloss
++    H->>H: one backward + Adam
++    H->>H: original final prediction, detach
++    H->>M: merge cached sampled f0 after prediction
++    H-->>R: detached logits + scalars; clear temporaries
++    R->>E: only now read current target mask
++```
++
++| 状态 | C | PER256 / SENS | 三个 PCA 臂 |
++|---|---|---|---|
++| 全局visit/累计Adam | 每图+1 | 恢复不重置 | 每图+1 |
++| BN affine/Adam | 连续更新 | 恢复初始affine，原对象不替换；清空moments/step/grad，固定lr/betas；当前图重新做完整C | 连续更新 |
++| BN统计 | 当前输入，track=False，mean/var=None | 恢复后仍是C当前统计 | 同C |
++| 周期age | 等于当前Adam age | optimizer_steps_since_reset与global_visit分开；257、513…当前teacher之前恢复 | 连续 |
++| 强增强RNG | 私有snapshot连续 | 不恢复seed；探测私有CPU generator不消耗它 | 采样/shuffle私有seed不消耗它 |
++| SENS趋势 | 无 | 有效s递推；触发记录保留触发前age/ema/best，控制器内部清空，下一图从age1重建；零触发合法 | 无 |
++| PCA | 无 | 无 | n/mean/M2/m固定维度；每16个贡献图刷新；center/U/spectrum/version同时快照 |
++
++每 bank 只保留 d=32 的 CPU float64均值/M2和rank≤8快照/谱及标量计数；四 bank 数值状态低于1MiB。无可靠或全零输入不贡献图像数。SHUFFLED在排除零向量后按自身REGION的相同输入数量重排；损失分配对全部伪分区token独立重排，使用另一盐值。
++
++当前时刻先复制旧快照，再建立强损失，最终预测后合并；逐日更新mean不会修改mu_basis。快照version必须小于global_visit；eigh异常直接抛出并停止该轨迹，不静默跳过。基向量符号任意，测试比较projector。
++
++临时保留只限当前步：六视图预测（继承原C）、1024×32原图采样向量、强采样特征的计算图、≤128个选中token、快照副本。finally清空pending。跨步不保留RGB/mask/dense feature/logits/样本向量列表，也没有replay。
++
++恢复计数reset_count是R1恢复；物理counts中的perturb/restore是旧GraTa扰动操作，均为0。恢复自身不算Adam/网络调用。SENS三个探测不与C视图复用，所以每图11前向；其他臂8前向。
++
++执行入口默认dry-run。只有另行提供真实用户授权文件、完整code SHA、science摘要、registration摘要和显式GPU列表，才允许进入未来Stage II。最多3独立worker，每卡1个本作业worker；不等待审批、不重试、不自动修复续跑。每卡smoke后的正式部分使用新进程；失败前缀保留，矩阵不标完成。资源上限不是效果gate。
+diff --git a/scripts/check_r1_cpu.py b/scripts/check_r1_cpu.py
+new file mode 100644
+index 0000000..397f691
+--- /dev/null
++++ b/scripts/check_r1_cpu.py
+@@ -0,0 +1,16 @@
++"""Actual Stage-I CPU suite; no GPU initialization or dataset access."""
++import os,sys,time,unittest,json,subprocess
++from pathlib import Path
++os.environ['CUDA_VISIBLE_DEVICES']=''
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses()
++import torch
++torch.set_num_threads(2)
++from unittest.mock import patch
++start=time.monotonic()
++with patch('torch.cuda._lazy_init',side_effect=AssertionError('Stage I forbids GPU initialization')):
++    result=unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromName('test_r1'))
++status=dict(tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skips=len(result.skipped),seconds=time.monotonic()-start,python=sys.version.split()[0],torch=torch.__version__,cuda_initialized=torch.cuda.is_initialized(),checkpoint_mode='registered_weights' if os.environ.get('CHECKPOINT') else 'programmatic_random_weights',exit_code=int(not result.wasSuccessful()))
++print(json.dumps(status,indent=2))
++if os.environ.get('CHECK_OUTPUT'):Path(os.environ['CHECK_OUTPUT']).write_text(json.dumps(status,indent=2)+'\n')
++sys.exit(status['exit_code'])
+diff --git a/scripts/run_r1_matrix.py b/scripts/run_r1_matrix.py
+new file mode 100644
+index 0000000..ead5278
+--- /dev/null
++++ b/scripts/run_r1_matrix.py
+@@ -0,0 +1,4 @@
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses()
++from dpa_ctta.r1.run import main
++main()
+diff --git a/src/dpa_ctta/r1/__init__.py b/src/dpa_ctta/r1/__init__.py
+new file mode 100644
+index 0000000..649551b
+--- /dev/null
++++ b/src/dpa_ctta/r1/__init__.py
+@@ -0,0 +1 @@
++"""Checkpoint-only recovery and target subspaces; execution opt-in only."""
+diff --git a/src/dpa_ctta/r1/analyze.py b/src/dpa_ctta/r1/analyze.py
+new file mode 100644
+index 0000000..9f11922
+--- /dev/null
++++ b/src/dpa_ctta/r1/analyze.py
+@@ -0,0 +1,104 @@
++"""Independent CPU scalar closeout; no real image or source reader import."""
++import json,math
++from pathlib import Path
++import numpy as np
++from .plan import science,stream,matrix
++from ..p2_analysis import validate_metric
++from ..m1_analysis import paired
++from ..host_diagnostic_analysis import channels,distribution
++
++PAIRS=(('C_SENS','C'),('C_PER256','C'),('C_SENS','C_PER256'),('C_PCA_GLOBAL','C'),('C_PCA_REGION','C'),('C_PCA_REGION','C_PCA_GLOBAL'),('C_PCA_REGION','C_PCA_SHUFFLED'))
++SUBSETS=('remaining_dev','legacy_dev','p1_extension_dev','all_dev')
++
++
++def validate(rows,ordered,arm,order):
++    if len(rows)!=len(ordered) or len({r['group_id'] for r in rows})!=len(rows):raise ValueError('coverage/duplicate')
++    resets=0;age=0
++    for i,(r,e) in enumerate(zip(rows,ordered),1):
++        if any(r[k]!=e[k] for k in ('group_id','sample_id','domain','subset')) or r['global_visit']!=i or r['order']!=order or r['arm']!=arm:raise ValueError('ordered identity')
++        if r['reset_before_current']:resets+=1;age=0
++        age+=1
++        if r['reset_count']!=resets or r['total_adam_calls']!=i or r['optimizer_steps_since_reset']!=age or r['segment_age']!=age:raise ValueError('reset/Adam lifecycle')
++        if arm=='C_PER256' and r['reset_before_current']!=(i>1 and (i-1)%256==0):raise ValueError('period boundary')
++        if arm not in ('C_PER256','C_SENS') and resets:raise ValueError('unexpected recovery')
++        if r['counts']!=dict(forwards=11 if arm=='C_SENS' else 8,backwards=1,base_adam=1,perturb=0,restore=0):raise ValueError('physical calls')
++        if r['prediction_fixed_before_label'] is not True:raise ValueError('evaluator isolation')
++        if [m['channel'] for m in r['metrics']]!=['OD','OC']:raise ValueError('channels')
++        for m in r['metrics']:validate_metric(m)
++        p=r['pca']
++        if arm.startswith('C_PCA_'):
++            if p is None or any(v is not None and v>=i for v in p['basis_versions_used']):raise ValueError('PCA time')
++            if sum(b['state_bytes'] for b in p['banks'])>=1024**2:raise ValueError('PCA memory')
++        elif p is not None:raise ValueError('unexpected PCA')
++        json.dumps(r,allow_nan=False)
++
++
++def summarize(arms):
++    result={}
++    for d in dict.fromkeys(r['domain'] for r in arms['C']):
++        selected={a:[r for r in rs if r['domain']==d] for a,rs in arms.items()}
++        result[d]=dict(arms={a:{c:dict(dice_percent=distribution([100*m['dice'] for m in channels(rs,c)]),**({} if c=='macro' else dict(assd_defined=sum(m['assd'] is not None for m in channels(rs,c)),assd_undefined=sum(m['assd'] is None for m in channels(rs,c)),**{k:sum(m[k] for m in channels(rs,c)) for k in ('pred_empty','pred_full','gt_empty','gt_full')}))) for c in ('OD','OC','macro')} for a,rs in selected.items()},paired={a+'-'+b:{c:paired(channels(selected[a],c),channels(selected[b],c),c=='macro') for c in ('OD','OC','macro')} for a,b in PAIRS})
++    means={a:float(np.mean([v['arms'][a]['macro']['dice_percent']['mean'] for v in result.values()])) for a in arms}
++    return dict(domains=result,task_domain_macro_dice_percent=means,comparisons_pp={a+'-'+b:means[a]-means[b] for a,b in PAIRS})
++
++
++def recompute(out,reg):
++    import torch
++    if torch.cuda.is_initialized():raise ValueError('CPU closeout must not initialize GPU')
++    out=Path(out);all_rows={};physical=dict(records=0,forwards=0,backwards=0,adam=0);mechanism={};target={}
++    for job in matrix()['jobs']:
++        p=out/job['job_id'];done=json.loads((p/'completion.json').read_text())
++        if done['status']!='TRAJECTORY_COMPLETE':raise ValueError('incomplete trajectory')
++        rows=[json.loads(line) for line in (p/'records.jsonl').read_text().splitlines()];validate(rows,stream(reg,job['order']),job['arm'],job['order']);all_rows[(job['order'],job['arm'])]=rows
++        physical['records']+=len(rows)
++        for k,v in [('forwards','forwards'),('backwards','backwards'),('adam','base_adam')]:physical[k]+=sum(r['counts'][v] for r in rows)
++        mechanism[job['job_id']]=dict(resets=rows[-1]['reset_count'],reset_visits=[r['global_visit'] for r in rows if r['reset_before_current']],host_seconds=sum(r['host_seconds'] for r in rows),peak_allocated_bytes=max(r['peak_allocated_bytes'] for r in rows),pca_ready_visits=sum(any(v is not None for v in r['pca']['basis_versions_used']) for r in rows if r['pca']),pca_last=None if not rows[-1]['pca'] else rows[-1]['pca']['banks'],subloss_mean=None if not rows[-1]['pca'] else float(np.mean([r['pca']['subloss'] for r in rows])))
++    if physical!={k:science()['formal_budget'][k] for k in physical}:raise ValueError('matrix counts')
++    for o in range(4):
++        arms={a:all_rows[o,a] for a in science()['arms']}
++        reference=arms['C']
++        for arm,rows in arms.items():
++            if any(any(m[k]!=n[k] for k in ('gt_pixels','total_pixels','gt_empty','gt_full')) for r,c in zip(rows,reference) for m,n in zip(r['metrics'],c['metrics'])):raise ValueError('cross-arm GT binding')
++        target[str(o)]={s:summarize({a:[r for r in rs if s=='all_dev' or r['subset']==s] for a,rs in arms.items()}) for s in SUBSETS}
++    pairs=[a+'-'+b for a,b in PAIRS];desc={p:float(np.mean([target[str(o)]['remaining_dev']['comparisons_pp'][p] for o in range(4)])) for p in pairs}
++    secondary=secondary_controls(all_rows,reg)
++    decision=assess(target,mechanism)
++    result=dict(status='R1_EXPERIMENT_COMPLETE',physical=physical,target=target,descriptive_four_order_comparisons_pp=desc,mechanism=mechanism,secondary_A_C0=secondary,scientific_assessment=decision,scientific_status=decision['status'],limitations=['Exposed development data; orders share contents.','ASSD geometry not recomputed; recorded scalar cohorts only.','No automatic next run or combination.'])
++    (out/'public_aggregate.json').write_text(json.dumps(result,indent=2,allow_nan=False)+'\n')
++    (out/'R1_EXPERIMENT_REPORT.md').write_text('# R1 results\n\nR1_EXPERIMENT_COMPLETE\n\n'+json.dumps(dict(physical=physical,descriptive=desc,scientific_status=result['scientific_status']),indent=2)+'\n\nAll domain/channel/subset pairs and mechanism coverage are in public_aggregate.json. Historical A/C0 are identity-validated when present; unavailable controls are explicit. Matched-control and risk assessments are in the aggregate. No automatic next experiment.\n')
++    return result
++
++
++def secondary_controls(all_rows,reg):
++    result={}
++    for o in range(4):
++        result[str(o)]={}
++        for name,path in reg.get('historical_scalars',{}).get(str(o),{}).items():
++            p=Path(path)
++            if not p.is_file():result[str(o)][name]=dict(status='UNAVAILABLE');continue
++            old=[json.loads(line) for line in p.read_text().splitlines()];lookup={r['group_id']:r for r in old};reference=all_rows[o,'C']
++            if len(lookup)!=len(old) or set(lookup)!={r['group_id'] for r in reference}:raise ValueError('historical identity coverage')
++            mapped=[lookup[r['group_id']] for r in reference]
++            for r,v in zip(reference,mapped):
++                if any(r[k]!=v[k] for k in ('sample_id','domain','subset')):raise ValueError('historical identity')
++                for a,b in zip(r['metrics'],v['metrics']):
++                    validate_metric(b)
++                    if any(a[k]!=b[k] for k in ('gt_pixels','total_pixels','gt_empty','gt_full')):raise ValueError('historical GT')
++            result[str(o)][name]=dict(status='AVAILABLE',comparisons={arm:{subset:{d:{c:paired(channels([r for r in rows if r['domain']==d and (subset=='all_dev' or r['subset']==subset)],c),channels([r for r in mapped if r['domain']==d and (subset=='all_dev' or r['subset']==subset)],c),c=='macro') for c in ('OD','OC','macro')} for d in science()['orders'][o]} for subset in SUBSETS} for (order,arm),rows in all_rows.items() if order==o})
++    return result
++
++
++def assess(target,mechanism):
++    cfg=science();s={a:[target[str(o)]['remaining_dev']['task_domain_macro_dice_percent'][a] for o in range(4)] for a in cfg['arms']};items={}
++    for arm in cfg['arms'][1:]:
++        delta=[a-b for a,b in zip(s[arm],s['C'])];domain={d:float(np.mean([target[str(o)]['remaining_dev']['domains'][d]['arms'][arm]['macro']['dice_percent']['mean']-target[str(o)]['remaining_dev']['domains'][d]['arms']['C']['macro']['dice_percent']['mean'] for o in range(4)])) for d in cfg['orders'][0]}
++        job_ids=[j['job_id'] for j in matrix()['jobs'] if j['arm']==arm];active=any(mechanism[k]['resets']>0 for k in job_ids) if arm=='C_SENS' else any(mechanism[k]['pca_ready_visits']>0 for k in job_ids) if 'PCA' in arm else True
++        practical=float(np.mean(delta))>=.5 and sum(v>0 for v in delta)>=3;risk=any(v < -2 for v in domain.values()) or min(s[arm])-min(s['C']) < -.5
++        items[arm]=dict(mean_gain_pp=float(np.mean(delta)),positive_orders=sum(v>0 for v in delta),domain_mean_deltas=domain,worst_order_score_delta_pp=min(s[arm])-min(s['C']),active=active,practical_signal=practical,risk_warning=risk)
++    mean=lambda a:float(np.mean(s[a]));routes=[]
++    if items['C_SENS']['active'] and items['C_SENS']['practical_signal'] and mean('C_SENS')>mean('C_PER256'):routes.append('C_SENS')
++    elif items['C_PER256']['practical_signal']:routes.append('C_PER256')
++    if items['C_PCA_REGION']['active'] and items['C_PCA_REGION']['practical_signal'] and mean('C_PCA_REGION')>max(mean('C_PCA_GLOBAL'),mean('C_PCA_SHUFFLED')):routes.append('C_PCA_REGION')
++    elif items['C_PCA_GLOBAL']['active'] and items['C_PCA_GLOBAL']['practical_signal']:routes.append('C_PCA_GLOBAL')
++    status='SUPPORTED' if routes and not any(items[a]['risk_warning'] for a in routes) else 'MIXED' if routes or any(v['mean_gain_pp']>0 for v in items.values()) else 'NO_GAIN'
++    return dict(status=status,arms=items,candidate_routes=routes,recommendation='Retain C; no sufficient matched evidence' if not routes else 'Independent candidates only; tail review and independent data remain necessary',combination_run_authorized=False,note='Frozen descriptive resource-allocation thresholds, not significance, clinical criteria, or execution gates. INACTIVE mechanisms are identified by active=false; no retuning.')
+diff --git a/src/dpa_ctta/r1/host.py b/src/dpa_ctta/r1/host.py
+new file mode 100644
+index 0000000..2101a82
+--- /dev/null
++++ b/src/dpa_ctta/r1/host.py
+@@ -0,0 +1,94 @@
++"""Image-only host; inherited C device/augmentation order and one Adam step."""
++import torch
++from ..b1_host import Host as C,official,finite
++from ..hosts.vptta import model_input_from_pixels
++from ..host_diagnostic import rng,restore,close
++from .recovery import TrendController,periodic_due,nested_erasure,dense_sensitivity
++from .region_memory import Memory,grid
++
++SUBSPACE_WEIGHT=.05
++ARMS=('C','C_PER256','C_SENS','C_PCA_GLOBAL','C_PCA_SHUFFLED','C_PCA_REGION')
++
++
++def segmentation(output):
++    z=output[0] if isinstance(output,(tuple,list)) else output
++    if not isinstance(z,torch.Tensor) or z.ndim!=4:raise ValueError('keep batch/channel')
++    return z
++
++
++class Host(C):
++    def __init__(self,arm,state=None,device='cpu',model=None):
++        if arm not in ARMS:raise ValueError('frozen arm')
++        super().__init__('C',state,device,model)
++        if model is None and (len(self.names),sum(p.numel() for p in self.params))!=(82,19136):raise ValueError('Fundus BN inventory')
++        self.variant=arm;self.visit=0;self.reset_count=0
++        self.initial=[p.detach().clone() for p in self.params] if arm in ('C_SENS','C_PER256') else []
++        self.controller=TrendController() if arm=='C_SENS' else None
++        self.memory=Memory(arm.removeprefix('C_PCA_')) if arm.startswith('C_PCA_') else None
++        self.pending={};self.phase=None;self.extra_handles=[]
++        if self.memory:
++            if not hasattr(self.model,'seg_head'):raise ValueError('exact segmentation head input required')
++            self.extra_handles=[self.model.seg_head.register_forward_pre_hook(self._features),self.model.register_forward_hook(self._views)]
++            original=self.opt.cal_consis_loss
++            self.opt.cal_consis_loss=lambda data:original(data,criterion=self._criterion)
++    def _features(self,module,args):
++        i=self.pending.get('forward',0)
++        if self.phase=='core' and i in (0,6):
++            f=grid(args[0])
++            if f.shape!=(1024,32):raise ValueError('actual 32D head_input')
++            self.pending['f0' if i==0 else 'fs']=f.detach().cpu() if i==0 else f
++    def _views(self,module,args,output):
++        if self.phase!='core':return
++        i=self.pending.get('forward',0)
++        if i<6:
++            z=segmentation(output)
++            if i:z=official().Rotate_and_Flip().inverse(z,i-1)
++            self.pending.setdefault('views',[]).append(grid(z.detach().cpu()).sigmoid())
++        self.pending['forward']=i+1
++    def _criterion(self,z,q):
++        base=torch.nn.functional.binary_cross_entropy_with_logits(z,q)
++        vectors,ids,audit=self.memory.prepare(self.pending['f0'],grid(q),torch.stack(self.pending['views']),self.visit)
++        sub=self.memory.loss(self.pending['fs'],ids,self.pending['snapshots']);finite(sub)
++        self.pending.update(vectors=vectors,memory_input=audit,subloss=float(sub.detach()),base_loss=float(base.detach()))
++        return base+SUBSPACE_WEIGHT*sub
++    @torch.no_grad()
++    def recover(self):
++        if not self.initial:raise ValueError('not a recovery arm')
++        before=rng()
++        for p,v in zip(self.params,self.initial):p.copy_(v);p.grad=None
++        self.base.state.clear();self.base.zero_grad(set_to_none=True)
++        self.base.param_groups[0].update(lr=1e-4,betas=(.9,.999),eps=1e-8,weight_decay=0)
++        self.steps=0;self.reset_count+=1;close(before,rng(),exact=True)
++    def step(self,pixels):
++        x=model_input_from_pixels(pixels,'fundus')
++        if len(x)!=1 or x.requires_grad:raise ValueError('one current RGB image only')
++        self.visit+=1;before=self.counts.copy();control=None;reset=False;restore(self.rng)
++        try:
++            if self.variant=='C_PER256':reset=periodic_due(self.visit)
++            elif self.controller:
++                old_rng=rng();versions={n:(v,v._version) for n,v in self.model.state_dict(keep_vars=True).items()}
++                views,valid,area=nested_erasure(x.to(self.device),self.visit)
++                with torch.no_grad():probs=torch.cat([segmentation(self.model(v)).sigmoid() for v in views])
++                s,groups=dense_sensitivity(probs,valid)
++                if any(v._version!=n for v,n in versions.values()):raise ValueError('probe state changed')
++                close(old_rng,rng(),exact=True)
++                control=dict(sensitivity=None if s is None else float(s),regions=groups,area=area,trend=None)
++                if s is not None:control['trend']=self.controller.observe(float(s));reset=control['trend']['trigger']
++                del views,probs,valid,versions
++            if reset:self.recover()
++            self.pending={'snapshots':self.memory.snapshots(self.visit)} if self.memory else {}
++            old_versions=[None if s is None else s[2] for s in self.pending.get('snapshots',[])]
++            self.phase='core';prior=[p.detach().clone() for p in self.params]
++            z,a=super().normalized_step(x);self.phase=None
++            a.update(global_visit=self.visit,segment_age=self.steps,optimizer_steps_since_reset=self.steps,total_adam_calls=self.counts['base_adam'],reset_before_current=reset,reset_count=self.reset_count,controller=control,optimizer_update_l2=float(sum((p.detach()-v).double().square().sum() for p,v in zip(self.params,prior)).sqrt()),pca=None)
++            if self.memory:
++                self.memory.merge(self.pending['vectors'],self.visit)
++                a['pca']=dict(input=self.pending['memory_input'],basis_versions_used=old_versions,subloss=self.pending['subloss'],base_loss=self.pending['base_loss'],banks=self.memory.audit())
++            a['counts']={k:v-before[k] for k,v in self.counts.items()}
++            if a['counts']!=dict(forwards=11 if self.controller else 8,backwards=1,base_adam=1,perturb=0,restore=0):raise ValueError('physical count mismatch')
++            if self.counts['base_adam']!=self.visit:raise ValueError('one Adam per global visit')
++            return z.detach(),a
++        finally:self.phase=None;self.pending.clear()
++    def finish(self,state):
++        super().finish(state)
++        for handle in self.extra_handles:handle.remove()
+diff --git a/src/dpa_ctta/r1/plan.py b/src/dpa_ctta/r1/plan.py
+new file mode 100644
+index 0000000..a3a9abd
+--- /dev/null
++++ b/src/dpa_ctta/r1/plan.py
+@@ -0,0 +1,67 @@
++"""Metadata-only registration, immutable science and explicit execution opt-in."""
++import hashlib,json,subprocess
++from collections import Counter
++from pathlib import Path
++
++ROOT=Path(__file__).resolve().parents[3]
++SCIENCE=ROOT/'configs/r1_science_v1.json'
++DEFAULTS=ROOT/'configs/r1_execution.defaults.json'
++BASELINE='0ef9d593a196e18f38295edc5b919372e297671b'
++REF='dbff0d985c6c95345d9fb78f5b1daef57b392564'
++GRATA='33ae20d664f305af34739ec54a5bec7da53ffa0b'
++COUNTS=dict(REFUGE=400,ORIGA=650,REFUGE_Valid=800,Drishti_GS=101)
++
++
++def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
++
++FROZEN_SCIENCE_SHA256='e23fb6de3e55f704ec2036d82777b29a78643ebc7e1ae1e89328f22f56de51e2'
++
++def science():
++    if digest(SCIENCE)!=FROZEN_SCIENCE_SHA256:raise ValueError('science bytes differ from frozen implementation')
++    return json.loads(SCIENCE.read_text())
++
++def registration_digest(reg):return hashlib.sha256(json.dumps(reg,sort_keys=True,separators=(',',':')).encode()).hexdigest()
++
++
++def from_b3(path):
++    # Never traverse identities/proxy/history or call historical file validators.
++    old=json.loads(Path(path).read_text());f=old['tasks']['fundus']
++    keys=('sample_id','group_id','domain','subset','image_path','mask_path','image_size','manifest_index','patient_linkage','video_linkage')
++    reg=dict(checkpoint={k:f['checkpoint'][k] for k in ('path','sha256','bytes','mtime_ns')},target=[{k:r.get(k,'UNKNOWN') for k in keys} for r in f['target']],metadata_origin='B3_registered_Fundus',checkpoint_only=True)
++    reg['historical_scalars']={str(o):dict(A=str(Path(old['p2_directory'])/f'fundus_{o}_A.jsonl') if o<2 else str(Path(path).parent/f'fundus_{o}_A.jsonl'),C0=str(Path(path).parent.parent/'b4_frozen_c_transfer_20260911/fundus_canonical_C0.jsonl')) for o in range(4)}
++    for o in range(4):stream(reg,o)
++    return reg
++
++
++def stream(reg,order):
++    if order not in range(4) or not reg['checkpoint_only']:raise ValueError('frozen registration')
++    rs=reg['target'];cfg=science()
++    if len(rs)!=1951 or len({r['group_id'] for r in rs})!=1951 or len({r['sample_id'] for r in rs})!=1951 or Counter(r['domain'] for r in rs)!=COUNTS:raise ValueError('target metadata coverage')
++    if Counter(r['subset'] for r in rs)!=Counter(remaining_dev=1695,legacy_dev=128,p1_extension_dev=128):raise ValueError('subset counts')
++    if any(r['image_size'] is None or len(r['image_size'])!=2 for r in rs):raise ValueError('grid metadata')
++    for d in COUNTS:
++        inds=[r['manifest_index'] for r in rs if r['domain']==d]
++        if inds!=sorted(inds) or len(set(inds))!=len(inds):raise ValueError('within-domain manifest order')
++    return [r for d in cfg['orders'][order] for r in rs if r['domain']==d]
++
++
++def matrix():
++    cfg=science();jobs=[]
++    for o,domains in enumerate(cfg['orders']):
++        for i,arm in enumerate(cfg['arms']):
++            jobs.append(dict(job_id=f'o{o}a{i}',arm=arm,order=o,domains=domains,records=1951,forwards=1951*(11 if arm=='C_SENS' else 8),backwards=1951,adam=1951,periodic_resets=7 if arm=='C_PER256' else None,status='NOT_RUN',gpu=None))
++    return dict(status='DRY_RUN_ONLY',science_sha256=digest(SCIENCE),jobs=jobs,formal_budget=cfg['formal_budget'],GPU_requests_issued=0,per_gpu_smoke=cfg['per_gpu_smoke_budget'],allowed_gpu_list=[],resource_plan=dict(max_workers=3,trajectory_hours_cap=2,total_gpu_hours_cap=24,wall_hours_cap=24,private_bytes_cap=2*1024**3,estimate='NOT_MEASURED: actual per-device smoke/memory readiness pending Stage II',reduced_concurrency_preserves_24_jobs=True))
++
++
++def authorize(auth,reg,current_sha=None,science_sha=None):
++    if auth.get('enabled') is not True:raise PermissionError('execution disabled; external review and new user authorization required')
++    sha=current_sha or subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
++    if len(sha)!=40 or auth.get('approved_code_sha')!=sha:raise PermissionError('approved full code SHA mismatch')
++    if auth.get('approved_science_sha256')!=(science_sha or digest(SCIENCE)):raise PermissionError('approved science digest mismatch')
++    if auth.get('approved_registration_digest')!=registration_digest(reg):raise PermissionError('approved registration mismatch')
++    if not isinstance(auth.get('external_review_reference'),str) or not auth['external_review_reference'].strip():raise PermissionError('real external review reference required')
++    ids=auth.get('allowed_physical_gpu_ids',[]);workers=auth.get('max_workers')
++    if not ids or len(ids)>3 or len(set(ids))!=len(ids) or any(type(i) is not int or i<0 for i in ids):raise PermissionError('explicit unique GPU list, max three')
++    if type(workers) is not int or not 1<=workers<=len(ids):raise PermissionError('worker count')
++    if not isinstance(auth.get('background_allowed'),bool):raise PermissionError('background policy missing')
++    return ids[:workers]
+diff --git a/src/dpa_ctta/r1/recovery.py b/src/dpa_ctta/r1/recovery.py
+new file mode 100644
+index 0000000..8c633d1
+--- /dev/null
++++ b/src/dpa_ctta/r1/recovery.py
+@@ -0,0 +1,90 @@
++"""Task-package math, integrated with isolated nested erasure and lifecycle."""
++from dataclasses import dataclass
++from typing import Optional
++import hashlib,math
++import torch
++
++def local_seed(namespace: str, visit: int, base: int = 20260907) -> int:
++    if visit < 1:
++        raise ValueError("visit must be positive")
++    payload = f"R1:{namespace}:{base}:{visit}".encode("utf-8")
++    return int.from_bytes(hashlib.sha256(payload).digest()[:8], "big") % (2**63 - 1)
++
++def bernoulli_entropy_bits(p: torch.Tensor) -> torch.Tensor:
++    if not p.is_floating_point() or not torch.isfinite(p).all():
++        raise ValueError("finite floating probabilities required")
++    if ((p < 0) | (p > 1)).any():
++        raise ValueError("probabilities outside [0,1]")
++    q = p.clamp(1e-6, 1 - 1e-6)
++    return -(q * q.log() + (1 - q) * torch.log1p(-q)) / math.log(2)
++
++@torch.no_grad()
++def dense_sensitivity(p: torch.Tensor, valid: torch.Tensor, min_pixels: int = 16):
++    """p: [3,C,H,W]; valid: [H,W], same unerased pixels for all views.
++
++    Returns a scalar tensor and a list of valid (channel, region, count).
++    No raw tensor is logged by production code.
++    """
++    if p.ndim != 4 or p.shape[0] != 3:
++        raise ValueError("three aligned [C,H,W] probability views required")
++    if valid.dtype != torch.bool or valid.shape != p.shape[-2:]:
++        raise ValueError("valid must be a spatial bool tensor")
++    h = bernoulli_entropy_bits(p.detach())
++    scores, groups = [], []
++    for c in range(p.shape[1]):
++        for b in (0, 1):
++            region = valid & ((p[0, c] >= 0.5) == bool(b))
++            n = int(region.sum())
++            if n < min_pixels:
++                continue
++            e = h[:, c, region].mean(dim=1)
++            scores.append((abs(e[1] - e[0]) + abs(e[2] - e[1])) / 2)
++            groups.append((c, b, n))
++    if not scores:
++        return None, groups
++    return torch.stack(scores).mean(), groups
++
++@dataclass
++class TrendController:
++    zeta: float = 0.9
++    horizon: int = 50
++    deterioration: float = 6.0
++    floor: float = 1e-6
++    age: int = 0
++    ema: Optional[float] = None
++    best: Optional[float] = None
++    resets: int = 0
++
++    def observe(self, sensitivity: float) -> dict:
++        if not math.isfinite(sensitivity) or not 0 <= sensitivity <= 1:
++            raise ValueError("finite sensitivity in [0,1] required")
++        if self.ema is None:
++            self.ema = sensitivity
++            self.best = max(sensitivity, self.floor)
++            self.age = 1
++        else:
++            self.ema = self.zeta * self.ema + (1 - self.zeta) * sensitivity
++            self.best = min(self.best, max(self.ema, self.floor))
++            self.age += 1
++        trigger = self.age >= self.horizon and self.ema > (1 + self.deterioration) * self.best
++        result = dict(trigger=trigger, age=self.age, ema=self.ema, best=self.best)
++        if trigger:
++            self.resets += 1
++            self.age, self.ema, self.best = 0, None, None
++        result["resets"] = self.resets
++        return result
++
++def periodic_due(visit):
++    if type(visit) is not int or visit<1:raise ValueError('positive global visit')
++    return visit>1 and (visit-1)%256==0
++
++
++def nested_erasure(x,visit):
++    if x.ndim!=4 or x.shape[0]!=1 or x.shape[-2]!=x.shape[-1]:raise ValueError('square single image')
++    H=x.shape[-1];large=math.floor(math.sqrt(.20)*H);small=math.floor(math.sqrt(.10)*H)
++    g=torch.Generator(device='cpu').manual_seed(local_seed('erasure',visit))
++    y,z=[int(torch.randint(H-large+1,(),generator=g)) for _ in range(2)]
++    dy,dz=[int(torch.randint(large-small+1,(),generator=g)) for _ in range(2)]
++    m20=torch.zeros(H,H,dtype=torch.bool,device=x.device);m20[y:y+large,z:z+large]=True
++    m10=torch.zeros_like(m20);m10[y+dy:y+dy+small,z+dz:z+dz+small]=True
++    return (x,x.masked_fill(m10,0),x.masked_fill(m20,0)),~m20,dict(small_pixels=small**2,large_pixels=large**2,valid_pixels=H*H-large**2)
+diff --git a/src/dpa_ctta/r1/region_memory.py b/src/dpa_ctta/r1/region_memory.py
+new file mode 100644
+index 0000000..6d0d09d
+--- /dev/null
++++ b/src/dpa_ctta/r1/region_memory.py
+@@ -0,0 +1,60 @@
++"""Same selection pool, single/global or quota-matched semantic/shuffled banks."""
++import torch
++from .recovery import local_seed
++from .streaming_pca import StreamingSubspace,projection_residual,bank_audit
++
++
++def grid(x):
++    if x.ndim!=4 or x.shape[0]!=1:raise ValueError('single BCHW tensor')
++    H,W=x.shape[-2:];a=((torch.arange(32,device=x.device)+.5)*H/32).long();b=((torch.arange(32,device=x.device)+.5)*W/32).long()
++    return x[0,:,a[:,None],b[None,:]].reshape(x.shape[1],1024).T
++
++
++def split_shuffle(ids,visit,salt):
++    counts=[len(i) for i in ids];pool=torch.cat(ids);g=torch.Generator(device='cpu').manual_seed(local_seed(salt,visit))
++    return list(pool[torch.randperm(len(pool),generator=g)].split(counts))
++
++
++def tokens(q,views):
++    q=q.detach().cpu();views=views.detach().cpu()
++    if q.shape!=(1024,2) or views.shape!=(6,1024,2):raise ValueError('OD/OC six-view grid')
++    hard=q>=.5;reliable=((q<=.1)|(q>=.9)) & ((views>=.5)==hard).all(0)
++    # Token ID c*1024+u, so OD/OC repeat a feature explicitly.
++    region=[torch.nonzero(hard[:,c]==bool(b)).flatten()+c*1024 for c in (0,1) for b in (0,1)]
++    reliable= reliable.T.reshape(-1)
++    return region,reliable
++
++
++class Memory:
++    def __init__(self,mode):
++        if mode not in ('GLOBAL','REGION','SHUFFLED'):raise ValueError('bank mode')
++        self.mode=mode;self.banks=[StreamingSubspace() for _ in range(1 if mode=='GLOBAL' else 4)]
++    def snapshots(self,visit):
++        values=[b.snapshot() for b in self.banks]
++        if any(s is not None and s[2]>=visit for s in values):raise ValueError('current item in own basis')
++        return values
++    def prepare(self,f0,q,views,visit):
++        if f0.shape!=(1024,32):raise ValueError('32-dimensional penultimate feature grid')
++        region,rel=tokens(q,views);selected=[]
++        for index,ids in enumerate(region):
++            ids=ids[rel[ids]];g=torch.Generator(device='cpu').manual_seed(local_seed('sample_'+str(index),visit))
++            if len(ids)>32:ids=ids[torch.randperm(len(ids),generator=g)[:32]]
++            selected.append(ids)
++        sampled=[len(i) for i in selected];raw=f0.detach().cpu();norm=raw.norm(dim=1,keepdim=True);v=raw/norm.clamp_min(1e-6)
++        zero=[int((norm[i%1024,0]==0).sum()) for i in selected]
++        selected=[i[norm[i%1024,0]>0] for i in selected];counts=[len(i) for i in selected]
++        if self.mode=='GLOBAL':selected=[torch.cat(selected)];loss_ids=[torch.cat(region)]
++        elif self.mode=='SHUFFLED':selected=split_shuffle(selected,visit,'memory_shuffle');loss_ids=split_shuffle(region,visit,'loss_shuffle')
++        else:loss_ids=region
++        vectors=[v[ids%1024].double() for ids in selected]
++        return vectors,loss_ids,dict(region_token_counts=[len(i) for i in region],sampled_region_counts=sampled,selected_region_counts=counts,assigned_bank_counts=[len(i) for i in selected],zero_vectors=zero,missing_foreground=[len(region[i])==0 for i in (1,3)])
++    def loss(self,fs,ids,snapshots):
++        if fs.shape!=(1024,32):raise ValueError('strong feature grid')
++        terms=[projection_residual(fs[i.to(fs.device)%1024],s[0],s[1]) for i,s in zip(ids,snapshots) if len(i) and s is not None]
++        return torch.stack(terms).mean() if terms else fs.new_zeros(())
++    def merge(self,vectors,visit):
++        for bank,x in zip(self.banks,vectors):bank.merge(x,visit)
++    def audit(self):
++        values=[bank_audit(b) for b in self.banks]
++        if sum(v['state_bytes'] for v in values)>=1024**2:raise ValueError('bounded PCA state exceeded')
++        return values
+diff --git a/src/dpa_ctta/r1/run.py b/src/dpa_ctta/r1/run.py
+new file mode 100644
+index 0000000..c89c369
+--- /dev/null
++++ b/src/dpa_ctta/r1/run.py
+@@ -0,0 +1,167 @@
++"""Foreground finite matrix runner. No daemon, polling for approval, or retry."""
++import argparse,gc,json,os,subprocess,sys,time
++from pathlib import Path
++from .plan import ROOT,DEFAULTS,SCIENCE,REF,GRATA,science,matrix,authorize,registration_digest,digest,stream
++
++
++def write(path,value):
++    with Path(path).open('x') as f:json.dump(value,f,indent=2,allow_nan=False)
++
++
++def claim(out,job_id):
++    p=Path(out)/job_id;p.mkdir(mode=0o700);return p
++
++
++def charge(out,worker,started,trajectory=None):
++    import fcntl
++    now=time.monotonic()
++    with (Path(out)/'usage.json').open('r+') as f:
++        fcntl.flock(f,fcntl.LOCK_EX);v=json.load(f);old=v['last'].get(str(worker),started);v['seconds']+=now-old;v['last'][str(worker)]=now
++        f.seek(0);json.dump(v,f);f.truncate()
++    if v['seconds']>86400 or time.time()-v['wall_start']>86400:raise RuntimeError('matrix active/wall cap')
++    if trajectory is not None and now-trajectory>7200:raise RuntimeError('trajectory cap')
++
++
++def smoke(state,device,out):
++    import torch
++    from ..b1_host import Host as OldC
++    from ..b4_run import capture,Calls
++    from ..source_pilot import seed_all
++    from ..host_diagnostic import close
++    from ..m2_run import deterministic_smoke_pair
++    from ..b3_runtime import process_audit
++    from .host import Host,ARMS
++    sys.path.insert(0,str(ROOT/'tests'));from test_vptta_host import pixels
++    calls=Calls();saved=[];ev={};start=time.monotonic()
++    try:
++        with deterministic_smoke_pair():
++            for arm in ('OLD',*ARMS):
++                seed_all(20260907);h=OldC('C',state,device) if arm=='OLD' else Host(arm,state,device);calls.attach(h,True)
++                if arm=='OLD':process_audit(out,'smoke')
++                if arm=='C_PER256':h.visit=256;h.counts['base_adam']=256
++                if arm=='C_SENS':
++                    h.controller.age=49;h.controller.ema=1e-6;h.controller.best=1e-6
++                    observed=h.controller.observe;h.controller.observe=lambda s:observed(1.)
++                if arm.startswith('C_PCA_'):
++                    # Fixed programmatic statistics, discarded with the test host.
++                    g=torch.Generator().manual_seed(42)
++                    for bank in h.memory.banks:
++                        for v in range(1,17):
++                            x=torch.randn(8,32,generator=g);bank.merge(x/x.norm(dim=1,keepdim=True),v)
++                    h.visit=16;h.counts['base_adam']=16
++                for i in range(2):
++                    z,a=h.step(pixels('fundus',i));current=dict(z=z.cpu(),state=capture(h))
++                    if arm=='OLD':saved.append(current)
++                    elif arm=='C':close(current,saved[i]);close(current['state']['rng'],saved[i]['state']['rng'],exact=True)
++                    if arm=='C_SENS' and i==0:
++                        if not a['reset_before_current']:raise ValueError('sensitivity fixture recovery')
++                        h.controller.observe=observed
++                    if arm=='C_PER256' and i==0 and not a['reset_before_current']:raise ValueError('period smoke fixture')
++                ev[arm]=dict(parity=arm=='C',resets=getattr(h,'reset_count',0),PCA=None if not getattr(h,'memory',None) else h.memory.audit())
++                calls.release();h.finish(state);del h,z,current;gc.collect()
++        if calls.counts!=dict(forwards=118,backwards=14,base_adam=14,perturb=0,restore=0):raise ValueError('smoke budget')
++        write(out/'smoke.completion.json',dict(status='MECHANICAL_SMOKE_COMPLETE',physical=calls.counts,evidence=ev,seconds=time.monotonic()-start))
++    except Exception as e:write(out/'smoke.failure.json',dict(status='INCOMPLETE',reason=str(e),physical=calls.counts));raise
++
++
++def trajectory(job,state,reg,out,worker,start):
++    import torch
++    from .host import Host
++    from ..source_pilot import seed_all
++    from ..source_io import read_pixels,read_mask
++    from ..p1_analysis import evaluate
++    from ..p1_run import sync
++    from ..b3_runtime import process_audit
++    p=claim(out,job['job_id']);h=None;written=0;t0=time.monotonic()
++    try:
++        seed_all(20260907);h=Host(job['arm'],state,'cuda:0');torch.cuda.reset_peak_memory_stats();process_audit(p,'run')
++        with (p/'records.jsonl').open('x') as log:
++            for row in stream(reg,job['order']):
++                charge(out,worker,start,t0);begin=time.monotonic();pixels=read_pixels(row['image_path'],'fundus',row['image_size']);sync();tic=time.monotonic();z,a=h.step(pixels);sync();host_seconds=time.monotonic()-tic
++                mask=read_mask(row['mask_path'],'fundus',row['image_size']);metrics=evaluate(z.sigmoid(),mask,'fundus')
++                r=dict(arm=job['arm'],order=job['order'],**{k:row[k] for k in ('group_id','sample_id','domain','subset')},**a,metrics=metrics,prediction_fixed_before_label=True,host_seconds=host_seconds,pipeline_seconds=time.monotonic()-begin,peak_allocated_bytes=torch.cuda.max_memory_allocated())
++                log.write(json.dumps(r,allow_nan=False)+'\n');log.flush();written+=1;del z,mask,pixels
++                if written%64==0:
++                    if sum(f.stat().st_size for f in Path(out).rglob('*') if f.is_file())>2*1024**3:raise RuntimeError('private output cap')
++        h.finish(state);charge(out,worker,start,t0);write(p/'completion.json',dict(status='TRAJECTORY_COMPLETE',records=written,physical=h.counts,seconds=time.monotonic()-t0))
++    except Exception as e:
++        write(p/'failure.json',dict(status='INCOMPLETE',reason=str(e),records=written,physical=None if h is None else h.counts));raise
++    finally:del h;gc.collect()
++
++
++def worker():
++    os.environ['CUBLAS_WORKSPACE_CONFIG']=':4096:8'
++    import torch
++    from ..source_pilot_release import environment
++    packet=json.loads(Path(os.environ['RUN_PACKET']).read_text());assets=packet['assets'];reg=assets['registration'];authorize(packet['authorization'],reg)
++    torch.set_num_threads(2);environment();out=Path(packet['out']);index=int(os.environ['RUN_WORKER']);entry=packet['devices'][index]
++    if os.environ.get('CUDA_VISIBLE_DEVICES')!=entry['uuid']:raise PermissionError('device UUID binding')
++    p=claim(out,'device'+str(index));start=time.monotonic()
++    # The only weight asset: no source data/proxy/history traversal.
++    cp=Path(reg['checkpoint']['path']);st=cp.stat()
++    if st.st_size!=reg['checkpoint']['bytes'] or st.st_mtime_ns!=reg['checkpoint']['mtime_ns']:raise ValueError('checkpoint metadata changed')
++    state=torch.load(cp,map_location='cpu',weights_only=True)
++    os.environ['CUBLAS_WORKSPACE_CONFIG']=':4096:8';smoke(state,'cuda:0',p);os.environ.pop('CUBLAS_WORKSPACE_CONFIG',None);charge(out,index,start);torch.cuda.empty_cache()
++    # Formal backend lives in a fresh process, never inherits smoke kernel scope.
++    env=os.environ.copy();env['RUN_MODE']='formal';run_child(env)
++
++
++def run_child(env):
++    from ..b3_runtime import ENTRY
++    rc=subprocess.call([sys.executable,'-c',ENTRY],cwd=ROOT,env=env,stdin=subprocess.DEVNULL)
++    if rc:raise RuntimeError('child failed: '+str(rc))
++
++
++def formal_worker():
++    import torch
++    from ..source_pilot_release import environment
++    packet=json.loads(Path(os.environ['RUN_PACKET']).read_text());reg=packet['assets']['registration'];authorize(packet['authorization'],reg);torch.set_num_threads(2);environment()
++    index=int(os.environ['RUN_WORKER']);entry=packet['devices'][index]
++    if os.environ.get('CUDA_VISIBLE_DEVICES')!=entry['uuid']:raise PermissionError('device binding')
++    out=Path(packet['out']);proof=json.loads((out/('device'+str(index))/'smoke.completion.json').read_text())
++    if proof['status']!='MECHANICAL_SMOKE_COMPLETE':raise PermissionError('smoke gate')
++    state=torch.load(reg['checkpoint']['path'],map_location='cpu',weights_only=True);start=time.monotonic()
++    for job in matrix()['jobs'][index::len(packet['devices'])]:trajectory(job,state,reg,out,index,start)
++
++
++def launch(auth,assets,out):
++    reg=assets['registration'];ids=authorize(auth,reg)
++    if subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip():raise PermissionError('clean reviewed checkout required')
++    for key,sha in (('ctta_dependency_root',REF),('grata_root',GRATA)):
++        if subprocess.check_output(['git','rev-parse','HEAD'],cwd=assets[key],text=True).strip()!=sha:raise ValueError('fixed dependency')
++    rows=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid,name,memory.free','--format=csv,noheader'],text=True)
++    mapping={int(row[0]):dict(uuid=row[1].strip(),model=row[2].strip(),free_MiB=int(row[3].split()[0])) for row in [line.split(',') for line in rows.splitlines()]}
++    devices=[dict(index=i,**mapping[i]) for i in ids]
++    if any(d['free_MiB']<4096 for d in devices):raise RuntimeError('need 4 GiB peak headroom per worker; no waiting/retry')
++    out=Path(out).resolve()
++    if out.is_relative_to(ROOT):raise ValueError('private output outside code')
++    if not out.is_relative_to(Path(assets['private_storage_root']).resolve()):raise ValueError('registered private storage root')
++    import tempfile
++    fs=os.statvfs(out.parent)
++    if fs.f_bavail*fs.f_frsize<3*1024**3:raise RuntimeError('storage capacity')
++    with tempfile.TemporaryFile(dir=out.parent) as probe:
++        probe.write(b'probe');probe.flush();os.fsync(probe.fileno());probe.seek(0)
++        if probe.read()!=b'probe':raise RuntimeError('storage write/read')
++    out.mkdir(mode=0o700);write(out/'usage.json',dict(seconds=0.,last={},wall_start=time.time()))
++    packet=dict(authorization=auth,assets=assets,out=str(out),devices=devices);write(out/'packet.private.json',packet)
++    processes=[]
++    from ..b3_runtime import ENTRY
++    for i,d in enumerate(devices):
++        env=os.environ.copy();env.update(PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=os.pathsep.join([str(ROOT/'src'),assets.get('dependency_pythonpath','')]),DPA_CTTA_BASE_ROOT=assets['ctta_dependency_root'],DPA_GRATA_ROOT=assets['grata_root'],CUDA_VISIBLE_DEVICES=d['uuid'],RUN_FILE=str(ROOT/'scripts/run_r1_matrix.py'),RUN_MODE='worker',RUN_WORKER=str(i),RUN_PACKET=str(out/'packet.private.json'))
++        with (out/f'worker{i}.log').open('x') as f:processes.append(subprocess.Popen([sys.executable,'-c',ENTRY],cwd=ROOT,env=env,stdin=subprocess.DEVNULL,stdout=f,stderr=subprocess.STDOUT))
++    codes=[p.wait() for p in processes];write(out/'matrix.processes.json',dict(exit_codes=codes,status='INCOMPLETE' if any(codes) else 'COMPUTE_COMPLETE'))
++    if any(codes):raise RuntimeError('failed matrix; no retry or automatic repair')
++    from .analyze import recompute
++    recompute(out,reg)
++
++
++def main():
++    os.umask(0o077)
++    if os.environ.get('RUN_MODE')=='worker':return worker()
++    if os.environ.get('RUN_MODE')=='formal':return formal_worker()
++    parser=argparse.ArgumentParser();parser.add_argument('--run',action='store_true');parser.add_argument('--authorization',type=Path,default=DEFAULTS);parser.add_argument('--assets',type=Path);parser.add_argument('--output',type=Path);args=parser.parse_args()
++    if not args.run:print(json.dumps(matrix(),indent=2));return
++    auth=json.loads(args.authorization.read_text())
++    if auth.get('enabled') is not True:raise PermissionError('execution disabled')
++    if args.assets is None or args.output is None:raise ValueError('explicit assets/output required')
++    launch(auth,json.loads(args.assets.read_text()),args.output)
+diff --git a/src/dpa_ctta/r1/streaming_pca.py b/src/dpa_ctta/r1/streaming_pca.py
+new file mode 100644
+index 0000000..367f556
+--- /dev/null
++++ b/src/dpa_ctta/r1/streaming_pca.py
+@@ -0,0 +1,89 @@
++"""CPU float64 sufficient statistics; task-package covariance reference."""
++import torch
++
++class StreamingSubspace:
++    """Cumulative CPU sufficient statistics with a lagged consumer snapshot.
++
++    Caller must obtain the snapshot before processing the current item, and call
++    merge once after that item's final prediction. No raw observations are stored.
++    """
++    def __init__(self, dim: int = 32, rank: int = 8, refresh: int = 16,
++                 min_images: int = 16, min_vectors: int = 128):
++        if not 0 < rank < dim or refresh < 1:
++            raise ValueError("invalid subspace dimensions")
++        self.dim, self.rank = dim, rank
++        self.refresh, self.min_images, self.min_vectors = refresh, min_images, min_vectors
++        self.n = self.images = self.version = self.merges = self.eigh_calls = 0
++        self.last_visit = 0
++        self.mean = torch.zeros(dim, dtype=torch.float64)
++        self.M2 = torch.zeros(dim, dim, dtype=torch.float64)
++        self.center = self.U = self.eigenvalues = None
++
++    @torch.no_grad()
++    def merge(self, X: torch.Tensor, visit: int) -> None:
++        if visit<=self.last_visit:raise ValueError('bank visit must advance')
++        self.last_visit=visit
++        if X.ndim != 2 or X.shape[1] != self.dim:
++            raise ValueError("[n,d] input required")
++        if not torch.isfinite(X).all():
++            raise ValueError("nonfinite features")
++        if len(X) == 0:
++            return
++        X = X.detach().to(device="cpu", dtype=torch.float64)
++        k = len(X)
++        mb = X.mean(0)
++        xb = X - mb
++        m2b = xb.T @ xb
++        if self.n == 0:
++            self.n = k
++            self.mean, self.M2 = mb.clone(), m2b.clone()
++        else:
++            delta = mb - self.mean
++            new_n = self.n + k
++            self.M2 = self.M2 + m2b + torch.outer(delta, delta) * (self.n * k / new_n)
++            self.mean = self.mean + delta * (k / new_n)
++            self.n = new_n
++        self.images += 1
++        self.merges += 1
++        if self.images % self.refresh or self.images < self.min_images or self.n < self.min_vectors:
++            return
++        cov = self.M2 / (self.n - 1)
++        cov = (cov + cov.T) / 2
++        self.eigh_calls += 1
++        eig, vec = torch.linalg.eigh(cov)
++        if not torch.isfinite(eig).all() or not torch.isfinite(vec).all():raise ValueError("nonfinite eigensystem")
++        ids = torch.nonzero(eig > 1e-10).flatten().flip(0)[:self.rank]
++        if not len(ids):
++            self.center = self.U = self.eigenvalues = None
++            self.version=visit
++            return
++        self.center = self.mean.clone()
++        self.U = vec[:, ids].clone()
++        self.eigenvalues = eig[ids].clone()
++        self.version = visit
++
++    def snapshot(self):
++        if self.U is None:
++            return None
++        return self.center.clone(), self.U.clone(), self.version
++
++def projection_residual(raw_features: torch.Tensor, center: torch.Tensor,
++                        U: torch.Tensor) -> torch.Tensor:
++    """Mean loss for one bank; caller defines per-bank equal weighting."""
++    if raw_features.ndim != 2 or U.ndim != 2:
++        raise ValueError("matrix features and basis required")
++    if raw_features.shape[1] != U.shape[0] or center.shape != (U.shape[0],):
++        raise ValueError("feature/basis shape mismatch")
++    if not len(raw_features):
++        raise ValueError("empty bank is omitted by caller")
++    c = center.detach().to(raw_features)
++    b = U.detach().to(raw_features)
++    v = raw_features / raw_features.norm(dim=1, keepdim=True).clamp_min(1e-6)
++    y = v - c
++    residual = y - (y @ b) @ b.T
++    denominator = y.square().sum(1).detach() + 1e-6
++    return (residual.square().sum(1) / denominator).mean()
++
++def bank_audit(bank):
++    tensors=[v for v in vars(bank).values() if isinstance(v,torch.Tensor)]
++    return dict(n=bank.n,contributing_images=bank.images,version=bank.version,ready=bank.U is not None,rank=0 if bank.U is None else bank.U.shape[1],merges=bank.merges,eigh_calls=bank.eigh_calls,state_bytes=sum(t.numel()*t.element_size() for t in tensors))
+diff --git a/tests/test_r1.py b/tests/test_r1.py
+new file mode 100644
+index 0000000..8b7c2c1
+--- /dev/null
++++ b/tests/test_r1.py
+@@ -0,0 +1,177 @@
++import copy,json,math,os,tempfile,unittest
++from pathlib import Path
++from unittest.mock import patch
++import torch
++from torch import nn
++from dpa_ctta.r1.recovery import *
++from dpa_ctta.r1.streaming_pca import *
++from dpa_ctta.r1.region_memory import Memory,grid,tokens,split_shuffle
++from dpa_ctta.r1.host import Host,ARMS,segmentation
++from dpa_ctta.r1.plan import authorize,matrix,science,registration_digest,digest,SCIENCE
++from dpa_ctta.r1.run import claim,main
++from dpa_ctta.r1.analyze import validate,recompute
++from dpa_ctta.b1_host import Host as OldC
++from dpa_ctta.b4_run import capture
++from dpa_ctta.host_diagnostic import rng,close
++from dpa_ctta.source_pilot import seed_all
++from dpa_ctta.integrations.ctta_suite import build_reference_model
++from dpa_ctta.p1_analysis import evaluate
++from test_vptta_host import pixels
++
++
++class Toy(nn.Module):
++    def __init__(self):
++        super().__init__();self.conv=nn.Conv2d(3,32,1,bias=False);self.bn=nn.BatchNorm2d(32);self.seg_head=nn.Conv2d(32,2,1)
++    def forward(self,x):
++        f=torch.relu(self.bn(self.conv(x)));return self.seg_head(f),[],f
++
++
++def toy(arm):
++    seed_all(20260907);return Host(arm,model=Toy())
++
++
++def ready(memory):
++    g=torch.Generator().manual_seed(8)
++    for b in memory.banks:
++        for i in range(1,17):
++            x=torch.randn(8,32,generator=g);b.merge(x/x.norm(dim=1,keepdim=True),i)
++
++
++class MathChecks(unittest.TestCase):
++    def test_entropy_shared_region_and_empty(self):
++        x=bernoulli_entropy_bits(torch.tensor([0.,.5,1.],dtype=torch.float64));self.assertTrue(torch.isfinite(x).all());self.assertAlmostEqual(float(x[1]),1)
++        p=torch.full((3,2,16,16),.1);valid=torch.ones(16,16,dtype=torch.bool);valid[:8]=False;p[1:,:,:8]=.9
++        value,groups=dense_sensitivity(p,valid);self.assertEqual(float(value),0);self.assertEqual(len(groups),2)
++        self.assertIsNone(dense_sensitivity(p,torch.zeros_like(valid))[0])
++        with self.assertRaises(ValueError):bernoulli_entropy_bits(torch.tensor([1.1]))
++    def test_nested_masks_rng(self):
++        before=rng();x=torch.ones(1,3,512,512);a,v,info=nested_erasure(x,7);b,w,j=nested_erasure(x,7);close(before,rng(),exact=True);close(a,b,exact=True)
++        self.assertTrue(((a[1]==0)<= (a[2]==0)).all());self.assertEqual(info['small_pixels'],161**2);self.assertEqual(info['large_pixels'],228**2);self.assertEqual(int((~v).sum()),228**2);self.assertTrue(x.eq(1).all())
++        self.assertEqual(local_seed('erasure',7),int.from_bytes(hashlib.sha256(b'R1:erasure:20260907:7').digest()[:8],'big')%(2**63-1))
++    def test_controller_exact_threshold_floor_reset(self):
++        c=TrendController();r=c.observe(0.);self.assertEqual(r['age'],1);self.assertEqual(r['best'],1e-6)
++        c.age=48;c.ema=c.best=.01;self.assertFalse(c.observe(1.)['trigger']);self.assertTrue(c.observe(1.)['trigger']);self.assertIsNone(c.ema);self.assertEqual(c.age,0)
++        c.age=49;c.ema=.01;c.best=.01;self.assertFalse(c.observe(.61)['trigger']);self.assertTrue(c.observe(.611)['trigger'])
++        z=TrendController();self.assertTrue(all(not z.observe(.1)['trigger'] for _ in range(200)))
++        self.assertEqual([i for i in range(1,1952) if periodic_due(i)],[257,513,769,1025,1281,1537,1793])
++    def test_covariance_ready_snapshot_and_projector(self):
++        g=torch.Generator().manual_seed(3);X=torch.randn(256,32,dtype=torch.float64,generator=g);X=X/X.norm(dim=1,keepdim=True);b=StreamingSubspace()
++        for i,x in enumerate(X[:128].split(8),1):self.assertIsNone(b.snapshot());b.merge(x,i)
++        snap=b.snapshot();self.assertEqual(snap[2],16);close(b.M2/127,torch.cov(X[:128].T));close(b.U.T@b.U,torch.eye(8,dtype=torch.float64));self.assertEqual(b.eigh_calls,1)
++        for i,x in enumerate(X[128:].split(8),17):
++            b.merge(x,i)
++            if i<32:close(b.snapshot(),snap,exact=True)
++        close(b.mean,X.mean(0));close(b.M2/255,torch.cov(X.T));self.assertEqual(b.version,32);self.assertEqual(b.eigh_calls,2)
++        vals,U=torch.linalg.eigh(torch.cov(X.T));close(b.U@b.U.T,U[:,-8:]@U[:,-8:].T)
++        self.assertFalse(any(isinstance(v,list) for v in vars(b).values()));self.assertLess(bank_audit(b)['state_bytes'],1024**2)
++    def test_zero_rank_rank_cap_and_eigh_failure(self):
++        b=StreamingSubspace()
++        for i in range(1,17):b.merge(torch.ones(8,32),i)
++        self.assertIsNone(b.snapshot());self.assertEqual(b.eigh_calls,1)
++        z=StreamingSubspace();x=torch.zeros(8,32);x[:,0]=torch.arange(8)
++        for i in range(1,17):z.merge(x,i)
++        self.assertEqual(z.U.shape[1],1)
++        with patch('torch.linalg.eigh',side_effect=RuntimeError('fixture')):
++            for i in range(17,32):z.merge(x,i)
++            with self.assertRaises(RuntimeError):z.merge(x,32)
++    def test_tokens_overlap_reliable_and_shuffle_quota(self):
++        q=torch.zeros(1024,2);q[:100,0]=1;q[:30,1]=1;views=q.expand(6,-1,-1).clone();views[1,3,0]=0
++        region,rel=tokens(q,views);self.assertEqual([len(x) for x in region],[924,100,994,30]);self.assertFalse(rel[3]);self.assertEqual(sum(len(i) for i in region),2048)
++        f=torch.randn(1024,32);before=rng();m=Memory('REGION');x,ids,a=m.prepare(f,q,views,1);s=Memory('SHUFFLED');y,si,b=s.prepare(f,q,views,1);close(before,rng(),exact=True)
++        self.assertEqual(a['selected_region_counts'],b['assigned_bank_counts']);self.assertEqual([len(i) for i in ids],[len(i) for i in si]);self.assertEqual(a['selected_region_counts'],[32,32,32,30]);close(q,views[0],exact=True)
++        global_m=Memory('GLOBAL');g,_,_=global_m.prepare(f,q,views,1);close(torch.cat(x).sort(dim=0).values,g[0].sort(dim=0).values)
++        zero,_,audit=m.prepare(torch.zeros_like(f),q,views,2);self.assertTrue(all(len(v)==0 for v in zero));self.assertEqual(sum(audit['zero_vectors']),126)
++    def test_grid_alignment_and_projection_gradient(self):
++        x=torch.arange(512*512).reshape(1,1,512,512).float();g=grid(x);self.assertEqual(float(g[0]),float(x[0,0,8,8]));self.assertEqual(float(g[-1]),float(x[0,0,504,504]))
++        m=Memory('REGION');ready(m);snap=m.snapshots(17);f=torch.randn(1024,32,requires_grad=True);ids=[torch.arange(256*i,256*(i+1)) for i in range(4)];loss=m.loss(f,ids,snap);loss.backward();self.assertGreater(float(f.grad.norm()),0)
++        c=snap[0][0].clone().requires_grad_();u=snap[0][1].clone().requires_grad_();z=torch.randn(8,32,requires_grad=True);r=projection_residual(z,c,u);r.backward();self.assertIsNone(c.grad);self.assertIsNone(u.grad)
++        close(r.detach(),projection_residual(z.detach(),c,-u));self.assertTrue(all(s[2]==16 for s in snap));self.assertRaises(ValueError,m.snapshots,16)
++
++
++class HostChecks(unittest.TestCase):
++    @classmethod
++    def setUpClass(cls):
++        seed_all(20260907);model,_=build_reference_model('fundus');cls.state=torch.load(os.environ['CHECKPOINT'],map_location='cpu',weights_only=True) if os.environ.get('CHECKPOINT') else copy.deepcopy(model.state_dict())
++    def test_full_model_old_C_equivalence(self):
++        seed_all(20260907);old=OldC('C',self.state);saved=[]
++        for i in range(2):z,a=old.step(pixels('fundus',i));saved.append((z,capture(old),[p.grad.clone() for p in old.params]))
++        old.finish(self.state);del old;seed_all(20260907);h=Host('C',self.state)
++        for i in range(2):
++            z,a=h.step(pixels('fundus',i));close(z,saved[i][0]);close(capture(h),saved[i][1]);close([p.grad for p in h.params],saved[i][2]);close(rng(),saved[i][1]['rng'],exact=True)
++        self.assertEqual((len(h.names),sum(p.numel() for p in h.params)),(82,19136));h.finish(self.state)
++    def test_real_feature_interface_and_PCA_ready_backward(self):
++        seed_all(20260907);h=Host('C_PCA_REGION',self.state);ready(h.memory);h.visit=16;h.counts['base_adam']=16
++        original=h.memory.loss;checked=[]
++        def checked_loss(fs,ids,snap):
++            loss=original(fs,ids,snap);g=torch.autograd.grad(loss,fs,retain_graph=True)[0];checked.append(float(g.norm()));return loss
++        with patch.object(h.memory,'loss',side_effect=checked_loss):z,a=h.step(pixels('fundus',0))
++        self.assertTrue(checked and checked[0]>0);self.assertEqual(z.shape,(1,2,512,512));self.assertEqual(a['pca']['basis_versions_used'],[16]*4);self.assertGreater(a['pca']['subloss'],0);self.assertEqual(h.pending,{});h.finish(self.state)
++    def test_all_six_hosts_physical_and_state_independence(self):
++        for arm in ARMS:
++            h=toy(arm)
++            if h.memory:ready(h.memory);h.visit=16;h.counts['base_adam']=16
++            z,a=h.step(pixels('fundus',0));self.assertEqual(a['counts']['forwards'],11 if arm=='C_SENS' else 8);self.assertEqual(a['counts']['base_adam'],1);self.assertFalse(z.requires_grad);self.assertEqual(h.pending,{})
++            self.assertFalse(any(isinstance(v,torch.Tensor) for v in a.values()))
++        h=toy('C_PCA_GLOBAL');other=toy('C_PCA_GLOBAL');h.step(pixels('fundus',0));self.assertEqual(other.memory.banks[0].n,0)
++    def test_recovery_affine_adam_rng_and_period(self):
++        h=toy('C_PER256');h.step(pixels('fundus',0));rng_before=rng();private=copy.deepcopy(h.rng);ids=[id(p) for p in h.params];calls=h.counts.copy();h.recover()
++        self.assertEqual(h.base.state,{});self.assertEqual(h.steps,0);self.assertEqual(h.visit,1);self.assertEqual(h.counts,calls);close(rng_before,rng(),exact=True);close(private,h.rng,exact=True);self.assertEqual(ids,[id(p) for p in h.params])
++        for p,v in zip(h.params,h.initial):close(p,v,exact=True);self.assertIsNone(p.grad)
++        h.visit=256;h.counts['base_adam']=256;z,a=h.step(pixels('fundus',1));self.assertTrue(a['reset_before_current']);self.assertEqual(a['optimizer_steps_since_reset'],1);self.assertEqual(a['total_adam_calls'],257)
++    def test_labels_source_readers_private_rng_and_zero_extra_loss(self):
++        a=toy('C');x=pixels('fundus',0);z,_=a.step(x);snapshot=capture(a);evaluate(z.sigmoid(),torch.zeros_like(z),'fundus');evaluate(z.sigmoid(),torch.ones_like(z),'fundus');close(snapshot,capture(a),exact=True)
++        with self.assertRaises(TypeError):a.step(x,torch.ones_like(z))
++        b=toy('C_PCA_REGION')
++        ready(b.memory);b.visit=16;b.counts['base_adam']=16
++        with patch('dpa_ctta.r1.host.SUBSPACE_WEIGHT',0.),patch('dpa_ctta.source_io.read_pixels',side_effect=AssertionError('source reader')),patch('dpa_ctta.source_io.read_mask',side_effect=AssertionError('mask reader')),patch('dpa_ctta.source_io.source_proxy',side_effect=AssertionError('proxy')):
++            q,_=b.step(x)
++        close(z,q);close(snapshot,capture(b));self.assertEqual(b.pending,{})
++        self.assertEqual(segmentation(torch.ones(1,2,3,3)).shape,(1,2,3,3))
++
++
++class ExecutionChecks(unittest.TestCase):
++    def test_disabled_digest_commit_and_matrix(self):
++        r={'target':[]};sha='a'*40;d=digest(SCIENCE);auth=dict(enabled=True,approved_code_sha=sha,approved_science_sha256=d,approved_registration_digest=registration_digest(r),external_review_reference='TEST_FIXTURE_ONLY',allowed_physical_gpu_ids=[7],max_workers=1,background_allowed=False)
++        for k,v in [('enabled',False),('approved_code_sha','b'*40),('approved_science_sha256','0'*64),('approved_registration_digest','0'*64),('allowed_physical_gpu_ids',[7,7]),('external_review_reference',None)]:
++            with self.assertRaises(PermissionError):authorize(dict(auth,**{k:v}),r,sha,d)
++        self.assertEqual(authorize(auth,r,sha,d),[7]);m=matrix();self.assertEqual(len(m['jobs']),24);self.assertEqual(sum(j['forwards'] for j in m['jobs']),398004);self.assertEqual(sum(j['adam'] for j in m['jobs']),46824)
++    def test_duplicate_claim_and_incomplete_closeout(self):
++        with tempfile.TemporaryDirectory() as out:
++            claim(out,'o0a0')
++            with self.assertRaises(FileExistsError):claim(out,'o0a0')
++            with self.assertRaises(FileNotFoundError):recompute(out,{})
++            self.assertFalse((Path(out)/'public_aggregate.json').exists())
++    def test_prefix_wrong_identity_counts_and_reset(self):
++        e=dict(group_id='toy',sample_id='toy',domain='D',subset='remaining_dev');z=torch.zeros(1,2,3,3)
++        r=dict(e,arm='C',order=0,global_visit=1,reset_count=0,total_adam_calls=1,optimizer_steps_since_reset=1,segment_age=1,reset_before_current=False,counts=dict(forwards=8,backwards=1,base_adam=1,perturb=0,restore=0),prediction_fixed_before_label=True,metrics=evaluate(z,z,'fundus'),pca=None)
++        validate([r],[e],'C',0)
++        for k,v in [('global_visit',2),('total_adam_calls',0),('sample_id','wrong'),('segment_age',2)]:
++            with self.assertRaises(ValueError):validate([dict(r,**{k:v})],[e],'C',0)
++        with self.assertRaises(ValueError):validate([], [e],'C',0)
++
++
++class CloseoutChecks(unittest.TestCase):
++    def test_actual_default_CLI_refuses_before_weight_or_GPU_access(self):
++        with patch('sys.argv',['neutral','--run']),patch('torch.load',side_effect=AssertionError('weight access')):
++            with self.assertRaises(PermissionError):main()
++        self.assertFalse(torch.cuda.is_initialized())
++    def test_complete_scalar_matrix_and_truncation(self):
++        from dpa_ctta.r1.plan import COUNTS
++        cfg=copy.deepcopy(science());cfg['formal_budget'].update(records=288,forwards=2448,backwards=288,adam=288)
++        jobs=matrix()['jobs'];canonical=[dict(group_id=str(i*3+j),sample_id=str(i*3+j),domain=d,subset=s) for i,d in enumerate(COUNTS) for j,s in enumerate(('remaining_dev','legacy_dev','p1_extension_dev'))]
++        def ordered(reg,o):return [r for d in cfg['orders'][o] for r in canonical if r['domain']==d]
++        metric=evaluate(torch.zeros(1,2,3,3),torch.zeros(1,2,3,3),'fundus')
++        with tempfile.TemporaryDirectory() as tmp:
++            out=Path(tmp)
++            for job in jobs:
++                p=claim(out,job['job_id']);(p/'completion.json').write_text(json.dumps(dict(status='TRAJECTORY_COMPLETE')));rows=[]
++                for i,e in enumerate(ordered({},job['order']),1):
++                    pca=None
++                    if 'PCA' in job['arm']:pca=dict(basis_versions_used=[None if i==1 else i-1],subloss=0.,banks=[dict(state_bytes=100,ready=True,rank=8)])
++                    rows.append(dict(e,arm=job['arm'],order=job['order'],global_visit=i,reset_count=0,total_adam_calls=i,optimizer_steps_since_reset=i,segment_age=i,reset_before_current=False,counts=dict(forwards=11 if job['arm']=='C_SENS' else 8,backwards=1,base_adam=1,perturb=0,restore=0),prediction_fixed_before_label=True,metrics=metric,pca=pca,host_seconds=.1,peak_allocated_bytes=1))
++                (p/'records.jsonl').write_text('\n'.join(json.dumps(r) for r in rows))
++            with patch('dpa_ctta.r1.analyze.stream',side_effect=ordered),patch('dpa_ctta.r1.analyze.science',return_value=cfg):result=recompute(out,{})
++            self.assertEqual(result['status'],'R1_EXPERIMENT_COMPLETE');self.assertEqual(result['physical']['records'],288)
++            (out/'o3a5/records.jsonl').write_text('')
++            with patch('dpa_ctta.r1.analyze.stream',side_effect=ordered),patch('dpa_ctta.r1.analyze.science',return_value=cfg):
++                with self.assertRaises(ValueError):recompute(out,{})

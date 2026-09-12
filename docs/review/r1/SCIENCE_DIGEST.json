@@ -1,0 +1,23 @@
+{
+  "task": "R1_RECOVERY_TARGET_SUBSPACE",
+  "science_file": "configs/r1_science_v1.json",
+  "source": "task_package/r1_science_v1.proposed.json",
+  "preserved_source_bytes": true,
+  "sha256": "e23fb6de3e55f704ec2036d82777b29a78643ebc7e1ae1e89328f22f56de51e2",
+  "schema_status": "proposed_for_code_review",
+  "baseline_commit": "0ef9d593a196e18f38295edc5b919372e297671b",
+  "implementation_commit": "f67a4d91c4337fe53e350cc2cf621ab703b9d2c1",
+  "arms": ["C", "C_PER256", "C_SENS", "C_PCA_GLOBAL", "C_PCA_SHUFFLED", "C_PCA_REGION"],
+  "seed": 20260907,
+  "groups": 1951,
+  "remaining_dev": 1695,
+  "orders": 4,
+  "formal_budget": {"trajectories": 24, "records": 46824, "forwards": 398004, "backwards": 46824, "adam": 46824},
+  "execution_defaults_file": "configs/r1_execution.defaults.json",
+  "execution_parameters_separate_from_science": true,
+  "execution_enabled": false,
+  "allowed_physical_gpu_ids": [],
+  "background_allowed": false,
+  "scientific_parameter_changes": [],
+  "additional_effectiveness_gates": []
+}
