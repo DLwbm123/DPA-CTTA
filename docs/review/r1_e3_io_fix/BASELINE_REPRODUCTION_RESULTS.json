@@ -1,0 +1,48 @@
+{
+  "code_sha": "c93018c0edca2bbe2475117ab0edf6adeece6ff2",
+  "python": "3.12.9",
+  "source_git_blob_sha1": {
+    "supervise.py": "b88acc85606d1af13251e2799150da75924f5465",
+    "evidence.py": "5e2d2ec507844efad67827003687e6a33dcca4e2"
+  },
+  "full_project_suite_rerun": false,
+  "GPU_used": false,
+  "real_assets_read": false,
+  "all_created_children_reaped": true,
+  "source": "GitHub.fetch_file text copied locally, exact Git blob identities checked",
+  "cases": [
+    {
+      "mode": "control_writable",
+      "observed_exception": "RuntimeError: incomplete finite matrix; no retry",
+      "formal_children": 1,
+      "formal_child_still_running_after_supervisor": false,
+      "outsider_still_running": true,
+      "calls_to_failure_writer": 1,
+      "summary_status": "INCOMPLETE",
+      "elapsed_seconds": 0.1488647919613868,
+      "expected_cleanup_property": true
+    },
+    {
+      "mode": "failure_record_enospc",
+      "observed_exception": "OSError: [Errno 28] programmatic no space left",
+      "formal_children": 1,
+      "formal_child_still_running_after_supervisor": true,
+      "outsider_still_running": true,
+      "calls_to_failure_writer": 2,
+      "summary_status": "INCOMPLETE",
+      "elapsed_seconds": 0.12203158298507333,
+      "expected_cleanup_property": false
+    },
+    {
+      "mode": "persistent_output_eio",
+      "observed_exception": "OSError: [Errno 5] programmatic output IO failure",
+      "formal_children": 1,
+      "formal_child_still_running_after_supervisor": true,
+      "outsider_still_running": true,
+      "calls_to_failure_writer": 1,
+      "summary_status": null,
+      "elapsed_seconds": 0.03060141601599753,
+      "expected_cleanup_property": false
+    }
+  ]
+}

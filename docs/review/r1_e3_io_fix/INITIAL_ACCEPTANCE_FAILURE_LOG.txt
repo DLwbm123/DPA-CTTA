@@ -1,0 +1,31 @@
+test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch (test_r1_fixes.ProcessChecks.test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch) ... {"probe": "ENOSPC", "observed_error": "OSError", "observed_errno": 28, "created": 4, "formal_children": 2, "all_owned_returned": false, "all_owned_reaped": false, "outsider_alive": true, "summary_status": "INCOMPLETE", "supervisor_exit_code": 1}
+FAIL
+test_persistent_EIO_reaps_all_owned_and_exits_nonzero (test_r1_fixes.ProcessChecks.test_persistent_EIO_reaps_all_owned_and_exits_nonzero) ... {"probe": "EIO", "observed_error": "OSError", "observed_errno": 5, "created": 4, "formal_children": 2, "all_owned_returned": false, "all_owned_reaped": false, "outsider_alive": true, "summary_status": null, "supervisor_exit_code": 1}
+FAIL
+
+======================================================================
+FAIL: test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch (test_r1_fixes.ProcessChecks.test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/test_r1_fixes.py", line 299, in test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch
+    self.check_io_failure('ENOSPC')
+  File "<CHECKOUT>/tests/test_r1_fixes.py", line 296, in check_io_failure
+    self.assertTrue(observed['all_owned_returned']);self.assertTrue(observed['all_owned_reaped']);self.assertTrue(observed['outsider_alive'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+======================================================================
+FAIL: test_persistent_EIO_reaps_all_owned_and_exits_nonzero (test_r1_fixes.ProcessChecks.test_persistent_EIO_reaps_all_owned_and_exits_nonzero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/test_r1_fixes.py", line 301, in test_persistent_EIO_reaps_all_owned_and_exits_nonzero
+    self.check_io_failure('EIO')
+  File "<CHECKOUT>/tests/test_r1_fixes.py", line 296, in check_io_failure
+    self.assertTrue(observed['all_owned_returned']);self.assertTrue(observed['all_owned_reaped']);self.assertTrue(observed['outsider_alive'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 2 tests in 1.571s
+
+FAILED (failures=2)

@@ -1,0 +1,42 @@
+{
+  "status": "R1_E3_IO_FIX_READY",
+  "implementation_sha": "54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b",
+  "reviewed_base": "c93018c0edca2bbe2475117ab0edf6adeece6ff2",
+  "branch": "experiment/r1-recovery-target-subspace-v1",
+  "patch_paths": [
+    "src/dpa_ctta/r1/supervise.py",
+    "tests/test_r1_fixes.py"
+  ],
+  "public_files": [
+    "BASELINE_REPRODUCTION_RESULTS.json",
+    "CPU_TEST_LOG.txt",
+    "CPU_TEST_RESULTS.json",
+    "DELIVERY.json",
+    "DIFF_STAT.txt",
+    "IMPLEMENTATION_REPORT.md",
+    "INITIAL_ACCEPTANCE_FAILURE_LOG.txt",
+    "IO_REGRESSION_RESULTS.json",
+    "LOCAL_PROCESS_CHECK_LOG.txt",
+    "REVIEW_INDEX.md",
+    "UNCHANGED_CONFIG_SUMMARY.json",
+    "implementation.patch"
+  ],
+  "tests": {
+    "tests": 37,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 60.969911041203886,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "cuda_initialized": false,
+    "checkpoint_mode": "programmatic_random_weights",
+    "exit_code": 0
+  },
+  "formal_experiments_run": 0,
+  "gpu_used": false,
+  "real_asset_contents_read": false,
+  "background_waiters_created": 0,
+  "external_review": "PENDING",
+  "execution_authorized": false
+}

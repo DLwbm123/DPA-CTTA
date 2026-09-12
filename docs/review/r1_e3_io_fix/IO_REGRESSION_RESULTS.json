@@ -1,0 +1,34 @@
+{
+  "implementation_sha": "54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b",
+  "source": "CPU_TEST_LOG.txt",
+  "environment": {
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121"
+  },
+  "cases": [
+    {
+      "probe": "ENOSPC",
+      "observed_error": "OSError",
+      "observed_errno": 28,
+      "created": 4,
+      "formal_children": 2,
+      "all_owned_returned": true,
+      "all_owned_reaped": true,
+      "outsider_alive": true,
+      "summary_status": "INCOMPLETE",
+      "supervisor_exit_code": 1
+    },
+    {
+      "probe": "EIO",
+      "observed_error": "OSError",
+      "observed_errno": 5,
+      "created": 4,
+      "formal_children": 2,
+      "all_owned_returned": true,
+      "all_owned_reaped": true,
+      "outsider_alive": true,
+      "summary_status": null,
+      "supervisor_exit_code": 1
+    }
+  ]
+}

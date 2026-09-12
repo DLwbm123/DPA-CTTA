@@ -1,0 +1,61 @@
+test_actual_default_CLI_refuses_before_weight_or_GPU_access (test_r1.CloseoutChecks) ... ok
+test_complete_scalar_matrix_and_truncation (test_r1.CloseoutChecks) ... ok
+test_disabled_digest_commit_and_matrix (test_r1.ExecutionChecks) ... ok
+test_duplicate_claim_and_incomplete_closeout (test_r1.ExecutionChecks) ... ok
+test_prefix_wrong_identity_counts_and_reset (test_r1.ExecutionChecks) ... ok
+test_all_six_hosts_physical_and_state_independence (test_r1.HostChecks) ... ok
+test_full_model_old_C_equivalence (test_r1.HostChecks) ... ok
+test_labels_source_readers_private_rng_and_zero_extra_loss (test_r1.HostChecks) ... ok
+test_real_feature_interface_and_PCA_ready_backward (test_r1.HostChecks) ... ok
+test_recovery_affine_adam_rng_and_period (test_r1.HostChecks) ... ok
+test_controller_exact_threshold_floor_reset (test_r1.MathChecks) ... ok
+test_covariance_ready_snapshot_and_projector (test_r1.MathChecks) ... ok
+test_entropy_shared_region_and_empty (test_r1.MathChecks) ... ok
+test_grid_alignment_and_projection_gradient (test_r1.MathChecks) ... ok
+test_nested_masks_rng (test_r1.MathChecks) ... ok
+test_tokens_overlap_reliable_and_shuffle_quota (test_r1.MathChecks) ... ok
+test_zero_rank_rank_cap_and_eigh_failure (test_r1.MathChecks) ... ok
+test_RGB_mask_same_verified_bytes_and_prediction_order (test_r1_fixes.AssetChecks) ... ok
+test_checkpoint_digest_precedes_smoke_and_formal_model_work (test_r1_fixes.AssetChecks) ... ok
+test_from_metadata_preserves_existing_hashes_without_readers (test_r1_fixes.AssetChecks) ... ok
+test_PCA_live_scalar_refresh_and_invalid_banks_quotas (test_r1_fixes.EvidenceChecks) ... ok
+test_completion_and_run_smoke_process_contradictions (test_r1_fixes.EvidenceChecks) ... ok
+test_failure_with_success_and_stale_complete_invalidated (test_r1_fixes.EvidenceChecks) ... ok
+test_first_visit_reset_and_controller_log_contradictions (test_r1_fixes.EvidenceChecks) ... ok
+test_history_method_order_receipt_and_C0_canonical_exception (test_r1_fixes.EvidenceChecks) ... ok
+test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch (test_r1_fixes.ProcessChecks) ... {"probe": "ENOSPC", "observed_error": "OSError", "observed_errno": 28, "created": 4, "formal_children": 2, "all_owned_returned": true, "all_owned_reaped": true, "outsider_alive": true, "summary_status": "INCOMPLETE", "supervisor_exit_code": 1}
+ok
+test_finite_success_records_all_created_processes (test_r1_fixes.ProcessChecks) ... ok
+test_later_worker_failure_stops_dispatch_allows_active_independent (test_r1_fixes.ProcessChecks) ... ok
+test_parent_SIGINT_SIGTERM_clean_up_own_groups (test_r1_fixes.ProcessChecks) ... supervision failed: Interrupted: parent signal 2
+supervision failed: Interrupted: parent signal 15
+ok
+test_parent_signal_during_spawn_is_deferred_until_child_owned (test_r1_fixes.ProcessChecks) ... supervision failed: Interrupted: parent signal 15
+ok
+test_partial_spawn_failure_cleans_created_child (test_r1_fixes.ProcessChecks) ... supervision failed: OSError: procedural spawn failure
+ok
+test_persistent_EIO_reaps_all_owned_and_exits_nonzero (test_r1_fixes.ProcessChecks) ... {"probe": "EIO", "observed_error": "OSError", "observed_errno": 5, "created": 4, "formal_children": 2, "all_owned_returned": true, "all_owned_reaped": true, "outsider_alive": true, "summary_status": null, "supervisor_exit_code": 1}
+ok
+test_rotation_one_two_three_slots_has_no_arm_device_lock (test_r1_fixes.ProcessChecks) ... ok
+test_shared_failure_cancels_only_this_batch_and_output_cap (test_r1_fixes.ProcessChecks) ... ok
+test_signal_during_mkstemp_does_not_leak_output_descriptor (test_r1_fixes.ProcessChecks) ... supervision failed: Interrupted: parent signal 15
+ok
+test_trajectory_timeout_prefix_and_unrelated_process_survives (test_r1_fixes.ProcessChecks) ... ok
+test_wall_and_active_caps_reach_stuck_smoke (test_r1_fixes.ProcessChecks) ... ok
+
+----------------------------------------------------------------------
+Ran 37 tests in 60.576s
+
+OK
+{
+  "tests": 37,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "seconds": 60.969911041203886,
+  "python": "3.10.6",
+  "torch": "2.2.1+cu121",
+  "cuda_initialized": false,
+  "checkpoint_mode": "programmatic_random_weights",
+  "exit_code": 0
+}

@@ -1,0 +1,24 @@
+test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch (test_r1_fixes.ProcessChecks.test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch) ... {"probe": "ENOSPC", "observed_error": "OSError", "observed_errno": 28, "created": 4, "formal_children": 2, "all_owned_returned": true, "all_owned_reaped": true, "outsider_alive": true, "summary_status": "INCOMPLETE", "supervisor_exit_code": 1}
+ok
+test_finite_success_records_all_created_processes (test_r1_fixes.ProcessChecks.test_finite_success_records_all_created_processes) ... ok
+test_later_worker_failure_stops_dispatch_allows_active_independent (test_r1_fixes.ProcessChecks.test_later_worker_failure_stops_dispatch_allows_active_independent) ... ok
+test_parent_SIGINT_SIGTERM_clean_up_own_groups (test_r1_fixes.ProcessChecks.test_parent_SIGINT_SIGTERM_clean_up_own_groups) ... supervision failed: Interrupted: parent signal 2
+supervision failed: Interrupted: parent signal 15
+ok
+test_parent_signal_during_spawn_is_deferred_until_child_owned (test_r1_fixes.ProcessChecks.test_parent_signal_during_spawn_is_deferred_until_child_owned) ... supervision failed: Interrupted: parent signal 15
+ok
+test_partial_spawn_failure_cleans_created_child (test_r1_fixes.ProcessChecks.test_partial_spawn_failure_cleans_created_child) ... supervision failed: OSError: procedural spawn failure
+ok
+test_persistent_EIO_reaps_all_owned_and_exits_nonzero (test_r1_fixes.ProcessChecks.test_persistent_EIO_reaps_all_owned_and_exits_nonzero) ... {"probe": "EIO", "observed_error": "OSError", "observed_errno": 5, "created": 4, "formal_children": 2, "all_owned_returned": true, "all_owned_reaped": true, "outsider_alive": true, "summary_status": null, "supervisor_exit_code": 1}
+ok
+test_rotation_one_two_three_slots_has_no_arm_device_lock (test_r1_fixes.ProcessChecks.test_rotation_one_two_three_slots_has_no_arm_device_lock) ... ok
+test_shared_failure_cancels_only_this_batch_and_output_cap (test_r1_fixes.ProcessChecks.test_shared_failure_cancels_only_this_batch_and_output_cap) ... ok
+test_signal_during_mkstemp_does_not_leak_output_descriptor (test_r1_fixes.ProcessChecks.test_signal_during_mkstemp_does_not_leak_output_descriptor) ... supervision failed: Interrupted: parent signal 15
+ok
+test_trajectory_timeout_prefix_and_unrelated_process_survives (test_r1_fixes.ProcessChecks.test_trajectory_timeout_prefix_and_unrelated_process_survives) ... ok
+test_wall_and_active_caps_reach_stuck_smoke (test_r1_fixes.ProcessChecks.test_wall_and_active_caps_reach_stuck_smoke) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 3.339s
+
+OK
