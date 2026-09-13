@@ -1,6 +1,6 @@
 # R2 implementation report
 
-Stage I: five new arms implemented; external review and Stage II execution remain separate. The complete source/test/config implementation commit is recorded in DELIVERY.json. No GPU experiment, real checkpoint load, target RGB/mask read, source asset access, offline update or background approval waiter was performed.
+Status: **R2_IMPLEMENTATION_READY_FOR_REVIEW**. Five new arms are implemented and all 51 CPU checks passed. External review and Stage II execution remain separate. The complete source/test/config implementation commit is `0d515328a6cc42d8e0c6a458265b41e41c454fa6`; DELIVERY.json binds the test evidence to it. No GPU experiment, real checkpoint load, target RGB/mask read, source asset access, offline update or background approval waiter was performed.
 
 ## Implemented scope
 
@@ -24,11 +24,11 @@ The disabled execution config has enabled=false, empty GPU IDs, zero workers, ba
 
 Development checks: 14 new CPU tests passed locally with Python 3.12.9 / Torch 2.6.0. They include a real ResUNet34 structure with random weights and the complete seven-host, two-step mechanical smoke on CPU: 112 forwards, 14 backwards and 14 Adam calls, including five ready-memory new arms. This CPU smoke is not a substitute for Stage II's per-device smoke. All other input tensors, masks used by evaluator fixtures and scalar records are programmatically generated.
 
-The final existing-environment CPU run is recorded in CPU_TEST_LOG.txt and CPU_TEST_RESULT.json, including all 37 unchanged R1 regressions plus 14 R2 checks. Test success is engineering evidence only. It is not an external review result or an effect gate. The guarded entry drops CHECKPOINT and rejects CUDA lazy initialization. Its real_target_reads field states the suite's procedural-only scope rather than a system-wide IO monitor.
+The final existing-environment CPU run passed all 51 tests (37 unchanged R1 regressions plus 14 R2 checks), with zero failures/errors/skips, exit 0 and 204.82 seconds total. Environment: Linux, Python 3.10.6, Torch 2.2.1+cu121, two CPU threads, CUDA initialized=false. CPU_TEST_LOG.txt and CPU_TEST_RESULT.json preserve the real evidence. Failure messages from ENOSPC/EIO/signal fixtures are intentional fault injection, and their enclosing tests passed. Test success is engineering evidence only. It is not an external review result or an effect gate. The guarded entry drops CHECKPOINT and rejects CUDA lazy initialization. Its real_target_reads field states the suite's procedural-only scope rather than a system-wide IO monitor.
 
 Coverage includes explicit weighted sample references, empty visits, half-life, rho=1 equivalence, rank-zero/eigh failure, detached snapshots and gradients, projection identities, actual-rank compensation, region weighting, full-feature reduction, RNG isolation, paired shuffle matching, lambda-zero C equivalence, original R1 REGION compatibility, 8-forward merge timing, failure cleanup, historical binding, scalar replay and invalidation of incomplete results. Unchanged R1 tests cover ownership cleanup on ENOSPC/EIO, signal races, timeout and unrelated-process protection.
 
-The provided independent NumPy plan algebra was also run; its results are separate from model implementation tests. Local Apple NumPy emitted matmul RuntimeWarnings while all reference assertions passed with finite outputs; the original plan script is also checked in the existing Linux environment, with the actual log preserved. No numerical formula was changed to suppress warnings.
+The provided independent NumPy plan algebra was also run; its results are separate from model implementation tests. Local Apple NumPy emitted matmul RuntimeWarnings while all reference assertions passed with finite outputs; the unchanged plan script passed in the existing Linux environment without warnings, with that actual log preserved. No numerical formula was changed to suppress warnings.
 
 ## Dry-run and not-run list
 

@@ -1,0 +1,56 @@
+{
+  "status": "R2_IMPLEMENTATION_READY_FOR_REVIEW",
+  "implementation_commit": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+  "branch": "experiment/r2-paired-forgetting-pca-v1",
+  "reviewed_runtime_baseline": "54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b",
+  "worktree_base": "0411fdfba8c05b08b6f7172e8d002ad3cc738e38",
+  "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "runtime_source_unchanged_R1": true,
+  "cpu_tested_commit": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+  "cpu_test_result": {
+    "tests": 51,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 204.82068756385706,
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "cuda_initialized": false,
+    "checkpoint_mode": "programmatic_random_weights",
+    "real_target_reads": 0,
+    "exit_code": 0
+  },
+  "implementation_patch": "IMPLEMENTATION.patch",
+  "patch_scope": "All R2 files at the implementation commit against the reviewed runtime; excludes previously published R1 result-report additions.",
+  "evidence_delivery_note": "Subsequent delivery commit changes only reviewer-facing evidence, not runtime source/tests/config.",
+  "future_gpu_preference": [
+    6,
+    7
+  ],
+  "execution_enabled": false,
+  "external_review_status": "PENDING",
+  "GPU_initializations": 0,
+  "formal_jobs_run": 0,
+  "background_waiters_created": 0,
+  "real_checkpoint_loads": 0,
+  "real_target_RGB_mask_reads": 0,
+  "historical_scalar_metric_contents_read": false,
+  "public_scope": [
+    "source",
+    "science",
+    "disabled execution config",
+    "tests",
+    "deidentified review documents",
+    "CPU logs",
+    "dry-run matrix",
+    "narrow patch"
+  ],
+  "excluded": [
+    "private registration and execution paths",
+    "raw per-content results",
+    "data and model weights",
+    "credentials and hardware identifiers",
+    "third-party PDFs"
+  ]
+}

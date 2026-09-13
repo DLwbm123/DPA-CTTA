@@ -1,0 +1,2092 @@
+diff --git a/configs/r2_execution.defaults.json b/configs/r2_execution.defaults.json
+new file mode 100644
+index 0000000..8ce15c0
+--- /dev/null
++++ b/configs/r2_execution.defaults.json
+@@ -0,0 +1,10 @@
++{
++  "enabled": false,
++  "approved_code_sha": null,
++  "approved_science_sha256": null,
++  "external_review_reference": null,
++  "allowed_physical_gpu_ids": [],
++  "max_workers": 0,
++  "background_allowed": false,
++  "approved_registration_digest": null
++}
+diff --git a/configs/r2_science_v1.json b/configs/r2_science_v1.json
+new file mode 100644
+index 0000000..76bd80a
+--- /dev/null
++++ b/configs/r2_science_v1.json
+@@ -0,0 +1,179 @@
++{
++  "task": "R2_PAIRED_FORGETTING_REGION_PCA",
++  "status": "PROPOSED_FOR_IMPLEMENTATION_REVIEW",
++  "code_baseline": "54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b",
++  "historical_result_commit": "0411fdfba8c05b08b6f7172e8d002ad3cc738e38",
++  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
++  "scope": "fundus",
++  "checkpoint_only": true,
++  "source_data_access": false,
++  "offline_updates": 0,
++  "seed": 20260907,
++  "groups": 1951,
++  "primary_subset": "remaining_dev",
++  "primary_groups": 1695,
++  "orders": [
++    [
++      "REFUGE",
++      "ORIGA",
++      "REFUGE_Valid",
++      "Drishti_GS"
++    ],
++    [
++      "Drishti_GS",
++      "REFUGE_Valid",
++      "ORIGA",
++      "REFUGE"
++    ],
++    [
++      "ORIGA",
++      "Drishti_GS",
++      "REFUGE",
++      "REFUGE_Valid"
++    ],
++    [
++      "REFUGE_Valid",
++      "REFUGE",
++      "Drishti_GS",
++      "ORIGA"
++    ]
++  ],
++  "arms": [
++    {
++      "name": "R2_E",
++      "loss": "absolute_r1",
++      "memory": "exponential",
++      "groups": "region"
++    },
++    {
++      "name": "R2_D",
++      "loss": "paired_complement",
++      "memory": "cumulative_r1",
++      "groups": "region"
++    },
++    {
++      "name": "R2_DE",
++      "loss": "paired_complement",
++      "memory": "exponential",
++      "groups": "region"
++    },
++    {
++      "name": "R2_F",
++      "loss": "paired_full",
++      "memory": "exponential_shadow_for_readiness",
++      "groups": "region"
++    },
++    {
++      "name": "R2_DE_S",
++      "loss": "paired_complement",
++      "memory": "exponential",
++      "groups": "shuffled_r1"
++    }
++  ],
++  "reused_primary_arms": [
++    "C",
++    "C_PCA_REGION"
++  ],
++  "C": {
++    "bn_layers": 41,
++    "affine_scalars": 19136,
++    "optimizer": "Adam",
++    "lr": 0.0001,
++    "betas": [
++      0.9,
++      0.999
++    ],
++    "eps": 1e-08,
++    "weight_decay": 0,
++    "weak_views": 6,
++    "forwards_per_image": 8,
++    "backwards_per_image": 1,
++    "adam_per_image": 1
++  },
++  "features": {
++    "hook": "seg_head_input_after_relu",
++    "dim": 32,
++    "grid": [
++      32,
++      32
++    ],
++    "norm_eps": 1e-06,
++    "f0_stopgrad": true,
++    "basis_stopgrad": true,
++    "lambda_extra": 0.05,
++    "pair_dimension_scale": "d/(d-k_actual)",
++    "full_dimension_scale": 1,
++    "feature_reduction": "sum_then_token_mean_then_active_region_mean",
++    "absolute_loss_denominator": "stopgrad(sum(centered_unit_feature**2))+1e-6"
++  },
++  "memory": {
++    "banks": 4,
++    "bank_names": [
++      "OD_background",
++      "OD_foreground",
++      "OC_background",
++      "OC_foreground"
++    ],
++    "rank_cap": 8,
++    "reliable_bounds": [
++      0.1,
++      0.9
++    ],
++    "all_six_hard_agree": true,
++    "max_tokens_per_region": 32,
++    "min_contributing_images": 16,
++    "min_raw_vectors": 128,
++    "refresh_every_contributing_images": 16,
++    "eigenvalue_floor": 1e-10,
++    "stats_dtype": "CPU_float64",
++    "half_life_global_visits": 128,
++    "rho_formula": "2**(-1/128)",
++    "rho": 0.9945994234836332,
++    "covariance_divisor": "W-Q/W",
++    "decay_empty_visits": true,
++    "merge_after_prediction": true,
++    "loss_uses_previous_snapshot": true,
++    "no_bank_expiry_gate": true,
++    "raw_observation_retention_between_visits": false,
++    "preserve_R1_sampling_salts": true
++  },
++  "formal_budget": {
++    "trajectories": 20,
++    "new_records": 39020,
++    "forwards": 312160,
++    "backwards": 39020,
++    "adam": 39020,
++    "offline_updates": 0
++  },
++  "historical_primary_records_referenced": 15608,
++  "per_gpu_smoke_budget": {
++    "adam": 14,
++    "backwards": 14,
++    "forwards": 112
++  },
++  "resource_caps": {
++    "max_workers": 3,
++    "max_worker_cpu_threads": 2,
++    "wall_hours": 24,
++    "total_active_worker_hours": 24,
++    "trajectory_hours": 2,
++    "private_output_bytes": 2147483648
++  },
++  "selection_not_execution_gate": {
++    "mean_gain_C_pp": 0.5,
++    "positive_orders_min": 3,
++    "domain_mean_macro_degradation_warning_pp": -2.0,
++    "worst_order_degradation_warning_pp": -0.5,
++    "combined_candidate_requires_beating_simpler_controls": true
++  },
++  "execution_defaults": {
++    "enabled": false,
++    "approved_code_sha": null,
++    "approved_science_sha256": null,
++    "external_review_reference": null,
++    "allowed_physical_gpu_ids": [],
++    "max_workers": 0,
++    "background_allowed": false
++  },
++  "authority": "R2_EXPERIMENT_PLAN_AND_CODEX_PROMPT.md; this JSON is a proposal, not a runtime authorization or reviewed implementation"
++}
+diff --git a/docs/review/r2/ASSET_METADATA_STATUS.json b/docs/review/r2/ASSET_METADATA_STATUS.json
+new file mode 100644
+index 0000000..2315f59
+--- /dev/null
++++ b/docs/review/r2/ASSET_METADATA_STATUS.json
+@@ -0,0 +1,73 @@
++{
++  "status": "METADATA_CONFIRMED_NO_CONTENT_READ",
++  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
++  "historical_runtime": "54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b",
++  "historical_status": "R1_EXPERIMENT_COMPLETE",
++  "historical_controls": [
++    {
++      "arm": "C",
++      "order": 0,
++      "completion_records": 1951,
++      "seed": 20260907,
++      "scalar_path_present": true
++    },
++    {
++      "arm": "C_PCA_REGION",
++      "order": 0,
++      "completion_records": 1951,
++      "seed": 20260907,
++      "scalar_path_present": true
++    },
++    {
++      "arm": "C",
++      "order": 1,
++      "completion_records": 1951,
++      "seed": 20260907,
++      "scalar_path_present": true
++    },
++    {
++      "arm": "C_PCA_REGION",
++      "order": 1,
++      "completion_records": 1951,
++      "seed": 20260907,
++      "scalar_path_present": true
++    },
++    {
++      "arm": "C",
++      "order": 2,
++      "completion_records": 1951,
++      "seed": 20260907,
++      "scalar_path_present": true
++    },
++    {
++      "arm": "C_PCA_REGION",
++      "order": 2,
++      "completion_records": 1951,
++      "seed": 20260907,
++      "scalar_path_present": true
++    },
++    {
++      "arm": "C",
++      "order": 3,
++      "completion_records": 1951,
++      "seed": 20260907,
++      "scalar_path_present": true
++    },
++    {
++      "arm": "C_PCA_REGION",
++      "order": 3,
++      "completion_records": 1951,
++      "seed": 20260907,
++      "scalar_path_present": true
++    }
++  ],
++  "target_RGB_reads": 0,
++  "target_mask_reads": 0,
++  "real_checkpoint_loads": 0,
++  "historical_metric_content_reads": 0,
++  "requested_future_physical_gpus": [
++    6,
++    7
++  ],
++  "execution_enabled": false
++}
+diff --git a/docs/review/r2/CPU_DEVELOPMENT_LOG.txt b/docs/review/r2/CPU_DEVELOPMENT_LOG.txt
+new file mode 100644
+index 0000000..940a940
+--- /dev/null
++++ b/docs/review/r2/CPU_DEVELOPMENT_LOG.txt
+@@ -0,0 +1,32 @@
++test_bound_historical_metadata_and_new_weighted_contradiction (test_r2.ExecutionChecks.test_bound_historical_metadata_and_new_weighted_contradiction) ... ok
++test_disabled_actual_entry_and_frozen_twenty_jobs (test_r2.ExecutionChecks.test_disabled_actual_entry_and_frozen_twenty_jobs) ... ok
++test_scalar_replay_live_weighted_refresh_and_corruptions (test_r2.ExecutionChecks.test_scalar_replay_live_weighted_refresh_and_corruptions) ... ok
++test_twenty_job_bound_closeout_and_truncation_invalidates (test_r2.ExecutionChecks.test_twenty_job_bound_closeout_and_truncation_invalidates) ... ok
++test_all_arms_eight_calls_post_prediction_merge_isolation_cleanup (test_r2.HostChecks.test_all_arms_eight_calls_post_prediction_merge_isolation_cleanup) ... ok
++test_full_model_CPU_smoke_ready_all_arms_physical_budget (test_r2.HostChecks.test_full_model_CPU_smoke_ready_all_arms_physical_budget) ... ok
++test_lambda_zero_old_C_and_absolute_cumulative_compatibility (test_r2.HostChecks.test_lambda_zero_old_C_and_absolute_cumulative_compatibility) ... ok
++test_explicit_weighted_reference_multitoken_empty_and_first (test_r2.MathChecks.test_explicit_weighted_reference_multitoken_empty_and_first) ... ok
++test_gradient_reductions_actual_rank_full_and_empty_zero (test_r2.MathChecks.test_gradient_reductions_actual_rank_full_and_empty_zero) ... ok
++test_half_life_empty_visits_snapshot_and_no_expiry (test_r2.MathChecks.test_half_life_empty_visits_snapshot_and_no_expiry) ... ok
++test_pair_identity_with_far_center_and_subspace_delta (test_r2.MathChecks.test_pair_identity_with_far_center_and_subspace_delta) ... ok
++test_rank_zero_failure_and_snapshot_causality (test_r2.MathChecks.test_rank_zero_failure_and_snapshot_causality) ... ok
++test_regions_same_pair_shuffle_RNG_and_F_shadow (test_r2.MathChecks.test_regions_same_pair_shuffle_RNG_and_F_shadow) ... ok
++test_rho_one_direct_R1_cumulative_equivalence (test_r2.MathChecks.test_rho_one_direct_R1_cumulative_equivalence) ... ok
++
++----------------------------------------------------------------------
++Ran 14 tests in 35.643s
++
++OK
++{
++  "tests": 14,
++  "failures": 0,
++  "errors": 0,
++  "skips": 0,
++  "seconds": 35.71005858411081,
++  "python": "3.12.9",
++  "torch": "2.6.0",
++  "cuda_initialized": false,
++  "checkpoint_mode": "programmatic_random_weights",
++  "real_target_reads": 0,
++  "exit_code": 0
++}
+diff --git a/docs/review/r2/DRY_RUN_MATRIX.json b/docs/review/r2/DRY_RUN_MATRIX.json
+new file mode 100644
+index 0000000..4590c7c
+--- /dev/null
++++ b/docs/review/r2/DRY_RUN_MATRIX.json
+@@ -0,0 +1,654 @@
++{
++  "status": "DRY_RUN_ONLY",
++  "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
++  "jobs": [
++    {
++      "job_id": "o0a0",
++      "arm": "R2_E",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o0a1",
++      "arm": "R2_D",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o0a2",
++      "arm": "R2_DE",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o0a3",
++      "arm": "R2_F",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o0a4",
++      "arm": "R2_DE_S",
++      "order": 0,
++      "domains": [
++        "REFUGE",
++        "ORIGA",
++        "REFUGE_Valid",
++        "Drishti_GS"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a0",
++      "arm": "R2_E",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a1",
++      "arm": "R2_D",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a2",
++      "arm": "R2_DE",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a3",
++      "arm": "R2_F",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o1a4",
++      "arm": "R2_DE_S",
++      "order": 1,
++      "domains": [
++        "Drishti_GS",
++        "REFUGE_Valid",
++        "ORIGA",
++        "REFUGE"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a0",
++      "arm": "R2_E",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a1",
++      "arm": "R2_D",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a2",
++      "arm": "R2_DE",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a3",
++      "arm": "R2_F",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o2a4",
++      "arm": "R2_DE_S",
++      "order": 2,
++      "domains": [
++        "ORIGA",
++        "Drishti_GS",
++        "REFUGE",
++        "REFUGE_Valid"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a0",
++      "arm": "R2_E",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a1",
++      "arm": "R2_D",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a2",
++      "arm": "R2_DE",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a3",
++      "arm": "R2_F",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    },
++    {
++      "job_id": "o3a4",
++      "arm": "R2_DE_S",
++      "order": 3,
++      "domains": [
++        "REFUGE_Valid",
++        "REFUGE",
++        "Drishti_GS",
++        "ORIGA"
++      ],
++      "records": 1951,
++      "forwards": 15608,
++      "backwards": 1951,
++      "adam": 1951,
++      "status": "NOT_RUN",
++      "gpu": null
++    }
++  ],
++  "formal_budget": {
++    "trajectories": 20,
++    "new_records": 39020,
++    "forwards": 312160,
++    "backwards": 39020,
++    "adam": 39020,
++    "offline_updates": 0
++  },
++  "historical_primary_records": 15608,
++  "per_gpu_smoke": {
++    "adam": 14,
++    "backwards": 14,
++    "forwards": 112
++  },
++  "rotation_examples": {
++    "1": {
++      "rule": "(arm_index + order_index) % workers",
++      "assignments": [
++        {
++          "job_id": "o0a0",
++          "worker": 0
++        },
++        {
++          "job_id": "o0a1",
++          "worker": 0
++        },
++        {
++          "job_id": "o0a2",
++          "worker": 0
++        },
++        {
++          "job_id": "o0a3",
++          "worker": 0
++        },
++        {
++          "job_id": "o0a4",
++          "worker": 0
++        },
++        {
++          "job_id": "o1a0",
++          "worker": 0
++        },
++        {
++          "job_id": "o1a1",
++          "worker": 0
++        },
++        {
++          "job_id": "o1a2",
++          "worker": 0
++        },
++        {
++          "job_id": "o1a3",
++          "worker": 0
++        },
++        {
++          "job_id": "o1a4",
++          "worker": 0
++        },
++        {
++          "job_id": "o2a0",
++          "worker": 0
++        },
++        {
++          "job_id": "o2a1",
++          "worker": 0
++        },
++        {
++          "job_id": "o2a2",
++          "worker": 0
++        },
++        {
++          "job_id": "o2a3",
++          "worker": 0
++        },
++        {
++          "job_id": "o2a4",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a0",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a1",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a2",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a3",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a4",
++          "worker": 0
++        }
++      ],
++      "loads": [
++        {
++          "worker": 0,
++          "jobs": 20,
++          "forwards": 312160
++        }
++      ]
++    },
++    "2": {
++      "rule": "(arm_index + order_index) % workers",
++      "assignments": [
++        {
++          "job_id": "o0a0",
++          "worker": 0
++        },
++        {
++          "job_id": "o0a1",
++          "worker": 1
++        },
++        {
++          "job_id": "o0a2",
++          "worker": 0
++        },
++        {
++          "job_id": "o0a3",
++          "worker": 1
++        },
++        {
++          "job_id": "o0a4",
++          "worker": 0
++        },
++        {
++          "job_id": "o1a0",
++          "worker": 1
++        },
++        {
++          "job_id": "o1a1",
++          "worker": 0
++        },
++        {
++          "job_id": "o1a2",
++          "worker": 1
++        },
++        {
++          "job_id": "o1a3",
++          "worker": 0
++        },
++        {
++          "job_id": "o1a4",
++          "worker": 1
++        },
++        {
++          "job_id": "o2a0",
++          "worker": 0
++        },
++        {
++          "job_id": "o2a1",
++          "worker": 1
++        },
++        {
++          "job_id": "o2a2",
++          "worker": 0
++        },
++        {
++          "job_id": "o2a3",
++          "worker": 1
++        },
++        {
++          "job_id": "o2a4",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a0",
++          "worker": 1
++        },
++        {
++          "job_id": "o3a1",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a2",
++          "worker": 1
++        },
++        {
++          "job_id": "o3a3",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a4",
++          "worker": 1
++        }
++      ],
++      "loads": [
++        {
++          "worker": 0,
++          "jobs": 10,
++          "forwards": 156080
++        },
++        {
++          "worker": 1,
++          "jobs": 10,
++          "forwards": 156080
++        }
++      ]
++    },
++    "3": {
++      "rule": "(arm_index + order_index) % workers",
++      "assignments": [
++        {
++          "job_id": "o0a0",
++          "worker": 0
++        },
++        {
++          "job_id": "o0a1",
++          "worker": 1
++        },
++        {
++          "job_id": "o0a2",
++          "worker": 2
++        },
++        {
++          "job_id": "o0a3",
++          "worker": 0
++        },
++        {
++          "job_id": "o0a4",
++          "worker": 1
++        },
++        {
++          "job_id": "o1a0",
++          "worker": 1
++        },
++        {
++          "job_id": "o1a1",
++          "worker": 2
++        },
++        {
++          "job_id": "o1a2",
++          "worker": 0
++        },
++        {
++          "job_id": "o1a3",
++          "worker": 1
++        },
++        {
++          "job_id": "o1a4",
++          "worker": 2
++        },
++        {
++          "job_id": "o2a0",
++          "worker": 2
++        },
++        {
++          "job_id": "o2a1",
++          "worker": 0
++        },
++        {
++          "job_id": "o2a2",
++          "worker": 1
++        },
++        {
++          "job_id": "o2a3",
++          "worker": 2
++        },
++        {
++          "job_id": "o2a4",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a0",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a1",
++          "worker": 1
++        },
++        {
++          "job_id": "o3a2",
++          "worker": 2
++        },
++        {
++          "job_id": "o3a3",
++          "worker": 0
++        },
++        {
++          "job_id": "o3a4",
++          "worker": 1
++        }
++      ],
++      "loads": [
++        {
++          "worker": 0,
++          "jobs": 7,
++          "forwards": 109256
++        },
++        {
++          "worker": 1,
++          "jobs": 7,
++          "forwards": 109256
++        },
++        {
++          "worker": 2,
++          "jobs": 6,
++          "forwards": 93648
++        }
++      ]
++    }
++  },
++  "GPU_requests_issued": 0
++}
+diff --git a/docs/review/r2/IMPLEMENTATION_REPORT.md b/docs/review/r2/IMPLEMENTATION_REPORT.md
+new file mode 100644
+index 0000000..7b02f5e
+--- /dev/null
++++ b/docs/review/r2/IMPLEMENTATION_REPORT.md
+@@ -0,0 +1,43 @@
++# R2 implementation report
++
++Stage I: five new arms implemented; external review and Stage II execution remain separate. The complete source/test/config implementation commit is recorded in DELIVERY.json. No GPU experiment, real checkpoint load, target RGB/mask read, source asset access, offline update or background approval waiter was performed.
++
++## Implemented scope
++
++R2_E, R2_D, R2_DE, R2_F and R2_DE_S use the frozen equations, rank/support/refresh rules, lambda=0.05 and half-life=128. C and the original absolute+cumulative C_PCA_REGION remain available only as compatibility test paths; the formal matrix contains exactly the five new arms times four orders. D imports the original cumulative class directly. E imports the old absolute reconstruction function directly. F retains exponential shadow PCA cost/readiness but excludes its direction from the loss. DE-S preserves R1 quotas and local RNG salts and retains same-position feature pairing.
++
++The R2 entry uses the reviewed R1 byte-verification/evaluator, neutral process invocation, process-group ownership cleanup, caps and atomic publication. It supplies the R2 schedule/budgets and complete scalar validation without changing original R1 constants. R2 scalar replay checks W/Q/raw counts/images/versions/refresh and matches historical controls by full run/code/science/registration/job/device identity. Truncation, mismatched completion and contradictory weights invalidate current success. Algorithm changes, evaluator changes and extra hyperparameters were not introduced.
++
++## Frozen references
++
++- Reviewed runtime: `54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b`.
++- Worktree base / historical public results: `0411fdfba8c05b08b6f7172e8d002ad3cc738e38`. This descendant adds R1 delivery evidence; it does not alter the reused R1 runtime. The R2 narrow patch excludes those already-published R1 results.
++- CTTA dependency: `dbff0d985c6c95345d9fb78f5b1daef57b392564`.
++- GraTa dependency: `33ae20d664f305af34739ec54a5bec7da53ffa0b`.
++- Original R1 science: `e23fb6de3e55f704ec2036d82777b29a78643ebc7e1ae1e89328f22f56de51e2`.
++- R2 science: `882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353` (exact supplied proposal bytes).
++- Registration: `8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf`; unchanged body, no registered asset rewriting.
++
++The disabled execution config has enabled=false, empty GPU IDs, zero workers, background_allowed=false and no approval references. The user's GPU 6/7 preference is recorded for future reviewed Stage II; no executable authorization was generated.
++
++## Verification and boundaries
++
++Development checks: 14 new CPU tests passed locally with Python 3.12.9 / Torch 2.6.0. They include a real ResUNet34 structure with random weights and the complete seven-host, two-step mechanical smoke on CPU: 112 forwards, 14 backwards and 14 Adam calls, including five ready-memory new arms. This CPU smoke is not a substitute for Stage II's per-device smoke. All other input tensors, masks used by evaluator fixtures and scalar records are programmatically generated.
++
++The final existing-environment CPU run is recorded in CPU_TEST_LOG.txt and CPU_TEST_RESULT.json, including all 37 unchanged R1 regressions plus 14 R2 checks. Test success is engineering evidence only. It is not an external review result or an effect gate. The guarded entry drops CHECKPOINT and rejects CUDA lazy initialization. Its real_target_reads field states the suite's procedural-only scope rather than a system-wide IO monitor.
++
++Coverage includes explicit weighted sample references, empty visits, half-life, rho=1 equivalence, rank-zero/eigh failure, detached snapshots and gradients, projection identities, actual-rank compensation, region weighting, full-feature reduction, RNG isolation, paired shuffle matching, lambda-zero C equivalence, original R1 REGION compatibility, 8-forward merge timing, failure cleanup, historical binding, scalar replay and invalidation of incomplete results. Unchanged R1 tests cover ownership cleanup on ENOSPC/EIO, signal races, timeout and unrelated-process protection.
++
++The provided independent NumPy plan algebra was also run; its results are separate from model implementation tests. Local Apple NumPy emitted matmul RuntimeWarnings while all reference assertions passed with finite outputs; the original plan script is also checked in the existing Linux environment, with the actual log preserved. No numerical formula was changed to suppress warnings.
++
++## Dry-run and not-run list
++
++Exactly 20 jobs, each 1,951 images: 39,020 new scores/backwards/Adam updates and 312,160 forwards. Historical C and REGION reuse 15,608 scalar records. Future per-device smoke adds 112 forwards and 14 backwards/Adam, so GPUs 6/7 with two workers would total 312,384 forwards and 39,048 backwards/Adam. Allocation rotates `(arm_index+order_index)%workers`. The fixed resource ceilings remain 2 hours/job, 24 hours wall, 24 active worker hours, 2 GiB output and at most three workers/two CPU threads per worker. No GPU time or memory measurement is claimed.
++
++Not run: GPU initialization or queries, target image/mask decoding, real checkpoint loading, GPU smoke, formal trajectories, pairing actual scalar metric contents, source-data operations, new model training, effect selection or follow-on experiments. Historical paths and receipts/completion metadata only were checked in Stage I. Full old/new scalar pairing and unchanged verified-byte asset loading belong to Stage II.
++
++No unresolved scientific choice was filled by observing target scores. Runtime authorization and GPU 6/7 availability at actual launch remain pending external review. The CPU analyzer can verify scalar recurrences and metadata, but cannot reconstruct feature covariance, basis directions or ASSD geometry from scalars. Four orders reuse exposed development contents and are not independent samples. Drishti_GS has 37 remaining_dev contents but receives one-quarter of the primary domain weight.
++
++Public scope: new source, science/defaults, tests, dry-run matrix, deidentified reports and true CPU evidence. Excluded: private registration/paths, credentials, raw per-content records, patient/subject information, source data, target data, model weights, hardware identifiers and supplied third-party PDFs. No exclusion blocks this source/review delivery.
++
++Final delivery status: R2_IMPLEMENTATION_READY_FOR_REVIEW. Stop here for external review; do not self-issue a review pass or run authorization.
+diff --git a/docs/review/r2/METHOD_PROVENANCE.md b/docs/review/r2/METHOD_PROVENANCE.md
+new file mode 100644
+index 0000000..4a62b65
+--- /dev/null
++++ b/docs/review/r2/METHOD_PROVENANCE.md
+@@ -0,0 +1,22 @@
++# R2 method provenance
++
++Authority: user-supplied `R2_EXPERIMENT_PLAN_AND_CODEX_PROMPT.md` and its byte-frozen `R2_SCIENCE_PROPOSAL.json`. This is an implementation proposal awaiting external review, not execution authorization.
++
++| Component | Source and exact reuse | R2 change |
++|---|---|---|
++| C / model / augmentation / optimizer | Reviewed R1 runtime `54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b`; original `b1_host.Host` and R1 Host sequence | No changes; new Host overrides extra criterion and memory only |
++| Feature grid, reliability, quotas and token IDs | R1 `region_memory.py`: 32x32 centers, seg_head input 32D, six weak hard agreements, probability <=0.1 or >=0.9, up to 32 reliable tokens per region | Direct inheritance; loss still uses all hard-partition tokens |
++| Cumulative statistics | R1 `StreamingSubspace`, CPU float64 centered-scatter merge | R2_D uses this exact class, not weighted code with rho=1 |
++| Absolute reconstruction | R1 `projection_residual` with detached centered-energy denominator | R2_E calls this exact function |
++| Target structural alignment | Supplied SaTeen PDF, section 3.2, equations describing reliable feature collection, incremental PCA/SVD and subspace reconstruction | Mechanism inspiration only. This implementation uses the R1 covariance/eigh variant, not an exact reproduction of SaTeen IPCA |
++| Paired complement objective | R2 task proposal | Unit(fs) - stopgrad(unit(f0)); complement of old U; d/(d-k_actual) scale; feature sum then token mean then active-region mean |
++| Exponential forgetting | R2 task proposal | Every global visit multiplies W/M2 by rho, Q by rho squared. Stable weighted merge and covariance divisor W-Q/W; half-life 128 visits |
++| F matched control | R2 task proposal | Full paired squared feature sum with scale 1; same exponential shadow memory and readiness rule. PCA direction affects diagnostics, not the loss |
++| Shuffled control | R1 quota-preserving independent memory/loss shuffles | R2_DE_S keeps original R1 seeds/salts. A shuffled token maps to identical spatial u on both f0 and fs |
++| Asset/evaluator/process cleanup | Reviewed R1 assets, `current`, ownership supervisor and atomic evidence publisher | Imported unchanged; R2 supplies its own matrix, counts, scalar replay and bound historical controls |
++
++Five arms: E=(absolute, forgetting, region), D=(paired complement, cumulative, region), DE=(paired complement, forgetting, region), F=(paired full, forgetting shadow, region), DE-S=(paired complement, forgetting, shuffled).
++
++The paired objective and exponentially weighted statistics are new proposed choices here. Neither the task package nor CPU tests prove improved Dice, theoretical guarantees, significance or superiority. Common lambda does not prove gradient fairness. Identical F/DE rules do not imply identical realized token selections after their models diverge.
++
++No source RGB, source masks, source proxies/prototypes, extra pretrained components, offline updates or source-domain replay are used. Stage I uses programmatic random weights and synthetic pixels only. The supplied PDF was read for provenance and is not bundled or required at runtime.
+diff --git a/docs/review/r2/PLAN_MATH_LOG.txt b/docs/review/r2/PLAN_MATH_LOG.txt
+new file mode 100644
+index 0000000..ab315de
+--- /dev/null
++++ b/docs/review/r2/PLAN_MATH_LOG.txt
+@@ -0,0 +1,44 @@
++{
++  "status": "PLAN_MATH_CHECKS_PASSED",
++  "scope": "NumPy procedural algebra and count checks only",
++  "actual_model_runs": 0,
++  "target_data_reads": 0,
++  "GPU_calls": 0,
++  "execution_approval": false,
++  "checks": {
++    "no_forgetting": {
++      "passed": true,
++      "max_mean_or_covariance_abs_error": 4.163336342344337e-17,
++      "procedural_visits": 40
++    },
++    "half_life_128": {
++      "passed": true,
++      "max_mean_or_covariance_abs_error": 5.551115123125783e-17,
++      "procedural_visits": 40
++    },
++    "projected_delta_identities": {
++      "passed": true,
++      "in_subspace_max_residual": 8.881784197001252e-16,
++      "equal_views_zero_delta": true
++    },
++    "budget": {
++      "passed": true,
++      "formal_records_and_adam": 39020,
++      "formal_forwards": 312160,
++      "with_smoke": {
++        "1": {
++          "adam": 39034,
++          "forwards": 312272
++        },
++        "2": {
++          "adam": 39048,
++          "forwards": 312384
++        },
++        "3": {
++          "adam": 39062,
++          "forwards": 312496
++        }
++      }
++    }
++  }
++}
+diff --git a/docs/review/r2/PLAN_MATH_RESULT.json b/docs/review/r2/PLAN_MATH_RESULT.json
+new file mode 100644
+index 0000000..ab315de
+--- /dev/null
++++ b/docs/review/r2/PLAN_MATH_RESULT.json
+@@ -0,0 +1,44 @@
++{
++  "status": "PLAN_MATH_CHECKS_PASSED",
++  "scope": "NumPy procedural algebra and count checks only",
++  "actual_model_runs": 0,
++  "target_data_reads": 0,
++  "GPU_calls": 0,
++  "execution_approval": false,
++  "checks": {
++    "no_forgetting": {
++      "passed": true,
++      "max_mean_or_covariance_abs_error": 4.163336342344337e-17,
++      "procedural_visits": 40
++    },
++    "half_life_128": {
++      "passed": true,
++      "max_mean_or_covariance_abs_error": 5.551115123125783e-17,
++      "procedural_visits": 40
++    },
++    "projected_delta_identities": {
++      "passed": true,
++      "in_subspace_max_residual": 8.881784197001252e-16,
++      "equal_views_zero_delta": true
++    },
++    "budget": {
++      "passed": true,
++      "formal_records_and_adam": 39020,
++      "formal_forwards": 312160,
++      "with_smoke": {
++        "1": {
++          "adam": 39034,
++          "forwards": 312272
++        },
++        "2": {
++          "adam": 39048,
++          "forwards": 312384
++        },
++        "3": {
++          "adam": 39062,
++          "forwards": 312496
++        }
++      }
++    }
++  }
++}
+diff --git a/docs/review/r2/REVIEW_INDEX.md b/docs/review/r2/REVIEW_INDEX.md
+new file mode 100644
+index 0000000..9604f24
+--- /dev/null
++++ b/docs/review/r2/REVIEW_INDEX.md
+@@ -0,0 +1,26 @@
++# R2 review index
++
++Status: R2_IMPLEMENTATION_READY_FOR_REVIEW after the evidence completion described in IMPLEMENTATION_REPORT.md. This repository does not issue external review approval.
++
++| Review concern | Material |
++|---|---|
++| Full implementation commit, real tests, exclusions | [IMPLEMENTATION_REPORT.md](IMPLEMENTATION_REPORT.md), [DELIVERY.json](DELIVERY.json), [CPU_TEST_LOG.txt](CPU_TEST_LOG.txt), [CPU_TEST_RESULT.json](CPU_TEST_RESULT.json) |
++| Exact scientific contract and digest | [science](../../../configs/r2_science_v1.json), [SCIENCE_DIGEST.txt](SCIENCE_DIGEST.txt) |
++| Disabled execution / 20 frozen jobs | [defaults](../../../configs/r2_execution.defaults.json), [DRY_RUN_MATRIX.json](DRY_RUN_MATRIX.json) |
++| Provenance and no inherited theoretical claim | [METHOD_PROVENANCE.md](METHOD_PROVENANCE.md) |
++| Snapshot / merge timing, empty visit, cleanup | [STATE_LIFECYCLE.md](STATE_LIFECYCLE.md) |
++| Weighted algebra | [weighted_pca.py](../../../src/dpa_ctta/r2/weighted_pca.py) |
++| Paired loss, reduction, F and shuffled matching | [feature_losses.py](../../../src/dpa_ctta/r2/feature_losses.py), [memory.py](../../../src/dpa_ctta/r2/memory.py) |
++| One-step sequence / compatibility | [host.py](../../../src/dpa_ctta/r2/host.py), unchanged [R1 host](../../../src/dpa_ctta/r1/host.py) |
++| Matrix / authorization / process and IO reuse | [plan.py](../../../src/dpa_ctta/r2/plan.py), [run.py](../../../src/dpa_ctta/r2/run.py) |
++| Historical binding / weighted replay / complete-result validation | [analyze.py](../../../src/dpa_ctta/r2/analyze.py) |
++| Procedural tests and guarded CPU entry | [test_r2.py](../../../tests/test_r2.py), [check_r2_cpu.py](../../../scripts/check_r2_cpu.py) |
++| Narrow diff against reviewed runtime | [IMPLEMENTATION.patch](IMPLEMENTATION.patch) |
++| Metadata-only confirmation | [ASSET_METADATA_STATUS.json](ASSET_METADATA_STATUS.json) |
++| Independent provided plan algebra | [PLAN_MATH_LOG.txt](PLAN_MATH_LOG.txt), [PLAN_MATH_RESULT.json](PLAN_MATH_RESULT.json) |
++
++Review the new mathematics, lifecycle, old-control bindings and thin execution entry. Existing 37 R1 regressions remain intact. No performance gate, additional hyperparameter or experiment arm has been introduced.
++
++CPU reproduction uses the existing environment and CTTA / GraTa dependency checkouts (digests in the implementation report). Set PYTHONPATH to src, tests and the existing dependency path; set DPA_CTTA_BASE_ROOT / DPA_GRATA_ROOT to those checkouts, RUN_FILE to scripts/check_r2_cpu.py, and invoke Python with `-c 'import os,runpy;runpy.run_path(os.environ["RUN_FILE"],run_name="__main__")'`. CHECKPOINT is discarded by this CPU entry. Optional CHECK_OUTPUT writes the machine-readable test status. R2_ONLY=1 runs only new checks during development. No dataset is needed.
++
++Dry-run: use the same neutral entry with RUN_FILE=scripts/run_r2_matrix.py and no arguments. `--run` rejects the shipped disabled config before checkpoint/GPU access. Future `--recompute --assets <private-json> --output <private-run-directory>` recomputes only scalars on CPU; it cannot substitute for review or authorize GPU execution. On a shared server pass sensitive paths via environment/stdin rather than visible arguments.
+diff --git a/docs/review/r2/SCIENCE_DIGEST.txt b/docs/review/r2/SCIENCE_DIGEST.txt
+new file mode 100644
+index 0000000..1e7c2b5
+--- /dev/null
++++ b/docs/review/r2/SCIENCE_DIGEST.txt
+@@ -0,0 +1 @@
++882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353  configs/r2_science_v1.json
+diff --git a/docs/review/r2/STATE_LIFECYCLE.md b/docs/review/r2/STATE_LIFECYCLE.md
+new file mode 100644
+index 0000000..80c14c2
+--- /dev/null
++++ b/docs/review/r2/STATE_LIFECYCLE.md
+@@ -0,0 +1,18 @@
++# R2 state lifecycle
++
++1. Start a trajectory with the sole registered checkpoint (Stage II only), fresh Adam and empty banks. There are no domain-boundary notifications, resets or recovery operations.
++2. Increment global visit. Snapshot each ready bank before any current-image computation. Each snapshot is a detached clone and its version must be less than the current visit.
++3. Run six weak predictions. The first original-view seg_head input is detached and retained only for this current visit. R1 aligns weak probability grids with the original 32x32 grid. Region masks and reliability are based on this existing weak computation.
++4. Stage at most 32 reliable unit vectors per region from the original features. These staged vectors have not entered memory. The loss uses all hard-partition tokens, regardless of memory reliability sampling. Token c*1024+u always pairs original and strong position u, including shuffled banks.
++5. Run the existing strong prediction. Compute original C loss plus 0.05 times the specified extra loss. Only strong features carry gradients through the extra term; f0, mean and basis are detached. No extra forward, backward or autograd.grad is used for diagnostics.
++6. Perform one backward and one Adam update, then the existing post-update final prediction. The returned prediction is fixed before target mask decoding/evaluation.
++7. Only after that final prediction merge the staged original, pre-update vectors. D calls the original cumulative bank. E/DE/F/DE-S decay W and M2 by rho and Q by rho squared on every global visit, even with no contribution, then merge any new weight-one tokens. Never merge post-update features.
++8. Refresh only on a contributing image when raw support reaches 16 images/128 tokens and the contributing-image count is a multiple of 16. Covariance is CPU float64, symmetrized M2/(W-Q/W); finite eigenvalues above 1e-10 determine actual rank up to 8. Snapshot center/basis/version change only at refresh. Empty visits decay statistics without refreshing or expiring the old snapshot. Rank zero is inactive; numerical/eigh failure propagates as failure.
++9. Clear pending f0/fs/views/vectors/snapshots in finally, including on errors. Host scalar diagnostics are also cleared after copying into its return record. Algorithm state retains only model/Adam, original augmentation RNG and sufficient statistics/basis. No raw observations, input pixels, masks, domain identity or feature history survive in the algorithm state.
++10. The evaluator subsequently reads the current mask using the unchanged verified-byte R1 path. JSONL contains scalar metrics/audits and private identities, not feature tensors. Public aggregates omit per-content identities. Finish removes hooks. A new trajectory gets new banks.
++
++Per bank: mean[32], M2[32,32], raw_n, contributing images, last visit, merges, eig calls, optional snapshot center[32], U[32,k], eigenvalues[k], version. Weighted banks additionally keep scalar W, Q, rho and optional scalar projector change. At rank 8, tensor storage is 10,816 bytes per bank, 43,264 bytes for four banks; scalar/object overhead is not included in tensor byte counts. Persistent PCA state remains far below 1 MiB. Current-visit staging is transient and separate from that count.
++
++F pays the same shadow sufficient-statistic/eigh costs and observes the same readiness rules as DE; loss direction is independent of U. Raw support and effective weights are separate fields. Global visit and contributing-image count are not interchangeable.
++
++R2 imports R1's reviewed process-group cleanup and atomic publisher. `R2_EXPERIMENT_REPORT.md` is an alias through the same atomic `current` pointer to the publisher's legacy internal `R1_EXPERIMENT_REPORT.md` filename. Its content and result status are R2. Invalidating current results makes both aliases unavailable. A failed recomputation cannot leave a valid success pointer.
+diff --git a/scripts/check_r2_cpu.py b/scripts/check_r2_cpu.py
+new file mode 100644
+index 0000000..157b94e
+--- /dev/null
++++ b/scripts/check_r2_cpu.py
+@@ -0,0 +1,18 @@
++"""CPU procedural suite with registered checkpoint use disabled unconditionally."""
++import os,sys,time,unittest,json
++from pathlib import Path
++os.environ['CUDA_VISIBLE_DEVICES']=''
++os.environ.pop('CHECKPOINT',None)
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses()
++import torch
++from unittest.mock import patch
++torch.set_num_threads(2)
++start=time.monotonic()
++modules=['test_r2'] if os.environ.get('R2_ONLY')=='1' else ['test_r1','test_r1_fixes','test_r2']
++with patch('torch.cuda._lazy_init',side_effect=AssertionError('Stage I forbids GPU initialization')):
++    result=unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromNames(modules))
++status=dict(tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skips=len(result.skipped),seconds=time.monotonic()-start,python=sys.version.split()[0],torch=torch.__version__,cuda_initialized=torch.cuda.is_initialized(),checkpoint_mode='programmatic_random_weights',real_target_reads=0,exit_code=int(not result.wasSuccessful()))
++print(json.dumps(status,indent=2))
++if os.environ.get('CHECK_OUTPUT'):Path(os.environ['CHECK_OUTPUT']).write_text(json.dumps(status,indent=2)+'\n')
++sys.exit(status['exit_code'])
+diff --git a/scripts/run_r2_matrix.py b/scripts/run_r2_matrix.py
+new file mode 100644
+index 0000000..611f000
+--- /dev/null
++++ b/scripts/run_r2_matrix.py
+@@ -0,0 +1,4 @@
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses()
++from dpa_ctta.r2.run import main
++main()
+diff --git a/src/dpa_ctta/r2/__init__.py b/src/dpa_ctta/r2/__init__.py
+new file mode 100644
+index 0000000..e69de29
+diff --git a/src/dpa_ctta/r2/analyze.py b/src/dpa_ctta/r2/analyze.py
+new file mode 100644
+index 0000000..00488e6
+--- /dev/null
++++ b/src/dpa_ctta/r2/analyze.py
+@@ -0,0 +1,217 @@
++"""R2 scalar validation, bound R1 controls and independent CPU closeout."""
++import json, math, re
++from pathlib import Path
++import numpy as np
++from ..r1 import analyze as r1
++from ..r1.evidence import invalidate, publish
++from ..p2_analysis import validate_metric
++from ..host_diagnostic_analysis import channels, distribution
++from ..m1_analysis import paired
++from .plan import science, matrix, allocation, binding, bound, digest, SCIENCE, registration_digest, stream, R1_CODE, R1_SCIENCE
++from .memory import SPECS
++from .weighted_pca import RHO
++
++SUBSETS = r1.SUBSETS
++PAIRS = tuple(dict.fromkeys([(a,b) for a in SPECS for b in ('C','C_PCA_REGION')]+[('R2_DE',b) for b in ('R2_D','R2_E','R2_F','R2_DE_S')]))
++
++
++def historical_metadata(assets):
++    """Only metadata and path presence; never open old scalar contents here."""
++    reg=assets['registration'];out=Path(assets['r1_result_directory'])
++    receipt=json.loads((out/'receipt.json').read_text());pointer=json.loads((out/'current_result.json').read_text())
++    expected=dict(code_sha=R1_CODE,science_sha256=R1_SCIENCE,registration_digest=registration_digest(reg))
++    if any(receipt['binding'].get(k)!=v for k,v in expected.items()) or not pointer.get('valid') or pointer['status']!='R1_EXPERIMENT_COMPLETE' or pointer['binding']!=receipt['binding']:
++        raise ValueError('primary historical execution binding')
++    controls={}
++    for o in range(4):
++        for arm,index in [('C',0),('C_PCA_REGION',5)]:
++            p=out/f'o{o}a{index}';done=json.loads((p/'completion.json').read_text());identity=done['binding']
++            if any(identity.get(k)!=v for k,v in receipt['binding'].items()) or identity.get('arm')!=arm or identity.get('order')!=o or done['status']!='TRAJECTORY_COMPLETE' or done['backend']['seed']!=20260907:
++                raise ValueError('historical arm/order/seed binding')
++            job=next(j for j in receipt['jobs'] if j['arm']==arm and j['order']==o)
++            slot=next(a['worker'] for a in receipt['schedule']['assignments'] if a['job_id']==job['job_id'])
++            bound(done,binding(receipt,slot,job))
++            if done['records']!=job['records'] or done['checkpoint_io']['bytes']!=reg['checkpoint']['bytes']:raise ValueError('historical completion/checkpoint metadata')
++            if not (p/'records.jsonl').is_file(): raise FileNotFoundError('required primary historical scalars')
++            controls[o,arm]=p
++    return receipt,controls
++
++
++def pca_scalars(p,previous,arm,visit):
++    if not isinstance(p,dict) or len(p.get('banks',[]))!=4 or len(p.get('basis_versions_used',[]))!=4: raise ValueError('four banks required')
++    previous=previous or [dict(n=0,contributing_images=0,eigh_calls=0,version=0,ready=False,rank=0,W=0.,Q=0.) for _ in range(4)]
++    if p['basis_versions_used']!=[b['version'] if b['ready'] else None for b in previous]: raise ValueError('prior snapshot binding')
++    if any(v is not None and v>=visit for v in p['basis_versions_used']): raise ValueError('current sample in basis')
++    inputs=p['input']
++    for key in ('region_token_counts','sampled_region_counts','selected_region_counts','zero_vectors','assigned_bank_counts'):
++        if len(inputs[key])!=4 or any(type(v) is not int or v<0 for v in inputs[key]): raise ValueError('nonnegative region quota')
++    regions,sampled,selected,zero=[inputs[k] for k in ('region_token_counts','sampled_region_counts','selected_region_counts','zero_vectors')]
++    if sum(regions[:2])!=1024 or sum(regions[2:])!=1024 or any(s>min(r,32) or n+z!=s for r,s,n,z in zip(regions,sampled,selected,zero)) or selected!=inputs['assigned_bank_counts']:
++        raise ValueError('selection and assigned quota')
++    if inputs['missing_foreground']!=[regions[i]==0 for i in (1,3)]: raise ValueError('foreground flag')
++    rho=1. if arm=='R2_D' else RHO
++    for b,old,k in zip(p['banks'],previous,selected):
++        n=old['n']+k;images=old['contributing_images']+int(k>0)
++        refresh=bool(k and images>=16 and n>=128 and images%16==0)
++        want=dict(n=n,raw_n=n,images=images,contributing_images=images,merges=images,last_visit=visit,eigh_calls=old['eigh_calls']+int(refresh),version=visit if refresh else old['version'])
++        if any(type(b.get(key)) is not int or b[key]!=value for key,value in want.items()): raise ValueError('raw counts/visit/refresh')
++        for key,value in dict(W=old['W']*rho+k,Q=old['Q']*rho**2+k,rho=rho).items():
++            if not math.isfinite(b[key]) or not math.isclose(b[key],value,rel_tol=1e-12,abs_tol=1e-12): raise ValueError('weighted scalar replay')
++        if type(b['rank']) is not int or not 0<=b['rank']<=8 or type(b['ready']) is not bool or b['ready']!=(b['rank']>0): raise ValueError('rank/ready')
++        if not refresh and any(b[key]!=old[key] for key in ('ready','rank')): raise ValueError('basis changed without refresh')
++        expected_bytes=8448+(8*(32+32*b['rank']+b['rank']) if b['ready'] else 0)
++        if b['state_bytes']!=expected_bytes: raise ValueError('PCA tensor storage')
++        change=b.get('projector_change')
++        if change is not None and (not refresh or not math.isfinite(change) or change<0): raise ValueError('projector change audit')
++    if not math.isfinite(p['subloss']) or p['subloss']<0 or not math.isfinite(p['base_loss']): raise ValueError('finite extra loss')
++    return p['banks']
++
++
++def validate(rows,ordered,arm,order,identity):
++    if arm not in SPECS or len(rows)!=len(ordered) or len({r['group_id'] for r in rows})!=len(rows): raise ValueError('R2 coverage/arm')
++    previous=None
++    for i,(r,e) in enumerate(zip(rows,ordered),1):
++        bound(r,identity)
++        if any(r[k]!=e[k] for k in ('group_id','sample_id','domain','subset')) or r['arm']!=arm or r['order']!=order or r['global_visit']!=i: raise ValueError('ordered identity')
++        if any(r[k]!=i for k in ('segment_age','optimizer_steps_since_reset','total_adam_calls')) or r['reset_count']!=0 or r['reset_before_current'] is not False or r['controller'] is not None: raise ValueError('one Adam, no recovery')
++        if r['counts']!=dict(forwards=8,backwards=1,base_adam=1,perturb=0,restore=0) or r['prediction_fixed_before_label'] is not True: raise ValueError('counts/label isolation')
++        if [v['channel'] for v in r['metrics']]!=['OD','OC']: raise ValueError('channel order')
++        for metric in r['metrics']:validate_metric(metric)
++        if set(r['asset_io'])!={'image','mask'}:raise ValueError('asset IO fields')
++        for v in r['asset_io'].values():
++            if type(v['bytes']) is not int or v['bytes']<=0 or not math.isfinite(v['read_verify_decode_seconds']) or v['read_verify_decode_seconds']<0:raise ValueError('asset IO')
++        previous=pca_scalars(r['pca'],previous,arm,i)
++        a=r['r2'];p=r['pca']
++        if a['base_loss']!=p['base_loss'] or a['extra_loss']!=p['subloss'] or not math.isclose(a['weighted_extra_loss'],.05*a['extra_loss'],rel_tol=1e-6,abs_tol=1e-9):raise ValueError('loss accounting')
++        if a['shadow_readiness_only']!=(arm=='R2_F') or a['active_regions']!=len(a['region_energies']):raise ValueError('shadow/region audit')
++        expected=[j for j,(n,v) in enumerate(zip(p['input']['region_token_counts'],p['basis_versions_used'])) if n and v is not None]
++        if [v['bank'] for v in a['region_energies']]!=expected:raise ValueError('active region membership')
++        for d in a['region_energies']:
++            if d['tokens']!=p['input']['region_token_counts'][d['bank']] or any(not math.isfinite(v) or v<0 for k,v in d.items() if k not in ('bank','tokens')):raise ValueError('region scalar energies')
++        if not expected and a['extra_loss']!=0:raise ValueError('inactive extra loss')
++        json.dumps(r,allow_nan=False)
++
++
++def execution_evidence(out,assets):
++    reg=assets['registration'];receipt=json.loads((out/'receipt.json').read_text());identity=receipt['binding'];jobs=matrix()['jobs'];devices=receipt['devices']
++    if set(identity)!={'run_id','code_sha','science_sha256','registration_digest'} or not re.fullmatch('[0-9a-f]{32}',identity['run_id']) or not re.fullmatch('[0-9a-f]{40}',identity['code_sha']):raise ValueError('execution identity')
++    if identity['science_sha256']!=digest(SCIENCE) or identity['registration_digest']!=registration_digest(reg):raise ValueError('science/registration binding')
++    packet=json.loads((out/'packet.private.json').read_text());bound(packet,identity)
++    from .plan import authorize
++    ids=authorize(packet['authorization'],reg,current_sha=identity['code_sha'])
++    if [d['index'] for d in devices]!=ids or len({d['uuid'] for d in devices})!=len(devices):raise ValueError('authorized devices')
++    if packet['assets']!=assets or packet['devices']!=devices or packet['jobs']!=jobs or packet['schedule']!=allocation(jobs,len(ids)):raise ValueError('packet consistency')
++    if receipt['jobs']!=jobs or receipt['schedule']!=packet['schedule'] or receipt['formal_budget']!=science()['formal_budget'] or receipt['smoke_budget']!=science()['per_gpu_smoke_budget']:raise ValueError('matrix/schedule/budget')
++    if (out/'dispatch.stopped.json').exists() or list(out.glob('*.failure.json')):raise ValueError('failure contradicts completion')
++    process=json.loads((out/'matrix.processes.json').read_text());bound(process,identity)
++    if process['status']!='COMPUTE_COMPLETE' or not 0<=process['active_seconds']<=86400 or not 0<=process['wall_seconds']<=86400:raise ValueError('process completion/budget')
++    slots={v['job_id']:v['worker'] for v in receipt['schedule']['assignments']}
++    expected={('smoke','device'+str(i)):binding(receipt,i) for i in range(len(ids))}
++    expected.update({('formal',j['job_id']):binding(receipt,slots[j['job_id']],j) for j in jobs})
++    entries=process['processes']
++    if len(entries)!=len(expected) or len({(e['phase'],e['key']) for e in entries})!=len(expected) or process['exit_codes']!=[e['exit_code'] for e in entries]:raise ValueError('process coverage')
++    for e in entries:
++        bound(e,expected[e['phase'],e['key']])
++        if e['exit_code']!=0 or e['status']!='EXITED' or e['pid']!=e['pgid'] or e['pid']<=0:raise ValueError('owned process exit')
++    started=json.loads((out/'processes.started.json').read_text());bound(started,identity)
++    if started['processes']!=[{k:e[k] for k in ('pid','pgid','binding','phase','key')} for e in entries]:raise ValueError('created process inventory')
++    smokes=[]
++    for i in range(len(ids)):
++        p=out/('device'+str(i));s=json.loads((p/'smoke.completion.json').read_text());bound(s,binding(receipt,i))
++        if list(p.glob('*failure.json')) or s['status']!='MECHANICAL_SMOKE_COMPLETE' or s['physical']!=dict(forwards=112,backwards=14,base_adam=14,perturb=0,restore=0) or s['backend']['seed']!=20260907 or s['checkpoint_io']['bytes']!=reg['checkpoint']['bytes']:raise ValueError('smoke evidence')
++        smokes.append(s)
++    return receipt,slots,smokes
++
++
++def historical_rows(assets):
++    reg=assets['registration'];old,controls=historical_metadata(assets)
++    r1.execution_evidence(Path(assets['r1_result_directory']),reg)
++    result={}
++    for (o,arm),path in controls.items():
++        done=json.loads((path/'completion.json').read_text());rows=[json.loads(s) for s in (path/'records.jsonl').read_text().splitlines()]
++        r1.validate(rows,stream(reg,o),arm,o,done['binding'])
++        counts={k:sum(r['counts'][k] for r in rows) for k in ('forwards','backwards','base_adam','perturb','restore')}
++        if done['records']!=len(rows) or done['physical']!=counts or done['checkpoint_io']['bytes']!=reg['checkpoint']['bytes']:raise ValueError('old completion/scalar counts')
++        result[o,arm]=rows
++    for o in range(4):
++        if any(any(x[k]!=y[k] for x,y in zip(a['metrics'],b['metrics']) for k in ('gt_pixels','total_pixels','gt_empty','gt_full')) for a,b in zip(result[o,'C'],result[o,'C_PCA_REGION'])):
++            raise ValueError('historical GT metadata')
++    return result
++
++
++def summarize(arms):
++    result={}
++    for domain in science()['orders'][0]:
++        rs={a:[r for r in rows if r['domain']==domain] for a,rows in arms.items()}
++        values={a:{c:dict(dice_percent=distribution([100*m['dice'] for m in channels(rows,c)]),**({} if c=='macro' else dict(assd_conditional=distribution([m['assd'] for m in channels(rows,c) if m['assd'] is not None]),assd_defined=sum(m['assd'] is not None for m in channels(rows,c)),assd_undefined=sum(m['assd'] is None for m in channels(rows,c)),**{k:sum(m[k] for m in channels(rows,c)) for k in ('pred_empty','pred_full','gt_empty','gt_full')}))) for c in ('OD','OC','macro')} for a,rows in rs.items()}
++        result[domain]=dict(arms=values,paired={a+'-'+b:{c:paired(channels(rs[a],c),channels(rs[b],c),c=='macro') for c in ('OD','OC','macro')} for a,b in PAIRS})
++    means={a:{c:float(np.mean([v['arms'][a][c]['dice_percent']['mean'] for v in result.values()])) for c in ('OD','OC','macro')} for a in arms}
++    comparisons={a+'-'+b:means[a]['macro']-means[b]['macro'] for a,b in PAIRS}
++    return dict(domains=result,domain_equal_dice_percent=means,comparisons_pp=comparisons,
++                pooled_content_paired={a+'-'+b:{c:paired(channels(arms[a],c),channels(arms[b],c),c=='macro') for c in ('OD','OC','macro')} for a,b in PAIRS},
++                factorial_interaction_pp=comparisons['R2_DE-R2_D']-comparisons['R2_E-C_PCA_REGION'])
++
++
++def assess(target):
++    scores={a:[target[str(o)]['remaining_dev']['domain_equal_dice_percent'][a]['macro'] for o in range(4)] for a in ('C','C_PCA_REGION',*SPECS)}
++    items={}
++    for arm in SPECS:
++        delta=np.array(scores[arm])-scores['C']
++        domain={d:float(np.mean([target[str(o)]['remaining_dev']['domains'][d]['arms'][arm]['macro']['dice_percent']['mean']-target[str(o)]['remaining_dev']['domains'][d]['arms']['C']['macro']['dice_percent']['mean'] for o in range(4)])) for d in science()['orders'][0]}
++        items[arm]=dict(mean_gain_C_pp=float(delta.mean()),positive_orders=int((delta>0).sum()),practical_signal=bool(delta.mean()>=.5 and (delta>0).sum()>=3),risk_warning=any(v< -2 for v in domain.values()) or min(scores[arm])-min(scores['C'])<-.5,domain_mean_deltas=domain)
++    controls=('R2_D','R2_E','R2_F','R2_DE_S')
++    needed=all(np.mean(scores['R2_DE'])>np.mean(scores[c]) for c in controls) and all(sum(a>b for a,b in zip(scores['R2_DE'],scores[c]))>=3 for c in ('R2_F','R2_DE_S'))
++    return dict(arms=items,DE_matched_necessity_supported=needed,status='DESCRIPTIVE_ONLY',next_execution_authorized=False,note='Shared exposed contents; thresholds are resource references, not significance or execution gates.')
++
++
++def recompute(out,assets):
++    out=Path(out);invalidate(out)
++    try:
++        import torch
++        if torch.cuda.is_initialized():raise ValueError('CPU closeout required')
++        receipt,slots,smokes=execution_evidence(out,assets);reg=assets['registration'];all_rows=historical_rows(assets)
++        physical=dict(new_records=0,forwards=0,backwards=0,adam=0);mechanism={}
++        for job in matrix()['jobs']:
++            p=out/job['job_id'];done=json.loads((p/'completion.json').read_text());identity=binding(receipt,slots[job['job_id']],job);bound(done,identity)
++            if done['status']!='TRAJECTORY_COMPLETE' or list(p.glob('*failure.json')):raise ValueError('trajectory incomplete')
++            rows=[json.loads(s) for s in (p/'records.jsonl').read_text().splitlines()];validate(rows,stream(reg,job['order']),job['arm'],job['order'],identity)
++            counts={k:sum(r['counts'][k] for r in rows) for k in ('forwards','backwards','base_adam','perturb','restore')}
++            if len(rows)!=job['records'] or done['records']!=len(rows) or done['physical']!=counts or counts!=dict(forwards=job['forwards'],backwards=job['backwards'],base_adam=job['adam'],perturb=0,restore=0):raise ValueError('completion/JSONL/job counts')
++            if done['backend']['seed']!=20260907 or done['checkpoint_io']['bytes']!=reg['checkpoint']['bytes']:raise ValueError('backend/checkpoint binding')
++            reference=all_rows[job['order'],'C']
++            if any(any(x[k]!=y[k] for x,y in zip(r['metrics'],c['metrics']) for k in ('gt_pixels','total_pixels','gt_empty','gt_full')) for r,c in zip(rows,reference)):raise ValueError('old/new GT metadata')
++            all_rows[job['order'],job['arm']]=rows;physical['new_records']+=len(rows)
++            for key,source in [('forwards','forwards'),('backwards','backwards'),('adam','base_adam')]:physical[key]+=counts[source]
++            mechanism[job['job_id']]=dict(ready_visits=sum(r['r2']['active_regions']>0 for r in rows),extra_loss=distribution([r['r2']['extra_loss'] for r in rows]),last_banks=rows[-1]['pca']['banks'],host_seconds=sum(r['host_seconds'] for r in rows),peak_allocated_bytes=max(r['peak_allocated_bytes'] for r in rows))
++        if physical!={k:science()['formal_budget'][k] for k in physical}:raise ValueError('matrix budget')
++        target={str(o):{subset:summarize({a:[r for r in all_rows[o,a] if subset=='all_dev' or r['subset']==subset] for a in ('C','C_PCA_REGION',*SPECS)}) for subset in SUBSETS} for o in range(4)}
++        result=dict(binding=receipt['binding'],status='R2_EXPERIMENT_COMPLETE',physical=physical,smoke_physical={k:sum(s['physical'][k] for s in smokes) for k in smokes[0]['physical']},historical_primary_records=sum(len(v) for (o,a),v in all_rows.items() if a in ('C','C_PCA_REGION')),target=target,mechanism=mechanism,assessment=assess(target),secondary_A_C0='NOT_RECOMPUTED: optional historical reference; primary C/R validated',limitations=['Exposed development data; four orders share contents.','Scalar replay checks W/Q/counts/refresh, not feature covariance or ASSD geometry.','F includes shadow PCA cost; no direction in its loss.','Same rule does not ensure identical F/DE tokens after adaptation.','No automatic next run.'])
++        result['four_order_equal']={subset:dict(arms={a:{c:float(np.mean([target[str(o)][subset]['domain_equal_dice_percent'][a][c] for o in range(4)])) for c in ('OD','OC','macro')} for a in ('C','C_PCA_REGION',*SPECS)},comparisons_pp={a+'-'+b:float(np.mean([target[str(o)][subset]['comparisons_pp'][a+'-'+b] for o in range(4)])) for a,b in PAIRS},factorial_interaction_pp=float(np.mean([target[str(o)][subset]['factorial_interaction_pp'] for o in range(4)]))) for subset in SUBSETS}
++        result['focus_domains']={str(o):{d:target[str(o)]['remaining_dev']['domains'][d] for d in ('REFUGE_Valid','ORIGA','Drishti_GS')} for o in range(4)}
++        result['limitations'].append('Drishti_GS remaining_dev has 37 contents and one-quarter domain weight; four orders are not independent samples.')
++        report=render_report(result)
++        if sum(p.stat().st_size for p in out.rglob('*') if p.is_file())+len(json.dumps(result).encode())+len(report.encode())>2*1024**3:raise ValueError('output budget')
++        # Preserve R1's atomic publisher unchanged; the R2 alias follows the same current pointer.
++        alias=out/'R2_EXPERIMENT_REPORT.md'
++        if not alias.is_symlink():alias.symlink_to('current/R1_EXPERIMENT_REPORT.md')
++        publish(out,result,report);return result
++    except BaseException as e:
++        invalidate(out,'INCOMPLETE',type(e).__name__+': '+str(e));raise
++
++
++def render_report(result):
++    lines=['# R2 experiment report','','R2_EXPERIMENT_COMPLETE','','Primary endpoint: remaining_dev, OD/OC mean, four domains equally weighted, then four orders equally weighted.','','| Arm | Order 0 | Order 1 | Order 2 | Order 3 | Mean | Mean gain C (pp) |','|---|---:|---:|---:|---:|---:|---:|']
++    means=result['four_order_equal']['remaining_dev']['arms']
++    for arm in ('C','C_PCA_REGION',*SPECS):
++        values=[result['target'][str(o)]['remaining_dev']['domain_equal_dice_percent'][arm]['macro'] for o in range(4)]
++        lines.append('| '+arm+' | '+' | '.join(f'{v:.4f}' for v in [*values,means[arm]['macro'],means[arm]['macro']-means['C']['macro']])+' |')
++    lines+=['','## Matched comparisons','','```json',json.dumps(result['four_order_equal']['remaining_dev']['comparisons_pp'],indent=2),'```','','Factorial interaction (descriptive pp): '+str(result['four_order_equal']['remaining_dev']['factorial_interaction_pp']),'','## Focus domains','','REFUGE_Valid OC and ORIGA / Drishti_GS gains and costs are detailed by order below. ASSD means are conditional on defined values; paired ASSD uses jointly defined contents only.','','| Order | Domain | Arm | OC Dice % | OC ASSD px | OC Dice decline vs C | Macro gain C (pp) |','|---|---|---|---:|---:|---:|---:|']
++    for o,domains in result['focus_domains'].items():
++        for d,entry in domains.items():
++            for arm in SPECS:
++                oc=entry['arms'][arm]['OC'];paired_oc=entry['paired'][arm+'-C']['OC']['dice_delta_pp']
++                assd=oc['assd_conditional']['mean'];decline=paired_oc['negative']/paired_oc['n'] if paired_oc['n'] else None
++                delta=entry['arms'][arm]['macro']['dice_percent']['mean']-entry['arms']['C']['macro']['dice_percent']['mean']
++                lines.append(f"| {o} | {d} | {arm} | {oc['dice_percent']['mean']:.4f} | {assd} | {decline} | {delta:.4f} |")
++    lines+=['','## Resource-reference assessment','','```json',json.dumps(result['assessment'],indent=2),'```','','## Counts and limits','','```json',json.dumps(dict(formal=result['physical'],smoke=result['smoke_physical'],historical_primary=result['historical_primary_records']),indent=2),'```','',*['- '+v for v in result['limitations']],'','Full per-subset, domain, channel, paired-tail and mechanism scalars are in public_aggregate.json. No automatic next experiment.','']
++    return '\n'.join(lines)
+diff --git a/src/dpa_ctta/r2/feature_losses.py b/src/dpa_ctta/r2/feature_losses.py
+new file mode 100644
+index 0000000..148dc09
+--- /dev/null
++++ b/src/dpa_ctta/r2/feature_losses.py
+@@ -0,0 +1,27 @@
++"""Same-image losses: feature sum, token mean; region mean is the caller's job."""
++import torch
++from ..r1.streaming_pca import projection_residual
++
++
++def unit(x):
++    return x/x.norm(dim=1,keepdim=True).clamp_min(1e-6)
++
++
++def paired_loss(fs, f0, U, full=False):
++    if fs.ndim != 2 or fs.shape != f0.shape or fs.shape[1] != 32: raise ValueError('matched [tokens,32] features required')
++    if U.ndim != 2 or U.shape[0] != 32 or not 1 <= U.shape[1] <= 8: raise ValueError('ready rank 1..8 required')
++    if not len(fs): return fs.sum()*0
++    delta = unit(fs)-unit(f0.detach().to(fs))
++    if full: return delta.square().sum(1).mean()
++    basis = U.detach().to(fs); residual = delta-(delta@basis)@basis.T
++    return (32/(32-basis.shape[1]))*residual.square().sum(1).mean()
++
++
++@torch.no_grad()
++def energies(fs, f0, center, U):
++    vs, v0 = unit(fs.detach()), unit(f0.detach().to(fs))
++    b, c = U.detach().to(fs), center.detach().to(fs)
++    residual = lambda x: x-(x@b)@b.T
++    energy = lambda x: float(x.square().sum(1).mean())
++    return dict(original_absolute_energy=energy(residual(v0-c)), strong_absolute_energy=energy(residual(vs-c)),
++                delta_energy=energy(vs-v0), complement_delta_energy=energy(residual(vs-v0)))
+diff --git a/src/dpa_ctta/r2/host.py b/src/dpa_ctta/r2/host.py
+new file mode 100644
+index 0000000..785162b
+--- /dev/null
++++ b/src/dpa_ctta/r2/host.py
+@@ -0,0 +1,36 @@
++"""R1's complete online sequence, with only the extra loss and memory replaced."""
++import torch
++from ..r1.host import Host as R1Host, finite
++from ..r1.region_memory import grid
++from .memory import Memory, SPECS
++
++ARMS = tuple(SPECS)
++EXTRA_WEIGHT = .05
++
++
++class Host(R1Host):
++    def __init__(self, arm, state=None, device='cpu', model=None):
++        if arm not in (*ARMS,'C','C_PCA_REGION'): raise ValueError('R2 arm or explicit compatibility path required')
++        self.r2_arm = arm if arm in ARMS else None
++        self.scalar_diagnostics = {}
++        super().__init__('C_PCA_REGION' if self.r2_arm else arm,state,device,model)
++        if self.r2_arm: self.memory = Memory(arm)
++
++    def _criterion(self,z,q):
++        if not self.r2_arm: return super()._criterion(z,q)
++        base = torch.nn.functional.binary_cross_entropy_with_logits(z,q)
++        vectors,ids,audit = self.memory.prepare(self.pending['f0'],grid(q),torch.stack(self.pending['views']),self.visit)
++        extra,diagnostics = self.memory.loss(self.pending['fs'],self.pending['f0'],ids,self.pending['snapshots'])
++        finite(extra)
++        self.pending.update(vectors=vectors,memory_input=audit,subloss=float(extra.detach()),base_loss=float(base.detach()))
++        self.scalar_diagnostics = dict(base_loss=float(base.detach()),extra_loss=float(extra.detach()),
++            weighted_extra_loss=float((EXTRA_WEIGHT*extra).detach()),active_regions=len(diagnostics),
++            region_energies=diagnostics,shadow_readiness_only=self.r2_arm=='R2_F')
++        return base+EXTRA_WEIGHT*extra
++
++    def step(self,pixels):
++        try:
++            prediction,record = super().step(pixels)
++            record['r2'] = dict(self.scalar_diagnostics) if self.r2_arm else None
++            return prediction,record
++        finally: self.scalar_diagnostics.clear()
+diff --git a/src/dpa_ctta/r2/memory.py b/src/dpa_ctta/r2/memory.py
+new file mode 100644
+index 0000000..97e15aa
+--- /dev/null
++++ b/src/dpa_ctta/r2/memory.py
+@@ -0,0 +1,34 @@
++"""Reuse R1 grid, selection, all-token loss regions, salts and independent shuffles."""
++import torch
++from ..r1.region_memory import Memory as R1Memory
++from ..r1.streaming_pca import StreamingSubspace
++from .weighted_pca import WeightedSubspace, audit
++from .feature_losses import paired_loss, projection_residual, energies
++
++SPECS = {'R2_E':('absolute',True,False), 'R2_D':('pair',False,False),
++         'R2_DE':('pair',True,False), 'R2_F':('full',True,False), 'R2_DE_S':('pair',True,True)}
++
++
++class Memory(R1Memory):
++    def __init__(self, arm):
++        self.loss_kind, weighted, shuffled = SPECS[arm]
++        super().__init__('SHUFFLED' if shuffled else 'REGION')
++        self.banks = [WeightedSubspace() if weighted else StreamingSubspace() for _ in range(4)]
++
++    def loss(self, fs, f0, ids, snapshots):
++        terms, diagnostics = [], []
++        for index,(tokens,snap) in enumerate(zip(ids,snapshots)):
++            if not len(tokens) or snap is None: continue
++            center,U,version = snap
++            # The same token always selects the same position on both sides.
++            positions = tokens.to(fs.device)%1024
++            strong, original = fs[positions], f0[tokens.cpu()%1024]
++            terms.append(projection_residual(strong,center,U) if self.loss_kind=='absolute'
++                         else paired_loss(strong,original,U,full=self.loss_kind=='full'))
++            diagnostics.append(dict(bank=index,tokens=len(tokens),**energies(strong,original,center,U)))
++        return (torch.stack(terms).mean() if terms else fs.sum()*0), diagnostics
++
++    def audit(self):
++        values = [audit(b) for b in self.banks]
++        if sum(v['state_bytes'] for v in values) >= 1024**2: raise ValueError('bounded state exceeded')
++        return values
+diff --git a/src/dpa_ctta/r2/plan.py b/src/dpa_ctta/r2/plan.py
+new file mode 100644
+index 0000000..9b6a7eb
+--- /dev/null
++++ b/src/dpa_ctta/r2/plan.py
+@@ -0,0 +1,41 @@
++"""Frozen five-arm R2 matrix; registration body remains the R1 registration."""
++import json
++from ..r1.plan import ROOT, digest, registration_digest, binding, bound, stream, REF, GRATA
++from ..r1.plan import authorize as r1_authorize
++
++SCIENCE = ROOT/'configs/r2_science_v1.json'
++DEFAULTS = ROOT/'configs/r2_execution.defaults.json'
++SCIENCE_SHA = '882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353'
++R1_CODE = '54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b'
++R1_SCIENCE = 'e23fb6de3e55f704ec2036d82777b29a78643ebc7e1ae1e89328f22f56de51e2'
++
++
++def science():
++    if digest(SCIENCE) != SCIENCE_SHA: raise ValueError('frozen R2 science bytes changed')
++    return json.loads(SCIENCE.read_text())
++
++
++def allocation(jobs,workers):
++    if type(workers) is not int or workers not in (1,2,3): raise ValueError('one to three slots')
++    arms=[s['name'] for s in science()['arms']]
++    assignments=[dict(job_id=j['job_id'],worker=(arms.index(j['arm'])+j['order'])%workers) for j in jobs]
++    return dict(rule='(arm_index + order_index) % workers',assignments=assignments,
++                loads=[dict(worker=i,jobs=sum(a['worker']==i for a in assignments),forwards=sum(j['forwards'] for j,a in zip(jobs,assignments) if a['worker']==i)) for i in range(workers)])
++
++
++def matrix():
++    c=science();jobs=[dict(job_id=f'o{o}a{i}',arm=s['name'],order=o,domains=ds,records=1951,forwards=15608,backwards=1951,adam=1951,status='NOT_RUN',gpu=None)
++        for o,ds in enumerate(c['orders']) for i,s in enumerate(c['arms'])]
++    return dict(status='DRY_RUN_ONLY',science_sha256=SCIENCE_SHA,jobs=jobs,formal_budget=c['formal_budget'],
++                historical_primary_records=15608,per_gpu_smoke=c['per_gpu_smoke_budget'],
++                rotation_examples={str(k):allocation(jobs,k) for k in (1,2,3)},GPU_requests_issued=0)
++
++
++def authorize(auth,reg,current_sha=None):
++    return r1_authorize(auth,reg,current_sha,science_sha=digest(SCIENCE))
++
++
++def caps():
++    c=science()['resource_caps']
++    return dict(trajectory_seconds=c['trajectory_hours']*3600,wall_seconds=c['wall_hours']*3600,
++                active_seconds=c['total_active_worker_hours']*3600,bytes=c['private_output_bytes'])
+diff --git a/src/dpa_ctta/r2/run.py b/src/dpa_ctta/r2/run.py
+new file mode 100644
+index 0000000..0b0dc7d
+--- /dev/null
++++ b/src/dpa_ctta/r2/run.py
+@@ -0,0 +1,160 @@
++"""R2 finite runner; unchanged R1 IO, ownership cleanup and one-step pipeline."""
++import argparse,gc,json,os,subprocess,sys,time,uuid
++from pathlib import Path
++from .plan import ROOT,DEFAULTS,SCIENCE,REF,GRATA,science,matrix,authorize,registration_digest,digest,stream,allocation,binding,bound,caps
++from ..r1.assets import checkpoint,target,AssetMismatch
++from ..r1.evidence import write
++
++
++from ..r1.run import claim,charge,current,failure_scope
++
++
++def smoke(state,device,out,identity,backend,checkpoint_io):
++    import torch
++    from ..b1_host import Host as OldC
++    from ..b4_run import capture,Calls
++    from ..source_pilot import seed_all
++    from ..host_diagnostic import close
++    from ..m2_run import deterministic_smoke_pair
++    from ..b3_runtime import process_audit
++    from .host import Host,ARMS
++    sys.path.insert(0,str(ROOT/'tests'));from test_vptta_host import pixels
++    calls=Calls();saved=[];ev={};start=time.monotonic()
++    try:
++        with deterministic_smoke_pair():
++            for arm in ('OLD','C',*ARMS):
++                seed_all(20260907);h=OldC('C',state,device) if arm=='OLD' else Host(arm,state,device);calls.attach(h,True)
++                if arm=='OLD':process_audit(out,'smoke')
++                if arm in ARMS:
++                    g=torch.Generator().manual_seed(42)
++                    for v in range(1,17):
++                        vectors=[]
++                        for bank in h.memory.banks:
++                            x=torch.randn(8,32,generator=g);vectors.append(x/x.norm(dim=1,keepdim=True))
++                        h.memory.merge(vectors,v)
++                    h.visit=16;h.counts['base_adam']=16
++                for i in range(2):
++                    z,a=h.step(pixels('fundus',i));current=dict(z=z.cpu(),state=capture(h))
++                    if arm=='OLD':saved.append(current)
++                    elif arm=='C':close(current,saved[i]);close(current['state']['rng'],saved[i]['state']['rng'],exact=True)
++                ev[arm]=dict(parity=arm=='C',resets=getattr(h,'reset_count',0),PCA=None if not getattr(h,'memory',None) else h.memory.audit())
++                calls.release();h.finish(state);del h,z,current;gc.collect()
++        if calls.counts!=dict(forwards=112,backwards=14,base_adam=14,perturb=0,restore=0):raise ValueError('smoke budget')
++        write(out/'smoke.completion.json',dict(binding=identity,status='MECHANICAL_SMOKE_COMPLETE',physical=calls.counts,evidence=ev,backend=backend,checkpoint_io=checkpoint_io,seconds=time.monotonic()-start))
++    except Exception as e:write(out/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',reason=str(e),physical=calls.counts,scope=failure_scope(e)));raise
++
++
++def trajectory(job,state,reg,out,worker,start,identity,backend,checkpoint_io):
++    import torch
++    from .host import Host
++    from ..source_pilot import seed_all
++    from ..b3_runtime import process_audit
++    p=claim(out,job['job_id']);h=None;written=0;t0=time.monotonic()
++    try:
++        seed_all(20260907);h=Host(job['arm'],state,'cuda:0');torch.cuda.reset_peak_memory_stats();process_audit(p,'run')
++        with (p/'records.jsonl').open('x') as log:
++            for row in stream(reg,job['order']):
++                charge(out,worker,start,t0);a=current(h,row)
++                r=dict(binding=identity,arm=job['arm'],order=job['order'],**{k:row[k] for k in ('group_id','sample_id','domain','subset')},**a,peak_allocated_bytes=torch.cuda.max_memory_allocated())
++                log.write(json.dumps(r,allow_nan=False)+'\n');log.flush();written+=1
++                if written%64==0:
++                    if sum(f.stat().st_size for f in Path(out).rglob('*') if f.is_file())>2*1024**3:raise RuntimeError('private output cap')
++        h.finish(state);charge(out,worker,start,t0);write(p/'completion.json',dict(binding=identity,status='TRAJECTORY_COMPLETE',records=written,physical=h.counts,backend=backend,checkpoint_io=checkpoint_io,seconds=time.monotonic()-t0))
++    except Exception as e:
++        write(p/'failure.json',dict(binding=identity,status='INCOMPLETE',reason=str(e),records=written,physical=None if h is None else h.counts,scope=failure_scope(e)));raise
++    finally:del h;gc.collect()
++
++
++def context():
++    packet=json.loads(Path(os.environ['RUN_PACKET']).read_text());reg=packet['assets']['registration']
++    ids=authorize(packet['authorization'],reg);index=int(os.environ['RUN_WORKER'])
++    if [d['index'] for d in packet['devices']]!=ids:raise PermissionError('authorized device list binding')
++    if os.environ.get('CUDA_VISIBLE_DEVICES')!=packet['devices'][index]['uuid']:raise PermissionError('device UUID binding')
++    if packet['binding']['code_sha']!=packet['authorization']['approved_code_sha'] or packet['binding']['science_sha256']!=digest(SCIENCE) or packet['binding']['registration_digest']!=registration_digest(reg):raise PermissionError('packet binding')
++    if packet['jobs']!=matrix()['jobs'] or packet['schedule']!=allocation(packet['jobs'],len(ids)):raise PermissionError('frozen schedule binding')
++    return packet,reg,index,Path(packet['out'])
++
++
++def worker():
++    import torch
++    from ..source_pilot_release import environment
++    packet,reg,index,out=context();p=claim(out,'device'+str(index));identity=binding(packet,index)
++    try:
++        # Wrong content is rejected before environment() queries or initializes CUDA.
++        state,io=checkpoint(reg);torch.set_num_threads(2)
++        os.environ['CUBLAS_WORKSPACE_CONFIG']=':4096:8';backend=environment()
++        smoke(state,'cuda:0',p,identity,backend,io)
++    except Exception as e:
++        if not p.exists():p.mkdir(mode=0o700)
++        if not (p/'smoke.failure.json').exists():write(p/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',reason=str(e),scope=failure_scope(e)))
++        raise
++
++
++def formal_worker():
++    import torch
++    from ..source_pilot_release import environment
++    packet,reg,index,out=context();job=next(j for j in packet['jobs'] if j['job_id']==os.environ['RUN_JOB'])
++    if next(a['worker'] for a in packet['schedule']['assignments'] if a['job_id']==job['job_id'])!=index:raise PermissionError('job device rotation binding')
++    identity=binding(packet,index,job)
++    try:
++        p=out/('device'+str(index));proof=json.loads((p/'smoke.completion.json').read_text());bound(proof,binding(packet,index))
++        if proof['status']!='MECHANICAL_SMOKE_COMPLETE' or list(p.glob('*.failure.json')) or proof['physical']!=dict(forwards=112,backwards=14,base_adam=14,perturb=0,restore=0):raise PermissionError('smoke evidence gate')
++        state,io=checkpoint(reg);torch.set_num_threads(2);os.environ.pop('CUBLAS_WORKSPACE_CONFIG',None);backend=environment()
++        trajectory(job,state,reg,out,index,time.monotonic(),identity,backend,io)
++    except Exception as e:
++        p=out/job['job_id'];p.mkdir(mode=0o700,exist_ok=True)
++        if not (p/'failure.json').exists():write(p/'failure.json',dict(binding=identity,status='INCOMPLETE',reason=str(e),scope=failure_scope(e)))
++        raise
++
++
++def launch(auth,assets,out):
++    reg=assets['registration'];ids=authorize(auth,reg)
++    from .analyze import historical_metadata
++    historical_metadata(assets)
++    for order in range(4):stream(reg,order)
++    if subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip():raise PermissionError('clean reviewed checkout required')
++    for key,sha in (('ctta_dependency_root',REF),('grata_root',GRATA)):
++        if subprocess.check_output(['git','rev-parse','HEAD'],cwd=assets[key],text=True).strip()!=sha:raise ValueError('fixed dependency')
++    rows=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid,name,memory.free','--format=csv,noheader'],text=True)
++    mapping={int(row[0]):dict(uuid=row[1].strip(),model=row[2].strip(),free_MiB=int(row[3].split()[0])) for row in [line.split(',') for line in rows.splitlines()]}
++    devices=[dict(index=i,**mapping[i]) for i in ids]
++    if any(d['free_MiB']<4096 for d in devices):raise RuntimeError('need 4 GiB peak headroom per worker; no waiting/retry')
++    out=Path(out).resolve()
++    if out.is_relative_to(ROOT):raise ValueError('private output outside code')
++    if not out.is_relative_to(Path(assets['private_storage_root']).resolve()):raise ValueError('registered private storage root')
++    import tempfile
++    fs=os.statvfs(out.parent)
++    if fs.f_bavail*fs.f_frsize<3*1024**3:raise RuntimeError('storage capacity')
++    with tempfile.TemporaryFile(dir=out.parent) as probe:
++        probe.write(b'probe');probe.flush();os.fsync(probe.fileno());probe.seek(0)
++        if probe.read()!=b'probe':raise RuntimeError('storage write/read')
++    out.mkdir(mode=0o700);write(out/'usage.json',dict(seconds=0.,wall_seconds=0.,active_workers=0))
++    jobs=matrix()['jobs'];identity=dict(run_id=uuid.uuid4().hex,code_sha=auth['approved_code_sha'],science_sha256=digest(SCIENCE),registration_digest=registration_digest(reg))
++    packet=dict(binding=identity,authorization=auth,assets=assets,out=str(out),devices=devices,jobs=jobs,schedule=allocation(jobs,len(devices)))
++    write(out/'packet.private.json',packet)
++    write(out/'receipt.json',dict(binding=identity,devices=devices,jobs=jobs,schedule=packet['schedule'],formal_budget=science()['formal_budget'],smoke_budget=science()['per_gpu_smoke_budget'],mixed_device_models=len({d['model'] for d in devices})>1))
++    from ..b3_runtime import ENTRY
++    from ..r1.supervise import supervise
++    def start_process(spec,log):
++        i=spec['worker'];env=os.environ.copy();env.update(PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=os.pathsep.join([str(ROOT/'src'),assets.get('dependency_pythonpath','')]),DPA_CTTA_BASE_ROOT=assets['ctta_dependency_root'],DPA_GRATA_ROOT=assets['grata_root'],CUDA_VISIBLE_DEVICES=devices[i]['uuid'],RUN_FILE=str(ROOT/'scripts/run_r2_matrix.py'),RUN_MODE='worker' if spec['phase']=='smoke' else 'formal',RUN_WORKER=str(i),RUN_JOB=spec['key'],RUN_PACKET=str(out/'packet.private.json'))
++        return subprocess.Popen([sys.executable,'-c',ENTRY],cwd=ROOT,env=env,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
++    supervise(out,packet,start_process,caps=caps())
++    from .analyze import recompute
++    recompute(out,assets)
++
++
++def main():
++    os.umask(0o077)
++    if os.environ.get('RUN_MODE')=='worker':return worker()
++    if os.environ.get('RUN_MODE')=='formal':return formal_worker()
++    parser=argparse.ArgumentParser();parser.add_argument('--run',action='store_true');parser.add_argument('--recompute',action='store_true');parser.add_argument('--authorization',type=Path,default=DEFAULTS);parser.add_argument('--assets',type=Path);parser.add_argument('--output',type=Path);args=parser.parse_args()
++    if args.recompute:
++        if args.run:raise ValueError('run and recompute are separate operations')
++        if args.assets is None or args.output is None:raise ValueError('explicit assets/output required')
++        from .analyze import recompute
++        return recompute(args.output,json.loads(args.assets.read_text()))
++    if not args.run:print(json.dumps(matrix(),indent=2));return
++    auth=json.loads(args.authorization.read_text())
++    if auth.get('enabled') is not True:raise PermissionError('execution disabled')
++    if args.assets is None or args.output is None:raise ValueError('explicit assets/output required')
++    launch(auth,json.loads(args.assets.read_text()),args.output)
+diff --git a/src/dpa_ctta/r2/weighted_pca.py b/src/dpa_ctta/r2/weighted_pca.py
+new file mode 100644
+index 0000000..55f2e76
+--- /dev/null
++++ b/src/dpa_ctta/r2/weighted_pca.py
+@@ -0,0 +1,62 @@
++"""Exponentially weighted CPU sufficient statistics; no raw observation cache."""
++import math
++import torch
++from ..r1.streaming_pca import StreamingSubspace, bank_audit
++
++RHO = 2**(-1/128)
++
++
++class WeightedSubspace(StreamingSubspace):
++    def __init__(self, rho=RHO):
++        super().__init__()
++        if not 0 < rho <= 1: raise ValueError('invalid decay')
++        self.rho = rho
++        self.W = self.Q = 0.
++        self.projector_change = None
++
++    def covariance(self):
++        divisor = self.W-self.Q/self.W if self.W else 0.
++        if not math.isfinite(divisor) or divisor <= 0: raise ValueError('invalid weighted covariance divisor')
++        cov = self.M2/divisor
++        if not torch.isfinite(cov).all(): raise ValueError('nonfinite weighted covariance')
++        return (cov+cov.T)/2
++
++    @torch.no_grad()
++    def merge(self, X, visit):
++        if type(visit) is not int or visit != self.last_visit+1: raise ValueError('one merge per global visit required')
++        if X.ndim != 2 or X.shape[1] != self.dim or not torch.isfinite(X).all(): raise ValueError('finite [n,32] vectors required')
++        X = X.detach().to(device='cpu', dtype=torch.float64)
++        self.last_visit = visit
++        self.W *= self.rho; self.Q *= self.rho**2; self.M2 *= self.rho
++        k = len(X)
++        if k:
++            mb = X.mean(0); centered = X-mb; m2b = centered.T@centered
++            if self.W == 0: self.mean, self.M2 = mb.clone(), m2b.clone()
++            else:
++                delta = mb-self.mean; total = self.W+k
++                self.M2 = self.M2+m2b+torch.outer(delta,delta)*(self.W*k/total)
++                self.mean = self.mean+delta*(k/total)
++            self.W += k; self.Q += k; self.n += k; self.images += 1; self.merges += 1
++        if not math.isfinite(self.W+self.Q) or not torch.isfinite(self.mean).all() or not torch.isfinite(self.M2).all():
++            raise ValueError('nonfinite weighted statistics')
++        self.projector_change = None
++        if not k or self.images < self.min_images or self.n < self.min_vectors or self.images % self.refresh: return
++        self.eigh_calls += 1
++        eig, vec = torch.linalg.eigh(self.covariance())
++        if not torch.isfinite(eig).all() or not torch.isfinite(vec).all(): raise ValueError('nonfinite eigensystem')
++        ids = torch.nonzero(eig > 1e-10).flatten().flip(0)[:self.rank]
++        previous = self.U
++        self.U = vec[:,ids].clone() if len(ids) else None
++        if previous is not None and self.U is not None:
++            self.projector_change = float((self.U@self.U.T-previous@previous.T).norm())
++        self.center = self.mean.clone() if len(ids) else None
++        self.eigenvalues = eig[ids].clone() if len(ids) else None
++        self.version = visit
++
++
++def audit(bank):
++    weighted = isinstance(bank,WeightedSubspace)
++    return dict(bank_audit(bank), raw_n=bank.n, images=bank.images,
++                W=bank.W if weighted else float(bank.n), Q=bank.Q if weighted else float(bank.n),
++                rho=bank.rho if weighted else 1.,
++                projector_change=bank.projector_change if weighted else None)
+diff --git a/tests/test_r2.py b/tests/test_r2.py
+new file mode 100644
+index 0000000..70130b3
+--- /dev/null
++++ b/tests/test_r2.py
+@@ -0,0 +1,212 @@
++"""Stage-I procedural checks. No registered weights, RGB, masks or GPU are read."""
++import copy,json,math,tempfile,unittest
++from contextlib import contextmanager,ExitStack
++from pathlib import Path
++from unittest.mock import patch
++import torch
++from dpa_ctta.r2 import analyze,plan,run
++from dpa_ctta.r2.weighted_pca import WeightedSubspace,RHO,audit
++from dpa_ctta.r2.feature_losses import paired_loss,unit,projection_residual
++from dpa_ctta.r2.memory import Memory,SPECS
++from dpa_ctta.r2.host import Host
++from dpa_ctta.r1.streaming_pca import StreamingSubspace
++from dpa_ctta.r1.host import Host as R1Host
++from dpa_ctta.r1.region_memory import Memory as R1Memory
++from dpa_ctta.r1.evidence import write
++from dpa_ctta.b1_host import Host as OldC
++from dpa_ctta.b4_run import capture
++from dpa_ctta.host_diagnostic import close,rng
++from dpa_ctta.source_pilot import seed_all
++from test_r1 import Toy,ready
++from test_r1_fixes import complete_fixture,scalar_row
++from test_vptta_host import pixels
++
++
++def host(arm,cls=Host):
++    seed_all(20260907);return cls(arm,model=Toy())
++
++
++class MathChecks(unittest.TestCase):
++    def test_explicit_weighted_reference_multitoken_empty_and_first(self):
++        g=torch.Generator().manual_seed(53);b=WeightedSubspace();xs=[];weights=[]
++        for t,k in enumerate([0,3,17,0,8]*8,1):
++            x=torch.randn(k,32,generator=g,dtype=torch.float64);xs.append(x);weights=[w*RHO for w in weights]+[torch.ones(k,dtype=torch.float64)]
++            b.merge(x,t)
++            if not b.n:continue
++            X=torch.cat(xs);w=torch.cat(weights);W=w.sum();mu=(X*w[:,None]).sum(0)/W;M=(X-mu).T@((X-mu)*w[:,None])
++            torch.testing.assert_close(b.mean,mu,rtol=1e-12,atol=1e-12);torch.testing.assert_close(b.M2,M,rtol=1e-12,atol=1e-12)
++            self.assertAlmostEqual(b.W,float(W),11);self.assertAlmostEqual(b.Q,float(w.square().sum()),11)
++            torch.testing.assert_close(b.covariance(),M/(W-w.square().sum()/W),rtol=1e-12,atol=1e-12)
++        self.assertEqual(b.images,24);self.assertEqual(b.eigh_calls,1)
++    def test_half_life_empty_visits_snapshot_and_no_expiry(self):
++        b=WeightedSubspace();g=torch.Generator().manual_seed(3)
++        for v in range(1,17):b.merge(torch.randn(8,32,generator=g),v)
++        old=b.snapshot();W,Q,M,mu=b.W,b.Q,b.M2.clone(),b.mean.clone()
++        for v in range(17,145):b.merge(torch.empty(0,32),v)
++        self.assertAlmostEqual(b.W,W*.5,11);self.assertAlmostEqual(b.Q,Q*.25,11)
++        close(b.M2,M*.5);close(b.mean,mu,exact=True);close(b.snapshot(),old,exact=True)
++        self.assertEqual((b.n,b.images,b.version,b.eigh_calls),(128,16,16,1))
++        self.assertLess(audit(b)['state_bytes'],1024**2);self.assertFalse(any(isinstance(v,(list,dict)) for v in vars(b).values()))
++        with self.assertRaises(ValueError):b.merge(torch.empty(0,32),146)
++    def test_rho_one_direct_R1_cumulative_equivalence(self):
++        a=WeightedSubspace(1.);b=StreamingSubspace();g=torch.Generator().manual_seed(12)
++        for i in range(1,42):
++            x=torch.randn(0 if i%7==0 else 8,32,generator=g);a.merge(x,i);b.merge(x,i)
++            close(a.mean,b.mean);close(a.M2,b.M2);self.assertEqual((a.n,a.images,a.version),(b.n,b.images,b.version))
++            if a.U is not None:close(a.U@a.U.T,b.U@b.U.T)
++        self.assertIs(type(Memory('R2_D').banks[0]),StreamingSubspace)
++    def test_rank_zero_failure_and_snapshot_causality(self):
++        b=WeightedSubspace()
++        for i in range(1,17):b.merge(torch.ones(8,32),i)
++        self.assertIsNone(b.snapshot());self.assertEqual(b.version,16)
++        m=Memory('R2_DE');ready(m)
++        with self.assertRaises(ValueError):m.snapshots(16)
++        before=m.snapshots(17)
++        for i in range(17,32):m.merge([torch.ones(8,32)]*4,i)
++        close(before,m.snapshots(32),exact=True)
++        with patch('torch.linalg.eigh',side_effect=RuntimeError('eigh fixture')):
++            with self.assertRaises(RuntimeError):m.merge([torch.ones(8,32)]*4,32)
++        with self.assertRaises(ValueError):WeightedSubspace().merge(torch.full((8,32),float('nan')),1)
++    def test_pair_identity_with_far_center_and_subspace_delta(self):
++        x=torch.randn(7,32,requires_grad=True);f0=x.detach().clone().requires_grad_();U=torch.eye(32)[:,:8].requires_grad_();mu=torch.ones(32)*40
++        loss=paired_loss(x,f0,U);loss.backward();self.assertEqual(float(loss),0);self.assertEqual(float(x.grad.norm()),0)
++        self.assertGreater(float(projection_residual(x.detach(),mu,U)),0);self.assertIsNone(f0.grad);self.assertIsNone(U.grad)
++        a=torch.eye(32)[0:1].requires_grad_();b=torch.eye(32)[1:2]
++        self.assertEqual(float(paired_loss(a,b,U)),0)
++    def test_gradient_reductions_actual_rank_full_and_empty_zero(self):
++        for k in (1,4,8):
++            a=torch.randn(5,32,dtype=torch.float64,requires_grad=True);b=torch.randn_like(a,requires_grad=True);U=torch.eye(32,dtype=torch.float64)[:,:k].requires_grad_()
++            d=unit(a)-unit(b.detach());expected=32/(32-k)*d[:,k:].square().sum(1).mean()
++            close(paired_loss(a,b,U),expected);paired_loss(a,b,U).backward();self.assertGreater(float(a.grad.norm()),0);self.assertIsNone(b.grad);self.assertIsNone(U.grad)
++            close(paired_loss(a,b,U,True),d.square().sum(1).mean())
++            close(paired_loss(a,b,U,True),paired_loss(a,b,torch.roll(U,10,0),True))
++        for n in (0,3):
++            a=torch.zeros(n,32,requires_grad=True);l=paired_loss(a,a.detach(),torch.eye(32)[:,:8]);l.backward();self.assertTrue(torch.isfinite(a.grad).all());self.assertEqual(float(l),0)
++    def test_regions_same_pair_shuffle_RNG_and_F_shadow(self):
++        f0=torch.randn(1024,32,requires_grad=True);fs=torch.randn(1024,32,requires_grad=True);q=torch.zeros(1024,2);q[:100,0]=1;q[:30,1]=1;views=q.expand(6,-1,-1).clone()
++        de,full,shuffled=Memory('R2_DE'),Memory('R2_F'),Memory('R2_DE_S')
++        ready(de);full.banks=copy.deepcopy(de.banks);shuffled.banks=copy.deepcopy(de.banks);before=rng()
++        x,ids,a=de.prepare(f0,q,views,17);y,fids,b=full.prepare(f0,q,views,17);z,sids,c=shuffled.prepare(f0,q,views,17);close(before,rng(),exact=True)
++        close(ids,fids,exact=True);close(x,y,exact=True);self.assertEqual(a,b);self.assertEqual(a,c)
++        old=R1Memory('SHUFFLED');ox,oi,oa=old.prepare(f0,q,views,17);close(oi,sids,exact=True);close(ox,z,exact=True)
++        self.assertFalse(torch.equal(ids[0],sids[0]));snaps=shuffled.snapshots(17)
++        expected=torch.stack([paired_loss(fs[t%1024],f0[t%1024],s[1]) for t,s in zip(sids,snaps)]).mean()
++        actual,diagnostic=shuffled.loss(fs,f0,sids,snaps);close(actual,expected);actual.backward();self.assertIsNone(f0.grad)
++        ld,dd=de.loss(fs,f0,ids,de.snapshots(17));lf,df=full.loss(fs,f0,fids,full.snapshots(17));self.assertEqual([v['bank'] for v in dd],[v['bank'] for v in df])
++        empty,_=full.loss(fs,f0,fids,[None]*4);self.assertEqual(float(empty),0)
++        changed=[(s[0],torch.roll(s[1],4,0),s[2]) for s in full.snapshots(17)];close(lf,full.loss(fs,f0,fids,changed)[0])
++
++
++class HostChecks(unittest.TestCase):
++    def test_full_model_CPU_smoke_ready_all_arms_physical_budget(self):
++        from dpa_ctta.integrations.ctta_suite import build_reference_model
++        seed_all(20260907);model,_=build_reference_model('fundus');state=copy.deepcopy(model.state_dict());del model
++        with tempfile.TemporaryDirectory() as tmp,patch('dpa_ctta.b3_runtime.process_audit'):
++            run.smoke(state,'cpu',Path(tmp),dict(fixture='CPU_RANDOM_WEIGHTS'),dict(seed=20260907),dict(fixture=True))
++            result=json.loads((Path(tmp)/'smoke.completion.json').read_text())
++            self.assertEqual(result['physical'],dict(forwards=112,backwards=14,base_adam=14,perturb=0,restore=0))
++            self.assertEqual(set(result['evidence']),{'OLD','C',*SPECS})
++            self.assertTrue(result['evidence']['C']['parity'])
++        self.assertFalse(torch.cuda.is_initialized())
++    def test_lambda_zero_old_C_and_absolute_cumulative_compatibility(self):
++        x=pixels('fundus',0);old=host('C',OldC);z,_=old.step(x);saved=capture(old)
++        for arm in SPECS:
++            h=host(arm);ready(h.memory);h.visit=16;h.counts['base_adam']=16
++            with patch('dpa_ctta.r2.host.EXTRA_WEIGHT',0.):q,a=h.step(x)
++            close(z,q);close(saved,capture(h));self.assertEqual(h.pending,{});self.assertEqual(h.scalar_diagnostics,{})
++        old=host('C_PCA_REGION',R1Host);new=host('C_PCA_REGION');ready(old.memory);ready(new.memory)
++        for h in (old,new):h.visit=16;h.counts['base_adam']=16
++        p,a=old.step(x);q,b=new.step(x);close(p,q);close(capture(old),capture(new));close(a['pca'],b['pca'])
++    def test_all_arms_eight_calls_post_prediction_merge_isolation_cleanup(self):
++        for arm in SPECS:
++            h=host(arm);ready(h.memory);h.visit=16;h.counts['base_adam']=16;seen=[];merge=h.memory.merge
++            def checked(vectors,visit):
++                self.assertEqual(h.pending['forward'],8);self.assertIsNone(h.phase);self.assertEqual(h.counts['base_adam'],17);seen.append(visit);return merge(vectors,visit)
++            with patch.object(h.memory,'merge',side_effect=checked),patch('dpa_ctta.source_io.read_pixels',side_effect=AssertionError('source')),patch('dpa_ctta.source_io.read_mask',side_effect=AssertionError('mask')),patch('dpa_ctta.source_io.source_proxy',side_effect=AssertionError('proxy')),patch('torch.autograd.grad',side_effect=AssertionError('extra gradient')):
++                z,a=h.step(pixels('fundus',0))
++            self.assertEqual(seen,[17]);self.assertEqual(a['counts'],dict(forwards=8,backwards=1,base_adam=1,perturb=0,restore=0));self.assertEqual(a['pca']['basis_versions_used'],[16]*4)
++            self.assertEqual(h.pending,{});self.assertEqual(h.scalar_diagnostics,{});json.dumps(a,allow_nan=False);self.assertFalse(z.requires_grad)
++            with self.assertRaises(TypeError):h.step(pixels('fundus',0),domain='toy')
++            with self.assertRaises(TypeError):h.step(pixels('fundus',0),torch.zeros(1))
++        h=host('R2_DE')
++        with patch.object(h.memory,'loss',side_effect=ValueError('fixture')):
++            with self.assertRaises(ValueError):h.step(pixels('fundus',0))
++        self.assertEqual(h.pending,{});self.assertEqual(h.scalar_diagnostics,{})
++
++
++@contextmanager
++def fixture(root):
++    old=root/'old';out=root/'new';old.mkdir();out.mkdir()
++    with complete_fixture(old,2) as (reg,oldpacket,ordered):
++        # Keep all identities synthetic but bind the old runtime exactly.
++        oldcode=oldpacket['binding']['code_sha'];newcode=plan.R1_CODE
++        for file in old.rglob('*.json*'):
++            file.write_text(file.read_text().replace(oldcode,newcode).replace('"backend": {','"backend": {"seed": 20260907,'))
++        analyze.r1.recompute(old,reg)
++        assets=dict(registration=reg,r1_result_directory=str(old))
++        cfg=copy.deepcopy(plan.science());jobs=plan.matrix()['jobs']
++        for j in jobs:j.update(records=12,forwards=96,backwards=12,adam=12)
++        cfg['formal_budget'].update(new_records=240,forwards=1920,backwards=240,adam=240)
++        identity=dict(run_id='c'*32,code_sha='d'*40,science_sha256=plan.SCIENCE_SHA,registration_digest=plan.registration_digest(reg))
++        devices=[dict(index=i,uuid='CPU_FIXTURE_'+str(i),model='PROGRAMMATIC_CPU') for i in (6,7)]
++        auth=dict(enabled=True,approved_code_sha=identity['code_sha'],approved_science_sha256=plan.SCIENCE_SHA,approved_registration_digest=identity['registration_digest'],external_review_reference='PROGRAMMATIC_TEST_ONLY_NOT_AUTHORIZATION',allowed_physical_gpu_ids=[6,7],max_workers=2,background_allowed=False)
++        packet=dict(binding=identity,authorization=auth,assets=assets,out=str(out),devices=devices,jobs=jobs,schedule=plan.allocation(jobs,2))
++        write(out/'packet.private.json',packet);write(out/'receipt.json',dict(binding=identity,devices=devices,jobs=jobs,schedule=packet['schedule'],formal_budget=cfg['formal_budget'],smoke_budget=cfg['per_gpu_smoke_budget']))
++        entries=[];backend=dict(seed=20260907,device_name='PROGRAMMATIC_CPU')
++        for i in range(2):
++            p=out/('device'+str(i));p.mkdir();b=plan.binding(packet,i)
++            write(p/'smoke.completion.json',dict(binding=b,status='MECHANICAL_SMOKE_COMPLETE',physical=dict(forwards=112,backwards=14,base_adam=14,perturb=0,restore=0),backend=backend,checkpoint_io=dict(bytes=7)))
++            entries.append(dict(binding=b,phase='smoke',key=p.name,pid=200+i,pgid=200+i,status='EXITED',exit_code=0))
++        for job,assignment in zip(jobs,packet['schedule']['assignments']):
++            p=out/job['job_id'];p.mkdir();b=plan.binding(packet,assignment['worker'],job);rows=[];memory=Memory(job['arm'])
++            for i,e in enumerate(ordered(reg,job['order']),1):
++                r=scalar_row(e,'C_PCA_REGION',job['order'],i);r.update(binding=b,arm=job['arm']);memory.merge([torch.empty(0,32)]*4,i);r['pca']['banks']=memory.audit()
++                r['r2']=dict(base_loss=.1,extra_loss=0.,weighted_extra_loss=0.,active_regions=0,region_energies=[],shadow_readiness_only=job['arm']=='R2_F');rows.append(r)
++            (p/'records.jsonl').write_text('\n'.join(json.dumps(r) for r in rows)+'\n')
++            write(p/'completion.json',dict(binding=b,status='TRAJECTORY_COMPLETE',records=12,physical=dict(forwards=96,backwards=12,base_adam=12,perturb=0,restore=0),backend=backend,checkpoint_io=dict(bytes=7)))
++            pid=200+len(entries);entries.append(dict(binding=b,phase='formal',key=p.name,pid=pid,pgid=pid,status='EXITED',exit_code=0))
++        write(out/'matrix.processes.json',dict(binding=identity,status='COMPUTE_COMPLETE',exit_codes=[0]*22,processes=entries,active_seconds=1.,wall_seconds=1.))
++        write(out/'processes.started.json',dict(binding=identity,processes=[{k:e[k] for k in ('pid','pgid','binding','phase','key')} for e in entries]))
++        with patch.object(analyze,'science',return_value=cfg),patch.object(analyze,'matrix',return_value=dict(jobs=jobs)),patch.object(analyze,'stream',side_effect=ordered):
++            yield out,assets
++
++
++class ExecutionChecks(unittest.TestCase):
++    def test_disabled_actual_entry_and_frozen_twenty_jobs(self):
++        m=plan.matrix();self.assertEqual(len(m['jobs']),20);self.assertEqual(len({j['job_id'] for j in m['jobs']}),20)
++        self.assertEqual(sum(j['forwards'] for j in m['jobs']),312160);self.assertEqual(sum(j['adam'] for j in m['jobs']),39020)
++        for n in (1,2,3):
++            a=plan.allocation(m['jobs'],n);self.assertEqual(len(a['assignments']),20)
++            self.assertEqual([r['worker'] for r in a['assignments']],[(list(SPECS).index(j['arm'])+j['order'])%n for j in m['jobs']])
++        with patch('sys.argv',['neutral','--run']),patch('torch.load',side_effect=AssertionError('weights')),patch('subprocess.check_output',side_effect=AssertionError('GPU query')):
++            with self.assertRaises(PermissionError):run.main()
++        self.assertFalse(torch.cuda.is_initialized())
++    def test_scalar_replay_live_weighted_refresh_and_corruptions(self):
++        for arm in SPECS:
++            m=Memory(arm);prior=None;g=torch.Generator().manual_seed(2)
++            for visit in range(1,35):
++                k=0 if visit in (8,19) else 8;used=[b.version if b.U is not None else None for b in m.banks]
++                m.merge([torch.randn(k,32,generator=g)]*4,visit)
++                p=dict(banks=m.audit(),basis_versions_used=used,input=dict(region_token_counts=[512]*4,sampled_region_counts=[k]*4,selected_region_counts=[k]*4,zero_vectors=[0]*4,assigned_bank_counts=[k]*4,missing_foreground=[False,False]),subloss=0.,base_loss=.1)
++                for key,value in [('W',999),('Q',999),('raw_n',0),('images',999),('version',visit+1)]:
++                    bad=copy.deepcopy(p);bad['banks'][0][key]=value
++                    with self.assertRaises(ValueError):analyze.pca_scalars(bad,prior,arm,visit)
++                prior=analyze.pca_scalars(p,prior,arm,visit)
++    def test_twenty_job_bound_closeout_and_truncation_invalidates(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            with fixture(Path(tmp)) as (out,assets):
++                result=analyze.recompute(out,assets)
++                self.assertEqual(result['physical']['new_records'],240);self.assertEqual(result['historical_primary_records'],96);self.assertEqual(result['status'],'R2_EXPERIMENT_COMPLETE')
++                self.assertTrue((out/'R2_EXPERIMENT_REPORT.md').is_file());self.assertFalse(result['assessment']['next_execution_authorized'])
++                (out/'o3a4/records.jsonl').write_text('')
++                with self.assertRaises(ValueError):analyze.recompute(out,assets)
++                self.assertFalse(json.loads((out/'current_result.json').read_text())['valid']);self.assertFalse((out/'R2_EXPERIMENT_REPORT.md').exists())
++    def test_bound_historical_metadata_and_new_weighted_contradiction(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            with fixture(Path(tmp)) as (out,assets):
++                receipt,paths=analyze.historical_metadata(assets);self.assertEqual(len(paths),8)
++                p=out/'o0a0/records.jsonl';original=p.read_text();rows=[json.loads(s) for s in original.splitlines()];rows[0]['pca']['banks'][0]['Q']=1;p.write_text('\n'.join(json.dumps(r) for r in rows))
++                with self.assertRaises(ValueError):analyze.recompute(out,assets)
++                p.write_text(original)
++                old=Path(assets['r1_result_directory'])/'o0a0/completion.json';d=json.loads(old.read_text());d['binding']['arm']='C_PCA_REGION';old.write_text(json.dumps(d))
++                with self.assertRaises(ValueError):analyze.historical_metadata(assets)
