@@ -17,14 +17,18 @@ from test_r2 import fixture
 class ContinuationChecks(unittest.TestCase):
     def test_atomic_temporary_disappearance_only(self):
         with tempfile.TemporaryDirectory() as tmp:
-            root=Path(tmp);(root/'records').write_bytes(b'1234');(root/'.write-race').write_bytes(b'xx')
+            root=Path(tmp);(root/'records').write_bytes(b'1234')
             original=Path.stat
             def race(path,*args,**kwargs):
-                if path.name=='.write-race':
+                if path.name in ('.write-race','.nfs000000000708194000000650'):
                     path.unlink(missing_ok=True)
                     raise FileNotFoundError(errno.ENOENT,'atomic rename',str(path))
                 return original(path,*args,**kwargs)
-            with patch.object(Path,'stat',race):self.assertEqual(output_bytes(root),4)
+            for name in ('.write-race','.nfs000000000708194000000650'):
+                (root/name).write_bytes(b'xx')
+                with patch.object(Path,'stat',race):self.assertEqual(output_bytes(root),4)
+            (root/'alias').symlink_to('records');(root/'invalidated-result').symlink_to('missing')
+            self.assertEqual(output_bytes(root),4)
             for error in (OSError(errno.EIO,'storage failure'),PermissionError('denied'),FileNotFoundError('ordinary file missing')):
                 with patch.object(Path,'stat',side_effect=error),self.assertRaises(type(error)):output_bytes(root)
 
@@ -47,7 +51,7 @@ class ContinuationChecks(unittest.TestCase):
                 path.write_text(path.read_text().replace('c'*32,c.SOURCE_RUN).replace('d'*40,c.SOURCE_CODE))
             original=c.read(source/'receipt.json');packet=c.read(source/'packet.private.json')
             entries=c.read(source/'matrix.processes.json')['processes']
-            new_identity=dict(original['binding'],run_id='e'*32,code_sha='f'*40)
+            new_identity=dict(original['binding'],run_id='a8693fe3eab44ddb802c6de6c0caafda',code_sha='66eea7e880e16d4d25efa4edabc9d8ad59ff175d')
             for key in ['device0','device1',*c.PENDING]:
                 shutil.copytree(source/key,new/key)
                 for path in (new/key).glob('*.json*'):
@@ -65,7 +69,7 @@ class ContinuationChecks(unittest.TestCase):
             write(source/'processes.started.json',dict(binding=original['binding'],processes=[{k:e[k] for k in ('pid','pgid','binding','phase','key')} for e in old_entries]),replace=True)
             write(source/'dispatch.stopped.json',dict(binding=original['binding'],status='INCOMPLETE',reason='worker nonzero exit'))
             auth=dict(packet['authorization'],approved_code_sha=new_identity['code_sha'],continuation_source_binding=original['binding'],continuation_policy='preserve_completed_restart_failed_once')
-            with patch.object(c,'matrix',analyze.matrix),patch.object(c,'science',analyze.science):
+            with patch.object(c,'matrix',analyze.matrix),patch.object(c,'science',analyze.science),patch('dpa_ctta.r2.plan.stream',analyze.stream):
                 continuation=c.inspect_source(source,assets,[6,7],auth)
                 with self.assertRaises(PermissionError):c.inspect_source(source,assets,[6,7],packet['authorization'])
                 caps=dict(trajectory_seconds=7200,wall_seconds=86000,active_seconds=86000,bytes=2*1024**3-continuation['source_bytes'])
@@ -81,10 +85,37 @@ class ContinuationChecks(unittest.TestCase):
                 self.assertEqual(len(result['continuation']['carried_jobs']),15)
                 self.assertTrue((source/'dispatch.stopped.json').is_file())
                 self.assertEqual(c.read(source/'o0a0/completion.json')['binding']['code_sha'],c.SOURCE_CODE)
-                # A truncated inherited result cannot become complete in the new run.
+                original_rows=(source/'o0a0/records.jsonl').read_text()
                 (source/'o0a0/records.jsonl').write_text('')
                 with self.assertRaises(ValueError):analyze.recompute(new,assets)
                 self.assertFalse(c.read(new/'current_result.json')['valid'])
+                (source/'o0a0/records.jsonl').write_text(original_rows)
+                # Procedural second failure: two partial trajectories killed by NFS scan.
+                analyze.invalidate(new,'INCOMPLETE')
+                for key in ('o3a1','o3a3','o3a4'):shutil.rmtree(new/key)
+                abandoned_entries=[]
+                for e in new_entries:
+                    if e['phase']=='formal' and e['key'] not in ('o2a4','o3a2'):continue
+                    e=copy.deepcopy(e)
+                    if e['phase']=='formal':
+                        e.update(status='INCOMPLETE',exit_code=-15)
+                        p=new/e['key'];(p/'completion.json').unlink()
+                        lines=(p/'records.jsonl').read_text().splitlines()[:4 if e['key']=='o2a4' else 5]
+                        (p/'records.jsonl').write_text('\n'.join(lines)+'\n')
+                        write(p/'supervisor.failure.json',dict(binding=e['binding'],status='INCOMPLETE',prefix_preserved=True))
+                    abandoned_entries.append(e)
+                write(new/'matrix.processes.json',dict(binding=new_identity,status='INCOMPLETE',processes=abandoned_entries,exit_codes=[e['exit_code'] for e in abandoned_entries],unstarted_jobs=['o3a1','o3a3','o3a4'],active_seconds=1,wall_seconds=1),replace=True)
+                write(new/'processes.started.json',dict(binding=new_identity,processes=[{k:e[k] for k in ('pid','pgid','binding','phase','key')} for e in abandoned_entries]),replace=True)
+                write(new/'dispatch.stopped.json',dict(binding=new_identity,status='INCOMPLETE',reason="FileNotFoundError: '/output/.nfs00000000000001'"))
+                second_auth=dict(auth,abandoned_continuation_directory=str(new),abandoned_continuation_binding=new_identity)
+                info=c.inspect_source(source,assets,[6,7],second_auth)
+                accounting=c.public_accounting(info,result['physical'],result['smoke_physical'])
+                self.assertEqual(accounting['discarded_prefix_records'],576+9)
+                self.assertEqual(accounting['actual_total_physical_lower_bound']['base_adam'],240+576+9+84)
+                self.assertEqual(accounting['actual_total_physical_upper_bound']['base_adam'],240+576+9+84+2)
+                self.assertNotIn('actual_total_physical',accounting)
+                self.assertEqual(info['completed_jobs'],continuation['completed_jobs'])
+                with self.assertRaises(PermissionError):c.inspect_source(source,assets,[6,7],dict(second_auth,abandoned_continuation_binding={}))
 
 
 if __name__=='__main__':unittest.main()

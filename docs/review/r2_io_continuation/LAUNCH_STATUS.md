@@ -1,5 +1,8 @@
 # R2 IO continuation: verified running
 
+Later status: this attempt stopped at 18:40:15. See [NFS follow-up](NFS_REPAIR.md).
+The startup observations below remain historical and are not current progress.
+
 Snapshot: 2026-09-13 18:30:20 Asia/Shanghai. This is a startup observation, not
 current progress or an experiment-completion claim.
 

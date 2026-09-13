@@ -19,7 +19,7 @@ def read(path):
 
 
 def inspect_source(source, assets, ids, authorization):
-    # ponytail: one incident only; a later failure needs its own explicit recovery review.
+    # ponytail: this IO incident only; unrelated failures require their own recovery review.
     source = Path(source).resolve()
     receipt = read(source/'receipt.json'); packet = read(source/'packet.private.json')
     identity = receipt['binding']; jobs = matrix()['jobs']
@@ -79,10 +79,72 @@ def inspect_source(source, assets, ids, authorization):
     if any((source/k).exists() for k in PENDING[1:]):raise ValueError('unstarted job has unexpected output')
     for key in ('active_seconds','wall_seconds'):
         if not 0<=process[key]<86400:raise ValueError('original runtime budget')
-    return dict(source_directory=str(source),source_binding=identity,completed_jobs=completed,pending_jobs=list(PENDING),
+    info=dict(source_directory=str(source),source_binding=identity,completed_jobs=completed,pending_jobs=list(PENDING),
                 discarded_prefix_records=576,discarded_prefix_physical=dict(forwards=4608,backwards=576,base_adam=576,perturb=0,restore=0),
                 prior_smoke_physical={k:v*len(ids) for k,v in SMOKE.items()},prior_active_seconds=process['active_seconds'],
                 prior_wall_seconds=process['wall_seconds'],source_bytes=output_bytes(source))
+    if authorization.get('abandoned_continuation_directory'):
+        include_abandoned(info,assets,ids,authorization)
+    return info
+
+
+def include_abandoned(info,assets,ids,authorization):
+    """Account for the observed NFS failure without adopting either partial state."""
+    from .plan import stream
+    from .analyze import validate
+    out=Path(authorization['abandoned_continuation_directory']).resolve()
+    packet=read(out/'packet.private.json');receipt=read(out/'receipt.json');identity=receipt['binding']
+    expected_run='a8693fe3eab44ddb802c6de6c0caafda';expected_code='66eea7e880e16d4d25efa4edabc9d8ad59ff175d'
+    if identity!=authorization.get('abandoned_continuation_binding') or identity['run_id']!=expected_run or identity['code_sha']!=expected_code:
+        raise PermissionError('unapproved abandoned continuation')
+    bound(packet,identity)
+    if identity['science_sha256']!=SCIENCE_SHA or identity['registration_digest']!=info['source_binding']['registration_digest']:
+        raise ValueError('abandoned science/registration')
+    if authorize(packet['authorization'],assets['registration'],current_sha=expected_code)!=ids or packet['assets']!=assets or Path(packet['out']).resolve()!=out:
+        raise ValueError('abandoned assets/authorization')
+    original=read(Path(info['source_directory'])/'receipt.json');jobs=matrix()['jobs']
+    if packet['devices']!=receipt['devices'] or [(d['index'],d['uuid']) for d in receipt['devices']]!=[(d['index'],d['uuid']) for d in original['devices']]:
+        raise ValueError('abandoned devices')
+    if any(v['jobs']!=jobs or v['schedule']!=allocation(jobs,len(ids)) or v['continuation']!=info for v in (packet,receipt)):
+        raise ValueError('abandoned original continuation binding')
+    process=read(out/'matrix.processes.json');stopped=read(out/'dispatch.stopped.json')
+    for value in (process,stopped):bound(value,identity)
+    if process['status']!='INCOMPLETE' or stopped['status']!='INCOMPLETE' or 'FileNotFoundError' not in stopped['reason'] or '/.nfs' not in stopped['reason']:
+        raise ValueError('abandoned NFS stop evidence')
+    attempted=('o2a4','o3a2');entries=process['processes']
+    expected={('smoke','device'+str(i)) for i in range(len(ids))}|{('formal',k) for k in attempted}
+    if len(entries)!=len(expected) or {(e['phase'],e['key']) for e in entries}!=expected or process['exit_codes']!=[e['exit_code'] for e in entries] or process['unstarted_jobs']!=[k for k in PENDING if k not in attempted]:
+        raise ValueError('abandoned process coverage')
+    started=read(out/'processes.started.json');bound(started,identity)
+    if started['processes']!=[{k:e[k] for k in ('pid','pgid','binding','phase','key')} for e in entries]:raise ValueError('abandoned started inventory')
+    slots={a['job_id']:a['worker'] for a in packet['schedule']['assignments']};prefixes={}
+    for e in entries:
+        key=e['key'];job=next((j for j in jobs if j['job_id']==key),None)
+        slot=slots[key] if job else int(key.removeprefix('device'));b=binding(receipt,slot,job);bound(e,b)
+        if e['pid']!=e['pgid'] or e['pid']<=0 or e['exit_code']!=(-15 if job else 0) or e['status']!=('INCOMPLETE' if job else 'EXITED'):
+            raise ValueError('abandoned owned exits')
+        p=out/key
+        if job:
+            failure=read(p/'supervisor.failure.json');bound(failure,b)
+            if failure['status']!='INCOMPLETE' or not failure['prefix_preserved'] or (p/'completion.json').exists():raise ValueError('abandoned prefix failure')
+            rows=[json.loads(line) for line in (p/'records.jsonl').read_text().splitlines() if line.strip()]
+            if not 0<len(rows)<job['records']:raise ValueError('abandoned partial coverage')
+            validate(rows,stream(assets['registration'],job['order'])[:len(rows)],job['arm'],job['order'],b)
+            prefixes[key]=len(rows)
+        else:
+            done=read(p/'smoke.completion.json');bound(done,b)
+            if list(p.glob('*failure.json')) or done['status']!='MECHANICAL_SMOKE_COMPLETE' or done['physical']!=SMOKE or done['backend']['seed']!=20260907 or done['checkpoint_io']['bytes']!=assets['registration']['checkpoint']['bytes']:
+                raise ValueError('abandoned smoke')
+    if any((out/k).exists() for k in [*info['completed_jobs'],*[k for k in PENDING if k not in attempted]]):raise ValueError('unexpected abandoned job')
+    n=sum(prefixes.values());info['discarded_prefix_records']+=n
+    for k,per_visit in dict(forwards=8,backwards=1,base_adam=1,perturb=0,restore=0).items():info['discarded_prefix_physical'][k]+=n*per_visit
+    for k in SMOKE:info['prior_smoke_physical'][k]+=SMOKE[k]*len(ids)
+    for key in ('active_seconds','wall_seconds'):
+        if not 0<=process[key]<86400:raise ValueError('abandoned runtime budget')
+        info['prior_'+key]+=process[key]
+    info['source_bytes']+=output_bytes(out)
+    info.update(abandoned_directory=str(out),abandoned_binding=identity,abandoned_prefixes=prefixes,
+                unrecorded_inflight_upper_bound=dict(forwards=8*len(attempted),backwards=len(attempted),base_adam=len(attempted)))
 
 
 def source_for(receipt, out, job):
@@ -95,8 +157,14 @@ def source_for(receipt, out, job):
 
 def public_accounting(continuation, physical, smoke):
     prefix = continuation['discarded_prefix_physical']; prior = continuation['prior_smoke_physical']
-    return dict(source_binding=continuation['source_binding'],carried_jobs=continuation['completed_jobs'],executed_jobs=continuation['pending_jobs'],
+    result=dict(source_binding=continuation['source_binding'],carried_jobs=continuation['completed_jobs'],executed_jobs=continuation['pending_jobs'],
                 discarded_prefix_records=continuation['discarded_prefix_records'],discarded_prefix_physical=prefix,prior_smoke_physical=prior,
                 actual_total_physical={k:physical['adam' if k=='base_adam' else k]+prefix[k]+prior[k]+smoke[k] for k in ('forwards','backwards','base_adam')},
                 actual_scoring_visits=physical['new_records']+continuation['discarded_prefix_records'],
-                note='User-authorized IO continuation; original failure preserved. Formal table excludes the interrupted prefix. Two runtime commits; repeated prefix and fresh smoke exceed the original compute budget explicitly.')
+                note='User-authorized IO continuation; prior failures preserved. Formal table excludes interrupted prefixes. Multiple runtime commits; repeated prefixes and fresh smoke exceed the original compute budget explicitly.')
+    if 'abandoned_binding' in continuation:
+        lower=result.pop('actual_total_physical');upper=continuation['unrecorded_inflight_upper_bound']
+        result.update(abandoned_binding=continuation['abandoned_binding'],abandoned_prefixes=continuation['abandoned_prefixes'],actual_total_physical_lower_bound=lower,
+                      actual_total_physical_upper_bound={k:v+upper[k] for k,v in lower.items()},unrecorded_inflight_upper_bound=upper)
+        result['note']+=' Terminated workers may each have one unrecorded in-flight visit; physical totals are bounded, not exact.'
+    return result

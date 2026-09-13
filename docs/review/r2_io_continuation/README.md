@@ -1,5 +1,9 @@
 # R2 temporary-file race repair and explicit continuation
 
+Update: the first continuation later hit a second NFS temporary-file variant.
+See [NFS follow-up and revised accounting](NFS_REPAIR.md). The original accounting
+below describes only the first continuation plan.
+
 The original September 13 R2 matrix stopped after 15 complete trajectories,
 576 records in `o2a4`, and four unstarted trajectories. A capacity scan observed
 an atomic evidence writer's `.write-*` temporary between its file-type check and
