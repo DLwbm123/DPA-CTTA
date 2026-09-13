@@ -50,3 +50,26 @@ finite parent-enforced caps, and full scalar closeout across the three prior
 attempts plus a final synthetic continuation. Both complete-result origins are
 checked without rewriting bindings. Local and target runtime evidence are recorded
 with this repair; launch status is appended only after actual verification.
+
+## Verified startup and target checks
+
+- Runtime: `e0d3f6634bfa7349b214942fc01f64d57a65470f`, clean isolated checkout.
+- Run: `a5144c0eacc040b6834cf0dd02ef3fdd`, started 2026-09-13 19:29:15
+  Asia/Shanghai as a detached finite queue on the original two devices.
+- Startup check at 19:30:43: both mechanical smokes passed; `o3a1` and `o3a2`
+  each had 66 records. The parent and both workers were alive with neutral process
+  arguments and expected GPU assignments. No failure artifact or launcher error
+  was present. The receipt carries 16 complete jobs and records all 4,085 excluded
+  prefix records. The remaining queue is exactly `o3a1/o3a2/o3a3/o3a4`.
+- Local CPU checks: 20 passed in 6.678 seconds.
+- Target CPU checks: 20 passed in 42.375 seconds.
+- Real NFS stress: 200 atomic replacements and 800 concurrent capacity scans,
+  observing 141 disappearing entries including `usage.json`, `arbitrary.json`
+  and atomic temporary names, with no scan failure.
+
+See [local log](LIVE_DIRECTORY_CPU_TEST_LOG.txt) and
+[server/NFS log](LIVE_DIRECTORY_SERVER_TEST_LOG.txt). The measured startup pipeline
+rate was about 0.70 seconds per record. With two trajectories per device, the
+estimated remaining time at this snapshot is 45–55 minutes including CPU summary,
+approximately 20:15–20:25 if no new interruption occurs. This dated estimate and
+startup verification do not constitute experiment completion or ongoing monitoring.
