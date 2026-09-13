@@ -3,7 +3,7 @@ import json, math, re
 from pathlib import Path
 import numpy as np
 from ..r1 import analyze as r1
-from ..r1.evidence import invalidate, publish
+from ..r1.evidence import invalidate, publish, output_bytes
 from ..p2_analysis import validate_metric
 from ..host_diagnostic_analysis import channels, distribution
 from ..m1_analysis import paired
@@ -102,12 +102,26 @@ def execution_evidence(out,assets):
     if [d['index'] for d in devices]!=ids or len({d['uuid'] for d in devices})!=len(devices):raise ValueError('authorized devices')
     if packet['assets']!=assets or packet['devices']!=devices or packet['jobs']!=jobs or packet['schedule']!=allocation(jobs,len(ids)):raise ValueError('packet consistency')
     if receipt['jobs']!=jobs or receipt['schedule']!=packet['schedule'] or receipt['formal_budget']!=science()['formal_budget'] or receipt['smoke_budget']!=science()['per_gpu_smoke_budget']:raise ValueError('matrix/schedule/budget')
+    completed=[]
+    if 'continuation' in packet:
+        from .continuation import inspect_source,read
+        continuation=inspect_source(packet['continuation']['source_directory'],assets,ids,packet['authorization'])
+        if packet['continuation']!=continuation or receipt.get('continuation')!=continuation or packet['runtime_caps']!=receipt.get('runtime_caps'):raise ValueError('continuation evidence binding')
+        original=read(Path(continuation['source_directory'])/'receipt.json')
+        if [(d['index'],d['uuid']) for d in devices]!=[(d['index'],d['uuid']) for d in original['devices']]:raise ValueError('continuation device identity')
+        completed=continuation['completed_jobs']
+        if any((out/k).exists() for k in completed):raise ValueError('carried trajectory must not be rewritten')
+        from .plan import caps
+        maximum=caps();maximum['active_seconds']-=continuation['prior_active_seconds'];maximum['wall_seconds']-=continuation['prior_wall_seconds'];maximum['bytes']-=continuation['source_bytes']
+        if set(packet['runtime_caps'])!=set(maximum) or any(not 0<v<=maximum[k] for k,v in packet['runtime_caps'].items()):raise ValueError('cumulative continuation caps')
+    elif 'continuation' in receipt:raise ValueError('receipt-only continuation')
     if (out/'dispatch.stopped.json').exists() or list(out.glob('*.failure.json')):raise ValueError('failure contradicts completion')
     process=json.loads((out/'matrix.processes.json').read_text());bound(process,identity)
     if process['status']!='COMPUTE_COMPLETE' or not 0<=process['active_seconds']<=86400 or not 0<=process['wall_seconds']<=86400:raise ValueError('process completion/budget')
+    if completed and any(process[k]>packet['runtime_caps'][k] for k in ('active_seconds','wall_seconds')):raise ValueError('continuation runtime cap')
     slots={v['job_id']:v['worker'] for v in receipt['schedule']['assignments']}
     expected={('smoke','device'+str(i)):binding(receipt,i) for i in range(len(ids))}
-    expected.update({('formal',j['job_id']):binding(receipt,slots[j['job_id']],j) for j in jobs})
+    expected.update({('formal',j['job_id']):binding(receipt,slots[j['job_id']],j) for j in jobs if j['job_id'] not in completed})
     entries=process['processes']
     if len(entries)!=len(expected) or len({(e['phase'],e['key']) for e in entries})!=len(expected) or process['exit_codes']!=[e['exit_code'] for e in entries]:raise ValueError('process coverage')
     for e in entries:
@@ -172,7 +186,8 @@ def recompute(out,assets):
         receipt,slots,smokes=execution_evidence(out,assets);reg=assets['registration'];all_rows=historical_rows(assets)
         physical=dict(new_records=0,forwards=0,backwards=0,adam=0);mechanism={}
         for job in matrix()['jobs']:
-            p=out/job['job_id'];done=json.loads((p/'completion.json').read_text());identity=binding(receipt,slots[job['job_id']],job);bound(done,identity)
+            from .continuation import source_for
+            p,origin=source_for(receipt,out,job);done=json.loads((p/'completion.json').read_text());identity=binding(origin,slots[job['job_id']],job);bound(done,identity)
             if done['status']!='TRAJECTORY_COMPLETE' or list(p.glob('*failure.json')):raise ValueError('trajectory incomplete')
             rows=[json.loads(s) for s in (p/'records.jsonl').read_text().splitlines()];validate(rows,stream(reg,job['order']),job['arm'],job['order'],identity)
             counts={k:sum(r['counts'][k] for r in rows) for k in ('forwards','backwards','base_adam','perturb','restore')}
@@ -189,8 +204,12 @@ def recompute(out,assets):
         result['four_order_equal']={subset:dict(arms={a:{c:float(np.mean([target[str(o)][subset]['domain_equal_dice_percent'][a][c] for o in range(4)])) for c in ('OD','OC','macro')} for a in ('C','C_PCA_REGION',*SPECS)},comparisons_pp={a+'-'+b:float(np.mean([target[str(o)][subset]['comparisons_pp'][a+'-'+b] for o in range(4)])) for a,b in PAIRS},factorial_interaction_pp=float(np.mean([target[str(o)][subset]['factorial_interaction_pp'] for o in range(4)]))) for subset in SUBSETS}
         result['focus_domains']={str(o):{d:target[str(o)]['remaining_dev']['domains'][d] for d in ('REFUGE_Valid','ORIGA','Drishti_GS')} for o in range(4)}
         result['limitations'].append('Drishti_GS remaining_dev has 37 contents and one-quarter domain weight; four orders are not independent samples.')
+        if 'continuation' in receipt:
+            from .continuation import public_accounting
+            result['continuation']=public_accounting(receipt['continuation'],physical,result['smoke_physical'])
+            result['limitations'].append(result['continuation']['note'])
         report=render_report(result)
-        if sum(p.stat().st_size for p in out.rglob('*') if p.is_file())+len(json.dumps(result).encode())+len(report.encode())>2*1024**3:raise ValueError('output budget')
+        if output_bytes(out)+receipt.get('continuation',{}).get('source_bytes',0)+len(json.dumps(result).encode())+len(report.encode())>2*1024**3:raise ValueError('output budget')
         # Preserve R1's atomic publisher unchanged; the R2 alias follows the same current pointer.
         alias=out/'R2_EXPERIMENT_REPORT.md'
         if not alias.is_symlink():alias.symlink_to('current/R1_EXPERIMENT_REPORT.md')
@@ -214,4 +233,5 @@ def render_report(result):
                 delta=entry['arms'][arm]['macro']['dice_percent']['mean']-entry['arms']['C']['macro']['dice_percent']['mean']
                 lines.append(f"| {o} | {d} | {arm} | {oc['dice_percent']['mean']:.4f} | {assd} | {decline} | {delta:.4f} |")
     lines+=['','## Resource-reference assessment','','```json',json.dumps(result['assessment'],indent=2),'```','','## Counts and limits','','```json',json.dumps(dict(formal=result['physical'],smoke=result['smoke_physical'],historical_primary=result['historical_primary_records']),indent=2),'```','',*['- '+v for v in result['limitations']],'','Full per-subset, domain, channel, paired-tail and mechanism scalars are in public_aggregate.json. No automatic next experiment.','']
+    if 'continuation' in result:lines+=['## IO continuation accounting','','```json',json.dumps(result['continuation'],indent=2),'```','']
     return '\n'.join(lines)

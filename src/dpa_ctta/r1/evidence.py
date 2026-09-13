@@ -1,9 +1,22 @@
 """Small private atomic evidence files; the current result pointer is authoritative."""
 import json
 import os
+import stat
 import tempfile
 import uuid
 from pathlib import Path
+
+
+def output_bytes(root):
+    """Count each file from one stat; atomic-write temporaries may disappear."""
+    total=0
+    for path in Path(root).rglob('*'):
+        try:info=path.stat()
+        except FileNotFoundError:
+            if path.name.startswith('.write-'):continue
+            raise
+        if stat.S_ISREG(info.st_mode):total+=info.st_size
+    return total
 
 
 def write(path,value,replace=False):

@@ -3,7 +3,7 @@ import json,math,re
 from pathlib import Path
 import numpy as np
 from .plan import science,stream,matrix,allocation,binding,bound,registration_digest,digest,SCIENCE
-from .evidence import invalidate,publish
+from .evidence import invalidate,publish,output_bytes
 from ..p2_analysis import validate_metric
 from ..m1_analysis import paired
 from ..host_diagnostic_analysis import channels,distribution
@@ -159,7 +159,7 @@ def complete(out,reg):
     result=dict(binding=receipt['binding'],status='R1_EXPERIMENT_COMPLETE',physical=physical,smoke_physical={k:sum(s['physical'][k] for s in smokes) for k in smokes[0]['physical']},device_models=[d['model'] for d in receipt['devices']],mixed_device_models=len({d['model'] for d in receipt['devices']})>1,target=target,descriptive_four_order_comparisons_pp=desc,mechanism=mechanism,secondary_A_C0=secondary,scientific_assessment=decision,scientific_status=decision['status'],limitations=['Exposed development data; orders share contents.','Only scalar-supported PCA properties and sensitivity-controller replay are checked; no PCA features or ASSD geometry reconstructed.','Device contention and mixed models do not support controlled speedup claims.','Descriptive assessment is not external research selection or execution permission.','No automatic next run or combination.'])
     synopsis=dict(physical=physical,descriptive_matched_comparisons=desc,assessment_including_risk_and_inactive=decision,secondary_controls={o:{a:{k:v for k,v in data.items() if k!='comparisons'} for a,data in entries.items()} for o,entries in secondary.items()},mixed_device_models=result['mixed_device_models'])
     report='# R1 results\n\nR1_EXPERIMENT_COMPLETE\n\n'+json.dumps(synopsis,indent=2)+'\n\nAll domain/channel/subset pairs and mechanism coverage are in public_aggregate.json. This descriptive assessment is not final external research selection. No automatic next experiment.\n'
-    if sum(p.stat().st_size for p in out.rglob('*') if p.is_file())+len(json.dumps(result).encode())+len(report.encode())>2*1024**3:raise ValueError('result publication exceeds private output cap')
+    if output_bytes(out)+len(json.dumps(result).encode())+len(report.encode())>2*1024**3:raise ValueError('result publication exceeds private output cap')
     publish(out,result,report)
     return result
 

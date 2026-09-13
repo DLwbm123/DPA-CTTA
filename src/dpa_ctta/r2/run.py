@@ -3,7 +3,7 @@ import argparse,gc,json,os,subprocess,sys,time,uuid
 from pathlib import Path
 from .plan import ROOT,DEFAULTS,SCIENCE,REF,GRATA,science,matrix,authorize,registration_digest,digest,stream,allocation,binding,bound,caps
 from ..r1.assets import checkpoint,target,AssetMismatch
-from ..r1.evidence import write
+from ..r1.evidence import write,output_bytes
 
 
 from ..r1.run import claim,charge,current,failure_scope
@@ -58,7 +58,7 @@ def trajectory(job,state,reg,out,worker,start,identity,backend,checkpoint_io):
                 r=dict(binding=identity,arm=job['arm'],order=job['order'],**{k:row[k] for k in ('group_id','sample_id','domain','subset')},**a,peak_allocated_bytes=torch.cuda.max_memory_allocated())
                 log.write(json.dumps(r,allow_nan=False)+'\n');log.flush();written+=1
                 if written%64==0:
-                    if sum(f.stat().st_size for f in Path(out).rglob('*') if f.is_file())>2*1024**3:raise RuntimeError('private output cap')
+                    if output_bytes(out)>2*1024**3:raise RuntimeError('private output cap')
         h.finish(state);charge(out,worker,start,t0);write(p/'completion.json',dict(binding=identity,status='TRAJECTORY_COMPLETE',records=written,physical=h.counts,backend=backend,checkpoint_io=checkpoint_io,seconds=time.monotonic()-t0))
     except Exception as e:
         write(p/'failure.json',dict(binding=identity,status='INCOMPLETE',reason=str(e),records=written,physical=None if h is None else h.counts,scope=failure_scope(e)));raise
@@ -94,6 +94,7 @@ def formal_worker():
     import torch
     from ..source_pilot_release import environment
     packet,reg,index,out=context();job=next(j for j in packet['jobs'] if j['job_id']==os.environ['RUN_JOB'])
+    if job['job_id'] in packet.get('continuation',{}).get('completed_jobs',[]):raise PermissionError('carried trajectory cannot be rerun')
     if next(a['worker'] for a in packet['schedule']['assignments'] if a['job_id']==job['job_id'])!=index:raise PermissionError('job device rotation binding')
     identity=binding(packet,index,job)
     try:
@@ -107,7 +108,7 @@ def formal_worker():
         raise
 
 
-def launch(auth,assets,out):
+def launch(auth,assets,out,continue_from=None):
     reg=assets['registration'];ids=authorize(auth,reg)
     from .analyze import historical_metadata
     historical_metadata(assets)
@@ -119,6 +120,16 @@ def launch(auth,assets,out):
     mapping={int(row[0]):dict(uuid=row[1].strip(),model=row[2].strip(),free_MiB=int(row[3].split()[0])) for row in [line.split(',') for line in rows.splitlines()]}
     devices=[dict(index=i,**mapping[i]) for i in ids]
     if any(d['free_MiB']<4096 for d in devices):raise RuntimeError('need 4 GiB peak headroom per worker; no waiting/retry')
+    continuation=None;runtime_caps=caps()
+    if continue_from is not None:
+        from .continuation import inspect_source,read
+        continuation=inspect_source(continue_from,assets,ids,auth)
+        old=read(Path(continue_from)/'receipt.json')
+        if [(d['index'],d['uuid']) for d in devices]!=[(d['index'],d['uuid']) for d in old['devices']]:raise ValueError('continuation device identity')
+        runtime_caps['active_seconds']-=continuation['prior_active_seconds']
+        runtime_caps['wall_seconds']-=max(continuation['prior_wall_seconds'],time.time()-(Path(continue_from)/'receipt.json').stat().st_mtime)
+        runtime_caps['bytes']-=continuation['source_bytes']
+        if min(runtime_caps.values())<=0:raise RuntimeError('continuation cumulative resource budget exhausted')
     out=Path(out).resolve()
     if out.is_relative_to(ROOT):raise ValueError('private output outside code')
     if not out.is_relative_to(Path(assets['private_storage_root']).resolve()):raise ValueError('registered private storage root')
@@ -131,14 +142,17 @@ def launch(auth,assets,out):
     out.mkdir(mode=0o700);write(out/'usage.json',dict(seconds=0.,wall_seconds=0.,active_workers=0))
     jobs=matrix()['jobs'];identity=dict(run_id=uuid.uuid4().hex,code_sha=auth['approved_code_sha'],science_sha256=digest(SCIENCE),registration_digest=registration_digest(reg))
     packet=dict(binding=identity,authorization=auth,assets=assets,out=str(out),devices=devices,jobs=jobs,schedule=allocation(jobs,len(devices)))
+    if continuation:packet.update(continuation=continuation,runtime_caps=runtime_caps)
     write(out/'packet.private.json',packet)
-    write(out/'receipt.json',dict(binding=identity,devices=devices,jobs=jobs,schedule=packet['schedule'],formal_budget=science()['formal_budget'],smoke_budget=science()['per_gpu_smoke_budget'],mixed_device_models=len({d['model'] for d in devices})>1))
+    receipt=dict(binding=identity,devices=devices,jobs=jobs,schedule=packet['schedule'],formal_budget=science()['formal_budget'],smoke_budget=science()['per_gpu_smoke_budget'],mixed_device_models=len({d['model'] for d in devices})>1)
+    if continuation:receipt.update(continuation=continuation,runtime_caps=runtime_caps)
+    write(out/'receipt.json',receipt)
     from ..b3_runtime import ENTRY
     from ..r1.supervise import supervise
     def start_process(spec,log):
         i=spec['worker'];env=os.environ.copy();env.update(PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=os.pathsep.join([str(ROOT/'src'),assets.get('dependency_pythonpath','')]),DPA_CTTA_BASE_ROOT=assets['ctta_dependency_root'],DPA_GRATA_ROOT=assets['grata_root'],CUDA_VISIBLE_DEVICES=devices[i]['uuid'],RUN_FILE=str(ROOT/'scripts/run_r2_matrix.py'),RUN_MODE='worker' if spec['phase']=='smoke' else 'formal',RUN_WORKER=str(i),RUN_JOB=spec['key'],RUN_PACKET=str(out/'packet.private.json'))
         return subprocess.Popen([sys.executable,'-c',ENTRY],cwd=ROOT,env=env,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
-    supervise(out,packet,start_process,caps=caps())
+    supervise(out,packet,start_process,caps=runtime_caps,completed=() if continuation is None else continuation['completed_jobs'])
     from .analyze import recompute
     recompute(out,assets)
 
@@ -147,9 +161,9 @@ def main():
     os.umask(0o077)
     if os.environ.get('RUN_MODE')=='worker':return worker()
     if os.environ.get('RUN_MODE')=='formal':return formal_worker()
-    parser=argparse.ArgumentParser();parser.add_argument('--run',action='store_true');parser.add_argument('--recompute',action='store_true');parser.add_argument('--authorization',type=Path,default=DEFAULTS);parser.add_argument('--assets',type=Path);parser.add_argument('--output',type=Path);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--run',action='store_true');parser.add_argument('--recompute',action='store_true');parser.add_argument('--authorization',type=Path,default=DEFAULTS);parser.add_argument('--assets',type=Path);parser.add_argument('--output',type=Path);parser.add_argument('--continue-from',type=Path);args=parser.parse_args()
     if args.recompute:
-        if args.run:raise ValueError('run and recompute are separate operations')
+        if args.run or args.continue_from:raise ValueError('run and recompute are separate operations')
         if args.assets is None or args.output is None:raise ValueError('explicit assets/output required')
         from .analyze import recompute
         return recompute(args.output,json.loads(args.assets.read_text()))
@@ -157,4 +171,4 @@ def main():
     auth=json.loads(args.authorization.read_text())
     if auth.get('enabled') is not True:raise PermissionError('execution disabled')
     if args.assets is None or args.output is None:raise ValueError('explicit assets/output required')
-    launch(auth,json.loads(args.assets.read_text()),args.output)
+    launch(auth,json.loads(args.assets.read_text()),args.output,args.continue_from)

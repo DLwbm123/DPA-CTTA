@@ -6,7 +6,7 @@ import subprocess
 import sys
 import time
 from pathlib import Path
-from .evidence import write
+from .evidence import write,output_bytes
 from .plan import binding,science
 
 
@@ -39,15 +39,15 @@ def stop_owned(record,grace=.5):
     record['cleaned']=True
 
 
-def supervise(out,packet,start_process,caps=None,poll_seconds=.2):
+def supervise(out,packet,start_process,caps=None,poll_seconds=.2,completed=()):
     """start_process(spec, log) must return a child with start_new_session=True.
 
     Tests supply only short CPU children and small caps. No CLI changes these caps.
     A fresh process per formal trajectory eliminates unmanaged formal grandchildren.
     """
     out=Path(out);caps=limits() if caps is None else caps
-    slots=len(packet['devices']);jobs={j['job_id']:j for j in packet['jobs']}
-    queues={i:[jobs[a['job_id']] for a in packet['schedule']['assignments'] if a['worker']==i] for i in range(slots)}
+    slots=len(packet['devices']);jobs={j['job_id']:j for j in packet['jobs'] if j['job_id'] not in completed}
+    queues={i:[jobs[a['job_id']] for a in packet['schedule']['assignments'] if a['worker']==i and a['job_id'] in jobs] for i in range(slots)}
     active={};history=[];stopped=False;phase='smoke';smoked=set();started=time.monotonic();last=started;seconds=0.;caught=None
     handlers={};pending_signal=None;stop_reason=None;failed_starts=[]
 
@@ -107,7 +107,7 @@ def supervise(out,packet,start_process,caps=None,poll_seconds=.2):
             for slot,rec in list(active.items()):
                 if rec['phase']=='formal' and now-rec['started']>=caps['trajectory_seconds']:
                     halt('trajectory time cap');finish(slot,'trajectory time cap','TIMEOUT')
-            if sum(p.stat().st_size for p in out.rglob('*') if p.is_file())>caps['bytes']:
+            if output_bytes(out)>caps['bytes']:
                 halt('private output cap')
                 for slot in list(active):finish(slot,'private output cap')
             if phase=='smoke' and len(smoked)==slots and not active and not stopped:phase='formal'

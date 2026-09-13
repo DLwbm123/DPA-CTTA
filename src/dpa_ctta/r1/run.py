@@ -3,7 +3,7 @@ import argparse,gc,json,os,subprocess,sys,time,uuid
 from pathlib import Path
 from .plan import ROOT,DEFAULTS,SCIENCE,REF,GRATA,science,matrix,authorize,registration_digest,digest,stream,allocation,binding,bound
 from .assets import checkpoint,target,AssetMismatch
-from .evidence import write
+from .evidence import write,output_bytes
 
 
 def claim(out,job_id):
@@ -90,7 +90,7 @@ def trajectory(job,state,reg,out,worker,start,identity,backend,checkpoint_io):
                 r=dict(binding=identity,arm=job['arm'],order=job['order'],**{k:row[k] for k in ('group_id','sample_id','domain','subset')},**a,peak_allocated_bytes=torch.cuda.max_memory_allocated())
                 log.write(json.dumps(r,allow_nan=False)+'\n');log.flush();written+=1
                 if written%64==0:
-                    if sum(f.stat().st_size for f in Path(out).rglob('*') if f.is_file())>2*1024**3:raise RuntimeError('private output cap')
+                    if output_bytes(out)>2*1024**3:raise RuntimeError('private output cap')
         h.finish(state);charge(out,worker,start,t0);write(p/'completion.json',dict(binding=identity,status='TRAJECTORY_COMPLETE',records=written,physical=h.counts,backend=backend,checkpoint_io=checkpoint_io,seconds=time.monotonic()-t0))
     except Exception as e:
         write(p/'failure.json',dict(binding=identity,status='INCOMPLETE',reason=str(e),records=written,physical=None if h is None else h.counts,scope=failure_scope(e)));raise
