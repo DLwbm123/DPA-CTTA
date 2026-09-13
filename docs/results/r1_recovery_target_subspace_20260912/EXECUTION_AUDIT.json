@@ -1,0 +1,1608 @@
+{
+  "status": "R1_EXPERIMENT_COMPLETE",
+  "binding": {
+    "run_id": "3e8b14d930e54eaca94408f3b68ccc01",
+    "code_sha": "54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b",
+    "science_sha256": "e23fb6de3e55f704ec2036d82777b29a78643ebc7e1ae1e89328f22f56de51e2",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+  },
+  "launcher_exit_code": 0,
+  "started_unix": 1789213971.305918,
+  "ended_unix": 1789229242.4404428,
+  "total_wall_seconds": 15271.134524822235,
+  "supervisor_wall_seconds": 15253.318552388111,
+  "active_worker_seconds": 32973.798264230136,
+  "physical": {
+    "records": 46824,
+    "forwards": 398004,
+    "backwards": 46824,
+    "adam": 46824
+  },
+  "smoke_physical": {
+    "forwards": 354,
+    "backwards": 42,
+    "base_adam": 42,
+    "perturb": 0,
+    "restore": 0
+  },
+  "process_count": 27,
+  "process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "jobs": [
+    {
+      "job_id": "o0a0",
+      "arm": "C",
+      "order": 0,
+      "worker": 0,
+      "physical_gpu": 4,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1895.5566664088983,
+      "peak_allocated_bytes": 615037952,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.8922343155536715,
+          "median": 0.8864464538637549,
+          "p10": 0.852073040092364,
+          "p90": 0.931654250016436,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5872770738787949,
+          "worst_decile_mean": 0.8367282069806123,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.9681902093507793,
+          "median": 0.964771089842543,
+          "p10": 0.9286027909256518,
+          "p90": 1.0058211300056428,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.6589237048756331,
+          "worst_decile_mean": 0.9124176094702882,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.618508944287896
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.859981375280768
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19347641104832292
+      }
+    },
+    {
+      "job_id": "o0a1",
+      "arm": "C_PER256",
+      "order": 0,
+      "worker": 1,
+      "physical_gpu": 6,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1636.0131305910181,
+      "peak_allocated_bytes": 617216000,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.760009757589419,
+          "median": 0.44371811603195965,
+          "p10": 0.42442530510015786,
+          "p90": 1.545864317100495,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.40216573793441057,
+          "worst_decile_mean": 0.41905758104510415,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.8348332295896699,
+          "median": 0.5150757529772818,
+          "p10": 0.49366581812500954,
+          "p90": 1.6293866180349141,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.47414442198351026,
+          "worst_decile_mean": 0.48894322558534237,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.83950431388803
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.814721916569397
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19377459911629558
+      }
+    },
+    {
+      "job_id": "o0a2",
+      "arm": "C_SENS",
+      "order": 0,
+      "worker": 2,
+      "physical_gpu": 7,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 21461,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1248.9785591340624,
+      "peak_allocated_bytes": 617216512,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.5603223293671229,
+          "median": 0.5590780070051551,
+          "p10": 0.5469994698651135,
+          "p90": 0.5738667161203921,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5355055381078273,
+          "worst_decile_mean": 0.5414947422283074,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6368950055613789,
+          "median": 0.6367894001305103,
+          "p10": 0.6186677471268922,
+          "p90": 0.6545399881433696,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.6036282419227064,
+          "worst_decile_mean": 0.6137036157187492,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 41.12012413004413
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 11.966439919546247
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19402375700883567
+      }
+    },
+    {
+      "job_id": "o0a3",
+      "arm": "C_PCA_GLOBAL",
+      "order": 0,
+      "worker": 0,
+      "physical_gpu": 4,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1764.0643936418928,
+      "peak_allocated_bytes": 667859968,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.8250139643345553,
+          "median": 0.8206744941417128,
+          "p10": 0.7782059400342405,
+          "p90": 0.8837399140466005,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.43484148383140564,
+          "worst_decile_mean": 0.7573265550558322,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.9007585013685304,
+          "median": 0.8933322289958596,
+          "p10": 0.8490551349241287,
+          "p90": 0.9722932979930192,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5058433408848941,
+          "worst_decile_mean": 0.8301627283656913,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.689420712413266
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.90782008273527
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19387678313069046
+      }
+    },
+    {
+      "job_id": "o0a4",
+      "arm": "C_PCA_SHUFFLED",
+      "order": 0,
+      "worker": 1,
+      "physical_gpu": 6,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1028.5139495611656,
+      "peak_allocated_bytes": 667859968,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.4490910104429612,
+          "median": 0.447989284992218,
+          "p10": 0.43505858699791133,
+          "p90": 0.4624286708422005,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.42221651202999055,
+          "worst_decile_mean": 0.4307140752468828,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5239086857407823,
+          "median": 0.5235058809630573,
+          "p10": 0.505677784094587,
+          "p90": 0.5413165111094713,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.48856052104383707,
+          "worst_decile_mean": 0.5013830270641959,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.71721107466146
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.845009698532522
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19232071610167623
+      }
+    },
+    {
+      "job_id": "o0a5",
+      "arm": "C_PCA_REGION",
+      "order": 0,
+      "worker": 2,
+      "physical_gpu": 7,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1029.1933153672144,
+      "peak_allocated_bytes": 667991040,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.44712810804516073,
+          "median": 0.446285790996626,
+          "p10": 0.4330959371291101,
+          "p90": 0.46097654197365046,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4127328258473426,
+          "worst_decile_mean": 0.42776991695769095,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5242223524763466,
+          "median": 0.5234993500635028,
+          "p10": 0.5043543321080506,
+          "p90": 0.5438186421524733,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.48367434088140726,
+          "worst_decile_mean": 0.49930802006654595,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.5702204760164
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.762261061230674
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19590823608450592
+      }
+    },
+    {
+      "job_id": "o1a0",
+      "arm": "C",
+      "order": 1,
+      "worker": 1,
+      "physical_gpu": 6,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1009.7437778550666,
+      "peak_allocated_bytes": 615037952,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.4380000433649463,
+          "median": 0.4372789259068668,
+          "p10": 0.4247696939855814,
+          "p90": 0.45163212693296373,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4033040381036699,
+          "worst_decile_mean": 0.4197663060123367,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5142475805277084,
+          "median": 0.5146058760583401,
+          "p10": 0.4963032021187246,
+          "p90": 0.5333646088838577,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.46730855386704206,
+          "worst_decile_mean": 0.4914997399271447,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.787900645053014
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.81680882931687
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19636653596535325
+      }
+    },
+    {
+      "job_id": "o1a1",
+      "arm": "C_PER256",
+      "order": 1,
+      "worker": 2,
+      "physical_gpu": 7,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1000.4452153001912,
+      "peak_allocated_bytes": 615118848,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.43569991789433127,
+          "median": 0.4349151870701462,
+          "p10": 0.42153981886804104,
+          "p90": 0.4495641279499978,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4091438530012965,
+          "worst_decile_mean": 0.41659729332159445,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5095214510483544,
+          "median": 0.5093893939629197,
+          "p10": 0.49107586895115674,
+          "p90": 0.5277163619175553,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4777408419176936,
+          "worst_decile_mean": 0.4865597148356978,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.375532642705366
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.75619580806233
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19878937886096537
+      }
+    },
+    {
+      "job_id": "o1a2",
+      "arm": "C_SENS",
+      "order": 1,
+      "worker": 0,
+      "physical_gpu": 4,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 21461,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 2350.202087697806,
+      "peak_allocated_bytes": 615119360,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 1.1254280870505868,
+          "median": 1.0963173599448055,
+          "p10": 1.0594326430000365,
+          "p90": 1.2989625961054116,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.9162978581152856,
+          "worst_decile_mean": 1.0296763239264468,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 1.2012044485287978,
+          "median": 1.1702093130443245,
+          "p10": 1.135294449981302,
+          "p90": 1.3725171629339457,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 1.0076151499524713,
+          "worst_decile_mean": 1.1116973289754242,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 40.11571409087628
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.80814881902188
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19635525392368436
+      }
+    },
+    {
+      "job_id": "o1a3",
+      "arm": "C_PCA_GLOBAL",
+      "order": 1,
+      "worker": 1,
+      "physical_gpu": 6,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1023.1700659419876,
+      "peak_allocated_bytes": 667859968,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.44424640997012227,
+          "median": 0.44330455595627427,
+          "p10": 0.4306933127809316,
+          "p90": 0.45804201322607696,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4198285660240799,
+          "worst_decile_mean": 0.42554320084710356,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5211095459926788,
+          "median": 0.5208903530146927,
+          "p10": 0.5023669879883528,
+          "p90": 0.5390934848692268,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4869965410325676,
+          "worst_decile_mean": 0.4981993177290341,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.76147486246191
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.7599318951834
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19986833003349602
+      }
+    },
+    {
+      "job_id": "o1a4",
+      "arm": "C_PCA_SHUFFLED",
+      "order": 1,
+      "worker": 2,
+      "physical_gpu": 7,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1034.1446036049165,
+      "peak_allocated_bytes": 667991040,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.44878842980889216,
+          "median": 0.4477368730586022,
+          "p10": 0.4345413569826633,
+          "p90": 0.46272606984712183,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4142731761094183,
+          "worst_decile_mean": 0.42971234397169167,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5267214933228891,
+          "median": 0.5267605849076062,
+          "p10": 0.5090244440361857,
+          "p90": 0.5456459170673043,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.489247044082731,
+          "worst_decile_mean": 0.5046977273625682,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.9491864729207
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.708850853145123
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19994871295057237
+      }
+    },
+    {
+      "job_id": "o1a5",
+      "arm": "C_PCA_REGION",
+      "order": 1,
+      "worker": 0,
+      "physical_gpu": 4,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1792.224853431806,
+      "peak_allocated_bytes": 667991040,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.8392149516922407,
+          "median": 0.8291602041572332,
+          "p10": 0.7848934570793062,
+          "p90": 0.904804470948875,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4813527490478009,
+          "worst_decile_mean": 0.7495167975881784,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.9152263672434048,
+          "median": 0.9039417810272425,
+          "p10": 0.8550797649659216,
+          "p90": 0.9811325508635491,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5569752790033817,
+          "worst_decile_mean": 0.8279223500415968,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.915443387813866
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.805216595064849
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19794391584582627
+      }
+    },
+    {
+      "job_id": "o2a0",
+      "arm": "C",
+      "order": 2,
+      "worker": 2,
+      "physical_gpu": 7,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1004.8509485570248,
+      "peak_allocated_bytes": 615037952,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.43693822457456055,
+          "median": 0.4359643729403615,
+          "p10": 0.4238734010141343,
+          "p90": 0.45028571388684213,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.40742305596359074,
+          "worst_decile_mean": 0.41847768489138354,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.511742815575221,
+          "median": 0.5116484900936484,
+          "p10": 0.49419258697889745,
+          "p90": 0.5301021658815444,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4719521440565586,
+          "worst_decile_mean": 0.4900895375603981,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.56073909532279
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.702067938633263
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20527988183312118
+      }
+    },
+    {
+      "job_id": "o2a1",
+      "arm": "C_PER256",
+      "order": 2,
+      "worker": 0,
+      "physical_gpu": 4,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1868.7166989489924,
+      "peak_allocated_bytes": 617216000,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.8789686543719251,
+          "median": 0.8833822060842067,
+          "p10": 0.8108290780801326,
+          "p90": 0.9302350080106407,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5113767848815769,
+          "worst_decile_mean": 0.7758090587294831,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.954135004768739,
+          "median": 0.9618038609623909,
+          "p10": 0.8776001140940934,
+          "p90": 1.0046355410013348,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5757234171032906,
+          "worst_decile_mean": 0.842917312739645,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.93984818691388
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.637584715383127
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20193282910622656
+      }
+    },
+    {
+      "job_id": "o2a2",
+      "arm": "C_SENS",
+      "order": 2,
+      "worker": 1,
+      "physical_gpu": 6,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 21461,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1253.7584741050377,
+      "peak_allocated_bytes": 617216512,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.5638571217648259,
+          "median": 0.5629444369114935,
+          "p10": 0.5506348297931254,
+          "p90": 0.577063794946298,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5326688000932336,
+          "worst_decile_mean": 0.5453877834667338,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6392469706558224,
+          "median": 0.6388338189572096,
+          "p10": 0.6215559020638466,
+          "p90": 0.657141035888344,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.6080077218357474,
+          "worst_decile_mean": 0.6175054613945112,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.52886289008893
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.709308163961396
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.2033792780712247
+      }
+    },
+    {
+      "job_id": "o2a3",
+      "arm": "C_PCA_GLOBAL",
+      "order": 2,
+      "worker": 2,
+      "physical_gpu": 7,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1014.3884154441766,
+      "peak_allocated_bytes": 667859968,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.4424736503944152,
+          "median": 0.441395471803844,
+          "p10": 0.4289440799038857,
+          "p90": 0.4558290019631386,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4100976660847664,
+          "worst_decile_mean": 0.42412297719167735,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5165476422003403,
+          "median": 0.5158440440427512,
+          "p10": 0.4984347459394485,
+          "p90": 0.5347741839941591,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4803077669348568,
+          "worst_decile_mean": 0.4944054798023509,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.49988899915479
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.762705068802461
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.204733518185094
+      }
+    },
+    {
+      "job_id": "o2a4",
+      "arm": "C_PCA_SHUFFLED",
+      "order": 2,
+      "worker": 0,
+      "physical_gpu": 4,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1844.5050366350915,
+      "peak_allocated_bytes": 667991040,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.8664547496825897,
+          "median": 0.8740230239927769,
+          "p10": 0.8041101549752057,
+          "p90": 0.9344394558575004,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5826931449119002,
+          "worst_decile_mean": 0.7843147676131612,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.9416949556149239,
+          "median": 0.9450015949551016,
+          "p10": 0.8783797300420702,
+          "p90": 1.0084914958570153,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.6716182520613074,
+          "worst_decile_mean": 0.8596991183668641,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.51130332937464
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.739052134100348
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20306961005553603
+      }
+    },
+    {
+      "job_id": "o2a5",
+      "arm": "C_PCA_REGION",
+      "order": 2,
+      "worker": 1,
+      "physical_gpu": 6,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1029.1237828049343,
+      "peak_allocated_bytes": 667991040,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.449003431351969,
+          "median": 0.4480808319058269,
+          "p10": 0.4357389009092003,
+          "p90": 0.4624627230223268,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4224469671025872,
+          "worst_decile_mean": 0.43061579057794747,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5241355548645233,
+          "median": 0.5246077149640769,
+          "p10": 0.5074200849048793,
+          "p90": 0.5415555040817708,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4905721410177648,
+          "worst_decile_mean": 0.5032958767616799,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.802634708816186
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.734264809638262
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20160003588534892
+      }
+    },
+    {
+      "job_id": "o3a0",
+      "arm": "C",
+      "order": 3,
+      "worker": 0,
+      "physical_gpu": 4,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1805.0321888509206,
+      "peak_allocated_bytes": 615037952,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.8459739731026833,
+          "median": 0.8616034258157015,
+          "p10": 0.7657319949939847,
+          "p90": 0.9231456418056041,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.6142950360663235,
+          "worst_decile_mean": 0.7438477027367763,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.9215522115864672,
+          "median": 0.9383390990551561,
+          "p10": 0.8394439390394837,
+          "p90": 0.995152615942061,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.6875762601848692,
+          "worst_decile_mean": 0.8177863105368914,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.791713492712006
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.717220379505306
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20336157409474254
+      }
+    },
+    {
+      "job_id": "o3a1",
+      "arm": "C_PER256",
+      "order": 3,
+      "worker": 1,
+      "physical_gpu": 6,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1006.3364545057993,
+      "peak_allocated_bytes": 617216000,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.4379648184113783,
+          "median": 0.4368805238045752,
+          "p10": 0.4241735339164734,
+          "p90": 0.45164698897860944,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4131968659348786,
+          "worst_decile_mean": 0.41919364499840506,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5124725891855512,
+          "median": 0.512321415124461,
+          "p10": 0.49502727785147727,
+          "p90": 0.5303246811963618,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4813946718350053,
+          "worst_decile_mean": 0.4904114023024425,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.98243773938157
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.75828821095638
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20307850698009133
+      }
+    },
+    {
+      "job_id": "o3a2",
+      "arm": "C_SENS",
+      "order": 3,
+      "worker": 2,
+      "physical_gpu": 7,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 21461,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1249.7478032179642,
+      "peak_allocated_bytes": 617216512,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.5624970079820674,
+          "median": 0.561496757902205,
+          "p10": 0.5492871750611812,
+          "p90": 0.5762268749531358,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.538533516228199,
+          "worst_decile_mean": 0.5443625503174524,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6372250643364755,
+          "median": 0.6368918940424919,
+          "p10": 0.6200476670637727,
+          "p90": 0.6550558628514409,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.6043099309317768,
+          "worst_decile_mean": 0.6156047438164431,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.68825176614337
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.74642261187546
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20357213588431478
+      }
+    },
+    {
+      "job_id": "o3a3",
+      "arm": "C_PCA_GLOBAL",
+      "order": 3,
+      "worker": 0,
+      "physical_gpu": 4,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1870.789104645839,
+      "peak_allocated_bytes": 667991040,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.8796339836793841,
+          "median": 0.8859842298552394,
+          "p10": 0.8183379590045661,
+          "p90": 0.9304885370656848,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5428742540534586,
+          "worst_decile_mean": 0.7832059578825149,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.9552389004166075,
+          "median": 0.9621614119969308,
+          "p10": 0.8867787991184741,
+          "p90": 1.004556787898764,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.6120488671585917,
+          "worst_decile_mean": 0.8512646898422961,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.55959919723682
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.804797286400571
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20363594288937747
+      }
+    },
+    {
+      "job_id": "o3a4",
+      "arm": "C_PCA_SHUFFLED",
+      "order": 3,
+      "worker": 1,
+      "physical_gpu": 6,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1029.6551955239847,
+      "peak_allocated_bytes": 667991040,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.44934408194951136,
+          "median": 0.44838446797803044,
+          "p10": 0.436548424186185,
+          "p90": 0.4626629180274904,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4235900668427348,
+          "worst_decile_mean": 0.4308917941026656,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5243606796715626,
+          "median": 0.5244369779247791,
+          "p10": 0.5074897408485413,
+          "p90": 0.5423262540716678,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4947418689262122,
+          "worst_decile_mean": 0.5029120140077014,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.766544989543036
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.624603781150654
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20230585988610983
+      }
+    },
+    {
+      "job_id": "o3a5",
+      "arm": "C_PCA_REGION",
+      "order": 3,
+      "worker": 2,
+      "physical_gpu": 7,
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1029.3528200439177,
+      "peak_allocated_bytes": 667859968,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.4478601184112713,
+          "median": 0.4470026090275496,
+          "p10": 0.4339555772021413,
+          "p90": 0.46172871300950646,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4117198649328202,
+          "worst_decile_mean": 0.42856132967174243,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5242643616505221,
+          "median": 0.5241646210197359,
+          "p10": 0.5071456239093095,
+          "p90": 0.5422350491862744,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4838818619027734,
+          "worst_decile_mean": 0.5017748248646967,
+          "tail_count": 196
+        }
+      },
+      "asset_io": {
+        "image": {
+          "bytes": 984966985,
+          "seconds": 39.57488703681156
+        },
+        "mask": {
+          "bytes": 9550277,
+          "seconds": 10.706596264848486
+        }
+      },
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20424300013110042
+      }
+    }
+  ],
+  "smoke": [
+    {
+      "worker": 0,
+      "physical_gpu": 4,
+      "physical": {
+        "forwards": 118,
+        "backwards": 14,
+        "base_adam": 14,
+        "perturb": 0,
+        "restore": 0
+      },
+      "seconds": 22.949338176986203,
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.20264298701658845
+      },
+      "backend": {
+        "python": "3.10.6",
+        "torch": "2.2.1+cu121",
+        "cuda": "12.1",
+        "cudnn": 8902,
+        "device_name": "NVIDIA GeForce RTX 3090",
+        "tf32_matmul": false,
+        "tf32_cudnn": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": false,
+        "seed": 20260907,
+        "gpu_same_device_tolerance": {
+          "rtol": 0.0001,
+          "atol": 1e-05
+        },
+        "seed_is_not_bitwise_determinism_proof": true
+      }
+    },
+    {
+      "worker": 1,
+      "physical_gpu": 6,
+      "physical": {
+        "forwards": 118,
+        "backwards": 14,
+        "base_adam": 14,
+        "perturb": 0,
+        "restore": 0
+      },
+      "seconds": 34.389685190981254,
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19391244603320956
+      },
+      "backend": {
+        "python": "3.10.6",
+        "torch": "2.2.1+cu121",
+        "cuda": "12.1",
+        "cudnn": 8902,
+        "device_name": "NVIDIA GeForce RTX 3090",
+        "tf32_matmul": false,
+        "tf32_cudnn": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": false,
+        "seed": 20260907,
+        "gpu_same_device_tolerance": {
+          "rtol": 0.0001,
+          "atol": 1e-05
+        },
+        "seed_is_not_bitwise_determinism_proof": true
+      }
+    },
+    {
+      "worker": 2,
+      "physical_gpu": 7,
+      "physical": {
+        "forwards": 118,
+        "backwards": 14,
+        "base_adam": 14,
+        "perturb": 0,
+        "restore": 0
+      },
+      "seconds": 13.769192428095266,
+      "checkpoint_io": {
+        "bytes": 90388078,
+        "read_verify_load_seconds": 0.19268639804795384
+      },
+      "backend": {
+        "python": "3.10.6",
+        "torch": "2.2.1+cu121",
+        "cuda": "12.1",
+        "cudnn": 8902,
+        "device_name": "NVIDIA GeForce RTX 3090",
+        "tf32_matmul": false,
+        "tf32_cudnn": false,
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": false,
+        "seed": 20260907,
+        "gpu_same_device_tolerance": {
+          "rtol": 0.0001,
+          "atol": 1e-05
+        },
+        "seed_is_not_bitwise_determinism_proof": true
+      }
+    }
+  ],
+  "output_accounted_bytes": 118267785,
+  "validation": "Frozen execution_evidence and validate, completion/call counts, GT metadata and aggregate means",
+  "cuda_initialized": false,
+  "real_images_masks_or_weights_read": false
+}

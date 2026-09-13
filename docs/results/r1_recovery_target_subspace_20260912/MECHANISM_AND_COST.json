@@ -1,0 +1,1762 @@
+{
+  "o0a0": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 1740.749149645213,
+    "peak_allocated_bytes": 615037952,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null
+  },
+  "o0a1": {
+    "resets": 7,
+    "reset_visits": [
+      257,
+      513,
+      769,
+      1025,
+      1281,
+      1537,
+      1793
+    ],
+    "host_seconds": 1482.7790370569564,
+    "peak_allocated_bytes": 617216000,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null
+  },
+  "o0a2": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 1093.1888645952567,
+    "peak_allocated_bytes": 617216512,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null,
+    "controller_summary": {
+      "sensitivity_missing": 0,
+      "eligible_visits": 1902,
+      "max_eligible_ema_over_best": 3.5171986879158164,
+      "sensitivity_distribution": {
+        "n": 1951,
+        "mean": 0.04754625108851543,
+        "median": 0.03592387214303017,
+        "p10": 0.012209083884954453,
+        "p90": 0.10038617998361588,
+        "positive": 1951,
+        "zero": 0,
+        "negative": 0,
+        "minimum": 0.003465950256213546,
+        "worst_decile_mean": 0.008746546337960705,
+        "tail_count": 196
+      }
+    }
+  },
+  "o0a3": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 1609.6022444167174,
+    "peak_allocated_bytes": 667859968,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 233545,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.08684002936673067,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 233545,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.08684002936673067,
+      "median": 0.08202129602432251,
+      "p10": 0.062037184834480286,
+      "p90": 0.1196812242269516,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.052490148674316554,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.04973472545504845,
+      "median": 0.04117567092180252,
+      "p10": 0.029901601374149323,
+      "p90": 0.07567071169614792,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.021683167666196823,
+      "worst_decile_mean": 0.02784914959564197,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      4
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o0a4": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 876.1765613742173,
+    "peak_allocated_bytes": 667859968,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62431,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 46250,
+        "contributing_images": 1947,
+        "version": 1940,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1947,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.08699888464107323,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 1,
+        "final": {
+          "n": 62431,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 2,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 3,
+        "final": {
+          "n": 46250,
+          "contributing_images": 1947,
+          "version": 1940,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1947,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1947
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.08699888464107323,
+      "median": 0.08223633468151093,
+      "p10": 0.06200259178876877,
+      "p90": 0.11983023583889008,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.05226305505374865,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.04971683223367593,
+      "median": 0.04113435745239258,
+      "p10": 0.029883679002523422,
+      "p90": 0.07559118419885635,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.021681347861886024,
+      "worst_decile_mean": 0.027827176065849408,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      4
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o0a5": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 872.3469387961086,
+    "peak_allocated_bytes": 667991040,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62431,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 48118,
+        "contributing_images": 1947,
+        "version": 1940,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1947,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.10630905512302181,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 1,
+        "final": {
+          "n": 62431,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 2,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 3,
+        "final": {
+          "n": 48118,
+          "contributing_images": 1947,
+          "version": 1940,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1947,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1947
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.10630905512302181,
+      "median": 0.10174113512039185,
+      "p10": 0.0787711888551712,
+      "p90": 0.14165961742401123,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.06737933587282896,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.04956741987139002,
+      "median": 0.04097898304462433,
+      "p10": 0.029667235910892487,
+      "p90": 0.07542900741100311,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.021675463765859604,
+      "worst_decile_mean": 0.027642544615557606,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      4
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o1a0": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 854.5380846050102,
+    "peak_allocated_bytes": 615037952,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null
+  },
+  "o1a1": {
+    "resets": 7,
+    "reset_visits": [
+      257,
+      513,
+      769,
+      1025,
+      1281,
+      1537,
+      1793
+    ],
+    "host_seconds": 850.0505398118403,
+    "peak_allocated_bytes": 615118848,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null
+  },
+  "o1a2": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 2195.710197835695,
+    "peak_allocated_bytes": 615119360,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null,
+    "controller_summary": {
+      "sensitivity_missing": 0,
+      "eligible_visits": 1902,
+      "max_eligible_ema_over_best": 3.30199590587351,
+      "sensitivity_distribution": {
+        "n": 1951,
+        "mean": 0.04802963200351295,
+        "median": 0.03848566859960556,
+        "p10": 0.013704651035368443,
+        "p90": 0.09720045328140259,
+        "positive": 1951,
+        "zero": 0,
+        "negative": 0,
+        "minimum": 0.0036258348263800144,
+        "worst_decile_mean": 0.010064100466516554,
+        "tail_count": 196
+      }
+    }
+  },
+  "o1a3": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 866.7247458517086,
+    "peak_allocated_bytes": 667859968,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 227521,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.09145724050498265,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 227521,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.09145724050498265,
+      "median": 0.08775151520967484,
+      "p10": 0.06273643672466278,
+      "p90": 0.12405706197023392,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.05371139160528475,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.06473988370596599,
+      "median": 0.05286669731140137,
+      "p10": 0.032318443059921265,
+      "p90": 0.10642977803945541,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.026024464517831802,
+      "worst_decile_mean": 0.030228163077667052,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      9
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o1a4": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 875.5862265571486,
+    "peak_allocated_bytes": 667991040,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62428,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 40196,
+        "contributing_images": 1942,
+        "version": 1945,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1942,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.0915056121717472,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 1,
+        "final": {
+          "n": 62428,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 2,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 3,
+        "final": {
+          "n": 40196,
+          "contributing_images": 1942,
+          "version": 1945,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1942,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1942
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.0915056121717472,
+      "median": 0.08814845234155655,
+      "p10": 0.062303513288497925,
+      "p90": 0.12382309883832932,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.053482835257083784,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.06477172809749887,
+      "median": 0.0528934970498085,
+      "p10": 0.032314471900463104,
+      "p90": 0.10653001070022583,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.026045218110084534,
+      "worst_decile_mean": 0.030231018693243364,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      9
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o1a5": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 1637.3083707515616,
+    "peak_allocated_bytes": 667991040,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62428,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 42640,
+        "contributing_images": 1943,
+        "version": 1944,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1943,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.11192163262900055,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 1,
+        "final": {
+          "n": 62428,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 2,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 3,
+        "final": {
+          "n": 42640,
+          "contributing_images": 1943,
+          "version": 1944,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1943,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1943
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.11192163262900055,
+      "median": 0.10798274725675583,
+      "p10": 0.08262884616851807,
+      "p90": 0.14806193113327026,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.07009365402010022,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.06467799638908286,
+      "median": 0.05259791761636734,
+      "p10": 0.032152242958545685,
+      "p90": 0.10687455534934998,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.025702714920043945,
+      "worst_decile_mean": 0.030060880446844563,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      8
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o2a0": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 852.4664761449676,
+    "peak_allocated_bytes": 615037952,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null
+  },
+  "o2a1": {
+    "resets": 7,
+    "reset_visits": [
+      257,
+      513,
+      769,
+      1025,
+      1281,
+      1537,
+      1793
+    ],
+    "host_seconds": 1714.8678446796257,
+    "peak_allocated_bytes": 617216000,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null
+  },
+  "o2a2": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 1100.0852445631754,
+    "peak_allocated_bytes": 617216512,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null,
+    "controller_summary": {
+      "sensitivity_missing": 0,
+      "eligible_visits": 1902,
+      "max_eligible_ema_over_best": 3.2589310748352656,
+      "sensitivity_distribution": {
+        "n": 1951,
+        "mean": 0.04691339202374621,
+        "median": 0.03535515069961548,
+        "p10": 0.012962385080754757,
+        "p90": 0.09631878137588501,
+        "positive": 1951,
+        "zero": 0,
+        "negative": 0,
+        "minimum": 0.003546886146068573,
+        "worst_decile_mean": 0.009487616089505277,
+        "tail_count": 196
+      }
+    }
+  },
+  "o2a3": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 863.2660919195041,
+    "peak_allocated_bytes": 667859968,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 230421,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.09253466181812196,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 230421,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.09253466181812196,
+      "median": 0.08793722838163376,
+      "p10": 0.06703664362430573,
+      "p90": 0.1251372992992401,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.05735875690850068,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.0597131432605471,
+      "median": 0.04469142109155655,
+      "p10": 0.028026288375258446,
+      "p90": 0.10715873539447784,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.018877802416682243,
+      "worst_decile_mean": 0.025099297025602083,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      14
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o2a4": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 1690.4532166307326,
+    "peak_allocated_bytes": 667991040,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62413,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 43129,
+        "contributing_images": 1937,
+        "version": 1950,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1937,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.09255012338823505,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 1,
+        "final": {
+          "n": 62413,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 2,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 3,
+        "final": {
+          "n": 43129,
+          "contributing_images": 1937,
+          "version": 1950,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1937,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1929,
+        "contributing_visits": 1937
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.09255012338823505,
+      "median": 0.08821497857570648,
+      "p10": 0.06662608683109283,
+      "p90": 0.1260613650083542,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.05712974301482342,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.059701137364040514,
+      "median": 0.04468035697937012,
+      "p10": 0.02803266979753971,
+      "p90": 0.10714779049158096,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.018874600529670715,
+      "worst_decile_mean": 0.025093585566370463,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      14
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o2a5": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 876.0056945676915,
+    "peak_allocated_bytes": 667991040,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62413,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 44048,
+        "contributing_images": 1938,
+        "version": 1949,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1938,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.11237683208293636,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 1,
+        "final": {
+          "n": 62413,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 2,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 3,
+        "final": {
+          "n": 44048,
+          "contributing_images": 1938,
+          "version": 1949,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1938,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1929,
+        "contributing_visits": 1938
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.11237683208293636,
+      "median": 0.10847082734107971,
+      "p10": 0.08325578272342682,
+      "p90": 0.14841912686824799,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.07086270709274983,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.059620661837650774,
+      "median": 0.04450366646051407,
+      "p10": 0.027932938188314438,
+      "p90": 0.10711830854415894,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.018808865919709206,
+      "worst_decile_mean": 0.02503227981339608,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      13
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o3a0": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 1650.4952215233352,
+    "peak_allocated_bytes": 615037952,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null
+  },
+  "o3a1": {
+    "resets": 7,
+    "reset_visits": [
+      257,
+      513,
+      769,
+      1025,
+      1281,
+      1537,
+      1793
+    ],
+    "host_seconds": 854.4693607205991,
+    "peak_allocated_bytes": 617216000,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null
+  },
+  "o3a2": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 1097.4316625730135,
+    "peak_allocated_bytes": 617216512,
+    "pca_ready_visits": 0,
+    "pca_last": null,
+    "subloss_mean": null,
+    "controller_summary": {
+      "sensitivity_missing": 0,
+      "eligible_visits": 1902,
+      "max_eligible_ema_over_best": 3.3194359830135536,
+      "sensitivity_distribution": {
+        "n": 1951,
+        "mean": 0.050712425950442036,
+        "median": 0.03984113782644272,
+        "p10": 0.014014989137649536,
+        "p90": 0.10401612520217896,
+        "positive": 1951,
+        "zero": 0,
+        "negative": 0,
+        "minimum": 0.0038390804547816515,
+        "worst_decile_mean": 0.010257843462512734,
+        "tail_count": 196
+      }
+    }
+  },
+  "o3a3": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 1716.1659021584783,
+    "peak_allocated_bytes": 667991040,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 222215,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.09216513685778982,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 222215,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.09216513685778982,
+      "median": 0.0891343504190445,
+      "p10": 0.06521105766296387,
+      "p90": 0.12455645203590393,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.05548401566564429,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.07311235174349581,
+      "median": 0.05673578381538391,
+      "p10": 0.03767145425081253,
+      "p90": 0.12559261918067932,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.027612239122390747,
+      "worst_decile_mean": 0.034714873053361565,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      29
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o3a4": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 876.6703038834967,
+    "peak_allocated_bytes": 667991040,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62365,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 34978,
+        "contributing_images": 1922,
+        "version": 1949,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1922,
+        "eigh_calls": 120,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.09223975730188255,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 1,
+        "final": {
+          "n": 62365,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 2,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 3,
+        "final": {
+          "n": 34978,
+          "contributing_images": 1922,
+          "version": 1949,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1922,
+          "eigh_calls": 120,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1922
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.09223975730188255,
+      "median": 0.08910177648067474,
+      "p10": 0.06518010795116425,
+      "p90": 0.12391415238380432,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.05540041901095181,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.07310677241478622,
+      "median": 0.05669623613357544,
+      "p10": 0.03761712461709976,
+      "p90": 0.12559270858764648,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.027622198686003685,
+      "worst_decile_mean": 0.0346928561980627,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      29
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  },
+  "o3a5": {
+    "resets": 0,
+    "reset_visits": [],
+    "host_seconds": 873.7750910203904,
+    "peak_allocated_bytes": 667859968,
+    "pca_ready_visits": 1935,
+    "pca_last": [
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62366,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 62432,
+        "contributing_images": 1951,
+        "version": 1936,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1951,
+        "eigh_calls": 121,
+        "state_bytes": 10816
+      },
+      {
+        "n": 39000,
+        "contributing_images": 1931,
+        "version": 1940,
+        "last_visit": 1951,
+        "ready": true,
+        "rank": 8,
+        "merges": 1931,
+        "eigh_calls": 120,
+        "state_bytes": 10816
+      }
+    ],
+    "subloss_mean": 0.11117687713696613,
+    "banks": [
+      {
+        "bank": 0,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 1,
+        "final": {
+          "n": 62366,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 2,
+        "final": {
+          "n": 62432,
+          "contributing_images": 1951,
+          "version": 1936,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1951,
+          "eigh_calls": 121,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1951
+      },
+      {
+        "bank": 3,
+        "final": {
+          "n": 39000,
+          "contributing_images": 1931,
+          "version": 1940,
+          "last_visit": 1951,
+          "ready": true,
+          "rank": 8,
+          "merges": 1931,
+          "eigh_calls": 120,
+          "state_bytes": 10816
+        },
+        "ready_basis_visits": 1935,
+        "contributing_visits": 1931
+      }
+    ],
+    "subloss_distribution": {
+      "n": 1951,
+      "mean": 0.11117687713696613,
+      "median": 0.1075364351272583,
+      "p10": 0.08342716097831726,
+      "p90": 0.14581167697906494,
+      "positive": 1935,
+      "zero": 16,
+      "negative": 0,
+      "minimum": 0.0,
+      "worst_decile_mean": 0.07080213208587802,
+      "tail_count": 196
+    },
+    "base_loss_distribution": {
+      "n": 1951,
+      "mean": 0.07293088486210955,
+      "median": 0.0565219409763813,
+      "p10": 0.03752721846103668,
+      "p90": 0.12553903460502625,
+      "positive": 1951,
+      "zero": 0,
+      "negative": 0,
+      "minimum": 0.02770553156733513,
+      "worst_decile_mean": 0.03440779676584869,
+      "tail_count": 196
+    },
+    "no_selected_tokens_per_region": [
+      0,
+      0,
+      0,
+      20
+    ],
+    "missing_foreground_visits": [
+      0,
+      0
+    ]
+  }
+}
