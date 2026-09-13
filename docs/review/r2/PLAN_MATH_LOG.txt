@@ -1,0 +1,44 @@
+{
+  "status": "PLAN_MATH_CHECKS_PASSED",
+  "scope": "NumPy procedural algebra and count checks only",
+  "actual_model_runs": 0,
+  "target_data_reads": 0,
+  "GPU_calls": 0,
+  "execution_approval": false,
+  "checks": {
+    "no_forgetting": {
+      "passed": true,
+      "max_mean_or_covariance_abs_error": 4.163336342344337e-17,
+      "procedural_visits": 40
+    },
+    "half_life_128": {
+      "passed": true,
+      "max_mean_or_covariance_abs_error": 5.551115123125783e-17,
+      "procedural_visits": 40
+    },
+    "projected_delta_identities": {
+      "passed": true,
+      "in_subspace_max_residual": 8.881784197001252e-16,
+      "equal_views_zero_delta": true
+    },
+    "budget": {
+      "passed": true,
+      "formal_records_and_adam": 39020,
+      "formal_forwards": 312160,
+      "with_smoke": {
+        "1": {
+          "adam": 39034,
+          "forwards": 312272
+        },
+        "2": {
+          "adam": 39048,
+          "forwards": 312384
+        },
+        "3": {
+          "adam": 39062,
+          "forwards": 312496
+        }
+      }
+    }
+  }
+}

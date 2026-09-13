@@ -1,0 +1,179 @@
+{
+  "task": "R2_PAIRED_FORGETTING_REGION_PCA",
+  "status": "PROPOSED_FOR_IMPLEMENTATION_REVIEW",
+  "code_baseline": "54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b",
+  "historical_result_commit": "0411fdfba8c05b08b6f7172e8d002ad3cc738e38",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "scope": "fundus",
+  "checkpoint_only": true,
+  "source_data_access": false,
+  "offline_updates": 0,
+  "seed": 20260907,
+  "groups": 1951,
+  "primary_subset": "remaining_dev",
+  "primary_groups": 1695,
+  "orders": [
+    [
+      "REFUGE",
+      "ORIGA",
+      "REFUGE_Valid",
+      "Drishti_GS"
+    ],
+    [
+      "Drishti_GS",
+      "REFUGE_Valid",
+      "ORIGA",
+      "REFUGE"
+    ],
+    [
+      "ORIGA",
+      "Drishti_GS",
+      "REFUGE",
+      "REFUGE_Valid"
+    ],
+    [
+      "REFUGE_Valid",
+      "REFUGE",
+      "Drishti_GS",
+      "ORIGA"
+    ]
+  ],
+  "arms": [
+    {
+      "name": "R2_E",
+      "loss": "absolute_r1",
+      "memory": "exponential",
+      "groups": "region"
+    },
+    {
+      "name": "R2_D",
+      "loss": "paired_complement",
+      "memory": "cumulative_r1",
+      "groups": "region"
+    },
+    {
+      "name": "R2_DE",
+      "loss": "paired_complement",
+      "memory": "exponential",
+      "groups": "region"
+    },
+    {
+      "name": "R2_F",
+      "loss": "paired_full",
+      "memory": "exponential_shadow_for_readiness",
+      "groups": "region"
+    },
+    {
+      "name": "R2_DE_S",
+      "loss": "paired_complement",
+      "memory": "exponential",
+      "groups": "shuffled_r1"
+    }
+  ],
+  "reused_primary_arms": [
+    "C",
+    "C_PCA_REGION"
+  ],
+  "C": {
+    "bn_layers": 41,
+    "affine_scalars": 19136,
+    "optimizer": "Adam",
+    "lr": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "weak_views": 6,
+    "forwards_per_image": 8,
+    "backwards_per_image": 1,
+    "adam_per_image": 1
+  },
+  "features": {
+    "hook": "seg_head_input_after_relu",
+    "dim": 32,
+    "grid": [
+      32,
+      32
+    ],
+    "norm_eps": 1e-06,
+    "f0_stopgrad": true,
+    "basis_stopgrad": true,
+    "lambda_extra": 0.05,
+    "pair_dimension_scale": "d/(d-k_actual)",
+    "full_dimension_scale": 1,
+    "feature_reduction": "sum_then_token_mean_then_active_region_mean",
+    "absolute_loss_denominator": "stopgrad(sum(centered_unit_feature**2))+1e-6"
+  },
+  "memory": {
+    "banks": 4,
+    "bank_names": [
+      "OD_background",
+      "OD_foreground",
+      "OC_background",
+      "OC_foreground"
+    ],
+    "rank_cap": 8,
+    "reliable_bounds": [
+      0.1,
+      0.9
+    ],
+    "all_six_hard_agree": true,
+    "max_tokens_per_region": 32,
+    "min_contributing_images": 16,
+    "min_raw_vectors": 128,
+    "refresh_every_contributing_images": 16,
+    "eigenvalue_floor": 1e-10,
+    "stats_dtype": "CPU_float64",
+    "half_life_global_visits": 128,
+    "rho_formula": "2**(-1/128)",
+    "rho": 0.9945994234836332,
+    "covariance_divisor": "W-Q/W",
+    "decay_empty_visits": true,
+    "merge_after_prediction": true,
+    "loss_uses_previous_snapshot": true,
+    "no_bank_expiry_gate": true,
+    "raw_observation_retention_between_visits": false,
+    "preserve_R1_sampling_salts": true
+  },
+  "formal_budget": {
+    "trajectories": 20,
+    "new_records": 39020,
+    "forwards": 312160,
+    "backwards": 39020,
+    "adam": 39020,
+    "offline_updates": 0
+  },
+  "historical_primary_records_referenced": 15608,
+  "per_gpu_smoke_budget": {
+    "adam": 14,
+    "backwards": 14,
+    "forwards": 112
+  },
+  "resource_caps": {
+    "max_workers": 3,
+    "max_worker_cpu_threads": 2,
+    "wall_hours": 24,
+    "total_active_worker_hours": 24,
+    "trajectory_hours": 2,
+    "private_output_bytes": 2147483648
+  },
+  "selection_not_execution_gate": {
+    "mean_gain_C_pp": 0.5,
+    "positive_orders_min": 3,
+    "domain_mean_macro_degradation_warning_pp": -2.0,
+    "worst_order_degradation_warning_pp": -0.5,
+    "combined_candidate_requires_beating_simpler_controls": true
+  },
+  "execution_defaults": {
+    "enabled": false,
+    "approved_code_sha": null,
+    "approved_science_sha256": null,
+    "external_review_reference": null,
+    "allowed_physical_gpu_ids": [],
+    "max_workers": 0,
+    "background_allowed": false
+  },
+  "authority": "R2_EXPERIMENT_PLAN_AND_CODEX_PROMPT.md; this JSON is a proposal, not a runtime authorization or reviewed implementation"
+}

@@ -1,0 +1,73 @@
+{
+  "status": "METADATA_CONFIRMED_NO_CONTENT_READ",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "historical_runtime": "54c4ca4fc2672d3da37e1f70d3c8ab7ac6bad31b",
+  "historical_status": "R1_EXPERIMENT_COMPLETE",
+  "historical_controls": [
+    {
+      "arm": "C",
+      "order": 0,
+      "completion_records": 1951,
+      "seed": 20260907,
+      "scalar_path_present": true
+    },
+    {
+      "arm": "C_PCA_REGION",
+      "order": 0,
+      "completion_records": 1951,
+      "seed": 20260907,
+      "scalar_path_present": true
+    },
+    {
+      "arm": "C",
+      "order": 1,
+      "completion_records": 1951,
+      "seed": 20260907,
+      "scalar_path_present": true
+    },
+    {
+      "arm": "C_PCA_REGION",
+      "order": 1,
+      "completion_records": 1951,
+      "seed": 20260907,
+      "scalar_path_present": true
+    },
+    {
+      "arm": "C",
+      "order": 2,
+      "completion_records": 1951,
+      "seed": 20260907,
+      "scalar_path_present": true
+    },
+    {
+      "arm": "C_PCA_REGION",
+      "order": 2,
+      "completion_records": 1951,
+      "seed": 20260907,
+      "scalar_path_present": true
+    },
+    {
+      "arm": "C",
+      "order": 3,
+      "completion_records": 1951,
+      "seed": 20260907,
+      "scalar_path_present": true
+    },
+    {
+      "arm": "C_PCA_REGION",
+      "order": 3,
+      "completion_records": 1951,
+      "seed": 20260907,
+      "scalar_path_present": true
+    }
+  ],
+  "target_RGB_reads": 0,
+  "target_mask_reads": 0,
+  "real_checkpoint_loads": 0,
+  "historical_metric_content_reads": 0,
+  "requested_future_physical_gpus": [
+    6,
+    7
+  ],
+  "execution_enabled": false
+}
