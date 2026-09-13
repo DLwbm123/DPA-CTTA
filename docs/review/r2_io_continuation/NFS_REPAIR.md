@@ -46,3 +46,24 @@ existing EIO process-reaping assertion failure; an immediate focused rerun passe
 The final local run is recorded separately. No full-model or real-data GPU work
 was performed by these tests. Server/NFS startup evidence is recorded after actual
 deployment, not inferred from local test success.
+
+## Verified second continuation startup
+
+- Runtime: `1560f28d41dda5665404ececbefc4f0a7c69d192`, clean separate checkout.
+- Run: `6bb3ccee255243a684c95975ba2671bc`.
+- Started: 2026-09-13 18:53:26 Asia/Shanghai, detached on the same two devices.
+- Checked: 18:54:37. Both mechanical smokes passed; `o2a4` and `o3a2` each had
+  67 records, beyond their first periodic capacity scan. No failure artifact or
+  launcher error was present. Parent and both workers were alive with neutral
+  process arguments and the expected device assignment.
+- Target-server checks: 19 tests passed in 16.910 seconds. A separate real NFS
+  probe held an unlinked file open, observed its `.nfs` rename, then closed it
+  during stat and verified the scanner handled its disappearance. See
+  [server verification log](NFS_SERVER_TEST_LOG.txt).
+- CPU source checks: [19 local tests passed](NFS_CPU_TEST_LOG.txt).
+
+The startup pipeline rate was about 0.59 seconds per record. The longest device
+queue has three trajectories, giving an approximate 19:55–20:05 finish including
+CPU summary if no further interruption occurs. This is a dated startup estimate,
+not a monitoring promise or completion claim. Final public result delivery is
+still pending. Both failed attempts and their private records remain preserved.
