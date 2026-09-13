@@ -1,0 +1,25 @@
+# State lifecycle and causal order
+
+The host API accepts a single current tensor. There is no domain, sample ID, mask, subset, future-image argument or source-query argument. Every complete trajectory creates a new host from the same supplied checkpoint and seed 20260907; no cross-domain reset occurs.
+
+| State | Initialization | Read / update | Retention and cleanup |
+|---|---|---|---|
+| Active model | Original ResUNet34 and checkpoint; 41 BN layers, 82 affine tensors, 19,136 scalars | C current-image BN; one original-C-gradient Adam proposal per visit | Convolution/decoder/head frozen; no source retraining |
+| Measurement clone, T/S only | Deep copy before active BN configuration; source BN eval, original buffers, all parameters frozen | One current original forward, isolated RNG; T takes grid features; S additionally takes spatial channel mean/population std | One clone per trajectory, independent buffers; no prior/next image cache |
+| Weak / strong RNG | Original host initialization consumes the same RNG as C; only the extra clone is isolated | Six separate weak forwards, CPU stack→sigmoid→mean; unchanged pinned strong style and normalization | One stream per trajectory; never saved/restored per context |
+| Sampling / random controls | R1 `sample_<region>` seed namespaces unchanged | Independent CPU generators; fixed `R3_U_RAND_<region>` namespace at seed-index 1; per-visit `R3_M_SHUFFLE_<region>` | No mutation of augmentation RNG |
+| Regional banks | Empty CPU float64 n/mean/M2, contribution counts, eigensystem snapshots | Maximum 32 reliable tokens per region; 16 contributing images / 128 tokens; every 16 nonempty contributions refresh | Four banks per memory; no token list, image, mask, dense feature or Jacobian retained |
+| Density/graph covariance snapshots | Empty; covariance and mean captured at the same contribution refresh as basis statistics | T/G consume previous snapshots; eigenvalue flooring can support density even when the raw PCA rank is zero | Bounded extra 32-vector / 32×32 matrix per bank; cloned query snapshots cannot be changed by commit |
+| U original graph / Jacobian | Current first original forward is gradient enabled | At most two probes per ready region; each VJP counted before call; 0 columns for unused parameters; graph released before strong backward | Only current-step local variables; no cross-step graph or Jacobian cache |
+| U Adam and actual parameters | Original Adam with source affine | Moments advance once from original C loss; solve at most 8×8; replace proposal with proximal displacement or its same-norm direction control | Moments not projected, cleared or mixed; empty A retains the actual Adam candidate exactly |
+| S contexts | Empty router, capacity 3; source affine template | Select from immutable-source descriptor before weak teacher. New slot: source affine, empty Adam/banks. Commit descriptor distances after final prediction | One active model; per-slot affine/Adam/banks for JOINT/NOPCA, shared affine/Adam for SHARED; unselected state unchanged |
+| M frames | Empty banks, frame version zero | Compute loss with old frame; final original prediction; fit preselected same-position pre/post pairs; rotate live mean/M2 and cached mean/basis/covariance; insert post tokens | Frame version advances each visited image; basis-stat version changes only at refresh; eigenvalues preserved under rotation |
+| G teacher | Original q, current pre-update unit grid, old density snapshots | Four banks required; 1,984 fixed local edges; 32 detached iterations; full-resolution log-odds correction and weighted containment projection | Refined teacher never labels memory; raw post-update network prediction remains the scored output |
+
+`Host.normalized_step` declares ORIGINAL → WEAK → STRONG → PREDICT → COMMIT. Teacher construction and U VJPs happen between WEAK and STRONG. S loads state before ORIGINAL, and commits its route only after PREDICT. `pending` is cleared in `finally`; a host with a failed new-family step refuses reuse. Existing C/RP use the unchanged R1 lifecycle.
+
+`r1.run.current` is reused unchanged: verified RGB bytes → host output plus online-state commit → verified mask bytes → evaluator. Thus label access is downstream of the frozen prediction/state. Failure during the host never calls the mask reader.
+
+The future thin execution adapter keeps existing `r1.assets`, `r1.evidence`, `r1.supervise`, pinned C dependencies and ownership cleanup unchanged. Capacity ENOENT is tolerated only inside the existing live scan; required evidence and asset reads remain fatal. The executor defaults to disabled, has no automatic retry/background-wait path, and binds fresh review/device/scope authorization before device queries or weights. CPU synthetic smoke states are created only by `r3.testing.ready`; formal trajectory construction does not import or call that fixture.
+
+All public diagnostics are scalars or bounded aggregate distributions. Memory is not differentially private; absence of a replay image cache is not a formal privacy guarantee.

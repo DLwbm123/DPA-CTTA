@@ -1,0 +1,137 @@
+test_01_covariance_models_psd (test_r3_reference.MathTests.test_01_covariance_models_psd) ... ok
+test_02_lowrank_tail_and_trace (test_r3_reference.MathTests.test_02_lowrank_tail_and_trace) ... ok
+test_03_density_matches_explicit_inverse (test_r3_reference.MathTests.test_03_density_matches_explicit_inverse) ... ok
+test_04_density_teacher_zero_and_bounded (test_r3_reference.MathTests.test_04_density_teacher_zero_and_bounded) ... ok
+test_05_density_unsupported_not_confident_fallback (test_r3_reference.MathTests.test_05_density_unsupported_not_confident_fallback) ... ok
+test_06_procrustes_recovers_known_rotation (test_r3_reference.MathTests.test_06_procrustes_recovers_known_rotation) ... ok
+test_07_transport_matches_reencoded_statistics (test_r3_reference.MathTests.test_07_transport_matches_reencoded_statistics) ... ok
+test_08_procrustes_identity_and_no_input_mutation (test_r3_reference.MathTests.test_08_procrustes_identity_and_no_input_mutation) ... ok
+test_09_projection_matches_full_solve (test_r3_reference.MathTests.test_09_projection_matches_full_solve) ... ok
+test_10_projection_nullspace_and_zero_rows (test_r3_reference.MathTests.test_10_projection_nullspace_and_zero_rows) ... ok
+test_11_norm_control_and_probe_contraction (test_r3_reference.MathTests.test_11_norm_control_and_probe_contraction) ... ok
+test_12_feature_jacobian_actual_Adam_step (test_r3_reference.MathTests.test_12_feature_jacobian_actual_Adam_step) ... ok
+test_13_nested_projection_formula (test_r3_reference.MathTests.test_13_nested_projection_formula) ... ok
+test_14_weighted_nested_projection_optimum (test_r3_reference.MathTests.test_14_weighted_nested_projection_optimum) ... ok
+test_15_grid_edges_local_unique (test_r3_reference.MathTests.test_15_grid_edges_local_unique) ... ok
+test_16_graph_isotropic_identity_metrics (test_r3_reference.MathTests.test_16_graph_isotropic_identity_metrics) ... ok
+test_17_graph_mirror_proximal_energy_and_order (test_r3_reference.MathTests.test_17_graph_mirror_proximal_energy_and_order) ... ok
+test_18_graph_zero_edges_equals_order_control (test_r3_reference.MathTests.test_18_graph_zero_edges_equals_order_control) ... ok
+test_19_router_capacity_and_readonly_choice (test_r3_reference.MathTests.test_19_router_capacity_and_readonly_choice) ... ok
+test_20_router_does_not_mutate_unselected (test_r3_reference.MathTests.test_20_router_does_not_mutate_unselected) ... ok
+test_21_recurrence_single_use_and_order_preserved (test_r3_reference.MathTests.test_21_recurrence_single_use_and_order_preserved) ... ok
+test_22_recurrence_rejects_duplicate (test_r3_reference.MathTests.test_22_recurrence_rejects_duplicate) ... ok
+test_23_full_matrix_budget (test_r3_reference.MathTests.test_23_full_matrix_budget) ... ok
+test_24_nonfinite_rejected_and_cuda_unused (test_r3_reference.MathTests.test_24_nonfinite_rejected_and_cuda_unused) ... ok
+test_C_RP_two_step_old_path_parity (test_r3.HostTests.test_C_RP_two_step_old_path_parity) ... ok
+test_all_families_actual_cold_and_ready_paths (test_r3.HostTests.test_all_families_actual_cold_and_ready_paths) ... ok
+test_cold_no_loss_branches_match_C_and_augmentation_rng (test_r3.HostTests.test_cold_no_loss_branches_match_C_and_augmentation_rng) ... ok
+test_prediction_before_merge_labels_private_and_failure_cleanup (test_r3.HostTests.test_prediction_before_merge_labels_private_and_failure_cleanup) ... ok
+test_programmatic_full_ResUNet_38_updates_all_families (test_r3.HostTests.test_programmatic_full_ResUNet_38_updates_all_families) ... ok
+test_Jacobian_finite_difference_unused_columns_and_no_32D_parameter_projection (test_r3.MechanismTests.test_Jacobian_finite_difference_unused_columns_and_no_32D_parameter_projection) ... ok
+test_T_high_resolution_zero_pair_ready_and_graph_detached (test_r3.MechanismTests.test_T_high_resolution_zero_pair_ready_and_graph_detached) ... ok
+test_actual_Adam_moments_and_norm_control (test_r3.MechanismTests.test_actual_Adam_moments_and_norm_control) ... ok
+test_context_small_states_capacity_reuse_and_rng (test_r3.MechanismTests.test_context_small_states_capacity_reuse_and_rng) ... ok
+test_current_reader_reused_mask_only_after_R3_commit (test_r3.MechanismTests.test_current_reader_reused_mask_only_after_R3_commit) ... ok
+test_matrix_and_disabled_entry_before_any_asset_access (test_r3.MechanismTests.test_matrix_and_disabled_entry_before_any_asset_access) ... ok
+test_sampling_equal_R1_and_local_rng (test_r3.MechanismTests.test_sampling_equal_R1_and_local_rng) ... ok
+test_transport_all_live_cached_frames_and_post_storage (test_r3.MechanismTests.test_transport_all_live_cached_frames_and_post_storage) ... ok
+test_transport_insufficient_support_and_single_token_shuffle (test_r3.MechanismTests.test_transport_insufficient_support_and_single_token_shuffle) ... ok
+test_unused_probe_columns_and_zero_A_candidate_exact (test_r3.MechanismTests.test_unused_probe_columns_and_zero_A_candidate_exact) ... ok
+test_85_fixture_closeout_separate_secondary_and_truncation (test_r3_execution.ExecutionTests.test_85_fixture_closeout_separate_secondary_and_truncation) ... ok
+test_authorization_rejects_before_model_or_device (test_r3_execution.ExecutionTests.test_authorization_rejects_before_model_or_device) ... ok
+test_corrupt_counts_and_missing_evidence_fail (test_r3_execution.ExecutionTests.test_corrupt_counts_and_missing_evidence_fail) ... ok
+test_actual_default_CLI_refuses_before_weight_or_GPU_access (test_r1.CloseoutChecks.test_actual_default_CLI_refuses_before_weight_or_GPU_access) ... ok
+test_complete_scalar_matrix_and_truncation (test_r1.CloseoutChecks.test_complete_scalar_matrix_and_truncation) ... ok
+test_disabled_digest_commit_and_matrix (test_r1.ExecutionChecks.test_disabled_digest_commit_and_matrix) ... ok
+test_duplicate_claim_and_incomplete_closeout (test_r1.ExecutionChecks.test_duplicate_claim_and_incomplete_closeout) ... ok
+test_prefix_wrong_identity_counts_and_reset (test_r1.ExecutionChecks.test_prefix_wrong_identity_counts_and_reset) ... ok
+test_all_six_hosts_physical_and_state_independence (test_r1.HostChecks.test_all_six_hosts_physical_and_state_independence) ... ok
+test_full_model_old_C_equivalence (test_r1.HostChecks.test_full_model_old_C_equivalence) ... ok
+test_labels_source_readers_private_rng_and_zero_extra_loss (test_r1.HostChecks.test_labels_source_readers_private_rng_and_zero_extra_loss) ... ok
+test_real_feature_interface_and_PCA_ready_backward (test_r1.HostChecks.test_real_feature_interface_and_PCA_ready_backward) ... ok
+test_recovery_affine_adam_rng_and_period (test_r1.HostChecks.test_recovery_affine_adam_rng_and_period) ... ok
+test_controller_exact_threshold_floor_reset (test_r1.MathChecks.test_controller_exact_threshold_floor_reset) ... ok
+test_covariance_ready_snapshot_and_projector (test_r1.MathChecks.test_covariance_ready_snapshot_and_projector) ... ok
+test_entropy_shared_region_and_empty (test_r1.MathChecks.test_entropy_shared_region_and_empty) ... ok
+test_grid_alignment_and_projection_gradient (test_r1.MathChecks.test_grid_alignment_and_projection_gradient) ... ok
+test_nested_masks_rng (test_r1.MathChecks.test_nested_masks_rng) ... ok
+test_tokens_overlap_reliable_and_shuffle_quota (test_r1.MathChecks.test_tokens_overlap_reliable_and_shuffle_quota) ... ok
+test_zero_rank_rank_cap_and_eigh_failure (test_r1.MathChecks.test_zero_rank_rank_cap_and_eigh_failure) ... ok
+test_RGB_mask_same_verified_bytes_and_prediction_order (test_r1_fixes.AssetChecks.test_RGB_mask_same_verified_bytes_and_prediction_order) ... ok
+test_checkpoint_digest_precedes_smoke_and_formal_model_work (test_r1_fixes.AssetChecks.test_checkpoint_digest_precedes_smoke_and_formal_model_work) ... ok
+test_from_metadata_preserves_existing_hashes_without_readers (test_r1_fixes.AssetChecks.test_from_metadata_preserves_existing_hashes_without_readers) ... ok
+test_PCA_live_scalar_refresh_and_invalid_banks_quotas (test_r1_fixes.EvidenceChecks.test_PCA_live_scalar_refresh_and_invalid_banks_quotas) ... ok
+test_completion_and_run_smoke_process_contradictions (test_r1_fixes.EvidenceChecks.test_completion_and_run_smoke_process_contradictions) ... ok
+test_failure_with_success_and_stale_complete_invalidated (test_r1_fixes.EvidenceChecks.test_failure_with_success_and_stale_complete_invalidated) ... ok
+test_first_visit_reset_and_controller_log_contradictions (test_r1_fixes.EvidenceChecks.test_first_visit_reset_and_controller_log_contradictions) ... ok
+test_history_method_order_receipt_and_C0_canonical_exception (test_r1_fixes.EvidenceChecks.test_history_method_order_receipt_and_C0_canonical_exception) ... ok
+test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch (test_r1_fixes.ProcessChecks.test_failure_record_ENOSPC_reaps_all_owned_without_new_dispatch) ... FULL_RESUNET_CPU_38_UPDATE_COUNTS {"actual_parameter_replacements": 5, "adam_calls": 38, "jacobian_vjp_calls": 18, "loss_backward_calls": 38, "network_forwards": 316}
+{"probe": "ENOSPC", "observed_error": "OSError", "observed_errno": 28, "created": 4, "formal_children": 2, "all_owned_returned": true, "all_owned_reaped": true, "outsider_alive": true, "summary_status": "INCOMPLETE", "supervisor_exit_code": 1}
+ok
+test_finite_success_records_all_created_processes (test_r1_fixes.ProcessChecks.test_finite_success_records_all_created_processes) ... ok
+test_later_worker_failure_stops_dispatch_allows_active_independent (test_r1_fixes.ProcessChecks.test_later_worker_failure_stops_dispatch_allows_active_independent) ... ok
+test_parent_SIGINT_SIGTERM_clean_up_own_groups (test_r1_fixes.ProcessChecks.test_parent_SIGINT_SIGTERM_clean_up_own_groups) ... supervision failed: Interrupted: parent signal 2
+supervision failed: Interrupted: parent signal 15
+ok
+test_parent_signal_during_spawn_is_deferred_until_child_owned (test_r1_fixes.ProcessChecks.test_parent_signal_during_spawn_is_deferred_until_child_owned) ... supervision failed: Interrupted: parent signal 15
+ok
+test_partial_spawn_failure_cleans_created_child (test_r1_fixes.ProcessChecks.test_partial_spawn_failure_cleans_created_child) ... supervision failed: OSError: procedural spawn failure
+ok
+test_persistent_EIO_reaps_all_owned_and_exits_nonzero (test_r1_fixes.ProcessChecks.test_persistent_EIO_reaps_all_owned_and_exits_nonzero) ... {"probe": "EIO", "observed_error": "OSError", "observed_errno": 5, "created": 4, "formal_children": 2, "all_owned_returned": false, "all_owned_reaped": false, "outsider_alive": true, "summary_status": null, "supervisor_exit_code": 1}
+FAIL
+test_rotation_one_two_three_slots_has_no_arm_device_lock (test_r1_fixes.ProcessChecks.test_rotation_one_two_three_slots_has_no_arm_device_lock) ... ok
+test_shared_failure_cancels_only_this_batch_and_output_cap (test_r1_fixes.ProcessChecks.test_shared_failure_cancels_only_this_batch_and_output_cap) ... ok
+test_signal_during_mkstemp_does_not_leak_output_descriptor (test_r1_fixes.ProcessChecks.test_signal_during_mkstemp_does_not_leak_output_descriptor) ... supervision failed: Interrupted: parent signal 15
+ok
+test_trajectory_timeout_prefix_and_unrelated_process_survives (test_r1_fixes.ProcessChecks.test_trajectory_timeout_prefix_and_unrelated_process_survives) ... ok
+test_wall_and_active_caps_reach_stuck_smoke (test_r1_fixes.ProcessChecks.test_wall_and_active_caps_reach_stuck_smoke) ... ok
+test_bound_historical_metadata_and_new_weighted_contradiction (test_r2.ExecutionChecks.test_bound_historical_metadata_and_new_weighted_contradiction) ... ok
+test_disabled_actual_entry_and_frozen_twenty_jobs (test_r2.ExecutionChecks.test_disabled_actual_entry_and_frozen_twenty_jobs) ... ok
+test_scalar_replay_live_weighted_refresh_and_corruptions (test_r2.ExecutionChecks.test_scalar_replay_live_weighted_refresh_and_corruptions) ... ok
+test_twenty_job_bound_closeout_and_truncation_invalidates (test_r2.ExecutionChecks.test_twenty_job_bound_closeout_and_truncation_invalidates) ... ok
+test_all_arms_eight_calls_post_prediction_merge_isolation_cleanup (test_r2.HostChecks.test_all_arms_eight_calls_post_prediction_merge_isolation_cleanup) ... ok
+test_full_model_CPU_smoke_ready_all_arms_physical_budget (test_r2.HostChecks.test_full_model_CPU_smoke_ready_all_arms_physical_budget) ... ok
+test_lambda_zero_old_C_and_absolute_cumulative_compatibility (test_r2.HostChecks.test_lambda_zero_old_C_and_absolute_cumulative_compatibility) ... ok
+test_explicit_weighted_reference_multitoken_empty_and_first (test_r2.MathChecks.test_explicit_weighted_reference_multitoken_empty_and_first) ... ok
+test_gradient_reductions_actual_rank_full_and_empty_zero (test_r2.MathChecks.test_gradient_reductions_actual_rank_full_and_empty_zero) ... ok
+test_half_life_empty_visits_snapshot_and_no_expiry (test_r2.MathChecks.test_half_life_empty_visits_snapshot_and_no_expiry) ... ok
+test_pair_identity_with_far_center_and_subspace_delta (test_r2.MathChecks.test_pair_identity_with_far_center_and_subspace_delta) ... ok
+test_rank_zero_failure_and_snapshot_causality (test_r2.MathChecks.test_rank_zero_failure_and_snapshot_causality) ... ok
+test_regions_same_pair_shuffle_RNG_and_F_shadow (test_r2.MathChecks.test_regions_same_pair_shuffle_RNG_and_F_shadow) ... ok
+test_rho_one_direct_R1_cumulative_equivalence (test_r2.MathChecks.test_rho_one_direct_R1_cumulative_equivalence) ... ok
+test_atomic_temporary_disappearance_only (test_r2_continuation.ContinuationChecks.test_atomic_temporary_disappearance_only) ... ok
+test_cross_run_closeout_original_binding_and_failure_retention (test_r2_continuation.ContinuationChecks.test_cross_run_closeout_original_binding_and_failure_retention) ... ok
+test_supervisor_skips_carried_jobs_preserves_rotation (test_r2_continuation.ContinuationChecks.test_supervisor_skips_carried_jobs_preserves_rotation) ... ok
+test_worker_deadline_does_not_read_shared_telemetry (test_r2_continuation.ContinuationChecks.test_worker_deadline_does_not_read_shared_telemetry) ... ok
+
+======================================================================
+FAIL: test_persistent_EIO_reaps_all_owned_and_exits_nonzero (test_r1_fixes.ProcessChecks.test_persistent_EIO_reaps_all_owned_and_exits_nonzero)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>/tests/test_r1_fixes.py", line 302, in test_persistent_EIO_reaps_all_owned_and_exits_nonzero
+    self.check_io_failure('EIO')
+  File "<WORKTREE>/tests/test_r1_fixes.py", line 297, in check_io_failure
+    self.assertTrue(observed['all_owned_returned']);self.assertTrue(observed['all_owned_reaped']);self.assertTrue(observed['outsider_alive'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 97 tests in 226.819s
+
+FAILED (failures=1)
+{
+  "tests": 97,
+  "failures": 1,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 226.84963287506253,
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "checkpoint_reads": 0,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 1
+}

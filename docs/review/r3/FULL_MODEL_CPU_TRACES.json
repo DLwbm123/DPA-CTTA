@@ -1,0 +1,4255 @@
+{
+  "C:0": {
+    "arm": "C",
+    "global_visit": 1,
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    }
+  },
+  "C:1": {
+    "arm": "C",
+    "global_visit": 2,
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    }
+  },
+  "RP:0": {
+    "arm": "RP",
+    "global_visit": 1,
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    }
+  },
+  "RP:1": {
+    "arm": "RP",
+    "global_visit": 2,
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    }
+  },
+  "T_LR:0": {
+    "arm": "T_LR",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "teacher": {
+      "pair_ready": [
+        false,
+        false
+      ],
+      "evidence": [],
+      "nonzero_grid_fraction": 0.0,
+      "max_abs_logit_correction": 0.0,
+      "mean_abs_logit_correction": 0.0,
+      "density_seconds": 0.003509791800752282
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 3.0150988327804953
+  },
+  "T_LR:1": {
+    "arm": "T_LR",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "teacher": {
+      "pair_ready": [
+        true,
+        true
+      ],
+      "evidence": [
+        {
+          "channel": 0,
+          "support_fraction": 1.0,
+          "density_difference_per_dim": {
+            "n": 1024,
+            "mean": -0.029573405787193575,
+            "median": -0.03247336029712711,
+            "p10": -0.04679719846623282,
+            "p90": -0.006652139498945113,
+            "positive": 29,
+            "zero": 0,
+            "negative": 995,
+            "minimum": -0.0686729267476005,
+            "worst_decile_mean": -0.052152548234651576,
+            "tail_count": 103
+          }
+        },
+        {
+          "channel": 1,
+          "support_fraction": 1.0,
+          "density_difference_per_dim": {
+            "n": 1024,
+            "mean": -0.03381321561595048,
+            "median": -0.0344840594548127,
+            "p10": -0.057145517101043077,
+            "p90": -0.0093002667390891,
+            "positive": 57,
+            "zero": 0,
+            "negative": 967,
+            "minimum": -0.09272765892797086,
+            "worst_decile_mean": -0.06908660898800123,
+            "tail_count": 103
+          }
+        }
+      ],
+      "nonzero_grid_fraction": 1.0,
+      "max_abs_logit_correction": 0.04636382946398543,
+      "mean_abs_logit_correction": 0.016384202381660044,
+      "density_seconds": 0.005792833864688873
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 2.9650609493255615,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.010128718441309881,
+    "final_raw_probability_nested_violations": 199733,
+    "host_seconds": 2.9821306250523776
+  },
+  "T_ISO:0": {
+    "arm": "T_ISO",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "teacher": {
+      "pair_ready": [
+        false,
+        false
+      ],
+      "evidence": [],
+      "nonzero_grid_fraction": 0.0,
+      "max_abs_logit_correction": 0.0,
+      "mean_abs_logit_correction": 0.0,
+      "density_seconds": 0.0029130829498171806
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 3.038933709030971
+  },
+  "T_ISO:1": {
+    "arm": "T_ISO",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "teacher": {
+      "pair_ready": [
+        true,
+        true
+      ],
+      "evidence": [
+        {
+          "channel": 0,
+          "support_fraction": 1.0,
+          "density_difference_per_dim": {
+            "n": 1024,
+            "mean": 0.006554378035136099,
+            "median": 0.0060061014645971245,
+            "p10": -0.0003637201121470922,
+            "p90": 0.013893323910269921,
+            "positive": 906,
+            "zero": 0,
+            "negative": 118,
+            "minimum": -0.005784683102281196,
+            "worst_decile_mean": -0.0018933481856101737,
+            "tail_count": 103
+          }
+        },
+        {
+          "channel": 1,
+          "support_fraction": 1.0,
+          "density_difference_per_dim": {
+            "n": 1024,
+            "mean": 0.004546356013609186,
+            "median": 0.004716023453652629,
+            "p10": -0.010621107797219875,
+            "p90": 0.018765476758629208,
+            "positive": 653,
+            "zero": 0,
+            "negative": 371,
+            "minimum": -0.01774247218248215,
+            "worst_decile_mean": -0.013943938037424644,
+            "tail_count": 103
+          }
+        }
+      ],
+      "nonzero_grid_fraction": 1.0,
+      "max_abs_logit_correction": 0.013605460672053149,
+      "mean_abs_logit_correction": 0.004224331950068921,
+      "density_seconds": 0.006352082826197147
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 2.966705322265625,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.0101290973270246,
+    "final_raw_probability_nested_violations": 199734,
+    "host_seconds": 3.0254936248529702
+  },
+  "T_DIAG:0": {
+    "arm": "T_DIAG",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "teacher": {
+      "pair_ready": [
+        false,
+        false
+      ],
+      "evidence": [],
+      "nonzero_grid_fraction": 0.0,
+      "max_abs_logit_correction": 0.0,
+      "mean_abs_logit_correction": 0.0,
+      "density_seconds": 0.0035727499052882195
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 3.480378207983449
+  },
+  "T_DIAG:1": {
+    "arm": "T_DIAG",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "teacher": {
+      "pair_ready": [
+        true,
+        true
+      ],
+      "evidence": [
+        {
+          "channel": 0,
+          "support_fraction": 1.0,
+          "density_difference_per_dim": {
+            "n": 1024,
+            "mean": -0.010555367887748659,
+            "median": -0.010137684184267193,
+            "p10": -0.01954801751394857,
+            "p90": -0.002473930799872435,
+            "positive": 45,
+            "zero": 0,
+            "negative": 979,
+            "minimum": -0.02994697526234935,
+            "worst_decile_mean": -0.022378156275531892,
+            "tail_count": 103
+          }
+        },
+        {
+          "channel": 1,
+          "support_fraction": 1.0,
+          "density_difference_per_dim": {
+            "n": 1024,
+            "mean": 0.03357937719993498,
+            "median": 0.03599589805777492,
+            "p10": 0.012592867022312972,
+            "p90": 0.04925976062739066,
+            "positive": 1021,
+            "zero": 0,
+            "negative": 3,
+            "minimum": -0.00257054044258731,
+            "worst_decile_mean": 0.007392938947775027,
+            "tail_count": 103
+          }
+        }
+      ],
+      "nonzero_grid_fraction": 1.0,
+      "max_abs_logit_correction": 0.030741565654893832,
+      "mean_abs_logit_correction": 0.011086672272252868,
+      "density_seconds": 0.005084791919216514
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 2.9589452743530273,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.010128834953212736,
+    "final_raw_probability_nested_violations": 199734,
+    "host_seconds": 2.953394250012934
+  },
+  "U_PCA:0": {
+    "arm": "U_PCA",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "jacobian_seconds": 0.00018612481653690338,
+    "update": {
+      "rows": 0,
+      "base_norm": 0.013830411435836706,
+      "new_norm": 0.013830411435836706,
+      "ratio": 1.0,
+      "applied_norm": 0.013830411435836706,
+      "actual_parameter_replacements": 0,
+      "cosine": 0.9999999999999919,
+      "applied_linear_probe_norm": 0.0,
+      "parameter_dim": 19136,
+      "jacobian_vjp_calls": 0
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 2.669350750045851
+  },
+  "U_PCA:1": {
+    "arm": "U_PCA",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "jacobian_seconds": 1.3198080831207335,
+    "update": {
+      "rows": 6,
+      "base_norm": 0.010128805214596904,
+      "new_norm": 0.010127545612813846,
+      "ratio": 0.999875641622445,
+      "probe_before": 0.00019112786142557383,
+      "probe_after": 9.077312369412429e-05,
+      "applied_norm": 0.01012754384677394,
+      "actual_parameter_replacements": 1,
+      "cosine": 0.9999559275930331,
+      "applied_linear_probe_norm": 9.076639086928486e-05,
+      "parameter_dim": 19136,
+      "jacobian_vjp_calls": 6,
+      "actual_post_probe_difference_l2": 0.00011649094223633508
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 6,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 1
+    },
+    "base_loss": 2.965946674346924,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.01012754384677394,
+    "final_raw_probability_nested_violations": 199734,
+    "host_seconds": 3.8561247079633176
+  },
+  "U_RAND:0": {
+    "arm": "U_RAND",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "jacobian_seconds": 0.00018691597506403923,
+    "update": {
+      "rows": 0,
+      "base_norm": 0.013830411435836706,
+      "new_norm": 0.013830411435836706,
+      "ratio": 1.0,
+      "applied_norm": 0.013830411435836706,
+      "actual_parameter_replacements": 0,
+      "cosine": 0.9999999999999919,
+      "applied_linear_probe_norm": 0.0,
+      "parameter_dim": 19136,
+      "jacobian_vjp_calls": 0
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 2.626222457969561
+  },
+  "U_RAND:1": {
+    "arm": "U_RAND",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "jacobian_seconds": 1.3758159580174834,
+    "update": {
+      "rows": 6,
+      "base_norm": 0.010128805214596904,
+      "new_norm": 0.010127205782589467,
+      "ratio": 0.9998420907527048,
+      "probe_before": 0.00020880117981262648,
+      "probe_after": 0.00010375082437086615,
+      "applied_norm": 0.010127172653142967,
+      "actual_parameter_replacements": 1,
+      "cosine": 0.9999469609273521,
+      "applied_linear_probe_norm": 0.00010371645160671152,
+      "parameter_dim": 19136,
+      "jacobian_vjp_calls": 6,
+      "actual_post_probe_difference_l2": 0.00024241807446753245
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 6,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 1
+    },
+    "base_loss": 2.965946674346924,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.010127172653142967,
+    "final_raw_probability_nested_violations": 199734,
+    "host_seconds": 3.9788295419421047
+  },
+  "U_SCALE:0": {
+    "arm": "U_SCALE",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "jacobian_seconds": 0.00018279114738106728,
+    "update": {
+      "rows": 0,
+      "base_norm": 0.013830411435836706,
+      "new_norm": 0.013830411435836706,
+      "ratio": 1.0,
+      "applied_norm": 0.013830411435836706,
+      "actual_parameter_replacements": 0,
+      "cosine": 0.9999999999999919,
+      "applied_linear_probe_norm": 0.0,
+      "parameter_dim": 19136,
+      "jacobian_vjp_calls": 0
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 2.625152208143845
+  },
+  "U_SCALE:1": {
+    "arm": "U_SCALE",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "jacobian_seconds": 1.3014757500495762,
+    "update": {
+      "rows": 6,
+      "base_norm": 0.010128805214596904,
+      "new_norm": 0.010127545612813846,
+      "ratio": 0.999875641622445,
+      "probe_before": 0.00019112786142557383,
+      "probe_after": 9.077312369412429e-05,
+      "applied_norm": 0.010128173281004743,
+      "actual_parameter_replacements": 1,
+      "cosine": 0.9999999980673259,
+      "applied_linear_probe_norm": 0.00019111626488776425,
+      "parameter_dim": 19136,
+      "jacobian_vjp_calls": 6,
+      "actual_post_probe_difference_l2": 0.00025116108407934897
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 6,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 1
+    },
+    "base_loss": 2.965946674346924,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.010128173281004743,
+    "final_raw_probability_nested_violations": 199734,
+    "host_seconds": 3.8822620410937816
+  },
+  "S_JOINT:0": {
+    "arm": "S_JOINT",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "context": {
+      "slot": 0,
+      "created": true,
+      "switched": false,
+      "distance": 0.0,
+      "old_threshold": null,
+      "overflow": false,
+      "actual_parameter_replacements": 1,
+      "load_seconds": 0.0010860420297831297,
+      "slot_assigned_counts": [
+        1
+      ],
+      "slot_updates": [
+        1
+      ],
+      "optimizer_steps": [
+        1
+      ],
+      "active_slots": 1,
+      "slots": 1,
+      "model_copies": 2,
+      "stored_affine_scalars": 19136,
+      "context_tensor_bytes": 340808
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 1
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 3.0608627921901643
+  },
+  "S_JOINT:1": {
+    "arm": "S_JOINT",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "context": {
+      "slot": 0,
+      "created": false,
+      "switched": false,
+      "distance": 0.0002904755896093945,
+      "old_threshold": 1e-06,
+      "overflow": false,
+      "actual_parameter_replacements": 0,
+      "load_seconds": 0.0001461249776184559,
+      "slot_assigned_counts": [
+        2
+      ],
+      "slot_updates": [
+        2
+      ],
+      "optimizer_steps": [
+        2
+      ],
+      "active_slots": 1,
+      "slots": 1,
+      "model_copies": 2,
+      "stored_affine_scalars": 19136,
+      "context_tensor_bytes": 384072
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 2.965946674346924,
+    "extra_loss": 0.7741059064865112,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.01012622161480411,
+    "final_raw_probability_nested_violations": 199736,
+    "host_seconds": 3.0031284580472857
+  },
+  "S_SHARED:0": {
+    "arm": "S_SHARED",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "context": {
+      "slot": 0,
+      "created": true,
+      "switched": false,
+      "distance": 0.0,
+      "old_threshold": null,
+      "overflow": false,
+      "actual_parameter_replacements": 0,
+      "load_seconds": 5.587493069469929e-05,
+      "slot_assigned_counts": [
+        1
+      ],
+      "slot_updates": [
+        1
+      ],
+      "optimizer_steps": [
+        1
+      ],
+      "active_slots": 1,
+      "slots": 1,
+      "model_copies": 2,
+      "stored_affine_scalars": 0,
+      "context_tensor_bytes": 110848
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 3.04668949986808
+  },
+  "S_SHARED:1": {
+    "arm": "S_SHARED",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "context": {
+      "slot": 0,
+      "created": false,
+      "switched": false,
+      "distance": 0.0002904755896093945,
+      "old_threshold": 1e-06,
+      "overflow": false,
+      "actual_parameter_replacements": 0,
+      "load_seconds": 0.00013699987903237343,
+      "slot_assigned_counts": [
+        2
+      ],
+      "slot_updates": [
+        2
+      ],
+      "optimizer_steps": [
+        2
+      ],
+      "active_slots": 1,
+      "slots": 1,
+      "model_copies": 2,
+      "stored_affine_scalars": 0,
+      "context_tensor_bytes": 154112
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 2.965946674346924,
+    "extra_loss": 0.7741059064865112,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.01012622161480411,
+    "final_raw_probability_nested_violations": 199736,
+    "host_seconds": 3.0461209998466074
+  },
+  "S_NOPCA:0": {
+    "arm": "S_NOPCA",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "context": {
+      "slot": 0,
+      "created": true,
+      "switched": false,
+      "distance": 0.0,
+      "old_threshold": null,
+      "overflow": false,
+      "actual_parameter_replacements": 1,
+      "load_seconds": 0.0005608750507235527,
+      "slot_assigned_counts": [
+        1
+      ],
+      "slot_updates": [
+        1
+      ],
+      "optimizer_steps": [
+        1
+      ],
+      "active_slots": 1,
+      "slots": 1,
+      "model_copies": 2,
+      "stored_affine_scalars": 19136,
+      "context_tensor_bytes": 340808
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 1
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 3.0407502909656614
+  },
+  "S_NOPCA:1": {
+    "arm": "S_NOPCA",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "context": {
+      "slot": 0,
+      "created": false,
+      "switched": false,
+      "distance": 0.0002904755896093945,
+      "old_threshold": 1e-06,
+      "overflow": false,
+      "actual_parameter_replacements": 0,
+      "load_seconds": 0.00012841587886214256,
+      "slot_assigned_counts": [
+        2
+      ],
+      "slot_updates": [
+        2
+      ],
+      "optimizer_steps": [
+        2
+      ],
+      "active_slots": 1,
+      "slots": 1,
+      "model_copies": 2,
+      "stored_affine_scalars": 19136,
+      "context_tensor_bytes": 384072
+    },
+    "counts": {
+      "network_forwards": 9,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 2.965946674346924,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.010128805214596904,
+    "final_raw_probability_nested_violations": 199734,
+    "host_seconds": 3.003588499967009
+  },
+  "M_TRANSPORT:0": {
+    "arm": "M_TRANSPORT",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "transport": {
+      "distinct_positions": 67,
+      "paired_tokens": 68,
+      "shuffled_positions": 0,
+      "insufficient_support": false,
+      "identity_policy": false,
+      "orthogonal_error": 1.0546020341668266e-14,
+      "rotation_from_identity": 0.00750931949405984,
+      "fit_before": 9.251685209719744e-06,
+      "fit_after": 6.016779636990679e-06,
+      "svd_seconds": 0.00023250002413988113,
+      "transport_seconds": 0.001033332897350192,
+      "frame_version": 1
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 2.801528165815398
+  },
+  "M_TRANSPORT:1": {
+    "arm": "M_TRANSPORT",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "transport": {
+      "distinct_positions": 65,
+      "paired_tokens": 65,
+      "shuffled_positions": 0,
+      "insufficient_support": false,
+      "identity_policy": false,
+      "orthogonal_error": 1.1985356083896266e-14,
+      "rotation_from_identity": 0.005141172340126796,
+      "fit_before": 5.792772812172369e-06,
+      "fit_after": 3.968144151012428e-06,
+      "svd_seconds": 0.00022316700778901577,
+      "transport_seconds": 0.0009987920057028532,
+      "frame_version": 2
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 2.965946674346924,
+    "extra_loss": 0.7741059064865112,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.01012622161480411,
+    "final_raw_probability_nested_violations": 199736,
+    "host_seconds": 2.687109624966979
+  },
+  "M_IDPOST:0": {
+    "arm": "M_IDPOST",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "transport": {
+      "distinct_positions": 67,
+      "paired_tokens": 68,
+      "shuffled_positions": 0,
+      "insufficient_support": false,
+      "identity_policy": true,
+      "orthogonal_error": 0.0,
+      "rotation_from_identity": 0.0,
+      "fit_before": 9.251685209719744e-06,
+      "fit_after": 9.251685209719744e-06,
+      "svd_seconds": 0.0,
+      "transport_seconds": 0.0008401249069720507,
+      "frame_version": 1
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 2.6969470421317965
+  },
+  "M_IDPOST:1": {
+    "arm": "M_IDPOST",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "transport": {
+      "distinct_positions": 65,
+      "paired_tokens": 65,
+      "shuffled_positions": 0,
+      "insufficient_support": false,
+      "identity_policy": true,
+      "orthogonal_error": 0.0,
+      "rotation_from_identity": 0.0,
+      "fit_before": 5.792772812172369e-06,
+      "fit_after": 5.792772812172369e-06,
+      "svd_seconds": 0.0,
+      "transport_seconds": 0.0008730830159038305,
+      "frame_version": 2
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 2.965946674346924,
+    "extra_loss": 0.7741059064865112,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.01012622161480411,
+    "final_raw_probability_nested_violations": 199736,
+    "host_seconds": 2.6358349171932787
+  },
+  "M_SHUFFLE:0": {
+    "arm": "M_SHUFFLE",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "transport": {
+      "distinct_positions": 67,
+      "paired_tokens": 68,
+      "shuffled_positions": 60,
+      "insufficient_support": false,
+      "identity_policy": false,
+      "orthogonal_error": 8.493798058317872e-15,
+      "rotation_from_identity": 2.7745457177260846,
+      "fit_before": 0.673453901546146,
+      "fit_after": 0.49223613317227194,
+      "svd_seconds": 0.0002327500842511654,
+      "transport_seconds": 0.0037858751602470875,
+      "frame_version": 1
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 1,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 2.7166825828608125
+  },
+  "M_SHUFFLE:1": {
+    "arm": "M_SHUFFLE",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "transport": {
+      "distinct_positions": 65,
+      "paired_tokens": 65,
+      "shuffled_positions": 63,
+      "insufficient_support": false,
+      "identity_policy": false,
+      "orthogonal_error": 9.422225039932762e-15,
+      "rotation_from_identity": 3.0650043628160453,
+      "fit_before": 0.8245691584703314,
+      "fit_after": 0.6434504517623131,
+      "svd_seconds": 0.00021112477406859398,
+      "transport_seconds": 0.001121792010962963,
+      "frame_version": 2
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 2.965946674346924,
+    "extra_loss": 0.7741059064865112,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 2,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.01012622161480411,
+    "final_raw_probability_nested_violations": 199736,
+    "host_seconds": 2.6787883748766035
+  },
+  "G_PCA:0": {
+    "arm": "G_PCA",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "graph": {
+      "ready": false,
+      "edges": 0,
+      "iterations": 0,
+      "graph_seconds": 9.790994226932526e-06
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 2.7424890000838786
+  },
+  "G_PCA:1": {
+    "arm": "G_PCA",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "graph": {
+      "ready": true,
+      "edges": 1984,
+      "active_edges": 1984,
+      "iterations": 32,
+      "edge_weight_mean": 0.025025000933792015,
+      "edge_weight_min": 1.5823326933634362e-09,
+      "edge_weight_max": 0.5692219122849864,
+      "energy_before": 684.4263926904862,
+      "energy_after": 684.400232312909,
+      "teacher_violations_before": 245869,
+      "teacher_violations_after": 0,
+      "correction_fraction": 1.0,
+      "graph_seconds": 0.014011000050231814
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 4.105037689208984,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.010082969443983463,
+    "final_raw_probability_nested_violations": 199690,
+    "host_seconds": 2.638644790975377
+  },
+  "G_ISO:0": {
+    "arm": "G_ISO",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "graph": {
+      "ready": false,
+      "edges": 0,
+      "iterations": 0,
+      "graph_seconds": 5.125068128108978e-06
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 2.775986416032538
+  },
+  "G_ISO:1": {
+    "arm": "G_ISO",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "graph": {
+      "ready": true,
+      "edges": 1984,
+      "active_edges": 1984,
+      "iterations": 32,
+      "edge_weight_mean": 0.024696873303275267,
+      "edge_weight_min": 2.061153892865241e-09,
+      "edge_weight_max": 0.573389139375216,
+      "energy_before": 684.3720834377054,
+      "energy_after": 684.3468155973288,
+      "teacher_violations_before": 245869,
+      "teacher_violations_after": 0,
+      "correction_fraction": 1.0,
+      "graph_seconds": 0.015016041928902268
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 4.105037689208984,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.010082953594337148,
+    "final_raw_probability_nested_violations": 199690,
+    "host_seconds": 2.6633790000341833
+  },
+  "G_ORDER:0": {
+    "arm": "G_ORDER",
+    "global_visit": 1,
+    "basis_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "density_versions_used": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        891,
+        133,
+        220,
+        804
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        3,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "graph": {
+      "ready": false,
+      "edges": 0,
+      "iterations": 0,
+      "graph_seconds": 6.2498729676008224e-06
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 3.1260175704956055,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 1,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 3,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      },
+      {
+        "n": 32,
+        "contributing_images": 1,
+        "version": 0,
+        "last_visit": 1,
+        "ready": false,
+        "rank": 0,
+        "merges": 1,
+        "eigh_calls": 0,
+        "state_bytes": 8448,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": null
+      }
+    ],
+    "optimizer_update_l2": 0.013830411435836706,
+    "final_raw_probability_nested_violations": 197259,
+    "host_seconds": 2.6901301669422537
+  },
+  "G_ORDER:1": {
+    "arm": "G_ORDER",
+    "global_visit": 2,
+    "basis_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "density_versions_used": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "memory_input": {
+      "region_token_counts": [
+        898,
+        126,
+        210,
+        814
+      ],
+      "sampled_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "selected_region_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "assigned_bank_counts": [
+        32,
+        1,
+        0,
+        32
+      ],
+      "zero_vectors": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "missing_foreground": [
+        false,
+        false
+      ]
+    },
+    "graph": {
+      "ready": true,
+      "edges": 1984,
+      "active_edges": 0,
+      "iterations": 0,
+      "edge_weight_mean": 0.0,
+      "edge_weight_min": 0.0,
+      "edge_weight_max": 0.0,
+      "energy_before": 682.6216815906579,
+      "energy_after": 682.6216815906579,
+      "teacher_violations_before": 245869,
+      "teacher_violations_after": 0,
+      "correction_fraction": 0.9988365173339844,
+      "graph_seconds": 0.008920416003093123
+    },
+    "counts": {
+      "network_forwards": 8,
+      "loss_backward_calls": 1,
+      "jacobian_vjp_calls": 0,
+      "adam_calls": 1,
+      "actual_parameter_replacements": 0
+    },
+    "base_loss": 4.105258464813232,
+    "extra_loss": 0.0,
+    "banks": [
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 129,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 128,
+        "contributing_images": 16,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 16,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      },
+      {
+        "n": 160,
+        "contributing_images": 17,
+        "version": 0,
+        "last_visit": 2,
+        "ready": true,
+        "rank": 8,
+        "merges": 17,
+        "eigh_calls": 1,
+        "state_bytes": 19264,
+        "frame_version": 0,
+        "basis_stat_version": 0,
+        "density_stat_version": 0
+      }
+    ],
+    "optimizer_update_l2": 0.010083078308591951,
+    "final_raw_probability_nested_violations": 199691,
+    "host_seconds": 2.6085185839328915
+  }
+}

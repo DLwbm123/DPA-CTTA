@@ -1,0 +1,2346 @@
+diff --git a/configs/r3_execution.defaults.json b/configs/r3_execution.defaults.json
+new file mode 100644
+index 0000000..60ffe19
+--- /dev/null
++++ b/configs/r3_execution.defaults.json
+@@ -0,0 +1,12 @@
++{
++  "enabled": false,
++  "approved_code_sha": null,
++  "approved_science_sha256": null,
++  "approved_registration_digest": null,
++  "approved_stream_digest": null,
++  "approved_trajectory_count": null,
++  "external_review_reference": null,
++  "allowed_physical_gpu_ids": [],
++  "max_workers": 0,
++  "background_allowed": false
++}
+diff --git a/configs/r3_science_v1.json b/configs/r3_science_v1.json
+new file mode 100644
+index 0000000..3b23d46
+--- /dev/null
++++ b/configs/r3_science_v1.json
+@@ -0,0 +1,405 @@
++{
++  "experiment": "R3_FIVE_REGION_FRAMEWORKS",
++  "status": "PROPOSED_FOR_IMPLEMENTATION_REVIEW",
++  "authority": "01_MASTER_PROMPT.md and 02_METHOD_SPEC.md; differences must be reported, not silently reconciled",
++  "base_commit": "f52f132e4be576ea871467432a6f4b12337209a5",
++  "source_access": "checkpoint_only_no_source_data_no_source_retraining",
++  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
++  "seed": 20260907,
++  "task": "fundus",
++  "groups": 1951,
++  "primary_subset": "remaining_dev",
++  "primary_subset_groups": 1695,
++  "orders": [
++    [
++      "REFUGE",
++      "ORIGA",
++      "REFUGE_Valid",
++      "Drishti_GS"
++    ],
++    [
++      "Drishti_GS",
++      "REFUGE_Valid",
++      "ORIGA",
++      "REFUGE"
++    ],
++    [
++      "ORIGA",
++      "Drishti_GS",
++      "REFUGE",
++      "REFUGE_Valid"
++    ],
++    [
++      "REFUGE_Valid",
++      "REFUGE",
++      "Drishti_GS",
++      "ORIGA"
++    ]
++  ],
++  "secondary_stream": {
++    "id": 4,
++    "type": "rotating_domain_chunks_unique_contents",
++    "chunk_size": 64,
++    "base_order": [
++      "REFUGE",
++      "ORIGA",
++      "REFUGE_Valid",
++      "Drishti_GS"
++    ],
++    "round_order_rule": "left_rotate_base_by_round_mod_4",
++    "within_domain_order": "unchanged_from_registered_sequence",
++    "raw_image_replay": false,
++    "new_registration_required": false,
++    "separate_stream_digest_required": true
++  },
++  "arms": [
++    {
++      "name": "C",
++      "family": "baseline",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "RP",
++      "family": "baseline",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "T_LR",
++      "family": "candidate_1_teacher",
++      "forwards_per_visit": 9,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "T_ISO",
++      "family": "control_teacher",
++      "forwards_per_visit": 9,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "T_DIAG",
++      "family": "control_teacher",
++      "forwards_per_visit": 9,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "U_PCA",
++      "family": "candidate_3_update",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 8
++    },
++    {
++      "name": "U_RAND",
++      "family": "control_update",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 8
++    },
++    {
++      "name": "U_SCALE",
++      "family": "control_update",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 8
++    },
++    {
++      "name": "S_JOINT",
++      "family": "candidate_4_state",
++      "forwards_per_visit": 9,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "S_SHARED",
++      "family": "control_state",
++      "forwards_per_visit": 9,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "S_NOPCA",
++      "family": "control_state",
++      "forwards_per_visit": 9,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "M_TRANSPORT",
++      "family": "candidate_2_transport",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "M_IDPOST",
++      "family": "control_transport",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "M_SHUFFLE",
++      "family": "control_transport",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "G_PCA",
++      "family": "candidate_5_graph",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "G_ISO",
++      "family": "control_graph",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    },
++    {
++      "name": "G_ORDER",
++      "family": "control_graph",
++      "forwards_per_visit": 8,
++      "loss_backward_per_visit": 1,
++      "adam_per_visit": 1,
++      "jacobian_vjp_per_visit_upper": 0
++    }
++  ],
++  "priority_candidates": [
++    "T_LR",
++    "U_PCA",
++    "S_JOINT",
++    "M_TRANSPORT",
++    "G_PCA"
++  ],
++  "host": {
++    "C": "unchanged_six_view_point_target_BCE",
++    "bn_layers": 41,
++    "affine_scalars": 19136,
++    "lr": 0.0001,
++    "betas": [
++      0.9,
++      0.999
++    ],
++    "eps": 1e-08,
++    "weight_decay": 0.0,
++    "parameter_dtype": "float32",
++    "AMP": false,
++    "view_batching": "separate_single_image_forwards",
++    "scored_prediction": "raw_original_image_after_one_update",
++    "cross_domain_reset": false,
++    "allow_real_domain_id_to_algorithm": false
++  },
++  "memory": {
++    "feature": "seg_head_input",
++    "dim": 32,
++    "grid": [
++      32,
++      32
++    ],
++    "rank": 8,
++    "norm_eps": 1e-06,
++    "region_order": [
++      "OD_bg",
++      "OD_fg",
++      "OC_bg",
++      "OC_fg"
++    ],
++    "reliable_q_bounds": [
++      0.1,
++      0.9
++    ],
++    "all_six_hard_agree": true,
++    "per_region_sample_cap": 32,
++    "min_contributing_images": 16,
++    "min_vectors": 128,
++    "refresh_contributing_images": 16,
++    "stats": "CPU_float64_cumulative_Welford",
++    "forgetting_factor": 1.0,
++    "current_image_joins_after_prediction": true,
++    "retained_raw_vectors": false,
++    "absolute_loss_weight": 0.05
++  },
++  "teacher": {
++    "feature_frame": "immutable_checkpoint_source_BN_eval",
++    "num_reference_forwards": 1,
++    "modes": [
++      "LR",
++      "ISO",
++      "DIAG"
++    ],
++    "covariance_shrink_beta": 0.1,
++    "variance_floor": 0.0001,
++    "rank": 8,
++    "log_evidence_divisor": 32,
++    "log_evidence_clip": 4.0,
++    "alpha": 0.5,
++    "inlier_mahalanobis_per_dim_max": 4.0,
++    "region_pair_ready_required": true,
++    "memory_labels": "original_C_six_view_targets_before_correction",
++    "foreground_prior": "not_estimated_from_balanced_samples",
++    "upsample": "bilinear_logodds_correction_align_corners_false",
++    "adds_absolute_PCA_loss": false
++  },
++  "update": {
++    "probes_per_ready_region": 2,
++    "max_rows": 8,
++    "probe_source": "original_image_preupdate_grad_enabled_feature",
++    "probe_definition": "two_leading_PCA_coordinates_of_reliable_region_mean",
++    "row_l2_normalize": true,
++    "zero_row_threshold": 1e-12,
++    "metric": "identity_in_ordered_BN_parameter_vector",
++    "strength": 1.0,
++    "candidate_delta": "actual_one_Adam_proposal",
++    "moments": "advance_once_from_unmodified_C_gradient_no_projection_of_moments",
++    "random_control": "fixed_CPU_QR_feature_directions_per_region",
++    "scale_control": "same_own_PCA_solution_norm_only",
++    "adds_absolute_PCA_loss": false
++  },
++  "state_pool": {
++    "capacity": 3,
++    "descriptor": "normalized_concat_global_mean_and_std_immutable_source_BN_head_input",
++    "descriptor_dim": 64,
++    "minimum_context_observations": 16,
++    "novelty": "distance_to_nearest > max(1e-6, past_distance_mean + 3*past_distance_sd)",
++    "novelty_is_calibrated_risk": false,
++    "initial_state": "source_affine_empty_Adam_empty_region_memory",
++    "when_full": "nearest_existing_no_eviction_no_growth",
++    "descriptor_update": "after_current_prediction",
++    "moments_mix": false,
++    "rng_per_context": false,
++    "global_rng_per_trajectory": true,
++    "arms": {
++      "S_JOINT": "context_affine_Adam_and_regional_memory",
++      "S_SHARED": "one_affine_Adam_context_regional_memories",
++      "S_NOPCA": "context_affine_Adam_shadow_regional_memory_no_PCA_loss"
++    },
++    "shared_source_weights": true
++  },
++  "transport": {
++    "rotation_dim": 32,
++    "tau": 0.01,
++    "min_distinct_spatial_pairs": 32,
++    "fit_weighting": "equal_nonempty_regions_then_uniform_within_selected_region",
++    "affine_translation": false,
++    "group": "O(32)_no_det_sign_fix",
++    "statistics_insert": "postupdate_features_at_preselected_positions",
++    "rotate_live_and_snapshot_mean_and_basis": true,
++    "covariance_rotation": "Q_M2_Qt",
++    "no_decay": true,
++    "controls": [
++      "identity_postinsert",
++      "shuffle_post_positions_within_same_region"
++    ],
++    "claim": "local_orthogonal_approximation_not_exact_history_reencoding"
++  },
++  "graph": {
++    "grid": [
++      32,
++      32
++    ],
++    "edges": "undirected_4_neighbour_no_self_edges",
++    "edge_count": 1984,
++    "temperature": 0.1,
++    "precision": "rank8_shrunk_trace_normalized",
++    "mixture": "soft_OD_OC_region_membership_average_endpoints",
++    "unary_reliable": 10.0,
++    "unary_other": 1.0,
++    "lam": 0.25,
++    "steps": 32,
++    "eta": 0.25,
++    "prob_eps": 1e-05,
++    "nested_constraint": "OC<=OD",
++    "all_four_banks_ready_required": true,
++    "solver": "mirror_proximal_fixed_iterations",
++    "refined_target_detached": true,
++    "memory_labels": "unrefined_C_teacher",
++    "full_resolution_target": "upsampled_logodds_correction_then_weighted_nested_projection",
++    "final_prediction_constraint": false,
++    "adds_absolute_PCA_loss": false
++  },
++  "formal_budget": {
++    "scoring_records": 165835,
++    "network_forwards": 1385210,
++    "loss_backward_calls": 165835,
++    "adam_calls": 165835,
++    "jacobian_vjp_upper": 234120,
++    "trajectories": 85,
++    "unique_contents": 1951,
++    "primary_trajectories": 68,
++    "primary_records": 132668,
++    "secondary_trajectories": 17,
++    "secondary_records": 33167,
++    "offline_training_updates": 0
++  },
++  "per_gpu_smoke": {
++    "adam_calls": 38,
++    "loss_backward_calls": 38,
++    "network_forwards": 316,
++    "jacobian_vjp_upper": 24,
++    "scoring_records_in_main_results": 0
++  },
++  "resources": {
++    "preferred_physical_devices": [
++      6,
++      7
++    ],
++    "authorized_devices": null,
++    "max_workers": 3,
++    "max_threads_per_worker": 2,
++    "trajectory_hours_cap": 6,
++    "wall_hours_cap": 96,
++    "total_active_worker_hours_cap": 160,
++    "new_private_output_bytes_cap": 6442450944,
++    "background_authorized": false,
++    "scope": "resource_caps_not_time_predictions"
++  },
++  "selection_reference": {
++    "primary_mean_gain_over_C_pp": 0.5,
++    "positive_primary_orders_at_least": 3,
++    "domain_mean_warning_below_pp": -2.0,
++    "worst_primary_order_warning_below_pp": -0.5,
++    "secondary_stream_not_pooled_with_primary": true,
++    "no_auto_combination": true,
++    "no_auto_hyperparameter_search": true,
++    "not_statistical_or_clinical_threshold": true
++  },
++  "phase_I": {
++    "GPU": false,
++    "read_real_target_pixels_or_masks": false,
++    "source_checkpoint_CPU_readonly_optional": true,
++    "publish": "code_config_logs_deidentified_documents_only",
++    "stop_status": "R3_IMPLEMENTATION_READY_FOR_REVIEW"
++  },
++  "phase_II": {
++    "requires_external_review_on_exact_commit": true,
++    "requires_fresh_device_authorization": true,
++    "no_score_gates_between_families": true,
++    "no_auto_retry_failed_trajectories": true
++  }
++}
+diff --git a/scripts/check_r3_cpu.py b/scripts/check_r3_cpu.py
+new file mode 100644
+index 0000000..c4f9567
+--- /dev/null
++++ b/scripts/check_r3_cpu.py
+@@ -0,0 +1,46 @@
++"""Phase I procedural suite: deny real-asset decoding and GPU initialization."""
++import os,sys,time,json,unittest,tempfile,io
++from pathlib import Path
++from contextlib import ExitStack
++from unittest.mock import patch
++os.environ['CUDA_VISIBLE_DEVICES']='';os.environ.pop('CHECKPOINT',None)
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses()
++import torch
++torch.set_num_threads(2)
++modules=['test_r3_reference','test_r3','test_r3_execution']
++if os.environ.get('R3_EXECUTION_ONLY')=='1':modules=['test_r3_execution']
++if os.environ.get('R3_FINAL_FOCUSED')=='1':modules=['test_r3.HostTests.test_S_host_switch_does_not_replay_augmentation_or_copy_model','test_r3_execution']
++if os.environ.get('R3_REGRESSION')=='1':modules+=['test_r1','test_r1_fixes','test_r2','test_r2_continuation']
++started=time.monotonic()
++with ExitStack() as stack:
++    stack.enter_context(patch('torch.cuda._lazy_init',side_effect=AssertionError('Stage I GPU forbidden')))
++    stack.enter_context(patch('dpa_ctta.source_io.source_proxy',side_effect=AssertionError('source proxy forbidden')))
++    if os.environ.get('R3_REGRESSION')=='1':
++        # Existing IO regression creates tiny images/weights itself. Allow only its
++        # dedicated fresh temp tree; registered real assets still fail closed.
++        from dpa_ctta import source_io
++        from dpa_ctta.r1 import assets
++        temp=stack.enter_context(tempfile.TemporaryDirectory())
++        stack.enter_context(patch.object(tempfile,'tempdir',temp))
++        verified=assets.verified_bytes
++        def safe_bytes(path,expected):
++            if not Path(path).resolve().is_relative_to(Path(temp).resolve()):raise AssertionError('non-procedural asset path')
++            return verified(path,expected)
++        stack.enter_context(patch.object(assets,'verified_bytes',side_effect=safe_bytes))
++        for name in ('read_pixels','read_mask'):
++            original=getattr(source_io,name)
++            def safe_read(path,*args,_reader=original,**kwargs):
++                if not isinstance(path,io.BytesIO) and not Path(path).resolve().is_relative_to(Path(temp).resolve()):raise AssertionError('non-procedural pixels')
++                return _reader(path,*args,**kwargs)
++            stack.enter_context(patch.object(source_io,name,side_effect=safe_read))
++    else:
++        for name in ('dpa_ctta.source_io.read_pixels','dpa_ctta.source_io.read_mask','dpa_ctta.r1.assets.checkpoint','dpa_ctta.r1.assets.target'):
++            stack.enter_context(patch(name,side_effect=AssertionError('Stage I real assets forbidden')))
++    result=unittest.TextTestRunner(verbosity=2).run(unittest.TestLoader().loadTestsFromNames(modules))
++status=dict(tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),seconds=time.monotonic()-started,
++    python=sys.version.split()[0],torch=torch.__version__,cuda_initialized=torch.cuda.is_initialized(),real_target_RGB_reads=0,real_target_mask_reads=0,registered_checkpoint_reads=0,procedural_IO_fixtures=os.environ.get('R3_REGRESSION')=='1',
++    source_data_reads=0,inputs='procedural CPU tensors; random model weights',exit_code=int(not result.wasSuccessful()))
++print(json.dumps(status,indent=2))
++if os.environ.get('CHECK_OUTPUT'):Path(os.environ['CHECK_OUTPUT']).write_text(json.dumps(status,indent=2)+'\n')
++sys.exit(status['exit_code'])
+diff --git a/scripts/run_r3.py b/scripts/run_r3.py
+new file mode 100644
+index 0000000..0148847
+--- /dev/null
++++ b/scripts/run_r3.py
+@@ -0,0 +1,5 @@
++from dpa_ctta.b3_runtime import neutral_subprocesses
++from dpa_ctta.r3.run import main
++if __name__=='__main__':
++    neutral_subprocesses()
++    main()
+diff --git a/src/dpa_ctta/r3/__init__.py b/src/dpa_ctta/r3/__init__.py
+new file mode 100644
+index 0000000..8d31e26
+--- /dev/null
++++ b/src/dpa_ctta/r3/__init__.py
+@@ -0,0 +1 @@
++"""R3 checkpoint-only, five independent regional frameworks."""
+diff --git a/src/dpa_ctta/r3/analyze.py b/src/dpa_ctta/r3/analyze.py
+new file mode 100644
+index 0000000..c3143ef
+--- /dev/null
++++ b/src/dpa_ctta/r3/analyze.py
+@@ -0,0 +1,153 @@
++"""Independent scalar validation and separate primary/recurrence aggregates.
++
++No image, mask, checkpoint, covariance or Jacobian reconstruction is performed.
++"""
++import json,math,re
++from pathlib import Path
++from statistics import mean
++from ..r1.plan import binding,bound
++from ..r1.evidence import invalidate,publish,output_bytes
++from ..p2_analysis import validate_metric
++from ..host_diagnostic_analysis import channels,distribution
++from ..m1_analysis import paired
++from .plan import science,matrix,allocation,stream,stream_summary,registration_digest,SCIENCE_SHA
++
++FAMILIES={a:(b,c) for a,b,c in [('T_LR','T_ISO','T_DIAG'),('U_PCA','U_RAND','U_SCALE'),('S_JOINT','S_SHARED','S_NOPCA'),('M_TRANSPORT','M_IDPOST','M_SHUFFLE'),('G_PCA','G_ISO','G_ORDER')]}
++PAIRS=[(a,b) for a,controls in FAMILIES.items() for b in ('C','RP',*controls)]
++SUBSETS=('remaining_dev','legacy_dev','p1_extension_dev','all_dev')
++COUNT_KEYS=('network_forwards','loss_backward_calls','jacobian_vjp_calls','adam_calls','actual_parameter_replacements')
++
++
++def read(path):return json.loads(Path(path).read_text())
++
++
++def validate(rows,ordered,job,identity):
++    if len(rows)!=job['records'] or len(rows)!=len(ordered) or len({r['group_id'] for r in rows})!=len(rows):raise ValueError('complete unique trajectory required')
++    past={};slot_counts=[]
++    for visit,(row,expected) in enumerate(zip(rows,ordered),1):
++        bound(row,identity)
++        if any(row[k]!=expected[k] for k in ('group_id','sample_id','domain','subset')) or row['arm']!=job['arm'] or row['order']!=job['order']:raise ValueError('ordered identity')
++        json.dumps(row,allow_nan=False)
++        a=row['r3'];c=a['counts'];arm=job['arm']
++        if a['global_visit']!=visit or a['arm']!=arm or row['prediction_fixed_before_label'] is not True:raise ValueError('causal visit')
++        if set(c)!=set(COUNT_KEYS) or any(type(x) is not int or x<0 for x in c.values()):raise ValueError('physical scalar types')
++        if c['network_forwards']!=(9 if arm.startswith(('T_','S_')) else 8) or c['loss_backward_calls']!=1 or c['adam_calls']!=1:raise ValueError('per-visit base calls')
++        if c['jacobian_vjp_calls']>(8 if arm.startswith('U_') else 0) or c['actual_parameter_replacements']>(1 if arm.startswith(('U_','S_')) else 0):raise ValueError('extra calls')
++        if [v['channel'] for v in row['metrics']]!=['OD','OC']:raise ValueError('channels')
++        for metric in row['metrics']:validate_metric(metric)
++        if set(row['asset_io'])!={'image','mask'} or any(type(v['bytes']) is not int or v['bytes']<=0 or not math.isfinite(v['read_verify_decode_seconds']) or v['read_verify_decode_seconds']<0 for v in row['asset_io'].values()):raise ValueError('verified asset IO')
++        if arm=='C':continue
++        slot=0
++        if arm.startswith('S_'):
++            ctx=a['context'];slot=ctx['slot']
++            if ctx['created']:
++                if slot!=len(slot_counts) or len(slot_counts)>=3:raise ValueError('context creation/capacity')
++                slot_counts.append(0)
++            if slot not in range(len(slot_counts)) or ctx['active_slots']!=1:raise ValueError('one active slot')
++            slot_counts[slot]+=1
++            if ctx['slot_assigned_counts']!=slot_counts or ctx['slot_updates']!=slot_counts or sum(slot_counts)!=visit:raise ValueError('slot/global counters')
++            if ctx['optimizer_steps']!=([visit] if arm=='S_SHARED' else slot_counts):raise ValueError('Adam state isolation')
++        p=row['pca'] if arm=='RP' else dict(input=a['memory_input'],banks=a['banks'],basis_versions_used=a['basis_versions_used'])
++        old=past.get(slot,[dict(n=0,contributing_images=0,version=0,eigh_calls=0,rank=0,ready=False) for _ in range(4)])
++        if len(p['banks'])!=4 or p['basis_versions_used']!=[b['version'] if b['ready'] else None for b in old]:raise ValueError('old PCA snapshots')
++        if arm!='RP' and a['density_versions_used']!=[b.get('density_stat_version') for b in old]:raise ValueError('old density snapshots')
++        inputs=p['input'];regions=inputs['region_token_counts'];selected=inputs['selected_region_counts']
++        if len(regions)!=4 or sum(regions[:2])!=1024 or sum(regions[2:])!=1024 or inputs['assigned_bank_counts']!=selected:raise ValueError('regional quotas')
++        for b,prior,k,sampled,zero in zip(p['banks'],old,selected,inputs['sampled_region_counts'],inputs['zero_vectors']):
++            if any(type(v) is not int or v<0 for v in (k,sampled,zero)) or k+zero!=sampled or sampled>32:raise ValueError('selected actual token counts')
++            n=prior['n']+k;images=prior['contributing_images']+int(k>0);refresh=bool(k and images>=16 and n>=128 and images%16==0)
++            want=dict(n=n,contributing_images=images,merges=images,last_visit=visit,version=visit if refresh else prior['version'],eigh_calls=prior['eigh_calls']+int(refresh))
++            if any(b[key]!=value for key,value in want.items()):raise ValueError('sufficient-statistic scalar replay')
++            if b['ready']!=(b['rank']>0) or not 0<=b['rank']<=8:raise ValueError('basis rank')
++            if not refresh and (b['rank'],b['ready'])!=(prior['rank'],prior['ready']):raise ValueError('basis refresh cadence')
++            if arm.startswith('M_') and b['frame_version']!=visit:raise ValueError('post-update coordinate frame')
++        past[slot]=p['banks'];json.dumps(row,allow_nan=False)
++    return {key:sum(r['r3']['counts'][key] for r in rows) for key in COUNT_KEYS}
++
++
++def summarize(arms):
++    result={}
++    for domain in science()['orders'][0]:
++        rs={a:[r for r in rows if r['domain']==domain] for a,rows in arms.items()}
++        values={a:{c:dict(dice_percent=distribution([100*m['dice'] for m in channels(rows,c)]),**({} if c=='macro' else dict(assd_conditional=distribution([m['assd'] for m in channels(rows,c) if m['assd'] is not None]),assd_defined=sum(m['assd'] is not None for m in channels(rows,c)),assd_undefined=sum(m['assd'] is None for m in channels(rows,c))))) for c in ('OD','OC','macro')} for a,rows in rs.items()}
++        result[domain]=dict(arms=values,paired={a+'-'+b:{c:paired(channels(rs[a],c),channels(rs[b],c),c=='macro') for c in ('OD','OC','macro')} for a,b in PAIRS})
++    means={a:{c:mean(v['arms'][a][c]['dice_percent']['mean'] for v in result.values()) for c in ('OD','OC','macro')} for a in arms}
++    return dict(domains=result,domain_equal_dice_percent=means,comparisons_pp={a+'-'+b:means[a]['macro']-means[b]['macro'] for a,b in PAIRS},
++        pooled_content_paired={a+'-'+b:{c:paired(channels(arms[a],c),channels(arms[b],c),c=='macro') for c in ('OD','OC','macro')} for a,b in PAIRS})
++
++
++def scalar_mechanisms(rows):
++    collected={}
++    def visit(v,path):
++        if isinstance(v,dict):
++            for k,x in v.items():visit(x,path+'.'+k)
++        elif isinstance(v,list):
++            for i,x in enumerate(v):visit(x,path+'.'+str(i))
++        elif isinstance(v,(int,float)):
++            if not math.isfinite(v):raise ValueError('nonfinite trace')
++            collected.setdefault(path,[]).append(float(v))
++    for row in rows:visit(row['r3'],'r3')
++    return {k:distribution(v) for k,v in collected.items()}
++
++
++def recompute(out,reg):
++    out=Path(out);invalidate(out)
++    try:
++        import torch
++        if torch.cuda.is_initialized():raise ValueError('CPU-only closeout')
++        receipt=read(out/'receipt.json');identity=receipt['binding'];jobs=matrix()['jobs'];devices=receipt['devices'];slots=len(devices)
++        expected=dict(science_sha256=SCIENCE_SHA,registration_digest=registration_digest(reg),stream_digest=stream_summary(reg)['stream_digest'])
++        if any(identity.get(k)!=v for k,v in expected.items()) or not re.fullmatch('[0-9a-f]{40}',identity['code_sha']) or not re.fullmatch('[0-9a-f]{32}',identity['run_id']):raise ValueError('execution bindings')
++        if not 1<=slots<=3 or len({d['uuid'] for d in devices})!=slots or receipt['jobs']!=jobs or receipt['schedule']!=allocation(jobs,slots):raise ValueError('complete registered matrix')
++        if (out/'dispatch.stopped.json').exists() or list(out.rglob('*failure.json')):raise ValueError('failed run cannot be complete')
++        processes=read(out/'matrix.processes.json');bound(processes,identity)
++        from .execution import caps
++        limits=caps()
++        if processes['status']!='COMPUTE_COMPLETE' or any(c!=0 for c in processes['exit_codes']) or processes.get('unstarted_jobs'):raise ValueError('process completion')
++        if not 0<=processes['wall_seconds']<=limits['wall_seconds'] or not 0<=processes['active_seconds']<=limits['active_seconds']:raise ValueError('run time caps')
++        assigned={a['job_id']:a['worker'] for a in receipt['schedule']['assignments']}
++        expected_process={('smoke','device'+str(i)):binding(receipt,i) for i in range(slots)}
++        expected_process.update({('formal',j['job_id']):binding(receipt,assigned[j['job_id']],j) for j in jobs})
++        entries=processes['processes']
++        if len(entries)!=len(expected_process) or len({(e['phase'],e['key']) for e in entries})!=len(expected_process) or processes['exit_codes']!=[e['exit_code'] for e in entries]:raise ValueError('process coverage')
++        for e in entries:
++            bound(e,expected_process[e['phase'],e['key']])
++            if e['status']!='EXITED' or e['exit_code']!=0 or e['pid']!=e['pgid'] or e['pid']<=0:raise ValueError('owned process exit')
++        started=read(out/'processes.started.json');bound(started,identity)
++        if started['processes']!=[{k:e[k] for k in ('pid','pgid','binding','phase','key')} for e in entries]:raise ValueError('started process evidence')
++        smoke=[]
++        for i in range(slots):
++            s=read(out/('device'+str(i))/'smoke.completion.json');bound(s,binding(receipt,i))
++            if s['status']!='MECHANICAL_SMOKE_COMPLETE' or any(s['physical'][k]!=v for k,v in dict(network_forwards=316,loss_backward_calls=38,adam_calls=38).items()) or not 0<=s['physical']['jacobian_vjp_calls']<=24:raise ValueError('smoke physical counts')
++            if s['backend']['seed']!=20260907 or s['checkpoint_io']['bytes']!=reg['checkpoint']['bytes']:raise ValueError('smoke asset/runtime evidence')
++            smoke.append(s)
++        all_rows={};mechanism={};physical={k:0 for k in COUNT_KEYS};physical['records']=0
++        for j in jobs:
++            folder=out/j['job_id'];done=read(folder/'completion.json');ident=binding(receipt,assigned[j['job_id']],j);bound(done,ident)
++            rows=[json.loads(s) for s in (folder/'records.jsonl').read_text().splitlines()]
++            counts=validate(rows,stream(reg,j['order']),j,ident)
++            if done['status']!='TRAJECTORY_COMPLETE' or done['records']!=len(rows) or done['physical']!=counts:raise ValueError('completion record mismatch')
++            if done['backend']['seed']!=20260907 or done['checkpoint_io']['bytes']!=reg['checkpoint']['bytes'] or not 0<=done['seconds']<=limits['trajectory_seconds']:raise ValueError('runtime evidence')
++            all_rows[j['order'],j['arm']]=rows;mechanism[j['job_id']]=scalar_mechanisms(rows);physical['records']+=len(rows)
++            for key in COUNT_KEYS:physical[key]+=counts[key]
++        budget=science()['formal_budget']
++        if physical['records']!=budget['scoring_records'] or any(physical[k]!=budget[k] for k in ('network_forwards','loss_backward_calls','adam_calls')) or physical['jacobian_vjp_calls']>budget['jacobian_vjp_upper']:raise ValueError('complete physical budget')
++        arms=[a['name'] for a in science()['arms']]
++        for order in range(5):
++            reference=all_rows[order,'C']
++            for arm in arms:
++                if any(any(x[k]!=y[k] for x,y in zip(r['metrics'],c['metrics']) for k in ('gt_pixels','total_pixels','gt_empty','gt_full')) for r,c in zip(all_rows[order,arm],reference)):raise ValueError('cross-arm GT binding')
++        target={str(o):{subset:summarize({a:[r for r in all_rows[o,a] if subset=='all_dev' or r['subset']==subset] for a in arms}) for subset in SUBSETS} for o in range(5)}
++        primary={s:dict(arms={a:{c:mean(target[str(o)][s]['domain_equal_dice_percent'][a][c] for o in range(4)) for c in ('OD','OC','macro')} for a in arms},comparisons_pp={a+'-'+b:mean(target[str(o)][s]['comparisons_pp'][a+'-'+b] for o in range(4)) for a,b in PAIRS}) for s in SUBSETS}
++        result=dict(status='R3_EXPERIMENT_COMPLETE',binding=identity,physical=physical,smoke_physical={k:sum(s['physical'][k] for s in smoke) for k in COUNT_KEYS},target=target,
++            primary_four_order_equal=primary,secondary_recurrence=target['4'],mechanism=mechanism,next_execution_authorized=False,
++            limitations=['Exposed shared contents; four primary orders are not independent patient samples.',
++            'Secondary stream remains separate; no five-stream average.', 'Drishti_GS primary subset has 37 contents and one-quarter domain weight.',
++            'Only scalar-supported quantities replayed; covariance, Jacobian, graph geometry and ASSD geometry not reconstructed.'])
++        report='# R3 experiment results\n\n'+result['status']+'\n\n'+json.dumps(dict(primary=primary['remaining_dev'],secondary=target['4']['remaining_dev']['domain_equal_dice_percent'],physical=physical),indent=2)+'\n'
++        if output_bytes(out)+len(json.dumps(result).encode())+len(report.encode())>limits['bytes']:raise ValueError('publication cap')
++        alias=out/'R3_EXPERIMENT_REPORT.md'
++        if not alias.is_symlink():alias.symlink_to('current/R1_EXPERIMENT_REPORT.md')
++        publish(out,result,report);return result
++    except BaseException as exc:
++        invalidate(out,'INCOMPLETE',type(exc).__name__+': '+str(exc));raise
+diff --git a/src/dpa_ctta/r3/contexts.py b/src/dpa_ctta/r3/contexts.py
+new file mode 100644
+index 0000000..d79667a
+--- /dev/null
++++ b/src/dpa_ctta/r3/contexts.py
+@@ -0,0 +1,64 @@
++"""At most three affine/Adam/bank states, one live model and one global RNG."""
++import copy,time
++import torch
++from .kernels import DescriptorRouter
++from .stats import Memory
++from .displacement import flatten,replace
++
++
++def state_bytes(value):
++    if isinstance(value,torch.Tensor):return value.numel()*value.element_size()
++    if isinstance(value,dict):return sum(state_bytes(v) for v in value.values())
++    if isinstance(value,list):return sum(state_bytes(v) for v in value)
++    return 0
++
++
++def cpu_copy(value):
++    if isinstance(value,torch.Tensor):return value.detach().cpu().clone()
++    if isinstance(value,dict):return {k:cpu_copy(v) for k,v in value.items()}
++    if isinstance(value,list):return [cpu_copy(v) for v in value]
++    return copy.deepcopy(value)
++
++
++class Contexts:
++    def __init__(self,params,names,optimizer,shared=False):
++        self.params,self.names,self.optimizer=params,names,optimizer
++        self.shared=shared;self.source=flatten(params).cpu().clone()
++        self.router=DescriptorRouter();self.slots=[];self.active=None;self.total_steps=0
++
++    def load(self,descriptor):
++        started=time.monotonic();index,created,distance=self.router.choose(descriptor)
++        old_threshold=None;overflow=False
++        if self.router.entries:
++            ds=[float((descriptor.double()-e.centre).square().sum()) for e in self.router.entries]
++            e=self.router.entries[min(range(len(ds)),key=ds.__getitem__)]
++            old_threshold=max(1e-6,e.distance_mean+3*(e.distance_m2/max(e.count-1,1))**.5)
++            overflow=len(self.slots)==3 and e.count>=16 and distance>old_threshold
++        if created:
++            if len(self.slots)>=3:raise ValueError('context capacity')
++            self.slots.append(dict(affine=None if self.shared else self.source.clone(),adam={},steps=0,memory=Memory()))
++        switched=self.active is not None and index!=self.active
++        replacements=0
++        if not self.shared and (created or index!=self.active):
++            s=self.slots[index];replace(self.params,s['affine'].to(self.params[0]));replacements=1
++            self.optimizer.state.clear()
++            for name,p in zip(self.names,self.params):
++                if name in s['adam']:
++                    self.optimizer.state[p]={k:(v.clone().to(p.device) if isinstance(v,torch.Tensor) and k!='step' else cpu_copy(v)) for k,v in s['adam'][name].items()}
++        self.active=index
++        return self.slots[index]['memory'],dict(slot=index,created=created,switched=switched,distance=distance,
++            old_threshold=old_threshold,overflow=overflow,actual_parameter_replacements=replacements,load_seconds=time.monotonic()-started)
++
++    def commit(self,descriptor,trace):
++        s=self.slots[self.active];s['steps']+=1;self.total_steps+=1
++        if not self.shared:
++            s['affine']=flatten(self.params).cpu().clone()
++            s['adam']={name:cpu_copy(self.optimizer.state[p]) for name,p in zip(self.names,self.params)}
++        self.router.commit(descriptor,trace['slot'],trace['created'],trace['distance'])
++        if sum(x['steps'] for x in self.slots)!=self.total_steps:raise ValueError('context/global counts')
++        expected=self.total_steps if self.shared else s['steps']
++        if any(int(self.optimizer.state[p]['step'])!=expected for p in self.params):raise ValueError('selected Adam counter')
++        trace.update(slot_assigned_counts=[e.count for e in self.router.entries],slot_updates=[x['steps'] for x in self.slots],
++            optimizer_steps=[self.total_steps] if self.shared else [x['steps'] for x in self.slots],active_slots=1,
++            slots=len(self.slots),model_copies=2,stored_affine_scalars=0 if self.shared else self.source.numel()*len(self.slots),
++            context_tensor_bytes=sum(state_bytes(s['affine'])+state_bytes(s['adam'])+sum(b['state_bytes'] for b in s['memory'].audit()) for s in self.slots)+state_bytes(self.source)+sum(state_bytes(e.descriptor_sum) for e in self.router.entries))
+diff --git a/src/dpa_ctta/r3/displacement.py b/src/dpa_ctta/r3/displacement.py
+new file mode 100644
+index 0000000..015c459
+--- /dev/null
++++ b/src/dpa_ctta/r3/displacement.py
+@@ -0,0 +1,56 @@
++"""Real feature-to-affine VJPs and a transform of one actual Adam proposal."""
++import torch
++from ..r1.recovery import local_seed
++from .kernels import unit,constrain_displacement,norm_matched_displacement
++
++
++def flatten(params):return torch.cat([p.detach().reshape(-1) for p in params])
++
++
++@torch.no_grad()
++def replace(params, vector):
++    if vector.ndim!=1 or vector.numel()!=sum(p.numel() for p in params) or not torch.isfinite(vector).all():
++        raise ValueError('affine replacement shape/finiteness')
++    offset=0
++    for p in params:
++        p.copy_(vector[offset:offset+p.numel()].reshape_as(p));offset+=p.numel()
++
++
++def directions(snapshot, region, random):
++    count=min(2,snapshot[1].shape[1])
++    if not random:return snapshot[1][:,:count]
++    g=torch.Generator().manual_seed(local_seed('R3_U_RAND_'+str(region),1))
++    return torch.linalg.qr(torch.randn(32,2,generator=g,dtype=torch.float64),mode='reduced').Q[:,:count]
++
++
++def probe_rows(raw, selected, snapshots, params, random=False, on_vjp=None):
++    v=unit(raw);probes=[];definitions=[]
++    for r,(ids,s) in enumerate(zip(selected,snapshots)):
++        if s is None or not len(ids):continue
++        basis=directions(s,r,random).to(v)
++        for j in range(basis.shape[1]):
++            probes.append(v[ids.to(v.device)].mean(0)@basis[:,j]);definitions.append((ids,basis[:,j].detach()))
++    rows=[]
++    for i,p in enumerate(probes):
++        if on_vjp is not None:on_vjp()
++        gs=torch.autograd.grad(p,params,retain_graph=i<len(probes)-1,create_graph=False,allow_unused=True)
++        rows.append(torch.cat([(torch.zeros_like(x) if g is None else g).detach().reshape(-1) for x,g in zip(params,gs)]))
++    A=torch.stack(rows) if rows else raw.new_empty((0,sum(p.numel() for p in params)))
++    return A,definitions,[float(p.detach()) for p in probes]
++
++
++@torch.no_grad()
++def transform(before, params, rows, mode):
++    proposal=flatten(params)-before
++    protected,info=constrain_displacement(proposal,rows)
++    applied=norm_matched_displacement(proposal,protected) if mode=='SCALE' else protected
++    # Empty/zero A preserves the actual Adam candidate exactly, including rounding.
++    replaced=bool(info['rows'])
++    if replaced:replace(params,before+applied)
++    actual=flatten(params)-before
++    norms=rows.double().norm(dim=1);A=rows.double()[norms>1e-12]/norms[norms>1e-12,None]
++    den=proposal.double().norm()*actual.double().norm()
++    info.update(applied_norm=float(actual.double().norm()),actual_parameter_replacements=int(replaced),
++        cosine=1. if float(den)==0 else float((proposal.double()@actual.double()/den).clamp(-1,1)),
++        applied_linear_probe_norm=float((A@actual.double()).norm()),parameter_dim=before.numel(),jacobian_vjp_calls=len(rows))
++    return info
+diff --git a/src/dpa_ctta/r3/execution.py b/src/dpa_ctta/r3/execution.py
+new file mode 100644
+index 0000000..3e2c438
+--- /dev/null
++++ b/src/dpa_ctta/r3/execution.py
+@@ -0,0 +1,167 @@
++"""Thin future execution wiring to the unchanged verified IO and owned supervisor.
++
++Default authorization is disabled. Stage I never invokes this module's launch.
++"""
++import gc,json,os,subprocess,sys,time,uuid
++from pathlib import Path
++from ..r1.plan import binding,bound,authorize as checked_authorization,REF,GRATA
++from ..r1.assets import checkpoint
++from ..r1.evidence import write,output_bytes
++from ..r1.run import claim,current,failure_scope
++from .plan import ROOT,SCIENCE_SHA,science,matrix,allocation,stream,stream_summary,registration_digest
++
++
++def authorize(auth,reg,current_sha=None):
++    ids=checked_authorization(auth,reg,current_sha,science_sha=SCIENCE_SHA)
++    if auth.get('approved_stream_digest')!=stream_summary(reg)['stream_digest']:raise PermissionError('reviewed recurrence digest required')
++    if auth.get('approved_trajectory_count')!=85:raise PermissionError('explicit complete 85 trajectory scope required')
++    return ids
++
++
++def caps():
++    c=science()['resources']
++    return dict(trajectory_seconds=c['trajectory_hours_cap']*3600,wall_seconds=c['wall_hours_cap']*3600,
++        active_seconds=c['total_active_worker_hours_cap']*3600,bytes=c['new_private_output_bytes_cap'])
++
++
++def counters(host):
++    if not host.legacy:return host.total.copy()
++    c=host.legacy.counts
++    return dict(network_forwards=c['forwards'],loss_backward_calls=c['backwards'],jacobian_vjp_calls=0,adam_calls=c['base_adam'],actual_parameter_replacements=0)
++
++
++def smoke(state,device,out,identity,backend,checkpoint_io):
++    import torch
++    from ..source_pilot import seed_all
++    from ..r1.host import Host as OldHost
++    from ..b4_run import capture
++    from ..host_diagnostic import close
++    from ..m2_run import deterministic_smoke_pair
++    from .host import Host,ARMS
++    from .testing import ready
++    sys.path.insert(0,str(ROOT/'tests'))
++    from test_vptta_host import pixels
++    total=dict(network_forwards=0,loss_backward_calls=0,jacobian_vjp_calls=0,adam_calls=0,actual_parameter_replacements=0)
++    saved={};evidence={}
++    try:
++        with deterministic_smoke_pair():
++            for arm in ('OLD_C','OLD_RP',*ARMS):
++                seed_all(20260907)
++                h=OldHost('C' if arm=='OLD_C' else 'C_PCA_REGION',state,device) if arm.startswith('OLD_') else Host(arm,state,device)
++                if len(h.params)!=82 or sum(p.numel() for p in h.params)!=19136:raise ValueError('registered affine dimensions')
++                for step in range(2):
++                    if step==1:
++                        memory=h.contexts.slots[0]['memory'] if getattr(h,'contexts',None) else h.memory
++                        if memory is not None:ready(memory)
++                    z,row=h.step(pixels('fundus',step))
++                    if arm.startswith('OLD_'):
++                        c=row['counts'];c=dict(network_forwards=c['forwards'],loss_backward_calls=c['backwards'],jacobian_vjp_calls=0,adam_calls=c['base_adam'],actual_parameter_replacements=0)
++                        saved[arm,step]=(z.detach().cpu(),capture(h))
++                    else:
++                        c=row['r3']['counts'];evidence[arm+':'+str(step)]=row['r3']
++                        if arm in ('C','RP'):
++                            close(z.cpu(),saved['OLD_'+arm,step][0]);close(capture(h.legacy),saved['OLD_'+arm,step][1])
++                        elif step==0:
++                            close(z.cpu(),saved['OLD_C',0][0]);close([p.detach().cpu() for p in h.params],saved['OLD_C',0][1]['affine']);close(h.rng,saved['OLD_C',0][1]['rng'],exact=True)
++                    for key in total:total[key]+=c[key]
++                h.finish(state);del h,z;gc.collect()
++        if any(total[k]!=v for k,v in dict(network_forwards=316,loss_backward_calls=38,adam_calls=38).items()) or total['jacobian_vjp_calls']>24:
++            raise ValueError('38-update mechanical budget')
++        write(out/'smoke.completion.json',dict(binding=identity,status='MECHANICAL_SMOKE_COMPLETE',physical=total,evidence=evidence,backend=backend,checkpoint_io=checkpoint_io))
++    except BaseException as exc:
++        write(out/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',physical=total,reason=str(exc),scope=failure_scope(exc)));raise
++
++
++def trajectory(job,state,reg,out,identity,backend,checkpoint_io):
++    import torch
++    from ..source_pilot import seed_all
++    from ..b3_runtime import process_audit
++    from .host import Host
++    p=claim(out,job['job_id']);h=None;written=0;started=time.monotonic();limits=caps()
++    try:
++        seed_all(science()['seed']);h=Host(job['arm'],state,'cuda:0');torch.cuda.reset_peak_memory_stats();process_audit(p,'run')
++        with (p/'records.jsonl').open('x') as log:
++            for entry in stream(reg,job['order']):
++                if time.monotonic()-started>limits['trajectory_seconds']:raise RuntimeError('trajectory cap')
++                record=current(h,entry)
++                row=dict(binding=identity,arm=job['arm'],order=job['order'],**{k:entry[k] for k in ('group_id','sample_id','domain','subset')},**record,peak_allocated_bytes=torch.cuda.max_memory_allocated())
++                log.write(json.dumps(row,allow_nan=False)+'\n');log.flush();written+=1
++                if written%64==0 and output_bytes(out)>limits['bytes']:raise RuntimeError('output cap')
++        h.finish(state)
++        if written!=job['records'] or time.monotonic()-started>limits['trajectory_seconds']:raise ValueError('trajectory count/time')
++        write(p/'completion.json',dict(binding=identity,status='TRAJECTORY_COMPLETE',records=written,physical=counters(h),backend=backend,checkpoint_io=checkpoint_io,seconds=time.monotonic()-started))
++    except BaseException as exc:
++        write(p/'failure.json',dict(binding=identity,status='INCOMPLETE',records=written,physical=None if h is None else counters(h),reason=str(exc),scope=failure_scope(exc)));raise
++    finally:del h;gc.collect()
++
++
++def context():
++    packet=json.loads(Path(os.environ['RUN_PACKET']).read_text());reg=packet['assets']['registration']
++    ids=authorize(packet['authorization'],reg);index=int(os.environ['RUN_WORKER'])
++    expected=dict(code_sha=packet['authorization']['approved_code_sha'],science_sha256=SCIENCE_SHA,registration_digest=registration_digest(reg),stream_digest=stream_summary(reg)['stream_digest'])
++    if any(packet['binding'].get(k)!=v for k,v in expected.items()):raise PermissionError('execution binding')
++    if [d['index'] for d in packet['devices']]!=ids or not 0<=index<len(ids):raise PermissionError('worker devices')
++    if os.environ.get('CUDA_VISIBLE_DEVICES')!=packet['devices'][index]['uuid']:raise PermissionError('worker UUID')
++    jobs=matrix()['jobs']
++    if packet['jobs']!=jobs or packet['schedule']!=allocation(jobs,len(ids)):raise PermissionError('complete frozen schedule')
++    return packet,reg,index,Path(packet['out'])
++
++
++def worker():
++    # Authorize before loading weights, querying a device or decoding an asset.
++    packet,reg,index,out=context();identity=binding(packet,index)
++    import torch
++    from ..source_pilot_release import environment
++    from ..b3_runtime import process_audit
++    torch.set_num_threads(2)
++    if os.environ['RUN_MODE']=='smoke':
++        p=claim(out,'device'+str(index))
++        try:
++            state,io=checkpoint(reg);backend=environment();process_audit(p,'smoke');smoke(state,'cuda:0',p,identity,backend,io)
++        except BaseException as exc:
++            if not (p/'smoke.failure.json').exists():write(p/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',reason=str(exc),scope=failure_scope(exc)))
++            raise
++    elif os.environ['RUN_MODE']=='formal':
++        job=next(j for j in packet['jobs'] if j['job_id']==os.environ['RUN_JOB'])
++        if next(a['worker'] for a in packet['schedule']['assignments'] if a['job_id']==job['job_id'])!=index:raise PermissionError('job rotation')
++        p=out/('device'+str(index));proof=json.loads((p/'smoke.completion.json').read_text());bound(proof,identity)
++        if proof['status']!='MECHANICAL_SMOKE_COMPLETE' or list(p.glob('*failure.json')):raise PermissionError('failed/missing smoke')
++        for key,value in dict(network_forwards=316,loss_backward_calls=38,adam_calls=38).items():
++            if proof['physical'][key]!=value:raise PermissionError('smoke counts')
++        if not 0<=proof['physical']['jacobian_vjp_calls']<=24:raise PermissionError('smoke VJP count')
++        state,io=checkpoint(reg);backend=environment();trajectory(job,state,reg,out,binding(packet,index,job),backend,io)
++    else:raise PermissionError('unknown worker mode')
++
++
++def launch(auth,assets,output):
++    reg=assets['registration'];ids=authorize(auth,reg)
++    for order in range(5):stream(reg,order)
++    if subprocess.check_output(['git','status','--porcelain'],cwd=ROOT,text=True).strip():raise PermissionError('clean reviewed checkout required')
++    for key,sha in (('ctta_dependency_root',REF),('grata_root',GRATA)):
++        if subprocess.check_output(['git','rev-parse','HEAD'],cwd=assets[key],text=True).strip()!=sha:raise ValueError('dependency commit')
++    rows=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid,name,memory.free','--format=csv,noheader'],text=True)
++    mapping={int(row[0]):dict(uuid=row[1].strip(),model=row[2].strip(),free_MiB=int(row[3].split()[0])) for row in [line.split(',') for line in rows.splitlines()]}
++    devices=[dict(index=i,**mapping[i]) for i in ids]
++    if any(d['free_MiB']<4096 for d in devices):raise RuntimeError('insufficient peak headroom; no waiting')
++    out=Path(output).resolve();root=Path(assets['private_storage_root']).resolve()
++    if out.is_relative_to(ROOT) or not out.is_relative_to(root):raise ValueError('new private output location')
++    fs=os.statvfs(out.parent)
++    if fs.f_bavail*fs.f_frsize<caps()['bytes']+1024**3:raise RuntimeError('storage capacity')
++    import tempfile
++    with tempfile.TemporaryFile(dir=out.parent) as probe:
++        probe.write(b'probe');probe.flush();os.fsync(probe.fileno());probe.seek(0)
++        if probe.read()!=b'probe':raise RuntimeError('storage probe')
++    out.mkdir(mode=0o700);jobs=matrix()['jobs']
++    identity=dict(run_id=uuid.uuid4().hex,code_sha=auth['approved_code_sha'],science_sha256=SCIENCE_SHA,registration_digest=registration_digest(reg),stream_digest=stream_summary(reg)['stream_digest'])
++    packet=dict(binding=identity,authorization=auth,assets=assets,out=str(out),devices=devices,jobs=jobs,schedule=allocation(jobs,len(devices)))
++    write(out/'packet.private.json',packet);write(out/'receipt.json',{k:packet[k] for k in ('binding','devices','jobs','schedule')})
++    from ..b3_runtime import ENTRY
++    from ..r1.supervise import supervise
++    def start(spec,log):
++        slot=spec['worker'];env=os.environ.copy();env.update(PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=os.pathsep.join([str(ROOT/'src'),assets.get('dependency_pythonpath','')]),
++            DPA_CTTA_BASE_ROOT=assets['ctta_dependency_root'],DPA_GRATA_ROOT=assets['grata_root'],CUDA_VISIBLE_DEVICES=devices[slot]['uuid'],
++            RUN_FILE=str(ROOT/'scripts/run_r3.py'),RUN_MODE=spec['phase'],RUN_WORKER=str(slot),RUN_JOB=spec['key'],RUN_PACKET=str(out/'packet.private.json'))
++        return subprocess.Popen([sys.executable,'-c',ENTRY],cwd=ROOT,env=env,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
++    supervise(out,packet,start,caps=caps())
++    from .analyze import recompute
++    return recompute(out,reg)
+diff --git a/src/dpa_ctta/r3/host.py b/src/dpa_ctta/r3/host.py
+new file mode 100644
+index 0000000..4e9b0c3
+--- /dev/null
++++ b/src/dpa_ctta/r3/host.py
+@@ -0,0 +1,165 @@
++"""Composition C engine. Algorithms receive only the current RGB tensor.
++
++C/RP delegate to unchanged R1. New families use the same pinned weak/strong
++operations, with explicit intervention points and independently counted VJPs.
++"""
++import copy,time
++import torch
++from torch.nn import functional as F
++from ..b1_host import configure,official,finite
++from ..source_pilot import SourceOnlyHost
++from ..hosts.vptta import model_input_from_pixels
++from ..host_diagnostic import rng,restore
++from ..r1.host import Host as LegacyHost,segmentation
++from ..r1.region_memory import grid
++from .stats import Memory
++from .kernels import unit
++from .teachers import density_target,graph_target
++from .displacement import flatten,probe_rows,transform
++from .contexts import Contexts
++from .transport import commit as transport_commit
++
++ARMS=('C','RP','T_LR','T_ISO','T_DIAG','U_PCA','U_RAND','U_SCALE','S_JOINT','S_SHARED','S_NOPCA','M_TRANSPORT','M_IDPOST','M_SHUFFLE','G_PCA','G_ISO','G_ORDER')
++
++
++class Host:
++    def __init__(self,arm,state=None,device='cpu',model=None):
++        if arm not in ARMS:raise ValueError('unknown R3 arm')
++        self.arm=arm;self.visit=0;self.failed=False;self.pending={};self.phase='IDLE';self.reference=None;self.contexts=None
++        self.legacy=LegacyHost('C' if arm=='C' else 'C_PCA_REGION',state,device,model) if arm in ('C','RP') else None
++        if self.legacy:
++            self.model=self.legacy.model;self.params=self.legacy.params;self.names=self.legacy.names;self.base=self.legacy.base
++            self.memory=self.legacy.memory;return
++        self.device=torch.device(device)
++        self.model=SourceOnlyHost('fundus',state,device).model if model is None else model.to(device)
++        saved=rng()
++        try:
++            if arm.startswith(('T_','S_')):
++                self.reference=copy.deepcopy(self.model).eval().requires_grad_(False)
++                if any(not m.track_running_stats or m.running_mean is None or m.running_var is None for m in self.reference.modules() if isinstance(m,torch.nn.BatchNorm2d)):
++                    raise ValueError('measurement clone requires original source BN buffers')
++        finally:restore(saved)
++        self.names,self.params=configure(self.model)
++        if not hasattr(self.model,'seg_head'):raise ValueError('32D segmentation head input required')
++        self.base=torch.optim.Adam(self.params,lr=1e-4,betas=(.9,.999),eps=1e-8,weight_decay=0)
++        self.memory=Memory();self.rng=rng()
++        self.frozen={n:(p,p._version) for n,p in self.model.named_parameters() if not p.requires_grad}
++        self.ref_versions={} if self.reference is None else {n:(v,v._version) for n,v in self.reference.state_dict(keep_vars=True).items()}
++        self.handles=[self.model.seg_head.register_forward_pre_hook(self._tap),self.model.register_forward_hook(self._count_forward),self.base.register_step_pre_hook(self._count_adam)]
++        if self.reference is not None:self.handles.extend([self.reference.seg_head.register_forward_pre_hook(self._ref_tap),self.reference.register_forward_hook(self._count_forward)])
++        if arm.startswith('S_'):self.contexts=Contexts(self.params,self.names,self.base,arm=='S_SHARED')
++        self.total=dict(network_forwards=0,loss_backward_calls=0,jacobian_vjp_calls=0,adam_calls=0,actual_parameter_replacements=0)
++
++    def _tap(self,module,args):
++        if self.phase in ('ORIGINAL','STRONG','PREDICT'):
++            value=grid(args[0])
++            if value.shape!=(1024,32):raise ValueError('seg_head input dimension')
++            self.pending[self.phase]=value
++
++    def _ref_tap(self,module,args):
++        raw=args[0];self.pending['REFERENCE']=grid(raw).detach().cpu()
++        if self.arm.startswith('S_'):
++            desc=torch.cat([raw.double().mean((0,2,3)),raw.double().std((0,2,3),unbiased=False)]).cpu()
++            self.pending['descriptor']=desc/desc.norm().clamp_min(1e-12)
++
++    def _count_forward(self,module,args,output):
++        self.total['network_forwards']+=1;finite(segmentation(output))
++
++    def _count_adam(self,opt,args,kwargs):self.total['adam_calls']+=1
++
++    def _count_vjp(self):self.total['jacobian_vjp_calls']+=1
++
++    def step(self,pixels):
++        if self.failed:raise RuntimeError('failed trajectory cannot be resumed')
++        if self.legacy:
++            z,trace=self.legacy.step(pixels);self.visit=self.legacy.visit
++            c=trace['counts'];trace['r3']=dict(arm=self.arm,global_visit=self.visit,counts=dict(network_forwards=c['forwards'],loss_backward_calls=c['backwards'],jacobian_vjp_calls=0,adam_calls=c['base_adam'],actual_parameter_replacements=0))
++            return z,trace
++        x=model_input_from_pixels(pixels,'fundus')
++        return self.normalized_step(x)
++
++    def normalized_step(self,x):
++        if self.legacy:raise ValueError('baseline uses original public step')
++        if self.failed:raise RuntimeError('failed trajectory cannot be resumed')
++        if not isinstance(x,torch.Tensor) or x.device.type!='cpu' or x.dtype!=torch.float32 or x.shape!=(1,3,512,512) or x.requires_grad:
++            raise ValueError('one detached current normalized RGB')
++        finite(x);restore(self.rng);self.visit+=1;before_counts=self.total.copy();started=time.monotonic()
++        trace=dict(arm=self.arm,global_visit=self.visit);route=None
++        try:
++            data={'data':x.numpy().copy()};original=x.to(self.device).clone()
++            if self.reference is not None:
++                saved=rng()
++                with torch.no_grad():self.reference(original)
++                restore(saved)
++                if self.contexts:
++                    self.memory,route=self.contexts.load(self.pending['descriptor'])
++                    self.total['actual_parameter_replacements']+=route['actual_parameter_replacements']
++            snapshots=self.memory.snapshots(self.visit);densities=self.memory.density_snapshots(self.visit)
++            trace['basis_versions_used']=[None if s is None else s[2] for s in snapshots]
++            trace['density_versions_used']=[None if s is None else s[2] for s in densities]
++            self.phase='ORIGINAL'
++            with torch.set_grad_enabled(self.arm.startswith('U_')):logits=segmentation(self.model(original))
++            predictions=[logits.detach().cpu()];del logits
++            self.phase='WEAK';weak=official().Rotate_and_Flip()
++            for factor in range(5):
++                with torch.no_grad():z=segmentation(self.model(weak(original,factor)));predictions.append(weak.inverse(z,factor).detach().cpu())
++            views=torch.stack([grid(z).sigmoid() for z in predictions])
++            q=torch.stack(predictions).sigmoid().mean(0).to(self.device);del predictions,z
++            pre=self.pending['ORIGINAL'];memory_raw=self.pending['REFERENCE'] if self.arm.startswith('T_') else pre
++            selected,ids,vectors,audit=self.memory.select(memory_raw,grid(q),views,self.visit)
++            del memory_raw
++            trace['memory_input']=audit;target=q
++            if self.arm.startswith('T_'):target,trace['teacher']=density_target(q,self.pending['REFERENCE'],densities,self.arm[2:])
++            if self.arm.startswith('G_'):target,trace['graph']=graph_target(q,pre,views,densities,self.arm[2:])
++            rows=None;definitions=[];probes=[]
++            if self.arm.startswith('U_'):
++                t=time.monotonic();rows,definitions,probes=probe_rows(pre,selected,snapshots,self.params,self.arm=='U_RAND',self._count_vjp)
++                trace['jacobian_seconds']=time.monotonic()-t
++                # Drop all original autograd references before strong loss backward.
++                pre=pre.detach();self.pending['ORIGINAL']=pre
++            self.base.zero_grad();self.phase='STRONG'
++            aug=official().augmentation_strong_style(data)
++            aug=official().normalize_image_to_0_1(torch.from_numpy(aug).float().to(self.device))
++            strong=segmentation(self.model(aug));loss=F.binary_cross_entropy_with_logits(strong,target.detach())
++            base_loss=float(loss.detach());extra=loss.new_zeros(())
++            if self.arm.startswith('M_') or self.arm in ('S_JOINT','S_SHARED'):
++                extra=self.memory.loss(self.pending['STRONG'],ids,snapshots);loss=loss+.05*extra
++            finite(loss);before=flatten(self.params);self.total['loss_backward_calls']+=1;loss.backward()
++            if any(p.grad is None for p in self.params):raise ValueError('unused BN in C loss')
++            finite([p.grad for p in self.params]);self.base.step()
++            if rows is not None:
++                trace['update']=transform(before,self.params,rows,self.arm[2:])
++                self.total['actual_parameter_replacements']+=trace['update']['actual_parameter_replacements']
++            self.phase='PREDICT'
++            with torch.no_grad():result=segmentation(self.model(original)).detach()
++            post=self.pending['PREDICT'].detach()
++            if definitions:
++                postv=unit(post);values=[float(postv[i.to(post.device)].mean(0)@u) for i,u in definitions]
++                trace['update']['actual_post_probe_difference_l2']=float(torch.tensor(values,dtype=torch.float64).sub(torch.tensor(probes)).norm())
++            self.phase='COMMIT'
++            if self.arm.startswith('M_'):trace['transport']=transport_commit(self.memory,pre,post,selected,self.visit,self.arm[2:])
++            else:self.memory.merge(vectors,self.visit)
++            if self.contexts:
++                self.contexts.commit(self.pending['descriptor'],route);trace['context']=route
++            elif any(int(self.base.state[p]['step'])!=self.visit for p in self.params):raise ValueError('global Adam step drift')
++            finite(self.params);finite(self.base.state)
++            if any(p._version!=version or p.grad is not None for p,version in self.frozen.values()):raise ValueError('frozen source parameter changed')
++            if any(p._version!=version or p.requires_grad for p,version in self.ref_versions.values()):raise ValueError('measurement clone changed')
++            self.rng=rng()
++            counts={k:v-before_counts[k] for k,v in self.total.items()}
++            if counts['network_forwards']!=(9 if self.reference is not None else 8) or counts['loss_backward_calls']!=1 or counts['adam_calls']!=1 or counts['jacobian_vjp_calls']>8:
++                raise ValueError('R3 physical count mismatch')
++            trace.update(counts=counts,base_loss=base_loss,extra_loss=float(extra.detach()),banks=self.memory.audit(),
++                optimizer_update_l2=float((flatten(self.params)-before).double().norm()),
++                final_raw_probability_nested_violations=int((result[:,1].sigmoid()>result[:,0].sigmoid()).sum()),host_seconds=time.monotonic()-started)
++            finite(trace)
++            return result,dict(r3=trace)
++        except BaseException:
++            self.failed=True;raise
++        finally:self.pending.clear();self.phase='IDLE'
++
++    def finish(self,state):
++        if self.legacy:return self.legacy.finish(state)
++        for name,value in self.model.state_dict().items():
++            if name not in self.names and not torch.equal(value.cpu(),state[name]):raise ValueError('frozen source state changed')
++        for handle in self.handles:handle.remove()
+diff --git a/src/dpa_ctta/r3/kernels.py b/src/dpa_ctta/r3/kernels.py
+new file mode 100644
+index 0000000..22dd4da
+--- /dev/null
++++ b/src/dpa_ctta/r3/kernels.py
+@@ -0,0 +1,350 @@
++"""R3 reference kernels. Pure CPU/tensor specifications, NOT repository hosts.
++
++These are proposed checkpoint-only segmentation designs, not reproductions of
++BayesTTA, KeepLoRA, LCA, MoIE or SPEGC. No data loading / network / CUDA code.
++"""
++from __future__ import annotations
++from dataclasses import dataclass
++from typing import Mapping, Sequence
++import torch
++
++
++def checked(x: torch.Tensor, ndim: int | None = None) -> torch.Tensor:
++    if not isinstance(x, torch.Tensor) or not x.is_floating_point():
++        raise TypeError("floating Tensor required")
++    if ndim is not None and x.ndim != ndim:
++        raise ValueError("tensor rank mismatch")
++    if not torch.isfinite(x).all():
++        raise ValueError("non-finite input")
++    return x
++
++
++def unit(x: torch.Tensor, eps: float = 1e-6) -> torch.Tensor:
++    checked(x, 2)
++    return x / x.norm(dim=-1, keepdim=True).clamp_min(eps)
++
++
++@torch.no_grad()
++def shrink_covariance(cov: torch.Tensor, beta: float = .1,
++                      floor: float = 1e-4) -> torch.Tensor:
++    checked(cov, 2)
++    if cov.shape[0] != cov.shape[1] or not 0 <= beta <= 1 or floor <= 0:
++        raise ValueError("covariance / regularization")
++    cov = (cov.double() + cov.double().T) / 2
++    vals, vecs = torch.linalg.eigh(cov)
++    scale = max(1., float(cov.norm()))
++    if float(vals.min()) < -1e-8 * scale:
++        raise ValueError("covariance is not PSD within round-off tolerance")
++    vals = vals.clamp_min(0)
++    tau = vals.mean().clamp_min(floor)
++    vals = ((1-beta)*vals + beta*tau).clamp_min(floor)
++    return (vecs * vals.unsqueeze(0)) @ vecs.T
++
++
++@torch.no_grad()
++def density_pair(cov0: torch.Tensor, cov1: torch.Tensor, mode: str,
++                 rank: int = 8) -> tuple[torch.Tensor, torch.Tensor]:
++    """LR / DIAG / shared-isotropic prototype control, after common shrinkage."""
++    c0, c1 = shrink_covariance(cov0), shrink_covariance(cov1)
++    d = c0.shape[0]
++    if c0.shape != c1.shape or not 0 < rank < d:
++        raise ValueError("shape / rank")
++    if mode == "ISO":
++        tau = (c0.trace()+c1.trace())/(2*d)
++        c = tau * torch.eye(d, dtype=c0.dtype, device=c0.device)
++        return c, c.clone()
++    if mode == "DIAG":
++        return torch.diag(c0.diag()), torch.diag(c1.diag())
++    if mode != "LR":
++        raise ValueError("density mode")
++    out = []
++    for c in (c0, c1):
++        vals, vecs = torch.linalg.eigh(c)
++        residual = vals[:-rank].mean()
++        vals = torch.cat([residual.expand(d-rank), vals[-rank:]])
++        out.append((vecs * vals.unsqueeze(0)) @ vecs.T)
++    return out[0], out[1]
++
++
++@torch.no_grad()
++def log_density(x: torch.Tensor, mean: torch.Tensor,
++                cov: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor]:
++    checked(x, 2); checked(mean, 1); checked(cov, 2)
++    d = x.shape[1]
++    if mean.shape != (d,) or cov.shape != (d, d):
++        raise ValueError("density dimensions")
++    c = cov.to(device=x.device, dtype=torch.float64)
++    l = torch.linalg.cholesky(c)
++    diff = x.double()-mean.to(device=x.device, dtype=torch.float64)
++    solved = torch.cholesky_solve(diff.T, l).T
++    maha = (diff*solved).sum(-1).clamp_min(0)
++    logdet = 2*torch.log(l.diag()).sum()
++    # The shared -d/2 log(2*pi) constant cancels in the binary evidence ratio.
++    return -.5*(maha+logdet), maha/d
++
++
++@torch.no_grad()
++def teacher_delta(x: torch.Tensor, means: Sequence[torch.Tensor],
++                  covs: Sequence[torch.Tensor], *, ready: bool,
++                  alpha: float = .5, per_dim_clip: float = 4.,
++                  inlier_maha_per_dim: float = 4.) -> torch.Tensor:
++    """Returns a LOW-RES log-odds correction, not a posterior guarantee.
++
++    Caller upsamples this correction, NOT q, and preserves q exactly at zero
++    correction. The caller rejects zero feature vectors before correction.
++    """
++    checked(x, 2)
++    if not ready:
++        return x.new_zeros(x.shape[0])
++    if len(means) != 2 or len(covs) != 2:
++        raise ValueError("two binary density models required")
++    l0, m0 = log_density(x, means[0], covs[0])
++    l1, m1 = log_density(x, means[1], covs[1])
++    supported = torch.minimum(m0, m1) <= inlier_maha_per_dim
++    supported &= x.norm(dim=-1) > 0
++    delta = alpha*((l1-l0)/x.shape[1]).clamp(-per_dim_clip, per_dim_clip)
++    return torch.where(supported, delta, 0).to(x.dtype)
++
++
++@torch.no_grad()
++def procrustes_step(x: torch.Tensor, y: torch.Tensor, weight: torch.Tensor,
++                    tau: float = .01) -> torch.Tensor:
++    """Column convention: y ~= Q x. x/y are rows. No centering/translation.
++
++    Optimizes sum(normalized_weight * ||y-Qx||^2)+tau*||Q-I||_F^2.
++    tau=0 is exposed for reference tests; production freezes tau=.01.
++    """
++    checked(x, 2); checked(y, 2); checked(weight, 1)
++    if x.shape != y.shape or weight.shape != (len(x),) or tau < 0:
++        raise ValueError("alignment dimensions")
++    d = x.shape[1]
++    eye = torch.eye(d, dtype=torch.float64, device=x.device)
++    if len(x) == 0:
++        return eye
++    if (weight < 0).any() or float(weight.sum()) <= 0:
++        raise ValueError("positive total weight required")
++    w = weight.double()/weight.double().sum()
++    cross = y.double().T @ (w[:, None]*x.double()) + tau*eye
++    left, _, right_t = torch.linalg.svd(cross, full_matrices=False)
++    return left @ right_t
++
++
++@torch.no_grad()
++def transport_state(mean: torch.Tensor, m2: torch.Tensor,
++                    basis: torch.Tensor | None, Q: torch.Tensor):
++    checked(mean, 1); checked(m2, 2); checked(Q, 2)
++    # Caller also transports any cached snapshot mean, not only live mean/M2.
++    mean2 = Q @ mean.double()
++    m22 = Q @ m2.double() @ Q.T
++    basis2 = None if basis is None else Q @ basis.double()
++    return mean2, (m22+m22.T)/2, basis2
++
++
++@torch.no_grad()
++def constrain_displacement(delta: torch.Tensor, rows: torch.Tensor,
++                           strength: float = 1.) -> tuple[torch.Tensor, dict]:
++    """Proximal actual-step transform with normalized feature-Jacobian rows.
++
++    argmin_d .5||d-delta||^2 + strength/2 ||A d||^2.
++    This function does not estimate A, update Adam or claim global retention.
++    """
++    checked(delta, 1); checked(rows, 2)
++    if rows.shape[1] != delta.numel() or strength < 0:
++        raise ValueError("step dimensions / strength")
++    rows = rows.to(device=delta.device, dtype=torch.float64)
++    base = delta.double()
++    norms = rows.norm(dim=1)
++    A = rows[norms > 1e-12] / norms[norms > 1e-12, None]
++    if not len(A) or strength == 0:
++        return delta.clone(), {"rows": len(A), "base_norm": float(base.norm()),
++                               "new_norm": float(base.norm()), "ratio": 1.}
++    system = torch.eye(len(A), dtype=A.dtype, device=A.device) + strength*(A @ A.T)
++    new = base - strength*A.T @ torch.linalg.solve(system, A @ base)
++    ratio = float(new.norm()/base.norm()) if float(base.norm()) > 0 else 1.
++    return new.to(delta.dtype), {
++        "rows": len(A), "base_norm": float(base.norm()), "new_norm": float(new.norm()),
++        "ratio": ratio, "probe_before": float((A@base).norm()),
++        "probe_after": float((A@new).norm())}
++
++
++@torch.no_grad()
++def norm_matched_displacement(base: torch.Tensor, protected: torch.Tensor) -> torch.Tensor:
++    checked(base, 1); checked(protected, 1)
++    if base.shape != protected.shape:
++        raise ValueError("shape")
++    n = base.double().norm()
++    if float(n) == 0:
++        return base.clone()
++    factor = (protected.double().norm()/n).clamp(0, 1)
++    return base*factor.to(base.dtype)
++
++
++def grid_edges(h: int = 32, w: int = 32, device="cpu") -> torch.Tensor:
++    if h < 1 or w < 1:
++        raise ValueError("grid size")
++    ids = torch.arange(h*w, device=device).reshape(h, w)
++    horizontal = torch.stack([ids[:, :-1].reshape(-1), ids[:, 1:].reshape(-1)], 1)
++    vertical = torch.stack([ids[:-1, :].reshape(-1), ids[1:, :].reshape(-1)], 1)
++    return torch.cat([horizontal, vertical])
++
++
++@torch.no_grad()
++def region_precision(cov: torch.Tensor) -> torch.Tensor:
++    """LR8 covariance followed by trace-normalized precision, for graph metric."""
++    c = shrink_covariance(cov)
++    d = c.shape[0]; k = min(8, d-1)
++    vals, vecs = torch.linalg.eigh(c)
++    vals = torch.cat([vals[:-k].mean().expand(d-k), vals[-k:]])
++    inverse = (vecs * vals.reciprocal().unsqueeze(0)) @ vecs.T
++    return inverse/(inverse.trace()/d)
++
++
++@torch.no_grad()
++def graph_weights(z: torch.Tensor, q: torch.Tensor, edges: torch.Tensor,
++                  precisions: Sequence[torch.Tensor] | None,
++                  temperature: float = .1) -> torch.Tensor:
++    checked(z, 2); checked(q, 2)
++    if q.shape != (len(z), 2) or temperature <= 0:
++        raise ValueError("graph shape/temperature")
++    u, v = edges[:, 0], edges[:, 1]
++    diff = z.double()[u]-z.double()[v]
++    if precisions is None:
++        dist = diff.square().sum(-1)
++    else:
++        if len(precisions) != 4:
++            raise ValueError("four regional metrics")
++        membership = torch.stack([1-q[:, 0], q[:, 0], 1-q[:, 1], q[:, 1]], 1).double()/2
++        mixture = (membership[u]+membership[v])/2
++        dist = torch.zeros(len(edges), dtype=torch.float64, device=z.device)
++        for r, precision in enumerate(precisions):
++            metric = precision.to(device=z.device, dtype=torch.float64)
++            dist += mixture[:, r]*((diff @ metric)*diff).sum(-1)
++    return torch.exp(-dist.clamp_min(0)/temperature).to(q.dtype)
++
++
++@torch.no_grad()
++def nested_bernoulli_projection(q: torch.Tensor, weight: torch.Tensor | None = None,
++                                eps: float = 1e-5) -> torch.Tensor:
++    """Forward-KL projection onto q_OC <= q_OD, independent Bernoulli channels.
++
++    Solves sum_c weight_c KL(Ber(p_c)||Ber(q_c)). Not a softmax operation.
++    """
++    checked(q, 2)
++    if q.shape[1] != 2 or not 0 < eps < .5:
++        raise ValueError("OD/OC shape/epsilon")
++    if weight is None:
++        weight = torch.ones_like(q)
++    checked(weight, 2)
++    if weight.shape != q.shape or (weight <= 0).any():
++        raise ValueError("positive matching weights required")
++    safe = q.clamp(eps, 1-eps)
++    logits = torch.logit(safe)
++    pooled = torch.sigmoid((weight*logits).sum(-1)/weight.sum(-1))
++    violation = safe[:, 1] > safe[:, 0]
++    return torch.where(violation[:, None], pooled[:, None].expand_as(safe), safe)
++
++
++def graph_energy(Q, q, weights_unary, edges, weights_edges, lam=.25, eps=1e-5):
++    Q=Q.clamp(eps, 1-eps); q=q.clamp(eps, 1-eps)
++    kl=Q*torch.log(Q/q)+(1-Q)*torch.log((1-Q)/(1-q))
++    dist=(Q[edges[:, 0]]-Q[edges[:, 1]]).square().sum(-1)
++    return (weights_unary*kl).sum()+lam*(weights_edges*dist).sum()
++
++
++@torch.no_grad()
++def graph_refine(q: torch.Tensor, reliable: torch.Tensor, edges: torch.Tensor,
++                 weights: torch.Tensor, *, steps: int = 32, eta: float = .25,
++                 lam: float = .25, eps: float = 1e-5) -> torch.Tensor:
++    """Fixed-count mirror/proximal iterations. No learned graph, no backward.
++
++    Minimize sum a KL(Q||q)+lam sum_(undirected edges) w||Q_u-Q_v||^2
++    subject to 0<=OC<=OD<=1. Fixed 32 steps is NOT a convergence claim.
++    """
++    checked(q, 2); checked(weights, 1)
++    if reliable.shape != q.shape or reliable.dtype != torch.bool:
++        raise ValueError("reliability shape/type")
++    if weights.shape != (len(edges),) or (weights < 0).any() or (weights > 1+1e-6).any():
++        raise ValueError("bounded edge weights")
++    if steps < 0 or eta <= 0 or lam < 0:
++        raise ValueError("solver parameter")
++    q=q.clamp(eps, 1-eps)
++    a=1+9*reliable.to(q.dtype)
++    Q=nested_bernoulli_projection(q, a, eps)
++    u, v=edges[:, 0], edges[:, 1]
++    for _ in range(steps):
++        messages=2*lam*weights[:, None]*(Q[u]-Q[v])
++        g=torch.zeros_like(Q)
++        g.index_add_(0, u, messages);g.index_add_(0, v, -messages)
++        unary=1+eta*a
++        candidate=torch.sigmoid((torch.logit(Q.clamp(eps,1-eps))+eta*a*torch.logit(q)-eta*g)/unary)
++        Q=nested_bernoulli_projection(candidate, unary, eps)
++    return Q
++
++
++@dataclass
++class RouteEntry:
++    descriptor_sum: torch.Tensor
++    count: int = 0
++    distance_mean: float = 0.
++    distance_m2: float = 0.
++    @property
++    def centre(self):
++        return self.descriptor_sum/self.descriptor_sum.norm().clamp_min(1e-12)
++
++
++class DescriptorRouter:
++    """Bounded online context cache. No real domain ID, no replay, no evictions.
++
++    choose is read-only; newly created slots are pending until commit after output.
++    The adaptation host separately stores BN/Adam and regional memories per slot.
++    """
++    def __init__(self, capacity: int = 3, min_observations: int = 16):
++        if capacity < 1 or min_observations < 2:
++            raise ValueError("router configuration")
++        self.capacity=capacity;self.min_observations=min_observations
++        self.entries: list[RouteEntry]=[]
++    @torch.no_grad()
++    def choose(self, descriptor: torch.Tensor) -> tuple[int, bool, float]:
++        checked(descriptor, 1)
++        if not self.entries:
++            return 0, True, 0.
++        d=descriptor.double()/descriptor.double().norm().clamp_min(1e-12)
++        distances=torch.stack([(d-e.centre).square().sum() for e in self.entries])
++        j=int(distances.argmin());distance=float(distances[j]);e=self.entries[j]
++        std=(e.distance_m2/max(e.count-1,1))**.5
++        threshold=max(1e-6,e.distance_mean+3*std)
++        new=(len(self.entries)<self.capacity and e.count>=self.min_observations and distance>threshold)
++        return (len(self.entries), True, distance) if new else (j, False, distance)
++    @torch.no_grad()
++    def commit(self, descriptor: torch.Tensor, index: int, created: bool, distance: float):
++        checked(descriptor, 1)
++        d=descriptor.double()/descriptor.double().norm().clamp_min(1e-12)
++        if created:
++            if index != len(self.entries) or index>=self.capacity:
++                raise ValueError("creation order/capacity")
++            self.entries.append(RouteEntry(d.clone(), 1, 0., 0.))
++            return
++        if index not in range(len(self.entries)) or not torch.isfinite(torch.tensor(distance)):
++            raise ValueError("route commit")
++        e=self.entries[index];e.count+=1;e.descriptor_sum+=d
++        delta=distance-e.distance_mean;e.distance_mean+=delta/e.count
++        e.distance_m2+=delta*(distance-e.distance_mean)
++
++
++def recurring_stream(domain_items: Mapping[str, Sequence[str]], base_order: Sequence[str],
++                     chunk: int = 64) -> list[str]:
++    """Metadata-only, unique-content recurrence; never repeats a content ID."""
++    if set(domain_items) != set(base_order) or len(base_order)!=len(set(base_order)) or chunk<=0:
++        raise ValueError("domain mapping/order")
++    all_items=[x for k in base_order for x in domain_items[k]]
++    if len(all_items)!=len(set(all_items)):
++        raise ValueError("duplicate content identities")
++    positions={k:0 for k in base_order};result=[];r=0
++    while any(positions[k]<len(domain_items[k]) for k in base_order):
++        shift=r%len(base_order)
++        order=list(base_order[shift:])+list(base_order[:shift])
++        for k in order:
++            lo=positions[k];hi=min(lo+chunk,len(domain_items[k]))
++            result.extend(domain_items[k][lo:hi]);positions[k]=hi
++        r+=1
++    return result
+diff --git a/src/dpa_ctta/r3/plan.py b/src/dpa_ctta/r3/plan.py
+new file mode 100644
+index 0000000..df55d3a
+--- /dev/null
++++ b/src/dpa_ctta/r3/plan.py
+@@ -0,0 +1,92 @@
++"""Frozen science and metadata-only 85-trajectory plan; no asset decoding."""
++import csv,hashlib,json
++from collections import Counter
++from pathlib import Path
++from ..r1.plan import ROOT,digest,registration_digest,stream as primary_stream
++from .kernels import recurring_stream
++
++BASE='f52f132e4be576ea871467432a6f4b12337209a5'
++SCIENCE=ROOT/'configs/r3_science_v1.json'
++SCIENCE_SHA='73879c29a33897beb9a79e6498258998abd8c0a964f8befc72b4ac1cdbd9c06e'
++
++
++def science():
++    if digest(SCIENCE)!=SCIENCE_SHA:raise ValueError('frozen science bytes changed')
++    return json.loads(SCIENCE.read_text())
++
++
++def stream(reg,index):
++    if type(index) is not int or index not in range(5):raise ValueError('stream index')
++    if registration_digest(reg)!=science()['registration_digest']:raise ValueError('registered metadata binding')
++    original=primary_stream(reg,0)
++    if index<4:return primary_stream(reg,index)
++    base=science()['secondary_stream']['base_order']
++    mapping={d:[r['group_id'] for r in original if r['domain']==d] for d in base}
++    sequence=recurring_stream(mapping,base,64);lookup={r['group_id']:r for r in original}
++    return [lookup[i] for i in sequence]
++
++
++def stream_summary(reg):
++    cfg=science();rs=stream(reg,4);base=stream(reg,0)
++    if len(rs)!=1951 or len({r['group_id'] for r in rs})!=1951:raise ValueError('coverage')
++    for d in cfg['orders'][0]:
++        if [r['group_id'] for r in rs if r['domain']==d]!=[r['group_id'] for r in base if r['domain']==d]:raise ValueError('within-domain order changed')
++    payload=dict(schema='R3_STREAM_V1',registration_digest=registration_digest(reg),stream_id=4,
++        rule=cfg['secondary_stream'],sequence=[r['group_id'] for r in rs])
++    sha=hashlib.sha256(json.dumps(payload,sort_keys=True,separators=(',',':')).encode()).hexdigest()
++    blocks=[]
++    for r in rs:
++        if not blocks or blocks[-1]['domain']!=r['domain']:blocks.append(dict(domain=r['domain'],first_visit=sum(b['count'] for b in blocks)+1,count=0))
++        blocks[-1]['count']+=1
++    chunks=[];positions={d:0 for d in cfg['orders'][0]};round_index=0;cursor=1
++    while any(positions[d]<sum(r['domain']==d for r in base) for d in positions):
++        order=cfg['orders'][0];shift=round_index%4
++        for d in order[shift:]+order[:shift]:
++            count=min(64,sum(r['domain']==d for r in base)-positions[d])
++            if count:
++                chunks.append(dict(round=round_index,domain=d,within_domain_start=positions[d],first_visit=cursor,count=count))
++                positions[d]+=count;cursor+=count
++        round_index+=1
++    if cursor!=1952:raise ValueError('chunk coverage')
++    return dict(status='METADATA_VERIFIED_NO_PIXELS',registration_digest=registration_digest(reg),stream_digest=sha,
++        digest_encoding='SHA256 canonical JSON: schema, registration_digest, stream_id, frozen rule, private ordered group_id sequence',
++        records=len(rs),unique_contents=1951,duplicates=0,within_domain_order_unchanged=True,base_registration_unchanged=True,
++        domain_counts=dict(Counter(r['domain'] for r in rs)),subset_counts=dict(Counter(r['subset'] for r in rs)),
++        chunk_schedule=chunks,contiguous_domain_segments=blocks,primary_streams_unchanged=True,raw_image_replay=False)
++
++
++def allocation(jobs,workers):
++    if type(workers) is not int or workers not in (1,2,3):raise ValueError('worker slots')
++    arms=[a['name'] for a in science()['arms']]
++    rows=[dict(job_id=j['job_id'],worker=(arms.index(j['arm'])+j['order'])%workers) for j in jobs]
++    return dict(rule='(arm_index + stream_id) % workers',assignments=rows,
++        loads=[dict(worker=w,jobs=sum(r['worker']==w for r in rows),network_forwards=sum(j['network_forwards'] for j,r in zip(jobs,rows) if r['worker']==w)) for w in range(workers)])
++
++
++def matrix(reg=None):
++    c=science();jobs=[]
++    for s in range(5):
++        for i,a in enumerate(c['arms']):
++            jobs.append(dict(job_id=f'o{s}a{i}',arm=a['name'],order=s,stream=s,endpoint='primary' if s<4 else 'secondary',
++                records=c['groups'],network_forwards=c['groups']*a['forwards_per_visit'],
++                loss_backward_calls=c['groups'],adam_calls=c['groups'],jacobian_vjp_upper=c['groups']*a['jacobian_vjp_per_visit_upper'],
++                actual_parameter_replacements_upper=c['groups'] if a['name'].startswith(('U_','S_')) else 0,
++                worker_slot_1=0,worker_slot_2=(i+s)%2,worker_slot_3=(i+s)%3,status='NOT_RUN',gpu=None))
++    budget=c['formal_budget']
++    for key,b in [('records','scoring_records'),('network_forwards','network_forwards'),('loss_backward_calls','loss_backward_calls'),('adam_calls','adam_calls'),('jacobian_vjp_upper','jacobian_vjp_upper')]:
++        if sum(j[key] for j in jobs)!=budget[b]:raise ValueError('budget contradiction')
++    if len(jobs)!=85 or len({j['job_id'] for j in jobs})!=85:raise ValueError('matrix coverage')
++    return dict(status='DRY_RUN_ONLY',base_commit=BASE,science_sha256=SCIENCE_SHA,jobs=jobs,formal_budget=budget,
++        per_gpu_smoke=c['per_gpu_smoke'],rotation_examples={str(w):allocation(jobs,w) for w in (1,2,3)},
++        GPU_requests_issued=0,background_tasks_started=0,real_target_reads=0,
++        secondary_stream=stream_summary(reg) if reg is not None else dict(status='REGISTRATION_METADATA_REQUIRED'))
++
++
++def write_plan(destination,reg):
++    p=Path(destination);p.mkdir(parents=True,exist_ok=True);m=matrix(reg)
++    for name,value in [('DRY_RUN_MATRIX.json',m),('STREAM_SUMMARY.json',m['secondary_stream'])]:
++        (p/name).write_text(json.dumps(value,indent=2)+'\n')
++    rows=m['jobs']
++    with (p/'DRY_RUN_MATRIX.csv').open('w',newline='') as f:
++        writer=csv.DictWriter(f,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
++    return m
+diff --git a/src/dpa_ctta/r3/run.py b/src/dpa_ctta/r3/run.py
+new file mode 100644
+index 0000000..aa43fc7
+--- /dev/null
++++ b/src/dpa_ctta/r3/run.py
+@@ -0,0 +1,28 @@
++"""Metadata by default; future compute requires explicit exact-commit authorization."""
++import argparse,json,os
++from pathlib import Path
++from .plan import ROOT,matrix,write_plan
++
++
++def main():
++    os.umask(0o077)
++    if os.environ.get('RUN_MODE'):
++        from .execution import worker
++        return worker()
++    p=argparse.ArgumentParser();p.add_argument('--run',action='store_true');p.add_argument('--recompute',action='store_true')
++    p.add_argument('--registration');p.add_argument('--out');p.add_argument('--assets')
++    p.add_argument('--authorization',default=str(ROOT/'configs/r3_execution.defaults.json'))
++    args=p.parse_args()
++    if args.run:
++        auth=json.loads(Path(args.authorization).read_text())
++        if auth.get('enabled') is not True:raise PermissionError('execution disabled; exact-commit external review and fresh user authorization required')
++        if args.recompute or not args.assets or not args.out:raise ValueError('explicit assets and output required')
++        from .execution import launch
++        return launch(auth,json.loads(Path(args.assets).read_text()),args.out)
++    if args.recompute:
++        if not args.registration or not args.out:raise ValueError('explicit registration and output required')
++        from .analyze import recompute
++        return recompute(args.out,json.loads(Path(args.registration).read_text()))
++    if bool(args.registration)!=bool(args.out):raise ValueError('registration and output must be supplied together')
++    result=write_plan(args.out,json.loads(Path(args.registration).read_text())) if args.registration else matrix()
++    print(json.dumps(dict(status=result['status'],jobs=len(result['jobs']),science_sha256=result['science_sha256'],GPU_requests_issued=0)))
+diff --git a/src/dpa_ctta/r3/stats.py b/src/dpa_ctta/r3/stats.py
+new file mode 100644
+index 0000000..cb46148
+--- /dev/null
++++ b/src/dpa_ctta/r3/stats.py
+@@ -0,0 +1,58 @@
++"""R1-compatible sampling plus bounded covariance snapshots; no retained tokens."""
++import torch
++from ..r1.region_memory import Memory as RegionalMemory, tokens
++from ..r1.recovery import local_seed
++from .kernels import unit, transport_state
++
++
++class Memory(RegionalMemory):
++    def __init__(self):
++        super().__init__('REGION')
++        self.covariances = [None]*4
++        self.frame_version = 0
++
++    def select(self, raw, q, views, visit):
++        vectors, regions, audit = self.prepare(raw, q, views, visit)
++        _, reliable = tokens(q, views)
++        selected = []
++        norms = raw.detach().cpu().norm(dim=1)
++        for r, ids in enumerate(regions):
++            ids = ids[reliable[ids]]
++            g = torch.Generator().manual_seed(local_seed('sample_'+str(r), visit))
++            if len(ids)>32: ids = ids[torch.randperm(len(ids), generator=g)[:32]]
++            selected.append(ids[norms[ids%1024]>0]%1024)
++        if [len(i) for i in selected] != audit['selected_region_counts']:
++            raise ValueError('selection quota drift')
++        return selected, regions, vectors, audit
++
++    def merge(self, vectors, visit):
++        versions = [b.version for b in self.banks]
++        super().merge(vectors, visit)
++        for i, b in enumerate(self.banks):
++            if b.version != versions[i]:
++                self.covariances[i] = (b.mean.clone(), ((b.M2+b.M2.T)/2)/(b.n-1), b.version)
++
++    def density_snapshots(self, visit):
++        if any(s is not None and s[2]>=visit for s in self.covariances):
++            raise ValueError('current image in density state')
++        return [None if s is None else (s[0].clone(),s[1].clone(),s[2]) for s in self.covariances]
++
++    @torch.no_grad()
++    def transport(self, rotation, visit):
++        if visit<=self.frame_version: raise ValueError('frame must advance')
++        for i,b in enumerate(self.banks):
++            b.mean,b.M2,b.U = transport_state(b.mean,b.M2,b.U,rotation)
++            if b.center is not None: b.center = rotation@b.center
++            s = self.covariances[i]
++            if s is not None: self.covariances[i]=(rotation@s[0], rotation@s[1]@rotation.T, s[2])
++        self.frame_version=visit
++
++    def audit(self):
++        out=super().audit()
++        for b,s in zip(out,self.covariances):
++            b['frame_version']=self.frame_version
++            b['basis_stat_version']=b['version']
++            b['density_stat_version']=None if s is None else s[2]
++            b['state_bytes']+=0 if s is None else sum(x.numel()*x.element_size() for x in s[:2])
++        if sum(b['state_bytes'] for b in out)>=1024**2:raise ValueError('bounded regional memory')
++        return out
+diff --git a/src/dpa_ctta/r3/teachers.py b/src/dpa_ctta/r3/teachers.py
+new file mode 100644
+index 0000000..37915dc
+--- /dev/null
++++ b/src/dpa_ctta/r3/teachers.py
+@@ -0,0 +1,61 @@
++"""T and G teachers; detached CPU geometry, full-resolution log-odds corrections."""
++import time
++import torch
++from torch.nn import functional as F
++from ..r1.region_memory import grid,tokens
++from .kernels import (unit,density_pair,log_density,region_precision,grid_edges,
++                      graph_weights,graph_refine,graph_energy,nested_bernoulli_projection)
++
++
++def up(values, size):
++    return F.interpolate(values.T.reshape(1,2,32,32),size=size,mode='bilinear',align_corners=False)
++
++
++@torch.no_grad()
++def correction(q, delta):
++    d=up(delta.to(q),q.shape[-2:])
++    refined=torch.sigmoid(torch.logit(q.clamp(1e-5,1-1e-5))+d)
++    return torch.where(d==0,q,refined)
++
++
++@torch.no_grad()
++def density_target(q, raw_reference, snapshots, mode):
++    start=time.monotonic();x=unit(raw_reference.detach().cpu()).double()
++    delta=torch.zeros(1024,2,dtype=torch.float64);ready=[];evidence=[]
++    for c in range(2):
++        pair=snapshots[c*2:c*2+2];ready.append(all(s is not None for s in pair))
++        if ready[-1]:
++            covs=density_pair(pair[0][1],pair[1][1],mode)
++            l0,m0=log_density(x,pair[0][0],covs[0]);l1,m1=log_density(x,pair[1][0],covs[1])
++            supported=(torch.minimum(m0,m1)<=4)&(x.norm(dim=-1)>0)
++            gap=(l1-l0)/32;delta[:,c]=torch.where(supported,.5*gap.clamp(-4,4),0)
++            from ..host_diagnostic_analysis import distribution
++            evidence.append(dict(channel=c,support_fraction=float(supported.double().mean()),
++                density_difference_per_dim=distribution(gap.tolist())))
++    result=correction(q,delta)
++    return result,dict(pair_ready=ready,evidence=evidence,nonzero_grid_fraction=float((delta!=0).double().mean()),
++        max_abs_logit_correction=float(delta.abs().max()),mean_abs_logit_correction=float(delta.abs().mean()),
++        density_seconds=time.monotonic()-start)
++
++
++@torch.no_grad()
++def graph_target(q, raw, views, snapshots, mode):
++    start=time.monotonic()
++    if any(s is None for s in snapshots):return q,dict(ready=False,edges=0,iterations=0,graph_seconds=time.monotonic()-start)
++    x=unit(raw.detach().cpu()).double();qg=grid(q.detach().cpu()).double()
++    _,rel=tokens(qg,views);rel=rel.reshape(2,1024).T;a=1+9*rel.double()
++    edges=grid_edges()
++    weights=torch.zeros(len(edges),dtype=torch.float64) if mode=='ORDER' else graph_weights(x,qg,edges,
++        [region_precision(s[1]) for s in snapshots] if mode=='PCA' else None)
++    initial=nested_bernoulli_projection(qg,a)
++    # Zero edges has an exact closed solution; avoids accumulating round-off drift.
++    refined=initial if mode=='ORDER' or not bool(weights.any()) else graph_refine(qg,rel,edges,weights)
++    delta=torch.logit(refined.clamp(1e-5,1-1e-5))-torch.logit(qg.clamp(1e-5,1-1e-5))
++    full=correction(q,delta);wa=up(a.to(q),q.shape[-2:])
++    flat=full[0].flatten(1).T
++    result=nested_bernoulli_projection(flat,wa[0].flatten(1).T).T.reshape_as(q)
++    return result,dict(ready=True,edges=len(edges),active_edges=int((weights>0).sum()),iterations=0 if mode=='ORDER' else 32,
++        edge_weight_mean=float(weights.mean()),edge_weight_min=float(weights.min()),edge_weight_max=float(weights.max()),
++        energy_before=float(graph_energy(initial,qg,a,edges,weights)),energy_after=float(graph_energy(refined,qg,a,edges,weights)),
++        teacher_violations_before=int((q[:,1]>q[:,0]).sum()),teacher_violations_after=int((result[:,1]>result[:,0]).sum()),
++        correction_fraction=float((q!=result).float().mean()),graph_seconds=time.monotonic()-start)
+diff --git a/src/dpa_ctta/r3/testing.py b/src/dpa_ctta/r3/testing.py
+new file mode 100644
+index 0000000..4c007e2
+--- /dev/null
++++ b/src/dpa_ctta/r3/testing.py
+@@ -0,0 +1,21 @@
++"""Synthetic prior construction for CPU tests / explicitly authorized smoke only.
++
++Never called by the formal trajectory initializer. No real observations retained.
++"""
++import torch
++from ..r1.region_memory import Memory as OldMemory
++from .stats import Memory
++from .kernels import unit
++
++
++def ready(memory):
++    if isinstance(memory,Memory):memory.__init__()
++    else:OldMemory.__init__(memory,'REGION')
++    g=torch.Generator().manual_seed(91)
++    if isinstance(memory,Memory):
++        for visit in range(1,17):memory.merge([unit(torch.randn(8,32,generator=g)) for _ in range(4)],visit)
++        memory.covariances=[(s[0],s[1],0) for s in memory.covariances]
++    else:
++        for b in memory.banks:
++            for visit in range(1,17):b.merge(unit(torch.randn(8,32,generator=g)),visit)
++    for b in memory.banks:b.version=b.last_visit=0
+diff --git a/src/dpa_ctta/r3/transport.py b/src/dpa_ctta/r3/transport.py
+new file mode 100644
+index 0000000..dbad176
+--- /dev/null
++++ b/src/dpa_ctta/r3/transport.py
+@@ -0,0 +1,32 @@
++"""Fit a current pre/post alignment; move all history before inserting post tokens."""
++import time
++import torch
++from ..r1.recovery import local_seed
++from .kernels import unit,procrustes_step
++
++
++@torch.no_grad()
++def commit(memory, pre, post, selected, visit, mode):
++    started=time.monotonic();x=unit(pre.detach().cpu()).double();y=unit(post.detach().cpu()).double()
++    active=[(r,ids) for r,ids in enumerate(selected) if len(ids)]
++    unique=len(torch.cat([i for _,i in active]).unique()) if active else 0
++    Q=torch.eye(32,dtype=torch.float64);xs=[];ys=[];weights=[];shuffled=0
++    for r,ids in active:
++        target=ids
++        if mode=='SHUFFLE' and len(ids)>1:
++            g=torch.Generator().manual_seed(local_seed('R3_M_SHUFFLE_'+str(r),visit))
++            target=ids[torch.randperm(len(ids),generator=g)];shuffled+=int((target!=ids).sum())
++        xs.append(x[ids]);ys.append(y[target]);weights.append(torch.full((len(ids),),1/(len(active)*len(ids)),dtype=torch.float64))
++    svd_seconds=0.
++    if mode!='IDPOST' and unique>=32:
++        t=time.monotonic();Q=procrustes_step(torch.cat(xs),torch.cat(ys),torch.cat(weights));svd_seconds=time.monotonic()-t
++    before=after=0.
++    if active:
++        X,Y,w=torch.cat(xs),torch.cat(ys),torch.cat(weights)
++        before=float((w*(Y-X).square().sum(1)).sum());after=float((w*(Y-X@Q.T).square().sum(1)).sum())
++    memory.transport(Q,visit)
++    memory.merge([y[ids] for ids in selected],visit)
++    return dict(distinct_positions=unique,paired_tokens=sum(len(i) for i in selected),shuffled_positions=shuffled,
++        insufficient_support=unique<32,identity_policy=mode=='IDPOST',orthogonal_error=float((Q.T@Q-torch.eye(32)).norm()),
++        rotation_from_identity=float((Q-torch.eye(32)).norm()),fit_before=before,fit_after=after,
++        svd_seconds=svd_seconds,transport_seconds=time.monotonic()-started,frame_version=memory.frame_version)
+diff --git a/tests/test_r3.py b/tests/test_r3.py
+new file mode 100644
+index 0000000..a5ce148
+--- /dev/null
++++ b/tests/test_r3.py
+@@ -0,0 +1,260 @@
++"""Procedural current tensors and synthetic bounded states only; no real assets."""
++import copy,json,unittest
++from unittest.mock import patch
++import torch
++from torch import nn
++from dpa_ctta.r3 import kernels as k,plan,run
++from dpa_ctta.r3.host import Host,ARMS
++from dpa_ctta.r3.stats import Memory
++from dpa_ctta.r3.contexts import Contexts,cpu_copy
++from dpa_ctta.r3.displacement import flatten,probe_rows,transform
++from dpa_ctta.r3.transport import commit as transport
++from dpa_ctta.r3.teachers import density_target,graph_target,correction
++from dpa_ctta.r1.host import Host as OldHost
++from dpa_ctta.r1.region_memory import Memory as OldMemory,grid
++from dpa_ctta.source_pilot import seed_all
++from dpa_ctta.host_diagnostic import rng,close
++from dpa_ctta.b4_run import capture
++from test_r1 import Toy
++from test_vptta_host import pixels
++
++
++from dpa_ctta.r3.testing import ready
++
++
++def model():
++    m=Toy()
++    with torch.no_grad():
++        m.seg_head.weight.zero_();m.seg_head.bias.fill_(-3)
++        m.seg_head.weight[0,0]=10;m.seg_head.weight[1,1]=10
++    return m
++
++
++def host(arm,cls=Host):
++    seed_all(20260907);return cls(arm,model=model())
++
++
++def ready_host(h):
++    if h.contexts:
++        load=h.contexts.load
++        def prepare(d):
++            m,trace=load(d)
++            if trace['created']:ready(m)
++            return m,trace
++        h.contexts.load=prepare
++    elif h.memory is not None:ready(h.memory)
++
++
++class HostTests(unittest.TestCase):
++    def test_C_RP_two_step_old_path_parity(self):
++        for arm,oldarm in [('C','C'),('RP','C_PCA_REGION')]:
++            old=host(oldarm,OldHost);new=host(arm)
++            if arm=='RP':ready(old.memory);ready(new.memory)
++            for t in range(2):
++                x=pixels('fundus',t);a,ta=old.step(x);b,tb=new.step(x)
++                close(a,b,exact=True);close(capture(old),capture(new.legacy),exact=True)
++                self.assertEqual(tb['r3']['counts']['network_forwards'],8)
++
++    def test_all_families_actual_cold_and_ready_paths(self):
++        for arm in ARMS[2:]:
++            with self.subTest(arm=arm):
++                for warm in (False,True):
++                    h=host(arm)
++                    if warm:ready_host(h)
++                    frozen=None if h.reference is None else copy.deepcopy(h.reference.state_dict())
++                    x=pixels('fundus',0);z,r=h.step(x);a=r['r3'];c=a['counts']
++                    self.assertEqual(c['network_forwards'],9 if arm.startswith(('T_','S_')) else 8)
++                    self.assertEqual(c['adam_calls'],1);self.assertEqual(c['loss_backward_calls'],1)
++                    self.assertFalse(z.requires_grad);self.assertEqual(h.pending,{});self.assertEqual(h.phase,'IDLE')
++                    self.assertEqual(c['jacobian_vjp_calls'],8 if arm.startswith('U_') and warm else 0)
++                    if arm.startswith('U_') and warm:
++                        self.assertEqual(a['update']['parameter_dim'],64);self.assertGreater(a['update']['rows'],0)
++                        self.assertLessEqual(a['update']['new_norm'],a['update']['base_norm']+1e-10)
++                        self.assertEqual(c['actual_parameter_replacements'],1)
++                    if arm.startswith('T_'):self.assertEqual(a['teacher']['pair_ready'],[warm]*2)
++                    if arm.startswith('G_'):
++                        self.assertEqual(a['graph']['ready'],warm)
++                        if warm:self.assertEqual(a['graph']['teacher_violations_after'],0)
++                    if arm.startswith('M_'):self.assertEqual(a['transport']['frame_version'],1)
++                    if arm.startswith('S_'):self.assertEqual(a['context']['active_slots'],1)
++                    if frozen is not None:close(frozen,h.reference.state_dict(),exact=True)
++                    json.dumps(a,allow_nan=False)
++
++    def test_cold_no_loss_branches_match_C_and_augmentation_rng(self):
++        old=host('C',OldHost);z,_=old.step(pixels('fundus',0));expected=capture(old)
++        for arm in ARMS[2:]:
++            h=host(arm);out,_=h.step(pixels('fundus',0))
++            close(out,z,exact=True);close([p.detach() for p in h.params],expected['affine'],exact=True)
++            close(h.rng,expected['rng'],exact=True)
++
++    def test_prediction_before_merge_labels_private_and_failure_cleanup(self):
++        for arm in ('T_LR','U_PCA','S_JOINT','M_TRANSPORT','G_PCA'):
++            h=host(arm);events=[]
++            original=Memory.merge
++            def checked(memory,vectors,visit):
++                self.assertEqual(h.phase,'COMMIT');self.assertEqual(h.total['adam_calls'],1);events.append(visit)
++                return original(memory,vectors,visit)
++            with patch.object(Memory,'merge',checked):h.step(pixels('fundus',0))
++            self.assertEqual(events,[1])
++            with self.assertRaises(TypeError):h.step(pixels('fundus',0),domain='forbidden')
++        h=host('T_LR')
++        with patch('dpa_ctta.r3.host.density_target',side_effect=ValueError('injected geometry failure')):
++            with self.assertRaises(ValueError):h.step(pixels('fundus',0))
++        self.assertEqual(h.pending,{});self.assertTrue(h.failed)
++        with self.assertRaises(RuntimeError):h.step(pixels('fundus',0))
++
++    def test_S_host_switch_does_not_replay_augmentation_or_copy_model(self):
++        old=host('C',OldHost);h=host('S_JOINT');identity=(id(h.model),id(h.reference))
++        descriptors=torch.eye(64,dtype=torch.float64)
++        def fixture_descriptor(module,args,output):
++            h.pending['descriptor']=descriptors[1 if h.visit==17 else 0]
++        handle=h.reference.register_forward_hook(fixture_descriptor)
++        try:
++            for visit in range(1,19):
++                old.step(pixels('fundus',visit%2));expected_rng=rng()
++                _,r=h.step(pixels('fundus',visit%2));close(h.rng,expected_rng,exact=True)
++                self.assertEqual((id(h.model),id(h.reference)),identity)
++                self.assertEqual(r['r3']['counts']['adam_calls'],1)
++                if visit==17:
++                    self.assertTrue(r['r3']['context']['created']);self.assertEqual(r['r3']['context']['slot'],1)
++                    saved=cpu_copy(h.contexts.slots[1]['adam'])
++                if visit==18:
++                    self.assertEqual(r['r3']['context']['slot'],0);self.assertTrue(r['r3']['context']['switched'])
++                    self.assertEqual(r['r3']['context']['slot_updates'],[17,1]);close(saved,h.contexts.slots[1]['adam'],exact=True)
++        finally:handle.remove()
++
++    def test_programmatic_full_ResUNet_38_updates_all_families(self):
++        import tempfile,os
++        from pathlib import Path
++        from dpa_ctta.integrations.ctta_suite import build_reference_model
++        from dpa_ctta.r3.execution import smoke
++        seed_all(20260907);m,_=build_reference_model('fundus')
++        with torch.no_grad():m.seg_head.weight.mul_(30)
++        state=copy.deepcopy(m.state_dict());del m
++        with tempfile.TemporaryDirectory() as tmp:
++            smoke(state,'cpu',Path(tmp),dict(fixture='PROGRAMMATIC_CPU_NOT_EXECUTION_AUTHORIZATION'),dict(seed=20260907),dict(bytes=1))
++            proof=json.loads((Path(tmp)/'smoke.completion.json').read_text())
++        total=proof['physical'];traces=proof['evidence']
++        self.assertEqual(total['network_forwards'],316);self.assertEqual(total['adam_calls'],38)
++        self.assertEqual(total['loss_backward_calls'],38);self.assertLessEqual(total['jacobian_vjp_calls'],24)
++        for arm in ('U_PCA','U_RAND','U_SCALE'):
++            self.assertGreater(traces[arm+':1']['counts']['jacobian_vjp_calls'],0)
++            self.assertEqual(traces[arm+':1']['update']['parameter_dim'],19136)
++        print('FULL_RESUNET_CPU_38_UPDATE_COUNTS '+json.dumps(total,sort_keys=True))
++        if os.environ.get('TRACE_OUTPUT'):Path(os.environ['TRACE_OUTPUT']).write_text(json.dumps(traces,indent=2,allow_nan=False)+'\n')
++        self.assertFalse(torch.cuda.is_initialized())
++
++
++class MechanismTests(unittest.TestCase):
++    def test_sampling_equal_R1_and_local_rng(self):
++        q=torch.zeros(1024,2);q[:500,0]=1;q[:100,1]=1;views=q.expand(6,-1,-1)
++        raw=torch.randn(1024,32);before=rng();m=Memory()
++        selected,ids,v,a=m.select(raw,q,views,7);vold,iold,aold=OldMemory('REGION').prepare(raw,q,views,7)
++        close(v,vold,exact=True);close(ids,iold,exact=True);self.assertEqual(a,aold);close(before,rng(),exact=True)
++        close(v,[k.unit(raw)[i].double() for i in selected],exact=True)
++        self.assertEqual(float(grid(torch.arange(512*512).reshape(1,1,512,512).float())[0]),4104.)
++
++    def test_Jacobian_finite_difference_unused_columns_and_no_32D_parameter_projection(self):
++        m=model().double();from dpa_ctta.b1_host import configure
++        names,ps=configure(m);x=torch.randn(1,3,32,32,dtype=torch.float64);raw=grid(m(x)[2]);memory=Memory();ready(memory)
++        ids=[torch.arange(32)]*4;snap=memory.snapshots(1)
++        A,defs,values=probe_rows(raw,ids,snap,ps)
++        before=flatten(ps);g=torch.Generator().manual_seed(71);d=torch.randn(before.shape,generator=g,dtype=torch.float64);d=d/d.norm();eps=1e-5
++        from dpa_ctta.r3.displacement import replace
++        vals=[]
++        for sign in (-1,1):
++            replace(ps,before+sign*eps*d);v=k.unit(grid(m(x)[2]));vals.append(torch.stack([v[i].mean(0)@u for i,u in defs]).detach())
++        torch.testing.assert_close((vals[1]-vals[0])/(2*eps),A@d,atol=2e-7,rtol=2e-5)
++        self.assertEqual(A.shape,(8,64))
++        with self.assertRaises(ValueError):k.constrain_displacement(before,torch.ones(8,32))
++
++    def test_actual_Adam_moments_and_norm_control(self):
++        for mode in ('PCA','RAND','SCALE'):
++            p=nn.Parameter(torch.tensor([1.,2.,3.],dtype=torch.float64));o=torch.optim.Adam([p],lr=1e-4)
++            p.square().sum().backward();before=flatten([p]);o.step();moment=copy.deepcopy(o.state_dict());proposal=flatten([p])-before
++            A=torch.tensor([[1.,2.,0.]],dtype=torch.float64);protected,_=k.constrain_displacement(proposal,A)
++            info=transform(before,[p],A,mode);close(moment,o.state_dict(),exact=True)
++            expected=k.norm_matched_displacement(proposal,protected) if mode=='SCALE' else protected
++            torch.testing.assert_close(p.detach()-before,expected,atol=1e-15,rtol=1e-10)
++            self.assertEqual(int(o.state[p]['step']),1)
++
++    def test_context_small_states_capacity_reuse_and_rng(self):
++        for shared in (False,True):
++            p=nn.Parameter(torch.ones(3));o=torch.optim.Adam([p],lr=1e-4);pool=Contexts([p],['bn.weight'],o,shared)
++            descriptors=torch.eye(64,dtype=torch.float64);initial_rng=rng()
++            for index in [0]*16+[1]*16+[2]*16+[3]+[0]:
++                m,r=pool.load(descriptors[index]);old=[cpu_copy({k:v for k,v in s.items() if k!='memory'}) for s in pool.slots]
++                o.zero_grad();p.square().sum().backward();o.step();pool.commit(descriptors[index],r)
++                for j,s in enumerate(pool.slots):
++                    if j!=r['slot']:close(old[j],{k:v for k,v in s.items() if k!='memory'},exact=True)
++            self.assertEqual(len(pool.slots),3);self.assertEqual(pool.total_steps,50);close(initial_rng,rng(),exact=True)
++            self.assertEqual(sum(s['steps'] for s in pool.slots),50)
++            self.assertTrue(all(not any(isinstance(v,nn.Module) for v in s.values()) for s in pool.slots))
++
++    def test_transport_all_live_cached_frames_and_post_storage(self):
++        x=k.unit(torch.randn(1024,32));Q=torch.linalg.qr(torch.randn(32,32,dtype=torch.float64)).Q;y=x.double()@Q.T
++        ids=[torch.arange(32)+i*32 for i in range(4)]
++        memories=[]
++        for mode in ('TRANSPORT','IDPOST','SHUFFLE'):
++            m=Memory();ready(m);old=copy.deepcopy(m);trace=transport(m,x,y,ids,1,mode)
++            self.assertEqual([b.n for b in m.banks],[160]*4);self.assertEqual(m.frame_version,1)
++            self.assertEqual([b.version for b in m.banks],[0]*4)
++            if mode=='IDPOST':close(m.banks[0].center,old.banks[0].center,exact=True)
++            else:self.assertFalse(torch.equal(m.banks[0].center,old.banks[0].center))
++            self.assertLess(trace['orthogonal_error'],1e-10);memories.append(m)
++        self.assertFalse(torch.equal(memories[0].banks[0].M2,memories[2].banks[0].M2))
++        m=Memory();ready(m);old=copy.deepcopy(m);Q=torch.linalg.qr(torch.randn(32,32,dtype=torch.float64)).Q;m.transport(Q,1)
++        close(m.banks[0].center,Q@old.banks[0].center);close(m.banks[0].U,Q@old.banks[0].U)
++        close(m.covariances[0][1],Q@old.covariances[0][1]@Q.T)
++
++    def test_T_high_resolution_zero_pair_ready_and_graph_detached(self):
++        q=torch.rand(1,2,512,512);raw=torch.randn(1024,32);m=Memory();ready(m);s=m.density_snapshots(1)
++        cold,a=density_target(q,raw,[None]*4,'LR');close(cold,q,exact=True)
++        partial,a=density_target(q,raw,[s[0],s[1],None,None],'ISO');close(partial[:,1],q[:,1],exact=True)
++        close(correction(q,torch.zeros(1024,2)),q,exact=True)
++        q.requires_grad_();raw.requires_grad_();views=grid(q.detach()).expand(6,-1,-1)
++        for mode in ('PCA','ISO','ORDER'):
++            out,a=graph_target(q,raw,views,s,mode);self.assertFalse(out.requires_grad);self.assertEqual(a['edges'],1984)
++            self.assertEqual(a['teacher_violations_after'],0)
++        with patch('dpa_ctta.r3.teachers.graph_weights',return_value=torch.zeros(1984,dtype=torch.float64)):
++            out,_=graph_target(q,raw,views,s,'PCA')
++        control,_=graph_target(q,raw,views,s,'ORDER');close(out,control,exact=True)
++
++    def test_unused_probe_columns_and_zero_A_candidate_exact(self):
++        p=nn.Parameter(torch.randn(32,dtype=torch.float64));unused=nn.Parameter(torch.ones(3,dtype=torch.float64))
++        raw=p[None,:].expand(1024,-1);m=Memory();ready(m)
++        A,_,_=probe_rows(raw,[torch.arange(8)]*4,m.snapshots(1),[p,unused])
++        self.assertEqual(A.shape,(8,35));self.assertEqual(float(A[:,-3:].abs().sum()),0)
++        o=torch.optim.Adam([p,unused],lr=1e-4);(p.square().sum()+unused.square().sum()).backward()
++        before=flatten([p,unused]);o.step();candidate=flatten([p,unused]).clone()
++        info=transform(before,[p,unused],torch.zeros(0,35,dtype=torch.float64),'PCA')
++        close(candidate,flatten([p,unused]),exact=True);self.assertEqual(info['actual_parameter_replacements'],0)
++
++    def test_current_reader_reused_mask_only_after_R3_commit(self):
++        from dpa_ctta.r1 import run as pipeline
++        for arm in ('T_LR','U_PCA','S_JOINT','M_TRANSPORT','G_PCA'):
++            h=host(arm);events=[]
++            def synthetic(row,kind):
++                events.append(kind)
++                if kind=='mask':
++                    self.assertEqual(h.phase,'IDLE');self.assertEqual(h.visit,1)
++                    self.assertEqual(h.pending,{})
++                value=pixels('fundus',0) if kind=='image' else torch.zeros(1,2,512,512)
++                return value,dict(bytes=1,read_verify_decode_seconds=0.)
++            with patch.object(pipeline,'target',side_effect=synthetic),patch('dpa_ctta.p1_run.sync'):
++                row=pipeline.current(h,{})
++            self.assertEqual(events,['image','mask']);self.assertTrue(row['prediction_fixed_before_label'])
++
++    def test_transport_insufficient_support_and_single_token_shuffle(self):
++        m=Memory();ready(m);raw=torch.randn(1024,32);s=m.banks[0].center.clone()
++        trace=transport(m,raw,raw*2,[torch.tensor([0])]*4,1,'SHUFFLE')
++        self.assertTrue(trace['insufficient_support']);self.assertEqual(trace['shuffled_positions'],0)
++        close(m.banks[0].center,s,exact=True)
++
++    def test_matrix_and_disabled_entry_before_any_asset_access(self):
++        m=plan.matrix();self.assertEqual(len(m['jobs']),85)
++        for w in (1,2,3):
++            assignments=m['rotation_examples'][str(w)]['assignments']
++            self.assertEqual([r['worker'] for r in assignments],[(ARMS.index(j['arm'])+j['order'])%w for j in m['jobs']])
++        with patch('sys.argv',['neutral','--run']),patch('torch.load',side_effect=AssertionError('weights')):
++            with self.assertRaises(PermissionError):run.main()
+diff --git a/tests/test_r3_execution.py b/tests/test_r3_execution.py
+new file mode 100644
+index 0000000..53e037d
+--- /dev/null
++++ b/tests/test_r3_execution.py
+@@ -0,0 +1,79 @@
++"""Synthetic scalar fixtures exercise every arm/stream; no model or real assets."""
++import copy,json,tempfile,unittest
++from contextlib import contextmanager
++from pathlib import Path
++from unittest.mock import patch
++from dpa_ctta.r3 import analyze,plan,execution
++from dpa_ctta.r1.evidence import write
++from dpa_ctta.r1.plan import binding,registration_digest
++from test_r1_fixes import scalar_row
++
++
++@contextmanager
++def fixture(out):
++    cfg=copy.deepcopy(plan.science());jobs=plan.matrix()['jobs']
++    rows=[dict(group_id=str(i*3+j),sample_id=str(i*3+j),domain=d,subset=s) for i,d in enumerate(cfg['orders'][0]) for j,s in enumerate(('remaining_dev','legacy_dev','p1_extension_dev'))]
++    reg=dict(checkpoint=dict(bytes=7),target=rows,fixture='PROGRAMMATIC_ONLY')
++    def ordered(reg,index):
++        ds=cfg['orders'][index] if index<4 else cfg['orders'][0][1:]+cfg['orders'][0][:1]
++        return [r for d in ds for r in rows if r['domain']==d]
++    for j in jobs:
++        j.update(records=12,network_forwards=12*(9 if j['arm'].startswith(('T_','S_')) else 8),loss_backward_calls=12,adam_calls=12,jacobian_vjp_upper=96 if j['arm'].startswith('U_') else 0)
++    for key,col in [('scoring_records','records'),('network_forwards','network_forwards'),('loss_backward_calls','loss_backward_calls'),('adam_calls','adam_calls'),('jacobian_vjp_upper','jacobian_vjp_upper')]:cfg['formal_budget'][key]=sum(j[col] for j in jobs)
++    identity=dict(run_id='a'*32,code_sha='b'*40,science_sha256=plan.SCIENCE_SHA,registration_digest=registration_digest(reg),stream_digest='c'*64)
++    packet=dict(binding=identity,jobs=jobs,devices=[dict(index=i,uuid='CPU_SLOT_'+str(i),model='PROCEDURAL') for i in range(2)],schedule=plan.allocation(jobs,2))
++    write(out/'receipt.json',packet);entries=[];backend=dict(seed=20260907)
++    for i in range(2):
++        p=out/('device'+str(i));p.mkdir();ident=binding(packet,i)
++        write(p/'smoke.completion.json',dict(binding=ident,status='MECHANICAL_SMOKE_COMPLETE',physical=dict(network_forwards=316,loss_backward_calls=38,jacobian_vjp_calls=0,adam_calls=38,actual_parameter_replacements=0),backend=backend,checkpoint_io=dict(bytes=7)))
++        entries.append(dict(binding=ident,phase='smoke',key=p.name,pid=100+i,pgid=100+i,status='EXITED',exit_code=0))
++    for j,assignment in zip(jobs,packet['schedule']['assignments']):
++        p=out/j['job_id'];p.mkdir();ident=binding(packet,assignment['worker'],j);records=[]
++        for t,e in enumerate(ordered(reg,j['order']),1):
++            r=scalar_row(e,'C' if j['arm']=='C' else 'C_PCA_REGION',j['order'],t)
++            r.update(arm=j['arm'],binding=ident)
++            a=dict(arm=j['arm'],global_visit=t,counts=dict(network_forwards=9 if j['arm'].startswith(('S_','T_')) else 8,loss_backward_calls=1,jacobian_vjp_calls=0,adam_calls=1,actual_parameter_replacements=0))
++            if j['arm'] not in ('C','RP'):
++                a.update(memory_input=r['pca']['input'],banks=r['pca']['banks'],basis_versions_used=[None]*4,density_versions_used=[None]*4)
++                for b in a['banks']:b['frame_version']=t if j['arm'].startswith('M_') else 0
++            if j['arm'].startswith('S_'):a['context']=dict(slot=0,created=t==1,active_slots=1,slot_assigned_counts=[t],slot_updates=[t],optimizer_steps=[t])
++            r['r3']=a;records.append(r)
++        (p/'records.jsonl').write_text('\n'.join(json.dumps(r) for r in records)+'\n')
++        counts={k:sum(r['r3']['counts'][k] for r in records) for k in analyze.COUNT_KEYS}
++        write(p/'completion.json',dict(binding=ident,status='TRAJECTORY_COMPLETE',records=12,physical=counts,backend=backend,checkpoint_io=dict(bytes=7),seconds=1.))
++        pid=100+len(entries);entries.append(dict(binding=ident,phase='formal',key=p.name,pid=pid,pgid=pid,status='EXITED',exit_code=0))
++    write(out/'matrix.processes.json',dict(binding=identity,status='COMPUTE_COMPLETE',exit_codes=[0]*len(entries),processes=entries,active_seconds=1.,wall_seconds=1.,unstarted_jobs=[]))
++    write(out/'processes.started.json',dict(binding=identity,processes=[{k:e[k] for k in ('pid','pgid','binding','phase','key')} for e in entries]))
++    with patch.object(analyze,'science',return_value=cfg),patch.object(analyze,'matrix',return_value=dict(jobs=jobs)),patch.object(analyze,'stream',side_effect=ordered),patch.object(analyze,'stream_summary',return_value=dict(stream_digest='c'*64)):
++        yield reg,jobs,packet,ordered
++
++
++class ExecutionTests(unittest.TestCase):
++    def test_85_fixture_closeout_separate_secondary_and_truncation(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            out=Path(tmp)
++            with fixture(out) as (reg,jobs,packet,ordered):
++                result=analyze.recompute(out,reg)
++                self.assertEqual(result['physical']['records'],1020);self.assertEqual(len(result['mechanism']),85)
++                self.assertEqual(set(result['target']),{'0','1','2','3','4'})
++                self.assertEqual(result['secondary_recurrence'],result['target']['4']);self.assertFalse(result['next_execution_authorized'])
++                self.assertTrue((out/'R3_EXPERIMENT_REPORT.md').exists())
++                (out/'o4a16/records.jsonl').write_text('')
++                with self.assertRaises(ValueError):analyze.recompute(out,reg)
++                self.assertFalse(json.loads((out/'current_result.json').read_text())['valid']);self.assertFalse((out/'R3_EXPERIMENT_REPORT.md').exists())
++
++    def test_corrupt_counts_and_missing_evidence_fail(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            out=Path(tmp)
++            with fixture(out) as (reg,jobs,packet,ordered):
++                j=jobs[5];p=out/j['job_id']/'records.jsonl';rows=[json.loads(s) for s in p.read_text().splitlines()]
++                rows[0]['r3']['counts']['jacobian_vjp_calls']=9
++                with self.assertRaises(ValueError):analyze.validate(rows,ordered(reg,0),j,binding(packet,1,j))
++                (out/'device0/smoke.completion.json').unlink()
++                with self.assertRaises(FileNotFoundError):analyze.recompute(out,reg)
++                self.assertFalse(json.loads((out/'current_result.json').read_text())['valid'])
++
++    def test_authorization_rejects_before_model_or_device(self):
++        with patch('subprocess.check_output',side_effect=AssertionError('no device query')):
++            with self.assertRaises(PermissionError):execution.launch(dict(enabled=False),dict(registration={}),'/unused')
++        self.assertEqual(execution.caps(),dict(trajectory_seconds=21600,wall_seconds=345600,active_seconds=576000,bytes=6*1024**3))
+diff --git a/tests/test_r3_reference.py b/tests/test_r3_reference.py
+new file mode 100644
+index 0000000..86da80f
+--- /dev/null
++++ b/tests/test_r3_reference.py
+@@ -0,0 +1,171 @@
++"""Procedural CPU tests only; do not load a checkpoint or any real image."""
++import unittest
++import json
++from pathlib import Path
++import torch
++from dpa_ctta.r3 import kernels as k
++
++torch.set_num_threads(1)
++ROOT=Path(__file__).resolve().parents[1]
++
++class MathTests(unittest.TestCase):
++    def setUp(self):
++        self.g=torch.Generator().manual_seed(6109)
++    def randn(self,*shape):
++        return torch.randn(*shape,generator=self.g,dtype=torch.float64)
++    def cov(self,d=32):
++        x=self.randn(d,d)
++        return x@x.T/d
++    def test_01_covariance_models_psd(self):
++        c0,c1=self.cov(),self.cov()
++        for mode in ('LR','DIAG','ISO'):
++            a,b=k.density_pair(c0,c1,mode)
++            self.assertGreaterEqual(float(torch.linalg.eigvalsh(a).min()),1e-4-1e-10)
++            self.assertGreaterEqual(float(torch.linalg.eigvalsh(b).min()),1e-4-1e-10)
++            if mode=='ISO': self.assertTrue(torch.equal(a,b))
++            if mode=='DIAG': self.assertTrue(torch.equal(a,torch.diag(a.diag())))
++    def test_02_lowrank_tail_and_trace(self):
++        c0,c1=self.cov(),self.cov()
++        lr,_=k.density_pair(c0,c1,'LR')
++        vals=torch.linalg.eigvalsh(lr)
++        torch.testing.assert_close(vals[:24],vals[0].expand(24))
++        torch.testing.assert_close(lr.trace(),k.shrink_covariance(c0).trace())
++    def test_03_density_matches_explicit_inverse(self):
++        x=self.randn(7,32);mean=self.randn(32);cov=k.shrink_covariance(self.cov())
++        score,maha=k.log_density(x,mean,cov)
++        explicit=((x-mean)@torch.linalg.inv(cov)*(x-mean)).sum(-1)
++        torch.testing.assert_close(maha,explicit/32)
++        torch.testing.assert_close(score,-.5*(explicit+torch.linalg.slogdet(cov)[1]))
++    def test_04_density_teacher_zero_and_bounded(self):
++        x=k.unit(self.randn(5,32));c=torch.eye(32,dtype=torch.float64)
++        means=[torch.zeros(32,dtype=torch.float64),torch.zeros(32,dtype=torch.float64)]
++        self.assertTrue(torch.equal(k.teacher_delta(x,[],[],ready=False),torch.zeros(5,dtype=x.dtype)))
++        self.assertEqual(float(k.teacher_delta(x,means,[c,c],ready=True).abs().max()),0.)
++        means[1]=self.randn(32)*100
++        delta=k.teacher_delta(x,means,[c,c],ready=True)
++        self.assertLessEqual(float(delta.abs().max()),2.)
++    def test_05_density_unsupported_not_confident_fallback(self):
++        x=torch.ones(2,32,dtype=torch.float64)*100
++        mean=torch.zeros(32,dtype=torch.float64);cov=torch.eye(32,dtype=torch.float64)
++        self.assertEqual(float(k.teacher_delta(x,[mean,mean+1],[cov,cov],ready=True).abs().max()),0.)
++    def test_06_procrustes_recovers_known_rotation(self):
++        x=self.randn(128,32);q,_=torch.linalg.qr(self.randn(32,32));y=x@q.T
++        found=k.procrustes_step(x,y,torch.ones(128,dtype=torch.float64),tau=0.)
++        torch.testing.assert_close(found,q,atol=1e-10,rtol=1e-10)
++    def test_07_transport_matches_reencoded_statistics(self):
++        x=self.randn(70,32);mu=x.mean(0);m2=(x-mu).T@(x-mu)
++        Q,_=torch.linalg.qr(self.randn(32,32));U,_=torch.linalg.qr(self.randn(32,8))
++        m,s,b=k.transport_state(mu,m2,U,Q);y=x@Q.T
++        torch.testing.assert_close(m,y.mean(0))
++        torch.testing.assert_close(s,(y-y.mean(0)).T@(y-y.mean(0)))
++        torch.testing.assert_close(b.T@b,torch.eye(8,dtype=b.dtype))
++    def test_08_procrustes_identity_and_no_input_mutation(self):
++        x=k.unit(self.randn(64,32));copy=x.clone()
++        Q=k.procrustes_step(x,x,torch.ones(64,dtype=x.dtype))
++        torch.testing.assert_close(Q,torch.eye(32,dtype=x.dtype),atol=1e-10,rtol=1e-10)
++        self.assertTrue(torch.equal(x,copy))
++    def test_09_projection_matches_full_solve(self):
++        A=self.randn(8,23);delta=self.randn(23);out,_=k.constrain_displacement(delta,A)
++        B=A/A.norm(dim=1,keepdim=True)
++        target=torch.linalg.solve(torch.eye(23,dtype=A.dtype)+B.T@B,delta)
++        torch.testing.assert_close(out,target,atol=1e-10,rtol=1e-10)
++    def test_10_projection_nullspace_and_zero_rows(self):
++        A=torch.tensor([[1.,0.,0.],[0.,0.,0.]],dtype=torch.float64)
++        d=torch.tensor([2.,3.,4.],dtype=torch.float64)
++        out,info=k.constrain_displacement(d,A)
++        torch.testing.assert_close(out,torch.tensor([1.,3.,4.],dtype=torch.float64))
++        self.assertEqual(info['rows'],1)
++        zero,_=k.constrain_displacement(d,A*0)
++        self.assertTrue(torch.equal(zero,d))
++    def test_11_norm_control_and_probe_contraction(self):
++        for _ in range(6):
++            A=self.randn(8,51);d=self.randn(51);out,info=k.constrain_displacement(d,A)
++            control=k.norm_matched_displacement(d,out)
++            torch.testing.assert_close(out.norm(),control.norm())
++            self.assertLessEqual(info['new_norm'],info['base_norm']+1e-10)
++            self.assertLessEqual(info['probe_after'],info['probe_before']+1e-10)
++            torch.testing.assert_close(control/control.norm(),d/d.norm())
++    def test_12_feature_jacobian_actual_Adam_step(self):
++        # A tiny differentiable model illustrates independent Jacobian VJPs and
++        # one Adam proposal, followed by an actual-delta transform.
++        p=torch.nn.Parameter(self.randn(7));W=self.randn(5,7)
++        features=torch.tanh(W@p)
++        rows=torch.stack([torch.autograd.grad(features[j],p,retain_graph=True)[0] for j in range(2)])
++        optimizer=torch.optim.Adam([p],lr=1e-4)
++        loss=features.square().mean();optimizer.zero_grad();loss.backward()
++        before=p.detach().clone();optimizer.step();proposal=p.detach()-before
++        out,_=k.constrain_displacement(proposal,rows)
++        with torch.no_grad():p.copy_(before+out)
++        self.assertEqual(int(optimizer.state[p]['step']),1)
++        torch.testing.assert_close(p.detach()-before,out,atol=1e-15,rtol=1e-10)
++    def test_13_nested_projection_formula(self):
++        q=torch.tensor([[.2,.8],[.8,.2]],dtype=torch.float64);a=torch.ones_like(q)
++        p=k.nested_bernoulli_projection(q,a)
++        torch.testing.assert_close(p,torch.tensor([[.5,.5],[.8,.2]],dtype=q.dtype))
++        self.assertTrue((p[:,1]<=p[:,0]).all())
++    def test_14_weighted_nested_projection_optimum(self):
++        q=torch.tensor([[.2,.8]],dtype=torch.float64);a=torch.tensor([[10.,1.]],dtype=q.dtype)
++        p=k.nested_bernoulli_projection(q,a)
++        gradient=(a*(torch.logit(p)-torch.logit(q))).sum()
++        self.assertAlmostEqual(float(gradient),0.,places=10)
++    def test_15_grid_edges_local_unique(self):
++        e=k.grid_edges();self.assertEqual(e.shape,(1984,2))
++        self.assertEqual(len(set(map(tuple,e.tolist()))),1984)
++        self.assertTrue(((e[:,1]-e[:,0]==1)|(e[:,1]-e[:,0]==32)).all())
++    def test_16_graph_isotropic_identity_metrics(self):
++        z=k.unit(self.randn(16,32));q=torch.rand((16,2),generator=self.g,dtype=z.dtype);e=k.grid_edges(4,4)
++        a=k.graph_weights(z,q,e,None)
++        b=k.graph_weights(z,q,e,[torch.eye(32,dtype=z.dtype)]*4)
++        torch.testing.assert_close(a,b)
++    def test_17_graph_mirror_proximal_energy_and_order(self):
++        q=torch.rand((25,2),generator=self.g,dtype=torch.float64)*.8+.1
++        e=k.grid_edges(5,5);w=torch.ones(len(e),dtype=q.dtype);rel=q>.7
++        a=1+9*rel.to(q.dtype);initial=k.nested_bernoulli_projection(q,a)
++        out=k.graph_refine(q,rel,e,w)
++        self.assertTrue((out[:,1]<=out[:,0]).all())
++        self.assertTrue(torch.isfinite(out).all())
++        self.assertLessEqual(float(k.graph_energy(out,q,a,e,w)),float(k.graph_energy(initial,q,a,e,w))+1e-10)
++    def test_18_graph_zero_edges_equals_order_control(self):
++        q=torch.rand((16,2),generator=self.g,dtype=torch.float64)*.8+.1;e=k.grid_edges(4,4);rel=q>.75
++        out=k.graph_refine(q,rel,e,torch.zeros(len(e),dtype=q.dtype))
++        torch.testing.assert_close(out,k.nested_bernoulli_projection(q,1+9*rel.to(q.dtype)),atol=1e-10,rtol=1e-10)
++    def test_19_router_capacity_and_readonly_choice(self):
++        router=k.DescriptorRouter();v=torch.eye(4,dtype=torch.float64)
++        for j in range(4):
++            for _ in range(16):
++                size=len(router.entries);idx,new,d=router.choose(v[j]);self.assertEqual(len(router.entries),size)
++                router.commit(v[j],idx,new,d)
++        self.assertEqual(len(router.entries),3)
++        self.assertEqual(sum(e.count for e in router.entries),64)
++    def test_20_router_does_not_mutate_unselected(self):
++        router=k.DescriptorRouter();v=torch.eye(3,dtype=torch.float64)
++        for j in range(2):
++            for _ in range(16):
++                idx,new,d=router.choose(v[j]);router.commit(v[j],idx,new,d)
++        old=router.entries[1].descriptor_sum.clone();count=router.entries[1].count
++        idx,new,d=router.choose(v[0]);router.commit(v[0],idx,new,d)
++        self.assertTrue(torch.equal(old,router.entries[1].descriptor_sum));self.assertEqual(count,router.entries[1].count)
++    def test_21_recurrence_single_use_and_order_preserved(self):
++        names=['A','B','C','D'];data={d:[f'{d}:{i}' for i in range(n)] for d,n in zip(names,[400,650,800,101])}
++        seq=k.recurring_stream(data,names);self.assertEqual(len(seq),1951);self.assertEqual(len(set(seq)),1951)
++        for name in names:self.assertEqual([i for i in seq if i.startswith(name+':')],data[name])
++        self.assertNotEqual(seq,[x for n in names for x in data[n]])
++    def test_22_recurrence_rejects_duplicate(self):
++        with self.assertRaises(ValueError):k.recurring_stream({'A':['x'],'B':['x']},['A','B'])
++    def test_23_full_matrix_budget(self):
++        from dpa_ctta.r3.plan import matrix
++        m=matrix();jobs=m['jobs']
++        self.assertEqual(len(jobs),85);self.assertEqual(len(set(j['job_id'] for j in jobs)),85)
++        self.assertEqual(sum(j['records'] for j in jobs),165835)
++        self.assertEqual(sum(j['network_forwards'] for j in jobs),1385210)
++        self.assertEqual(sum(j['jacobian_vjp_upper'] for j in jobs),234120)
++        self.assertEqual(m['per_gpu_smoke']['adam_calls'],38)
++        # Each method sees both devices over the four original orders.
++        for arm in {j['arm'] for j in jobs}:
++            self.assertEqual({(list(dict.fromkeys(j['arm'] for j in jobs)).index(arm)+j['order'])%2 for j in jobs if j['arm']==arm and j['order']<4},{0,1})
++    def test_24_nonfinite_rejected_and_cuda_unused(self):
++        with self.assertRaises(ValueError):k.shrink_covariance(torch.tensor([[float('nan')]]))
++        with self.assertRaises(ValueError):k.constrain_displacement(torch.zeros(3),torch.zeros(2,4))
++        self.assertFalse(torch.cuda.is_initialized())
++
++if __name__=='__main__':unittest.main(verbosity=2)

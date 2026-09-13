@@ -1,0 +1,3043 @@
+{
+  "status": "DRY_RUN_ONLY",
+  "base_commit": "f52f132e4be576ea871467432a6f4b12337209a5",
+  "science_sha256": "73879c29a33897beb9a79e6498258998abd8c0a964f8befc72b4ac1cdbd9c06e",
+  "jobs": [
+    {
+      "job_id": "o0a0",
+      "arm": "C",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a1",
+      "arm": "RP",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a2",
+      "arm": "T_LR",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a3",
+      "arm": "T_ISO",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a4",
+      "arm": "T_DIAG",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a5",
+      "arm": "U_PCA",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a6",
+      "arm": "U_RAND",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a7",
+      "arm": "U_SCALE",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a8",
+      "arm": "S_JOINT",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a9",
+      "arm": "S_SHARED",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a10",
+      "arm": "S_NOPCA",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a11",
+      "arm": "M_TRANSPORT",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a12",
+      "arm": "M_IDPOST",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a13",
+      "arm": "M_SHUFFLE",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a14",
+      "arm": "G_PCA",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a15",
+      "arm": "G_ISO",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o0a16",
+      "arm": "G_ORDER",
+      "order": 0,
+      "stream": 0,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a0",
+      "arm": "C",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a1",
+      "arm": "RP",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a2",
+      "arm": "T_LR",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a3",
+      "arm": "T_ISO",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a4",
+      "arm": "T_DIAG",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a5",
+      "arm": "U_PCA",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a6",
+      "arm": "U_RAND",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a7",
+      "arm": "U_SCALE",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a8",
+      "arm": "S_JOINT",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a9",
+      "arm": "S_SHARED",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a10",
+      "arm": "S_NOPCA",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a11",
+      "arm": "M_TRANSPORT",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a12",
+      "arm": "M_IDPOST",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a13",
+      "arm": "M_SHUFFLE",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a14",
+      "arm": "G_PCA",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a15",
+      "arm": "G_ISO",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o1a16",
+      "arm": "G_ORDER",
+      "order": 1,
+      "stream": 1,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a0",
+      "arm": "C",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a1",
+      "arm": "RP",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a2",
+      "arm": "T_LR",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a3",
+      "arm": "T_ISO",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a4",
+      "arm": "T_DIAG",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a5",
+      "arm": "U_PCA",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a6",
+      "arm": "U_RAND",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a7",
+      "arm": "U_SCALE",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a8",
+      "arm": "S_JOINT",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a9",
+      "arm": "S_SHARED",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a10",
+      "arm": "S_NOPCA",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a11",
+      "arm": "M_TRANSPORT",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a12",
+      "arm": "M_IDPOST",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a13",
+      "arm": "M_SHUFFLE",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a14",
+      "arm": "G_PCA",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a15",
+      "arm": "G_ISO",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o2a16",
+      "arm": "G_ORDER",
+      "order": 2,
+      "stream": 2,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a0",
+      "arm": "C",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a1",
+      "arm": "RP",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a2",
+      "arm": "T_LR",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a3",
+      "arm": "T_ISO",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a4",
+      "arm": "T_DIAG",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a5",
+      "arm": "U_PCA",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a6",
+      "arm": "U_RAND",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a7",
+      "arm": "U_SCALE",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a8",
+      "arm": "S_JOINT",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a9",
+      "arm": "S_SHARED",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a10",
+      "arm": "S_NOPCA",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a11",
+      "arm": "M_TRANSPORT",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a12",
+      "arm": "M_IDPOST",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a13",
+      "arm": "M_SHUFFLE",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a14",
+      "arm": "G_PCA",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a15",
+      "arm": "G_ISO",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o3a16",
+      "arm": "G_ORDER",
+      "order": 3,
+      "stream": 3,
+      "endpoint": "primary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a0",
+      "arm": "C",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a1",
+      "arm": "RP",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a2",
+      "arm": "T_LR",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a3",
+      "arm": "T_ISO",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a4",
+      "arm": "T_DIAG",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a5",
+      "arm": "U_PCA",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a6",
+      "arm": "U_RAND",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a7",
+      "arm": "U_SCALE",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 15608,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a8",
+      "arm": "S_JOINT",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a9",
+      "arm": "S_SHARED",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a10",
+      "arm": "S_NOPCA",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 17559,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 1951,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a11",
+      "arm": "M_TRANSPORT",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a12",
+      "arm": "M_IDPOST",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a13",
+      "arm": "M_SHUFFLE",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a14",
+      "arm": "G_PCA",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 0,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a15",
+      "arm": "G_ISO",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 1,
+      "worker_slot_3": 1,
+      "status": "NOT_RUN",
+      "gpu": null
+    },
+    {
+      "job_id": "o4a16",
+      "arm": "G_ORDER",
+      "order": 4,
+      "stream": 4,
+      "endpoint": "secondary",
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "actual_parameter_replacements_upper": 0,
+      "worker_slot_1": 0,
+      "worker_slot_2": 0,
+      "worker_slot_3": 2,
+      "status": "NOT_RUN",
+      "gpu": null
+    }
+  ],
+  "formal_budget": {
+    "scoring_records": 165835,
+    "network_forwards": 1385210,
+    "loss_backward_calls": 165835,
+    "adam_calls": 165835,
+    "jacobian_vjp_upper": 234120,
+    "trajectories": 85,
+    "unique_contents": 1951,
+    "primary_trajectories": 68,
+    "primary_records": 132668,
+    "secondary_trajectories": 17,
+    "secondary_records": 33167,
+    "offline_training_updates": 0
+  },
+  "per_gpu_smoke": {
+    "adam_calls": 38,
+    "loss_backward_calls": 38,
+    "network_forwards": 316,
+    "jacobian_vjp_upper": 24,
+    "scoring_records_in_main_results": 0
+  },
+  "rotation_examples": {
+    "1": {
+      "rule": "(arm_index + stream_id) % workers",
+      "assignments": [
+        {
+          "job_id": "o0a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a6",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a7",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a8",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a9",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a10",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a11",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a12",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a13",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a14",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a15",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a16",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a6",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a7",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a8",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a9",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a10",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a11",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a12",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a13",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a14",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a15",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a16",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a6",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a7",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a8",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a9",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a10",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a11",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a12",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a13",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a14",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a15",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a16",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a6",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a7",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a8",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a9",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a10",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a11",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a12",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a13",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a14",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a15",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a16",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a6",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a7",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a8",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a9",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a10",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a11",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a12",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a13",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a14",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a15",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a16",
+          "worker": 0
+        }
+      ],
+      "loads": [
+        {
+          "worker": 0,
+          "jobs": 85,
+          "network_forwards": 1385210
+        }
+      ]
+    },
+    "2": {
+      "rule": "(arm_index + stream_id) % workers",
+      "assignments": [
+        {
+          "job_id": "o0a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a1",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a3",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a5",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a6",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a7",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a8",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a9",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a10",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a11",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a12",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a13",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a14",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a15",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a16",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a0",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a2",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a4",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a6",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a7",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a8",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a9",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a10",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a11",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a12",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a13",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a14",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a15",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a16",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a1",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a3",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a5",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a6",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a7",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a8",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a9",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a10",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a11",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a12",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a13",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a14",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a15",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a16",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a0",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a2",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a4",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a6",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a7",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a8",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a9",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a10",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a11",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a12",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a13",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a14",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a15",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a16",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a1",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a3",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a5",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a6",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a7",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a8",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a9",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a10",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a11",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a12",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a13",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a14",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a15",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a16",
+          "worker": 0
+        }
+      ],
+      "loads": [
+        {
+          "worker": 0,
+          "jobs": 43,
+          "network_forwards": 702360
+        },
+        {
+          "worker": 1,
+          "jobs": 42,
+          "network_forwards": 682850
+        }
+      ]
+    },
+    "3": {
+      "rule": "(arm_index + stream_id) % workers",
+      "assignments": [
+        {
+          "job_id": "o0a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a1",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a2",
+          "worker": 2
+        },
+        {
+          "job_id": "o0a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a4",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a5",
+          "worker": 2
+        },
+        {
+          "job_id": "o0a6",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a7",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a8",
+          "worker": 2
+        },
+        {
+          "job_id": "o0a9",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a10",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a11",
+          "worker": 2
+        },
+        {
+          "job_id": "o0a12",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a13",
+          "worker": 1
+        },
+        {
+          "job_id": "o0a14",
+          "worker": 2
+        },
+        {
+          "job_id": "o0a15",
+          "worker": 0
+        },
+        {
+          "job_id": "o0a16",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a0",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a1",
+          "worker": 2
+        },
+        {
+          "job_id": "o1a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a3",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a4",
+          "worker": 2
+        },
+        {
+          "job_id": "o1a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a6",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a7",
+          "worker": 2
+        },
+        {
+          "job_id": "o1a8",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a9",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a10",
+          "worker": 2
+        },
+        {
+          "job_id": "o1a11",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a12",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a13",
+          "worker": 2
+        },
+        {
+          "job_id": "o1a14",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a15",
+          "worker": 1
+        },
+        {
+          "job_id": "o1a16",
+          "worker": 2
+        },
+        {
+          "job_id": "o2a0",
+          "worker": 2
+        },
+        {
+          "job_id": "o2a1",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a2",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a3",
+          "worker": 2
+        },
+        {
+          "job_id": "o2a4",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a5",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a6",
+          "worker": 2
+        },
+        {
+          "job_id": "o2a7",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a8",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a9",
+          "worker": 2
+        },
+        {
+          "job_id": "o2a10",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a11",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a12",
+          "worker": 2
+        },
+        {
+          "job_id": "o2a13",
+          "worker": 0
+        },
+        {
+          "job_id": "o2a14",
+          "worker": 1
+        },
+        {
+          "job_id": "o2a15",
+          "worker": 2
+        },
+        {
+          "job_id": "o2a16",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a1",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a2",
+          "worker": 2
+        },
+        {
+          "job_id": "o3a3",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a4",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a5",
+          "worker": 2
+        },
+        {
+          "job_id": "o3a6",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a7",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a8",
+          "worker": 2
+        },
+        {
+          "job_id": "o3a9",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a10",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a11",
+          "worker": 2
+        },
+        {
+          "job_id": "o3a12",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a13",
+          "worker": 1
+        },
+        {
+          "job_id": "o3a14",
+          "worker": 2
+        },
+        {
+          "job_id": "o3a15",
+          "worker": 0
+        },
+        {
+          "job_id": "o3a16",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a0",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a1",
+          "worker": 2
+        },
+        {
+          "job_id": "o4a2",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a3",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a4",
+          "worker": 2
+        },
+        {
+          "job_id": "o4a5",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a6",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a7",
+          "worker": 2
+        },
+        {
+          "job_id": "o4a8",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a9",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a10",
+          "worker": 2
+        },
+        {
+          "job_id": "o4a11",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a12",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a13",
+          "worker": 2
+        },
+        {
+          "job_id": "o4a14",
+          "worker": 0
+        },
+        {
+          "job_id": "o4a15",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a16",
+          "worker": 2
+        }
+      ],
+      "loads": [
+        {
+          "worker": 0,
+          "jobs": 28,
+          "network_forwards": 456534
+        },
+        {
+          "worker": 1,
+          "jobs": 29,
+          "network_forwards": 472142
+        },
+        {
+          "worker": 2,
+          "jobs": 28,
+          "network_forwards": 456534
+        }
+      ]
+    }
+  },
+  "GPU_requests_issued": 0,
+  "background_tasks_started": 0,
+  "real_target_reads": 0,
+  "secondary_stream": {
+    "status": "METADATA_VERIFIED_NO_PIXELS",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+    "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+    "digest_encoding": "SHA256 canonical JSON: schema, registration_digest, stream_id, frozen rule, private ordered group_id sequence",
+    "records": 1951,
+    "unique_contents": 1951,
+    "duplicates": 0,
+    "within_domain_order_unchanged": true,
+    "base_registration_unchanged": true,
+    "domain_counts": {
+      "REFUGE": 400,
+      "ORIGA": 650,
+      "REFUGE_Valid": 800,
+      "Drishti_GS": 101
+    },
+    "subset_counts": {
+      "remaining_dev": 1695,
+      "p1_extension_dev": 128,
+      "legacy_dev": 128
+    },
+    "chunk_schedule": [
+      {
+        "round": 0,
+        "domain": "REFUGE",
+        "within_domain_start": 0,
+        "first_visit": 1,
+        "count": 64
+      },
+      {
+        "round": 0,
+        "domain": "ORIGA",
+        "within_domain_start": 0,
+        "first_visit": 65,
+        "count": 64
+      },
+      {
+        "round": 0,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 0,
+        "first_visit": 129,
+        "count": 64
+      },
+      {
+        "round": 0,
+        "domain": "Drishti_GS",
+        "within_domain_start": 0,
+        "first_visit": 193,
+        "count": 64
+      },
+      {
+        "round": 1,
+        "domain": "ORIGA",
+        "within_domain_start": 64,
+        "first_visit": 257,
+        "count": 64
+      },
+      {
+        "round": 1,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 64,
+        "first_visit": 321,
+        "count": 64
+      },
+      {
+        "round": 1,
+        "domain": "Drishti_GS",
+        "within_domain_start": 64,
+        "first_visit": 385,
+        "count": 37
+      },
+      {
+        "round": 1,
+        "domain": "REFUGE",
+        "within_domain_start": 64,
+        "first_visit": 422,
+        "count": 64
+      },
+      {
+        "round": 2,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 128,
+        "first_visit": 486,
+        "count": 64
+      },
+      {
+        "round": 2,
+        "domain": "REFUGE",
+        "within_domain_start": 128,
+        "first_visit": 550,
+        "count": 64
+      },
+      {
+        "round": 2,
+        "domain": "ORIGA",
+        "within_domain_start": 128,
+        "first_visit": 614,
+        "count": 64
+      },
+      {
+        "round": 3,
+        "domain": "REFUGE",
+        "within_domain_start": 192,
+        "first_visit": 678,
+        "count": 64
+      },
+      {
+        "round": 3,
+        "domain": "ORIGA",
+        "within_domain_start": 192,
+        "first_visit": 742,
+        "count": 64
+      },
+      {
+        "round": 3,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 192,
+        "first_visit": 806,
+        "count": 64
+      },
+      {
+        "round": 4,
+        "domain": "REFUGE",
+        "within_domain_start": 256,
+        "first_visit": 870,
+        "count": 64
+      },
+      {
+        "round": 4,
+        "domain": "ORIGA",
+        "within_domain_start": 256,
+        "first_visit": 934,
+        "count": 64
+      },
+      {
+        "round": 4,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 256,
+        "first_visit": 998,
+        "count": 64
+      },
+      {
+        "round": 5,
+        "domain": "ORIGA",
+        "within_domain_start": 320,
+        "first_visit": 1062,
+        "count": 64
+      },
+      {
+        "round": 5,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 320,
+        "first_visit": 1126,
+        "count": 64
+      },
+      {
+        "round": 5,
+        "domain": "REFUGE",
+        "within_domain_start": 320,
+        "first_visit": 1190,
+        "count": 64
+      },
+      {
+        "round": 6,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 384,
+        "first_visit": 1254,
+        "count": 64
+      },
+      {
+        "round": 6,
+        "domain": "REFUGE",
+        "within_domain_start": 384,
+        "first_visit": 1318,
+        "count": 16
+      },
+      {
+        "round": 6,
+        "domain": "ORIGA",
+        "within_domain_start": 384,
+        "first_visit": 1334,
+        "count": 64
+      },
+      {
+        "round": 7,
+        "domain": "ORIGA",
+        "within_domain_start": 448,
+        "first_visit": 1398,
+        "count": 64
+      },
+      {
+        "round": 7,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 448,
+        "first_visit": 1462,
+        "count": 64
+      },
+      {
+        "round": 8,
+        "domain": "ORIGA",
+        "within_domain_start": 512,
+        "first_visit": 1526,
+        "count": 64
+      },
+      {
+        "round": 8,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 512,
+        "first_visit": 1590,
+        "count": 64
+      },
+      {
+        "round": 9,
+        "domain": "ORIGA",
+        "within_domain_start": 576,
+        "first_visit": 1654,
+        "count": 64
+      },
+      {
+        "round": 9,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 576,
+        "first_visit": 1718,
+        "count": 64
+      },
+      {
+        "round": 10,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 640,
+        "first_visit": 1782,
+        "count": 64
+      },
+      {
+        "round": 10,
+        "domain": "ORIGA",
+        "within_domain_start": 640,
+        "first_visit": 1846,
+        "count": 10
+      },
+      {
+        "round": 11,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 704,
+        "first_visit": 1856,
+        "count": 64
+      },
+      {
+        "round": 12,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 768,
+        "first_visit": 1920,
+        "count": 32
+      }
+    ],
+    "contiguous_domain_segments": [
+      {
+        "domain": "REFUGE",
+        "first_visit": 1,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 65,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 129,
+        "count": 64
+      },
+      {
+        "domain": "Drishti_GS",
+        "first_visit": 193,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 257,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 321,
+        "count": 64
+      },
+      {
+        "domain": "Drishti_GS",
+        "first_visit": 385,
+        "count": 37
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 422,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 486,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 550,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 614,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 678,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 742,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 806,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 870,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 934,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 998,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 1062,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1126,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 1190,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1254,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 1318,
+        "count": 16
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 1334,
+        "count": 128
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1462,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 1526,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1590,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 1654,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1718,
+        "count": 128
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 1846,
+        "count": 10
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1856,
+        "count": 96
+      }
+    ],
+    "primary_streams_unchanged": true,
+    "raw_image_replay": false
+  }
+}

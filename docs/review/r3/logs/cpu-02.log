@@ -1,0 +1,75 @@
+test_01_covariance_models_psd (test_r3_reference.MathTests.test_01_covariance_models_psd) ... ok
+test_02_lowrank_tail_and_trace (test_r3_reference.MathTests.test_02_lowrank_tail_and_trace) ... ok
+test_03_density_matches_explicit_inverse (test_r3_reference.MathTests.test_03_density_matches_explicit_inverse) ... ok
+test_04_density_teacher_zero_and_bounded (test_r3_reference.MathTests.test_04_density_teacher_zero_and_bounded) ... ok
+test_05_density_unsupported_not_confident_fallback (test_r3_reference.MathTests.test_05_density_unsupported_not_confident_fallback) ... ok
+test_06_procrustes_recovers_known_rotation (test_r3_reference.MathTests.test_06_procrustes_recovers_known_rotation) ... ok
+test_07_transport_matches_reencoded_statistics (test_r3_reference.MathTests.test_07_transport_matches_reencoded_statistics) ... ok
+test_08_procrustes_identity_and_no_input_mutation (test_r3_reference.MathTests.test_08_procrustes_identity_and_no_input_mutation) ... ok
+test_09_projection_matches_full_solve (test_r3_reference.MathTests.test_09_projection_matches_full_solve) ... ok
+test_10_projection_nullspace_and_zero_rows (test_r3_reference.MathTests.test_10_projection_nullspace_and_zero_rows) ... ok
+test_11_norm_control_and_probe_contraction (test_r3_reference.MathTests.test_11_norm_control_and_probe_contraction) ... ok
+test_12_feature_jacobian_actual_Adam_step (test_r3_reference.MathTests.test_12_feature_jacobian_actual_Adam_step) ... ok
+test_13_nested_projection_formula (test_r3_reference.MathTests.test_13_nested_projection_formula) ... ok
+test_14_weighted_nested_projection_optimum (test_r3_reference.MathTests.test_14_weighted_nested_projection_optimum) ... ok
+test_15_grid_edges_local_unique (test_r3_reference.MathTests.test_15_grid_edges_local_unique) ... ok
+test_16_graph_isotropic_identity_metrics (test_r3_reference.MathTests.test_16_graph_isotropic_identity_metrics) ... ok
+test_17_graph_mirror_proximal_energy_and_order (test_r3_reference.MathTests.test_17_graph_mirror_proximal_energy_and_order) ... ok
+test_18_graph_zero_edges_equals_order_control (test_r3_reference.MathTests.test_18_graph_zero_edges_equals_order_control) ... ok
+test_19_router_capacity_and_readonly_choice (test_r3_reference.MathTests.test_19_router_capacity_and_readonly_choice) ... ok
+test_20_router_does_not_mutate_unselected (test_r3_reference.MathTests.test_20_router_does_not_mutate_unselected) ... ok
+test_21_recurrence_single_use_and_order_preserved (test_r3_reference.MathTests.test_21_recurrence_single_use_and_order_preserved) ... ok
+test_22_recurrence_rejects_duplicate (test_r3_reference.MathTests.test_22_recurrence_rejects_duplicate) ... ok
+test_23_full_matrix_budget (test_r3_reference.MathTests.test_23_full_matrix_budget) ... ok
+test_24_nonfinite_rejected_and_cuda_unused (test_r3_reference.MathTests.test_24_nonfinite_rejected_and_cuda_unused) ... ok
+test_C_RP_two_step_old_path_parity (test_r3.HostTests.test_C_RP_two_step_old_path_parity) ... ok
+test_all_families_actual_cold_and_ready_paths (test_r3.HostTests.test_all_families_actual_cold_and_ready_paths) ... ok
+test_cold_no_loss_branches_match_C_and_augmentation_rng (test_r3.HostTests.test_cold_no_loss_branches_match_C_and_augmentation_rng) ... ok
+test_prediction_before_merge_labels_private_and_failure_cleanup (test_r3.HostTests.test_prediction_before_merge_labels_private_and_failure_cleanup) ... ok
+test_programmatic_full_ResUNet_38_updates_all_families (test_r3.HostTests.test_programmatic_full_ResUNet_38_updates_all_families) ... ERROR
+test_Jacobian_finite_difference_unused_columns_and_no_32D_parameter_projection (test_r3.MechanismTests.test_Jacobian_finite_difference_unused_columns_and_no_32D_parameter_projection) ... ok
+test_T_high_resolution_zero_pair_ready_and_graph_detached (test_r3.MechanismTests.test_T_high_resolution_zero_pair_ready_and_graph_detached) ... ok
+test_actual_Adam_moments_and_norm_control (test_r3.MechanismTests.test_actual_Adam_moments_and_norm_control) ... ok
+test_context_small_states_capacity_reuse_and_rng (test_r3.MechanismTests.test_context_small_states_capacity_reuse_and_rng) ... ok
+test_matrix_and_disabled_entry_before_any_asset_access (test_r3.MechanismTests.test_matrix_and_disabled_entry_before_any_asset_access) ... ok
+test_sampling_equal_R1_and_local_rng (test_r3.MechanismTests.test_sampling_equal_R1_and_local_rng) ... ok
+test_transport_all_live_cached_frames_and_post_storage (test_r3.MechanismTests.test_transport_all_live_cached_frames_and_post_storage) ... ok
+
+======================================================================
+ERROR: test_programmatic_full_ResUNet_38_updates_all_families (test_r3.HostTests.test_programmatic_full_ResUNet_38_updates_all_families)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>/tests/test_r3.py", line 129, in test_programmatic_full_ResUNet_38_updates_all_families
+    if h.memory is not None:ready(h.memory)
+                            ^^^^^^^^^^^^^^^
+  File "<WORKTREE>/tests/test_r3.py", line 30, in ready
+    for visit in range(1,17):b.merge(k.unit(torch.randn(8,32,generator=g)),visit)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_PREFIX>/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<WORKTREE>/src/dpa_ctta/r1/streaming_pca.py", line 24, in merge
+    if visit<=self.last_visit:raise ValueError('bank visit must advance')
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: bank visit must advance
+
+----------------------------------------------------------------------
+Ran 36 tests in 28.626s
+
+FAILED (errors=1)
+{
+  "tests": 36,
+  "failures": 0,
+  "errors": 1,
+  "skipped": 0,
+  "seconds": 28.64815070782788,
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "checkpoint_reads": 0,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 1
+}
