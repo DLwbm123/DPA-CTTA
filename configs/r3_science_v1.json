@@ -1,0 +1,405 @@
+{
+  "experiment": "R3_FIVE_REGION_FRAMEWORKS",
+  "status": "PROPOSED_FOR_IMPLEMENTATION_REVIEW",
+  "authority": "01_MASTER_PROMPT.md and 02_METHOD_SPEC.md; differences must be reported, not silently reconciled",
+  "base_commit": "f52f132e4be576ea871467432a6f4b12337209a5",
+  "source_access": "checkpoint_only_no_source_data_no_source_retraining",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "seed": 20260907,
+  "task": "fundus",
+  "groups": 1951,
+  "primary_subset": "remaining_dev",
+  "primary_subset_groups": 1695,
+  "orders": [
+    [
+      "REFUGE",
+      "ORIGA",
+      "REFUGE_Valid",
+      "Drishti_GS"
+    ],
+    [
+      "Drishti_GS",
+      "REFUGE_Valid",
+      "ORIGA",
+      "REFUGE"
+    ],
+    [
+      "ORIGA",
+      "Drishti_GS",
+      "REFUGE",
+      "REFUGE_Valid"
+    ],
+    [
+      "REFUGE_Valid",
+      "REFUGE",
+      "Drishti_GS",
+      "ORIGA"
+    ]
+  ],
+  "secondary_stream": {
+    "id": 4,
+    "type": "rotating_domain_chunks_unique_contents",
+    "chunk_size": 64,
+    "base_order": [
+      "REFUGE",
+      "ORIGA",
+      "REFUGE_Valid",
+      "Drishti_GS"
+    ],
+    "round_order_rule": "left_rotate_base_by_round_mod_4",
+    "within_domain_order": "unchanged_from_registered_sequence",
+    "raw_image_replay": false,
+    "new_registration_required": false,
+    "separate_stream_digest_required": true
+  },
+  "arms": [
+    {
+      "name": "C",
+      "family": "baseline",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "RP",
+      "family": "baseline",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "T_LR",
+      "family": "candidate_1_teacher",
+      "forwards_per_visit": 9,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "T_ISO",
+      "family": "control_teacher",
+      "forwards_per_visit": 9,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "T_DIAG",
+      "family": "control_teacher",
+      "forwards_per_visit": 9,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "U_PCA",
+      "family": "candidate_3_update",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 8
+    },
+    {
+      "name": "U_RAND",
+      "family": "control_update",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 8
+    },
+    {
+      "name": "U_SCALE",
+      "family": "control_update",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 8
+    },
+    {
+      "name": "S_JOINT",
+      "family": "candidate_4_state",
+      "forwards_per_visit": 9,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "S_SHARED",
+      "family": "control_state",
+      "forwards_per_visit": 9,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "S_NOPCA",
+      "family": "control_state",
+      "forwards_per_visit": 9,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "M_TRANSPORT",
+      "family": "candidate_2_transport",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "M_IDPOST",
+      "family": "control_transport",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "M_SHUFFLE",
+      "family": "control_transport",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "G_PCA",
+      "family": "candidate_5_graph",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "G_ISO",
+      "family": "control_graph",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    },
+    {
+      "name": "G_ORDER",
+      "family": "control_graph",
+      "forwards_per_visit": 8,
+      "loss_backward_per_visit": 1,
+      "adam_per_visit": 1,
+      "jacobian_vjp_per_visit_upper": 0
+    }
+  ],
+  "priority_candidates": [
+    "T_LR",
+    "U_PCA",
+    "S_JOINT",
+    "M_TRANSPORT",
+    "G_PCA"
+  ],
+  "host": {
+    "C": "unchanged_six_view_point_target_BCE",
+    "bn_layers": 41,
+    "affine_scalars": 19136,
+    "lr": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0.0,
+    "parameter_dtype": "float32",
+    "AMP": false,
+    "view_batching": "separate_single_image_forwards",
+    "scored_prediction": "raw_original_image_after_one_update",
+    "cross_domain_reset": false,
+    "allow_real_domain_id_to_algorithm": false
+  },
+  "memory": {
+    "feature": "seg_head_input",
+    "dim": 32,
+    "grid": [
+      32,
+      32
+    ],
+    "rank": 8,
+    "norm_eps": 1e-06,
+    "region_order": [
+      "OD_bg",
+      "OD_fg",
+      "OC_bg",
+      "OC_fg"
+    ],
+    "reliable_q_bounds": [
+      0.1,
+      0.9
+    ],
+    "all_six_hard_agree": true,
+    "per_region_sample_cap": 32,
+    "min_contributing_images": 16,
+    "min_vectors": 128,
+    "refresh_contributing_images": 16,
+    "stats": "CPU_float64_cumulative_Welford",
+    "forgetting_factor": 1.0,
+    "current_image_joins_after_prediction": true,
+    "retained_raw_vectors": false,
+    "absolute_loss_weight": 0.05
+  },
+  "teacher": {
+    "feature_frame": "immutable_checkpoint_source_BN_eval",
+    "num_reference_forwards": 1,
+    "modes": [
+      "LR",
+      "ISO",
+      "DIAG"
+    ],
+    "covariance_shrink_beta": 0.1,
+    "variance_floor": 0.0001,
+    "rank": 8,
+    "log_evidence_divisor": 32,
+    "log_evidence_clip": 4.0,
+    "alpha": 0.5,
+    "inlier_mahalanobis_per_dim_max": 4.0,
+    "region_pair_ready_required": true,
+    "memory_labels": "original_C_six_view_targets_before_correction",
+    "foreground_prior": "not_estimated_from_balanced_samples",
+    "upsample": "bilinear_logodds_correction_align_corners_false",
+    "adds_absolute_PCA_loss": false
+  },
+  "update": {
+    "probes_per_ready_region": 2,
+    "max_rows": 8,
+    "probe_source": "original_image_preupdate_grad_enabled_feature",
+    "probe_definition": "two_leading_PCA_coordinates_of_reliable_region_mean",
+    "row_l2_normalize": true,
+    "zero_row_threshold": 1e-12,
+    "metric": "identity_in_ordered_BN_parameter_vector",
+    "strength": 1.0,
+    "candidate_delta": "actual_one_Adam_proposal",
+    "moments": "advance_once_from_unmodified_C_gradient_no_projection_of_moments",
+    "random_control": "fixed_CPU_QR_feature_directions_per_region",
+    "scale_control": "same_own_PCA_solution_norm_only",
+    "adds_absolute_PCA_loss": false
+  },
+  "state_pool": {
+    "capacity": 3,
+    "descriptor": "normalized_concat_global_mean_and_std_immutable_source_BN_head_input",
+    "descriptor_dim": 64,
+    "minimum_context_observations": 16,
+    "novelty": "distance_to_nearest > max(1e-6, past_distance_mean + 3*past_distance_sd)",
+    "novelty_is_calibrated_risk": false,
+    "initial_state": "source_affine_empty_Adam_empty_region_memory",
+    "when_full": "nearest_existing_no_eviction_no_growth",
+    "descriptor_update": "after_current_prediction",
+    "moments_mix": false,
+    "rng_per_context": false,
+    "global_rng_per_trajectory": true,
+    "arms": {
+      "S_JOINT": "context_affine_Adam_and_regional_memory",
+      "S_SHARED": "one_affine_Adam_context_regional_memories",
+      "S_NOPCA": "context_affine_Adam_shadow_regional_memory_no_PCA_loss"
+    },
+    "shared_source_weights": true
+  },
+  "transport": {
+    "rotation_dim": 32,
+    "tau": 0.01,
+    "min_distinct_spatial_pairs": 32,
+    "fit_weighting": "equal_nonempty_regions_then_uniform_within_selected_region",
+    "affine_translation": false,
+    "group": "O(32)_no_det_sign_fix",
+    "statistics_insert": "postupdate_features_at_preselected_positions",
+    "rotate_live_and_snapshot_mean_and_basis": true,
+    "covariance_rotation": "Q_M2_Qt",
+    "no_decay": true,
+    "controls": [
+      "identity_postinsert",
+      "shuffle_post_positions_within_same_region"
+    ],
+    "claim": "local_orthogonal_approximation_not_exact_history_reencoding"
+  },
+  "graph": {
+    "grid": [
+      32,
+      32
+    ],
+    "edges": "undirected_4_neighbour_no_self_edges",
+    "edge_count": 1984,
+    "temperature": 0.1,
+    "precision": "rank8_shrunk_trace_normalized",
+    "mixture": "soft_OD_OC_region_membership_average_endpoints",
+    "unary_reliable": 10.0,
+    "unary_other": 1.0,
+    "lam": 0.25,
+    "steps": 32,
+    "eta": 0.25,
+    "prob_eps": 1e-05,
+    "nested_constraint": "OC<=OD",
+    "all_four_banks_ready_required": true,
+    "solver": "mirror_proximal_fixed_iterations",
+    "refined_target_detached": true,
+    "memory_labels": "unrefined_C_teacher",
+    "full_resolution_target": "upsampled_logodds_correction_then_weighted_nested_projection",
+    "final_prediction_constraint": false,
+    "adds_absolute_PCA_loss": false
+  },
+  "formal_budget": {
+    "scoring_records": 165835,
+    "network_forwards": 1385210,
+    "loss_backward_calls": 165835,
+    "adam_calls": 165835,
+    "jacobian_vjp_upper": 234120,
+    "trajectories": 85,
+    "unique_contents": 1951,
+    "primary_trajectories": 68,
+    "primary_records": 132668,
+    "secondary_trajectories": 17,
+    "secondary_records": 33167,
+    "offline_training_updates": 0
+  },
+  "per_gpu_smoke": {
+    "adam_calls": 38,
+    "loss_backward_calls": 38,
+    "network_forwards": 316,
+    "jacobian_vjp_upper": 24,
+    "scoring_records_in_main_results": 0
+  },
+  "resources": {
+    "preferred_physical_devices": [
+      6,
+      7
+    ],
+    "authorized_devices": null,
+    "max_workers": 3,
+    "max_threads_per_worker": 2,
+    "trajectory_hours_cap": 6,
+    "wall_hours_cap": 96,
+    "total_active_worker_hours_cap": 160,
+    "new_private_output_bytes_cap": 6442450944,
+    "background_authorized": false,
+    "scope": "resource_caps_not_time_predictions"
+  },
+  "selection_reference": {
+    "primary_mean_gain_over_C_pp": 0.5,
+    "positive_primary_orders_at_least": 3,
+    "domain_mean_warning_below_pp": -2.0,
+    "worst_primary_order_warning_below_pp": -0.5,
+    "secondary_stream_not_pooled_with_primary": true,
+    "no_auto_combination": true,
+    "no_auto_hyperparameter_search": true,
+    "not_statistical_or_clinical_threshold": true
+  },
+  "phase_I": {
+    "GPU": false,
+    "read_real_target_pixels_or_masks": false,
+    "source_checkpoint_CPU_readonly_optional": true,
+    "publish": "code_config_logs_deidentified_documents_only",
+    "stop_status": "R3_IMPLEMENTATION_READY_FOR_REVIEW"
+  },
+  "phase_II": {
+    "requires_external_review_on_exact_commit": true,
+    "requires_fresh_device_authorization": true,
+    "no_score_gates_between_families": true,
+    "no_auto_retry_failed_trajectories": true
+  }
+}
