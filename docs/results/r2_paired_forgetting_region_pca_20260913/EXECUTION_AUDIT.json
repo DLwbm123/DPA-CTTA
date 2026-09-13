@@ -1,0 +1,1139 @@
+{
+  "status": "R2_EXPERIMENT_COMPLETE",
+  "binding": {
+    "run_id": "a5144c0eacc040b6834cf0dd02ef3fdd",
+    "code_sha": "e0d3f6634bfa7349b214942fc01f64d57a65470f",
+    "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+  },
+  "jobs": [
+    {
+      "job_id": "o0a0",
+      "arm": "R2_E",
+      "order": 0,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 6,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1307.96124770795,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.5485265137227219,
+          "median": 0.5606353119947016,
+          "p10": 0.48394577903673053,
+          "p90": 0.5810566230211407,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.43748715496622026,
+          "worst_decile_mean": 0.4666529516309348,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6383752459294995,
+          "median": 0.6421872889623046,
+          "p10": 0.59007004997693,
+          "p90": 0.6754428041167557,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5150158200412989,
+          "worst_decile_mean": 0.5576982831199919,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 667991040
+    },
+    {
+      "job_id": "o0a1",
+      "arm": "R2_D",
+      "order": 0,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 7,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1308.4784757960588,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.545631246635908,
+          "median": 0.5578521220013499,
+          "p10": 0.4806187408976257,
+          "p90": 0.577277555828914,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.44048635894432664,
+          "worst_decile_mean": 0.4641476561830911,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6383643545072405,
+          "median": 0.641703066881746,
+          "p10": 0.5895430939272046,
+          "p90": 0.6802294789813459,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5118123069405556,
+          "worst_decile_mean": 0.5584542166158956,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o0a2",
+      "arm": "R2_DE",
+      "order": 0,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 6,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1165.8952072248794,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.5003902566470521,
+          "median": 0.46942132082767785,
+          "p10": 0.4450203569140285,
+          "p90": 0.5754431351087987,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4163024800363928,
+          "worst_decile_mean": 0.43952363348157353,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5818718443067361,
+          "median": 0.5474199359305203,
+          "p10": 0.5183886620216072,
+          "p90": 0.6618333470541984,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.48293327796272933,
+          "worst_decile_mean": 0.5127486439186566,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o0a3",
+      "arm": "R2_F",
+      "order": 0,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 7,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1150.3158169039525,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.4921128395642906,
+          "median": 0.4615773889236152,
+          "p10": 0.43655621190555394,
+          "p90": 0.5642745709046721,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.41171081899665296,
+          "worst_decile_mean": 0.4314887012243366,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5725274807730568,
+          "median": 0.5384545880369842,
+          "p10": 0.5091003151610494,
+          "p90": 0.6519540371373296,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.47565728798508644,
+          "worst_decile_mean": 0.5031507645035163,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 657374208
+    },
+    {
+      "job_id": "o0a4",
+      "arm": "R2_DE_S",
+      "order": 0,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 6,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1030.8762357519008,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.4505307833451218,
+          "median": 0.44955583894625306,
+          "p10": 0.43738219095394015,
+          "p90": 0.463965707924217,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4118558850605041,
+          "worst_decile_mean": 0.43194033244829055,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5249916838353375,
+          "median": 0.5250570541247725,
+          "p10": 0.5074939848855138,
+          "p90": 0.5426474511623383,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4822017459664494,
+          "worst_decile_mean": 0.5028864796907755,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 667991040
+    },
+    {
+      "job_id": "o1a0",
+      "arm": "R2_E",
+      "order": 1,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 7,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1024.6618320459966,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.44694885102087306,
+          "median": 0.4458618899807334,
+          "p10": 0.4336523150559515,
+          "p90": 0.46033744886517525,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4184768770355731,
+          "worst_decile_mean": 0.4286880793729417,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5218277204561471,
+          "median": 0.5221482901833951,
+          "p10": 0.5039914159569889,
+          "p90": 0.5403059541713446,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.48902545613236725,
+          "worst_decile_mean": 0.49972652623724495,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o1a1",
+      "arm": "R2_D",
+      "order": 1,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 6,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1041.0349586829543,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.45331449036654475,
+          "median": 0.4528357901144773,
+          "p10": 0.43883638782426715,
+          "p90": 0.4674804019741714,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.413065975997597,
+          "worst_decile_mean": 0.4338181071251878,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5297206639940409,
+          "median": 0.5299978700932115,
+          "p10": 0.5125185649376363,
+          "p90": 0.5468311479780823,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4806920289993286,
+          "worst_decile_mean": 0.5070036440738477,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o1a2",
+      "arm": "R2_DE",
+      "order": 1,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 7,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1035.6716726419982,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.4515658995303216,
+          "median": 0.45105616096407175,
+          "p10": 0.4372929879464209,
+          "p90": 0.46577157313004136,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4191281299572438,
+          "worst_decile_mean": 0.43226219677219013,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5269204644385586,
+          "median": 0.5274170411285013,
+          "p10": 0.5097297909669578,
+          "p90": 0.5447029119823128,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.48390177893452346,
+          "worst_decile_mean": 0.5037895287137611,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 667991040
+    },
+    {
+      "job_id": "o1a3",
+      "arm": "R2_F",
+      "order": 1,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 6,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1087.8443320649676,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.47862253396980453,
+          "median": 0.4567152401432395,
+          "p10": 0.4374005089048296,
+          "p90": 0.5841575050726533,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4166287698317319,
+          "worst_decile_mean": 0.4319741319358938,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5537564336678594,
+          "median": 0.5279365200549364,
+          "p10": 0.5082119179423898,
+          "p90": 0.6711265670601279,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.48423544596880674,
+          "worst_decile_mean": 0.5022148289123778,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 657374208
+    },
+    {
+      "job_id": "o1a4",
+      "arm": "R2_DE_S",
+      "order": 1,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 7,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1073.9203205169179,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.47114448349644594,
+          "median": 0.45181659306399524,
+          "p10": 0.43517730198800564,
+          "p90": 0.5728489251341671,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.40989193599671125,
+          "worst_decile_mean": 0.42942810666091663,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5466729490522502,
+          "median": 0.5254893959499896,
+          "p10": 0.5062721739523113,
+          "p90": 0.6622632090002298,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.48068449296988547,
+          "worst_decile_mean": 0.49990939161602443,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o2a0",
+      "arm": "R2_E",
+      "order": 2,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 6,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1232.4579926661681,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.5516605530314144,
+          "median": 0.585307784145698,
+          "p10": 0.44831978785805404,
+          "p90": 0.5969406838994473,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.41515430388972163,
+          "worst_decile_mean": 0.44114138289920185,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6277225828713578,
+          "median": 0.6628818470053375,
+          "p10": 0.5170666361227632,
+          "p90": 0.6758984429761767,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4883896701503545,
+          "worst_decile_mean": 0.5098170410029172,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o2a1",
+      "arm": "R2_D",
+      "order": 2,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 7,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1099.5255586910062,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.48347550878436835,
+          "median": 0.45845877402462065,
+          "p10": 0.43989091203548014,
+          "p90": 0.5820335750468075,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4171734540723264,
+          "worst_decile_mean": 0.43496269341415666,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5595999887290204,
+          "median": 0.5317378980107605,
+          "p10": 0.5093098119832575,
+          "p90": 0.6610143971629441,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.48659481201320887,
+          "worst_decile_mean": 0.5043859126388418,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o2a2",
+      "arm": "R2_DE",
+      "order": 2,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 6,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1239.0351417381316,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.5068778134707022,
+          "median": 0.5030024300795048,
+          "p10": 0.4766917328815907,
+          "p90": 0.5298163718543947,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.41610679402947426,
+          "worst_decile_mean": 0.4619612585627284,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.608718614450306,
+          "median": 0.6123135690577328,
+          "p10": 0.5617556129582226,
+          "p90": 0.6519790911115706,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4802419310435653,
+          "worst_decile_mean": 0.5416365167178327,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o2a3",
+      "arm": "R2_F",
+      "order": 2,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 7,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1179.5857398801018,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.4850169499323578,
+          "median": 0.4876352238934487,
+          "p10": 0.44749144092202187,
+          "p90": 0.5170915881171823,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4246846919413656,
+          "worst_decile_mean": 0.4412716856280969,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5790112383932406,
+          "median": 0.5847156420350075,
+          "p10": 0.5180159830488265,
+          "p90": 0.6289481369312853,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.49272536393254995,
+          "worst_decile_mean": 0.5113414356993435,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 657374208
+    },
+    {
+      "job_id": "o2a4",
+      "arm": "R2_DE_S",
+      "order": 2,
+      "runtime_binding": {
+        "run_id": "6bb3ccee255243a684c95975ba2671bc",
+        "code_sha": "1560f28d41dda5665404ececbefc4f0a7c69d192",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 6,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1218.914830337977,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.48878986022276644,
+          "median": 0.4887459168676287,
+          "p10": 0.45115008391439915,
+          "p90": 0.5261077219620347,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.41914244601503015,
+          "worst_decile_mean": 0.44302915897320155,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.5970760352149613,
+          "median": 0.5887308218516409,
+          "p10": 0.5333256640005857,
+          "p90": 0.6697315811179578,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.49829970905557275,
+          "worst_decile_mean": 0.5219123052167041,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o3a0",
+      "arm": "R2_E",
+      "order": 3,
+      "runtime_binding": {
+        "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+        "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 7,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1235.852844239911,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.499298199111675,
+          "median": 0.500340485945344,
+          "p10": 0.4743146321270615,
+          "p90": 0.520328267943114,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4184398108627647,
+          "worst_decile_mean": 0.46157746272855343,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6027439303145048,
+          "median": 0.6043609280604869,
+          "p10": 0.5657184571027756,
+          "p90": 0.6367142370436341,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.49328682012856007,
+          "worst_decile_mean": 0.5486144206370227,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o3a1",
+      "arm": "R2_D",
+      "order": 3,
+      "runtime_binding": {
+        "run_id": "a5144c0eacc040b6834cf0dd02ef3fdd",
+        "code_sha": "e0d3f6634bfa7349b214942fc01f64d57a65470f",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 6,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1327.965612243861,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.5147046378342534,
+          "median": 0.5034576340112835,
+          "p10": 0.46061305794864893,
+          "p90": 0.5793958550784737,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4265580498613417,
+          "worst_decile_mean": 0.4506956505071258,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6761338249097618,
+          "median": 0.6676894098054618,
+          "p10": 0.5931302329991013,
+          "p90": 0.7720319211948663,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5174396100919694,
+          "worst_decile_mean": 0.5711209251051198,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o3a2",
+      "arm": "R2_DE",
+      "order": 3,
+      "runtime_binding": {
+        "run_id": "a5144c0eacc040b6834cf0dd02ef3fdd",
+        "code_sha": "e0d3f6634bfa7349b214942fc01f64d57a65470f",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 7,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1327.9820797101129,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.5052540622111448,
+          "median": 0.4965161301661283,
+          "p10": 0.4573476279620081,
+          "p90": 0.5619020180311054,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4289195421151817,
+          "worst_decile_mean": 0.44801142000075317,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6762252887623811,
+          "median": 0.6681674839928746,
+          "p10": 0.5950549908448011,
+          "p90": 0.7651406801305711,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5148798869922757,
+          "worst_decile_mean": 0.5738494358042122,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    },
+    {
+      "job_id": "o3a3",
+      "arm": "R2_F",
+      "order": 3,
+      "runtime_binding": {
+        "run_id": "a5144c0eacc040b6834cf0dd02ef3fdd",
+        "code_sha": "e0d3f6634bfa7349b214942fc01f64d57a65470f",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 6,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1286.0845744020771,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.5201120672063441,
+          "median": 0.5151538250502199,
+          "p10": 0.470146169885993,
+          "p90": 0.5714566891547292,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.43204461806453764,
+          "worst_decile_mean": 0.4586826908860679,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6545818625459555,
+          "median": 0.6495656850747764,
+          "p10": 0.5897869039326906,
+          "p90": 0.7245990009978414,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5132570599671453,
+          "worst_decile_mean": 0.5697960591178901,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 657374208
+    },
+    {
+      "job_id": "o3a4",
+      "arm": "R2_DE_S",
+      "order": 3,
+      "runtime_binding": {
+        "run_id": "a5144c0eacc040b6834cf0dd02ef3fdd",
+        "code_sha": "e0d3f6634bfa7349b214942fc01f64d57a65470f",
+        "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+      },
+      "physical_gpu": 7,
+      "device_model": "NVIDIA GeForce RTX 3090",
+      "records": 1951,
+      "physical": {
+        "forwards": 15608,
+        "backwards": 1951,
+        "base_adam": 1951,
+        "perturb": 0,
+        "restore": 0
+      },
+      "trajectory_seconds": 1252.305280298926,
+      "latency": {
+        "host_seconds": {
+          "n": 1951,
+          "mean": 0.504302035067956,
+          "median": 0.5007953990716487,
+          "p10": 0.46364005492068827,
+          "p90": 0.5479893679730594,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.4308049299288541,
+          "worst_decile_mean": 0.4534076942791402,
+          "tail_count": 196
+        },
+        "pipeline_seconds": {
+          "n": 1951,
+          "mean": 0.6369314183995867,
+          "median": 0.6312796310521662,
+          "p10": 0.5781778739765286,
+          "p90": 0.7021026948932558,
+          "positive": 1951,
+          "zero": 0,
+          "negative": 0,
+          "minimum": 0.5207449349109083,
+          "worst_decile_mean": 0.5606996607729139,
+          "tail_count": 196
+        }
+      },
+      "peak_allocated_bytes": 665893888
+    }
+  ],
+  "launcher_exit_code": 0,
+  "completed_at": "2026-09-13T20:14:15.734085+08:00",
+  "final_attempt_process_exit_codes": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "selected_formal_physical": {
+    "new_records": 39020,
+    "forwards": 312160,
+    "backwards": 39020,
+    "adam": 39020
+  },
+  "cumulative_active_worker_seconds": 26373.932922688546,
+  "cumulative_attempt_wall_seconds": 13713.014093003003,
+  "final_attempt_cpu_closeout_seconds": 51.11873772740364,
+  "continuation_accounting": {
+    "source_binding": {
+      "run_id": "8ce180e3db2249c19bba9d103ede9cb2",
+      "code_sha": "0d515328a6cc42d8e0c6a458265b41e41c454fa6",
+      "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+      "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+    },
+    "carried_jobs": [
+      "o0a0",
+      "o0a1",
+      "o0a2",
+      "o0a3",
+      "o0a4",
+      "o1a0",
+      "o1a1",
+      "o1a2",
+      "o1a3",
+      "o1a4",
+      "o2a0",
+      "o2a1",
+      "o2a2",
+      "o2a3",
+      "o3a0",
+      "o2a4"
+    ],
+    "executed_jobs": [
+      "o3a1",
+      "o3a2",
+      "o3a3",
+      "o3a4"
+    ],
+    "discarded_prefix_records": 4085,
+    "discarded_prefix_physical": {
+      "forwards": 32680,
+      "backwards": 4085,
+      "base_adam": 4085,
+      "perturb": 0,
+      "restore": 0
+    },
+    "prior_smoke_physical": {
+      "forwards": 672,
+      "backwards": 84,
+      "base_adam": 84,
+      "perturb": 0,
+      "restore": 0
+    },
+    "note": "User-authorized IO continuation; prior failures preserved. Formal table excludes interrupted prefixes. Multiple runtime commits; repeated prefixes and fresh smoke exceed the original compute budget explicitly. Terminated workers may each have one unrecorded in-flight visit; physical totals are bounded, not exact.",
+    "abandoned_binding": {
+      "run_id": "a8693fe3eab44ddb802c6de6c0caafda",
+      "code_sha": "66eea7e880e16d4d25efa4edabc9d8ad59ff175d",
+      "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+      "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+    },
+    "abandoned_prefixes": {
+      "o2a4": 1048,
+      "o3a2": 1053
+    },
+    "actual_total_physical_lower_bound": {
+      "forwards": 345736,
+      "backwards": 43217,
+      "base_adam": 43217
+    },
+    "actual_total_physical_upper_bound": {
+      "forwards": 345752,
+      "backwards": 43219,
+      "base_adam": 43219
+    },
+    "unrecorded_inflight_upper_bound": {
+      "forwards": 16,
+      "backwards": 2,
+      "base_adam": 2
+    },
+    "recorded_scoring_visits": 43105,
+    "partial_binding": {
+      "run_id": "6bb3ccee255243a684c95975ba2671bc",
+      "code_sha": "1560f28d41dda5665404ececbefc4f0a7c69d192",
+      "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+      "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+    },
+    "partial_prefixes": {
+      "o3a2": 1408
+    },
+    "additional_carried_jobs": [
+      "o2a4"
+    ]
+  },
+  "cuda_initialized": false,
+  "real_images_masks_or_weights_read": false,
+  "validation": "Completed frozen CPU recompute plus export-time selected-row bindings, counts and completion consistency. No second model or metric evaluation."
+}

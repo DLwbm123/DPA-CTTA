@@ -1,0 +1,25 @@
+{
+  "status": "R2_EXPERIMENT_COMPLETE",
+  "completed_at": "2026-09-13T20:14:15.734085+08:00",
+  "binding": {
+    "run_id": "a5144c0eacc040b6834cf0dd02ef3fdd",
+    "code_sha": "e0d3f6634bfa7349b214942fc01f64d57a65470f",
+    "science_sha256": "882323714fc29b439bccb540cfe7e685733da1e7f0012af8a202954ec2e12353",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf"
+  },
+  "selected_trajectories": 20,
+  "selected_records": 39020,
+  "decision": "RETAIN_C",
+  "next_execution_authorized": false,
+  "public_scope": "Code, aggregate metrics, scalar mechanism/cost distributions, execution audit and validation summary",
+  "excluded": "Raw or per-content data, masks, weights, credentials, private paths and device UUIDs",
+  "validation": "Frozen CPU recompute passed; export verified selected-row bindings, counts and completion with CUDA uninitialized.",
+  "files": [
+    "EXECUTION_AUDIT.json",
+    "EXPORT_CHECK.log",
+    "MECHANISM_AND_COST.json",
+    "README.md",
+    "RUNTIME_REPORT.md",
+    "public_aggregate.json"
+  ]
+}
