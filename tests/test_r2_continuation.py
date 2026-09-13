@@ -15,21 +15,27 @@ from test_r2 import fixture
 
 
 class ContinuationChecks(unittest.TestCase):
+    def test_worker_deadline_does_not_read_shared_telemetry(self):
+        from dpa_ctta.r1.run import charge
+        with patch.object(Path,'read_text',side_effect=AssertionError('shared telemetry read')):
+            with patch('dpa_ctta.r1.run.time.monotonic',return_value=10):charge('/not-created',0,0,0)
+            with patch('dpa_ctta.r1.run.time.monotonic',return_value=7201),self.assertRaises(RuntimeError):charge('/not-created',0,0,0)
+
     def test_atomic_temporary_disappearance_only(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp);(root/'records').write_bytes(b'1234')
             original=Path.stat
             def race(path,*args,**kwargs):
-                if path.name in ('.write-race','.nfs000000000708194000000650'):
+                if path.name in ('.write-race','.nfs000000000708194000000650','usage.json','arbitrary.json'):
                     path.unlink(missing_ok=True)
                     raise FileNotFoundError(errno.ENOENT,'atomic rename',str(path))
                 return original(path,*args,**kwargs)
-            for name in ('.write-race','.nfs000000000708194000000650'):
+            for name in ('.write-race','.nfs000000000708194000000650','usage.json','arbitrary.json'):
                 (root/name).write_bytes(b'xx')
                 with patch.object(Path,'stat',race):self.assertEqual(output_bytes(root),4)
             (root/'alias').symlink_to('records');(root/'invalidated-result').symlink_to('missing')
             self.assertEqual(output_bytes(root),4)
-            for error in (OSError(errno.EIO,'storage failure'),PermissionError('denied'),FileNotFoundError('ordinary file missing')):
+            for error in (OSError(errno.EIO,'storage failure'),PermissionError('denied')):
                 with patch.object(Path,'stat',side_effect=error),self.assertRaises(type(error)):output_bytes(root)
 
     def test_supervisor_skips_carried_jobs_preserves_rotation(self):
@@ -79,6 +85,7 @@ class ContinuationChecks(unittest.TestCase):
                 new_entries=[json.loads(json.dumps(e).replace(c.SOURCE_RUN,new_identity['run_id']).replace(c.SOURCE_CODE,new_identity['code_sha'])) for e in entries if e['phase']=='smoke' or e['key'] in c.PENDING]
                 write(new/'matrix.processes.json',dict(binding=new_identity,status='COMPUTE_COMPLETE',processes=new_entries,exit_codes=[0]*len(new_entries),unstarted_jobs=[],active_seconds=1,wall_seconds=1))
                 write(new/'processes.started.json',dict(binding=new_identity,processes=[{k:e[k] for k in ('pid','pgid','binding','phase','key')} for e in new_entries]))
+                template=Path(tmp)/'template';shutil.copytree(new,template)
                 result=analyze.recompute(new,assets)
                 self.assertEqual(result['physical']['new_records'],240)
                 self.assertEqual(result['continuation']['actual_total_physical']['base_adam'],240+576+56)
@@ -116,6 +123,41 @@ class ContinuationChecks(unittest.TestCase):
                 self.assertNotIn('actual_total_physical',accounting)
                 self.assertEqual(info['completed_jobs'],continuation['completed_jobs'])
                 with self.assertRaises(PermissionError):c.inspect_source(source,assets,[6,7],dict(second_auth,abandoned_continuation_binding={}))
+                # Next attempt completed one job before the other worker's usage scan failed.
+                partial=Path(tmp)/'partial';shutil.copytree(template,partial)
+                partial_identity=dict(new_identity,run_id='6bb3ccee255243a684c95975ba2671bc',code_sha='1560f28d41dda5665404ececbefc4f0a7c69d192')
+                for p in partial.rglob('*.json*'):p.write_text(p.read_text().replace(new_identity['run_id'],partial_identity['run_id']).replace(new_identity['code_sha'],partial_identity['code_sha']))
+                for key in ('o3a1','o3a3','o3a4'):shutil.rmtree(partial/key)
+                partial_auth=dict(second_auth,approved_code_sha=partial_identity['code_sha'])
+                partial_packet=dict(packet,binding=partial_identity,authorization=partial_auth,out=str(partial),continuation=info,runtime_caps=caps)
+                write(partial/'packet.private.json',partial_packet,replace=True)
+                write(partial/'receipt.json',dict(original,binding=partial_identity,continuation=info,runtime_caps=caps),replace=True)
+                partial_entries=[json.loads(json.dumps(e).replace(new_identity['run_id'],partial_identity['run_id']).replace(new_identity['code_sha'],partial_identity['code_sha'])) for e in new_entries if e['phase']=='smoke' or e['key'] in ('o2a4','o3a2')]
+                e=next(e for e in partial_entries if e['key']=='o3a2');e.update(status='INCOMPLETE',exit_code=1)
+                p=partial/'o3a2';(p/'completion.json').unlink()
+                (p/'records.jsonl').write_text('\n'.join((p/'records.jsonl').read_text().splitlines()[:6])+'\n')
+                write(p/'failure.json',dict(binding=e['binding'],status='INCOMPLETE',records=6,reason="No such file or directory: '/output/usage.json'",physical=dict(forwards=48,backwards=6,base_adam=6,perturb=0,restore=0)))
+                write(p/'supervisor.failure.json',dict(binding=e['binding'],status='INCOMPLETE',prefix_preserved=True))
+                write(partial/'matrix.processes.json',dict(binding=partial_identity,status='INCOMPLETE',processes=partial_entries,exit_codes=[e['exit_code'] for e in partial_entries],unstarted_jobs=['o3a1','o3a3','o3a4'],active_seconds=1,wall_seconds=1),replace=True)
+                write(partial/'processes.started.json',dict(binding=partial_identity,processes=[{k:e[k] for k in ('pid','pgid','binding','phase','key')} for e in partial_entries]),replace=True)
+                write(partial/'dispatch.stopped.json',dict(binding=partial_identity,status='INCOMPLETE',reason='worker nonzero exit'))
+                third_auth=dict(second_auth,partial_continuation_directory=str(partial),partial_continuation_binding=partial_identity)
+                carried=c.inspect_source(source,assets,[6,7],third_auth)
+                self.assertEqual(len(carried['completed_jobs']),16);self.assertEqual(len(carried['pending_jobs']),4)
+                self.assertEqual(c.source_for(dict(continuation=carried),new,dict(job_id='o2a4'))[0].resolve(),(partial/'o2a4').resolve())
+                final=Path(tmp)/'final';shutil.copytree(template,final);shutil.rmtree(final/'o2a4')
+                final_identity=dict(new_identity,run_id='7'*32,code_sha='8'*40)
+                for p in final.rglob('*.json*'):p.write_text(p.read_text().replace(new_identity['run_id'],final_identity['run_id']).replace(new_identity['code_sha'],final_identity['code_sha']))
+                final_auth=dict(third_auth,approved_code_sha=final_identity['code_sha']);caps['bytes']=2*1024**3-carried['source_bytes']
+                write(final/'packet.private.json',dict(packet,binding=final_identity,authorization=final_auth,out=str(final),continuation=carried,runtime_caps=caps),replace=True)
+                write(final/'receipt.json',dict(original,binding=final_identity,continuation=carried,runtime_caps=caps),replace=True)
+                final_entries=[json.loads(json.dumps(e).replace(new_identity['run_id'],final_identity['run_id']).replace(new_identity['code_sha'],final_identity['code_sha'])) for e in new_entries if e['key']!='o2a4']
+                write(final/'matrix.processes.json',dict(binding=final_identity,status='COMPUTE_COMPLETE',processes=final_entries,exit_codes=[0]*len(final_entries),unstarted_jobs=[],active_seconds=1,wall_seconds=1),replace=True)
+                write(final/'processes.started.json',dict(binding=final_identity,processes=[{k:e[k] for k in ('pid','pgid','binding','phase','key')} for e in final_entries]),replace=True)
+                combined=analyze.recompute(final,assets)
+                self.assertEqual(combined['physical']['new_records'],240)
+                self.assertEqual(combined['continuation']['actual_total_physical_lower_bound']['base_adam'],240+576+9+6+112)
+                self.assertEqual(combined['continuation']['additional_carried_jobs'],['o2a4'])
 
 
 if __name__=='__main__':unittest.main()

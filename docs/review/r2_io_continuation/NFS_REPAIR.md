@@ -1,5 +1,8 @@
 # NFS follow-up to the temporary-file race
 
+Later status: this attempt exited at 19:14:14 with 16/20 trajectories complete.
+See [live-directory repair](LIVE_DIRECTORY_REPAIR.md); the startup estimate below expired.
+
 At 18:40:15 Asia/Shanghai on September 13, continuation
 `a8693fe3eab44ddb802c6de6c0caafda` stopped. The capacity scanner tolerated removed
 `.write-*` files but omitted NFS `.nfs<hex>` silly-rename files. The supervisor

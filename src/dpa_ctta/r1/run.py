@@ -11,9 +11,9 @@ def claim(out,job_id):
 
 
 def charge(out,worker,started,trajectory=None):
+    # The owning supervisor enforces cumulative active/wall caps in memory.
+    # Workers only need their own deadline; shared NFS telemetry is not a control channel.
     now=time.monotonic()
-    v=json.loads((Path(out)/'usage.json').read_text())
-    if v['seconds']>=86400 or v['wall_seconds']>=86400:raise TimeoutError('matrix active/wall cap')
     if trajectory is not None and now-trajectory>7200:raise RuntimeError('trajectory cap')
 
 

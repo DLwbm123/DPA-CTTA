@@ -1,7 +1,6 @@
 """Small private atomic evidence files; the current result pointer is authoritative."""
 import json
 import os
-import re
 import stat
 import tempfile
 import uuid
@@ -9,13 +8,11 @@ from pathlib import Path
 
 
 def output_bytes(root):
-    """Count each file once; atomic writes and NFS silly-renames may disappear."""
+    """Count a live directory, not a transaction; vanished entries consume no bytes."""
     total=0
     for path in Path(root).rglob('*'):
         try:info=path.stat(follow_symlinks=False)
-        except FileNotFoundError:
-            if path.name.startswith('.write-') or re.fullmatch(r'\.nfs[0-9a-fA-F]+',path.name):continue
-            raise
+        except FileNotFoundError:continue
         if stat.S_ISREG(info.st_mode):total+=info.st_size
     return total
 

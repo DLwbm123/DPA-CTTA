@@ -84,18 +84,19 @@ def inspect_source(source, assets, ids, authorization):
                 prior_smoke_physical={k:v*len(ids) for k,v in SMOKE.items()},prior_active_seconds=process['active_seconds'],
                 prior_wall_seconds=process['wall_seconds'],source_bytes=output_bytes(source))
     if authorization.get('abandoned_continuation_directory'):
-        include_abandoned(info,assets,ids,authorization)
+        include_attempt(info,assets,ids,authorization,'abandoned','a8693fe3eab44ddb802c6de6c0caafda','66eea7e880e16d4d25efa4edabc9d8ad59ff175d',())
+    if authorization.get('partial_continuation_directory'):
+        include_attempt(info,assets,ids,authorization,'partial','6bb3ccee255243a684c95975ba2671bc','1560f28d41dda5665404ececbefc4f0a7c69d192',('o2a4',))
     return info
 
 
-def include_abandoned(info,assets,ids,authorization):
-    """Account for the observed NFS failure without adopting either partial state."""
+def include_attempt(info,assets,ids,authorization,kind,expected_run,expected_code,completed):
+    """Validate the two known failed continuations; carry only complete trajectories."""
     from .plan import stream
     from .analyze import validate
-    out=Path(authorization['abandoned_continuation_directory']).resolve()
+    out=Path(authorization[kind+'_continuation_directory']).resolve()
     packet=read(out/'packet.private.json');receipt=read(out/'receipt.json');identity=receipt['binding']
-    expected_run='a8693fe3eab44ddb802c6de6c0caafda';expected_code='66eea7e880e16d4d25efa4edabc9d8ad59ff175d'
-    if identity!=authorization.get('abandoned_continuation_binding') or identity['run_id']!=expected_run or identity['code_sha']!=expected_code:
+    if identity!=authorization.get(kind+'_continuation_binding') or identity['run_id']!=expected_run or identity['code_sha']!=expected_code:
         raise PermissionError('unapproved abandoned continuation')
     bound(packet,identity)
     if identity['science_sha256']!=SCIENCE_SHA or identity['registration_digest']!=info['source_binding']['registration_digest']:
@@ -109,7 +110,8 @@ def include_abandoned(info,assets,ids,authorization):
         raise ValueError('abandoned original continuation binding')
     process=read(out/'matrix.processes.json');stopped=read(out/'dispatch.stopped.json')
     for value in (process,stopped):bound(value,identity)
-    if process['status']!='INCOMPLETE' or stopped['status']!='INCOMPLETE' or 'FileNotFoundError' not in stopped['reason'] or '/.nfs' not in stopped['reason']:
+    reason_ok=stopped['reason']=='worker nonzero exit' if completed else 'FileNotFoundError' in stopped['reason'] and '/.nfs' in stopped['reason']
+    if process['status']!='INCOMPLETE' or stopped['status']!='INCOMPLETE' or not reason_ok:
         raise ValueError('abandoned NFS stop evidence')
     attempted=('o2a4','o3a2');entries=process['processes']
     expected={('smoke','device'+str(i)) for i in range(len(ids))}|{('formal',k) for k in attempted}
@@ -121,16 +123,25 @@ def include_abandoned(info,assets,ids,authorization):
     for e in entries:
         key=e['key'];job=next((j for j in jobs if j['job_id']==key),None)
         slot=slots[key] if job else int(key.removeprefix('device'));b=binding(receipt,slot,job);bound(e,b)
-        if e['pid']!=e['pgid'] or e['pid']<=0 or e['exit_code']!=(-15 if job else 0) or e['status']!=('INCOMPLETE' if job else 'EXITED'):
+        success=job is None or key in completed
+        if e['pid']!=e['pgid'] or e['pid']<=0 or e['exit_code']!=(0 if success else 1 if completed else -15) or e['status']!=('EXITED' if success else 'INCOMPLETE'):
             raise ValueError('abandoned owned exits')
         p=out/key
         if job:
-            failure=read(p/'supervisor.failure.json');bound(failure,b)
-            if failure['status']!='INCOMPLETE' or not failure['prefix_preserved'] or (p/'completion.json').exists():raise ValueError('abandoned prefix failure')
             rows=[json.loads(line) for line in (p/'records.jsonl').read_text().splitlines() if line.strip()]
-            if not 0<len(rows)<job['records']:raise ValueError('abandoned partial coverage')
+            if not 0<len(rows)<=job['records']:raise ValueError('prior trajectory coverage')
             validate(rows,stream(assets['registration'],job['order'])[:len(rows)],job['arm'],job['order'],b)
-            prefixes[key]=len(rows)
+            if success:
+                done=read(p/'completion.json');bound(done,b)
+                if list(p.glob('*failure.json')) or done['status']!='TRAJECTORY_COMPLETE' or done['records']!=job['records'] or len(rows)!=job['records'] or done['physical']!=dict(forwards=job['forwards'],backwards=job['backwards'],base_adam=job['adam'],perturb=0,restore=0):raise ValueError('prior complete trajectory')
+                if done['backend']['seed']!=20260907 or done['checkpoint_io']['bytes']!=assets['registration']['checkpoint']['bytes']:raise ValueError('prior complete checkpoint/seed')
+            else:
+                failure=read(p/'supervisor.failure.json');bound(failure,b)
+                if failure['status']!='INCOMPLETE' or not failure['prefix_preserved'] or (p/'completion.json').exists() or len(rows)>=job['records']:raise ValueError('abandoned prefix failure')
+                if completed:
+                    failure=read(p/'failure.json');bound(failure,b)
+                    if failure['records']!=len(rows) or failure['status']!='INCOMPLETE' or '/usage.json' not in failure['reason'] or 'No such file or directory' not in failure['reason'] or failure['physical']!=dict(forwards=len(rows)*8,backwards=len(rows),base_adam=len(rows),perturb=0,restore=0):raise ValueError('usage scan failure accounting')
+                prefixes[key]=len(rows)
         else:
             done=read(p/'smoke.completion.json');bound(done,b)
             if list(p.glob('*failure.json')) or done['status']!='MECHANICAL_SMOKE_COMPLETE' or done['physical']!=SMOKE or done['backend']['seed']!=20260907 or done['checkpoint_io']['bytes']!=assets['registration']['checkpoint']['bytes']:
@@ -143,14 +154,17 @@ def include_abandoned(info,assets,ids,authorization):
         if not 0<=process[key]<86400:raise ValueError('abandoned runtime budget')
         info['prior_'+key]+=process[key]
     info['source_bytes']+=output_bytes(out)
-    info.update(abandoned_directory=str(out),abandoned_binding=identity,abandoned_prefixes=prefixes,
-                unrecorded_inflight_upper_bound=dict(forwards=8*len(attempted),backwards=len(attempted),base_adam=len(attempted)))
+    info.update({kind+'_directory':str(out),kind+'_binding':identity,kind+'_prefixes':prefixes})
+    if not completed:info['unrecorded_inflight_upper_bound']=dict(forwards=8*len(attempted),backwards=len(attempted),base_adam=len(attempted))
+    for key in completed:
+        info['completed_jobs'].append(key);info['pending_jobs'].remove(key)
+        info.setdefault('carried_job_sources',{})[key]=str(out)
 
 
 def source_for(receipt, out, job):
     continuation = receipt.get('continuation')
     if continuation and job['job_id'] in continuation['completed_jobs']:
-        source = Path(continuation['source_directory'])
+        source = Path(continuation.get('carried_job_sources',{}).get(job['job_id'],continuation['source_directory']))
         return source/job['job_id'],read(source/'receipt.json')
     return Path(out)/job['job_id'],receipt
 
@@ -166,5 +180,7 @@ def public_accounting(continuation, physical, smoke):
         lower=result.pop('actual_total_physical');upper=continuation['unrecorded_inflight_upper_bound']
         result.update(abandoned_binding=continuation['abandoned_binding'],abandoned_prefixes=continuation['abandoned_prefixes'],actual_total_physical_lower_bound=lower,
                       actual_total_physical_upper_bound={k:v+upper[k] for k,v in lower.items()},unrecorded_inflight_upper_bound=upper)
+        result['recorded_scoring_visits']=result.pop('actual_scoring_visits')
         result['note']+=' Terminated workers may each have one unrecorded in-flight visit; physical totals are bounded, not exact.'
+    if 'partial_binding' in continuation:result.update(partial_binding=continuation['partial_binding'],partial_prefixes=continuation['partial_prefixes'],additional_carried_jobs=list(continuation['carried_job_sources']))
     return result
