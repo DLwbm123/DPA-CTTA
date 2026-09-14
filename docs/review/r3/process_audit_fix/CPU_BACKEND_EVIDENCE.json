@@ -1,0 +1,27 @@
+{
+  "origin": "cpu-full-01.log; actual procedural CPU smoke",
+  "backend": {
+    "before": {
+      "cublas_workspace_config": null,
+      "deterministic_algorithms": false,
+      "warn_only": true
+    },
+    "comparison": {
+      "cublas_workspace_config": null,
+      "deterministic_algorithms": true,
+      "warn_only": false
+    },
+    "restored": {
+      "cublas_workspace_config": null,
+      "deterministic_algorithms": false,
+      "warn_only": true
+    }
+  },
+  "physical": {
+    "actual_parameter_replacements": 5,
+    "adam_calls": 38,
+    "jacobian_vjp_calls": 18,
+    "loss_backward_calls": 38,
+    "network_forwards": 316
+  }
+}

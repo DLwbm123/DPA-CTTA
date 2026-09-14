@@ -1,4 +1,18 @@
-# R3 current execution status
+# R3 current review status
+
+**R3_PROCESS_AUDIT_FIX_READY_FOR_REVIEW**. New implementation: **`185fd440b16920f367c1f5e3096ab495bd85c0ec`**. The first GPU attempt remains stopped; no replacement execution has been launched or authorized by this packet.
+
+- [Process-audit repair report, scope, tests and limitations](process_audit_fix/REPORT.md)
+- [Complete narrow patch relative to d601496a](process_audit_fix/PROCESS_AUDIT_FIX.patch), [pinned implementation](https://github.com/DLwbm123/DPA-CTTA/tree/185fd440b16920f367c1f5e3096ab495bd85c0ec)
+- [Full 107/107 CPU log](process_audit_fix/logs/cpu-full-01.log), [result JSON](process_audit_fix/logs/cpu-full-01.json), [12/12 targeted log](process_audit_fix/logs/targeted-01.log)
+- [Old-worker negative control and invalid first harness disclosure](process_audit_fix/REPORT.md#cpu-results-and-negative-control), [actual model backend/counters](process_audit_fix/CPU_BACKEND_EVIDENCE.json)
+- [Frozen-input preservation](process_audit_fix/FROZEN_INPUTS.json), [delivery manifest](process_audit_fix/DELIVERY.json)
+
+107 distinct tests = 104 prior + 3 new. All scientific settings and the 85-job plan are unchanged. GPU audit remains mandatory after the existing first model allocation, before the first forward; rejection now retains its private evidence. The exact trigger of the historical GPU rejection is still unconfirmed. EIO history remains “本次未重现，根因未知”. External review of this new SHA is pending; this is not a review pass or a renewed GPU execution authorization.
+
+---
+
+# Failed GPU attempt (historical; not restarted)
 
 **R3_EXECUTION_STOPPED_INCOMPLETE** — first authorized GPU attempt stopped at pre-model process audit. All 85 formal trajectories remain unstarted; both smoke workers and the launcher exited. No automatic retry or source change.
 

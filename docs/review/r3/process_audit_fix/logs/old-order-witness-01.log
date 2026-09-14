@@ -1,0 +1,46 @@
+test_worker_smoke_audits_after_host_before_first_forward (test_r3_execution.ExecutionTests.test_worker_smoke_audits_after_host_before_first_forward) ... 
+  test_worker_smoke_audits_after_host_before_first_forward (test_r3_execution.ExecutionTests.test_worker_smoke_audits_after_host_before_first_forward) (visible=True) ... ERROR
+  test_worker_smoke_audits_after_host_before_first_forward (test_r3_execution.ExecutionTests.test_worker_smoke_audits_after_host_before_first_forward) (visible=False) ... ERROR
+
+======================================================================
+ERROR: test_worker_smoke_audits_after_host_before_first_forward (test_r3_execution.ExecutionTests.test_worker_smoke_audits_after_host_before_first_forward) (visible=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>/tests/test_r3_execution.py", line 72, in test_worker_smoke_audits_after_host_before_first_forward
+    with self.assertRaisesRegex(RuntimeError if visible else ValueError,'CPU sentinel' if visible else 'missing_gpu_process'):execution.worker()
+                                                                                                                              ^^^^^^^^^^^^^^^^^^
+  File "<reviewed-old-worker>", line 136, in worker
+  File "<WORKTREE>/src/dpa_ctta/r3/execution.py", line 126, in context
+    packet=json.loads(Path(os.environ['RUN_PACKET']).read_text());reg=packet['assets']['registration']
+                           ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "<frozen os>", line 714, in __getitem__
+KeyError: 'RUN_PACKET'
+
+======================================================================
+ERROR: test_worker_smoke_audits_after_host_before_first_forward (test_r3_execution.ExecutionTests.test_worker_smoke_audits_after_host_before_first_forward) (visible=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>/tests/test_r3_execution.py", line 72, in test_worker_smoke_audits_after_host_before_first_forward
+    with self.assertRaisesRegex(RuntimeError if visible else ValueError,'CPU sentinel' if visible else 'missing_gpu_process'):execution.worker()
+                                                                                                                              ^^^^^^^^^^^^^^^^^^
+  File "<reviewed-old-worker>", line 136, in worker
+  File "<WORKTREE>/src/dpa_ctta/r3/execution.py", line 126, in context
+    packet=json.loads(Path(os.environ['RUN_PACKET']).read_text());reg=packet['assets']['registration']
+                           ~~~~~~~~~~^^^^^^^^^^^^^^
+  File "<frozen os>", line 714, in __getitem__
+KeyError: 'RUN_PACKET'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.004s
+
+FAILED (errors=2)
+{
+  "status": "EXPECTED_OLD_ORDER_REJECTION",
+  "reviewed_sha": "d601496a0827af3e1fe728612a4b9f17a613955d",
+  "tests": 1,
+  "failures": 0,
+  "errors": 2,
+  "cuda_initialized": false,
+  "real_assets_read": false,
+  "scope": "old worker only; new test and audit diagnostic helper; procedural collaborators"
+}

@@ -1,0 +1,41 @@
+test_worker_smoke_audits_after_host_before_first_forward (test_r3_execution.ExecutionTests.test_worker_smoke_audits_after_host_before_first_forward) ... 
+  test_worker_smoke_audits_after_host_before_first_forward (test_r3_execution.ExecutionTests.test_worker_smoke_audits_after_host_before_first_forward) (visible=True) ... ERROR
+  test_worker_smoke_audits_after_host_before_first_forward (test_r3_execution.ExecutionTests.test_worker_smoke_audits_after_host_before_first_forward) (visible=False) ... FAIL
+
+======================================================================
+ERROR: test_worker_smoke_audits_after_host_before_first_forward (test_r3_execution.ExecutionTests.test_worker_smoke_audits_after_host_before_first_forward) (visible=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>/tests/test_r3_execution.py", line 72, in test_worker_smoke_audits_after_host_before_first_forward
+    with self.assertRaisesRegex(RuntimeError if visible else ValueError,'CPU sentinel' if visible else 'missing_gpu_process'):execution.worker()
+                                                                                                                              ^^^^^^^^^^^^^^^^^^
+  File "<reviewed-old-worker>", line 146, in worker
+  File "<WORKTREE>/src/dpa_ctta/b3_runtime.py", line 63, in process_audit
+    if error is not None:raise error
+                         ^^^^^^^^^^^
+ValueError: visible process command audit: missing_gpu_process
+
+======================================================================
+FAIL: test_worker_smoke_audits_after_host_before_first_forward (test_r3_execution.ExecutionTests.test_worker_smoke_audits_after_host_before_first_forward) (visible=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<WORKTREE>/tests/test_r3_execution.py", line 73, in test_worker_smoke_audits_after_host_before_first_forward
+    host.assert_called_once_with('C',{},'cuda:0')
+  File "<PYTHON_PREFIX>/lib/python3.12/unittest/mock.py", line 960, in assert_called_once_with
+    raise AssertionError(msg)
+AssertionError: Expected 'Host' to be called once. Called 0 times.
+
+----------------------------------------------------------------------
+Ran 1 test in 0.008s
+
+FAILED (failures=1, errors=1)
+{
+  "status": "EXPECTED_OLD_ORDER_REJECTION",
+  "reviewed_sha": "d601496a0827af3e1fe728612a4b9f17a613955d",
+  "tests": 1,
+  "failures": 1,
+  "errors": 1,
+  "cuda_initialized": false,
+  "real_assets_read": false,
+  "scope": "old worker only; new test and audit diagnostic helper; procedural collaborators"
+}
