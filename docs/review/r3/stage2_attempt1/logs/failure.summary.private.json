@@ -1,0 +1,56 @@
+{
+  "status": "R3_EXECUTION_STOPPED_INCOMPLETE",
+  "run_id": "<RUN_ID>",
+  "code_sha": "d601496a0827af3e1fe728612a4b9f17a613955d",
+  "formal_jobs_completed": 0,
+  "formal_jobs_started": 0,
+  "formal_jobs_unstarted": 85,
+  "formal_records": 0,
+  "smoke_completed": 0,
+  "smoke_workers_started": 2,
+  "owned": [
+    {
+      "pid": 3539381,
+      "pgid": 3539381,
+      "phase": "smoke",
+      "exit_code": 1,
+      "proc_exists": false,
+      "process_group_exists": false
+    },
+    {
+      "pid": 3539382,
+      "pgid": 3539382,
+      "phase": "smoke",
+      "exit_code": 1,
+      "proc_exists": false,
+      "process_group_exists": false
+    }
+  ],
+  "parent_pid": 3539365,
+  "parent_alive": false,
+  "active_worker_seconds": 6.615295846015215,
+  "supervisor_wall_seconds": 3.382074187975377,
+  "launcher_exit": {
+    "status": "EXITED",
+    "exit_code": 1,
+    "reason": "RuntimeError: incomplete finite matrix; no retry",
+    "started_unix": 1789364040.1703765,
+    "ended_unix": 1789364045.4821928
+  },
+  "failure": "visible process command audit",
+  "failure_scope": "shared_code",
+  "physical_accounting": {
+    "network_forwards": 0,
+    "loss_backward_calls": 0,
+    "adam_calls": 0,
+    "jacobian_vjp_calls": 0,
+    "basis": "both tracebacks stop at process_audit before smoke() is called; no Host constructed; no formal dispatch",
+    "registered_checkpoint_loads_completed": 2,
+    "registered_checkpoint_bytes_each": 90388078,
+    "target_RGB_reads": 0,
+    "target_mask_reads": 0
+  },
+  "retry_started": false,
+  "code_modified": false,
+  "checked_unix": 1789364138.3699665
+}

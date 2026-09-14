@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "<CONTROL>/entry.py", line 7, in <module>
+    runpy.run_path(os.environ['ENTRY_FILE'],run_name='__main__')
+  File "<PYTHON_PREFIX>/envs/py38/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "<PYTHON_PREFIX>/envs/py38/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "<PYTHON_PREFIX>/envs/py38/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "<WORKTREE>/scripts/run_r3.py", line 5, in <module>
+    main()
+  File "<WORKTREE>/src/dpa_ctta/r3/run.py", line 21, in main
+    return launch(auth,json.loads(Path(args.assets).read_text()),args.out)
+  File "<WORKTREE>/src/dpa_ctta/r3/execution.py", line 192, in launch
+    supervise(out,packet,start,caps=caps())
+  File "<WORKTREE>/src/dpa_ctta/r1/supervise.py", line 168, in supervise
+    if not complete:raise RuntimeError('incomplete finite matrix; no retry')
+RuntimeError: incomplete finite matrix; no retry

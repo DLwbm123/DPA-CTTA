@@ -1,0 +1,31 @@
+{
+  "status": "PREFLIGHT_METADATA_READY",
+  "code_sha": "d601496a0827af3e1fe728612a4b9f17a613955d",
+  "science_sha256": "73879c29a33897beb9a79e6498258998abd8c0a964f8befc72b4ac1cdbd9c06e",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+  "jobs": 85,
+  "records_per_job": 1951,
+  "dependencies": {
+    "ctta_dependency_root": {
+      "sha": "dbff0d985c6c95345d9fb78f5b1daef57b392564"
+    },
+    "grata_root": {
+      "sha": "33ae20d664f305af34739ec54a5bec7da53ffa0b"
+    }
+  },
+  "python": "3.10.6",
+  "torch": "2.2.1+cu121",
+  "cuda_build": "12.1",
+  "cuda_initialized": false,
+  "physical_gpu_ids": [
+    6,
+    7
+  ],
+  "workers": 2,
+  "background_allowed": true,
+  "checkpoint_size_checked": true,
+  "checkpoint_loaded": false,
+  "target_pixels_read": false,
+  "unix_time": 1789363992.802908
+}

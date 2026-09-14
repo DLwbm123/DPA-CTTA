@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "<PYTHON_PREFIX>/envs/py38/lib/python3.10/runpy.py", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "<PYTHON_PREFIX>/envs/py38/lib/python3.10/runpy.py", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "<PYTHON_PREFIX>/envs/py38/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "<WORKTREE>/scripts/run_r3.py", line 5, in <module>
+    main()
+  File "<WORKTREE>/src/dpa_ctta/r3/run.py", line 11, in main
+    return worker()
+  File "<WORKTREE>/src/dpa_ctta/r3/execution.py", line 146, in worker
+    state,io=checkpoint(reg);backend=environment()|backend_policy();process_audit(p,'smoke');smoke(state,'cuda:0',p,identity,backend,io)
+  File "<WORKTREE>/src/dpa_ctta/b3_runtime.py", line 53, in process_audit
+    if not own or any(s in (ps+'\n'+'\n'.join(own)).lower() for s in FORBIDDEN):raise ValueError('visible process command audit')
+ValueError: visible process command audit

@@ -1,4 +1,17 @@
-# R3 current review index
+# R3 current execution status
+
+**R3_EXECUTION_STOPPED_INCOMPLETE** — first authorized GPU attempt stopped at pre-model process audit. All 85 formal trajectories remain unstarted; both smoke workers and the launcher exited. No automatic retry or source change.
+
+- [Stage II attempt report, failure boundary, physical cost and cleanup](stage2_attempt1/REPORT.md)
+- [Exact failure/cleanup summary](stage2_attempt1/logs/failure.summary.private.json), [process matrix](stage2_attempt1/logs/matrix.processes.json)
+- [Slot 0 traceback](stage2_attempt1/logs/device0.log), [slot 1 traceback](stage2_attempt1/logs/device1.log), [launcher exit](stage2_attempt1/logs/launcher.exit.json)
+- [User-supplied external review pass](stage2_attempt1/input/R3_REVIEW_PASS_d601496a.md), [Stage II scope and no-retry policy](stage2_attempt1/input/R3_STAGE_II_EXECUTION_PROMPT_d601496a.md)
+
+Execution SHA remains `d601496a0827af3e1fe728612a4b9f17a613955d`. This publication contains evidence only. The review packets below are historical; they do not imply successful GPU smoke or a completed experiment.
+
+---
+
+# Environment repair review packet (historical)
 
 **R3_ENV_FIX_READY_FOR_REVIEW** — R3-ENV-01 repaired; external difference review pending. GPU execution remains unauthorized.
 
