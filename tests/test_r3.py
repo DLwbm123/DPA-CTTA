@@ -127,13 +127,23 @@ class HostTests(unittest.TestCase):
         import tempfile,os
         from pathlib import Path
         from dpa_ctta.integrations.ctta_suite import build_reference_model
-        from dpa_ctta.r3.execution import smoke
+        from dpa_ctta.r3.execution import smoke,backend_policy
         seed_all(20260907);m,_=build_reference_model('fundus')
         with torch.no_grad():m.seg_head.weight.mul_(30)
         state=copy.deepcopy(m.state_dict());del m
-        with tempfile.TemporaryDirectory() as tmp:
-            smoke(state,'cpu',Path(tmp),dict(fixture='PROGRAMMATIC_CPU_NOT_EXECUTION_AUTHORIZATION'),dict(seed=20260907),dict(bytes=1))
-            proof=json.loads((Path(tmp)/'smoke.completion.json').read_text())
+        original=backend_policy()
+        try:
+            torch.use_deterministic_algorithms(False,warn_only=True)
+            with tempfile.TemporaryDirectory() as tmp,patch.dict(os.environ):
+                os.environ.pop('CUBLAS_WORKSPACE_CONFIG',None)
+                before=backend_policy()
+                smoke(state,'cpu',Path(tmp),dict(fixture='PROGRAMMATIC_CPU_NOT_EXECUTION_AUTHORIZATION'),dict(seed=20260907,**before),dict(bytes=1))
+                proof=json.loads((Path(tmp)/'smoke.completion.json').read_text())
+                self.assertEqual(backend_policy(),before)
+                self.assertEqual(proof['backend'],dict(seed=20260907,**before))
+                self.assertEqual(proof['paired_comparison_backend'],dict(deterministic_algorithms=True,warn_only=False,cublas_workspace_config=None))
+                print('SMOKE_CPU_BACKEND '+json.dumps(dict(before=before,comparison=proof['paired_comparison_backend'],restored=backend_policy()),sort_keys=True))
+        finally:torch.use_deterministic_algorithms(original['deterministic_algorithms'],warn_only=original['warn_only'])
         total=proof['physical'];traces=proof['evidence']
         self.assertEqual(total['network_forwards'],316);self.assertEqual(total['adam_calls'],38)
         self.assertEqual(total['loss_backward_calls'],38);self.assertLessEqual(total['jacobian_vjp_calls'],24)

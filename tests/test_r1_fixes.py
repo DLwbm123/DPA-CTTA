@@ -229,7 +229,15 @@ time.sleep(s.get('delay',.01));sys.exit(s.get('exit',0))
 def io_failure_probe(mode):
     """Real CPU supervisor process; observe ownership before fallback cleanup."""
     from dpa_ctta.r1 import supervise as module
-    created=[];caught=None
+    created=[];caught=None;cleanup=[];fallback=[]
+    stop_owned=module.stop_owned
+    def observed_stop(record,*args,**kwargs):
+        row=dict(pid=record['process'].pid,phase=record['phase'],key=record['key'])
+        cleanup.append(row)
+        try:return stop_owned(record,*args,**kwargs)
+        except BaseException as exc:
+            row['exception']=dict(type=type(exc).__name__,message=str(exc),errno=getattr(exc,'errno',None));raise
+        finally:row.update(returncode=record['process'].returncode,cleaned=record.get('cleaned',False))
     outsider=subprocess.Popen([sys.executable,'-c','import time;time.sleep(20)'],start_new_session=True)
     try:
         with tempfile.TemporaryDirectory() as tmp:
@@ -244,21 +252,23 @@ def io_failure_probe(mode):
                 if mode=='EIO' and sum(s['phase']=='formal' for s,p in created)>=2:
                     raise OSError(errno.EIO,'programmatic persistent evidence write')
                 return write(path,value,replace=replace)
-            with patch.object(module,'write',side_effect=writer):
+            with patch.object(module,'write',side_effect=writer),patch.object(module,'stop_owned',side_effect=observed_stop):
                 try:module.supervise(out,packet,spawn,case.caps(trajectory_seconds=.12),.01)
                 except BaseException as exc:caught=exc
-            reaped=[]
+            reaped=[];owned=[]
             for spec,process in created:
-                try:os.waitpid(process.pid,os.WNOHANG)
-                except ChildProcessError:reaped.append(process.pid)
+                row=dict(pid=process.pid,phase=spec['phase'],key=spec['key'],returncode=process.returncode)
+                try:row['waitpid']=os.waitpid(process.pid,os.WNOHANG)
+                except ChildProcessError:reaped.append(process.pid);row['waitpid']='ChildProcessError: already reaped'
+                owned.append(row)
             summary=out/'matrix.processes.json'
             result=dict(probe=mode,observed_error=None if caught is None else type(caught).__name__,
                 observed_errno=getattr(caught,'errno',None),created=len(created),
                 formal_children=sum(s['phase']=='formal' for s,p in created),
                 all_owned_returned=all(p.returncode is not None for s,p in created),
                 all_owned_reaped=len(reaped)==len(created),outsider_alive=outsider.poll() is None,
-                summary_status=json.loads(summary.read_text())['status'] if summary.exists() else None)
-            print(json.dumps(result),flush=True)
+                summary_status=json.loads(summary.read_text())['status'] if summary.exists() else None,
+                owned=owned,cleanup=cleanup,outsider_pid=outsider.pid)
     finally:
         # Test failure must never leave either an owned or a control child alive.
         for process in [p for s,p in created]+[outsider]:
@@ -268,6 +278,9 @@ def io_failure_probe(mode):
             try:process.wait(timeout=2)
             except subprocess.TimeoutExpired:
                 os.killpg(process.pid,signal.SIGKILL);process.wait(timeout=2)
+            fallback.append(dict(pid=process.pid,returncode=process.returncode,wait_completed=True))
+    result['fallback_cleanup']=fallback
+    print(json.dumps(result),flush=True)
     if caught is not None:raise caught
 
 
@@ -291,6 +304,7 @@ class ProcessChecks(unittest.TestCase):
         result=subprocess.run([sys.executable,'-c',code],env=env,text=True,capture_output=True,timeout=30)
         observed=json.loads(result.stdout);observed['supervisor_exit_code']=result.returncode
         print(json.dumps(observed),flush=True)
+        if result.stderr:print(result.stderr,flush=True)
         self.assertNotEqual(result.returncode,0)
         self.assertEqual(observed['observed_error'],'OSError');self.assertEqual(observed['observed_errno'],getattr(errno,mode))
         self.assertEqual(observed['created'],4);self.assertEqual(observed['formal_children'],2)

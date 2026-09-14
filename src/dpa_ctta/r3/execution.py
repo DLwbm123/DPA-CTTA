@@ -30,6 +30,29 @@ def counters(host):
     return dict(network_forwards=c['forwards'],loss_backward_calls=c['backwards'],jacobian_vjp_calls=0,adam_calls=c['base_adam'],actual_parameter_replacements=0)
 
 
+def worker_environment(parent,phase):
+    """Set phase policy on a copy, before the child interpreter starts."""
+    env=parent.copy()
+    if phase=='smoke':env['CUBLAS_WORKSPACE_CONFIG']=':4096:8'
+    elif phase=='formal':env.pop('CUBLAS_WORKSPACE_CONFIG',None)
+    else:raise ValueError('unknown execution phase')
+    return env
+
+
+def check_worker_environment(phase,env):
+    if phase not in ('smoke','formal'):raise ValueError('unknown execution phase')
+    if (phase=='smoke' and env.get('CUBLAS_WORKSPACE_CONFIG')!=':4096:8') or (phase=='formal' and 'CUBLAS_WORKSPACE_CONFIG' in env):
+        raise PermissionError('R3 '+phase+' CUBLAS_WORKSPACE_CONFIG mismatch')
+
+
+def backend_policy():
+    """Observe policy without querying or initializing a CUDA device."""
+    import torch
+    return dict(deterministic_algorithms=torch.are_deterministic_algorithms_enabled(),
+        warn_only=torch.is_deterministic_algorithms_warn_only_enabled(),
+        cublas_workspace_config=os.environ.get('CUBLAS_WORKSPACE_CONFIG'))
+
+
 def smoke(state,device,out,identity,backend,checkpoint_io):
     import torch
     from ..source_pilot import seed_all
@@ -45,6 +68,7 @@ def smoke(state,device,out,identity,backend,checkpoint_io):
     saved={};evidence={}
     try:
         with deterministic_smoke_pair():
+            paired_comparison_backend=backend_policy()
             for arm in ('OLD_C','OLD_RP',*ARMS):
                 seed_all(20260907)
                 h=OldHost('C' if arm=='OLD_C' else 'C_PCA_REGION',state,device) if arm.startswith('OLD_') else Host(arm,state,device)
@@ -67,7 +91,7 @@ def smoke(state,device,out,identity,backend,checkpoint_io):
                 h.finish(state);del h,z;gc.collect()
         if any(total[k]!=v for k,v in dict(network_forwards=316,loss_backward_calls=38,adam_calls=38).items()) or total['jacobian_vjp_calls']>24:
             raise ValueError('38-update mechanical budget')
-        write(out/'smoke.completion.json',dict(binding=identity,status='MECHANICAL_SMOKE_COMPLETE',physical=total,evidence=evidence,backend=backend,checkpoint_io=checkpoint_io))
+        write(out/'smoke.completion.json',dict(binding=identity,status='MECHANICAL_SMOKE_COMPLETE',physical=total,evidence=evidence,backend=backend,paired_comparison_backend=paired_comparison_backend,checkpoint_io=checkpoint_io))
     except BaseException as exc:
         write(out/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',physical=total,reason=str(exc),scope=failure_scope(exc)));raise
 
@@ -109,7 +133,9 @@ def context():
 
 def worker():
     # Authorize before loading weights, querying a device or decoding an asset.
-    packet,reg,index,out=context();identity=binding(packet,index)
+    packet,reg,index,out=context()
+    check_worker_environment(os.environ.get('RUN_MODE'),os.environ)
+    identity=binding(packet,index)
     import torch
     from ..source_pilot_release import environment
     from ..b3_runtime import process_audit
@@ -117,7 +143,7 @@ def worker():
     if os.environ['RUN_MODE']=='smoke':
         p=claim(out,'device'+str(index))
         try:
-            state,io=checkpoint(reg);backend=environment();process_audit(p,'smoke');smoke(state,'cuda:0',p,identity,backend,io)
+            state,io=checkpoint(reg);backend=environment()|backend_policy();process_audit(p,'smoke');smoke(state,'cuda:0',p,identity,backend,io)
         except BaseException as exc:
             if not (p/'smoke.failure.json').exists():write(p/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',reason=str(exc),scope=failure_scope(exc)))
             raise
@@ -129,7 +155,7 @@ def worker():
         for key,value in dict(network_forwards=316,loss_backward_calls=38,adam_calls=38).items():
             if proof['physical'][key]!=value:raise PermissionError('smoke counts')
         if not 0<=proof['physical']['jacobian_vjp_calls']<=24:raise PermissionError('smoke VJP count')
-        state,io=checkpoint(reg);backend=environment();trajectory(job,state,reg,out,binding(packet,index,job),backend,io)
+        state,io=checkpoint(reg);backend=environment()|backend_policy();trajectory(job,state,reg,out,binding(packet,index,job),backend,io)
     else:raise PermissionError('unknown worker mode')
 
 
@@ -161,6 +187,7 @@ def launch(auth,assets,output):
         slot=spec['worker'];env=os.environ.copy();env.update(PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=os.pathsep.join([str(ROOT/'src'),assets.get('dependency_pythonpath','')]),
             DPA_CTTA_BASE_ROOT=assets['ctta_dependency_root'],DPA_GRATA_ROOT=assets['grata_root'],CUDA_VISIBLE_DEVICES=devices[slot]['uuid'],
             RUN_FILE=str(ROOT/'scripts/run_r3.py'),RUN_MODE=spec['phase'],RUN_WORKER=str(slot),RUN_JOB=spec['key'],RUN_PACKET=str(out/'packet.private.json'))
+        env=worker_environment(env,spec['phase'])
         return subprocess.Popen([sys.executable,'-c',ENTRY],cwd=ROOT,env=env,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
     supervise(out,packet,start,caps=caps())
     from .analyze import recompute
