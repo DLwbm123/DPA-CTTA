@@ -50,5 +50,14 @@ def process_audit(out,stage):
     ps=subprocess.check_output(['ps','-ww','-p',','.join(map(str,ids)),'-o','pid=,ppid=,args='],text=True)
     gpu=subprocess.check_output(['nvidia-smi','--query-compute-apps=pid,process_name,gpu_uuid','--format=csv,noheader'],text=True)
     own=[s for s in gpu.splitlines() if s.split(',')[0].strip()==str(os.getpid())]
-    if not own or any(s in (ps+'\n'+'\n'.join(own)).lower() for s in FORBIDDEN):raise ValueError('visible process command audit')
-    private_json(out/(stage+'.process_audit.json'),dict(ps=ps,gpu=own,neutral=True))
+    reasons=[]
+    if not own:reasons.append('missing_gpu_process')
+    if any(s in (ps+'\n'+'\n'.join(own)).lower() for s in FORBIDDEN):reasons.append('non_neutral_command')
+    error=ValueError('visible process command audit: '+', '.join(reasons)) if reasons else None
+    try:
+        private_json(out/(stage+'.process_audit.json'),dict(ps=ps,gpu=own,gpu_query=gpu,neutral=not reasons,reasons=reasons))
+    except OSError as exc:
+        # A failed diagnostic write must not hide a shared-code rejection.
+        if error is not None:raise error from exc
+        raise
+    if error is not None:raise error

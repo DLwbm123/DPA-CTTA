@@ -1,8 +1,10 @@
 """Synthetic scalar fixtures exercise every arm/stream; no model or real assets."""
-import copy,json,os,tempfile,unittest
+import copy,errno,json,os,tempfile,unittest
+from types import SimpleNamespace
 from contextlib import contextmanager
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock,patch
+from dpa_ctta import b3_runtime
 from dpa_ctta.r3 import analyze,plan,execution
 from dpa_ctta.r1.evidence import write
 from dpa_ctta.r1.plan import binding,registration_digest
@@ -49,6 +51,60 @@ def fixture(out):
 
 
 class ExecutionTests(unittest.TestCase):
+    def test_worker_smoke_audits_after_host_before_first_forward(self):
+        # CPU substitutes simulate a PID becoming GPU-visible at host allocation.
+        # The old worker ordering fails this test before the constructor is called.
+        for visible in (True,False):
+            with self.subTest(visible=visible),tempfile.TemporaryDirectory() as tmp,patch.dict(os.environ,RUN_MODE='smoke',CUBLAS_WORKSPACE_CONFIG=':4096:8'):
+                events=[];out=Path(tmp);packet=dict(binding={},devices=[dict(uuid='CPU_FIXTURE')])
+                def constructor(*args):
+                    events.append('host')
+                    return SimpleNamespace(params=[SimpleNamespace(numel=lambda:1)]*81+[SimpleNamespace(numel=lambda:19055)],step=Mock(side_effect=stop))
+                def stop(*args):events.append('step');raise RuntimeError('CPU sentinel before real forward')
+                def query(args,**kwargs):
+                    events.append(args[0])
+                    if args[0]=='ps':return '1 0 python -c neutral\n'
+                    self.assertEqual(args[0],'nvidia-smi')
+                    return str(os.getpid())+', python, CPU_FIXTURE\n' if 'host' in events and visible else ''
+                def checkpoint(reg):events.append('checkpoint');return {},dict(bytes=0)
+                def environment():events.append('backend');return dict(seed=20260907)
+                with patch.object(execution,'context',return_value=(packet,{},0,out)),patch.object(execution,'checkpoint',side_effect=checkpoint),patch('dpa_ctta.source_pilot_release.environment',side_effect=environment),patch('dpa_ctta.source_pilot.seed_all'),patch('dpa_ctta.r1.host.Host',side_effect=constructor) as host,patch('test_vptta_host.pixels',return_value=None),patch.object(b3_runtime.subprocess,'check_output',side_effect=query):
+                    with self.assertRaisesRegex(RuntimeError if visible else ValueError,'CPU sentinel' if visible else 'missing_gpu_process'):execution.worker()
+                host.assert_called_once_with('C',{},'cuda:0')
+                self.assertEqual(events,['checkpoint','backend','host','ps','nvidia-smi']+(['step'] if visible else []))
+                audit=json.loads((out/'device0/smoke.process_audit.json').read_text())
+                self.assertEqual(audit['neutral'],visible)
+                self.assertFalse((out/'device0/smoke.completion.json').exists())
+                failure=json.loads((out/'device0/smoke.failure.json').read_text())
+                self.assertTrue(all(v==0 for v in failure['physical'].values()))
+                print('AUDIT_ORDER '+json.dumps(dict(gpu_listing=visible,events=events,reasons=audit['reasons'],physical=failure['physical'])))
+
+    def test_process_audit_preserves_predicate_and_failure_evidence(self):
+        pid=str(os.getpid());neutral='1 0 python -c neutral\n';own=pid+', python, CPU_FIXTURE\n'
+        cases=[(neutral,own,[]),(neutral,'',['missing_gpu_process']),('1 0 ctta\n',own,['non_neutral_command']),(neutral,pid+', grata, CPU_FIXTURE\n',['non_neutral_command']),('1 0 ctta\n','',['missing_gpu_process','non_neutral_command']),(neutral,own+'999999, ctta, OTHER_FIXTURE\n',[])]
+        for ps,gpu,reasons in cases:
+            with self.subTest(reasons=reasons,gpu=gpu),tempfile.TemporaryDirectory() as tmp,patch.object(b3_runtime.subprocess,'check_output',side_effect=[ps,gpu]):
+                if reasons:
+                    with self.assertRaisesRegex(ValueError,'visible process command audit'):b3_runtime.process_audit(Path(tmp),'smoke')
+                else:b3_runtime.process_audit(Path(tmp),'smoke')
+                path=Path(tmp)/'smoke.process_audit.json';audit=json.loads(path.read_text())
+                self.assertEqual(audit['ps'],ps);self.assertEqual(audit['gpu_query'],gpu)
+                self.assertEqual(audit['reasons'],reasons);self.assertEqual(audit['neutral'],not reasons)
+                self.assertEqual(audit['gpu'],[s for s in gpu.splitlines() if s.split(',')[0]==pid])
+                self.assertEqual(path.stat().st_mode&0o777,0o600)
+
+    def test_audit_evidence_EIO_does_not_hide_shared_code_rejection(self):
+        for listed in (False,True):
+            io_error=OSError(errno.EIO,'procedural audit write failure')
+            with self.subTest(listed=listed),patch.object(b3_runtime.subprocess,'check_output',side_effect=['1 0 python\n',str(os.getpid())+', python, CPU_FIXTURE\n' if listed else '']),patch.object(b3_runtime,'private_json',side_effect=io_error):
+                if listed:
+                    with self.assertRaises(OSError) as caught:b3_runtime.process_audit(Path('/unused'),'smoke')
+                    self.assertIs(caught.exception,io_error)
+                else:
+                    with self.assertRaisesRegex(ValueError,'missing_gpu_process') as caught:b3_runtime.process_audit(Path('/unused'),'smoke')
+                    self.assertIs(caught.exception.__cause__,io_error)
+                    self.assertEqual(execution.failure_scope(caught.exception),'shared_code')
+
     def test_phase_environment_matrix_preserves_parent_and_identity(self):
         for value in (None,'invalid',':16:8',':4096:8'):
             for phase in ('smoke','formal'):

@@ -60,6 +60,7 @@ def smoke(state,device,out,identity,backend,checkpoint_io):
     from ..b4_run import capture
     from ..host_diagnostic import close
     from ..m2_run import deterministic_smoke_pair
+    from ..b3_runtime import process_audit
     from .host import Host,ARMS
     from .testing import ready
     sys.path.insert(0,str(ROOT/'tests'))
@@ -72,6 +73,8 @@ def smoke(state,device,out,identity,backend,checkpoint_io):
             for arm in ('OLD_C','OLD_RP',*ARMS):
                 seed_all(20260907)
                 h=OldHost('C' if arm=='OLD_C' else 'C_PCA_REGION',state,device) if arm.startswith('OLD_') else Host(arm,state,device)
+                # GPU process visibility requires the existing host allocation.
+                if arm=='OLD_C' and torch.device(device).type=='cuda':process_audit(out,'smoke')
                 if len(h.params)!=82 or sum(p.numel() for p in h.params)!=19136:raise ValueError('registered affine dimensions')
                 for step in range(2):
                     if step==1:
@@ -138,12 +141,11 @@ def worker():
     identity=binding(packet,index)
     import torch
     from ..source_pilot_release import environment
-    from ..b3_runtime import process_audit
     torch.set_num_threads(2)
     if os.environ['RUN_MODE']=='smoke':
         p=claim(out,'device'+str(index))
         try:
-            state,io=checkpoint(reg);backend=environment()|backend_policy();process_audit(p,'smoke');smoke(state,'cuda:0',p,identity,backend,io)
+            state,io=checkpoint(reg);backend=environment()|backend_policy();smoke(state,'cuda:0',p,identity,backend,io)
         except BaseException as exc:
             if not (p/'smoke.failure.json').exists():write(p/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',reason=str(exc),scope=failure_scope(exc)))
             raise

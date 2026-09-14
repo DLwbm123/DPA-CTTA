@@ -134,7 +134,7 @@ class HostTests(unittest.TestCase):
         original=backend_policy()
         try:
             torch.use_deterministic_algorithms(False,warn_only=True)
-            with tempfile.TemporaryDirectory() as tmp,patch.dict(os.environ):
+            with tempfile.TemporaryDirectory() as tmp,patch.dict(os.environ),patch('dpa_ctta.b3_runtime.process_audit',side_effect=AssertionError('CPU smoke must not query GPU processes')):
                 os.environ.pop('CUBLAS_WORKSPACE_CONFIG',None)
                 before=backend_policy()
                 smoke(state,'cpu',Path(tmp),dict(fixture='PROGRAMMATIC_CPU_NOT_EXECUTION_AUTHORIZATION'),dict(seed=20260907,**before),dict(bytes=1))
