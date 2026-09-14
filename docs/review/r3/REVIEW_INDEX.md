@@ -1,4 +1,20 @@
-# R3 Stage I review index
+# R3 current review index
+
+**R3_ENV_FIX_READY_FOR_REVIEW** — R3-ENV-01 repaired; external difference review pending. GPU execution remains unauthorized.
+
+New implementation: **`d601496a0827af3e1fe728612a4b9f17a613955d`**, on `experiment/r3-five-region-frameworks-v1`. The following original packet is retained as history; review this environment-only delta first.
+
+- [Environment fix report, entry points, before/after matrix and test counts](env_fix/REPORT.md)
+- [Narrow patch relative to 6d8fc731](env_fix/ENV_FIX.patch), [pinned implementation](https://github.com/DLwbm123/DPA-CTTA/tree/d601496a0827af3e1fe728612a4b9f17a613955d)
+- [Full 104/104 CPU log](env_fix/logs/cpu-full-01.log), [machine-readable result](env_fix/logs/cpu-full-01.json), [actual backend/counters](env_fix/CPU_BACKEND_EVIDENCE.json), [full-model traces](env_fix/FULL_MODEL_CPU_TRACES.json)
+- [Retained first targeted failure](env_fix/logs/targeted-01.log), [corrected 9/9 targeted log](env_fix/logs/targeted-02.log), [CPU reproduction recipe](env_fix/REPRODUCE.md)
+- [Frozen-input preservation](env_fix/FROZEN_INPUTS.json), [delivery manifest](env_fix/DELIVERY.json), [supplied external review](env_fix/input/R3_REVIEW_REPORT_6d8fc731.md), [supplied fix prompt](env_fix/input/R3_CODEX_ENV_FIX_PROMPT.md)
+
+104 distinct tests = 98 prior + 6 new; targeted tests overlap. EIO ownership failure: **本次未重现，根因未知**. Shared supervisor and method numerics are unchanged. No GPU, real target/source assets, experiment or background task was used. This index does not issue external review approval or execution authorization. Stop here for external review.
+
+---
+
+# Original Stage I packet (historical)
 
 **R3_IMPLEMENTATION_READY_FOR_REVIEW** — external review pending; GPU execution not authorized.
 

@@ -1,0 +1,39 @@
+test_85_fixture_closeout_separate_secondary_and_truncation (test_r3_execution.ExecutionTests.test_85_fixture_closeout_separate_secondary_and_truncation) ... ok
+test_authorization_rejects_before_model_or_device (test_r3_execution.ExecutionTests.test_authorization_rejects_before_model_or_device) ... ok
+test_corrupt_counts_and_missing_evidence_fail (test_r3_execution.ExecutionTests.test_corrupt_counts_and_missing_evidence_fail) ... ok
+test_direct_worker_disabled_authorization_precedes_environment (test_r3_execution.ExecutionTests.test_direct_worker_disabled_authorization_precedes_environment) ... ok
+test_direct_worker_mismatch_rejected_before_device_or_assets (test_r3_execution.ExecutionTests.test_direct_worker_mismatch_rejected_before_device_or_assets) ... ok
+test_formal_worker_records_actual_policy_without_changing_it (test_r3_execution.ExecutionTests.test_formal_worker_records_actual_policy_without_changing_it) ... ok
+test_phase_environment_matrix_preserves_parent_and_identity (test_r3_execution.ExecutionTests.test_phase_environment_matrix_preserves_parent_and_identity) ... ok
+test_smoke_failure_restores_both_flags_and_workspace (test_r3_execution.ExecutionTests.test_smoke_failure_restores_both_flags_and_workspace) ... ok
+test_unknown_phase_rejected (test_r3_execution.ExecutionTests.test_unknown_phase_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 2.401s
+
+OK
+PHASE_ENV {"parent": null, "phase": "smoke", "child": ":4096:8", "parent_unchanged": true}
+PHASE_ENV {"parent": null, "phase": "formal", "child": null, "parent_unchanged": true}
+PHASE_ENV {"parent": "invalid", "phase": "smoke", "child": ":4096:8", "parent_unchanged": true}
+PHASE_ENV {"parent": "invalid", "phase": "formal", "child": null, "parent_unchanged": true}
+PHASE_ENV {"parent": ":16:8", "phase": "smoke", "child": ":4096:8", "parent_unchanged": true}
+PHASE_ENV {"parent": ":16:8", "phase": "formal", "child": null, "parent_unchanged": true}
+PHASE_ENV {"parent": ":4096:8", "phase": "smoke", "child": ":4096:8", "parent_unchanged": true}
+PHASE_ENV {"parent": ":4096:8", "phase": "formal", "child": null, "parent_unchanged": true}
+{
+  "tests": 9,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 2.41863050009124,
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "registered_checkpoint_reads": 0,
+  "procedural_IO_fixtures": false,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 0
+}

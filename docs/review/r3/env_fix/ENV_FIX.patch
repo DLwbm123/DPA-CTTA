@@ -1,0 +1,284 @@
+diff --git a/src/dpa_ctta/r3/execution.py b/src/dpa_ctta/r3/execution.py
+index 3e2c438a6e92d8c5766e3eb0490914e163a6a4de..7b2266d647111f816c8faff6507f7070a7e3f9eb 100644
+--- a/src/dpa_ctta/r3/execution.py
++++ b/src/dpa_ctta/r3/execution.py
+@@ -30,6 +30,29 @@ def counters(host):
+     return dict(network_forwards=c['forwards'],loss_backward_calls=c['backwards'],jacobian_vjp_calls=0,adam_calls=c['base_adam'],actual_parameter_replacements=0)
+ 
+ 
++def worker_environment(parent,phase):
++    """Set phase policy on a copy, before the child interpreter starts."""
++    env=parent.copy()
++    if phase=='smoke':env['CUBLAS_WORKSPACE_CONFIG']=':4096:8'
++    elif phase=='formal':env.pop('CUBLAS_WORKSPACE_CONFIG',None)
++    else:raise ValueError('unknown execution phase')
++    return env
++
++
++def check_worker_environment(phase,env):
++    if phase not in ('smoke','formal'):raise ValueError('unknown execution phase')
++    if (phase=='smoke' and env.get('CUBLAS_WORKSPACE_CONFIG')!=':4096:8') or (phase=='formal' and 'CUBLAS_WORKSPACE_CONFIG' in env):
++        raise PermissionError('R3 '+phase+' CUBLAS_WORKSPACE_CONFIG mismatch')
++
++
++def backend_policy():
++    """Observe policy without querying or initializing a CUDA device."""
++    import torch
++    return dict(deterministic_algorithms=torch.are_deterministic_algorithms_enabled(),
++        warn_only=torch.is_deterministic_algorithms_warn_only_enabled(),
++        cublas_workspace_config=os.environ.get('CUBLAS_WORKSPACE_CONFIG'))
++
++
+ def smoke(state,device,out,identity,backend,checkpoint_io):
+     import torch
+     from ..source_pilot import seed_all
+@@ -45,6 +68,7 @@ def smoke(state,device,out,identity,backend,checkpoint_io):
+     saved={};evidence={}
+     try:
+         with deterministic_smoke_pair():
++            paired_comparison_backend=backend_policy()
+             for arm in ('OLD_C','OLD_RP',*ARMS):
+                 seed_all(20260907)
+                 h=OldHost('C' if arm=='OLD_C' else 'C_PCA_REGION',state,device) if arm.startswith('OLD_') else Host(arm,state,device)
+@@ -67,7 +91,7 @@ def smoke(state,device,out,identity,backend,checkpoint_io):
+                 h.finish(state);del h,z;gc.collect()
+         if any(total[k]!=v for k,v in dict(network_forwards=316,loss_backward_calls=38,adam_calls=38).items()) or total['jacobian_vjp_calls']>24:
+             raise ValueError('38-update mechanical budget')
+-        write(out/'smoke.completion.json',dict(binding=identity,status='MECHANICAL_SMOKE_COMPLETE',physical=total,evidence=evidence,backend=backend,checkpoint_io=checkpoint_io))
++        write(out/'smoke.completion.json',dict(binding=identity,status='MECHANICAL_SMOKE_COMPLETE',physical=total,evidence=evidence,backend=backend,paired_comparison_backend=paired_comparison_backend,checkpoint_io=checkpoint_io))
+     except BaseException as exc:
+         write(out/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',physical=total,reason=str(exc),scope=failure_scope(exc)));raise
+ 
+@@ -109,7 +133,9 @@ def context():
+ 
+ def worker():
+     # Authorize before loading weights, querying a device or decoding an asset.
+-    packet,reg,index,out=context();identity=binding(packet,index)
++    packet,reg,index,out=context()
++    check_worker_environment(os.environ.get('RUN_MODE'),os.environ)
++    identity=binding(packet,index)
+     import torch
+     from ..source_pilot_release import environment
+     from ..b3_runtime import process_audit
+@@ -117,7 +143,7 @@ def worker():
+     if os.environ['RUN_MODE']=='smoke':
+         p=claim(out,'device'+str(index))
+         try:
+-            state,io=checkpoint(reg);backend=environment();process_audit(p,'smoke');smoke(state,'cuda:0',p,identity,backend,io)
++            state,io=checkpoint(reg);backend=environment()|backend_policy();process_audit(p,'smoke');smoke(state,'cuda:0',p,identity,backend,io)
+         except BaseException as exc:
+             if not (p/'smoke.failure.json').exists():write(p/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',reason=str(exc),scope=failure_scope(exc)))
+             raise
+@@ -129,7 +155,7 @@ def worker():
+         for key,value in dict(network_forwards=316,loss_backward_calls=38,adam_calls=38).items():
+             if proof['physical'][key]!=value:raise PermissionError('smoke counts')
+         if not 0<=proof['physical']['jacobian_vjp_calls']<=24:raise PermissionError('smoke VJP count')
+-        state,io=checkpoint(reg);backend=environment();trajectory(job,state,reg,out,binding(packet,index,job),backend,io)
++        state,io=checkpoint(reg);backend=environment()|backend_policy();trajectory(job,state,reg,out,binding(packet,index,job),backend,io)
+     else:raise PermissionError('unknown worker mode')
+ 
+ 
+@@ -161,6 +187,7 @@ def launch(auth,assets,output):
+         slot=spec['worker'];env=os.environ.copy();env.update(PYTHONDONTWRITEBYTECODE='1',PYTHONPATH=os.pathsep.join([str(ROOT/'src'),assets.get('dependency_pythonpath','')]),
+             DPA_CTTA_BASE_ROOT=assets['ctta_dependency_root'],DPA_GRATA_ROOT=assets['grata_root'],CUDA_VISIBLE_DEVICES=devices[slot]['uuid'],
+             RUN_FILE=str(ROOT/'scripts/run_r3.py'),RUN_MODE=spec['phase'],RUN_WORKER=str(slot),RUN_JOB=spec['key'],RUN_PACKET=str(out/'packet.private.json'))
++        env=worker_environment(env,spec['phase'])
+         return subprocess.Popen([sys.executable,'-c',ENTRY],cwd=ROOT,env=env,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+     supervise(out,packet,start,caps=caps())
+     from .analyze import recompute
+diff --git a/tests/test_r1_fixes.py b/tests/test_r1_fixes.py
+index 4daeaf259fabb6c7792af14f632ca2dde7bd21e3..efaf2893b7ae0cece3a648baa712849efb23538e 100644
+--- a/tests/test_r1_fixes.py
++++ b/tests/test_r1_fixes.py
+@@ -229,7 +229,15 @@ time.sleep(s.get('delay',.01));sys.exit(s.get('exit',0))
+ def io_failure_probe(mode):
+     """Real CPU supervisor process; observe ownership before fallback cleanup."""
+     from dpa_ctta.r1 import supervise as module
+-    created=[];caught=None
++    created=[];caught=None;cleanup=[];fallback=[]
++    stop_owned=module.stop_owned
++    def observed_stop(record,*args,**kwargs):
++        row=dict(pid=record['process'].pid,phase=record['phase'],key=record['key'])
++        cleanup.append(row)
++        try:return stop_owned(record,*args,**kwargs)
++        except BaseException as exc:
++            row['exception']=dict(type=type(exc).__name__,message=str(exc),errno=getattr(exc,'errno',None));raise
++        finally:row.update(returncode=record['process'].returncode,cleaned=record.get('cleaned',False))
+     outsider=subprocess.Popen([sys.executable,'-c','import time;time.sleep(20)'],start_new_session=True)
+     try:
+         with tempfile.TemporaryDirectory() as tmp:
+@@ -244,21 +252,23 @@ def io_failure_probe(mode):
+                 if mode=='EIO' and sum(s['phase']=='formal' for s,p in created)>=2:
+                     raise OSError(errno.EIO,'programmatic persistent evidence write')
+                 return write(path,value,replace=replace)
+-            with patch.object(module,'write',side_effect=writer):
++            with patch.object(module,'write',side_effect=writer),patch.object(module,'stop_owned',side_effect=observed_stop):
+                 try:module.supervise(out,packet,spawn,case.caps(trajectory_seconds=.12),.01)
+                 except BaseException as exc:caught=exc
+-            reaped=[]
++            reaped=[];owned=[]
+             for spec,process in created:
+-                try:os.waitpid(process.pid,os.WNOHANG)
+-                except ChildProcessError:reaped.append(process.pid)
++                row=dict(pid=process.pid,phase=spec['phase'],key=spec['key'],returncode=process.returncode)
++                try:row['waitpid']=os.waitpid(process.pid,os.WNOHANG)
++                except ChildProcessError:reaped.append(process.pid);row['waitpid']='ChildProcessError: already reaped'
++                owned.append(row)
+             summary=out/'matrix.processes.json'
+             result=dict(probe=mode,observed_error=None if caught is None else type(caught).__name__,
+                 observed_errno=getattr(caught,'errno',None),created=len(created),
+                 formal_children=sum(s['phase']=='formal' for s,p in created),
+                 all_owned_returned=all(p.returncode is not None for s,p in created),
+                 all_owned_reaped=len(reaped)==len(created),outsider_alive=outsider.poll() is None,
+-                summary_status=json.loads(summary.read_text())['status'] if summary.exists() else None)
+-            print(json.dumps(result),flush=True)
++                summary_status=json.loads(summary.read_text())['status'] if summary.exists() else None,
++                owned=owned,cleanup=cleanup,outsider_pid=outsider.pid)
+     finally:
+         # Test failure must never leave either an owned or a control child alive.
+         for process in [p for s,p in created]+[outsider]:
+@@ -268,6 +278,9 @@ def io_failure_probe(mode):
+             try:process.wait(timeout=2)
+             except subprocess.TimeoutExpired:
+                 os.killpg(process.pid,signal.SIGKILL);process.wait(timeout=2)
++            fallback.append(dict(pid=process.pid,returncode=process.returncode,wait_completed=True))
++    result['fallback_cleanup']=fallback
++    print(json.dumps(result),flush=True)
+     if caught is not None:raise caught
+ 
+ 
+@@ -291,6 +304,7 @@ class ProcessChecks(unittest.TestCase):
+         result=subprocess.run([sys.executable,'-c',code],env=env,text=True,capture_output=True,timeout=30)
+         observed=json.loads(result.stdout);observed['supervisor_exit_code']=result.returncode
+         print(json.dumps(observed),flush=True)
++        if result.stderr:print(result.stderr,flush=True)
+         self.assertNotEqual(result.returncode,0)
+         self.assertEqual(observed['observed_error'],'OSError');self.assertEqual(observed['observed_errno'],getattr(errno,mode))
+         self.assertEqual(observed['created'],4);self.assertEqual(observed['formal_children'],2)
+diff --git a/tests/test_r3.py b/tests/test_r3.py
+index a5ce148a13f77df46ca3c21c994b149321b6b75b..4eb707371197e4e4f4824cd58776b11a5bed093d 100644
+--- a/tests/test_r3.py
++++ b/tests/test_r3.py
+@@ -127,13 +127,23 @@ class HostTests(unittest.TestCase):
+         import tempfile,os
+         from pathlib import Path
+         from dpa_ctta.integrations.ctta_suite import build_reference_model
+-        from dpa_ctta.r3.execution import smoke
++        from dpa_ctta.r3.execution import smoke,backend_policy
+         seed_all(20260907);m,_=build_reference_model('fundus')
+         with torch.no_grad():m.seg_head.weight.mul_(30)
+         state=copy.deepcopy(m.state_dict());del m
+-        with tempfile.TemporaryDirectory() as tmp:
+-            smoke(state,'cpu',Path(tmp),dict(fixture='PROGRAMMATIC_CPU_NOT_EXECUTION_AUTHORIZATION'),dict(seed=20260907),dict(bytes=1))
+-            proof=json.loads((Path(tmp)/'smoke.completion.json').read_text())
++        original=backend_policy()
++        try:
++            torch.use_deterministic_algorithms(False,warn_only=True)
++            with tempfile.TemporaryDirectory() as tmp,patch.dict(os.environ):
++                os.environ.pop('CUBLAS_WORKSPACE_CONFIG',None)
++                before=backend_policy()
++                smoke(state,'cpu',Path(tmp),dict(fixture='PROGRAMMATIC_CPU_NOT_EXECUTION_AUTHORIZATION'),dict(seed=20260907,**before),dict(bytes=1))
++                proof=json.loads((Path(tmp)/'smoke.completion.json').read_text())
++                self.assertEqual(backend_policy(),before)
++                self.assertEqual(proof['backend'],dict(seed=20260907,**before))
++                self.assertEqual(proof['paired_comparison_backend'],dict(deterministic_algorithms=True,warn_only=False,cublas_workspace_config=None))
++                print('SMOKE_CPU_BACKEND '+json.dumps(dict(before=before,comparison=proof['paired_comparison_backend'],restored=backend_policy()),sort_keys=True))
++        finally:torch.use_deterministic_algorithms(original['deterministic_algorithms'],warn_only=original['warn_only'])
+         total=proof['physical'];traces=proof['evidence']
+         self.assertEqual(total['network_forwards'],316);self.assertEqual(total['adam_calls'],38)
+         self.assertEqual(total['loss_backward_calls'],38);self.assertLessEqual(total['jacobian_vjp_calls'],24)
+diff --git a/tests/test_r3_execution.py b/tests/test_r3_execution.py
+index 53e037de738bb8c7d8f8a961ec1ca856d148d6bc..cb2bf6de6e4384336059e503595947eb41fc14af 100644
+--- a/tests/test_r3_execution.py
++++ b/tests/test_r3_execution.py
+@@ -1,5 +1,5 @@
+ """Synthetic scalar fixtures exercise every arm/stream; no model or real assets."""
+-import copy,json,tempfile,unittest
++import copy,json,os,tempfile,unittest
+ from contextlib import contextmanager
+ from pathlib import Path
+ from unittest.mock import patch
+@@ -22,10 +22,10 @@ def fixture(out):
+     for key,col in [('scoring_records','records'),('network_forwards','network_forwards'),('loss_backward_calls','loss_backward_calls'),('adam_calls','adam_calls'),('jacobian_vjp_upper','jacobian_vjp_upper')]:cfg['formal_budget'][key]=sum(j[col] for j in jobs)
+     identity=dict(run_id='a'*32,code_sha='b'*40,science_sha256=plan.SCIENCE_SHA,registration_digest=registration_digest(reg),stream_digest='c'*64)
+     packet=dict(binding=identity,jobs=jobs,devices=[dict(index=i,uuid='CPU_SLOT_'+str(i),model='PROCEDURAL') for i in range(2)],schedule=plan.allocation(jobs,2))
+-    write(out/'receipt.json',packet);entries=[];backend=dict(seed=20260907)
++    write(out/'receipt.json',packet);entries=[];backend=dict(seed=20260907,deterministic_algorithms=False,warn_only=False,cublas_workspace_config=None)
+     for i in range(2):
+         p=out/('device'+str(i));p.mkdir();ident=binding(packet,i)
+-        write(p/'smoke.completion.json',dict(binding=ident,status='MECHANICAL_SMOKE_COMPLETE',physical=dict(network_forwards=316,loss_backward_calls=38,jacobian_vjp_calls=0,adam_calls=38,actual_parameter_replacements=0),backend=backend,checkpoint_io=dict(bytes=7)))
++        write(p/'smoke.completion.json',dict(binding=ident,status='MECHANICAL_SMOKE_COMPLETE',physical=dict(network_forwards=316,loss_backward_calls=38,jacobian_vjp_calls=0,adam_calls=38,actual_parameter_replacements=0),backend=dict(backend,cublas_workspace_config=':4096:8'),paired_comparison_backend=dict(deterministic_algorithms=True,warn_only=False,cublas_workspace_config=':4096:8'),checkpoint_io=dict(bytes=7)))
+         entries.append(dict(binding=ident,phase='smoke',key=p.name,pid=100+i,pgid=100+i,status='EXITED',exit_code=0))
+     for j,assignment in zip(jobs,packet['schedule']['assignments']):
+         p=out/j['job_id'];p.mkdir();ident=binding(packet,assignment['worker'],j);records=[]
+@@ -49,6 +49,70 @@ def fixture(out):
+ 
+ 
+ class ExecutionTests(unittest.TestCase):
++    def test_phase_environment_matrix_preserves_parent_and_identity(self):
++        for value in (None,'invalid',':16:8',':4096:8'):
++            for phase in ('smoke','formal'):
++                with self.subTest(parent=value,phase=phase):
++                    parent=dict(CUDA_VISIBLE_DEVICES='CPU_SLOT',RUN_MODE=phase,RUN_WORKER='1',RUN_JOB='o4a16',RUN_PACKET='/procedural/packet',RUN_FILE='/procedural/entry',PYTHONPATH='/procedural/src',EXTRA='preserved')
++                    if value is not None:parent['CUBLAS_WORKSPACE_CONFIG']=value
++                    saved=parent.copy();child=execution.worker_environment(parent,phase)
++                    self.assertEqual(parent,saved);self.assertIsNot(child,parent)
++                    self.assertEqual({k:v for k,v in child.items() if k!='CUBLAS_WORKSPACE_CONFIG'},{k:v for k,v in parent.items() if k!='CUBLAS_WORKSPACE_CONFIG'})
++                    if phase=='smoke':self.assertEqual(child['CUBLAS_WORKSPACE_CONFIG'],':4096:8')
++                    else:self.assertNotIn('CUBLAS_WORKSPACE_CONFIG',child)
++                    execution.check_worker_environment(phase,child)
++                    print('PHASE_ENV '+json.dumps(dict(parent=value,phase=phase,child=child.get('CUBLAS_WORKSPACE_CONFIG'),parent_unchanged=parent==saved)))
++
++    def test_unknown_phase_rejected(self):
++        with self.assertRaisesRegex(ValueError,'unknown execution phase'):execution.worker_environment({},'other')
++        with self.assertRaisesRegex(ValueError,'unknown execution phase'):execution.check_worker_environment('other',{})
++
++    def test_direct_worker_mismatch_rejected_before_device_or_assets(self):
++        with patch.object(execution,'context',return_value=({}, {},0,Path('/unused'))),patch.object(execution,'checkpoint',side_effect=AssertionError('no assets')),patch('dpa_ctta.source_pilot_release.environment',side_effect=AssertionError('no device query')),patch('torch.cuda._lazy_init',side_effect=AssertionError('no CUDA init')):
++            for phase,values in (('smoke',(None,'invalid',':16:8','')),('formal',('invalid',':16:8',':4096:8',''))):
++                for value in values:
++                    with self.subTest(phase=phase,value=value),patch.dict(os.environ,RUN_MODE=phase):
++                        os.environ.pop('CUBLAS_WORKSPACE_CONFIG',None)
++                        if value is not None:os.environ['CUBLAS_WORKSPACE_CONFIG']=value
++                        with self.assertRaisesRegex(PermissionError,'CUBLAS_WORKSPACE_CONFIG mismatch'):execution.worker()
++
++    def test_direct_worker_disabled_authorization_precedes_environment(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            packet=Path(tmp)/'packet.json';packet.write_text(json.dumps(dict(authorization=dict(enabled=False),assets=dict(registration={}))))
++            with patch.dict(os.environ,RUN_PACKET=str(packet),RUN_MODE='smoke',CUBLAS_WORKSPACE_CONFIG='invalid'),patch.object(execution,'check_worker_environment',side_effect=AssertionError('authorization must run first')),patch('subprocess.check_output',side_effect=AssertionError('no device query')):
++                with self.assertRaisesRegex(PermissionError,'execution disabled'):execution.worker()
++
++    def test_formal_worker_records_actual_policy_without_changing_it(self):
++        import torch
++        original=execution.backend_policy()
++        try:
++            torch.use_deterministic_algorithms(True,warn_only=True)
++            with tempfile.TemporaryDirectory() as tmp,patch.dict(os.environ,RUN_MODE='formal',RUN_JOB='o0a0'):
++                os.environ.pop('CUBLAS_WORKSPACE_CONFIG',None)
++                out=Path(tmp)
++                with fixture(out) as (reg,jobs,packet,ordered),patch.object(execution,'context',return_value=(packet,reg,0,out)),patch.object(execution,'checkpoint',return_value=({},dict(bytes=7))),patch('dpa_ctta.source_pilot_release.environment',return_value=dict(seed=20260907)),patch.object(execution,'trajectory') as trajectory,patch('torch.cuda._lazy_init',side_effect=AssertionError('no CUDA init')):
++                    before=execution.backend_policy();execution.worker()
++                    self.assertEqual(trajectory.call_args.args[5],dict(seed=20260907,**before))
++                    self.assertEqual(execution.backend_policy(),before)
++                    self.assertEqual(before,dict(deterministic_algorithms=True,warn_only=True,cublas_workspace_config=None))
++        finally:torch.use_deterministic_algorithms(original['deterministic_algorithms'],warn_only=original['warn_only'])
++
++    def test_smoke_failure_restores_both_flags_and_workspace(self):
++        import torch
++        original=execution.backend_policy()
++        try:
++            torch.use_deterministic_algorithms(False,warn_only=True)
++            with tempfile.TemporaryDirectory() as tmp,patch.dict(os.environ,CUBLAS_WORKSPACE_CONFIG=':4096:8'):
++                before=execution.backend_policy()
++                def fail_before_model(seed):
++                    self.assertEqual(execution.backend_policy(),dict(deterministic_algorithms=True,warn_only=False,cublas_workspace_config=':4096:8'))
++                    raise RuntimeError('procedural failure before model')
++                with patch('dpa_ctta.source_pilot.seed_all',side_effect=fail_before_model):
++                    with self.assertRaisesRegex(RuntimeError,'procedural failure before model'):execution.smoke({},'cpu',Path(tmp),{},before,{})
++                self.assertEqual(execution.backend_policy(),before)
++                self.assertFalse((Path(tmp)/'smoke.completion.json').exists())
++        finally:torch.use_deterministic_algorithms(original['deterministic_algorithms'],warn_only=original['warn_only'])
++
+     def test_85_fixture_closeout_separate_secondary_and_truncation(self):
+         with tempfile.TemporaryDirectory() as tmp:
+             out=Path(tmp)
