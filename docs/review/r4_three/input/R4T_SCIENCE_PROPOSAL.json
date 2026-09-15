@@ -1,0 +1,460 @@
+{
+  "status": "PROPOSED_NOT_IMPLEMENTED_NOT_REVIEWED_NOT_AUTHORIZED",
+  "experiment": "R4T_TEACHER_PCA_KERNEL_GEOMETRY_AND_ANCHORED_BOUNDARY_GRAPH",
+  "basis_result_commit": "2f90a6a0933cec3a25337a0d46ee632f8d772840",
+  "basis_runtime_commit": "185fd440b16920f367c1f5e3096ab495bd85c0ec",
+  "asset_condition": "given_checkpoint_only_no_source_data_no_source_retraining",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "secondary_stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+  "seed": 20260907,
+  "task": "fundus",
+  "groups": 1951,
+  "primary_subset": "remaining_dev",
+  "primary_subset_groups": 1695,
+  "primary_orders": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "secondary_order": 4,
+  "arms": [
+    {
+      "name": "C",
+      "teacher": "current",
+      "region_pca": false,
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "RP",
+      "teacher": "current",
+      "region_pca": true,
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "MT",
+      "teacher": "ema",
+      "region_pca": false,
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "MT_RP",
+      "teacher": "ema",
+      "region_pca": true,
+      "forwards_per_visit": 9,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "FT",
+      "teacher": "fixed_initial_affine",
+      "region_pca": false,
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "FT_RP",
+      "teacher": "fixed_initial_affine",
+      "region_pca": true,
+      "forwards_per_visit": 9,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "KDG",
+      "direction": "B",
+      "teacher": "current",
+      "region_pca": false,
+      "kernel_adapter": "KDG",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 2147,
+      "total_trainable_scalars": 21283
+    },
+    {
+      "name": "K_ALL",
+      "direction": "B",
+      "teacher": "current",
+      "region_pca": false,
+      "kernel_adapter": "K_ALL",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 2147,
+      "total_trainable_scalars": 21283
+    },
+    {
+      "name": "K_MAG",
+      "direction": "B",
+      "teacher": "current",
+      "region_pca": false,
+      "kernel_adapter": "K_MAG",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 128,
+      "total_trainable_scalars": 19264
+    },
+    {
+      "name": "K_FREE",
+      "direction": "B",
+      "teacher": "current",
+      "region_pca": false,
+      "kernel_adapter": "K_FREE",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 4288,
+      "total_trainable_scalars": 23424
+    },
+    {
+      "name": "G_BOUND",
+      "direction": "C",
+      "teacher": "current_graph_refined",
+      "region_pca": false,
+      "kernel_adapter": null,
+      "graph_mode": "boundary_rgb",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 0,
+      "total_trainable_scalars": 19136
+    },
+    {
+      "name": "G_CONST",
+      "direction": "C",
+      "teacher": "current_graph_refined",
+      "region_pca": false,
+      "kernel_adapter": null,
+      "graph_mode": "boundary_constant_matched_sum",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 0,
+      "total_trainable_scalars": 19136
+    },
+    {
+      "name": "G_SHUFFLE",
+      "direction": "C",
+      "teacher": "current_graph_refined",
+      "region_pca": false,
+      "kernel_adapter": null,
+      "graph_mode": "boundary_shuffled_rgb_weights",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 0,
+      "total_trainable_scalars": 19136
+    },
+    {
+      "name": "G_GLOBAL",
+      "direction": "C",
+      "teacher": "current_graph_refined",
+      "region_pca": false,
+      "kernel_adapter": null,
+      "graph_mode": "all_unreliable_rgb",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 0,
+      "total_trainable_scalars": 19136
+    }
+  ],
+  "teacher": {
+    "weak_views": 6,
+    "EMA_momentum": 0.99,
+    "EMA_initialization": "source_affine",
+    "EMA_update_time": "after_student_final_prediction_and_memory_commit",
+    "update_only": "BN_affine",
+    "optimizer": null,
+    "normalization": "same_as_C_current_input_statistics_not_source_running_statistics",
+    "frozen_teacher": "initial_affine_with_C_normalization_policy",
+    "scored_predictor": "student_raw_original_after_one_Adam",
+    "current_teacher_identity_forward_reused_for_student_pre_features": true,
+    "EMA_or_fixed_RP_requires_separate_preupdate_student_forward": true,
+    "average_predictions_at_output": false,
+    "no_warmup_momentum_ramp": true
+  },
+  "student": {
+    "update": "41_BN_affine_19136_scalars",
+    "lr": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "AMP": false,
+    "cross_domain_reset": false,
+    "additional_restoration": false,
+    "scope_note": "The original update field applies to A. B adds the listed kernel coordinates to the same single Adam call."
+  },
+  "RP": {
+    "reference": "unchanged_R1_RP_absolute_loss",
+    "weight": 0.05,
+    "feature_dim": 32,
+    "rank_cap": 8,
+    "grid": [
+      32,
+      32
+    ],
+    "regions": [
+      "OD_bg",
+      "OD_fg",
+      "OC_bg",
+      "OC_fg"
+    ],
+    "feature_frame": "student_preupdate_original_not_teacher",
+    "memory_labels": "same_preupdate_teacher_q_and_six_views_used_for_BCE",
+    "selection_q_bounds": [
+      0.1,
+      0.9
+    ],
+    "all_six_hard_agree": true,
+    "per_region_token_cap": 32,
+    "min_contributing_images": 16,
+    "min_tokens": 128,
+    "refresh_contributing_images": 16,
+    "stats": "cumulative_no_forgetting_no_transport",
+    "insert_time": "after_final_student_prediction"
+  },
+  "evaluation": {
+    "auxiliary_teacher_metrics": "after_current_state_commit_in_isolated_evaluator_same_current_mask",
+    "additional_teacher_forward_for_evaluation": false,
+    "additional_GT_access_by_host": false,
+    "auxiliary_metrics_are_not_additional_stream_predictions": true,
+    "do_not_serialize_teacher_probability_maps": true,
+    "unavailable_historical_teacher_metrics": "not_reconstructable_from_R3_scalars",
+    "primary_and_secondary_pooled": false,
+    "kernel_audit": "source weight immutable; DC/detail deltas; Q orthogonality; relevant cosine Gram; actual effective-kernel displacement; gains; same current q evaluation",
+    "memory_metrics_for_no_RP": "NOT_APPLICABLE, not zero or fabricated pseudo-memory",
+    "graph_auxiliary": "For G arms evaluate unmodified q and qstar after commit, valid counts for correction transitions, band fractions, and confidence anchors; dense tensors released after evaluator.",
+    "graph_not_RP": "No shadow banks for graph arms; memory quality NOT_APPLICABLE."
+  },
+  "formal_budget": {
+    "trajectories": 70,
+    "primary_trajectories": 56,
+    "secondary_trajectories": 14,
+    "scoring_records": 136570,
+    "primary_records": 109256,
+    "secondary_records": 27314,
+    "network_forwards": 1112070,
+    "loss_backward_calls": 136570,
+    "adam_calls": 136570,
+    "jacobian_vjp_calls": 0,
+    "offline_training_updates": 0,
+    "direction_A_records": 58530,
+    "direction_A_forwards": 487750,
+    "direction_B_records": 39020,
+    "direction_B_forwards": 312160,
+    "direction_C_records": 39020,
+    "direction_C_forwards": 312160
+  },
+  "per_actual_gpu_smoke": {
+    "current_and_continued_updates_per_arm": 2,
+    "old_C_RP_reference_updates": 4,
+    "adam_calls": 32,
+    "loss_backward_calls": 32,
+    "network_forwards": 260,
+    "jacobian_vjp_calls": 0,
+    "scoring_records_in_primary_table": 0,
+    "procedural_inputs": true,
+    "K_branch_preupdate_identity_not_postupdate_C_parity": true
+  },
+  "selection": {
+    "primary_gain_over_C_pp_reference": 0.5,
+    "positive_primary_orders_reference": 3,
+    "component_gain_must_be_compared_to_own_teacher_without_RP": true,
+    "no_posthoc_domainwise_method_selection": true,
+    "thresholds_not_statistical_or_clinical": true,
+    "no_auto_hyperparameter_search": true,
+    "no_auto_expansion": true,
+    "kernel_required_controls": [
+      "K_ALL",
+      "K_MAG",
+      "K_FREE"
+    ],
+    "no_automatic_direction_combination": true,
+    "graph_required_controls": [
+      "G_CONST",
+      "G_SHUFFLE",
+      "G_GLOBAL"
+    ],
+    "graph_qualification": "Net student gain over C and direct controls, plus localized teacher correction evidence; no promotion from geometry/auxiliary metrics alone.",
+    "experimental_diversity_not_statistical_independence": true
+  },
+  "execution": {
+    "enabled": false,
+    "allowed_gpu_ids": [],
+    "background_allowed": false,
+    "requires_implementation_review": true,
+    "requires_fresh_resource_authorization": true,
+    "continue_all_arms_regardless_of_scores": true,
+    "no_auto_retry": true,
+    "stop_stage_I": "R4T_IMPLEMENTATION_READY_FOR_REVIEW"
+  },
+  "supersedes": "Unexecuted R4/R4D scheduling only. Prior ten arm definitions and shared scientific settings unchanged. Do not execute old and new queues cumulatively.",
+  "direction_A_preservation": {
+    "original_science_sha256": "22e59034737ab37404b4647edb6fd7186ec19613ddb0666ddb5258877a387ac5",
+    "original_arms_semantically_unchanged": true,
+    "original_teacher_student_RP_definitions_unchanged": true
+  },
+  "kernel_geometry": {
+    "status": "new experimental design; not original PAID and not a proven anti-forgetting method",
+    "source_assets": "given checkpoint tensors only; PAID source statistics and source subset are NOT used",
+    "module_paths": [
+      {
+        "path": "res.conv1",
+        "weight_shape": [
+          64,
+          3,
+          7,
+          7
+        ],
+        "stride": [
+          2,
+          2
+        ],
+        "padding": [
+          3,
+          3
+        ],
+        "groups": 1,
+        "bias": false
+      },
+      {
+        "path": "res.layer1.2.conv2",
+        "weight_shape": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "bias": false
+      }
+    ],
+    "spatial_projection": "b=ones(kh,kw)/sqrt(kh*kw); A0=sum(W0*b); H0=W0-A0*b",
+    "KDG": "W_eff=W0+(diag(exp(a))*A0*Q-A0)*b; H0 is fixed",
+    "K_ALL": "same Q and gains on ALL spatial kernel offsets; no detail protection",
+    "K_MAG": "KDG with Q=I; only train output log gains",
+    "K_FREE": "W_eff=W0+(row_norm(A0)/sqrt(Cin)*E)*b; unconstrained E; no separate gains",
+    "Q": "solve(I+0.5*S,I-0.5*S), S skew from independent strict-upper-triangular coordinates",
+    "zero_initialization": "all added coordinates exactly zero; no Python zero-state branch that disconnects derivatives",
+    "matrix_dtype": "float64 on model device; cast effective kernel to model float32 with autograd retained",
+    "optimizer": "one Adam call on original BN affine plus new coordinates; all lr=1e-4 betas=(0.9,0.999) eps=1e-8 wd=0",
+    "source_weight_storage": "original frozen weight/bias tensors immutable; effective kernels created differentiably per forward",
+    "gain_parameterization": "exp(a); strictly positive, no unreported clamp or bound",
+    "warmup": 0,
+    "extra_PCA": false,
+    "extra_EMA": false,
+    "extra_objective": false,
+    "extra_Jacobian_VJP": 0,
+    "source_zero_DC_row_policy": "zero DC rows remain zero; no artificial source direction or minimum norm invented",
+    "scope_of_guarantee": "local algebraic kernel decomposition only; not exact output/boundary/topology/source-accuracy preservation",
+    "control_caveat": "KDG and K_ALL match coordinates; K_MAG and K_FREE deliberately do not match parameter counts or effective step sizes",
+    "forbid_source_preparation": true
+  },
+  "resources": {
+    "preferred_physical_gpu_ids": [
+      6,
+      7
+    ],
+    "authorized_gpu_ids": [],
+    "max_workers": 3,
+    "max_threads_per_worker": 2,
+    "trajectory_hours_cap": 6,
+    "wall_hours_cap": 72,
+    "total_active_worker_hours_cap": 96,
+    "new_private_output_bytes_cap": 6442450944,
+    "background_authorized": false,
+    "scope": "caps, not completion-time predictions"
+  },
+  "prior_R4D_science_sha256": "79a238f8dd59f1a138adcf9c9b0583f29d2567699b94e82b31dc2603b2a3ed12",
+  "boundary_graph": {
+    "parent_R3_family": "5: G spatial graph teacher, not U and not a new sixth research family",
+    "claim_scope": "New project graph-teacher redesign. Not full SPEGC; not a new invention of harmonic/seeded graph segmentation; no correctness or anti-forgetting guarantee.",
+    "independent_of_RP_and_KDG": true,
+    "inputs": "current already-resized raw RGB [0,1], current student original six aligned probability maps and mean q, global visit for local shuffle seed only",
+    "model_norm": "original C current input statistics unchanged",
+    "new_source_assets": false,
+    "graph_grid": [
+      128,
+      128
+    ],
+    "reduce": "4x4 average pooling of probabilities and raw RGB from 512 grid; do not pool logits or use RP grid indices",
+    "edges": "undirected 4-neighbour; horizontal then vertical; no self loops, no wrap-around, no fabricated image-border edges",
+    "potential_edges": 32512,
+    "reliable": "(q<=0.1 or q>=0.9) AND all six hard probabilities agree with q>=0.5; computed separately at coarse and full grid",
+    "contour": "both endpoints of four-neighbour changes of q>=0.5, separately per independent OD/OC channel",
+    "boundary_dilation_chebyshev_grid_radius": 2,
+    "free_BOUND_CONST_SHUFFLE": "dilated_predicted_contour AND NOT reliable",
+    "free_GLOBAL": "NOT reliable; no contour restriction",
+    "anchor_values": "original soft q for ALL fixed nodes; never round seeds to 0/1; no external scribbles",
+    "rgb_standardization": "per current image/channel coarse-grid mean and population std; denominator max(std,0.05); graph-only, never replaces model preprocessing",
+    "edge_weight": "max(exp(-squared_standardized_RGB_distance/(2*0.5^2)),1e-4)",
+    "rgb_sigma": 0.5,
+    "rgb_std_floor": 0.05,
+    "edge_weight_floor": 0.0001,
+    "CONST": "each horizontal weight replaced by horizontal mean; same for vertical; matches orientation-specific weight sum, not nodewise degrees",
+    "SHUFFLE": "independent orientation-wise permutations of original edge-weight lists, preserving counts and multisets; endpoint topology and free mask unchanged",
+    "shuffle_seed": "first 8 big-endian bytes SHA256(R4T_G|20260907|visit|h_or_v) modulo (2^63-1); local CPU generator only",
+    "energy": "0.5 sum_free (Q-q)^2 + 0.5 lambda sum_undirected_edges w*(Qu-Qv)^2, Q_fixed=q",
+    "lambda": 1.0,
+    "solver": "64 synchronous Jacobi iterations starting at q; full positive fidelity for every free node; no early stopping gate",
+    "iterations": 64,
+    "geometry_dtype_device": "CPU float64, detached",
+    "solver_scope": "strictly convex anchored probability graph; NOT exact clinical segmentation. No dense 16384^2 allocation.",
+    "lift": "bilinear probability residual Q-q to full grid (align_corners=False); mask by nearest free-grid lift AND NOT full-grid reliable; clamp q+residual to [0,1] INSIDE support only; outside copy original q bitwise",
+    "nested_projection": false,
+    "logodds_replacement": false,
+    "hard_teacher": false,
+    "BCE": "same full-image ordinary BCEWithLogits as C; no region reweighting and no extra graph loss",
+    "final_output": "raw student original prediction after one Adam, never refined q",
+    "persistent_graph_state": false,
+    "graph_warmup": 0,
+    "no_boundary_or_no_free_nodes": "exact original q, still normal C update; not a skip/reset/failure",
+    "aux_evaluation": "q and qstar Dice/Brier plus correct-to-wrong and wrong-to-correct teacher pixel counts after all model state commit; no metric feedback",
+    "risks": [
+      "wrong confident anchors remain wrong",
+      "RGB boundaries can be vessels or illumination rather than OD/OC",
+      "missed confident structures cannot be invented",
+      "restricted teacher changes do not restrict student output changes outside the band",
+      "controls match rules, not identical masks after trajectories diverge"
+    ]
+  },
+  "directions": {
+    "A": "teacher timescale x regional PCA (six original arms)",
+    "B": "KDG and controls (four original arms; thematic continuation of R3 U)",
+    "C": "boundary-anchored graph supervision (four new arms; direct redesign of R3 G)"
+  },
+  "prior_ten_arms_unchanged": true
+}

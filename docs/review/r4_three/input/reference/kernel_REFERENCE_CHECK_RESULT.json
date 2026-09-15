@@ -1,0 +1,16 @@
+{
+  "status": "MATHEMATICAL_REFERENCE_ONLY",
+  "tests": 12,
+  "failures": 0,
+  "errors": 0,
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "torch": "2.10.0+cpu",
+  "cuda_initialized": false,
+  "full_model_forwards": 0,
+  "GPU_calls": 0,
+  "real_checkpoint_reads": 0,
+  "source_data_reads": 0,
+  "target_RGB_or_mask_reads": 0,
+  "scope": "synthetic kernel tensors, autograd finite differences and budget arithmetic; not Codex implementation review",
+  "command": "cd reference && python test_reference.py"
+}

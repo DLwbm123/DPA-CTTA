@@ -1,0 +1,337 @@
+{
+  "status": "PROPOSED_NOT_IMPLEMENTED_NOT_REVIEWED_NOT_AUTHORIZED",
+  "experiment": "R4D_TEACHER_PCA_AND_KERNEL_DETAIL_GEOMETRY",
+  "basis_result_commit": "2f90a6a0933cec3a25337a0d46ee632f8d772840",
+  "basis_runtime_commit": "185fd440b16920f367c1f5e3096ab495bd85c0ec",
+  "asset_condition": "given_checkpoint_only_no_source_data_no_source_retraining",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "secondary_stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+  "seed": 20260907,
+  "task": "fundus",
+  "groups": 1951,
+  "primary_subset": "remaining_dev",
+  "primary_subset_groups": 1695,
+  "primary_orders": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "secondary_order": 4,
+  "arms": [
+    {
+      "name": "C",
+      "teacher": "current",
+      "region_pca": false,
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "RP",
+      "teacher": "current",
+      "region_pca": true,
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "MT",
+      "teacher": "ema",
+      "region_pca": false,
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "MT_RP",
+      "teacher": "ema",
+      "region_pca": true,
+      "forwards_per_visit": 9,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "FT",
+      "teacher": "fixed_initial_affine",
+      "region_pca": false,
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "FT_RP",
+      "teacher": "fixed_initial_affine",
+      "region_pca": true,
+      "forwards_per_visit": 9,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "direction": "A",
+      "kernel_adapter": null
+    },
+    {
+      "name": "KDG",
+      "direction": "B",
+      "teacher": "current",
+      "region_pca": false,
+      "kernel_adapter": "KDG",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 2147,
+      "total_trainable_scalars": 21283
+    },
+    {
+      "name": "K_ALL",
+      "direction": "B",
+      "teacher": "current",
+      "region_pca": false,
+      "kernel_adapter": "K_ALL",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 2147,
+      "total_trainable_scalars": 21283
+    },
+    {
+      "name": "K_MAG",
+      "direction": "B",
+      "teacher": "current",
+      "region_pca": false,
+      "kernel_adapter": "K_MAG",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 128,
+      "total_trainable_scalars": 19264
+    },
+    {
+      "name": "K_FREE",
+      "direction": "B",
+      "teacher": "current",
+      "region_pca": false,
+      "kernel_adapter": "K_FREE",
+      "forwards_per_visit": 8,
+      "adam_per_visit": 1,
+      "loss_backward_per_visit": 1,
+      "additional_trainable_scalars": 4288,
+      "total_trainable_scalars": 23424
+    }
+  ],
+  "teacher": {
+    "weak_views": 6,
+    "EMA_momentum": 0.99,
+    "EMA_initialization": "source_affine",
+    "EMA_update_time": "after_student_final_prediction_and_memory_commit",
+    "update_only": "BN_affine",
+    "optimizer": null,
+    "normalization": "same_as_C_current_input_statistics_not_source_running_statistics",
+    "frozen_teacher": "initial_affine_with_C_normalization_policy",
+    "scored_predictor": "student_raw_original_after_one_Adam",
+    "current_teacher_identity_forward_reused_for_student_pre_features": true,
+    "EMA_or_fixed_RP_requires_separate_preupdate_student_forward": true,
+    "average_predictions_at_output": false,
+    "no_warmup_momentum_ramp": true
+  },
+  "student": {
+    "update": "41_BN_affine_19136_scalars",
+    "lr": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "AMP": false,
+    "cross_domain_reset": false,
+    "additional_restoration": false,
+    "scope_note": "The original update field applies to A. B adds the listed kernel coordinates to the same single Adam call."
+  },
+  "RP": {
+    "reference": "unchanged_R1_RP_absolute_loss",
+    "weight": 0.05,
+    "feature_dim": 32,
+    "rank_cap": 8,
+    "grid": [
+      32,
+      32
+    ],
+    "regions": [
+      "OD_bg",
+      "OD_fg",
+      "OC_bg",
+      "OC_fg"
+    ],
+    "feature_frame": "student_preupdate_original_not_teacher",
+    "memory_labels": "same_preupdate_teacher_q_and_six_views_used_for_BCE",
+    "selection_q_bounds": [
+      0.1,
+      0.9
+    ],
+    "all_six_hard_agree": true,
+    "per_region_token_cap": 32,
+    "min_contributing_images": 16,
+    "min_tokens": 128,
+    "refresh_contributing_images": 16,
+    "stats": "cumulative_no_forgetting_no_transport",
+    "insert_time": "after_final_student_prediction"
+  },
+  "evaluation": {
+    "auxiliary_teacher_metrics": "after_current_state_commit_in_isolated_evaluator_same_current_mask",
+    "additional_teacher_forward_for_evaluation": false,
+    "additional_GT_access_by_host": false,
+    "auxiliary_metrics_are_not_additional_stream_predictions": true,
+    "do_not_serialize_teacher_probability_maps": true,
+    "unavailable_historical_teacher_metrics": "not_reconstructable_from_R3_scalars",
+    "primary_and_secondary_pooled": false,
+    "kernel_audit": "source weight immutable; DC/detail deltas; Q orthogonality; relevant cosine Gram; actual effective-kernel displacement; gains; same current q evaluation",
+    "memory_metrics_for_no_RP": "NOT_APPLICABLE, not zero or fabricated pseudo-memory"
+  },
+  "formal_budget": {
+    "trajectories": 50,
+    "primary_trajectories": 40,
+    "secondary_trajectories": 10,
+    "scoring_records": 97550,
+    "primary_records": 78040,
+    "secondary_records": 19510,
+    "network_forwards": 799910,
+    "loss_backward_calls": 97550,
+    "adam_calls": 97550,
+    "jacobian_vjp_calls": 0,
+    "offline_training_updates": 0,
+    "direction_A_records": 58530,
+    "direction_A_forwards": 487750,
+    "direction_B_records": 39020,
+    "direction_B_forwards": 312160
+  },
+  "per_actual_gpu_smoke": {
+    "current_and_continued_updates_per_arm": 2,
+    "old_C_RP_reference_updates": 4,
+    "adam_calls": 24,
+    "loss_backward_calls": 24,
+    "network_forwards": 196,
+    "jacobian_vjp_calls": 0,
+    "scoring_records_in_primary_table": 0,
+    "procedural_inputs": true,
+    "K_branch_preupdate_identity_not_postupdate_C_parity": true
+  },
+  "selection": {
+    "primary_gain_over_C_pp_reference": 0.5,
+    "positive_primary_orders_reference": 3,
+    "component_gain_must_be_compared_to_own_teacher_without_RP": true,
+    "no_posthoc_domainwise_method_selection": true,
+    "thresholds_not_statistical_or_clinical": true,
+    "no_auto_hyperparameter_search": true,
+    "no_auto_expansion": true,
+    "kernel_required_controls": [
+      "K_ALL",
+      "K_MAG",
+      "K_FREE"
+    ],
+    "no_automatic_direction_combination": true
+  },
+  "execution": {
+    "enabled": false,
+    "allowed_gpu_ids": [],
+    "background_allowed": false,
+    "requires_implementation_review": true,
+    "requires_fresh_resource_authorization": true,
+    "continue_all_arms_regardless_of_scores": true,
+    "no_auto_retry": true
+  },
+  "supersedes": "unexecuted R4 six-arm scheduling only; original direction-A algorithms are unchanged",
+  "direction_A_preservation": {
+    "original_science_sha256": "22e59034737ab37404b4647edb6fd7186ec19613ddb0666ddb5258877a387ac5",
+    "original_arms_semantically_unchanged": true,
+    "original_teacher_student_RP_definitions_unchanged": true
+  },
+  "kernel_geometry": {
+    "status": "new experimental design; not original PAID and not a proven anti-forgetting method",
+    "source_assets": "given checkpoint tensors only; PAID source statistics and source subset are NOT used",
+    "module_paths": [
+      {
+        "path": "res.conv1",
+        "weight_shape": [
+          64,
+          3,
+          7,
+          7
+        ],
+        "stride": [
+          2,
+          2
+        ],
+        "padding": [
+          3,
+          3
+        ],
+        "groups": 1,
+        "bias": false
+      },
+      {
+        "path": "res.layer1.2.conv2",
+        "weight_shape": [
+          64,
+          64,
+          3,
+          3
+        ],
+        "stride": [
+          1,
+          1
+        ],
+        "padding": [
+          1,
+          1
+        ],
+        "groups": 1,
+        "bias": false
+      }
+    ],
+    "spatial_projection": "b=ones(kh,kw)/sqrt(kh*kw); A0=sum(W0*b); H0=W0-A0*b",
+    "KDG": "W_eff=W0+(diag(exp(a))*A0*Q-A0)*b; H0 is fixed",
+    "K_ALL": "same Q and gains on ALL spatial kernel offsets; no detail protection",
+    "K_MAG": "KDG with Q=I; only train output log gains",
+    "K_FREE": "W_eff=W0+(row_norm(A0)/sqrt(Cin)*E)*b; unconstrained E; no separate gains",
+    "Q": "solve(I+0.5*S,I-0.5*S), S skew from independent strict-upper-triangular coordinates",
+    "zero_initialization": "all added coordinates exactly zero; no Python zero-state branch that disconnects derivatives",
+    "matrix_dtype": "float64 on model device; cast effective kernel to model float32 with autograd retained",
+    "optimizer": "one Adam call on original BN affine plus new coordinates; all lr=1e-4 betas=(0.9,0.999) eps=1e-8 wd=0",
+    "source_weight_storage": "original frozen weight/bias tensors immutable; effective kernels created differentiably per forward",
+    "gain_parameterization": "exp(a); strictly positive, no unreported clamp or bound",
+    "warmup": 0,
+    "extra_PCA": false,
+    "extra_EMA": false,
+    "extra_objective": false,
+    "extra_Jacobian_VJP": 0,
+    "source_zero_DC_row_policy": "zero DC rows remain zero; no artificial source direction or minimum norm invented",
+    "scope_of_guarantee": "local algebraic kernel decomposition only; not exact output/boundary/topology/source-accuracy preservation",
+    "control_caveat": "KDG and K_ALL match coordinates; K_MAG and K_FREE deliberately do not match parameter counts or effective step sizes",
+    "forbid_source_preparation": true
+  },
+  "resources": {
+    "preferred_physical_gpu_ids": [
+      6,
+      7
+    ],
+    "authorized_gpu_ids": [],
+    "max_workers": 3,
+    "max_threads_per_worker": 2,
+    "trajectory_hours_cap": 6,
+    "wall_hours_cap": 72,
+    "total_active_worker_hours_cap": 96,
+    "new_private_output_bytes_cap": 6442450944,
+    "background_authorized": false,
+    "scope": "caps, not completion-time predictions"
+  }
+}

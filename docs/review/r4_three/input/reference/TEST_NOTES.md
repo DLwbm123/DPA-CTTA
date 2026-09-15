@@ -1,0 +1,9 @@
+# 本包参考检查的实际范围
+
+本次运行29项：原kernel参考12项、新增boundary graph15项、原十臂保持性与新预算2项。
+
+首次合并测试有一个路径错误：原kernel测试仍在包根目录寻找旧R4D science，而继承文件被放到inherited/。旧预算断言未改，测试只将读取路径改为inherited/R4D_SCIENCE_PROPOSAL.json。首失败日志保留于first_run_path_failure.log；最后全套为29/29。旧50job预算测试检验被保留的来源文件，新70job预算另由test_plan检验。
+
+没有为获得通过修改kernel或graph数学实现。kernel_geometry.py保留自旧包原字节。新图实现无模型、文件读取、目标GT接口或GPU运算。production shape测试仅构造程序化512×512张量，不读取患者图像。
+
+这些结果不是Codex集成代码的review通过。CPU-only环境不能验证真实CUDA算子与源checkpoint部署；实际GPU smoke留到外部review与资源授权之后。
