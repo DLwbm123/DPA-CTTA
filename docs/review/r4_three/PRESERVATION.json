@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "teacher": true,
+    "student": true,
+    "RP": true,
+    "kernel_geometry": true,
+    "resources": true,
+    "direction_A_preservation": true
+  },
+  "first_ten_arms_unchanged": true,
+  "science_sha256": "3b4db63b60cb483c91329c87cafd91931f316b4cb94a1d5aeb6c08c236a64096",
+  "science_bytes_equal_proposal": true,
+  "base_commit": "2f90a6a0933cec3a25337a0d46ee632f8d772840",
+  "historical_code_and_results_modified": false,
+  "kernel_implementation_delta": "Factor constant DC basis out of sum for exact zero-sum rows; additional diagnostic scalars; no threshold, clipping or formula change",
+  "boundary_graph_implementation_bytes_equal_supplied_reference": true
+}

@@ -1,0 +1,61 @@
+test_all_modes_zero_initialization_exact_and_rng_unchanged (test_r4t_kernel.MathChecks) ... ok
+test_cayley_orthogonality_and_identity_derivative (test_r4t_kernel.MathChecks) ... ok
+test_dc_decomposition (test_r4t_kernel.MathChecks) ... ok
+test_free_preserves_detail_not_angular_structure (test_r4t_kernel.MathChecks) ... ok
+test_gradients_finite_difference (test_r4t_kernel.MathChecks) ... ok
+test_kall_changes_detail_preserves_full_filter_angles (test_r4t_kernel.MathChecks) ... ok
+test_kdg_preserves_detail_and_dc_angles (test_r4t_kernel.MathChecks) ... ok
+test_local_zero_mean_perturbation_response (test_r4t_kernel.MathChecks) ... ok
+test_matrix_and_smoke_budgets (test_r4t_kernel.MathChecks) ... ok
+test_original_weights_immutable_after_adam (test_r4t_kernel.MathChecks) ... ok
+test_pinned_parameter_budgets (test_r4t_kernel.MathChecks) ... ok
+test_zero_dc_rows_finite_and_cannot_invent_signal (test_r4t_kernel.MathChecks) ... ok
+test_01_full_grid_edge_count (test_r4t_graph.BoundaryGraphTests) ... ok
+test_02_no_artificial_contour_on_uniform_mask (test_r4t_graph.BoundaryGraphTests) ... ok
+test_03_anchors_need_confidence_and_six_view_agreement (test_r4t_graph.BoundaryGraphTests) ... ok
+test_04_control_weight_sums_multisets_and_rng (test_r4t_graph.BoundaryGraphTests) ... ok
+test_05_dense_system_equivalence_and_anchor_identity (test_r4t_graph.BoundaryGraphTests) ... ok
+test_06_probability_range_contraction_and_residual (test_r4t_graph.BoundaryGraphTests) ... ok
+test_07_lambda_zero_and_empty_free_exact_identity (test_r4t_graph.BoundaryGraphTests) ... ok
+test_08_lifted_support_and_reliable_nodes_exact (test_r4t_graph.BoundaryGraphTests) ... ok
+test_09_unchanged_inputs_and_detached_output (test_r4t_graph.BoundaryGraphTests) ... ok
+test_10_global_free_superset_and_three_local_controls_share_masks (test_r4t_graph.BoundaryGraphTests) ... ok
+test_11_uniform_confident_q_returns_original (test_r4t_graph.BoundaryGraphTests) ... ok
+test_12_uniform_ambiguous_q_is_well_defined (test_r4t_graph.BoundaryGraphTests) ... ok
+test_13_rgb_contrast_reduces_cross_edge_weight (test_r4t_graph.BoundaryGraphTests) ... ok
+test_14_invalid_inputs_rejected (test_r4t_graph.BoundaryGraphTests) ... ok
+test_15_full_production_shape_without_network (test_r4t_graph.BoundaryGraphTests) ... ok
+test_auxiliary_known_flips_Brier_and_no_feedback (test_r4t_host.HostTests) ... ok
+test_baseline_RP_exact_parity_and_actual_selection (test_r4t_host.HostTests) ... ok
+test_full_model_actual_32_updates_cpu_smoke (test_r4t_host.HostTests) ... ok
+test_graph_integrated_all_modes_and_empty_band (test_r4t_host.HostTests) ... ok
+test_kernel_coordinates_frozen_zero_gives_complete_C_trajectory (test_r4t_host.HostTests) ... ok
+test_mask_read_after_commit_and_payload_release (test_r4t_host.HostTests) ... ok
+test_teacher_first_step_parity_EMA_timing_and_frozen_teacher (test_r4t_host.HostTests) ... ok
+test_auxiliary_counter_corruption_and_causal_marker_rejected (test_r4t_execution.ExecutionTests) ... ok
+test_disabled_authorization_before_model_or_device_and_review_mode (test_r4t_execution.ExecutionTests) ... ok
+test_frozen_AB_preservation_matrix_and_caps (test_r4t_execution.ExecutionTests) ... ok
+test_seventy_complete_and_atomic_invalid_after_truncation (test_r4t_execution.ExecutionTests) ... ok
+
+----------------------------------------------------------------------
+Ran 38 tests in 225.980s
+
+OK
+FULL_MODEL_CPU {"physical": {"network_forwards": 260, "loss_backward_calls": 32, "jacobian_vjp_calls": 0, "adam_calls": 32, "actual_parameter_replacements": 0}, "backend": {"seed": 20260907, "deterministic_algorithms": false, "warn_only": false, "cublas_workspace_config": null}, "comparison": {"deterministic_algorithms": true, "warn_only": false, "cublas_workspace_config": null}}
+{
+  "tests": 38,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 226.17171270912513,
+  "python": "3.10.6",
+  "torch": "2.2.1+cu121",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "registered_checkpoint_reads": 0,
+  "procedural_IO_fixtures": false,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 0
+}

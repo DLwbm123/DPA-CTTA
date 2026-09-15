@@ -1,0 +1,28 @@
+test_auxiliary_known_flips_Brier_and_no_feedback (test_r4t_host.HostTests.test_auxiliary_known_flips_Brier_and_no_feedback) ... ok
+test_baseline_RP_exact_parity_and_actual_selection (test_r4t_host.HostTests.test_baseline_RP_exact_parity_and_actual_selection) ... ok
+test_full_model_actual_32_updates_cpu_smoke (test_r4t_host.HostTests.test_full_model_actual_32_updates_cpu_smoke) ... skipped 'full model in complete suite'
+test_graph_integrated_all_modes_and_empty_band (test_r4t_host.HostTests.test_graph_integrated_all_modes_and_empty_band) ... ok
+test_mask_read_after_commit_and_payload_release (test_r4t_host.HostTests.test_mask_read_after_commit_and_payload_release) ... ok
+test_teacher_first_step_parity_EMA_timing_and_frozen_teacher (test_r4t_host.HostTests.test_teacher_first_step_parity_EMA_timing_and_frozen_teacher) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 7.229s
+
+OK (skipped=1)
+{
+  "tests": 6,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 1,
+  "seconds": 7.306897707981989,
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "registered_checkpoint_reads": 0,
+  "procedural_IO_fixtures": false,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 0
+}
