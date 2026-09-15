@@ -52,6 +52,13 @@ def fixture(out):
 
 
 class ExecutionTests(unittest.TestCase):
+    def test_entry_installs_neutral_subprocesses_before_dispatch(self):
+        import runpy
+        calls=[]
+        with patch('dpa_ctta.b3_runtime.neutral_subprocesses',side_effect=lambda:calls.append('neutral')),patch.object(run,'main',side_effect=lambda:calls.append('dispatch')):
+            runpy.run_path(str(plan.ROOT/'scripts/run_r4t.py'),run_name='__main__')
+        self.assertEqual(calls,['neutral','dispatch'])
+
     def test_seventy_complete_and_atomic_invalid_after_truncation(self):
         with tempfile.TemporaryDirectory() as tmp:
             out=Path(tmp)
