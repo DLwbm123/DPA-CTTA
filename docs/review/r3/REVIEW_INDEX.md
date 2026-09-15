@@ -1,4 +1,18 @@
-# R3 current review status
+# R3 current status: R3_EXPERIMENT_COMPLETE
+
+All **85/85** trajectories completed, with **165,835** formal records. Both smoke processes and all 85 formal processes exited with code 0. The independent CPU scalar analyzer published a valid complete result. Finished **2026-09-15 07:56:02 Asia/Shanghai**.
+
+- [Complete results, all 17 arms, paired controls, risk, ASSD, resources and scientific decision](../../results/r3_five_frameworks_v1/REPORT.md)
+- [Execution bindings, 85 completion receipts, supervisor exits and two actual smoke traces](../../results/r3_five_frameworks_v1/execution.json)
+- [Real CPU export log](../../results/r3_five_frameworks_v1/export_cpu.log), [public table validation log](../../results/r3_five_frameworks_v1/tables_cpu.log), [complete deidentified aggregate](../../results/r3_five_frameworks_v1/aggregate.json.gz)
+
+Runtime implementation: **`185fd440b16920f367c1f5e3096ab495bd85c0ec`**. Science SHA256: **`73879c29a33897beb9a79e6498258998abd8c0a964f8befc72b4ac1cdbd9c06e`**. The user authorized the repair and explicitly waived a further review before this fresh execution; no new external review pass is claimed. The old review and failed attempt below remain historical evidence and their earlier authorization/status statements are not the current status.
+
+Scientific disposition: retain **C**; no main candidate promoted. All five families and their controls are archived for this frozen batch. No additional execution is authorized or started by this publication.
+
+---
+
+# Process-audit repair review packet (historical, before execution waiver)
 
 **R3_PROCESS_AUDIT_FIX_READY_FOR_REVIEW**. New implementation: **`185fd440b16920f367c1f5e3096ab495bd85c0ec`**. The first GPU attempt remains stopped; no replacement execution has been launched or authorized by this packet.
 
