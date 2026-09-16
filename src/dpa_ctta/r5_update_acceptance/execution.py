@@ -26,22 +26,37 @@ def smoke(state,device,out,identity,recipe,p_accept=None):
     try:
         with deterministic_smoke_pair():
             for arm in arms:
-                seed_all(20260907);h=Old('C',state,device) if arm=='OLD' else Host(arm,state,device,p_accept=p_accept if arm=='C_RANDOM' else None)
-                if arm=='OLD' and torch.device(device).type=='cuda':process_audit(out,'smoke')
-                for i in recipe['pixel_indices']:
-                    z,t=h.step(pixels('fundus',i));core=h if arm=='OLD' else h.core
-                    counts=t['counts'];actual=dict(network_forwards=counts['forwards'],loss_backward_calls=counts['backwards'],adam_calls=counts['base_adam'],jacobian_vjp_calls=0) if arm=='OLD' else counts
-                    for k,v in actual.items():physical[k]+=v
-                    value=dict(logits=z.detach().cpu().clone(),state=capture(core))
-                    if arm=='OLD':saved.append(value)
-                    elif arm!='C_HALF':close(value,saved[i],exact=torch.device(device).type=='cpu');close(core.rng,saved[i]['state']['rng'],exact=True)
-                    if arm!='OLD':h.take_evaluation().clear()
-                evidence[arm]=dict(visits=4,counts=core.counts.copy(),parity=arm not in ('OLD','C_HALF'))
-                h.finish(state);del h,core,z,value;gc.collect()
+                h=core=z=value=None
+                try:
+                    seed_all(20260907);h=Old('C',state,device) if arm=='OLD' else Host(arm,state,device,p_accept=p_accept if arm=='C_RANDOM' else None)
+                    core=h if arm=='OLD' else h.core
+                    if arm=='OLD' and torch.device(device).type=='cuda':process_audit(out,'smoke')
+                    for i in recipe['pixel_indices']:
+                        z,t=h.step(pixels('fundus',i))
+                        value=dict(logits=z.detach().cpu().clone(),state=capture(core))
+                        if arm=='OLD':saved.append(value)
+                        elif arm!='C_HALF':close(value,saved[i],exact=torch.device(device).type=='cpu');close(core.rng,saved[i]['state']['rng'],exact=True)
+                        if arm!='OLD':h.take_evaluation().clear()
+                    evidence[arm]=dict(visits=4,counts=core.counts.copy(),parity=arm not in ('OLD','C_HALF'))
+                    h.finish(state)
+                finally:
+                    # Each host's live cumulative counters are charged once, including a failed step.
+                    if core is not None:
+                        for public,internal in (('network_forwards','forwards'),('loss_backward_calls','backwards'),('adam_calls','base_adam')):physical[public]+=core.counts[internal]
+                        for owner in (core,h) if h is not core else (core,):
+                            for handle in owner.handles:handle.remove()
+                    h=core=z=value=None;gc.collect()
         if physical!={k:recipe[k] for k in PHYSICAL}:raise ValueError('smoke physical budget')
         write(out/'smoke.completion.json',dict(binding=identity,status='MECHANICAL_SMOKE_COMPLETE',C_parity_valid=True,recipe=recipe,physical=physical,evidence=evidence,backend=backend_policy()))
     except BaseException as exc:
-        write(out/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',physical=physical,reason=str(exc),scope=failure_scope(exc)));raise
+        try:
+            write(out/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',physical=physical,
+                physical_accounting='OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE',
+                uncertainty='Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.',
+                reason=str(exc),scope=failure_scope(exc)))
+        except FileExistsError:pass  # Preserve the first failure; never replace it or retry compute.
+        except OSError as logging_error:print('smoke failure evidence write failed: '+str(logging_error),file=sys.stderr)
+        raise
 
 
 def trajectory(job,state,reg,out,identity,caps,p_accept=None):

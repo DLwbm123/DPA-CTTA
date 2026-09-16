@@ -3,7 +3,7 @@ import hashlib,json,math,random
 from collections import deque
 from statistics import mean
 from pathlib import Path
-from ..p2_analysis import validate_metric
+from ..p2_analysis import validate_metric as inherited_validate_metric
 from ..host_diagnostic_analysis import channels,distribution
 from ..m1_analysis import paired
 from ..r1.plan import bound,binding
@@ -14,6 +14,13 @@ from .rule import PHYSICAL
 
 def read(path):return json.loads(Path(path).read_text())
 def lines(path):return [json.loads(s) for s in Path(path).read_text().splitlines()]
+
+
+def validate_metric(m):
+    inherited_validate_metric(m)
+    pred,gt,n,tp=(m[k] for k in ('pred_pixels','gt_pixels','total_pixels','intersection'))
+    cells=(tp,pred-tp,gt-tp,n-pred-gt+tp)
+    if any(type(v) is not int or v<0 for v in cells):raise ValueError('R5 infeasible TP/FP/FN/TN')
 
 
 def replay(traces,ordered,job,identity,p_accept=None):

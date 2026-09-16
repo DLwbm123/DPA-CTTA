@@ -8,7 +8,7 @@ from dpa_ctta.b3_runtime import neutral_subprocesses
 neutral_subprocesses()
 import torch
 torch.set_num_threads(2)
-modules=['test_r5_rule','test_r5_host','test_r5_analysis']
+modules=['test_r5_rule','test_r5_host','test_r5_analysis','test_r5_audit_fix']
 if os.environ.get('R5_MODULES'):modules=os.environ['R5_MODULES'].split(',')
 if os.environ.get('R3_REGRESSION')=='1':modules+=['test_r4t_execution','test_r3_reference','test_r3','test_r3_execution','test_r1','test_r1_fixes','test_r2','test_r2_continuation']
 from dpa_ctta.b1_host import Host as B1
