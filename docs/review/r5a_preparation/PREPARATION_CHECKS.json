@@ -1,0 +1,59 @@
+{
+  "status": "PREPARATION_METADATA_VALIDATED",
+  "implementation_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+  "checks": [
+    {
+      "check": "authorization_disabled",
+      "result": "PASS",
+      "observed_error": "R5 execution disabled"
+    },
+    {
+      "check": "real_entry_disabled_before_assets",
+      "result": "PASS",
+      "observed_error": "R5 disabled; R4 waiver is not R5 permission"
+    }
+  ],
+  "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+  "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+  "registered_metadata_verified": true,
+  "trajectories": 3,
+  "formal_budget": {
+    "jobs": 3,
+    "records": 5853,
+    "network_forwards": 46824,
+    "adam_calls": 5853
+  },
+  "per_device_smoke": {
+    "recipe": "PROCEDURAL_OLD_C4_DIAG_C4_V1",
+    "network_forwards": 64,
+    "loss_backward_calls": 8,
+    "adam_calls": 8,
+    "jacobian_vjp_calls": 0,
+    "seed": 20260907,
+    "pixel_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "rtol": 0.0001,
+    "atol": 1e-05,
+    "tolerance_source": "src/dpa_ctta/source_pilot_release.py:TOLERANCE"
+  },
+  "total_with_smoke": {
+    "network_forwards": "46824 + 64*g",
+    "loss_backward_calls": "5853 + 8*g",
+    "adam_calls": "5853 + 8*g",
+    "jacobian_vjp_calls": 0,
+    "g": "unset until separately authorized; 1..3"
+  },
+  "cuda_initialized": false,
+  "real_RGB_reads": 0,
+  "real_mask_reads": 0,
+  "checkpoint_reads": 0,
+  "source_data_reads": 0,
+  "GPU_query": false,
+  "execution_started": false,
+  "full_CPU_suite_rerun": false,
+  "prior_CPU_evidence": "b50348776c03aeb621cfbe9cfeac1068c4683412/docs/review/r5_audit_fix/logs/INDEX.json"
+}

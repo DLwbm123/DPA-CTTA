@@ -1,0 +1,49 @@
+{
+  "status": "R5A_PREPARED_AWAITING_EXECUTION_AUTHORIZATION",
+  "implementation_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+  "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+  "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+  "scope": "A",
+  "approved_trajectory_count": 3,
+  "external_review": {
+    "status": "PASS",
+    "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+    "scope": "A",
+    "reference": "https://github.com/DLwbm123/DPA-CTTA/blob/316c051199087aceb42fb09eae5bc9b193b4551b/docs/review/r5a_preparation/R5_REREVIEW.md"
+  },
+  "execution_authorized": false,
+  "execution_started": false,
+  "enabled": false,
+  "R5A": "NOT_RUN",
+  "R5B": "NOT_RUN",
+  "next_execution_authorized": false,
+  "background_started": false,
+  "missing_user_authorization_items": [
+    "Independent user authorization for R5-A on the exact implementation/science/data/stream/fingerprint/3-trajectory binding",
+    "Allowed physical GPU IDs",
+    "Maximum worker count, at most 3 and one per device",
+    "caps.trajectory_seconds",
+    "caps.wall_seconds",
+    "caps.active_seconds",
+    "caps.bytes"
+  ],
+  "authorization_draft": "AUTHORIZATION.disabled.json",
+  "receipt_draft": "RECEIPT.draft.json",
+  "matrix": "A_MATRIX.json",
+  "checkouts": "CHECKOUT_RECORD.json",
+  "checks": "PREPARATION_CHECKS.json",
+  "review_registration": "REVIEW_REGISTRATION.json",
+  "missing_external_attachment": "REVIEW_DECISION.json was referenced but not supplied or found; PASS is transcribed from supplied R5_REREVIEW.md, not independently issued.",
+  "private_artifacts": "Separate authorization, assets, receipt and checkout records kept outside Git; machine paths and registration identities omitted from public package",
+  "science_or_code_changed": false,
+  "formal_budget": {
+    "jobs": 3,
+    "records": 5853,
+    "network_forwards": 46824,
+    "adam_calls": 5853
+  },
+  "smoke_budget": "64 forward / 8 backward / 8 Adam / 0 VJP per newly authorized device; not executed",
+  "full_CPU_suite_rerun": false,
+  "no_duplicate_execution": true,
+  "existing_output_check_scope": "Bounded inventory of known R5 project jobs directories; no claim of a global server scan"
+}

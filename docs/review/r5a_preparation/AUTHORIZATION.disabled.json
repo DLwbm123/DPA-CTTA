@@ -1,0 +1,52 @@
+{
+  "enabled": false,
+  "scope": "A",
+  "approved_code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+  "approved_science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+  "approved_registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "approved_stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+  "approved_c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+  "approved_trajectory_count": 3,
+  "external_review": {
+    "status": "PASS",
+    "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+    "scope": "A",
+    "reference": "https://github.com/DLwbm123/DPA-CTTA/blob/316c051199087aceb42fb09eae5bc9b193b4551b/docs/review/r5a_preparation/R5_REREVIEW.md"
+  },
+  "user_waiver": {
+    "explicit": false,
+    "reference": null
+  },
+  "user_execution_authorization": {
+    "status": "NOT_PROVIDED",
+    "reference": null
+  },
+  "allowed_physical_gpu_ids": [],
+  "max_workers": 0,
+  "background_allowed": false,
+  "caps": {
+    "trajectory_seconds": null,
+    "wall_seconds": null,
+    "active_seconds": null,
+    "bytes": null
+  },
+  "smoke_recipe": {
+    "recipe": "PROCEDURAL_OLD_C4_DIAG_C4_V1",
+    "network_forwards": 64,
+    "loss_backward_calls": 8,
+    "adam_calls": 8,
+    "jacobian_vjp_calls": 0,
+    "seed": 20260907,
+    "pixel_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "rtol": 0.0001,
+    "atol": 1e-05,
+    "tolerance_source": "src/dpa_ctta/source_pilot_release.py:TOLERANCE"
+  },
+  "calibration": null,
+  "reuse_A": null
+}
