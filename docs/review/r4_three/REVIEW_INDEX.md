@@ -14,3 +14,7 @@
 - [用户提供主 prompt](input/R4T_STAGE_I_CODEX_PROMPT.md)、[主计划](input/R4T_COMBINED_EXPERIMENT_PLAN.md)、[原 science 提案](input/R4T_SCIENCE_PROPOSAL.json)
 
 保留 R3 的实际执行修补与结果历史，未改 main 或旧科学配置。等待实际外部 review 或用户对本轮的明确 waiver；任何后续执行都必须保留其真实授权来源，不能自行签发 review 通过。
+
+## 2026-09-16 执行完成
+
+用户明确免除 R4 外部 review 后，实际执行提交为 `2377505819ca9be6658b4f5b34f49dac3bf67889`。70/70 条轨迹、3 次 smoke 全部退出 0，CPU 标量重算有效。阶段 I 状态与 SHA 保留为历史记录；最新结果见 [R4T 完成报告](../../results/r4_three_track_v1/REPORT.md)。本轮状态为 `R4T_EXPERIMENT_COMPLETE`，无后续 GPU 执行授权。
