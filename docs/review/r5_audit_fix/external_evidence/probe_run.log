@@ -1,0 +1,90 @@
+{
+  "implementation_sha": "0c08cece6a91bdf5e3d06c9862dcd192df7787d8",
+  "source_blob_matches": {
+    "host.py": "a5384abfabded8749df450e13711fa6faddbe3ca",
+    "rule.py": "f4ed32ee9e3cbae728a65f9e962532221db14c15"
+  },
+  "python": "3.13.5",
+  "torch": "2.10.0+cpu",
+  "cuda_initialized": false,
+  "registered_checkpoint_reads": 0,
+  "real_images_or_masks_reads": 0,
+  "full_project_suite_rerun": false,
+  "results": [
+    {
+      "name": "rule_vs_independent_400_step_oracle_each_arm",
+      "passed": true,
+      "detail": {
+        "rule_decisions": 1600,
+        "rejected": {
+          "C": 0,
+          "C_HALF": 0,
+          "C_RANDOM": 113,
+          "C_VERIFY": 103
+        },
+        "reference": "separate history + NumPy quantile + separate seeded RNG"
+      }
+    },
+    {
+      "name": "full_grid_empty_partial_regions",
+      "passed": true,
+      "detail": {
+        "empty_all_is_null": true,
+        "partial_region_correct": true
+      }
+    },
+    {
+      "name": "rollback_uninitialized_next_step_independent_reference",
+      "passed": true,
+      "detail": {
+        "initialized": false,
+        "exact_next_update_parity": true,
+        "reference_did_not_call_rollback": true
+      }
+    },
+    {
+      "name": "rollback_initialized_next_step_independent_reference",
+      "passed": true,
+      "detail": {
+        "initialized": true,
+        "exact_next_update_parity": true,
+        "reference_did_not_call_rollback": true
+      }
+    },
+    {
+      "name": "audit_gap_impossible_counts",
+      "passed": true,
+      "detail": {
+        "finding": "IMPOSSIBLE_PIXEL_COUNTS_ACCEPTED",
+        "accepted": {
+          "channel": "OD",
+          "pred_pixels": 262144,
+          "gt_pixels": 100,
+          "intersection": 0,
+          "total_pixels": 262144,
+          "dice": 0.0,
+          "gt_empty": false,
+          "gt_full": false,
+          "pred_empty": false,
+          "pred_full": true,
+          "assd": 1.0
+        },
+        "union": 262244,
+        "grid": 262144
+      }
+    },
+    {
+      "name": "audit_gap_partial_smoke_cost",
+      "passed": true,
+      "detail": {
+        "finding": "SMOKE_FAILURE_UNDERCOUNTS_COMPLETED_FORWARDS",
+        "actual_completed_forwards": 3,
+        "recorded_forwards": 0,
+        "scope": "isolated original smoke orchestration; real procedural CPU linear forwards; mock host/dependencies; no full C model"
+      }
+    }
+  ],
+  "positive_invariants": 4,
+  "reproduced_audit_gaps": 2,
+  "note": "passed=true for a gap probe means the described defect was reproduced, not that production passes review"
+}

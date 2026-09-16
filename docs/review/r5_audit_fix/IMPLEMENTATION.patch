@@ -1,0 +1,245 @@
+diff --git a/scripts/check_r5_cpu.py b/scripts/check_r5_cpu.py
+index cdc06bd..c40d336 100644
+--- a/scripts/check_r5_cpu.py
++++ b/scripts/check_r5_cpu.py
+@@ -8,7 +8,7 @@ from dpa_ctta.b3_runtime import neutral_subprocesses
+ neutral_subprocesses()
+ import torch
+ torch.set_num_threads(2)
+-modules=['test_r5_rule','test_r5_host','test_r5_analysis']
++modules=['test_r5_rule','test_r5_host','test_r5_analysis','test_r5_audit_fix']
+ if os.environ.get('R5_MODULES'):modules=os.environ['R5_MODULES'].split(',')
+ if os.environ.get('R3_REGRESSION')=='1':modules+=['test_r4t_execution','test_r3_reference','test_r3','test_r3_execution','test_r1','test_r1_fixes','test_r2','test_r2_continuation']
+ from dpa_ctta.b1_host import Host as B1
+diff --git a/src/dpa_ctta/r5_update_acceptance/analyze.py b/src/dpa_ctta/r5_update_acceptance/analyze.py
+index 2a41a9d..58b73cb 100644
+--- a/src/dpa_ctta/r5_update_acceptance/analyze.py
++++ b/src/dpa_ctta/r5_update_acceptance/analyze.py
+@@ -3,7 +3,7 @@ import hashlib,json,math,random
+ from collections import deque
+ from statistics import mean
+ from pathlib import Path
+-from ..p2_analysis import validate_metric
++from ..p2_analysis import validate_metric as inherited_validate_metric
+ from ..host_diagnostic_analysis import channels,distribution
+ from ..m1_analysis import paired
+ from ..r1.plan import bound,binding
+@@ -16,6 +16,13 @@ def read(path):return json.loads(Path(path).read_text())
+ def lines(path):return [json.loads(s) for s in Path(path).read_text().splitlines()]
+ 
+ 
++def validate_metric(m):
++    inherited_validate_metric(m)
++    pred,gt,n,tp=(m[k] for k in ('pred_pixels','gt_pixels','total_pixels','intersection'))
++    cells=(tp,pred-tp,gt-tp,n-pred-gt+tp)
++    if any(type(v) is not int or v<0 for v in cells):raise ValueError('R5 infeasible TP/FP/FN/TN')
++
++
+ def replay(traces,ordered,job,identity,p_accept=None):
+     if len(traces)!=len(ordered) or len(traces)!=job['records'] or len({r['group_id'] for r in traces})!=len(traces):raise ValueError('trace coverage/duplicates')
+     history=deque(maxlen=128);rng=random.Random(20260908);committed=forced=eligible_count=restores=0
+diff --git a/src/dpa_ctta/r5_update_acceptance/execution.py b/src/dpa_ctta/r5_update_acceptance/execution.py
+index 158f092..9a23a64 100644
+--- a/src/dpa_ctta/r5_update_acceptance/execution.py
++++ b/src/dpa_ctta/r5_update_acceptance/execution.py
+@@ -26,22 +26,37 @@ def smoke(state,device,out,identity,recipe,p_accept=None):
+     try:
+         with deterministic_smoke_pair():
+             for arm in arms:
+-                seed_all(20260907);h=Old('C',state,device) if arm=='OLD' else Host(arm,state,device,p_accept=p_accept if arm=='C_RANDOM' else None)
+-                if arm=='OLD' and torch.device(device).type=='cuda':process_audit(out,'smoke')
+-                for i in recipe['pixel_indices']:
+-                    z,t=h.step(pixels('fundus',i));core=h if arm=='OLD' else h.core
+-                    counts=t['counts'];actual=dict(network_forwards=counts['forwards'],loss_backward_calls=counts['backwards'],adam_calls=counts['base_adam'],jacobian_vjp_calls=0) if arm=='OLD' else counts
+-                    for k,v in actual.items():physical[k]+=v
+-                    value=dict(logits=z.detach().cpu().clone(),state=capture(core))
+-                    if arm=='OLD':saved.append(value)
+-                    elif arm!='C_HALF':close(value,saved[i],exact=torch.device(device).type=='cpu');close(core.rng,saved[i]['state']['rng'],exact=True)
+-                    if arm!='OLD':h.take_evaluation().clear()
+-                evidence[arm]=dict(visits=4,counts=core.counts.copy(),parity=arm not in ('OLD','C_HALF'))
+-                h.finish(state);del h,core,z,value;gc.collect()
++                h=core=z=value=None
++                try:
++                    seed_all(20260907);h=Old('C',state,device) if arm=='OLD' else Host(arm,state,device,p_accept=p_accept if arm=='C_RANDOM' else None)
++                    core=h if arm=='OLD' else h.core
++                    if arm=='OLD' and torch.device(device).type=='cuda':process_audit(out,'smoke')
++                    for i in recipe['pixel_indices']:
++                        z,t=h.step(pixels('fundus',i))
++                        value=dict(logits=z.detach().cpu().clone(),state=capture(core))
++                        if arm=='OLD':saved.append(value)
++                        elif arm!='C_HALF':close(value,saved[i],exact=torch.device(device).type=='cpu');close(core.rng,saved[i]['state']['rng'],exact=True)
++                        if arm!='OLD':h.take_evaluation().clear()
++                    evidence[arm]=dict(visits=4,counts=core.counts.copy(),parity=arm not in ('OLD','C_HALF'))
++                    h.finish(state)
++                finally:
++                    # Each host's live cumulative counters are charged once, including a failed step.
++                    if core is not None:
++                        for public,internal in (('network_forwards','forwards'),('loss_backward_calls','backwards'),('adam_calls','base_adam')):physical[public]+=core.counts[internal]
++                        for owner in (core,h) if h is not core else (core,):
++                            for handle in owner.handles:handle.remove()
++                    h=core=z=value=None;gc.collect()
+         if physical!={k:recipe[k] for k in PHYSICAL}:raise ValueError('smoke physical budget')
+         write(out/'smoke.completion.json',dict(binding=identity,status='MECHANICAL_SMOKE_COMPLETE',C_parity_valid=True,recipe=recipe,physical=physical,evidence=evidence,backend=backend_policy()))
+     except BaseException as exc:
+-        write(out/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',physical=physical,reason=str(exc),scope=failure_scope(exc)));raise
++        try:
++            write(out/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',physical=physical,
++                physical_accounting='OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE',
++                uncertainty='Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.',
++                reason=str(exc),scope=failure_scope(exc)))
++        except FileExistsError:pass  # Preserve the first failure; never replace it or retry compute.
++        except OSError as logging_error:print('smoke failure evidence write failed: '+str(logging_error),file=sys.stderr)
++        raise
+ 
+ 
+ def trajectory(job,state,reg,out,identity,caps,p_accept=None):
+diff --git a/tests/test_r5_audit_fix.py b/tests/test_r5_audit_fix.py
+new file mode 100644
+index 0000000..6a56f24
+--- /dev/null
++++ b/tests/test_r5_audit_fix.py
+@@ -0,0 +1,144 @@
++"""External-review regressions: feasible metrics, partial smoke cost, independent rollback."""
++import copy,json,tempfile,unittest
++from contextlib import ExitStack
++from pathlib import Path
++from unittest.mock import patch
++import torch
++from dpa_ctta.r5_update_acceptance import analyze,execution,plan,host
++from dpa_ctta.r5_update_acceptance.rule import PHYSICAL
++from dpa_ctta.r1.host import Host as Old
++from dpa_ctta.source_pilot import seed_all
++from dpa_ctta.host_diagnostic import close
++from test_r5_analysis import fixture_rows,write_fixture
++from test_r5_host import Toy,new,state
++from test_vptta_host import pixels
++
++
++def metric(pred,gt,k,n=262144,channel='OD'):
++    return dict(channel=channel,total_pixels=n,pred_pixels=pred,gt_pixels=gt,intersection=k,
++        dice=2*k/(pred+gt) if pred+gt else 1.,assd=1. if pred and gt else None,
++        pred_empty=pred==0,pred_full=pred==n,gt_empty=gt==0,gt_full=gt==n)
++
++
++class AuditFixTests(unittest.TestCase):
++    def test_metric_feasibility_boundaries_and_original_dice_guard(self):
++        n=262144
++        for pred,gt,k in [(0,0,0),(0,100,0),(100,0,0),(100,100,90),(n,100,100),(100,n,100),(n,n,n),(0,n,0),(n,0,0),(n-10,20,10)]:
++            with self.subTest(valid=(pred,gt,k)):analyze.validate_metric(metric(pred,gt,k))
++        for pred,gt,k in [(n,100,99),(100,n,99),(n-10,20,9)]:
++            with self.subTest(invalid=(pred,gt,k)),self.assertRaises(ValueError):analyze.validate_metric(metric(pred,gt,k))
++        bad=metric(100,100,90);bad['dice']-=.1
++        with self.assertRaises(ValueError):analyze.validate_metric(bad)
++        for key in ('pred_pixels','gt_pixels','intersection','total_pixels'):
++            bad=metric(100,100,90);bad[key]=float(bad[key])
++            with self.assertRaises(ValueError):analyze.validate_metric(bad)
++
++    def test_33_valid_shadow_rows_impossible_counts_all_predictions(self):
++        ts,es,ordered=fixture_rows(n=33);ident={'test':'procedural'};job=dict(arm='C',records=33)
++        for r in ts+es:r['binding']=ident
++        self.assertEqual(len(analyze.join(ts,es,ordered,job,ident)),33)
++        self.assertTrue(ts[-1]['trace']['eligible']);self.assertFalse(ts[-1]['trace']['shadow_accept'])
++        for name in ('pre','q','trial','emit'):
++            bad=copy.deepcopy(es)
++            bad[-1]['evaluation']['metrics'][name]=[metric(262144,100,0,channel=c) for c in ('OD','OC')]
++            # Keep emitted-branch equality, flags and reconstructed Dice consistent.
++            if name in ('trial','emit'):
++                for p in ('trial','emit'):bad[-1]['evaluation']['metrics'][p]=copy.deepcopy(bad[-1]['evaluation']['metrics'][name])
++            with self.subTest(prediction=name),self.assertRaises(ValueError):analyze.join(ts,bad,ordered,job,ident)
++
++    def test_complete_A_impossible_metrics_invalidate_without_scientific_result(self):
++        with tempfile.TemporaryDirectory() as tmp:
++            out=Path(tmp)/'A';reg,ordered,_=write_fixture(out,'A')
++            with patch.object(analyze,'stream',return_value=ordered),patch.object(analyze,'stream_summary',return_value=dict(stream_digest='c'*64)):
++                analyze.recompute(out,reg);self.assertTrue(analyze.read(out/'current_result.json')['valid'])
++                p=out/'o0a0/evaluation.jsonl';rows=analyze.lines(p)
++                for name in ('trial','emit'):rows[32]['evaluation']['metrics'][name]=[metric(262144,100,0,channel=c) for c in ('OD','OC')]
++                p.write_text(''.join(json.dumps(r)+'\n' for r in rows))
++                with self.assertRaises(ValueError):analyze.recompute(out,reg)
++                current=analyze.read(out/'current_result.json');self.assertFalse(current['valid']);self.assertEqual(current['status'],'INCOMPLETE')
++                self.assertFalse((out/'current').exists())
++
++    def smoke_probe(self,target=None,point=None,recipe=None,first_failure=False):
++        """Real old/R5 C paths with procedural Toy; only host construction is replaced."""
++        recipe=recipe or dict(recipe='B_ALL_ARMS4_OLD_C4_V1',network_forwards=160,loss_backward_calls=20,adam_calls=20,jacobian_vjp_calls=0,seed=20260907,pixel_indices=[0,1,2,3],rtol=1e-4,atol=1e-5)
++        made=[];handles=[];error=RuntimeError('injected '+str(point));observed={k:0 for k in PHYSICAL}
++        def factory(arm,unused,device,p_accept=None,legacy=False):
++            model=Toy();initial=copy.deepcopy(model.state_dict());h=Old('C',model=model,device=device) if legacy else host.Host(arm,model=model,device=device,p_accept=p_accept)
++            core=h if legacy else h.core;name='OLD' if legacy else arm;made.append((name,h,core))
++            original_finish=h.finish;h.finish=lambda _:original_finish(initial)
++            # Independent hooks observe actual model/autograd/optimizer calls.
++            def forward(m,x,z):
++                observed['network_forwards']+=1
++                if name==target and point=='forward' and core.counts['forwards']==11:raise error
++            def backward(g):observed['loss_backward_calls']+=1;return g
++            def before(opt,args,kwargs):
++                if name==target and point=='backward' and core.counts['backwards']==2:raise error
++            def after(opt,args,kwargs):
++                observed['adam_calls']+=1
++                if name==target and point=='adam' and core.counts['base_adam']==2:raise error
++            handles.extend([core.model.register_forward_hook(forward),core.params[0].register_hook(backward),core.base.register_step_pre_hook(before),core.base.register_step_post_hook(after)])
++            return h
++        with tempfile.TemporaryDirectory() as tmp,ExitStack() as stack:
++            out=Path(tmp)
++            stack.enter_context(patch('dpa_ctta.r1.host.Host',side_effect=lambda a,s,d:factory(a,s,d,legacy=True)))
++            original=host.Host
++            # Use the saved real class inside factory while patching smoke's local import.
++            def make_new(a,s,d,p_accept=None):
++                with patch.object(host,'Host',original):return factory(a,s,d,p_accept)
++            stack.enter_context(patch.object(host,'Host',side_effect=make_new))
++            if first_failure:(out/'smoke.failure.json').write_text('{"first_failure": true}\n')
++            try:
++                if target:
++                    with self.assertRaises(RuntimeError) as caught:execution.smoke(None,'cpu',out,{},recipe,.5)
++                    self.assertIs(caught.exception,error);self.assertFalse((out/'smoke.completion.json').exists())
++                    failure=analyze.read(out/'smoke.failure.json')
++                    if first_failure:self.assertEqual(failure,{'first_failure':True})
++                    else:
++                        self.assertEqual(failure['physical'],observed)
++                        index=['OLD','C','C_HALF','C_RANDOM','C_VERIFY'].index(target)
++                        partial={'forward':(11,1,1),'backward':(15,2,1),'adam':(15,2,2)}[point]
++                        self.assertEqual(failure['physical'],dict(network_forwards=index*32+partial[0],loss_backward_calls=index*4+partial[1],adam_calls=index*4+partial[2],jacobian_vjp_calls=0))
++                        self.assertEqual(failure['reason'],str(error))
++                        self.assertIn('LOWER_BOUND',failure['physical_accounting'])
++                    self.assertEqual([a for a,_,_ in made],['OLD','C','C_HALF','C_RANDOM','C_VERIFY'][:index+1] if not first_failure else ['OLD'])
++                else:
++                    execution.smoke(None,'cpu',out,{},recipe,.5);done=analyze.read(out/'smoke.completion.json')
++                    self.assertEqual(done['physical'],{k:recipe[k] for k in PHYSICAL});self.assertEqual(done['physical'],observed)
++                    self.assertFalse((out/'smoke.failure.json').exists())
++            finally:
++                for h in handles:h.remove()
++
++    def test_smoke_partial_forward_all_hosts(self):
++        for arm in ('OLD','C','C_HALF','C_RANDOM','C_VERIFY'):
++            with self.subTest(arm=arm):self.smoke_probe(arm,'forward')
++    def test_smoke_after_backward_before_Adam_all_hosts(self):
++        for arm in ('OLD','C','C_HALF','C_RANDOM','C_VERIFY'):
++            with self.subTest(arm=arm):self.smoke_probe(arm,'backward')
++    def test_smoke_after_Adam_before_return_all_hosts(self):
++        for arm in ('OLD','C','C_HALF','C_RANDOM','C_VERIFY'):
++            with self.subTest(arm=arm):self.smoke_probe(arm,'adam')
++    def test_smoke_success_A_B_exact_budgets(self):
++        self.smoke_probe(recipe=plan.science()['A_smoke_proposal']);self.smoke_probe()
++    def test_smoke_preserves_first_failure_and_original_exception(self):self.smoke_probe('OLD','forward',first_failure=True)
++
++    def test_rollback_next_step_reference_never_attempted_candidate(self):
++        for initialized in (False,True):
++            with self.subTest(initialized=initialized):
++                h=new('C_VERIFY');seed_all(20260907);reference=Old('C',model=Toy())
++                def reference_state():return dict(params=[p.clone() for p in reference.params],adam=copy.deepcopy(reference.base.state_dict()),rng=copy.deepcopy(reference.rng))
++                if initialized:
++                    h.step(pixels('fundus',0));h.take_evaluation().clear();reference.step(pixels('fundus',0))
++                before=reference_state();original=h.rule.decide
++                def reject(obs):return dict(original(obs),accept=False)
++                with patch.object(h.rule,'decide',side_effect=reject):h.step(pixels('fundus',1))
++                h.take_evaluation().clear()
++                # Old C never runs the rejected input and never snapshots/restores model or Adam.
++                # Only synchronize the consumed augmentation stream for the next input.
++                reference.rng=copy.deepcopy(h.core.rng)
++                close(before['params'],[p for p in h.params],exact=True);close(before['adam'],h.base.state_dict(),exact=True)
++                with patch.object(host,'snapshot',side_effect=AssertionError('reference must not snapshot')),patch.object(host,'rollback',side_effect=AssertionError('reference must not rollback')):
++                    expected,_=reference.step(pixels('fundus',2))
++                actual,_=h.step(pixels('fundus',2));h.take_evaluation().clear()
++                close(actual,expected,exact=True);close(state(h),reference_state(),exact=True)
++                self.assertEqual(reference.counts['forwards'],8*(1+int(initialized)))
++                self.assertEqual(h.core.counts['forwards'],reference.counts['forwards']+8)

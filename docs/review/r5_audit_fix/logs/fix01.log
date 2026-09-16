@@ -1,0 +1,136 @@
+test_33_valid_shadow_rows_impossible_counts_all_predictions (test_r5_audit_fix.AuditFixTests.test_33_valid_shadow_rows_impossible_counts_all_predictions) ... ok
+test_complete_A_impossible_metrics_invalidate_without_scientific_result (test_r5_audit_fix.AuditFixTests.test_complete_A_impossible_metrics_invalidate_without_scientific_result) ... ok
+test_metric_feasibility_boundaries_and_original_dice_guard (test_r5_audit_fix.AuditFixTests.test_metric_feasibility_boundaries_and_original_dice_guard) ... ok
+test_rollback_next_step_reference_never_attempted_candidate (test_r5_audit_fix.AuditFixTests.test_rollback_next_step_reference_never_attempted_candidate) ... 
+  test_rollback_next_step_reference_never_attempted_candidate (test_r5_audit_fix.AuditFixTests.test_rollback_next_step_reference_never_attempted_candidate) (initialized=False) ... ERROR
+  test_rollback_next_step_reference_never_attempted_candidate (test_r5_audit_fix.AuditFixTests.test_rollback_next_step_reference_never_attempted_candidate) (initialized=True) ... ERROR
+test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) ... ok
+test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) ... ok
+test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) ... ok
+test_smoke_preserves_first_failure_and_original_exception (test_r5_audit_fix.AuditFixTests.test_smoke_preserves_first_failure_and_original_exception) ... ok
+test_smoke_success_A_B_exact_budgets (test_r5_audit_fix.AuditFixTests.test_smoke_success_A_B_exact_budgets) ... ok
+
+======================================================================
+ERROR: test_rollback_next_step_reference_never_attempted_candidate (test_r5_audit_fix.AuditFixTests.test_rollback_next_step_reference_never_attempted_candidate) (initialized=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 140, in test_rollback_next_step_reference_never_attempted_candidate
+    expected,_=reference.core.step(pixels('fundus',2))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 121, in step
+    return self.normalized_step(model_input_from_pixels(pixels,'fundus'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 130, in normalized_step
+    else:self.opt.cal_consis_loss(data);self.base.step()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r5_update_acceptance/host.py", line 41, in <lambda>
+    self.core.opt.cal_consis_loss=lambda data:original(data,criterion=self._criterion)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 90, in observed
+    result=_fn(*args,**kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<GRATA_DEP>/GraTa-master/custom_optimizers/grata.py", line 131, in cal_consis_loss
+    pred, fea = self.model(x)
+                ^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 67, in forward
+    output=self.model(x)
+           ^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1806, in inner
+    hook_result = hook(self, args, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r5_update_acceptance/host.py", line 44, in _observe
+    if self.phase!='CANDIDATE':raise ValueError('forward outside candidate')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: forward outside candidate
+
+======================================================================
+ERROR: test_rollback_next_step_reference_never_attempted_candidate (test_r5_audit_fix.AuditFixTests.test_rollback_next_step_reference_never_attempted_candidate) (initialized=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 140, in test_rollback_next_step_reference_never_attempted_candidate
+    expected,_=reference.core.step(pixels('fundus',2))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 121, in step
+    return self.normalized_step(model_input_from_pixels(pixels,'fundus'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 130, in normalized_step
+    else:self.opt.cal_consis_loss(data);self.base.step()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r5_update_acceptance/host.py", line 41, in <lambda>
+    self.core.opt.cal_consis_loss=lambda data:original(data,criterion=self._criterion)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 90, in observed
+    result=_fn(*args,**kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<GRATA_DEP>/GraTa-master/custom_optimizers/grata.py", line 131, in cal_consis_loss
+    pred, fea = self.model(x)
+                ^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 67, in forward
+    output=self.model(x)
+           ^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1806, in inner
+    hook_result = hook(self, args, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r5_update_acceptance/host.py", line 44, in _observe
+    if self.phase!='CANDIDATE':raise ValueError('forward outside candidate')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: forward outside candidate
+
+----------------------------------------------------------------------
+Ran 9 tests in 21.226s
+
+FAILED (errors=2)
+{
+  "tests": 9,
+  "failures": 0,
+  "errors": 2,
+  "skipped": 0,
+  "seconds": 21.287236041855067,
+  "procedural_B1_physical": {
+    "network_forwards": 1434,
+    "loss_backward_calls": 178,
+    "adam_calls": 173,
+    "jacobian_vjp_calls": 0
+  },
+  "physical_counter_scope": "all R5 model tests; B1-derived paths only if inherited regressions requested",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "registered_checkpoint_reads": 0,
+  "procedural_IO_fixtures": false,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 1
+}

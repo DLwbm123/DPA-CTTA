@@ -1,0 +1,667 @@
+test_33_valid_shadow_rows_impossible_counts_all_predictions (test_r5_audit_fix.AuditFixTests.test_33_valid_shadow_rows_impossible_counts_all_predictions) ... 
+  test_33_valid_shadow_rows_impossible_counts_all_predictions (test_r5_audit_fix.AuditFixTests.test_33_valid_shadow_rows_impossible_counts_all_predictions) (prediction='pre') ... FAIL
+  test_33_valid_shadow_rows_impossible_counts_all_predictions (test_r5_audit_fix.AuditFixTests.test_33_valid_shadow_rows_impossible_counts_all_predictions) (prediction='q') ... FAIL
+  test_33_valid_shadow_rows_impossible_counts_all_predictions (test_r5_audit_fix.AuditFixTests.test_33_valid_shadow_rows_impossible_counts_all_predictions) (prediction='trial') ... FAIL
+  test_33_valid_shadow_rows_impossible_counts_all_predictions (test_r5_audit_fix.AuditFixTests.test_33_valid_shadow_rows_impossible_counts_all_predictions) (prediction='emit') ... FAIL
+test_complete_A_impossible_metrics_invalidate_without_scientific_result (test_r5_audit_fix.AuditFixTests.test_complete_A_impossible_metrics_invalidate_without_scientific_result) ... FAIL
+test_metric_feasibility_boundaries_and_original_dice_guard (test_r5_audit_fix.AuditFixTests.test_metric_feasibility_boundaries_and_original_dice_guard) ... 
+  test_metric_feasibility_boundaries_and_original_dice_guard (test_r5_audit_fix.AuditFixTests.test_metric_feasibility_boundaries_and_original_dice_guard) (invalid=(262144, 100, 99)) ... FAIL
+  test_metric_feasibility_boundaries_and_original_dice_guard (test_r5_audit_fix.AuditFixTests.test_metric_feasibility_boundaries_and_original_dice_guard) (invalid=(100, 262144, 99)) ... FAIL
+  test_metric_feasibility_boundaries_and_original_dice_guard (test_r5_audit_fix.AuditFixTests.test_metric_feasibility_boundaries_and_original_dice_guard) (invalid=(262134, 20, 9)) ... FAIL
+test_rollback_next_step_reference_never_attempted_candidate (test_r5_audit_fix.AuditFixTests.test_rollback_next_step_reference_never_attempted_candidate) ... 
+  test_rollback_next_step_reference_never_attempted_candidate (test_r5_audit_fix.AuditFixTests.test_rollback_next_step_reference_never_attempted_candidate) (initialized=False) ... ERROR
+  test_rollback_next_step_reference_never_attempted_candidate (test_r5_audit_fix.AuditFixTests.test_rollback_next_step_reference_never_attempted_candidate) (initialized=True) ... ERROR
+test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) ... 
+  test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) (arm='OLD') ... FAIL
+  test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) (arm='C') ... FAIL
+  test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) (arm='C_HALF') ... FAIL
+  test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) (arm='C_RANDOM') ... FAIL
+  test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) (arm='C_VERIFY') ... FAIL
+test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) ... 
+  test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) (arm='OLD') ... FAIL
+  test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) (arm='C') ... FAIL
+  test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) (arm='C_HALF') ... FAIL
+  test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) (arm='C_RANDOM') ... FAIL
+  test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) (arm='C_VERIFY') ... FAIL
+test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) ... 
+  test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) (arm='OLD') ... FAIL
+  test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) (arm='C') ... FAIL
+  test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) (arm='C_HALF') ... FAIL
+  test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) (arm='C_RANDOM') ... FAIL
+  test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) (arm='C_VERIFY') ... FAIL
+test_smoke_preserves_first_failure_and_original_exception (test_r5_audit_fix.AuditFixTests.test_smoke_preserves_first_failure_and_original_exception) ... ERROR
+test_smoke_success_A_B_exact_budgets (test_r5_audit_fix.AuditFixTests.test_smoke_success_A_B_exact_budgets) ... ok
+
+======================================================================
+ERROR: test_rollback_next_step_reference_never_attempted_candidate (test_r5_audit_fix.AuditFixTests.test_rollback_next_step_reference_never_attempted_candidate) (initialized=False)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 140, in test_rollback_next_step_reference_never_attempted_candidate
+    expected,_=reference.core.step(pixels('fundus',2))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 121, in step
+    return self.normalized_step(model_input_from_pixels(pixels,'fundus'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 130, in normalized_step
+    else:self.opt.cal_consis_loss(data);self.base.step()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r5_update_acceptance/host.py", line 41, in <lambda>
+    self.core.opt.cal_consis_loss=lambda data:original(data,criterion=self._criterion)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 90, in observed
+    result=_fn(*args,**kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<GRATA_DEP>/GraTa-master/custom_optimizers/grata.py", line 131, in cal_consis_loss
+    pred, fea = self.model(x)
+                ^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 67, in forward
+    output=self.model(x)
+           ^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1806, in inner
+    hook_result = hook(self, args, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r5_update_acceptance/host.py", line 44, in _observe
+    if self.phase!='CANDIDATE':raise ValueError('forward outside candidate')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: forward outside candidate
+
+======================================================================
+ERROR: test_rollback_next_step_reference_never_attempted_candidate (test_r5_audit_fix.AuditFixTests.test_rollback_next_step_reference_never_attempted_candidate) (initialized=True)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 140, in test_rollback_next_step_reference_never_attempted_candidate
+    expected,_=reference.core.step(pixels('fundus',2))
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 121, in step
+    return self.normalized_step(model_input_from_pixels(pixels,'fundus'))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 130, in normalized_step
+    else:self.opt.cal_consis_loss(data);self.base.step()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r5_update_acceptance/host.py", line 41, in <lambda>
+    self.core.opt.cal_consis_loss=lambda data:original(data,criterion=self._criterion)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 90, in observed
+    result=_fn(*args,**kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<GRATA_DEP>/GraTa-master/custom_optimizers/grata.py", line 131, in cal_consis_loss
+    pred, fea = self.model(x)
+                ^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 67, in forward
+    output=self.model(x)
+           ^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1806, in inner
+    hook_result = hook(self, args, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r5_update_acceptance/host.py", line 44, in _observe
+    if self.phase!='CANDIDATE':raise ValueError('forward outside candidate')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: forward outside candidate
+
+======================================================================
+ERROR: test_smoke_preserves_first_failure_and_original_exception (test_r5_audit_fix.AuditFixTests.test_smoke_preserves_first_failure_and_original_exception)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/src/dpa_ctta/r5_update_acceptance/execution.py", line 32, in smoke
+    z,t=h.step(pixels('fundus',i));core=h if arm=='OLD' else h.core
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r1/host.py", line 82, in step
+    z,a=super().normalized_step(x);self.phase=None
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 130, in normalized_step
+    else:self.opt.cal_consis_loss(data);self.base.step()
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 90, in observed
+    result=_fn(*args,**kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "<GRATA_DEP>/GraTa-master/custom_optimizers/grata.py", line 138, in cal_consis_loss
+    pred, fea = self.model(x_weak)
+                ^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/b1_host.py", line 67, in forward
+    output=self.model(x)
+           ^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1845, in _call_impl
+    return inner()
+           ^^^^^^^
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1806, in inner
+    hook_result = hook(self, args, result)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 72, in forward
+    if name==target and point=='forward' and core.counts['forwards']==11:raise error
+                                                                         ^^^^^^^^^^^
+RuntimeError: injected forward
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 122, in test_smoke_preserves_first_failure_and_original_exception
+    def test_smoke_preserves_first_failure_and_original_exception(self):self.smoke_probe('OLD','forward',first_failure=True)
+                                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 92, in smoke_probe
+    with self.assertRaises(RuntimeError) as caught:execution.smoke(None,'cpu',out,{},recipe,.5)
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r5_update_acceptance/execution.py", line 44, in smoke
+    write(out/'smoke.failure.json',dict(binding=identity,status='INCOMPLETE',physical=physical,reason=str(exc),scope=failure_scope(exc)));raise
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/src/dpa_ctta/r1/evidence.py", line 27, in write
+    else:os.link(name,path)
+         ^^^^^^^^^^^^^^^^^^
+FileExistsError: [Errno 17] File exists: '<TEMP_PATH>' -> '<TEMP_PATH>'
+
+======================================================================
+FAIL: test_33_valid_shadow_rows_impossible_counts_all_predictions (test_r5_audit_fix.AuditFixTests.test_33_valid_shadow_rows_impossible_counts_all_predictions) (prediction='pre')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 47, in test_33_valid_shadow_rows_impossible_counts_all_predictions
+    with self.subTest(prediction=name),self.assertRaises(ValueError):analyze.join(ts,bad,ordered,job,ident)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_33_valid_shadow_rows_impossible_counts_all_predictions (test_r5_audit_fix.AuditFixTests.test_33_valid_shadow_rows_impossible_counts_all_predictions) (prediction='q')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 47, in test_33_valid_shadow_rows_impossible_counts_all_predictions
+    with self.subTest(prediction=name),self.assertRaises(ValueError):analyze.join(ts,bad,ordered,job,ident)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_33_valid_shadow_rows_impossible_counts_all_predictions (test_r5_audit_fix.AuditFixTests.test_33_valid_shadow_rows_impossible_counts_all_predictions) (prediction='trial')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 47, in test_33_valid_shadow_rows_impossible_counts_all_predictions
+    with self.subTest(prediction=name),self.assertRaises(ValueError):analyze.join(ts,bad,ordered,job,ident)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_33_valid_shadow_rows_impossible_counts_all_predictions (test_r5_audit_fix.AuditFixTests.test_33_valid_shadow_rows_impossible_counts_all_predictions) (prediction='emit')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 47, in test_33_valid_shadow_rows_impossible_counts_all_predictions
+    with self.subTest(prediction=name),self.assertRaises(ValueError):analyze.join(ts,bad,ordered,job,ident)
+                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_complete_A_impossible_metrics_invalidate_without_scientific_result (test_r5_audit_fix.AuditFixTests.test_complete_A_impossible_metrics_invalidate_without_scientific_result)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 57, in test_complete_A_impossible_metrics_invalidate_without_scientific_result
+    with self.assertRaises(ValueError):analyze.recompute(out,reg)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_metric_feasibility_boundaries_and_original_dice_guard (test_r5_audit_fix.AuditFixTests.test_metric_feasibility_boundaries_and_original_dice_guard) (invalid=(262144, 100, 99))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 29, in test_metric_feasibility_boundaries_and_original_dice_guard
+    with self.subTest(invalid=(pred,gt,k)),self.assertRaises(ValueError):analyze.validate_metric(metric(pred,gt,k))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_metric_feasibility_boundaries_and_original_dice_guard (test_r5_audit_fix.AuditFixTests.test_metric_feasibility_boundaries_and_original_dice_guard) (invalid=(100, 262144, 99))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 29, in test_metric_feasibility_boundaries_and_original_dice_guard
+    with self.subTest(invalid=(pred,gt,k)),self.assertRaises(ValueError):analyze.validate_metric(metric(pred,gt,k))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_metric_feasibility_boundaries_and_original_dice_guard (test_r5_audit_fix.AuditFixTests.test_metric_feasibility_boundaries_and_original_dice_guard) (invalid=(262134, 20, 9))
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 29, in test_metric_feasibility_boundaries_and_original_dice_guard
+    with self.subTest(invalid=(pred,gt,k)),self.assertRaises(ValueError):analyze.validate_metric(metric(pred,gt,k))
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) (arm='OLD')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 119, in test_smoke_after_Adam_before_return_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'adam')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 8, 'loss_backward_calls': 1, 'adam_calls'[24 chars]': 0} != {'network_forwards': 15, 'loss_backward_calls': 2, 'adam_calls[25 chars]': 0}
+- {'adam_calls': 1,
+?                ^
+
++ {'adam_calls': 2,
+?                ^
+
+   'jacobian_vjp_calls': 0,
+-  'loss_backward_calls': 1,
+?                         ^
+
++  'loss_backward_calls': 2,
+?                         ^
+
+-  'network_forwards': 8}
+?                      ^
+
++  'network_forwards': 15}
+?                      ^^
+
+
+======================================================================
+FAIL: test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) (arm='C')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 119, in test_smoke_after_Adam_before_return_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'adam')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 40, 'loss_backward_calls': 5, 'adam_calls'[24 chars]': 0} != {'network_forwards': 47, 'loss_backward_calls': 6, 'adam_calls'[24 chars]': 0}
+- {'adam_calls': 5,
+?                ^
+
++ {'adam_calls': 6,
+?                ^
+
+   'jacobian_vjp_calls': 0,
+-  'loss_backward_calls': 5,
+?                         ^
+
++  'loss_backward_calls': 6,
+?                         ^
+
+-  'network_forwards': 40}
+?                       ^
+
++  'network_forwards': 47}
+?                       ^
+
+
+======================================================================
+FAIL: test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) (arm='C_HALF')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 119, in test_smoke_after_Adam_before_return_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'adam')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 72, 'loss_backward_calls': 9, 'adam_calls'[24 chars]': 0} != {'network_forwards': 79, 'loss_backward_calls': 10, 'adam_calls[26 chars]': 0}
+- {'adam_calls': 9,
+?                ^
+
++ {'adam_calls': 10,
+?                ^^
+
+   'jacobian_vjp_calls': 0,
+-  'loss_backward_calls': 9,
+?                         ^
+
++  'loss_backward_calls': 10,
+?                         ^^
+
+-  'network_forwards': 72}
+?                       ^
+
++  'network_forwards': 79}
+?                       ^
+
+
+======================================================================
+FAIL: test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) (arm='C_RANDOM')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 119, in test_smoke_after_Adam_before_return_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'adam')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 104, 'loss_backward_calls': 13, 'adam_call[27 chars]': 0} != {'network_forwards': 111, 'loss_backward_calls': 14, 'adam_call[27 chars]': 0}
+- {'adam_calls': 13,
+?                 ^
+
++ {'adam_calls': 14,
+?                 ^
+
+   'jacobian_vjp_calls': 0,
+-  'loss_backward_calls': 13,
+?                          ^
+
++  'loss_backward_calls': 14,
+?                          ^
+
+-  'network_forwards': 104}
+?                       ^^
+
++  'network_forwards': 111}
+?                       ^^
+
+
+======================================================================
+FAIL: test_smoke_after_Adam_before_return_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_Adam_before_return_all_hosts) (arm='C_VERIFY')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 119, in test_smoke_after_Adam_before_return_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'adam')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 136, 'loss_backward_calls': 17, 'adam_call[27 chars]': 0} != {'network_forwards': 143, 'loss_backward_calls': 18, 'adam_call[27 chars]': 0}
+- {'adam_calls': 17,
+?                 ^
+
++ {'adam_calls': 18,
+?                 ^
+
+   'jacobian_vjp_calls': 0,
+-  'loss_backward_calls': 17,
+?                          ^
+
++  'loss_backward_calls': 18,
+?                          ^
+
+-  'network_forwards': 136}
+?                        -
+
++  'network_forwards': 143}
+?                       +
+
+
+======================================================================
+FAIL: test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) (arm='OLD')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 116, in test_smoke_after_backward_before_Adam_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'backward')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 8, 'loss_backward_calls': 1, 'adam_calls'[24 chars]': 0} != {'network_forwards': 15, 'loss_backward_calls': 2, 'adam_calls[25 chars]': 0}
+  {'adam_calls': 1,
+   'jacobian_vjp_calls': 0,
+-  'loss_backward_calls': 1,
+?                         ^
+
++  'loss_backward_calls': 2,
+?                         ^
+
+-  'network_forwards': 8}
+?                      ^
+
++  'network_forwards': 15}
+?                      ^^
+
+
+======================================================================
+FAIL: test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) (arm='C')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 116, in test_smoke_after_backward_before_Adam_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'backward')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 40, 'loss_backward_calls': 5, 'adam_calls'[24 chars]': 0} != {'network_forwards': 47, 'loss_backward_calls': 6, 'adam_calls'[24 chars]': 0}
+  {'adam_calls': 5,
+   'jacobian_vjp_calls': 0,
+-  'loss_backward_calls': 5,
+?                         ^
+
++  'loss_backward_calls': 6,
+?                         ^
+
+-  'network_forwards': 40}
+?                       ^
+
++  'network_forwards': 47}
+?                       ^
+
+
+======================================================================
+FAIL: test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) (arm='C_HALF')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 116, in test_smoke_after_backward_before_Adam_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'backward')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 72, 'loss_backward_calls': 9, 'adam_calls'[24 chars]': 0} != {'network_forwards': 79, 'loss_backward_calls': 10, 'adam_calls[25 chars]': 0}
+  {'adam_calls': 9,
+   'jacobian_vjp_calls': 0,
+-  'loss_backward_calls': 9,
+?                         ^
+
++  'loss_backward_calls': 10,
+?                         ^^
+
+-  'network_forwards': 72}
+?                       ^
+
++  'network_forwards': 79}
+?                       ^
+
+
+======================================================================
+FAIL: test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) (arm='C_RANDOM')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 116, in test_smoke_after_backward_before_Adam_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'backward')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 104, 'loss_backward_calls': 13, 'adam_call[27 chars]': 0} != {'network_forwards': 111, 'loss_backward_calls': 14, 'adam_call[27 chars]': 0}
+  {'adam_calls': 13,
+   'jacobian_vjp_calls': 0,
+-  'loss_backward_calls': 13,
+?                          ^
+
++  'loss_backward_calls': 14,
+?                          ^
+
+-  'network_forwards': 104}
+?                       ^^
+
++  'network_forwards': 111}
+?                       ^^
+
+
+======================================================================
+FAIL: test_smoke_after_backward_before_Adam_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_after_backward_before_Adam_all_hosts) (arm='C_VERIFY')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 116, in test_smoke_after_backward_before_Adam_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'backward')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 136, 'loss_backward_calls': 17, 'adam_call[27 chars]': 0} != {'network_forwards': 143, 'loss_backward_calls': 18, 'adam_call[27 chars]': 0}
+  {'adam_calls': 17,
+   'jacobian_vjp_calls': 0,
+-  'loss_backward_calls': 17,
+?                          ^
+
++  'loss_backward_calls': 18,
+?                          ^
+
+-  'network_forwards': 136}
+?                        -
+
++  'network_forwards': 143}
+?                       +
+
+
+======================================================================
+FAIL: test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) (arm='OLD')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 113, in test_smoke_partial_forward_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'forward')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 8, 'loss_backward_calls': 1, 'adam_calls'[24 chars]': 0} != {'network_forwards': 11, 'loss_backward_calls': 1, 'adam_calls[25 chars]': 0}
+  {'adam_calls': 1,
+   'jacobian_vjp_calls': 0,
+   'loss_backward_calls': 1,
+-  'network_forwards': 8}
+?                      ^
+
++  'network_forwards': 11}
+?                      ^^
+
+
+======================================================================
+FAIL: test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) (arm='C')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 113, in test_smoke_partial_forward_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'forward')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 40, 'loss_backward_calls': 5, 'adam_calls'[24 chars]': 0} != {'network_forwards': 43, 'loss_backward_calls': 5, 'adam_calls'[24 chars]': 0}
+  {'adam_calls': 5,
+   'jacobian_vjp_calls': 0,
+   'loss_backward_calls': 5,
+-  'network_forwards': 40}
+?                       ^
+
++  'network_forwards': 43}
+?                       ^
+
+
+======================================================================
+FAIL: test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) (arm='C_HALF')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 113, in test_smoke_partial_forward_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'forward')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'network_forwards': 72, 'loss_backward_calls': 9, 'adam_calls'[24 chars]': 0} != {'network_forwards': 75, 'loss_backward_calls': 9, 'adam_calls'[24 chars]': 0}
+  {'adam_calls': 9,
+   'jacobian_vjp_calls': 0,
+   'loss_backward_calls': 9,
+-  'network_forwards': 72}
+?                       ^
+
++  'network_forwards': 75}
+?                       ^
+
+
+======================================================================
+FAIL: test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) (arm='C_RANDOM')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 113, in test_smoke_partial_forward_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'forward')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'net[13 chars]': 104, 'loss_backward_calls': 13, 'adam_calls[26 chars]': 0} != {'net[13 chars]': 107, 'loss_backward_calls': 13, 'adam_calls[26 chars]': 0}
+  {'adam_calls': 13,
+   'jacobian_vjp_calls': 0,
+   'loss_backward_calls': 13,
+-  'network_forwards': 104}
+?                        ^
+
++  'network_forwards': 107}
+?                        ^
+
+
+======================================================================
+FAIL: test_smoke_partial_forward_all_hosts (test_r5_audit_fix.AuditFixTests.test_smoke_partial_forward_all_hosts) (arm='C_VERIFY')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<REPO>/tests/test_r5_audit_fix.py", line 113, in test_smoke_partial_forward_all_hosts
+    with self.subTest(arm=arm):self.smoke_probe(arm,'forward')
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<REPO>/tests/test_r5_audit_fix.py", line 97, in smoke_probe
+    self.assertEqual(failure['physical'],observed)
+AssertionError: {'net[13 chars]': 136, 'loss_backward_calls': 17, 'adam_calls[26 chars]': 0} != {'net[13 chars]': 139, 'loss_backward_calls': 17, 'adam_calls[26 chars]': 0}
+  {'adam_calls': 17,
+   'jacobian_vjp_calls': 0,
+   'loss_backward_calls': 17,
+-  'network_forwards': 136}
+?                        ^
+
++  'network_forwards': 139}
+?                        ^
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 21.911s
+
+FAILED (failures=23, errors=3)
+{
+  "tests": 9,
+  "failures": 23,
+  "errors": 3,
+  "skipped": 0,
+  "seconds": 21.990126916905865,
+  "procedural_B1_physical": {
+    "network_forwards": 1434,
+    "loss_backward_calls": 178,
+    "adam_calls": 173,
+    "jacobian_vjp_calls": 0
+  },
+  "physical_counter_scope": "all R5 model tests; B1-derived paths only if inherited regressions requested",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "registered_checkpoint_reads": 0,
+  "procedural_IO_fixtures": false,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 1
+}

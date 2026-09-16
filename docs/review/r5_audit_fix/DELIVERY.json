@@ -1,0 +1,142 @@
+{
+  "schema": "R5_AUDIT_FIX_DELIVERY_V1",
+  "status": "R5_IMPLEMENTATION_READY_FOR_REVIEW",
+  "execution_started": false,
+  "external_review": "AWAITING_REREVIEW",
+  "R5A": "NOT_RUN",
+  "R5B": "NOT_RUN",
+  "implementation_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+  "repository": "https://github.com/DLwbm123/DPA-CTTA",
+  "branch": "review/r5-audit-fix-v1",
+  "reviewed_implementation_sha": "0c08cece6a91bdf5e3d06c9862dcd192df7787d8",
+  "reviewed_publication_sha": "ef06c90b3306d01f0f35e313e803f1fb03c50c31",
+  "previous_external_review": {
+    "status": "R5_REVIEW_NEEDS_FIX",
+    "preserved": "external_evidence/R5_EXTERNAL_REVIEW.md",
+    "scope": "Old reviewed implementation only; no rereview PASS issued"
+  },
+  "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+  "science_raw_bytes_unchanged": true,
+  "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+  "metadata_budgets": {
+    "A": {
+      "jobs": 3,
+      "records": 5853,
+      "network_forwards": 46824,
+      "adam_calls": 5853
+    },
+    "B_NEW": {
+      "jobs": 17,
+      "records": 33167,
+      "network_forwards": 265336,
+      "adam_calls": 33167
+    },
+    "AB": {
+      "jobs": 20,
+      "records": 39020,
+      "network_forwards": 312160,
+      "adam_calls": 39020
+    }
+  },
+  "default_execution_disabled": true,
+  "changes": {
+    "F1": "R5-local inherited validator plus nonnegative integer TP/FP/FN/TN for all four predictions",
+    "F2": "Accumulate each host live core counters exactly once in finally, include failed visit, preserve first failure and original exception, label failure hook counts as lower bound",
+    "independent_rollback": "Original C reference never executes rejected candidate or uses R5 snapshot/rollback; empty and initialized Adam"
+  },
+  "final_CPU_checks": {
+    "final-local": {
+      "log": "logs/final-local.log",
+      "json": "logs/final-local.json",
+      "tests": 143,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 311.88975883298554,
+      "procedural_B1_physical": {
+        "network_forwards": 2466,
+        "loss_backward_calls": 306,
+        "adam_calls": 301,
+        "jacobian_vjp_calls": 0
+      },
+      "physical_counter_scope": "all R5 model tests; B1-derived paths only if inherited regressions requested",
+      "python": "3.12.9",
+      "torch": "2.6.0",
+      "cuda_initialized": false,
+      "real_target_RGB_reads": 0,
+      "real_target_mask_reads": 0,
+      "registered_checkpoint_reads": 0,
+      "procedural_IO_fixtures": true,
+      "source_data_reads": 0,
+      "inputs": "procedural CPU tensors; random model weights",
+      "exit_code": 0
+    },
+    "final-server": {
+      "log": "logs/final-server.log",
+      "json": "logs/final-server.json",
+      "tests": 143,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 841.4208205780014,
+      "procedural_B1_physical": {
+        "network_forwards": 2466,
+        "loss_backward_calls": 306,
+        "adam_calls": 301,
+        "jacobian_vjp_calls": 0
+      },
+      "physical_counter_scope": "all R5 model tests; B1-derived paths only if inherited regressions requested",
+      "python": "3.10.6",
+      "torch": "2.2.1+cu121",
+      "cuda_initialized": false,
+      "real_target_RGB_reads": 0,
+      "real_target_mask_reads": 0,
+      "registered_checkpoint_reads": 0,
+      "procedural_IO_fixtures": true,
+      "source_data_reads": 0,
+      "inputs": "procedural CPU tensors; random model weights",
+      "exit_code": 0
+    }
+  },
+  "coverage": {
+    "R5_original": 22,
+    "R5_new": 9,
+    "R5_total": 31,
+    "inherited": 112,
+    "total": 143
+  },
+  "all_attempts": "logs/INDEX.json",
+  "patch": {
+    "path": "IMPLEMENTATION.patch",
+    "base": "ef06c90b3306d01f0f35e313e803f1fb03c50c31",
+    "tip": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+    "files": [
+      "scripts/check_r5_cpu.py",
+      "src/dpa_ctta/r5_update_acceptance/analyze.py",
+      "src/dpa_ctta/r5_update_acceptance/execution.py",
+      "tests/test_r5_audit_fix.py"
+    ]
+  },
+  "preservation": "PRESERVATION.json",
+  "review_index": "REVIEW_INDEX.md",
+  "test_inventory": "TEST_COVERAGE.md",
+  "report": "FIX_REPORT.md",
+  "boundaries": {
+    "GPU_smoke": "NOT_RUN",
+    "real_target_RGB_reads": 0,
+    "real_target_mask_reads": 0,
+    "registered_checkpoint_reads": 0,
+    "source_data_reads": 0,
+    "cuda_initialized": false,
+    "background_tasks_started": false,
+    "old_C_P2_R1_R4_dependencies_results_unchanged": true
+  },
+  "limitations": [
+    "CPU smoke orchestration fault probes use real old/R5 code and fixed GraTa with procedural Toy; they are not GPU or registered-checkpoint runs.",
+    "Successful full random ResUNet warm-up parity does not establish full-network long eligible/rejected trajectories.",
+    "Failure physical counts are observed hook lower bounds; interrupted work before callbacks or construction is not exactly observable.",
+    "Historical per-content R4 parity and matching C0 remain unverified; H_t stays null.",
+    "Overlapping test runs are not summed as independent coverage.",
+    "No external rereview PASS or R5-A/GPU execution authorization is issued."
+  ]
+}

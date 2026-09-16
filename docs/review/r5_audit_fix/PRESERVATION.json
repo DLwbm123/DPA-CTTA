@@ -1,0 +1,41 @@
+{
+  "implementation_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+  "reviewed_implementation_sha": "0c08cece6a91bdf5e3d06c9862dcd192df7787d8",
+  "reviewed_publication_sha": "ef06c90b3306d01f0f35e313e803f1fb03c50c31",
+  "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+  "science_raw_bytes_unchanged": true,
+  "metadata_dry_run_equal_to_reviewed": true,
+  "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+  "budgets": {
+    "A": {
+      "jobs": 3,
+      "records": 5853,
+      "network_forwards": 46824,
+      "adam_calls": 5853
+    },
+    "B_NEW": {
+      "jobs": 17,
+      "records": 33167,
+      "network_forwards": 265336,
+      "adam_calls": 33167
+    },
+    "AB": {
+      "jobs": 20,
+      "records": 39020,
+      "network_forwards": 312160,
+      "adam_calls": 39020
+    }
+  },
+  "code_files_changed": [
+    "scripts/check_r5_cpu.py",
+    "src/dpa_ctta/r5_update_acceptance/analyze.py",
+    "src/dpa_ctta/r5_update_acceptance/execution.py",
+    "tests/test_r5_audit_fix.py"
+  ],
+  "old_C_P2_R1_R4_dependencies_results_unchanged": true,
+  "default_execution_disabled": true,
+  "execution_started": false,
+  "external_review": "AWAITING_REREVIEW",
+  "R5A": "NOT_RUN",
+  "R5B": "NOT_RUN"
+}
