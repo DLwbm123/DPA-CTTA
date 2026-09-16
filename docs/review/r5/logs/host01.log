@@ -1,0 +1,36 @@
+test_C_half_shadow_and_nonfinite_hard_failure (test_r5_rule.RuleTests.test_C_half_shadow_and_nonfinite_hard_failure) ... ok
+test_forcing_order_empty_history_ties_and_tolerance (test_r5_rule.RuleTests.test_forcing_order_empty_history_ties_and_tolerance) ... ok
+test_full_grid_regions_empty_partial_and_detach (test_r5_rule.RuleTests.test_full_grid_regions_empty_partial_and_detach) ... ok
+test_random_one_draw_every_visit_independent_eligibility (test_r5_rule.RuleTests.test_random_one_draw_every_visit_independent_eligibility) ... ok
+test_window_over_128_current_excluded_and_rejections_appended (test_r5_rule.RuleTests.test_window_over_128_current_excluded_and_rejections_appended) ... ok
+test_actual_q_target_pre_and_six_view_alignment (test_r5_host.HostTests.test_actual_q_target_pre_and_six_view_alignment) ... ok
+test_evaluation_isolation_delayed_omitted_identity_rejected (test_r5_host.HostTests.test_evaluation_isolation_delayed_omitted_identity_rejected) ... ok
+test_evaluator_reads_GT_after_all_commits (test_r5_host.HostTests.test_evaluator_reads_GT_after_all_commits) ... ok
+test_full_random_ResUNet_old_C_diag_verify_random_p1_four_steps (test_r5_host.HostTests.test_full_random_ResUNet_old_C_diag_verify_random_p1_four_steps) ... skipped 'explicit fast-only pass; full network in required final suite'
+test_half_only_lr_and_all_physical_counts (test_r5_host.HostTests.test_half_only_lr_and_all_physical_counts) ... ok
+test_nonfinite_state_hard_failure_no_resume (test_r5_host.HostTests.test_nonfinite_state_hard_failure_no_resume) ... ok
+test_reject_first_and_existing_Adam_state_next_visit_reference (test_r5_host.HostTests.test_reject_first_and_existing_Adam_state_next_visit_reference) ... ok
+test_snapshot_buffers_extra_state_groups_and_no_alias (test_r5_host.HostTests.test_snapshot_buffers_extra_state_groups_and_no_alias) ... ok
+test_toy_all_accept_old_C_exact_and_capture_contract (test_r5_host.HostTests.test_toy_all_accept_old_C_exact_and_capture_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 4.403s
+
+OK (skipped=1)
+{
+  "tests": 14,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 1,
+  "seconds": 4.451787249883637,
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "registered_checkpoint_reads": 0,
+  "procedural_IO_fixtures": false,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 0
+}

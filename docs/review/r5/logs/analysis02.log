@@ -1,0 +1,36 @@
+test_3_17_20_budget_scopes_default_entry_and_neutral_protection (test_r5_analysis.AnalysisTests.test_3_17_20_budget_scopes_default_entry_and_neutral_protection) ... ok
+test_A_gate_boundaries_and_mechanical_failures (test_r5_analysis.AnalysisTests.test_A_gate_boundaries_and_mechanical_failures) ... ok
+test_B_gate_boundaries (test_r5_analysis.AnalysisTests.test_B_gate_boundaries) ... ok
+test_complete_A_then_separate_17_B_reuse_and_atomic_corruption (test_r5_analysis.AnalysisTests.test_complete_A_then_separate_17_B_reuse_and_atomic_corruption) ... ok
+test_label_free_calibration_and_analytical_random_reference (test_r5_analysis.AnalysisTests.test_label_free_calibration_and_analytical_random_reference) ... ok
+test_new_scope_review_waiver_caps_and_calibration_bindings (test_r5_analysis.AnalysisTests.test_new_scope_review_waiver_caps_and_calibration_bindings) ... ok
+test_scalar_replay_all_arms_corruption_and_join (test_r5_analysis.AnalysisTests.test_scalar_replay_all_arms_corruption_and_join) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 23.916s
+
+OK
+{
+  "tests": 7,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 23.963778832927346,
+  "procedural_B1_physical": {
+    "network_forwards": 0,
+    "loss_backward_calls": 0,
+    "adam_calls": 0,
+    "jacobian_vjp_calls": 0
+  },
+  "physical_counter_scope": "all R5 model tests; B1-derived paths only if inherited regressions requested",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "registered_checkpoint_reads": 0,
+  "procedural_IO_fixtures": false,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 0
+}

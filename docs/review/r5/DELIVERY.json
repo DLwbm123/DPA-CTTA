@@ -1,0 +1,148 @@
+{
+  "schema": "R5_STAGE_I_DELIVERY_V1",
+  "status": "R5_IMPLEMENTATION_READY_FOR_REVIEW",
+  "execution_started": false,
+  "external_review": "NOT_RUN",
+  "R5A": "NOT_RUN",
+  "R5B": "NOT_RUN",
+  "repository": "https://github.com/DLwbm123/DPA-CTTA",
+  "branch": "experiment/r5-update-acceptance-v1",
+  "implementation_sha": "0c08cece6a91bdf5e3d06c9862dcd192df7787d8",
+  "base_publication_sha": "b2bfce6cb29cea2df026194120f45b4f7252d53f",
+  "historical_r4_execution_sha": "2377505819ca9be6658b4f5b34f49dac3bf67889",
+  "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+  "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+  "dependencies": {
+    "ctta": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+    "grata": "33ae20d664f305af34739ec54a5bec7da53ffa0b"
+  },
+  "arms": [
+    "C",
+    "C_HALF",
+    "C_RANDOM",
+    "C_VERIFY"
+  ],
+  "metadata_budgets": {
+    "A": {
+      "jobs": 3,
+      "records": 5853,
+      "network_forwards": 46824,
+      "adam_calls": 5853
+    },
+    "B_NEW": {
+      "jobs": 17,
+      "records": 33167,
+      "network_forwards": 265336,
+      "adam_calls": 33167
+    },
+    "AB": {
+      "jobs": 20,
+      "records": 39020,
+      "network_forwards": 312160,
+      "adam_calls": 39020
+    }
+  },
+  "p_accept": null,
+  "calibration": "NOT_RUN",
+  "new_C0_runs": 0,
+  "H_t": null,
+  "H_reason": "Matching per-content C0 not verified in Stage I; no aggregate substitution.",
+  "GPU_smoke": "NOT_RUN",
+  "devices": null,
+  "caps": null,
+  "background_started": false,
+  "shared_code_modified": false,
+  "historical_science_or_results_modified": false,
+  "final_CPU_checks": {
+    "final02": {
+      "log": "logs/final02.log",
+      "json": "logs/final02.json",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 55.23666250007227,
+      "procedural_B1_physical": {
+        "network_forwards": 368,
+        "loss_backward_calls": 46,
+        "adam_calls": 46,
+        "jacobian_vjp_calls": 0
+      },
+      "physical_counter_scope": "all R5 model tests; B1-derived paths only if inherited regressions requested",
+      "python": "3.12.9",
+      "torch": "2.6.0",
+      "cuda_initialized": false,
+      "real_target_RGB_reads": 0,
+      "real_target_mask_reads": 0,
+      "registered_checkpoint_reads": 0,
+      "procedural_IO_fixtures": false,
+      "source_data_reads": 0,
+      "inputs": "procedural CPU tensors; random model weights",
+      "exit_code": 0
+    },
+    "cpu-server-01": {
+      "log": "logs/cpu-server-01.log",
+      "json": "logs/cpu-server-01.json",
+      "tests": 22,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 161.80614364007488,
+      "procedural_B1_physical": {
+        "network_forwards": 368,
+        "loss_backward_calls": 46,
+        "adam_calls": 46,
+        "jacobian_vjp_calls": 0
+      },
+      "physical_counter_scope": "all R5 model tests; B1-derived paths only if inherited regressions requested",
+      "python": "3.10.6",
+      "torch": "2.2.1+cu121",
+      "cuda_initialized": false,
+      "real_target_RGB_reads": 0,
+      "real_target_mask_reads": 0,
+      "registered_checkpoint_reads": 0,
+      "procedural_IO_fixtures": false,
+      "source_data_reads": 0,
+      "inputs": "procedural CPU tensors; random model weights",
+      "exit_code": 0
+    }
+  },
+  "inherited_regression": {
+    "log": "logs/final01.log",
+    "json": "logs/final01.json",
+    "tests": 133,
+    "passed": 133,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "Pre-final 21 R5 plus 112 inherited; final 22 R5 rerun separately."
+  },
+  "all_checks_index": "logs/INDEX.json",
+  "patch": {
+    "path": "IMPLEMENTATION.patch",
+    "base": "b2bfce6cb29cea2df026194120f45b4f7252d53f",
+    "tip": "0c08cece6a91bdf5e3d06c9862dcd192df7787d8",
+    "scope": [
+      "src",
+      "scripts",
+      "tests",
+      "configs"
+    ]
+  },
+  "review_index": "REVIEW_INDEX.md",
+  "stage_I_boundaries": {
+    "cuda_initialized": false,
+    "real_target_RGB_reads": 0,
+    "real_target_mask_reads": 0,
+    "registered_checkpoint_reads": 0,
+    "source_data_reads": 0
+  },
+  "limitations": [
+    "Procedural CPU and scalar fixtures are not formal A/B performance evidence.",
+    "GPU and historical per-content R4 parity have not been rerun.",
+    "B requires qualified complete A, frozen label-free calibration and a separately reviewed execution recipe.",
+    "No review PASS or GPU authorization is issued by this delivery."
+  ]
+}
