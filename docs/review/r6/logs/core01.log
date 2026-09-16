@@ -1,0 +1,54 @@
+test_local_gradients_detached_independent_reference_both_dtypes (test_r6_loss.LossTests.test_local_gradients_detached_independent_reference_both_dtypes) ... FAIL
+test_partition_edges_double_mean_bounds_mass_and_fallback (test_r6_loss.LossTests.test_partition_edges_double_mean_bounds_mass_and_fallback) ... ok
+test_permutation_seed_rng_histogram_and_soft_targets (test_r6_loss.LossTests.test_permutation_seed_rng_histogram_and_soft_targets) ... ok
+test_soft_optimum_pos_weight_negative_control_and_zero_energy (test_r6_loss.LossTests.test_soft_optimum_pos_weight_negative_control_and_zero_energy) ... ok
+test_tiny_residuals_uniform_degeneration_and_hard_failures (test_r6_loss.LossTests.test_tiny_residuals_uniform_degeneration_and_hard_failures) ... ok
+test_actual_q_and_original_C_bitwise (test_r6_host.HostTests.test_actual_q_and_original_C_bitwise) ... ok
+test_each_arm_GT_change_delay_omit_cannot_change_state (test_r6_host.HostTests.test_each_arm_GT_change_delay_omit_cannot_change_state) ... ok
+test_evaluation_release_after_Adam_and_RNG_commit (test_r6_host.HostTests.test_evaluation_release_after_Adam_and_RNG_commit) ... ok
+test_full_random_ResUNet_old_C_and_four_arms_four_visits (test_r6_host.HostTests.test_full_random_ResUNet_old_C_and_four_arms_four_visits) ... ok
+test_nonfinite_state_failure_and_production_no_VJP (test_r6_host.HostTests.test_nonfinite_state_failure_and_production_no_VJP) ... ok
+
+======================================================================
+FAIL: test_local_gradients_detached_independent_reference_both_dtypes (test_r6_loss.LossTests.test_local_gradients_detached_independent_reference_both_dtypes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/test_r6_loss.py", line 42, in test_local_gradients_detached_independent_reference_both_dtypes
+    torch.testing.assert_close(norms[-1],reference,**TOLERANCES[dtype])
+  File "<PYTHON_ENV>/lib/python3.12/site-packages/torch/testing/_comparison.py", line 1530, in assert_close
+    raise error_metas[0].to_error(msg)
+AssertionError: Tensor-likes are not close!
+
+Mismatched elements: 2 / 2 (100.0%)
+Greatest absolute difference: 1.0517651471975142e-09 at index (0, 1) (up to 1e-14 allowed)
+Greatest relative difference: 1.5961113562862452e-08 at index (0, 1) (up to 1e-10 allowed)
+
+----------------------------------------------------------------------
+Ran 10 tests in 49.384s
+
+FAILED (failures=1)
+R6_FULL_RANDOM_MODEL {"network_forwards": 160, "loss_backward_calls": 20, "adam_calls": 20, "jacobian_vjp_calls": 0}
+{
+  "tests": 10,
+  "failures": 1,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 49.44284441694617,
+  "procedural_B1_physical": {
+    "network_forwards": 440,
+    "loss_backward_calls": 55,
+    "adam_calls": 55,
+    "jacobian_vjp_calls": 0
+  },
+  "physical_counter_scope": "all R6 and R5 model tests; B1-derived paths only if inherited regressions requested",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "registered_checkpoint_reads": 0,
+  "procedural_IO_fixtures": false,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 1
+}

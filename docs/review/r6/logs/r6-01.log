@@ -1,0 +1,67 @@
+test_local_gradients_detached_independent_reference_both_dtypes (test_r6_loss.LossTests.test_local_gradients_detached_independent_reference_both_dtypes) ... ok
+test_partition_edges_double_mean_bounds_mass_and_fallback (test_r6_loss.LossTests.test_partition_edges_double_mean_bounds_mass_and_fallback) ... ok
+test_permutation_seed_rng_histogram_and_soft_targets (test_r6_loss.LossTests.test_permutation_seed_rng_histogram_and_soft_targets) ... ok
+test_soft_optimum_pos_weight_negative_control_and_zero_energy (test_r6_loss.LossTests.test_soft_optimum_pos_weight_negative_control_and_zero_energy) ... ok
+test_tiny_residuals_uniform_degeneration_and_hard_failures (test_r6_loss.LossTests.test_tiny_residuals_uniform_degeneration_and_hard_failures) ... ok
+test_actual_q_and_original_C_bitwise (test_r6_host.HostTests.test_actual_q_and_original_C_bitwise) ... ok
+test_each_arm_GT_change_delay_omit_cannot_change_state (test_r6_host.HostTests.test_each_arm_GT_change_delay_omit_cannot_change_state) ... ok
+test_evaluation_release_after_Adam_and_RNG_commit (test_r6_host.HostTests.test_evaluation_release_after_Adam_and_RNG_commit) ... ok
+test_full_random_ResUNet_old_C_and_four_arms_four_visits (test_r6_host.HostTests.test_full_random_ResUNet_old_C_and_four_arms_four_visits) ... ok
+test_nonfinite_state_failure_and_production_no_VJP (test_r6_host.HostTests.test_nonfinite_state_failure_and_production_no_VJP) ... ok
+test_exact_code_science_data_stream_devices_stage_bindings (test_r6_execution.ExecutionTests.test_exact_code_science_data_stream_devices_stage_bindings) ... ok
+test_matrix_defaults_authorization_and_neutral_entry (test_r6_execution.ExecutionTests.test_matrix_defaults_authorization_and_neutral_entry) ... ok
+test_smoke_after_Adam_before_return_all_hosts (test_r6_execution.ExecutionTests.test_smoke_after_Adam_before_return_all_hosts) ... ok
+test_smoke_after_backward_before_Adam_all_hosts (test_r6_execution.ExecutionTests.test_smoke_after_backward_before_Adam_all_hosts) ... ok
+test_smoke_partial_forward_all_hosts (test_r6_execution.ExecutionTests.test_smoke_partial_forward_all_hosts) ... ok
+test_smoke_preserves_first_failure_and_original_exception (test_r6_execution.ExecutionTests.test_smoke_preserves_first_failure_and_original_exception) ... ok
+test_smoke_success_A_B_exact_budgets (test_r6_execution.ExecutionTests.test_smoke_success_A_B_exact_budgets) ... ok
+test_all_arms_ledger_corruptions_and_metrics (test_r6_analysis.AnalysisTests.test_all_arms_ledger_corruptions_and_metrics) ... ok
+test_foreign_marker_run_scope_never_invalidate_history (test_r6_analysis.AnalysisTests.test_foreign_marker_run_scope_never_invalidate_history) ... ok
+test_full_A_then_B_reuse_original_bindings_and_invalidated_corruption (test_r6_analysis.AnalysisTests.test_full_A_then_B_reuse_original_bindings_and_invalidated_corruption) ... ok
+test_gate_equal_boundaries_and_each_independent_failure (test_r6_analysis.AnalysisTests.test_gate_equal_boundaries_and_each_independent_failure) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 86.395s
+
+OK
+R6_FULL_RANDOM_MODEL {"network_forwards": 160, "loss_backward_calls": 20, "adam_calls": 20, "jacobian_vjp_calls": 0}
+EXPECTED_R6_INJECTED_FAILURE {"target": "OLD", "point": "adam", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 15, "loss_backward_calls": 2, "adam_calls": 2, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected adam", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "C", "point": "adam", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 47, "loss_backward_calls": 6, "adam_calls": 6, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected adam", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "R_BAL", "point": "adam", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 79, "loss_backward_calls": 10, "adam_calls": 10, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected adam", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "R_SCALE", "point": "adam", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 111, "loss_backward_calls": 14, "adam_calls": 14, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected adam", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "R_SHUFFLE", "point": "adam", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 143, "loss_backward_calls": 18, "adam_calls": 18, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected adam", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "OLD", "point": "backward", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 15, "loss_backward_calls": 2, "adam_calls": 1, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected backward", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "C", "point": "backward", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 47, "loss_backward_calls": 6, "adam_calls": 5, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected backward", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "R_BAL", "point": "backward", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 79, "loss_backward_calls": 10, "adam_calls": 9, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected backward", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "R_SCALE", "point": "backward", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 111, "loss_backward_calls": 14, "adam_calls": 13, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected backward", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "R_SHUFFLE", "point": "backward", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 143, "loss_backward_calls": 18, "adam_calls": 17, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected backward", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "OLD", "point": "forward", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 11, "loss_backward_calls": 1, "adam_calls": 1, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected forward", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "C", "point": "forward", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 43, "loss_backward_calls": 5, "adam_calls": 5, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected forward", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "R_BAL", "point": "forward", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 75, "loss_backward_calls": 9, "adam_calls": 9, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected forward", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "R_SCALE", "point": "forward", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 107, "loss_backward_calls": 13, "adam_calls": 13, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected forward", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "R_SHUFFLE", "point": "forward", "evidence": {"binding": {}, "status": "INCOMPLETE", "physical": {"network_forwards": 139, "loss_backward_calls": 17, "adam_calls": 17, "jacobian_vjp_calls": 0}, "physical_accounting": "OBSERVED_HOOK_COUNTS_LOWER_BOUND_ON_FAILURE", "uncertainty": "Live forward/gradient/Adam-post hooks; work interrupted before its hook or during construction is not observable. No VJP exists in this smoke.", "reason": "injected forward", "scope": "trajectory"}}
+EXPECTED_R6_INJECTED_FAILURE {"target": "OLD", "point": "forward", "evidence": {"first_failure": true}}
+{
+  "tests": 21,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 86.4358731249813,
+  "procedural_B1_physical": {
+    "network_forwards": 1936,
+    "loss_backward_calls": 241,
+    "adam_calls": 236,
+    "jacobian_vjp_calls": 0
+  },
+  "physical_counter_scope": "all R6 and R5 model tests; B1-derived paths only if inherited regressions requested",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "registered_checkpoint_reads": 0,
+  "procedural_IO_fixtures": false,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 0
+}

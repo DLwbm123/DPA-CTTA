@@ -1,0 +1,1491 @@
+{
+  "status": "REGISTERED_METADATA_DRY_RUN",
+  "source": "provided prompt and plan; original proposal pending",
+  "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+  "science_bytes_verified": false,
+  "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+  "matrices": {
+    "A": [
+      {
+        "job_id": "o0a0",
+        "arm": "C",
+        "order": 0,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o0a1",
+        "arm": "R_BAL",
+        "order": 0,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o0a2",
+        "arm": "R_SCALE",
+        "order": 0,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o0a3",
+        "arm": "R_SHUFFLE",
+        "order": 0,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o1a0",
+        "arm": "C",
+        "order": 1,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o1a1",
+        "arm": "R_BAL",
+        "order": 1,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o1a2",
+        "arm": "R_SCALE",
+        "order": 1,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o1a3",
+        "arm": "R_SHUFFLE",
+        "order": 1,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o4a0",
+        "arm": "C",
+        "order": 4,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o4a1",
+        "arm": "R_BAL",
+        "order": 4,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o4a2",
+        "arm": "R_SCALE",
+        "order": 4,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o4a3",
+        "arm": "R_SHUFFLE",
+        "order": 4,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_development_stream"
+      }
+    ],
+    "B_NEW": [
+      {
+        "job_id": "o2a0",
+        "arm": "C",
+        "order": 2,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o2a1",
+        "arm": "R_BAL",
+        "order": 2,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o2a2",
+        "arm": "R_SCALE",
+        "order": 2,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o2a3",
+        "arm": "R_SHUFFLE",
+        "order": 2,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o3a0",
+        "arm": "C",
+        "order": 3,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o3a1",
+        "arm": "R_BAL",
+        "order": 3,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o3a2",
+        "arm": "R_SCALE",
+        "order": 3,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o3a3",
+        "arm": "R_SHUFFLE",
+        "order": 3,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      }
+    ],
+    "AB": [
+      {
+        "job_id": "o0a0",
+        "arm": "C",
+        "order": 0,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o0a1",
+        "arm": "R_BAL",
+        "order": 0,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o0a2",
+        "arm": "R_SCALE",
+        "order": 0,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o0a3",
+        "arm": "R_SHUFFLE",
+        "order": 0,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o1a0",
+        "arm": "C",
+        "order": 1,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o1a1",
+        "arm": "R_BAL",
+        "order": 1,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o1a2",
+        "arm": "R_SCALE",
+        "order": 1,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o1a3",
+        "arm": "R_SHUFFLE",
+        "order": 1,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o2a0",
+        "arm": "C",
+        "order": 2,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o2a1",
+        "arm": "R_BAL",
+        "order": 2,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o2a2",
+        "arm": "R_SCALE",
+        "order": 2,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o2a3",
+        "arm": "R_SHUFFLE",
+        "order": 2,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o3a0",
+        "arm": "C",
+        "order": 3,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o3a1",
+        "arm": "R_BAL",
+        "order": 3,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o3a2",
+        "arm": "R_SCALE",
+        "order": 3,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o3a3",
+        "arm": "R_SHUFFLE",
+        "order": 3,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "B_new_order_same_contents"
+      },
+      {
+        "job_id": "o4a0",
+        "arm": "C",
+        "order": 4,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o4a1",
+        "arm": "R_BAL",
+        "order": 4,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o4a2",
+        "arm": "R_SCALE",
+        "order": 4,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      },
+      {
+        "job_id": "o4a3",
+        "arm": "R_SHUFFLE",
+        "order": 4,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": true,
+        "selection_exposure": "A_development_stream"
+      }
+    ]
+  },
+  "budgets": {
+    "A": {
+      "jobs": 12,
+      "records": 23412,
+      "network_forwards": 187296,
+      "loss_backward_calls": 23412,
+      "adam_calls": 23412,
+      "jacobian_vjp_calls": 0
+    },
+    "B_NEW": {
+      "jobs": 8,
+      "records": 15608,
+      "network_forwards": 124864,
+      "loss_backward_calls": 15608,
+      "adam_calls": 15608,
+      "jacobian_vjp_calls": 0
+    },
+    "AB": {
+      "jobs": 20,
+      "records": 39020,
+      "network_forwards": 312160,
+      "loss_backward_calls": 39020,
+      "adam_calls": 39020,
+      "jacobian_vjp_calls": 0
+    }
+  },
+  "stream": {
+    "status": "METADATA_VERIFIED_NO_PIXELS",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+    "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+    "digest_encoding": "SHA256 canonical JSON: schema, registration_digest, stream_id, frozen rule, private ordered group_id sequence",
+    "records": 1951,
+    "unique_contents": 1951,
+    "duplicates": 0,
+    "within_domain_order_unchanged": true,
+    "base_registration_unchanged": true,
+    "domain_counts": {
+      "REFUGE": 400,
+      "ORIGA": 650,
+      "REFUGE_Valid": 800,
+      "Drishti_GS": 101
+    },
+    "subset_counts": {
+      "remaining_dev": 1695,
+      "p1_extension_dev": 128,
+      "legacy_dev": 128
+    },
+    "chunk_schedule": [
+      {
+        "round": 0,
+        "domain": "REFUGE",
+        "within_domain_start": 0,
+        "first_visit": 1,
+        "count": 64
+      },
+      {
+        "round": 0,
+        "domain": "ORIGA",
+        "within_domain_start": 0,
+        "first_visit": 65,
+        "count": 64
+      },
+      {
+        "round": 0,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 0,
+        "first_visit": 129,
+        "count": 64
+      },
+      {
+        "round": 0,
+        "domain": "Drishti_GS",
+        "within_domain_start": 0,
+        "first_visit": 193,
+        "count": 64
+      },
+      {
+        "round": 1,
+        "domain": "ORIGA",
+        "within_domain_start": 64,
+        "first_visit": 257,
+        "count": 64
+      },
+      {
+        "round": 1,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 64,
+        "first_visit": 321,
+        "count": 64
+      },
+      {
+        "round": 1,
+        "domain": "Drishti_GS",
+        "within_domain_start": 64,
+        "first_visit": 385,
+        "count": 37
+      },
+      {
+        "round": 1,
+        "domain": "REFUGE",
+        "within_domain_start": 64,
+        "first_visit": 422,
+        "count": 64
+      },
+      {
+        "round": 2,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 128,
+        "first_visit": 486,
+        "count": 64
+      },
+      {
+        "round": 2,
+        "domain": "REFUGE",
+        "within_domain_start": 128,
+        "first_visit": 550,
+        "count": 64
+      },
+      {
+        "round": 2,
+        "domain": "ORIGA",
+        "within_domain_start": 128,
+        "first_visit": 614,
+        "count": 64
+      },
+      {
+        "round": 3,
+        "domain": "REFUGE",
+        "within_domain_start": 192,
+        "first_visit": 678,
+        "count": 64
+      },
+      {
+        "round": 3,
+        "domain": "ORIGA",
+        "within_domain_start": 192,
+        "first_visit": 742,
+        "count": 64
+      },
+      {
+        "round": 3,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 192,
+        "first_visit": 806,
+        "count": 64
+      },
+      {
+        "round": 4,
+        "domain": "REFUGE",
+        "within_domain_start": 256,
+        "first_visit": 870,
+        "count": 64
+      },
+      {
+        "round": 4,
+        "domain": "ORIGA",
+        "within_domain_start": 256,
+        "first_visit": 934,
+        "count": 64
+      },
+      {
+        "round": 4,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 256,
+        "first_visit": 998,
+        "count": 64
+      },
+      {
+        "round": 5,
+        "domain": "ORIGA",
+        "within_domain_start": 320,
+        "first_visit": 1062,
+        "count": 64
+      },
+      {
+        "round": 5,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 320,
+        "first_visit": 1126,
+        "count": 64
+      },
+      {
+        "round": 5,
+        "domain": "REFUGE",
+        "within_domain_start": 320,
+        "first_visit": 1190,
+        "count": 64
+      },
+      {
+        "round": 6,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 384,
+        "first_visit": 1254,
+        "count": 64
+      },
+      {
+        "round": 6,
+        "domain": "REFUGE",
+        "within_domain_start": 384,
+        "first_visit": 1318,
+        "count": 16
+      },
+      {
+        "round": 6,
+        "domain": "ORIGA",
+        "within_domain_start": 384,
+        "first_visit": 1334,
+        "count": 64
+      },
+      {
+        "round": 7,
+        "domain": "ORIGA",
+        "within_domain_start": 448,
+        "first_visit": 1398,
+        "count": 64
+      },
+      {
+        "round": 7,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 448,
+        "first_visit": 1462,
+        "count": 64
+      },
+      {
+        "round": 8,
+        "domain": "ORIGA",
+        "within_domain_start": 512,
+        "first_visit": 1526,
+        "count": 64
+      },
+      {
+        "round": 8,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 512,
+        "first_visit": 1590,
+        "count": 64
+      },
+      {
+        "round": 9,
+        "domain": "ORIGA",
+        "within_domain_start": 576,
+        "first_visit": 1654,
+        "count": 64
+      },
+      {
+        "round": 9,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 576,
+        "first_visit": 1718,
+        "count": 64
+      },
+      {
+        "round": 10,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 640,
+        "first_visit": 1782,
+        "count": 64
+      },
+      {
+        "round": 10,
+        "domain": "ORIGA",
+        "within_domain_start": 640,
+        "first_visit": 1846,
+        "count": 10
+      },
+      {
+        "round": 11,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 704,
+        "first_visit": 1856,
+        "count": 64
+      },
+      {
+        "round": 12,
+        "domain": "REFUGE_Valid",
+        "within_domain_start": 768,
+        "first_visit": 1920,
+        "count": 32
+      }
+    ],
+    "contiguous_domain_segments": [
+      {
+        "domain": "REFUGE",
+        "first_visit": 1,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 65,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 129,
+        "count": 64
+      },
+      {
+        "domain": "Drishti_GS",
+        "first_visit": 193,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 257,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 321,
+        "count": 64
+      },
+      {
+        "domain": "Drishti_GS",
+        "first_visit": 385,
+        "count": 37
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 422,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 486,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 550,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 614,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 678,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 742,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 806,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 870,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 934,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 998,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 1062,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1126,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 1190,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1254,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE",
+        "first_visit": 1318,
+        "count": 16
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 1334,
+        "count": 128
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1462,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 1526,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1590,
+        "count": 64
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 1654,
+        "count": 64
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1718,
+        "count": 128
+      },
+      {
+        "domain": "ORIGA",
+        "first_visit": 1846,
+        "count": 10
+      },
+      {
+        "domain": "REFUGE_Valid",
+        "first_visit": 1856,
+        "count": 96
+      }
+    ],
+    "primary_streams_unchanged": true,
+    "raw_image_replay": false
+  },
+  "allocation_examples": {
+    "A": {
+      "1": {
+        "rule": "job_index % workers",
+        "assignments": [
+          {
+            "job_id": "o0a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a3",
+            "worker": 0
+          }
+        ]
+      },
+      "2": {
+        "rule": "job_index % workers",
+        "assignments": [
+          {
+            "job_id": "o0a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o0a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a3",
+            "worker": 1
+          },
+          {
+            "job_id": "o1a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o1a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a3",
+            "worker": 1
+          },
+          {
+            "job_id": "o4a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o4a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a3",
+            "worker": 1
+          }
+        ]
+      },
+      "3": {
+        "rule": "job_index % workers",
+        "assignments": [
+          {
+            "job_id": "o0a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o0a2",
+            "worker": 2
+          },
+          {
+            "job_id": "o0a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a0",
+            "worker": 1
+          },
+          {
+            "job_id": "o1a1",
+            "worker": 2
+          },
+          {
+            "job_id": "o1a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a3",
+            "worker": 1
+          },
+          {
+            "job_id": "o4a0",
+            "worker": 2
+          },
+          {
+            "job_id": "o4a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a2",
+            "worker": 1
+          },
+          {
+            "job_id": "o4a3",
+            "worker": 2
+          }
+        ]
+      }
+    },
+    "B_NEW": {
+      "1": {
+        "rule": "job_index % workers",
+        "assignments": [
+          {
+            "job_id": "o2a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a3",
+            "worker": 0
+          }
+        ]
+      },
+      "2": {
+        "rule": "job_index % workers",
+        "assignments": [
+          {
+            "job_id": "o2a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o2a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a3",
+            "worker": 1
+          },
+          {
+            "job_id": "o3a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o3a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a3",
+            "worker": 1
+          }
+        ]
+      },
+      "3": {
+        "rule": "job_index % workers",
+        "assignments": [
+          {
+            "job_id": "o2a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o2a2",
+            "worker": 2
+          },
+          {
+            "job_id": "o2a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a0",
+            "worker": 1
+          },
+          {
+            "job_id": "o3a1",
+            "worker": 2
+          },
+          {
+            "job_id": "o3a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a3",
+            "worker": 1
+          }
+        ]
+      }
+    },
+    "AB": {
+      "1": {
+        "rule": "job_index % workers",
+        "assignments": [
+          {
+            "job_id": "o0a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a3",
+            "worker": 0
+          }
+        ]
+      },
+      "2": {
+        "rule": "job_index % workers",
+        "assignments": [
+          {
+            "job_id": "o0a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o0a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a3",
+            "worker": 1
+          },
+          {
+            "job_id": "o1a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o1a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a3",
+            "worker": 1
+          },
+          {
+            "job_id": "o2a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o2a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a3",
+            "worker": 1
+          },
+          {
+            "job_id": "o3a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o3a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a3",
+            "worker": 1
+          },
+          {
+            "job_id": "o4a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o4a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a3",
+            "worker": 1
+          }
+        ]
+      },
+      "3": {
+        "rule": "job_index % workers",
+        "assignments": [
+          {
+            "job_id": "o0a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o0a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o0a2",
+            "worker": 2
+          },
+          {
+            "job_id": "o0a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a0",
+            "worker": 1
+          },
+          {
+            "job_id": "o1a1",
+            "worker": 2
+          },
+          {
+            "job_id": "o1a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o1a3",
+            "worker": 1
+          },
+          {
+            "job_id": "o2a0",
+            "worker": 2
+          },
+          {
+            "job_id": "o2a1",
+            "worker": 0
+          },
+          {
+            "job_id": "o2a2",
+            "worker": 1
+          },
+          {
+            "job_id": "o2a3",
+            "worker": 2
+          },
+          {
+            "job_id": "o3a0",
+            "worker": 0
+          },
+          {
+            "job_id": "o3a1",
+            "worker": 1
+          },
+          {
+            "job_id": "o3a2",
+            "worker": 2
+          },
+          {
+            "job_id": "o3a3",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a0",
+            "worker": 1
+          },
+          {
+            "job_id": "o4a1",
+            "worker": 2
+          },
+          {
+            "job_id": "o4a2",
+            "worker": 0
+          },
+          {
+            "job_id": "o4a3",
+            "worker": 1
+          }
+        ]
+      }
+    }
+  },
+  "proposed_caps": {
+    "trajectory_seconds": 21600,
+    "wall_seconds": 86400,
+    "active_seconds": 172800,
+    "bytes": 8589934592
+  },
+  "approved_caps": null,
+  "devices": null,
+  "smoke_proposal": {
+    "recipe": "R6_ALL_ARMS4_OLD_C4_V1",
+    "network_forwards": 160,
+    "loss_backward_calls": 20,
+    "adam_calls": 20,
+    "jacobian_vjp_calls": 0,
+    "seed": 20260907,
+    "pixel_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "execution_started": false,
+  "external_review": "NOT_RUN",
+  "R6A": "NOT_RUN",
+  "R6B": "NOT_RUN"
+}

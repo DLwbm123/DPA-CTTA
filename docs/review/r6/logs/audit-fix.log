@@ -1,0 +1,33 @@
+test_all_arms_ledger_corruptions_and_metrics (test_r6_analysis.AnalysisTests.test_all_arms_ledger_corruptions_and_metrics) ... ok
+test_foreign_marker_run_scope_never_invalidate_history (test_r6_analysis.AnalysisTests.test_foreign_marker_run_scope_never_invalidate_history) ... ok
+test_full_A_then_B_reuse_original_bindings_and_invalidated_corruption (test_r6_analysis.AnalysisTests.test_full_A_then_B_reuse_original_bindings_and_invalidated_corruption) ... ok
+test_gate_equal_boundaries_and_each_independent_failure (test_r6_analysis.AnalysisTests.test_gate_equal_boundaries_and_each_independent_failure) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 22.385s
+
+OK
+{
+  "tests": 4,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 22.400047292001545,
+  "procedural_B1_physical": {
+    "network_forwards": 0,
+    "loss_backward_calls": 0,
+    "adam_calls": 0,
+    "jacobian_vjp_calls": 0
+  },
+  "physical_counter_scope": "all R6 and R5 model tests; B1-derived paths only if inherited regressions requested",
+  "python": "3.12.9",
+  "torch": "2.6.0",
+  "cuda_initialized": false,
+  "real_target_RGB_reads": 0,
+  "real_target_mask_reads": 0,
+  "registered_checkpoint_reads": 0,
+  "procedural_IO_fixtures": false,
+  "source_data_reads": 0,
+  "inputs": "procedural CPU tensors; random model weights",
+  "exit_code": 0
+}

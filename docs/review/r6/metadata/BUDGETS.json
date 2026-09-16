@@ -1,0 +1,53 @@
+{
+  "formal": {
+    "A": {
+      "jobs": 12,
+      "records": 23412,
+      "network_forwards": 187296,
+      "loss_backward_calls": 23412,
+      "adam_calls": 23412,
+      "jacobian_vjp_calls": 0
+    },
+    "B_NEW": {
+      "jobs": 8,
+      "records": 15608,
+      "network_forwards": 124864,
+      "loss_backward_calls": 15608,
+      "adam_calls": 15608,
+      "jacobian_vjp_calls": 0
+    },
+    "AB": {
+      "jobs": 20,
+      "records": 39020,
+      "network_forwards": 312160,
+      "loss_backward_calls": 39020,
+      "adam_calls": 39020,
+      "jacobian_vjp_calls": 0
+    }
+  },
+  "per_device_per_stage_smoke": {
+    "recipe": "R6_ALL_ARMS4_OLD_C4_V1",
+    "network_forwards": 160,
+    "loss_backward_calls": 20,
+    "adam_calls": 20,
+    "jacobian_vjp_calls": 0,
+    "seed": 20260907,
+    "pixel_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "proposed_caps": {
+    "trajectory_seconds": 21600,
+    "wall_seconds": 86400,
+    "active_seconds": 172800,
+    "bytes": 8589934592
+  },
+  "devices": null,
+  "approved_caps": null,
+  "execution_started": false
+}
