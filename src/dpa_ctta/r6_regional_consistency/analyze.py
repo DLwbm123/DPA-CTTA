@@ -93,6 +93,7 @@ def join(traces,evaluations,ordered,job,identity):
             for m,p in zip(ms,metrics['pre']):
                 validate_metric(m)
                 if any(m[k]!=p[k] for k in ('gt_pixels','total_pixels','gt_empty','gt_full')) or m['total_pixels']!=262144:raise ValueError('GT identity')
+        if any(m['pred_pixels']!=c['n_fg'] for m,c in zip(metrics['q'],t['trace']['channels'])):raise ValueError('actual q partition versus evaluator foreground')
         for key in ('pipeline_seconds','evaluator_seconds'):
             if type(e['evaluation'][key]) not in (int,float) or e['evaluation'][key]<0:raise ValueError('evaluation time')
         result.append(dict(**t,metrics=metrics,evaluator_seconds=e['evaluation']['evaluator_seconds'],pipeline_seconds=e['evaluation']['pipeline_seconds']))

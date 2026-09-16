@@ -16,11 +16,11 @@ def fixture_rows(arm='C',n=1951):
         cs=[]
         for c,ch in enumerate(('OD','OC')):
             seed=int.from_bytes(hashlib.sha256(f'R6_WEIGHT_PERM_V1|20260907|{i}|{c}'.encode()).digest()[:8],'big')%(2**63)
-            cs.append(dict(channel=ch,n_fg=N//2,n_bg=N//2,rho=1.,rho_clipped=False,w_fg=1.,w_bg=1.,fallback=None,applied_w_fg=1.,applied_w_bg=1.,mean_weight=1.,S0=0.,Sw=0.,Sperm=0.,a=1.,b=1.,seed=seed,bce_sum=N,bce_fg_sum=N/2,bce_bg_sum=N/2,weighted_bce_sum=N,shuffled_bce_sum=N,residual_fg_sse=0.,residual_bg_sse=0.,weighted_fg_sse=0.,weighted_bg_sse=0.,residual_weighted_dot=0.,residual_shuffled_dot=0.,weight_residual_dot=0.,weight_squared_sum=N,permutation_histogram_preserved=True,permutation_changed_positions=0,base_weight_sha256='0'*64,shuffled_weight_sha256='0'*64,expected_logit_gradient_l2=0.,actual_logit_gradient_l2=0.))
-        trace=dict(arm=arm,visit=i,counts=PHYSICAL.copy(),cumulative={k:v*i for k,v in PHYSICAL.items()},adam_step=i,channels=cs,actual_loss=1.,bn_gradient_l2=0.,adam_affine_displacement_l2=0.,source_unchanged=True,transaction_complete=True,host_seconds=0.)
+            cs.append(dict(channel=ch,n_fg=N//2,n_bg=N//2,rho=1.,rho_clipped=False,w_fg=1.,w_bg=1.,fallback=None,applied_w_fg=1.,applied_w_bg=1.,mean_weight=1.,S0=0.,Sw=0.,Sperm=0.,a=1.,b=1.,seed=seed,bce_sum=N/2,bce_fg_sum=N/4,bce_bg_sum=N/4,weighted_bce_sum=N/2,shuffled_bce_sum=N/2,residual_fg_sse=0.,residual_bg_sse=0.,weighted_fg_sse=0.,weighted_bg_sse=0.,residual_weighted_dot=0.,residual_shuffled_dot=0.,weight_residual_dot=0.,weight_squared_sum=N,permutation_histogram_preserved=True,permutation_changed_positions=0,base_weight_sha256='0'*64,shuffled_weight_sha256='0'*64,expected_logit_gradient_l2=0.,actual_logit_gradient_l2=0.))
+        trace=dict(arm=arm,visit=i,counts=PHYSICAL.copy(),cumulative={k:v*i for k,v in PHYSICAL.items()},adam_step=i,channels=cs,actual_loss=.5,bn_gradient_l2=0.,adam_affine_displacement_l2=0.,source_unchanged=True,transaction_complete=True,host_seconds=0.)
         ident=dict(visit=i,**entry);ts.append(dict(**ident,trace=trace))
         pre=[metric(100,100,90,channel=c) for c in ('OD','OC')];post=[metric(100,100,91 if arm=='R_BAL' else 90,channel=c) for c in ('OD','OC')]
-        es.append(dict(**ident,evaluation=dict(transaction_before_GT=True,metrics=dict(pre=pre,q=copy.deepcopy(pre),post=post),evaluator_seconds=0.,pipeline_seconds=0.)))
+        es.append(dict(**ident,evaluation=dict(transaction_before_GT=True,metrics=dict(pre=pre,q=[metric(N//2,100,90,channel=c) for c in ('OD','OC')],post=post),evaluator_seconds=0.,pipeline_seconds=0.)))
     return ts,es,ordered
 
 
@@ -49,7 +49,7 @@ class AnalysisTests(unittest.TestCase):
             ts,es,ordered=fixture_rows(arm,8);identity={'fixture':True};job=dict(arm=arm,records=8)
             for r in ts+es:r['binding']=identity
             self.assertEqual(len(analyze.join(ts,es,ordered,job,identity)),8)
-            for change in ('duplicate','missing','order','weight','cap','a','b','seed','S0','step','count','causal','dice','pre','q','post','GT'):
+            for change in ('duplicate','missing','order','weight','cap','a','b','seed','S0','step','count','causal','dice','pre','q','post','GT','q_partition'):
                 t,e=copy.deepcopy(ts),copy.deepcopy(es);z=t[1]['trace'];c=z['channels'][0]
                 if change=='duplicate':t[1]=t[0]
                 elif change=='missing':t.pop()
@@ -61,6 +61,7 @@ class AnalysisTests(unittest.TestCase):
                 elif change=='count':z['counts']['network_forwards']+=1
                 elif change=='causal':e[1]['evaluation']['transaction_before_GT']=False
                 elif change=='dice':e[1]['evaluation']['metrics']['post'][0]['dice']+=.1
+                elif change=='q_partition':e[1]['evaluation']['metrics']['q'][0]=metric(100,100,90)
                 elif change=='GT':e[1]['evaluation']['metrics']['post'][0]=metric(100,99,90)
                 else:e[1]['evaluation']['metrics'][change]=[metric(262144,100,99,channel=ch) for ch in ('OD','OC')]
                 with self.subTest(arm=arm,change=change),self.assertRaises(ValueError):analyze.join(t,e,ordered,job,identity)
