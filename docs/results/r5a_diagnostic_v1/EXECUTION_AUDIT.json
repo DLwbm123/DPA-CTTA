@@ -1,0 +1,633 @@
+{
+  "implementation_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+  "binding": {
+    "run_id": "2516876ea26641fe885e18aba7cb0220",
+    "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+    "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+    "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+    "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+    "scope": "A"
+  },
+  "verified_at_utc": "2026-09-16T13:31:46.345290+00:00",
+  "launcher_exit": {
+    "exit_code": 0,
+    "started_unix": 1789536019.7420185,
+    "ended_unix": 1789537042.0621285,
+    "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+    "scope": "A",
+    "R5B": "NOT_RUN"
+  },
+  "current_result": {
+    "status": "R5A_DIAGNOSTIC_COMPLETE_NO_ADVANCE",
+    "valid": true,
+    "binding": {
+      "run_id": "2516876ea26641fe885e18aba7cb0220",
+      "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+      "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+      "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+      "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+      "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+      "scope": "A"
+    },
+    "result_directory": "results/fa0df2a1eafd4371be700c092d5091f3"
+  },
+  "process_matrix": {
+    "binding": {
+      "run_id": "2516876ea26641fe885e18aba7cb0220",
+      "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+      "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+      "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+      "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+      "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+      "scope": "A"
+    },
+    "status": "COMPUTE_COMPLETE",
+    "processes": [
+      {
+        "phase": "smoke",
+        "worker": 0,
+        "key": "device0",
+        "binding": {
+          "run_id": "2516876ea26641fe885e18aba7cb0220",
+          "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+          "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+          "scope": "A",
+          "worker": 0
+        },
+        "started_seconds": 0.0061344250570982695,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 10.449271491030231
+      },
+      {
+        "phase": "smoke",
+        "worker": 1,
+        "key": "device1",
+        "binding": {
+          "run_id": "2516876ea26641fe885e18aba7cb0220",
+          "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+          "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+          "scope": "A",
+          "worker": 1
+        },
+        "started_seconds": 0.0105156060308218,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 10.242481194902211
+      },
+      {
+        "phase": "smoke",
+        "worker": 2,
+        "key": "device2",
+        "binding": {
+          "run_id": "2516876ea26641fe885e18aba7cb0220",
+          "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+          "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+          "scope": "A",
+          "worker": 2
+        },
+        "started_seconds": 0.13952012197114527,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 10.242599241901189
+      },
+      {
+        "phase": "formal",
+        "worker": 0,
+        "key": "o0a0",
+        "binding": {
+          "run_id": "2516876ea26641fe885e18aba7cb0220",
+          "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+          "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+          "scope": "A",
+          "worker": 0,
+          "job_id": "o0a0",
+          "arm": "C",
+          "order": 0
+        },
+        "started_seconds": 10.455105241853744,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 1014.9645734180231
+      },
+      {
+        "phase": "formal",
+        "worker": 1,
+        "key": "o1a0",
+        "binding": {
+          "run_id": "2516876ea26641fe885e18aba7cb0220",
+          "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+          "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+          "scope": "A",
+          "worker": 1,
+          "job_id": "o1a0",
+          "arm": "C",
+          "order": 1
+        },
+        "started_seconds": 10.498143767006695,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 887.1295487808529
+      },
+      {
+        "phase": "formal",
+        "worker": 2,
+        "key": "o4a0",
+        "binding": {
+          "run_id": "2516876ea26641fe885e18aba7cb0220",
+          "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+          "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+          "scope": "A",
+          "worker": 2,
+          "job_id": "o4a0",
+          "arm": "C",
+          "order": 4
+        },
+        "started_seconds": 10.503229673951864,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 893.0180953410454
+      }
+    ],
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "active_seconds": 2794.6887165613007,
+    "wall_seconds": 1014.9707045028917,
+    "unstarted_jobs": []
+  },
+  "receipt": {
+    "binding": {
+      "run_id": "2516876ea26641fe885e18aba7cb0220",
+      "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+      "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+      "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+      "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+      "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+      "scope": "A"
+    },
+    "devices": [
+      {
+        "index": 5,
+        "model": "NVIDIA GeForce RTX 3090",
+        "free_MiB": 24124
+      },
+      {
+        "index": 6,
+        "model": "NVIDIA GeForce RTX 3090",
+        "free_MiB": 24124
+      },
+      {
+        "index": 7,
+        "model": "NVIDIA GeForce RTX 3090",
+        "free_MiB": 24124
+      }
+    ],
+    "jobs": [
+      {
+        "job_id": "o0a0",
+        "arm": "C",
+        "order": 0,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_diagnostic_stream"
+      },
+      {
+        "job_id": "o1a0",
+        "arm": "C",
+        "order": 1,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_diagnostic_stream"
+      },
+      {
+        "job_id": "o4a0",
+        "arm": "C",
+        "order": 4,
+        "records": 1951,
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_upper": 0,
+        "reused_from_A": false,
+        "selection_exposure": "A_diagnostic_stream"
+      }
+    ],
+    "schedule": {
+      "rule": "job_index % workers",
+      "assignments": [
+        {
+          "job_id": "o0a0",
+          "worker": 0
+        },
+        {
+          "job_id": "o1a0",
+          "worker": 1
+        },
+        {
+          "job_id": "o4a0",
+          "worker": 2
+        }
+      ]
+    },
+    "caps": {
+      "trajectory_seconds": 21600,
+      "wall_seconds": 28800,
+      "active_seconds": 86400,
+      "bytes": 2147483648
+    },
+    "smoke_recipe": {
+      "recipe": "PROCEDURAL_OLD_C4_DIAG_C4_V1",
+      "network_forwards": 64,
+      "loss_backward_calls": 8,
+      "adam_calls": 8,
+      "jacobian_vjp_calls": 0,
+      "seed": 20260907,
+      "pixel_indices": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "rtol": 0.0001,
+      "atol": 1e-05,
+      "tolerance_source": "src/dpa_ctta/source_pilot_release.py:TOLERANCE"
+    },
+    "calibration": null
+  },
+  "trajectory_completion": {
+    "o0a0": {
+      "binding": {
+        "run_id": "2516876ea26641fe885e18aba7cb0220",
+        "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+        "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+        "scope": "A",
+        "worker": 0,
+        "job_id": "o0a0",
+        "arm": "C",
+        "order": 0
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "totals": {
+        "n_visits": 1951,
+        "n_candidate_adam": 1951,
+        "n_committed": 1951,
+        "n_rejected": 0,
+        "n_forced": 32,
+        "n_eligible": 1919,
+        "parameter_restorations": 0
+      },
+      "seconds": 1001.4771841710899
+    },
+    "o1a0": {
+      "binding": {
+        "run_id": "2516876ea26641fe885e18aba7cb0220",
+        "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+        "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+        "scope": "A",
+        "worker": 1,
+        "job_id": "o1a0",
+        "arm": "C",
+        "order": 1
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "totals": {
+        "n_visits": 1951,
+        "n_candidate_adam": 1951,
+        "n_committed": 1951,
+        "n_rejected": 0,
+        "n_forced": 32,
+        "n_eligible": 1919,
+        "parameter_restorations": 0
+      },
+      "seconds": 873.7951011790428
+    },
+    "o4a0": {
+      "binding": {
+        "run_id": "2516876ea26641fe885e18aba7cb0220",
+        "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+        "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+        "scope": "A",
+        "worker": 2,
+        "job_id": "o4a0",
+        "arm": "C",
+        "order": 4
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "totals": {
+        "n_visits": 1951,
+        "n_candidate_adam": 1951,
+        "n_committed": 1951,
+        "n_rejected": 0,
+        "n_forced": 32,
+        "n_eligible": 1919,
+        "parameter_restorations": 0
+      },
+      "seconds": 879.7051659410354
+    }
+  },
+  "smoke": {
+    "0": {
+      "binding": {
+        "run_id": "2516876ea26641fe885e18aba7cb0220",
+        "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+        "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+        "scope": "A",
+        "worker": 0
+      },
+      "status": "MECHANICAL_SMOKE_COMPLETE",
+      "C_parity_valid": true,
+      "recipe": {
+        "recipe": "PROCEDURAL_OLD_C4_DIAG_C4_V1",
+        "network_forwards": 64,
+        "loss_backward_calls": 8,
+        "adam_calls": 8,
+        "jacobian_vjp_calls": 0,
+        "seed": 20260907,
+        "pixel_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "rtol": 0.0001,
+        "atol": 1e-05,
+        "tolerance_source": "src/dpa_ctta/source_pilot_release.py:TOLERANCE"
+      },
+      "physical": {
+        "network_forwards": 64,
+        "loss_backward_calls": 8,
+        "adam_calls": 8,
+        "jacobian_vjp_calls": 0
+      },
+      "evidence": {
+        "OLD": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "C": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": true
+        }
+      },
+      "backend": {
+        "deterministic_algorithms": false,
+        "warn_only": false,
+        "cublas_workspace_config": ":4096:8"
+      }
+    },
+    "1": {
+      "binding": {
+        "run_id": "2516876ea26641fe885e18aba7cb0220",
+        "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+        "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+        "scope": "A",
+        "worker": 1
+      },
+      "status": "MECHANICAL_SMOKE_COMPLETE",
+      "C_parity_valid": true,
+      "recipe": {
+        "recipe": "PROCEDURAL_OLD_C4_DIAG_C4_V1",
+        "network_forwards": 64,
+        "loss_backward_calls": 8,
+        "adam_calls": 8,
+        "jacobian_vjp_calls": 0,
+        "seed": 20260907,
+        "pixel_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "rtol": 0.0001,
+        "atol": 1e-05,
+        "tolerance_source": "src/dpa_ctta/source_pilot_release.py:TOLERANCE"
+      },
+      "physical": {
+        "network_forwards": 64,
+        "loss_backward_calls": 8,
+        "adam_calls": 8,
+        "jacobian_vjp_calls": 0
+      },
+      "evidence": {
+        "OLD": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "C": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": true
+        }
+      },
+      "backend": {
+        "deterministic_algorithms": false,
+        "warn_only": false,
+        "cublas_workspace_config": ":4096:8"
+      }
+    },
+    "2": {
+      "binding": {
+        "run_id": "2516876ea26641fe885e18aba7cb0220",
+        "code_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+        "science_sha256": "89fa1492d196b232d16fe587d30effce9b70ab4a4a087d9d711b95f877f2b8f5",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "c_fingerprint": "71c8be1e77e1fe45eb9d9c84ba2c46edbc3936720117399eb342de4a89ccb829",
+        "scope": "A",
+        "worker": 2
+      },
+      "status": "MECHANICAL_SMOKE_COMPLETE",
+      "C_parity_valid": true,
+      "recipe": {
+        "recipe": "PROCEDURAL_OLD_C4_DIAG_C4_V1",
+        "network_forwards": 64,
+        "loss_backward_calls": 8,
+        "adam_calls": 8,
+        "jacobian_vjp_calls": 0,
+        "seed": 20260907,
+        "pixel_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "rtol": 0.0001,
+        "atol": 1e-05,
+        "tolerance_source": "src/dpa_ctta/source_pilot_release.py:TOLERANCE"
+      },
+      "physical": {
+        "network_forwards": 64,
+        "loss_backward_calls": 8,
+        "adam_calls": 8,
+        "jacobian_vjp_calls": 0
+      },
+      "evidence": {
+        "OLD": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "C": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": true
+        }
+      },
+      "backend": {
+        "deterministic_algorithms": false,
+        "warn_only": false,
+        "cublas_workspace_config": ":4096:8"
+      }
+    }
+  },
+  "ledger_counts": {
+    "o0a0": {
+      "unlabeled.jsonl": 1951,
+      "evaluation.jsonl": 1951
+    },
+    "o1a0": {
+      "unlabeled.jsonl": 1951,
+      "evaluation.jsonl": 1951
+    },
+    "o4a0": {
+      "unlabeled.jsonl": 1951,
+      "evaluation.jsonl": 1951
+    }
+  },
+  "failures": [],
+  "formal_physical": {
+    "network_forwards": 46824,
+    "loss_backward_calls": 5853,
+    "adam_calls": 5853,
+    "jacobian_vjp_calls": 0
+  },
+  "smoke_physical": {
+    "network_forwards": 192,
+    "loss_backward_calls": 24,
+    "adam_calls": 24,
+    "jacobian_vjp_calls": 0
+  },
+  "total_physical": {
+    "network_forwards": 47016,
+    "loss_backward_calls": 5877,
+    "adam_calls": 5877,
+    "jacobian_vjp_calls": 0
+  },
+  "failed_prefix_compute": 0,
+  "CUDA_initialized_for_CPU_analyzer": false,
+  "CPU_verification": "Original runtime CPU recompute finished successfully before launcher exit; authoritative current_result.valid=true. No repeat pixel inference or additional recomputation in this closeout.",
+  "current_checkout_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+  "current_checkout_clean": true,
+  "active_workers_after_completion": 0,
+  "usage_note": "usage.json may retain the last pre-poll active_workers value; terminal process matrix and launcher exit are authoritative.",
+  "R5B": "NOT_RUN",
+  "next_execution_authorized": false
+}
