@@ -1,5 +1,5 @@
 {
-  "final_implementation_sha": "d875f20c11cc7e617c9f39dba04ed46381aba450",
+  "final_implementation_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
   "records": [
     {
       "file": "audit-fix.json",
@@ -263,5 +263,16 @@
   ],
   "raw_logs_retained_privately": true,
   "redaction": "Only checkout/interpreter absolute path prefixes replaced; complete stdout/stderr retained. No test event or failure removed.",
-  "cost_notes": "Repeated suites overlap; do not count runs as independent coverage. B1 hook counters cover a subset. Inherited VJP total unknown. Interrupted candidate01 prefix has no final cost total."
+  "cost_notes": "Repeated suites overlap; do not count runs as independent coverage. B1 hook counters cover a subset. Inherited VJP total unknown. Interrupted candidate01 prefix has no final cost total.",
+  "historical_final_implementation_sha": "d875f20c11cc7e617c9f39dba04ed46381aba450",
+  "originals_redelivery": {
+    "implementation_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "summary": "../ORIGINALS_ACCEPTANCE.json",
+    "directory": "originals-redelivery",
+    "suite_each_environment": 166,
+    "reference_fresh_rerun_each_environment": 8,
+    "new_comparison_methods_each_environment": 3,
+    "common_input_cases_each_environment": 240,
+    "old_records_unchanged": true
+  }
 }

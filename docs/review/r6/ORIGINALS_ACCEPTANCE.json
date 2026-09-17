@@ -1,0 +1,243 @@
+{
+  "status": "PASSED_BOTH_ENVIRONMENTS",
+  "implementation_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+  "previous_implementation_sha": "d875f20c11cc7e617c9f39dba04ed46381aba450",
+  "scientific_formula_changes": false,
+  "production_python_changes": false,
+  "science_configuration_added": true,
+  "original_config_byte_identical": true,
+  "original_historical_tests_are_not_new_results": true,
+  "new_checks": {
+    "local": {
+      "suite": {
+        "tests": 166,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 432.3824832921382,
+        "procedural_B1_physical": {
+          "network_forwards": 4514,
+          "loss_backward_calls": 561,
+          "adam_calls": 551,
+          "jacobian_vjp_calls": 0
+        },
+        "physical_counter_scope": "all R6 and R5 model tests; B1-derived paths only if inherited regressions requested",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "cuda_initialized": false,
+        "real_target_RGB_reads": 0,
+        "real_target_mask_reads": 0,
+        "registered_checkpoint_reads": 0,
+        "procedural_IO_fixtures": true,
+        "source_data_reads": 0,
+        "inputs": "procedural CPU tensors; random model weights",
+        "exit_code": 0
+      },
+      "process_exit": {
+        "exit_code": 0,
+        "wall_seconds": 433.2195909169968,
+        "sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "checkout_clean": true
+      },
+      "original_checks": {
+        "implementation_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "scope": "NEW CPU checks; archived historical math logs untouched; does not replace 166-test implementation suite",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "seconds": 0.3188563329167664,
+        "original_reference_fresh_rerun": {
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "new_comparison": {
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "tolerances": {
+          "torch.float64": {
+            "rtol": 1e-10,
+            "atol": 1e-14
+          },
+          "torch.float32": {
+            "rtol": 1e-05,
+            "atol": 1e-12
+          }
+        },
+        "cuda_initialized": false,
+        "real_asset_reads": 0,
+        "model_forwards": 0,
+        "optimizer_calls": 0,
+        "autograd_calls_for_reference_comparison": 480,
+        "reference_autograd_calls": 8,
+        "exit_code": 0
+      },
+      "original_process_exit": {
+        "exit_code": 0,
+        "wall_seconds": 1.5013853751588613,
+        "sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "checkout_clean": true
+      },
+      "common_input_cases": 240,
+      "max_errors_by_dtype_arm": {
+        "torch.float32:C": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float32:R_BAL": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float32:R_SCALE": {
+          "max_loss_absolute_error": 1.7881393432617188e-07,
+          "max_gradient_absolute_error": 4.656612873077393e-10
+        },
+        "torch.float32:R_SHUFFLE": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float64:C": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float64:R_BAL": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float64:R_SCALE": {
+          "max_loss_absolute_error": 2.220446049250313e-16,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float64:R_SHUFFLE": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        }
+      }
+    },
+    "server": {
+      "suite": {
+        "tests": 166,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "seconds": 1417.3862011039164,
+        "procedural_B1_physical": {
+          "network_forwards": 4514,
+          "loss_backward_calls": 561,
+          "adam_calls": 551,
+          "jacobian_vjp_calls": 0
+        },
+        "physical_counter_scope": "all R6 and R5 model tests; B1-derived paths only if inherited regressions requested",
+        "python": "3.10.6",
+        "torch": "2.2.1+cu121",
+        "cuda_initialized": false,
+        "real_target_RGB_reads": 0,
+        "real_target_mask_reads": 0,
+        "registered_checkpoint_reads": 0,
+        "procedural_IO_fixtures": true,
+        "source_data_reads": 0,
+        "inputs": "procedural CPU tensors; random model weights",
+        "exit_code": 0
+      },
+      "process_exit": {
+        "exit_code": 0,
+        "wall_seconds": 1419.4325131329242,
+        "sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "checkout_clean": true,
+        "TMPDIR": "<PRIVATE_CPU_JOB>/tmp"
+      },
+      "original_checks": {
+        "implementation_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "scope": "NEW CPU checks; archived historical math logs untouched; does not replace 166-test implementation suite",
+        "python": "3.10.6",
+        "torch": "2.2.1+cu121",
+        "seconds": 0.8624620460905135,
+        "original_reference_fresh_rerun": {
+          "tests": 8,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "new_comparison": {
+          "tests": 3,
+          "failures": 0,
+          "errors": 0,
+          "skipped": 0
+        },
+        "tolerances": {
+          "torch.float64": {
+            "rtol": 1e-10,
+            "atol": 1e-14
+          },
+          "torch.float32": {
+            "rtol": 1e-05,
+            "atol": 1e-12
+          }
+        },
+        "cuda_initialized": false,
+        "real_asset_reads": 0,
+        "model_forwards": 0,
+        "optimizer_calls": 0,
+        "autograd_calls_for_reference_comparison": 480,
+        "reference_autograd_calls": 8,
+        "exit_code": 0
+      },
+      "original_process_exit": {
+        "exit_code": 0,
+        "wall_seconds": 2.5347129951696843,
+        "sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "checkout_clean": true,
+        "TMPDIR": "<PRIVATE_CPU_JOB>/tmp"
+      },
+      "common_input_cases": 240,
+      "max_errors_by_dtype_arm": {
+        "torch.float32:C": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float32:R_BAL": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float32:R_SCALE": {
+          "max_loss_absolute_error": 1.1920928955078125e-07,
+          "max_gradient_absolute_error": 4.656612873077393e-10
+        },
+        "torch.float32:R_SHUFFLE": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float64:C": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float64:R_BAL": {
+          "max_loss_absolute_error": 0.0,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float64:R_SCALE": {
+          "max_loss_absolute_error": 2.220446049250313e-16,
+          "max_gradient_absolute_error": 0.0
+        },
+        "torch.float64:R_SHUFFLE": {
+          "max_loss_absolute_error": 1.1102230246251565e-16,
+          "max_gradient_absolute_error": 1.734723475976807e-18
+        }
+      }
+    }
+  },
+  "failure_count": 0,
+  "error_count": 0,
+  "skip_count": 0,
+  "inherited_regression_VJP_total": null,
+  "cost_notes": "B1 hook counts cover only B1-derived paths. The suite jacobian_vjp_calls=0 field is not a measured total for inherited regressions. Common-input script has 480 autograd calls plus 8 in the freshly run reference tests; no models/Adam. Suite timings exclude process startup; process wall_seconds includes it. Do not combine repeated suites as independent coverage.",
+  "log_redaction": "Only absolute checkout/interpreter/job prefixes replaced; no deletion/truncation of errors or expected injected failure events.",
+  "CPU_storage": "Server TMPDIR explicitly on dedicated NAS job path; local TMPDIR dedicated to this task.",
+  "execution_started": false,
+  "external_review": "NOT_RUN",
+  "R6A": "NOT_RUN",
+  "R6B": "NOT_RUN"
+}

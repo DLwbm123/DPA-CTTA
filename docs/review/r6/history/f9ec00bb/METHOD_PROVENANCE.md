@@ -1,8 +1,6 @@
 # 方法来源与限制
 
-直接科学定义来自原始 STAGE_I_PROMPT.md、EXPERIMENT_PLAN.md 与本次补交且按MANIFEST核验的 R6_SCIENCE_PROPOSAL.json。原始数学参考仅用于公式及共同输入核对，不是生产host。原件历史8项与本次8项新执行、3个比较方法、166项两端完整实现回归分别记录；详见 ORIGINALS_REPORT.md、CORRESPONDENCE.md。
-
-本次源代码沿用d875f20，候选c94fff7补齐原始配置与独立核对脚本；不存在重新设计实验或按新结果选择公式。原proposal历史status保留，当前交付状态独立。
+直接科学定义来自随附 STAGE_I_PROMPT.md、EXPERIMENT_PLAN.md；预期原始 science JSON 尚缺失，见 BLOCKERS.md。实现不把已提供文本冒充该 JSON，不宣称外部参考八项检查已由本次执行验证。
 
 基线 e271098e2a12baa166fc7b77848af4a2300d9cc3；R5-A 历史执行 b4b71601a5bdf87bb3a7e5d3db352610adcdff74。已读基线 REPORT/PUBLIC_AGGREGATE 与审计修复材料：R5-A 两主序 G=-0.007689130379057169pp，NO_ADVANCE 保留；旧 C 路径即时 GT 选优量不作为新 loss 长期增益上界。B2 interval 的半径/投影改变 target 或残差，与 R6 整体 BCE 乘正权重不同，没有复用旧 B2 为本轮运行证据。
 

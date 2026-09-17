@@ -1,28 +1,11 @@
-# CPU 覆盖与证据边界
+# 当前 R6 CPU 验收覆盖
 
-实现候选：d875f20c11cc7e617c9f39dba04ed46381aba450。每端完整入口 scripts/check_r6_cpu.py，R3_REGRESSION=1；R6 23 个 methods、R5 31 个、继承回归 112 个，共 166。测试数量只作清单，不替代性质覆盖。最终结果与实际成本以 logs/final-local.json、logs/final-server.json 为准。
+本次候选 `c94fff7c05cec38d541c441b62a9381ee46ba076`：两端分别完整166/166，失败/错误/跳过0、退出码0；原参考8/8的新运行与3/3比较方法分别保存。共同输入240组、gate对照402组，容差沿用既有冻结值。完整结果与成本见 [ORIGINALS_ACCEPTANCE.json](ORIGINALS_ACCEPTANCE.json)，新日志位于 logs/originals-redelivery/。
 
-| 文件 / 检查 | 覆盖 |
-| --- | --- |
-| test_r6_loss（5 methods） | 空/满/1像素/稀少/半图分区、double 构造、正值/cap/mean、未裁剪质量均等及裁剪非50/50；全通道置乱/直方图/位置/seed/RNG/软q；统一状态 double/float 梯度及 detached scale；p=q零梯度与pos_weight反例；微小残差、非有限值、零能量分支、统一权重退化及生产无VJP |
-| test_r6_host（7 methods） | 旧C多步bitwise、实际六视图q/pre/post；每臂改GT/延迟/省略不影响state/RNG、禁止身份参数；读mask晚于所有提交；非有限参数/Adam硬失败不续跑；完整随机ResUNet旧C+四臂各4步；小模型独立目标参数/Adam/RNG比较；有Adam历史时零梯度仍调用并产生moments位移 |
-| test_r6_execution（7 methods） | OLD+C+BAL+SCALE+SHUFFLE 每角色第2访问 forward/backward前Adam/Adam后故障共15组合，live独立计数、原异常与首失败；A/B同160/20/20/0 smoke编排；12/8/20及轮转；默认disabled先于查询；SHA/science/data/stream/fingerprint/设备/阶段/recipe拒绝；中性入口 |
-| test_r6_analysis（4 methods） | 四臂完整标量字段及join；不可能像素/Dice/GT、重复/缺失/换序、weight/cap/scale/seed/S0/physical污染；A/B所有gate边界与单项失效；12完整A→8完整B复用原SHA，破坏A后A/B均INCOMPLETE；异阶段/错run_id/scope绝不invalidate |
-| host_scalar_probe.py | 程序化Toy当前host两访问×四臂的真实非均匀权重trace→独立标量join，64F/8B/8Adam/0VJP；与纯合成完整ledger互补，日志单列 |
-| 既有回归 | test_r5_rule / host / analysis / audit_fix；test_r4t_execution、test_r3_reference、test_r3、test_r3_execution、test_r1、test_r1_fixes、test_r2、test_r2_continuation，全部同一最终候选重新执行 |
+本轮补入科学配置后重新执行全部R6 23、R5 31、既有回归112项；没有拿旧d875f20日志替代。后续文档发布SHA未重新跑套件。两端均CUDA未初始化、真实RGB/mask/checkpoint/source读取0，服务器临时fixture位于专用NAS目录。原件及历史数学日志不改写。
 
-第一次 core01 的独立 double 参考把整数 count 相除，触发 PyTorch float32 中间值，误差约1.6e-8；生产 double 构造已正确。修正独立参考的 count dtype，保留预定 rtol/atol，没有更改生产公式来通过测试。r6-01 为当时21项通过；host02 为后加两项通过；它们不替代最终166项全套。
+既有各测试的性质覆盖和首失败/修正历史保持不变，完整历史说明见 [原覆盖文档](history/f9ec00bb/TEST_COVERAGE.md)。额外logs/host-scalar-probe.log对应旧438ff073候选，logs/final-host-scalar-probe.log对应d875f20；两者均未在c94fff7重跑，不改标为本次结果。完整套件中的host/标量/ledger检查已重新运行。
 
-EXPECTED_R6_INJECTED_FAILURE 为主动故障测试事件，不是实际套件失败；事件JSON保留在原CPU日志。unittest totals/failures/errors/skip是该次真实结果。B1物理统计只覆盖B1派生路径，不把其他继承方法的成本伪记为零，也不将不同重复套件相加成独立覆盖。
+新增 check_originals_cpu.py 验证原MANIFEST和config字节绑定、矩阵/预算/执行关闭、错误science摘要拒绝；在共同程序化z/q上对比原参考与生产loss、逐像素梯度、权重、能量、倍率、seed及RNG；gate阈值从原提案取值独立计算。原参考通过import加载，未执行会覆盖历史日志的main。
 
-GPU lazy init 被拒绝。完整套件中的旧IO回归仅放行现场新建临时目录和BytesIO程序化fixture，其余真实路径拒绝。新R6模型输入为程序化像素和随机初始化完整网络，没有读取已登记checkpoint。外部 R6_MATH_REFERENCE.py 与 math_history 未提供，不属于本次验收成绩；原始science缺失使阶段I整体仍BLOCKED。
-
-## 后续标量审计修正
-
-静态复核发现 q 评价的前景像素数没有与 loss n_fg 相互约束；audit-gap-before-fix.log 以可实现像素记录复现这一缺口。加入 q.pred_pixels == n_fg 检查，污染测试单独覆盖“指标本身合法但与分区矛盾”的情形；完整合成fixture的q前景计数也修正为实际声明的分区量。audit-fix 为4个分析器methods通过。
-
-旧候选438ff073b05b34d60d3aef4802bbcdc7c3fe1898的本地完整166项曾通过，归档为candidate01-final-local；旧候选服务器套件为节省无效重复成本被主动取消，只取消本任务专用CPU验证进程，退出-15，保留candidate01-final-server.log、candidate01-exit.json、candidate01-superseded.json。该前缀没有最终总计，物理成本未知，不假装通过或零成本。没有终止历史实验/他人任务，也没有自动retry任何真实轨迹。修订后最终候选d875f20c11cc7e617c9f39dba04ed46381aba450在两端重新运行完整166项；其最终日志才用于当前交付。
-
-## 成本计数范围
-
-完整runner的 procedural_B1_physical.forward/backward/Adam 来自 B1 的三个实际hook，仅是这些hook覆盖范围的实测数；不会覆盖所有继承方法。该字典的 jacobian_vjp_calls=0 是继承runner预置字段，**没有给全部继承回归安装VJP计数hook**，不能把它解释为完整166项的实测VJP总数。R6生产路径的0额外VJP由公式实现、禁止autograd.grad测试和其自己的每步配额单独限定；R3等继承方法的VJP总成本在此统一计数器中未知。完整套件的实测wall seconds与B1 hook计数、R6完整网络/额外probe的专用计数分开报告，不伪造全方法总成本。
+成本边界：完整suite的B1 forward/backward/Adam hook计数并非全方法总调用量；runner预置的jacobian_vjp_calls=0不是继承回归的实测VJP总计，该总计未知。新小张量比较每端480次autograd求导，原参考新运行8次，无模型前向/Adam。CPU程序化故障注入日志不代表真实实验失败，也不能当真实实验receipt。

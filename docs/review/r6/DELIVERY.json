@@ -1,17 +1,13 @@
 {
-  "status": "R6_STAGE_I_BLOCKED_MISSING_ORIGINAL_MATERIALS",
-  "implementation_sha": "d875f20c11cc7e617c9f39dba04ed46381aba450",
+  "status": "R6_IMPLEMENTATION_READY_FOR_REVIEW",
+  "implementation_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
   "base_publication_sha": "e271098e2a12baa166fc7b77848af4a2300d9cc3",
-  "publication_sha_location": "Final delivery message; separate evidence commit",
+  "publication_sha_location": "Final delivery message and Git commit containing this document; this evidence publication is not the tested candidate.",
   "branch": "experiment/r6-bounded-regional-consistency-v1",
   "expected_original_science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
-  "observed_original_science_sha256": null,
-  "science_bytes_verified": false,
-  "missing_materials": [
-    "R6_SCIENCE_PROPOSAL.json",
-    "R6_MATH_REFERENCE.py",
-    "math_history"
-  ],
+  "observed_original_science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+  "science_bytes_verified": true,
+  "missing_materials": [],
   "code_implemented": true,
   "metadata_status": "REGISTERED_METADATA_DRY_RUN",
   "metadata_matrices": {
@@ -43,7 +39,7 @@
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "seconds": 400.92389091593213,
+    "seconds": 432.3824832921382,
     "procedural_B1_physical": {
       "network_forwards": 4514,
       "loss_backward_calls": 561,
@@ -67,7 +63,7 @@
     "failures": 0,
     "errors": 0,
     "skipped": 0,
-    "seconds": 1151.5608685479965,
+    "seconds": 1417.3862011039164,
     "procedural_B1_physical": {
       "network_forwards": 4514,
       "loss_backward_calls": 561,
@@ -86,8 +82,24 @@
     "inputs": "procedural CPU tensors; random model weights",
     "exit_code": 0
   },
-  "CPU_storage_deviation": "Procedural temporary fixtures used inherited /tmp default; code and evidence on NAS. See IMPLEMENTATION_REPORT.",
+  "CPU_storage_deviation": "None in this redelivery CPU suite; dedicated server NAS TMPDIR. Prior /tmp deviation retained in history/f9ec00bb/IMPLEMENTATION_REPORT.md.",
   "superseded_CPU_prefix_accounting": "candidate01 server interrupted for code correction; incomplete physical/time total unknown; retained logs and exit -15",
   "inherited_regression_VJP_total": null,
-  "cost_scope_reference": "TEST_COVERAGE.md"
+  "cost_scope_reference": "TEST_COVERAGE.md",
+  "previous_implementation_sha": "d875f20c11cc7e617c9f39dba04ed46381aba450",
+  "previous_publication_sha": "f9ec00bb01b3ece6b5a6a3964ca7d888eb455484",
+  "science_config_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+  "science_config_byte_identical_to_original": true,
+  "original_math_reference_sha256": "cbf47ef84616c445e53bc52182ac6848e666b1810ff1dc3ccd712d09e2c93cb6",
+  "original_manifest_verified_entries": 11,
+  "archived_original_members": 12,
+  "scientific_differences": [],
+  "binding_record": "SCIENCE_DIGEST.json",
+  "binding_record_sha256": "2567fd7bb9caca8daa11237274faf421e25e3d20c6d8875eee5b809b21612965",
+  "command_visibility_deviation": "One short metadata helper used a direct python -c module name. Full CPU runners used neutral RUN_FILE wrappers; see PRESERVATION.md.",
+  "originals_acceptance": "ORIGINALS_ACCEPTANCE.json",
+  "originals_report": "ORIGINALS_REPORT.md",
+  "correspondence": "CORRESPONDENCE.md",
+  "historical_blocked_record": "history/f9ec00bb/DELIVERY.json",
+  "documentation_publication_retested": false
 }

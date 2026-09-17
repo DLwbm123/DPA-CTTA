@@ -1,0 +1,59 @@
+{
+  "original": {
+    "path": "originals/r6_plan/R6_SCIENCE_PROPOSAL.json",
+    "bytes": 5462,
+    "sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+    "status": "DESIGN_PROPOSAL_NOT_IMPLEMENTED"
+  },
+  "final_science_config": {
+    "path": "configs/r6_science_v1.json",
+    "bytes": 5462,
+    "sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+    "byte_identical_to_original": true,
+    "wrapping_or_reformatting": false
+  },
+  "original_math_reference": {
+    "path": "originals/r6_plan/R6_MATH_REFERENCE.py",
+    "sha256": "cbf47ef84616c445e53bc52182ac6848e666b1810ff1dc3ccd712d09e2c93cb6"
+  },
+  "implementation_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+  "previous_implementation_sha": "d875f20c11cc7e617c9f39dba04ed46381aba450",
+  "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+  "execution_defaults": {
+    "path": "configs/r6_execution.defaults.json",
+    "sha256": "572cd6a0a4897d4affeab957bfa0406143e1745956561840eea4ea6ffb83abdd",
+    "enabled": false,
+    "approved_caps": null,
+    "devices": null
+  },
+  "science_differences": [],
+  "implementation_only_differences": [
+    "SCALE reduction evaluation order within frozen tolerances",
+    "smoke recipe identifier alias",
+    "private_output_bytes is named bytes in runtime caps",
+    "reference detached-q validation vs production fixed GraTa detached-q input contract"
+  ],
+  "execution_started": false,
+  "external_review": "NOT_RUN",
+  "R6A": "NOT_RUN",
+  "R6B": "NOT_RUN",
+  "note": "This separate implementation binding record is not the original proposal; its own digest is SCIENCE_DIGEST.sha256.",
+  "field_mappings": [
+    {
+      "original_field": "smoke_proposal.recipe",
+      "original_value": "OLD_C4_AND_FOUR_R6_ARMS4_V1",
+      "runtime_field": "plan.SMOKE.recipe",
+      "runtime_value": "R6_ALL_ARMS4_OLD_C4_V1",
+      "classification": "IMPLEMENTATION_BINDING_ONLY",
+      "semantics": "OLD,C,R_BAL,R_SCALE,R_SHUFFLE; four visits each; 160/20/20/0"
+    },
+    {
+      "original_field": "resources.proposed_hard_caps.private_output_bytes",
+      "original_value": 8589934592,
+      "runtime_field": "plan.CAPS.bytes",
+      "runtime_value": 8589934592,
+      "classification": "IMPLEMENTATION_BINDING_ONLY"
+    }
+  ],
+  "record_scope": "Review documentation only; not an execution packet or authorization and not imported by production."
+}

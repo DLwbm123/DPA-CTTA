@@ -1,6 +1,6 @@
 {
   "base_sha": "e271098e2a12baa166fc7b77848af4a2300d9cc3",
-  "implementation_sha": "d875f20c11cc7e617c9f39dba04ed46381aba450",
+  "implementation_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
   "changes": [
     "A\tconfigs/r6_execution.defaults.json",
     "A\tscripts/check_r6_cpu.py",
@@ -16,7 +16,8 @@
     "A\ttests/test_r6_analysis.py",
     "A\ttests/test_r6_execution.py",
     "A\ttests/test_r6_host.py",
-    "A\ttests/test_r6_loss.py"
+    "A\ttests/test_r6_loss.py",
+    "A\tconfigs/r6_science_v1.json"
   ],
   "all_changes_are_new_R6_files": true,
   "shared_engineering_changes": [],
@@ -24,5 +25,17 @@
   "R5": "NO_ADVANCE",
   "R5B": "CLOSED",
   "GPU_queried": false,
-  "execution_started": false
+  "execution_started": false,
+  "previous_implementation_sha": "d875f20c11cc7e617c9f39dba04ed46381aba450",
+  "previous_publication_sha": "f9ec00bb01b3ece6b5a6a3964ca7d888eb455484",
+  "redelivery_runtime_diff": [
+    "A\tconfigs/r6_science_v1.json"
+  ],
+  "production_sources_tests_and_runner_unchanged": true,
+  "science_config": "New file, byte-identical to original proposal; no existing config overwritten",
+  "originals_manifest": "ORIGINALS_VERIFICATION_CURRENT.json",
+  "historical_blocked_record": "history/f9ec00bb/DELIVERY.json",
+  "historical_math_logs": "originals/r6_plan/R6_MATH_CHECK.log and math_history/first_attempt.log unchanged",
+  "original_json_status_preserved": true,
+  "first_failure_overwritten": false
 }
