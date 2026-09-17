@@ -1,0 +1,1052 @@
+{
+  "binding": {
+    "run_id": "a70dc79f23db47289532792141b61f57",
+    "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+    "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+    "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+    "scope": "A"
+  },
+  "current_result": {
+    "status": "R6A_COMPLETE_NO_ADVANCE",
+    "valid": true,
+    "binding": {
+      "run_id": "a70dc79f23db47289532792141b61f57",
+      "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+      "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+      "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+      "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+      "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+      "scope": "A"
+    },
+    "result_directory": "results/7b2e24f345f0463fa8ee451888650e66"
+  },
+  "launcher_exit": {
+    "exit_code": 0,
+    "started_unix": 1789615587.7043693,
+    "ended_unix": 1789629828.470163,
+    "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "scope": "A",
+    "R6B": "NOT_RUN",
+    "next_execution_authorized": false
+  },
+  "process_ledger": {
+    "binding": {
+      "run_id": "a70dc79f23db47289532792141b61f57",
+      "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+      "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+      "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+      "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+      "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+      "scope": "A"
+    },
+    "status": "COMPUTE_COMPLETE",
+    "processes": [
+      {
+        "phase": "smoke",
+        "worker": 0,
+        "key": "device0",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 0
+        },
+        "started_seconds": 0.0049960280302912,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 16.458999010035768
+      },
+      {
+        "phase": "smoke",
+        "worker": 1,
+        "key": "device1",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 1
+        },
+        "started_seconds": 0.008767413906753063,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 42.29894644487649
+      },
+      {
+        "phase": "smoke",
+        "worker": 2,
+        "key": "device2",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 2
+        },
+        "started_seconds": 0.11726103303954005,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 27.424417602829635
+      },
+      {
+        "phase": "formal",
+        "worker": 0,
+        "key": "o0a0",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 0,
+          "job_id": "o0a0",
+          "arm": "C",
+          "order": 0
+        },
+        "started_seconds": 42.305474592838436,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 928.1331602369901
+      },
+      {
+        "phase": "formal",
+        "worker": 1,
+        "key": "o0a1",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 1,
+          "job_id": "o0a1",
+          "arm": "R_BAL",
+          "order": 0
+        },
+        "started_seconds": 42.34302785387263,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 3620.6524736180436
+      },
+      {
+        "phase": "formal",
+        "worker": 2,
+        "key": "o0a2",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 2,
+          "job_id": "o0a2",
+          "arm": "R_SCALE",
+          "order": 0
+        },
+        "started_seconds": 42.349144723964855,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 1886.9087587909307
+      },
+      {
+        "phase": "formal",
+        "worker": 0,
+        "key": "o0a3",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 0,
+          "job_id": "o0a3",
+          "arm": "R_SHUFFLE",
+          "order": 0
+        },
+        "started_seconds": 928.143929103855,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 1784.4199922899716
+      },
+      {
+        "phase": "formal",
+        "worker": 0,
+        "key": "o1a2",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 0,
+          "job_id": "o1a2",
+          "arm": "R_SCALE",
+          "order": 1
+        },
+        "started_seconds": 1784.4312469239812,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 2719.075236910954
+      },
+      {
+        "phase": "formal",
+        "worker": 2,
+        "key": "o1a1",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 2,
+          "job_id": "o1a1",
+          "arm": "R_BAL",
+          "order": 1
+        },
+        "started_seconds": 1886.9198907630052,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 3904.795112231979
+      },
+      {
+        "phase": "formal",
+        "worker": 0,
+        "key": "o4a1",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 0,
+          "job_id": "o4a1",
+          "arm": "R_BAL",
+          "order": 4
+        },
+        "started_seconds": 2719.086852343986,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 3625.8339605669025
+      },
+      {
+        "phase": "formal",
+        "worker": 1,
+        "key": "o1a0",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 1,
+          "job_id": "o1a0",
+          "arm": "C",
+          "order": 1
+        },
+        "started_seconds": 3620.6665312929545,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 7118.525605388917
+      },
+      {
+        "phase": "formal",
+        "worker": 2,
+        "key": "o4a0",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 2,
+          "job_id": "o4a0",
+          "arm": "C",
+          "order": 4
+        },
+        "started_seconds": 3904.809929105919,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 5636.189624301856
+      },
+      {
+        "phase": "formal",
+        "worker": 2,
+        "key": "o4a3",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 2,
+          "job_id": "o4a3",
+          "arm": "R_SHUFFLE",
+          "order": 4
+        },
+        "started_seconds": 5636.2034166199155,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 7535.184754992835
+      },
+      {
+        "phase": "formal",
+        "worker": 1,
+        "key": "o1a3",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 1,
+          "job_id": "o1a3",
+          "arm": "R_SHUFFLE",
+          "order": 1
+        },
+        "started_seconds": 7118.541150610894,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 10630.616273512831
+      },
+      {
+        "phase": "formal",
+        "worker": 1,
+        "key": "o4a2",
+        "binding": {
+          "run_id": "a70dc79f23db47289532792141b61f57",
+          "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+          "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+          "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+          "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+          "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+          "scope": "A",
+          "worker": 1,
+          "job_id": "o4a2",
+          "arm": "R_SCALE",
+          "order": 4
+        },
+        "started_seconds": 10630.633736326825,
+        "status": "EXITED",
+        "exit_code": 0,
+        "ended_seconds": 14222.044658991974
+      }
+    ],
+    "exit_codes": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "active_seconds": 25342.3359534333,
+    "wall_seconds": 14222.058816628996,
+    "unstarted_jobs": []
+  },
+  "trajectory_completions": {
+    "o0a0": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 0,
+        "job_id": "o0a0",
+        "arm": "C",
+        "order": 0
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 882.7618178098928
+    },
+    "o0a2": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 2,
+        "job_id": "o0a2",
+        "arm": "R_SCALE",
+        "order": 0
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 1841.6315790389199
+    },
+    "o0a1": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 1,
+        "job_id": "o0a1",
+        "arm": "R_BAL",
+        "order": 0
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 3575.123325621942
+    },
+    "o0a3": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 0,
+        "job_id": "o0a3",
+        "arm": "R_SHUFFLE",
+        "order": 0
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 853.3800913519226
+    },
+    "o1a2": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 0,
+        "job_id": "o1a2",
+        "arm": "R_SCALE",
+        "order": 1
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621299200,
+      "seconds": 931.7466488620266
+    },
+    "o1a1": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 2,
+        "job_id": "o1a1",
+        "arm": "R_BAL",
+        "order": 1
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 2014.762755439151
+    },
+    "o4a1": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 0,
+        "job_id": "o4a1",
+        "arm": "R_BAL",
+        "order": 4
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 903.7492855458986
+    },
+    "o1a0": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 1,
+        "job_id": "o1a0",
+        "arm": "C",
+        "order": 1
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 3494.7811973539647
+    },
+    "o4a0": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 2,
+        "job_id": "o4a0",
+        "arm": "C",
+        "order": 4
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 1728.370744600892
+    },
+    "o4a3": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 2,
+        "job_id": "o4a3",
+        "arm": "R_SHUFFLE",
+        "order": 4
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 1895.9267494271044
+    },
+    "o1a3": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 1,
+        "job_id": "o1a3",
+        "arm": "R_SHUFFLE",
+        "order": 1
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 3509.097890400095
+    },
+    "o4a2": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 1,
+        "job_id": "o4a2",
+        "arm": "R_SCALE",
+        "order": 4
+      },
+      "status": "TRAJECTORY_COMPLETE",
+      "records": 1951,
+      "physical": {
+        "network_forwards": 15608,
+        "loss_backward_calls": 1951,
+        "adam_calls": 1951,
+        "jacobian_vjp_calls": 0
+      },
+      "adam_step": 1951,
+      "peak_allocated_bytes": 621460992,
+      "seconds": 3588.3286678299773
+    }
+  },
+  "smoke": {
+    "0": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 0
+      },
+      "status": "MECHANICAL_SMOKE_COMPLETE",
+      "C_parity_valid": true,
+      "recipe": {
+        "recipe": "R6_ALL_ARMS4_OLD_C4_V1",
+        "network_forwards": 160,
+        "loss_backward_calls": 20,
+        "adam_calls": 20,
+        "jacobian_vjp_calls": 0,
+        "seed": 20260907,
+        "pixel_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "rtol": 0.0001,
+        "atol": 1e-05
+      },
+      "physical": {
+        "network_forwards": 160,
+        "loss_backward_calls": 20,
+        "adam_calls": 20,
+        "jacobian_vjp_calls": 0
+      },
+      "evidence": {
+        "OLD": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "C": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": true
+        },
+        "R_BAL": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "R_SCALE": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "R_SHUFFLE": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        }
+      },
+      "backend": {
+        "deterministic_algorithms": false,
+        "warn_only": false,
+        "cublas_workspace_config": ":4096:8"
+      }
+    },
+    "1": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 1
+      },
+      "status": "MECHANICAL_SMOKE_COMPLETE",
+      "C_parity_valid": true,
+      "recipe": {
+        "recipe": "R6_ALL_ARMS4_OLD_C4_V1",
+        "network_forwards": 160,
+        "loss_backward_calls": 20,
+        "adam_calls": 20,
+        "jacobian_vjp_calls": 0,
+        "seed": 20260907,
+        "pixel_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "rtol": 0.0001,
+        "atol": 1e-05
+      },
+      "physical": {
+        "network_forwards": 160,
+        "loss_backward_calls": 20,
+        "adam_calls": 20,
+        "jacobian_vjp_calls": 0
+      },
+      "evidence": {
+        "OLD": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "C": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": true
+        },
+        "R_BAL": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "R_SCALE": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "R_SHUFFLE": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        }
+      },
+      "backend": {
+        "deterministic_algorithms": false,
+        "warn_only": false,
+        "cublas_workspace_config": ":4096:8"
+      }
+    },
+    "2": {
+      "binding": {
+        "run_id": "a70dc79f23db47289532792141b61f57",
+        "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+        "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+        "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+        "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+        "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+        "scope": "A",
+        "worker": 2
+      },
+      "status": "MECHANICAL_SMOKE_COMPLETE",
+      "C_parity_valid": true,
+      "recipe": {
+        "recipe": "R6_ALL_ARMS4_OLD_C4_V1",
+        "network_forwards": 160,
+        "loss_backward_calls": 20,
+        "adam_calls": 20,
+        "jacobian_vjp_calls": 0,
+        "seed": 20260907,
+        "pixel_indices": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "rtol": 0.0001,
+        "atol": 1e-05
+      },
+      "physical": {
+        "network_forwards": 160,
+        "loss_backward_calls": 20,
+        "adam_calls": 20,
+        "jacobian_vjp_calls": 0
+      },
+      "evidence": {
+        "OLD": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "C": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": true
+        },
+        "R_BAL": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "R_SCALE": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        },
+        "R_SHUFFLE": {
+          "visits": 4,
+          "counts": {
+            "forwards": 32,
+            "backwards": 4,
+            "base_adam": 4,
+            "perturb": 0,
+            "restore": 0
+          },
+          "parity": false
+        }
+      },
+      "backend": {
+        "deterministic_algorithms": false,
+        "warn_only": false,
+        "cublas_workspace_config": ":4096:8"
+      }
+    }
+  },
+  "startup_neutral_argv_audit": true,
+  "owned_processes_alive_at_closeout": 0,
+  "failures": [],
+  "observed_unix": 1789637997.0769968,
+  "physical_total": {
+    "network_forwards": 187776,
+    "loss_backward_calls": 23472,
+    "adam_calls": 23472,
+    "jacobian_vjp_calls": 0
+  },
+  "runtime": {
+    "python": "3.10.6",
+    "torch": "2.2.1+cu121",
+    "devices": "3 x RTX 3090",
+    "physical_gpu_ids": [
+      5,
+      6,
+      7
+    ],
+    "threads_per_worker": 2
+  },
+  "authorization_summary": {
+    "status": "USER_AUTHORIZED_R6_A_ONLY",
+    "scope": "A",
+    "execution_authorized": true,
+    "approved_code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "approved_science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+    "approved_registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+    "approved_stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+    "approved_production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+    "approved_trajectory_count": 12,
+    "allowed_physical_gpu_ids": [
+      5,
+      6,
+      7
+    ],
+    "max_workers": 3,
+    "threads_per_worker": 2,
+    "background_allowed": true,
+    "caps": {
+      "trajectory_seconds": 21600,
+      "wall_seconds": 86400,
+      "active_seconds": 172800,
+      "bytes": 8589934592
+    }
+  },
+  "validation": {
+    "original_cpu_scalar_replay": "VALID, performed by reviewed launcher before current_result publication",
+    "closeout": "PASS: final binding/count/cost/gate consistency and public field inspection",
+    "reran_model": false,
+    "reran_166_tests": false,
+    "production_changes": false
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "status": "R6A_COMPLETE_NO_ADVANCE",
+  "scope": "A",
+  "execution_started": true,
+  "R6B": "NOT_RUN",
+  "next_execution_authorized": false,
+  "execution_binding": {
+    "run_id": "a70dc79f23db47289532792141b61f57",
+    "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+    "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+    "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+    "scope": "A"
+  },
+  "base_preparation_sha": "b2cb276e4d901315556e04003310b16cc3cf5f3e",
+  "branch": "results/r6a-bounded-regional-v1",
+  "production_code_changes": false,
+  "science_changes": false,
+  "published_files": [
+    "REPORT.md",
+    "PUBLIC_AGGREGATE.json",
+    "EXECUTION_AUDIT.json",
+    "DELIVERY.json"
+  ],
+  "excluded": [
+    "RGB, masks, checkpoints, optimizer states",
+    "Per-content trace/evaluation rows and identities",
+    "Private paths, process IDs, device UUIDs and credentials"
+  ],
+  "validation": "Existing reviewed CPU scalar replay plus closeout consistency checks; no new inference or historical test rerun",
+  "external_review": "Existing Stage I external PASS for A implementation only; no new result review asserted"
+}
