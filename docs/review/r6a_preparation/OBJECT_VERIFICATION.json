@@ -1,0 +1,74 @@
+{
+  "status": "MATCHED_READ_ONLY_METADATA",
+  "reviewed_code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+  "evidence_publication_sha": "70e48d5da9737f806bd797b5c1752bd5b50a8e20",
+  "local_document_checkout": {
+    "sha": "70e48d5da9737f806bd797b5c1752bd5b50a8e20",
+    "clean_before_archival": true,
+    "production_src_scripts_tests_configs_identical_to_reviewed_code": true,
+    "dependencies": {
+      "ctta": {
+        "sha": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+        "clean": true
+      },
+      "grata": {
+        "sha": "33ae20d664f305af34739ec54a5bec7da53ffa0b",
+        "clean": true
+      }
+    }
+  },
+  "reviewed_server_checkout": {
+    "checkout_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "checkout_clean": true,
+    "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+    "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+    "dependencies": {
+      "ctta": {
+        "sha": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+        "clean": true
+      },
+      "grata": {
+        "sha": "33ae20d664f305af34739ec54a5bec7da53ffa0b",
+        "clean": true
+      }
+    },
+    "mode": "read-only git and metadata bytes; no torch/model import",
+    "GPU_queries": 0,
+    "real_asset_reads": 0
+  },
+  "science_config_byte_identical_to_archived_original": true,
+  "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+  "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+  "archived_attachments": [
+    {
+      "file": "R6_EXTERNAL_REVIEW.md",
+      "bytes": 9411,
+      "byte_identical_to_supplied_attachment": true
+    },
+    {
+      "file": "R6_REVIEW_RECORD.json",
+      "bytes": 838,
+      "byte_identical_to_supplied_attachment": true
+    },
+    {
+      "file": "R6A_PREPARATION_PROMPT.md",
+      "bytes": 3944,
+      "byte_identical_to_supplied_attachment": true
+    }
+  ],
+  "new_CPU_tests_run": 0,
+  "full_166_suite_rerun": false,
+  "reviewer_probe_bundle_provided_in_this_request": false,
+  "reviewer_probe_results": "As reported in the supplied external review; not independently rerun in this preparation",
+  "GPU_queries": 0,
+  "GPU_initializations": 0,
+  "real_RGB_reads": 0,
+  "real_mask_reads": 0,
+  "checkpoint_reads": 0,
+  "source_data_reads": 0,
+  "source_proxy_reads": 0,
+  "background_tasks_started": 0,
+  "execution_started": false
+}

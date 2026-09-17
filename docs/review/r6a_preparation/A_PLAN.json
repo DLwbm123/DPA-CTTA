@@ -1,0 +1,234 @@
+{
+  "status": "REGISTERED_A_METADATA_ONLY",
+  "binding": {
+    "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+    "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+    "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+    "scope": "A"
+  },
+  "arms": [
+    "C",
+    "R_BAL",
+    "R_SCALE",
+    "R_SHUFFLE"
+  ],
+  "orders": [
+    0,
+    1,
+    4
+  ],
+  "jobs": [
+    {
+      "job_id": "o0a0",
+      "arm": "C",
+      "order": 0,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o0a1",
+      "arm": "R_BAL",
+      "order": 0,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o0a2",
+      "arm": "R_SCALE",
+      "order": 0,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o0a3",
+      "arm": "R_SHUFFLE",
+      "order": 0,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o1a0",
+      "arm": "C",
+      "order": 1,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o1a1",
+      "arm": "R_BAL",
+      "order": 1,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o1a2",
+      "arm": "R_SCALE",
+      "order": 1,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o1a3",
+      "arm": "R_SHUFFLE",
+      "order": 1,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o4a0",
+      "arm": "C",
+      "order": 4,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o4a1",
+      "arm": "R_BAL",
+      "order": 4,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o4a2",
+      "arm": "R_SCALE",
+      "order": 4,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    },
+    {
+      "job_id": "o4a3",
+      "arm": "R_SHUFFLE",
+      "order": 4,
+      "records": 1951,
+      "network_forwards": 15608,
+      "loss_backward_calls": 1951,
+      "adam_calls": 1951,
+      "jacobian_vjp_upper": 0,
+      "reused_from_A": false,
+      "selection_exposure": "A_development_stream"
+    }
+  ],
+  "content_visits": {
+    "0": 1951,
+    "1": 1951,
+    "4": 1951
+  },
+  "remaining_dev": 1695,
+  "adapt_all_contents": true,
+  "formal_budget": {
+    "jobs": 12,
+    "records": 23412,
+    "network_forwards": 187296,
+    "loss_backward_calls": 23412,
+    "adam_calls": 23412,
+    "jacobian_vjp_calls": 0
+  },
+  "per_device_smoke": {
+    "recipe": "R6_ALL_ARMS4_OLD_C4_V1",
+    "network_forwards": 160,
+    "loss_backward_calls": 20,
+    "adam_calls": 20,
+    "jacobian_vjp_calls": 0,
+    "seed": 20260907,
+    "pixel_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "number_of_devices": null,
+  "total_smoke_budget": null,
+  "resources": {
+    "allowed_physical_gpu_ids": null,
+    "max_workers": null,
+    "proposed_max_workers": 3,
+    "one_worker_per_device": true,
+    "threads_per_worker": 2,
+    "approved_caps": {
+      "trajectory_seconds": null,
+      "wall_seconds": null,
+      "active_seconds": null,
+      "bytes": null
+    },
+    "proposed_caps": {
+      "trajectory_seconds": 21600,
+      "wall_seconds": 86400,
+      "active_seconds": 172800,
+      "bytes": 8589934592
+    },
+    "private_output": null,
+    "background_allowed": null
+  },
+  "A_gate": {
+    "mean_R_BAL_minus_C_pp": 0.5,
+    "mean_R_BAL_minus_R_SCALE_pp": 0.2,
+    "mean_R_BAL_minus_R_SHUFFLE_pp": 0.2,
+    "each_primary_delta_vs_each_control_min_pp": 0.0,
+    "recurrence_delta_vs_each_control_min_pp": -0.1,
+    "each_domain_two_order_mean_R_BAL_minus_C_min_pp": -2.0,
+    "all_12_complete_before_gate": true
+  },
+  "B_reviewed": false,
+  "next_execution_authorized": false,
+  "execution_started": false
+}

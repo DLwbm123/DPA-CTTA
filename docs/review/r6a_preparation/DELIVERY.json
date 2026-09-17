@@ -1,0 +1,49 @@
+{
+  "status": "R6A_PREPARED_AWAITING_EXECUTION_AUTHORIZATION",
+  "review_result": "R6_REVIEW_PASS_A_ONLY",
+  "external_review": {
+    "status": "PASS",
+    "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "scope": "A",
+    "reference": "docs/review/r6a_preparation/R6_EXTERNAL_REVIEW.md (verbatim user-supplied attachment; accompanies this preparation package)"
+  },
+  "reviewed_implementation_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+  "evidence_publication_sha": "70e48d5da9737f806bd797b5c1752bd5b50a8e20",
+  "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+  "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+  "execution_started": false,
+  "execution_authorized": false,
+  "execution_enabled": false,
+  "R6A": "NOT_RUN",
+  "R6B": "NOT_RUN",
+  "next_execution_authorized": false,
+  "trajectory_count": 12,
+  "approved_devices": null,
+  "approved_workers": null,
+  "approved_caps": {
+    "trajectory_seconds": null,
+    "wall_seconds": null,
+    "active_seconds": null,
+    "bytes": null
+  },
+  "private_output": null,
+  "actual_receipt": null,
+  "unfilled_fields": [
+    "new_user_A_execution_authorization",
+    "allowed_physical_gpu_ids",
+    "max_workers",
+    "trajectory_seconds",
+    "wall_seconds",
+    "active_seconds",
+    "private_output_bytes",
+    "new_private_output_path",
+    "background_allowed"
+  ],
+  "production_code_or_science_modified": false,
+  "historical_records_modified": false,
+  "new_CPU_tests_run": 0,
+  "GPU_queries": 0,
+  "real_asset_reads": 0,
+  "probe_bundle_available": false,
+  "publication_sha_location": "Final delivery message; preparation docs commit is not reviewed execution code"
+}

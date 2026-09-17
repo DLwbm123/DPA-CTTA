@@ -1,0 +1,71 @@
+{
+  "status": "DISABLED_TEMPLATE_NOT_USER_AUTHORIZATION",
+  "enabled": false,
+  "execution_authorized": false,
+  "scope": "A",
+  "approved_code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+  "approved_science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+  "approved_registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "approved_stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+  "approved_production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+  "approved_trajectory_count": 12,
+  "external_review": {
+    "status": "PASS",
+    "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "scope": "A",
+    "reference": "docs/review/r6a_preparation/R6_EXTERNAL_REVIEW.md (verbatim user-supplied attachment; accompanies this preparation package)"
+  },
+  "user_execution_authorization": {
+    "status": "NOT_PROVIDED",
+    "reference": null
+  },
+  "user_waiver": null,
+  "allowed_physical_gpu_ids": null,
+  "max_workers": null,
+  "threads_per_worker": 2,
+  "one_worker_per_device": true,
+  "background_allowed": null,
+  "caps": {
+    "trajectory_seconds": null,
+    "wall_seconds": null,
+    "active_seconds": null,
+    "bytes": null
+  },
+  "proposed_caps": {
+    "trajectory_seconds": 21600,
+    "wall_seconds": 86400,
+    "active_seconds": 172800,
+    "bytes": 8589934592
+  },
+  "proposed_max_workers": 3,
+  "smoke_recipe": {
+    "recipe": "R6_ALL_ARMS4_OLD_C4_V1",
+    "network_forwards": 160,
+    "loss_backward_calls": 20,
+    "adam_calls": 20,
+    "jacobian_vjp_calls": 0,
+    "seed": 20260907,
+    "pixel_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "rtol": 0.0001,
+    "atol": 1e-05
+  },
+  "receipt": null,
+  "reuse_A": null,
+  "reuse_A_binding": null,
+  "unfilled_fields": [
+    "new_user_A_execution_authorization",
+    "allowed_physical_gpu_ids",
+    "max_workers",
+    "trajectory_seconds",
+    "wall_seconds",
+    "active_seconds",
+    "private_output_bytes",
+    "new_private_output_path",
+    "background_allowed"
+  ]
+}

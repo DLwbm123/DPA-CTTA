@@ -1,0 +1,20 @@
+{
+  "schema": "R6_EXTERNAL_REVIEW_RECORD_V1",
+  "review_result": "R6_REVIEW_PASS_A_ONLY",
+  "external_review": {
+    "status": "PASS",
+    "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "scope": "A",
+    "reference": "R6_EXTERNAL_REVIEW.md (attach this report; do not invent a remote review URL)"
+  },
+  "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+  "evidence_publication_sha": "70e48d5da9737f806bd797b5c1752bd5b50a8e20",
+  "execution_authorized": false,
+  "R6A": "NOT_RUN",
+  "R6B": "NOT_RUN",
+  "blocking_findings_in_reviewed_scope": [],
+  "reviewer_execution_scope": "five groups of loss/autograd/scalar-gate CPU probes; no full suite, model or GPU execution",
+  "reviewer_full_166_suite_rerun": false,
+  "reviewer_cuda_initialized": false,
+  "next_execution_authorized": false
+}
