@@ -1,0 +1,188 @@
+{
+  "schema": "R6_BOUNDED_REGIONAL_CONSISTENCY_PROPOSAL_V1",
+  "status": "DESIGN_PROPOSAL_NOT_IMPLEMENTED",
+  "execution_enabled": false,
+  "base_publication_sha": "e271098e2a12baa166fc7b77848af4a2300d9cc3",
+  "historical_r5a_execution_sha": "b4b71601a5bdf87bb3a7e5d3db352610adcdff74",
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+  "dependencies": {
+    "ctta": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+    "grata": "33ae20d664f305af34739ec54a5bec7da53ffa0b"
+  },
+  "arms": [
+    "C",
+    "R_BAL",
+    "R_SCALE",
+    "R_SHUFFLE"
+  ],
+  "stages": {
+    "A": {
+      "orders": [
+        0,
+        1,
+        4
+      ],
+      "jobs": 12
+    },
+    "B_NEW": {
+      "orders": [
+        2,
+        3
+      ],
+      "jobs": 8
+    },
+    "AB": {
+      "orders": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "jobs": 20
+    }
+  },
+  "groups_per_trajectory": 1951,
+  "remaining_dev": 1695,
+  "adapt_all_contents": true,
+  "seed": 20260907,
+  "optimizer": {
+    "name": "Adam",
+    "lr": 0.0001,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0,
+    "BN_layers": 41,
+    "affine_scalars": 19136,
+    "dtype": "float32",
+    "AMP": false,
+    "one_update_every_visit": true
+  },
+  "rule": {
+    "partition": "actual_detached_q >= 0.5",
+    "grid": [
+      512,
+      512
+    ],
+    "ratio_cap": 8.0,
+    "ratio": "clip(n_bg / n_fg, 1/8, 8) when both nonempty",
+    "w_bg": "N / (ratio*n_fg + n_bg)",
+    "w_fg": "ratio*w_bg",
+    "empty_partition": "weights=1 for that entire channel",
+    "normalization": "mean pixel weight = 1 separately for OD and OC in real arithmetic",
+    "placement": "weight multiplies BOTH terms of unreduced BCEWithLogits(z,q)",
+    "pos_weight": null,
+    "q_modification": false,
+    "output_modification": false
+  },
+  "controls": {
+    "norm_space": "per-channel strong-output logit gradient, not parameter/Adam step",
+    "delta": "sigmoid(z.detach()) - q.detach(), subtraction in loss dtype then CPU float64",
+    "S0": "sum(delta^2)",
+    "Sw": "sum((actual_float32_w*delta)^2)",
+    "Sperm": "sum((actual_float32_w_perm*delta)^2)",
+    "R_SCALE": "detach(sqrt(Sw/S0)) * channel mean BCE",
+    "R_SHUFFLE": "detach(sqrt(Sw/Sperm)) * channel mean shuffled-weight BCE",
+    "zero_residual": "S0==0 => all three SSE=0 and both scale factors=1",
+    "positive_residual": "S0>0 but Sw<=0 or Sperm<=0 => hard error",
+    "extra_backward_or_vjp": 0,
+    "matching": "local same z,q comparison only; own state in each trajectory"
+  },
+  "shuffle": {
+    "domain": "all H*W positions within each channel; DO NOT shuffle inside each existing partition",
+    "implementation": "torch.randperm on dedicated CPU torch.Generator",
+    "seed_encoding": "int.from_bytes(sha256(ascii(R6_WEIGHT_PERM_V1|20260907|visit|channel)).digest()[:8], big) & ((1<<63)-1)",
+    "identity_input": false,
+    "uses_global_rng": false
+  },
+  "primary": "remaining_dev; mean OD/OC per image; domain mean; four domains equal; main orders equal",
+  "recurrence_separate": true,
+  "A_gate": {
+    "mean_R_BAL_minus_C_pp": 0.5,
+    "mean_R_BAL_minus_R_SCALE_pp": 0.2,
+    "mean_R_BAL_minus_R_SHUFFLE_pp": 0.2,
+    "each_primary_delta_vs_each_control_min_pp": 0.0,
+    "recurrence_delta_vs_each_control_min_pp": -0.1,
+    "each_domain_two_order_mean_R_BAL_minus_C_min_pp": -2.0,
+    "all_12_complete_before_gate": true
+  },
+  "B_gate": {
+    "mean_R_BAL_minus_C_pp": 0.5,
+    "mean_R_BAL_minus_R_SCALE_pp": 0.2,
+    "mean_R_BAL_minus_R_SHUFFLE_pp": 0.2,
+    "positive_main_orders_vs_each_control_min": 3,
+    "worst_main_order_R_BAL_minus_C_min_pp": -0.5,
+    "each_domain_four_order_mean_R_BAL_minus_C_min_pp": -2.0,
+    "recurrence_delta_vs_each_control_min_pp": -0.1
+  },
+  "budgets": {
+    "A": {
+      "jobs": 12,
+      "records": 23412,
+      "network_forwards": 187296,
+      "loss_backward_calls": 23412,
+      "adam_calls": 23412,
+      "jacobian_vjp_calls": 0
+    },
+    "B_NEW": {
+      "jobs": 8,
+      "records": 15608,
+      "network_forwards": 124864,
+      "loss_backward_calls": 15608,
+      "adam_calls": 15608,
+      "jacobian_vjp_calls": 0
+    },
+    "AB": {
+      "jobs": 20,
+      "records": 39020,
+      "network_forwards": 312160,
+      "loss_backward_calls": 39020,
+      "adam_calls": 39020,
+      "jacobian_vjp_calls": 0
+    }
+  },
+  "smoke_proposal": {
+    "recipe": "OLD_C4_AND_FOUR_R6_ARMS4_V1",
+    "pixel_indices": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "seed": 20260907,
+    "per_device": {
+      "network_forwards": 160,
+      "loss_backward_calls": 20,
+      "adam_calls": 20,
+      "jacobian_vjp_calls": 0
+    },
+    "C_parity": {
+      "CPU": "exact",
+      "GPU_rtol": 0.0001,
+      "GPU_atol": 1e-05
+    },
+    "new_arms_equal_C_assertion": false
+  },
+  "resources": {
+    "devices": null,
+    "max_workers": 3,
+    "threads_per_worker": 2,
+    "one_worker_per_device": true,
+    "proposed_hard_caps": {
+      "trajectory_seconds": 21600,
+      "wall_seconds": 86400,
+      "active_seconds": 172800,
+      "private_output_bytes": 8589934592
+    }
+  },
+  "statistical_claim": "development screening, not significance/clinical safety/independent confirmation",
+  "no_new_C0_or_source_run": true,
+  "reuse_old_R4_R5_C_as_new_controls": false,
+  "automatic_B": false,
+  "automatic_retry": false,
+  "background_authorized": false
+}

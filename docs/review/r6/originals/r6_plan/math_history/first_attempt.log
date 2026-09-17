@@ -1,0 +1,35 @@
+test_bad_input_rejected (__main__.ReferenceTests.test_bad_input_rejected) ... ok
+test_detached_weights_and_scales (__main__.ReferenceTests.test_detached_weights_and_scales) ... ok
+test_per_channel_gradient_norms (__main__.ReferenceTests.test_per_channel_gradient_norms) ... ok
+test_permutation_reproducibility_and_rng_isolation (__main__.ReferenceTests.test_permutation_reproducibility_and_rng_isolation) ... ok
+test_soft_target_stationary_point (__main__.ReferenceTests.test_soft_target_stationary_point) ... ok
+test_uniform_weight_degeneracy (__main__.ReferenceTests.test_uniform_weight_degeneracy) ... ok
+test_weights_mean_bounds_and_partition_mass (__main__.ReferenceTests.test_weights_mean_bounds_and_partition_mass) ... FAIL
+test_zero_residual_branch (__main__.ReferenceTests.test_zero_residual_branch) ... ok
+
+======================================================================
+FAIL: test_weights_mean_bounds_and_partition_mass (__main__.ReferenceTests.test_weights_mean_bounds_and_partition_mass)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/data/r6_plan/R6_MATH_REFERENCE.py", line 116, in test_weights_mean_bounds_and_partition_mass
+    self.assertTrue(torch.allclose(w.mean((-1, -2)), torch.ones((1, 2), dtype=w.dtype), atol=1e-14, rtol=0))
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: False is not true
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.026s
+
+FAILED (failures=1)
+{
+  "scope": "R6 mathematical CPU reference only; no network/CTTA host/optimizer",
+  "tests": 8,
+  "failures": 1,
+  "errors": 0,
+  "skipped": 0,
+  "python": "3.13.5",
+  "torch": "2.10.0+cpu",
+  "cuda_initialized": false,
+  "real_data_reads": 0,
+  "checkpoint_reads": 0,
+  "success": false
+}

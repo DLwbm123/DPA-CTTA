@@ -1,0 +1,86 @@
+{
+  "scope": "Original artifact recovery and byte-integrity verification only; no code or model execution",
+  "source_archive": "R6_DESIGN_BUNDLE.zip",
+  "source_archive_sha256": "7cc64f3924a96f6a93bb7be6bd1441fb05c784f0375e1f6d1a3b1c316a66f212",
+  "source_archive_modified": false,
+  "zip_crc_valid": true,
+  "original_manifest_sha256": "93578cbca08a0b8a3458d20534f947ed4b56d26f7a67133057d37c0ee2aa956d",
+  "original_manifest_entries_verified": 11,
+  "all_original_members_extracted": 12,
+  "extracted_files_byte_identical_to_archive": true,
+  "uploaded_plan_and_prompt_byte_identical_to_archive": true,
+  "files": [
+    {
+      "path": "R6_STAGE_I_CODEX_PROMPT.md",
+      "bytes": 18503,
+      "sha256": "6c72f0edfec857a8f6423dd3791ef8766b1aac1cbc13a8f64943879f40ace52f",
+      "matches_original_manifest": true
+    },
+    {
+      "path": "R6_MATH_CHECK.log",
+      "bytes": 1202,
+      "sha256": "c2104f66c2b90079c19c569d9d561282e104b02ed65d516950057002bf6a71c6",
+      "matches_original_manifest": true
+    },
+    {
+      "path": "README.md",
+      "bytes": 1082,
+      "sha256": "383931b9cfc663533d912a1625de68750d7798b534c6d5b6c1453fcb2b335ac1",
+      "matches_original_manifest": true
+    },
+    {
+      "path": "R6_SCIENCE_PROPOSAL.sha256",
+      "bytes": 91,
+      "sha256": "225424a6a8d19c9f11611f79164801426bd31806f1fbf57f4334a70f0cdbf597",
+      "matches_original_manifest": true
+    },
+    {
+      "path": "R6_SCIENCE_PROPOSAL.json",
+      "bytes": 5462,
+      "sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+      "matches_original_manifest": true
+    },
+    {
+      "path": "R6_MATH_CHECK.json",
+      "bytes": 290,
+      "sha256": "5386f933f2ed80a853adbd692a7f12bfc85b61fe33532abe2af76cfd36254286",
+      "matches_original_manifest": true
+    },
+    {
+      "path": "R6_MATH_REFERENCE.py",
+      "bytes": 8432,
+      "sha256": "cbf47ef84616c445e53bc52182ac6848e666b1810ff1dc3ccd712d09e2c93cb6",
+      "matches_original_manifest": true
+    },
+    {
+      "path": "R6_EXPERIMENT_PLAN.md",
+      "bytes": 13879,
+      "sha256": "e6c5a2ef97da051d8689b2cd99135e45f51c4782f7121d4048d975d48b141981",
+      "matches_original_manifest": true
+    },
+    {
+      "path": "math_history/first_attempt.json",
+      "bytes": 291,
+      "sha256": "664cba6073d79d89e3bf82bec622a7fb0779db9da851e466c0a20ec95d5a16cc",
+      "matches_original_manifest": true
+    },
+    {
+      "path": "math_history/first_reference.py",
+      "bytes": 8419,
+      "sha256": "7aa297a68e86f47cb18e556865c2e337acdb0cee904527845d4e1bbc2bbed57b",
+      "matches_original_manifest": true
+    },
+    {
+      "path": "math_history/first_attempt.log",
+      "bytes": 1878,
+      "sha256": "fdff71e6b771a30765eee71adc655db4c22f9923076dde35636fc37156d089e3",
+      "matches_original_manifest": true
+    }
+  ],
+  "new_helper_artifacts": [
+    "R6_math_history.zip",
+    "ORIGINALS_VERIFICATION.json",
+    "R6_ORIGINALS_REDELIVERY.zip"
+  ],
+  "note": "Helper archives and this verification record are created for this redelivery. All original r6_plan member bytes, including historical logs, are unchanged. Historical test logs are not fresh test results; this does not validate the user implementation or authorize execution."
+}

@@ -1,0 +1,26 @@
+test_bad_input_rejected (__main__.ReferenceTests.test_bad_input_rejected) ... ok
+test_detached_weights_and_scales (__main__.ReferenceTests.test_detached_weights_and_scales) ... ok
+test_per_channel_gradient_norms (__main__.ReferenceTests.test_per_channel_gradient_norms) ... ok
+test_permutation_reproducibility_and_rng_isolation (__main__.ReferenceTests.test_permutation_reproducibility_and_rng_isolation) ... ok
+test_soft_target_stationary_point (__main__.ReferenceTests.test_soft_target_stationary_point) ... ok
+test_uniform_weight_degeneracy (__main__.ReferenceTests.test_uniform_weight_degeneracy) ... ok
+test_weights_mean_bounds_and_partition_mass (__main__.ReferenceTests.test_weights_mean_bounds_and_partition_mass) ... ok
+test_zero_residual_branch (__main__.ReferenceTests.test_zero_residual_branch) ... ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 0.018s
+
+OK
+{
+  "scope": "R6 mathematical CPU reference only; no network/CTTA host/optimizer",
+  "tests": 8,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "python": "3.13.5",
+  "torch": "2.10.0+cpu",
+  "cuda_initialized": false,
+  "real_data_reads": 0,
+  "checkpoint_reads": 0,
+  "success": true
+}
