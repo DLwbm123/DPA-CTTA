@@ -1,0 +1,29 @@
+test_already_exited_worker_terminal_resource_audit (test_target_screen.ScreenTests.test_already_exited_worker_terminal_resource_audit) ... ok
+test_child_rechecks_exact_authority_without_freshness_bypass (test_target_screen.ScreenTests.test_child_rechecks_exact_authority_without_freshness_bypass) ... ok
+test_disabled_all_scopes_before_reads (test_target_screen.ScreenTests.test_disabled_all_scopes_before_reads) ... ok
+test_exact_authority_code_resource_and_matrix_binding (test_target_screen.ScreenTests.test_exact_authority_code_resource_and_matrix_binding) ... ok
+test_exact_nominal_counts_and_schedule (test_target_screen.ScreenTests.test_exact_nominal_counts_and_schedule) ... ok
+test_execution_first_survives_cleanup_and_evidence_no_retry (test_target_screen.ScreenTests.test_execution_first_survives_cleanup_and_evidence_no_retry) ... {"evidence_error": {"type": "OSError", "message": "evidence failure"}, "first_error": {"type": "RuntimeError", "message": "worker nonzero exit 7"}}
+{"evidence_error": {"type": "OSError", "message": "evidence failure"}, "first_error": {"type": "RuntimeError", "message": "worker nonzero exit 7"}}
+ok
+test_finite_caps_gpu_unqualified (test_target_screen.ScreenTests.test_finite_caps_gpu_unqualified) ... ok
+test_full_persistence_static_reset_and_instance_order_isolation (test_target_screen.ScreenTests.test_full_persistence_static_reset_and_instance_order_isolation) ... ok
+test_online_and_posthoc_separate_and_evaluator_equivalence (test_target_screen.ScreenTests.test_online_and_posthoc_separate_and_evaluator_equivalence) ... ok
+test_prediction_quantization_matches_original_evaluator (test_target_screen.ScreenTests.test_prediction_quantization_matches_original_evaluator) ... ok
+test_procedural_job_completes_online_before_any_mask (test_target_screen.ScreenTests.test_procedural_job_completes_online_before_any_mask) ... ok
+test_real_factory_trusted_loader_fresh_instances (test_target_screen.ScreenTests.test_real_factory_trusted_loader_fresh_instances) ... ok
+test_running_worker_wall_cap_kills_only_owned_process (test_target_screen.ScreenTests.test_running_worker_wall_cap_kills_only_owned_process) ... ok
+test_same_content_rewrite_is_not_immutable (test_target_screen.ScreenTests.test_same_content_rewrite_is_not_immutable) ... ok
+test_scheduler_all_24_fresh_jobs_three_lanes_and_report (test_target_screen.ScreenTests.test_scheduler_all_24_fresh_jobs_three_lanes_and_report) ... ok
+test_serial_scheduler_preserves_frozen_job_list (test_target_screen.ScreenTests.test_serial_scheduler_preserves_frozen_job_list) ... ok
+test_target_reader_paths_after_read_and_label_capability (test_target_screen.ScreenTests.test_target_reader_paths_after_read_and_label_capability) ... ok
+test_traversal_symlink_hardlink_and_output_isolation (test_target_screen.ScreenTests.test_traversal_symlink_hardlink_and_output_isolation) ... ok
+test_trusted_loader_and_context_hashes (test_target_screen.ScreenTests.test_trusted_loader_and_context_hashes) ... ok
+test_worker_first_error_survives_after_check_failure (test_target_screen.ScreenTests.test_worker_first_error_survives_after_check_failure) ... ok
+test_wrong_registration_recurrence_and_inventory_hash (test_target_screen.ScreenTests.test_wrong_registration_recurrence_and_inventory_hash) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 5.250s
+
+OK
+TARGET_SCREEN_CPU_RESULT {"tests": 21, "failures": 0, "errors": 0, "skipped": 0, "exit_code": 0, "wall_seconds": 5.274905083002523, "cpu_user_seconds": 2.050285, "cpu_system_seconds": 0.677785, "peak_RSS": 286310400, "peak_RSS_unit": "bytes", "python": "3.12.9", "torch": "2.6.0", "physical_calls": {"backward": 0, "VJP": 0, "Adam": 0, "AdamW": 0, "synthetic_checkpoint_loads": 19, "synthetic_image_mask_decodes": 6}, "procedural_counts": {"backbone_forwards": 45, "appearance_MLP": 21, "method_MLP": 42, "spectral_norms": 28, "cholesky_solves": 42, "ISTA_iterations": 35, "IRLS_iterations": 21}, "hash_cost": {"tensor_digest_calls": 200, "tensor_bytes": 40244000, "wall_ns": 26134911, "cpu_ns": 51011000, "context_build_calls": 100, "context_wall_ns": 59575462, "context_cpu_ns": 117250000}, "real_RGB_mask_decodes": 0, "real_checkpoint_deserializations": 0, "GPU_queries_or_initializations": 0, "real_source_training": false, "target_execution_layer_review": "NOT_RUN"}

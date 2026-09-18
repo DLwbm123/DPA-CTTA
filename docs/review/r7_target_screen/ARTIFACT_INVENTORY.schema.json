@@ -1,0 +1,214 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Exact SOURCE_PREP six-artifact deployment inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "A_FULL",
+    "A_STATIC",
+    "B_FULL",
+    "B_STATIC",
+    "C_FULL",
+    "C_STATIC"
+  ],
+  "properties": {
+    "A_FULL": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "training_asset_file_sha256",
+        "bytes",
+        "context_sha256",
+        "context_file_sha256"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "const": "A_FULL.pt"
+        },
+        "training_asset_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "context_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "A_STATIC": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "training_asset_file_sha256",
+        "bytes",
+        "context_sha256",
+        "context_file_sha256"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "const": "A_STATIC.pt"
+        },
+        "training_asset_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "context_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "B_FULL": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "training_asset_file_sha256",
+        "bytes",
+        "context_sha256",
+        "context_file_sha256"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "const": "B_FULL.pt"
+        },
+        "training_asset_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "context_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "B_STATIC": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "training_asset_file_sha256",
+        "bytes",
+        "context_sha256",
+        "context_file_sha256"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "const": "B_STATIC.pt"
+        },
+        "training_asset_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "context_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "C_FULL": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "training_asset_file_sha256",
+        "bytes",
+        "context_sha256",
+        "context_file_sha256"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "const": "C_FULL.pt"
+        },
+        "training_asset_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "context_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "C_STATIC": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "training_asset_file_sha256",
+        "bytes",
+        "context_sha256",
+        "context_file_sha256"
+      ],
+      "properties": {
+        "file": {
+          "type": "string",
+          "const": "C_STATIC.pt"
+        },
+        "training_asset_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "context_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "context_file_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  }
+}

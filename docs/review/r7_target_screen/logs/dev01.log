@@ -1,0 +1,22 @@
+test_already_exited_worker_terminal_resource_audit (test_target_screen.ScreenTests.test_already_exited_worker_terminal_resource_audit) ... ok
+test_disabled_all_scopes_before_reads (test_target_screen.ScreenTests.test_disabled_all_scopes_before_reads) ... ok
+test_exact_authority_code_resource_and_matrix_binding (test_target_screen.ScreenTests.test_exact_authority_code_resource_and_matrix_binding) ... ok
+test_exact_nominal_counts_and_schedule (test_target_screen.ScreenTests.test_exact_nominal_counts_and_schedule) ... ok
+test_execution_first_survives_cleanup_and_evidence_no_retry (test_target_screen.ScreenTests.test_execution_first_survives_cleanup_and_evidence_no_retry) ... {"evidence_error": {"type": "OSError", "message": "evidence failure"}, "first_error": {"type": "RuntimeError", "message": "worker nonzero exit 7"}}
+{"evidence_error": {"type": "OSError", "message": "evidence failure"}, "first_error": {"type": "RuntimeError", "message": "worker nonzero exit 7"}}
+ok
+test_finite_caps_gpu_unqualified (test_target_screen.ScreenTests.test_finite_caps_gpu_unqualified) ... ok
+test_full_persistence_static_reset_and_instance_order_isolation (test_target_screen.ScreenTests.test_full_persistence_static_reset_and_instance_order_isolation) ... ok
+test_online_and_posthoc_separate_and_evaluator_equivalence (test_target_screen.ScreenTests.test_online_and_posthoc_separate_and_evaluator_equivalence) ... ok
+test_scheduler_all_24_fresh_jobs_three_lanes_and_report (test_target_screen.ScreenTests.test_scheduler_all_24_fresh_jobs_three_lanes_and_report) ... ok
+test_target_reader_paths_after_read_and_label_capability (test_target_screen.ScreenTests.test_target_reader_paths_after_read_and_label_capability) ... ok
+test_traversal_symlink_hardlink_and_output_isolation (test_target_screen.ScreenTests.test_traversal_symlink_hardlink_and_output_isolation) ... ok
+test_trusted_loader_and_context_hashes (test_target_screen.ScreenTests.test_trusted_loader_and_context_hashes) ... ok
+test_worker_first_error_survives_after_check_failure (test_target_screen.ScreenTests.test_worker_first_error_survives_after_check_failure) ... ok
+test_wrong_registration_recurrence_and_inventory_hash (test_target_screen.ScreenTests.test_wrong_registration_recurrence_and_inventory_hash) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 2.075s
+
+OK
+TARGET_SCREEN_CPU_RESULT {"tests": 14, "failures": 0, "errors": 0, "skipped": 0, "exit_code": 0, "wall_seconds": 2.0990493330173194, "cpu_user_seconds": 1.5505769999999999, "cpu_system_seconds": 0.32928799999999997, "peak_RSS": 276054016, "peak_RSS_unit": "bytes", "python": "3.12.9", "torch": "2.6.0", "physical_calls": {"backward": 0, "VJP": 0, "Adam": 0, "AdamW": 0, "synthetic_checkpoint_loads": 7, "synthetic_image_mask_decodes": 3}, "procedural_counts": {"backbone_forwards": 31, "appearance_MLP": 15, "method_MLP": 30, "spectral_norms": 20, "cholesky_solves": 30, "ISTA_iterations": 25, "IRLS_iterations": 15}, "hash_cost": {"tensor_digest_calls": 120, "tensor_bytes": 24146400, "wall_ns": 16882797, "cpu_ns": 32348000, "context_build_calls": 60, "context_wall_ns": 38165875, "context_cpu_ns": 74214000}, "real_RGB_mask_decodes": 0, "real_checkpoint_deserializations": 0, "GPU_queries_or_initializations": 0, "real_source_training": false, "target_execution_layer_review": "NOT_RUN"}
