@@ -1,7 +1,7 @@
 {
   "status": "R7_TARGET_SCREEN_IMPLEMENTATION_READY_FOR_REVIEW",
-  "implementation_sha": "PENDING_FINAL_COMMIT",
-  "base_sha": "ecde8ba",
+  "implementation_sha": "9de62090fb921695aacd7d68027cf7ec853bcc47",
+  "base_sha": "ecde8ba63940eb5c660f4de01bd7a9300b18c15b",
   "SOURCE_PREP": "PENDING_EXTERNAL_ARTIFACT_REVIEW",
   "source_prep_dispatched_by_this_task": false,
   "artifact_identity": "PENDING",
@@ -20,6 +20,21 @@
   "scientific_winner_issued": false,
   "frozen_science_modified": false,
   "historical_166_suite_rerun": false,
-  "monitor": {"automation_id": "r7", "interval": "hourly", "status": "ACTIVE", "execution_authorization": false},
-  "stop": "Implementation delivery only. Wait for exact reviewed source release and external execution binding. Heartbeat may track readiness and authorized future work; it cannot issue PASS or bypass frozen scope."
+  "monitor": {
+    "automation_id": "r7",
+    "interval": "hourly",
+    "status": "ACTIVE",
+    "execution_authorization": false
+  },
+  "stop": "Implementation delivery only. Wait for exact reviewed source release and external execution binding. Heartbeat may track readiness and authorized future work; it cannot issue PASS or bypass frozen scope.",
+  "tests": {
+    "total": 114,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "screen": 23,
+    "r7": 59,
+    "reused_source_helpers": 32
+  },
+  "publication_branch": "review/r7-target-screen-execution-v1"
 }

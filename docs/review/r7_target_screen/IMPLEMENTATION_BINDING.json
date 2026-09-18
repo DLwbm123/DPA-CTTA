@@ -1,0 +1,37 @@
+{
+  "implementation_sha": "9de62090fb921695aacd7d68027cf7ec853bcc47",
+  "base_sha": "ecde8ba63940eb5c660f4de01bd7a9300b18c15b",
+  "executable_patch_paths": [
+    "src/dpa_ctta/r7_target_screen",
+    "scripts/r7/target_screen.py",
+    "scripts/r7/check_target_screen_cpu.py",
+    "tests/r7/test_target_screen.py",
+    "configs/r7_target_screen.authorization.disabled.json"
+  ],
+  "changed_files": [
+    "configs/r7_target_screen.authorization.disabled.json",
+    "docs/review/r7_target_screen/ARTIFACT_BINDING.md",
+    "docs/review/r7_target_screen/ARTIFACT_INVENTORY.schema.json",
+    "docs/review/r7_target_screen/CPU_RESULTS.json",
+    "docs/review/r7_target_screen/DELIVERY.json",
+    "docs/review/r7_target_screen/EXACT_24_JOB_MANIFEST.json",
+    "docs/review/r7_target_screen/ISOLATION_AND_FAILURE_EVIDENCE.md",
+    "docs/review/r7_target_screen/RESOURCE_PROPOSAL.json",
+    "docs/review/r7_target_screen/REVIEW_INDEX.md",
+    "docs/review/r7_target_screen/RUN_CPU.md",
+    "docs/review/r7_target_screen/SCHEDULER_PLAN.json",
+    "docs/review/r7_target_screen/logs/dev-r7.log",
+    "docs/review/r7_target_screen/logs/dev01.log",
+    "docs/review/r7_target_screen/logs/dev02.log",
+    "docs/review/r7_target_screen/logs/dev03.log",
+    "docs/review/r7_target_screen/logs/dev04.log",
+    "scripts/r7/check_target_screen_cpu.py",
+    "scripts/r7/target_screen.py",
+    "src/dpa_ctta/r7_target_screen/__init__.py",
+    "src/dpa_ctta/r7_target_screen/runner.py",
+    "tests/r7/test_target_screen.py"
+  ],
+  "protected_algorithm_source_and_science_files_changed": [],
+  "external_execution_layer_review": "NOT_RUN",
+  "publication_rule": "Bind exact clean launch HEAD; documentation-only descendant is not a new execution authorization."
+}

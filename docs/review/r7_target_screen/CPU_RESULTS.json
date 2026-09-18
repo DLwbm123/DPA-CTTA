@@ -232,5 +232,152 @@
       "wall_seconds": 34.27063516713679
     }
   },
-  "final": "PENDING_FIXED_SHA_RUN"
+  "final": {
+    "implementation_sha": "9de62090fb921695aacd7d68027cf7ec853bcc47",
+    "clean_checkout_at_start": true,
+    "suites": {
+      "screen": {
+        "tests": 23,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "exit_code": 0,
+        "wall_seconds": 5.233895208919421,
+        "cpu_user_seconds": 2.056726,
+        "cpu_system_seconds": 0.724192,
+        "peak_RSS": 302661632,
+        "peak_RSS_unit": "bytes",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "physical_calls": {
+          "backward": 0,
+          "VJP": 0,
+          "Adam": 0,
+          "AdamW": 0,
+          "synthetic_checkpoint_loads": 19,
+          "synthetic_image_mask_decodes": 6
+        },
+        "procedural_counts": {
+          "backbone_forwards": 45,
+          "appearance_MLP": 21,
+          "method_MLP": 42,
+          "spectral_norms": 28,
+          "cholesky_solves": 42,
+          "ISTA_iterations": 35,
+          "IRLS_iterations": 21
+        },
+        "hash_cost": {
+          "tensor_digest_calls": 200,
+          "tensor_bytes": 40244000,
+          "wall_ns": 28590630,
+          "cpu_ns": 55276000,
+          "context_build_calls": 100,
+          "context_wall_ns": 68013414,
+          "context_cpu_ns": 131419000
+        },
+        "real_RGB_mask_decodes": 0,
+        "real_checkpoint_deserializations": 0,
+        "GPU_queries_or_initializations": 0,
+        "real_source_training": false,
+        "target_execution_layer_review": "NOT_RUN"
+      },
+      "r7": {
+        "GPU_queries_or_initializations": 0,
+        "context_hash_cost": {
+          "context_build_calls": 199,
+          "context_cpu_ns": 1023812000,
+          "context_wall_ns": 516076327,
+          "cpu_ns": 866601000,
+          "tensor_bytes": 978899706,
+          "tensor_digest_calls": 407,
+          "wall_ns": 436904795
+        },
+        "cpu_system_seconds": 10.335229,
+        "cpu_user_seconds": 52.501832,
+        "errors": 0,
+        "exit_code": 0,
+        "external_review": "NOT_RUN",
+        "failures": 0,
+        "peak_RSS": 1844101120,
+        "peak_RSS_unit": "bytes",
+        "physical_calls": {
+          "AdamW_step": 6,
+          "Adam_step": 24,
+          "Tensor_backward": 36,
+          "autograd_grad": 2,
+          "old_backbone_forwards": 16
+        },
+        "platform": "Darwin arm64",
+        "procedural_counts": {
+          "IRLS_iterations": 105,
+          "ISTA_iterations": 240,
+          "appearance_MLP": 391,
+          "backbone_forwards": 479,
+          "calibration_Adam": 6,
+          "calibration_backward_calls": 6,
+          "cholesky_solves": 264,
+          "eigh": 4,
+          "method_MLP": 967,
+          "source_Adam": 16,
+          "source_AdamW": 6,
+          "source_VJP": 2,
+          "source_backward_calls": 22,
+          "spectral_norms": 181,
+          "svd": 1
+        },
+        "python": "3.12.9",
+        "real_asset_reads": 0,
+        "skipped": 0,
+        "tests": 59,
+        "torch": "2.6.0",
+        "wall_seconds": 31.93853091704659
+      },
+      "source": {
+        "tests": 32,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "exit_code": 0,
+        "wall_seconds": 1.3013445830438286,
+        "cpu_user_seconds": 0.5868540000000001,
+        "cpu_system_seconds": 0.526517,
+        "peak_RSS": 230391808,
+        "peak_RSS_unit": "bytes",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "physical_calls": {
+          "backward": 0,
+          "VJP": 0,
+          "Adam": 0,
+          "AdamW": 0,
+          "synthetic_checkpoint_loads": 5,
+          "synthetic_image_mask_decodes": 2
+        },
+        "procedural_counts": {
+          "backbone_forwards": 2,
+          "appearance_MLP": 1,
+          "method_MLP": 2,
+          "spectral_norms": 3,
+          "ISTA_iterations": 5
+        },
+        "hash_cost": {
+          "tensor_digest_calls": 28,
+          "tensor_bytes": 5634160,
+          "wall_ns": 3502375,
+          "cpu_ns": 6540000,
+          "context_build_calls": 14,
+          "context_wall_ns": 8497499,
+          "context_cpu_ns": 15640000
+        },
+        "real_RGB_mask_decodes": 0,
+        "real_checkpoint_deserializations": 0,
+        "GPU_queries_or_initializations": 0,
+        "real_source_training": false,
+        "source_execution_layer_review": "NOT_RUN"
+      }
+    },
+    "total_tests": 114,
+    "historical_166_rerun": false,
+    "scope": "LOCAL_CPU_SYNTHETIC_AND_PROCEDURAL_ONLY"
+  }
 }

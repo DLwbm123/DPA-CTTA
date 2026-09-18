@@ -1,0 +1,1282 @@
+diff --git a/configs/r7_target_screen.authorization.disabled.json b/configs/r7_target_screen.authorization.disabled.json
+new file mode 100644
+index 0000000..31452c3
+--- /dev/null
++++ b/configs/r7_target_screen.authorization.disabled.json
+@@ -0,0 +1,384 @@
++{
++  "schema": "R7_TARGET_SCREEN_AUTH_V1",
++  "scope": "TARGET_SCREEN",
++  "enabled": false,
++  "user_authorization": {
++    "granted": false,
++    "scope": "TARGET_SCREEN",
++    "receipt_id": null
++  },
++  "execution_layer_review": {
++    "status": "NOT_RUN",
++    "scope": "TARGET_SCREEN",
++    "reference": null,
++    "binding_sha256": null
++  },
++  "binding": {
++    "code_sha": null,
++    "science_sha256": {
++      "COMMON_PROTOCOL.json": "a18f51317b8547067f8383ebd1125eca1697b24ce6245ca5e2733e2daa28f42d",
++      "A_PSF.json": "5e8f62ab8a39806ef5aef2dbb5b0206255d9e49c33fa3bcd68c82e78e88410bf",
++      "B_RCA.json": "9895dba31443881e50bb87d4df94f83598c0069931b35d6d000e6c2b1e61fc61",
++      "C_RBE.json": "4151c86ebec9073bca570e696c45bbecc4f10e0505698989a0be41cbe2032e86"
++    },
++    "jobs": [
++      {
++        "job_id": "TARGET_SCREEN_C_BASE_0",
++        "arm": "C_BASE",
++        "order": 0,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 15608,
++        "backwards": 1951,
++        "Adam": 1951,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C0_0",
++        "arm": "C0",
++        "order": 0,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 1951,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_A_FULL_0",
++        "arm": "A_FULL",
++        "order": 0,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_A_STATIC_0",
++        "arm": "A_STATIC",
++        "order": 0,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_B_FULL_0",
++        "arm": "B_FULL",
++        "order": 0,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_B_STATIC_0",
++        "arm": "B_STATIC",
++        "order": 0,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C_FULL_0",
++        "arm": "C_FULL",
++        "order": 0,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C_STATIC_0",
++        "arm": "C_STATIC",
++        "order": 0,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C_BASE_1",
++        "arm": "C_BASE",
++        "order": 1,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 15608,
++        "backwards": 1951,
++        "Adam": 1951,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C0_1",
++        "arm": "C0",
++        "order": 1,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 1951,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_A_FULL_1",
++        "arm": "A_FULL",
++        "order": 1,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_A_STATIC_1",
++        "arm": "A_STATIC",
++        "order": 1,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_B_FULL_1",
++        "arm": "B_FULL",
++        "order": 1,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_B_STATIC_1",
++        "arm": "B_STATIC",
++        "order": 1,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C_FULL_1",
++        "arm": "C_FULL",
++        "order": 1,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C_STATIC_1",
++        "arm": "C_STATIC",
++        "order": 1,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C_BASE_4",
++        "arm": "C_BASE",
++        "order": 4,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 15608,
++        "backwards": 1951,
++        "Adam": 1951,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C0_4",
++        "arm": "C0",
++        "order": 4,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 1951,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_A_FULL_4",
++        "arm": "A_FULL",
++        "order": 4,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_A_STATIC_4",
++        "arm": "A_STATIC",
++        "order": 4,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_B_FULL_4",
++        "arm": "B_FULL",
++        "order": 4,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_B_STATIC_4",
++        "arm": "B_STATIC",
++        "order": 4,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C_FULL_4",
++        "arm": "C_FULL",
++        "order": 4,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      },
++      {
++        "job_id": "TARGET_SCREEN_C_STATIC_4",
++        "arm": "C_STATIC",
++        "order": 4,
++        "arrivals": 1951,
++        "scored_contents": 1695,
++        "network_forwards": 3902,
++        "backwards": 0,
++        "Adam": 0,
++        "VJP": 0,
++        "status": "NOT_RUN",
++        "device": null
++      }
++    ],
++    "seed": 20260907,
++    "resources": {
++      "device": "cpu",
++      "physical_GPU_ids": null,
++      "runtime": null,
++      "dtype_policy": "R7_CPU_FP32_MODEL_FP64_LATENT_V1",
++      "workers": 1,
++      "threads": 2,
++      "retry": false,
++      "resume": false,
++      "wall_seconds": 345600,
++      "output_bytes": 7516192768,
++      "job_wall_seconds": 14400,
++      "job_output_bytes": 268435456,
++      "max_asset_bytes": 536870912,
++      "max_image_pixels": 16777216,
++      "storage_root": null,
++      "resource_authorization": null
++    },
++    "registration": {
++      "path": null,
++      "sha256": null
++    },
++    "registration_digest": null,
++    "recurrence_digest": null,
++    "inventory": {
++      "path": null,
++      "sha256": null
++    },
++    "source_release": {
++      "status": "PENDING",
++      "artifact_identity": "PENDING",
++      "external_review_reference": null,
++      "trusted_loader_verified": false,
++      "manifest_sha256": null,
++      "split_sha256": null
++    },
++    "checkpoint": {
++      "path": null,
++      "sha256": null,
++      "bytes": null
++    },
++    "target_root": null,
++    "artifact_root": null,
++    "output_dir": null
++  }
++}
+diff --git a/scripts/r7/check_target_screen_cpu.py b/scripts/r7/check_target_screen_cpu.py
+new file mode 100644
+index 0000000..9b27af5
+--- /dev/null
++++ b/scripts/r7/check_target_screen_cpu.py
+@@ -0,0 +1,50 @@
++"""Synthetic execution-layer acceptance; file decodes/loads use BytesIO only."""
++import io,json,os,platform,resource,sys,time,unittest,subprocess
++from contextlib import ExitStack
++from pathlib import Path
++from unittest.mock import patch
++os.environ['CUDA_VISIBLE_DEVICES']='';os.environ['PYTHONDONTWRITEBYTECODE']='1'
++import torch
++from PIL import Image
++from dpa_ctta.r7_shared.numerics import COUNTS
++from dpa_ctta.r7_shared.context import HASH_COST
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses();torch.set_num_threads(2)
++root=Path(__file__).resolve().parents[2];sys.path.insert(0,str(root/'tests/r7'))
++calls=dict(backward=0,VJP=0,Adam=0,AdamW=0,synthetic_checkpoint_loads=0,synthetic_image_mask_decodes=0)
++for obj,name,key in [(torch.Tensor,'backward','backward'),(torch.autograd,'grad','VJP'),(torch.optim.Adam,'step','Adam'),(torch.optim.AdamW,'step','AdamW')]:
++ original=getattr(obj,name)
++ def wrapped(*a,_fn=original,_key=key,**kw):calls[_key]+=1;return _fn(*a,**kw)
++ setattr(obj,name,wrapped)
++original_load=torch.load;original_open=Image.open
++
++def load(source,*args,**kw):
++ if not isinstance(source,io.BytesIO):raise AssertionError('only synthetic in-memory checkpoint allowed')
++ calls['synthetic_checkpoint_loads']+=1;return original_load(source,*args,**kw)
++def image(source,*args,**kw):
++ if not isinstance(source,io.BytesIO):raise AssertionError('only encoded synthetic bytes allowed')
++ calls['synthetic_image_mask_decodes']+=1;return original_open(source,*args,**kw)
++from dpa_ctta.r7_source_prep import registry, runner as source_runner
++from dpa_ctta.r7_target_screen import runner as screen_runner
++original_verified=registry.verified
++
++def procedural_verified(path,*args,**kwargs):
++ p=Path(path).absolute()
++ if not any(a.name.startswith('screen-procedural-') for a in p.parents) and not p.is_relative_to(root/'docs/review/r7/input/specs'):
++  raise AssertionError('acceptance forbids real asset reads')
++ return original_verified(path,*args,**kwargs)
++
++print('IMPLEMENTATION_SHA '+subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),flush=True)
++print('ARGV_AUDIT '+subprocess.check_output(['ps','-ww','-p',str(os.getpid()),'-o','args='],text=True).strip(),flush=True)
++start=time.monotonic();before=resource.getrusage(resource.RUSAGE_SELF)
++with ExitStack() as stack:
++ for module in (registry,source_runner,screen_runner):stack.enter_context(patch.object(module,'verified',side_effect=procedural_verified))
++ for name in ('_lazy_init','init','device_count','get_device_properties','is_available'):
++  stack.enter_context(patch('torch.cuda.'+name,return_value=False) if name=='is_available' else patch('torch.cuda.'+name,side_effect=AssertionError('GPU forbidden')))
++ stack.enter_context(patch('torch.load',side_effect=load));stack.enter_context(patch('PIL.Image.open',side_effect=image))
++ result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromName('test_target_screen'))
++after=resource.getrusage(resource.RUSAGE_SELF)
++r=dict(tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),exit_code=int(not result.wasSuccessful()),wall_seconds=time.monotonic()-start,cpu_user_seconds=after.ru_utime-before.ru_utime,cpu_system_seconds=after.ru_stime-before.ru_stime,peak_RSS=after.ru_maxrss,peak_RSS_unit='bytes' if sys.platform=='darwin' else 'KiB',python=platform.python_version(),torch=torch.__version__,physical_calls=calls,procedural_counts=dict(COUNTS),hash_cost=dict(HASH_COST),real_RGB_mask_decodes=0,real_checkpoint_deserializations=0,GPU_queries_or_initializations=0,real_source_training=False,target_execution_layer_review='NOT_RUN')
++print('TARGET_SCREEN_CPU_RESULT '+json.dumps(r),flush=True)
++if os.environ.get('TARGET_SCREEN_CPU_RESULT'):Path(os.environ['TARGET_SCREEN_CPU_RESULT']).write_text(json.dumps(r,indent=2)+'\n')
++raise SystemExit(r['exit_code'])
+diff --git a/scripts/r7/target_screen.py b/scripts/r7/target_screen.py
+new file mode 100644
+index 0000000..83da22c
+--- /dev/null
++++ b/scripts/r7/target_screen.py
+@@ -0,0 +1,7 @@
++"""Neutral environment-selected entry. No CLI auto-scope or resume switches."""
++import os
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses()
++from dpa_ctta.r7_target_screen.runner import main, child_entry
++if __name__ == '__main__':
++    (child_entry if os.environ.get('SCREEN_CHILD') == '1' else main)()
+diff --git a/src/dpa_ctta/r7_target_screen/__init__.py b/src/dpa_ctta/r7_target_screen/__init__.py
+new file mode 100644
+index 0000000..59d2ab2
+--- /dev/null
++++ b/src/dpa_ctta/r7_target_screen/__init__.py
+@@ -0,0 +1 @@
++"""Separately reviewed, disabled-by-default TARGET_SCREEN execution shell."""
+diff --git a/src/dpa_ctta/r7_target_screen/runner.py b/src/dpa_ctta/r7_target_screen/runner.py
+new file mode 100644
+index 0000000..5905fdd
+--- /dev/null
++++ b/src/dpa_ctta/r7_target_screen/runner.py
+@@ -0,0 +1,477 @@
++"""Finite screen only. No source preparation, retries, resume or follow-on scopes.
++
++Authority files are externally reviewed inputs, not signatures or self-issued
++permissions. CPU is the existing tensor route; CUDA remains fail-closed.
++"""
++import copy
++import io
++import json
++import os
++import platform
++import signal
++import subprocess
++import sys
++import time
++from collections import Counter
++from pathlib import Path
++
++import numpy as np
++import torch
++
++from ..r7_shared.context import SCIENCE, json_digest, validate_context
++from ..r7_shared.io import checked_path
++from ..r7_shared.plan import matrix, dry_run
++from ..r7_shared.host import OnlineHost
++from ..r7_shared.report import review as report
++from ..r7_source_prep.registry import verified, ordinary, digest, sha
++from ..r7_source_prep.runner import (code_identity, load_model, load_artifact,
++    BudgetOutput as _BudgetOutput, resource_check as _resource_check, cleanup_owned, TERMINAL_RESERVE)
++from ..r3.plan import stream
++
++ROOT = Path(__file__).resolve().parents[3]
++SCOPE = 'TARGET_SCREEN'
++ARMS = [j['arm'] for j in matrix(SCOPE)[:8]]
++METHODS = set(ARMS) - {'C_BASE', 'C0'}
++SEED = 20260907
++
++
++class BudgetOutput(_BudgetOutput):
++    """Retain reviewed byte/evidence limits, additionally pin the owned directory."""
++    def check_root(self):
++        path = checked_path(self.path)
++        st = path.stat(); identity = (st.st_dev, st.st_ino)
++        if getattr(self, '_directory_identity', identity) != identity:
++            raise ValueError('owned output directory replaced')
++        self._directory_identity = identity
++
++    def bytes(self, name, data):
++        self.check_root()
++        return super().bytes(name, data)
++
++    def evidence(self, name, value):
++        self.check_root()
++        return super().evidence(name, value)
++
++
++def resource_check(out, caps, started, reserve=TERMINAL_RESERVE):
++    out.check_root()
++    return _resource_check(out, caps, started, reserve)
++
++
++def schedule(workers):
++    if type(workers) is not int or workers not in (1, 3):
++        raise ValueError('review either one serial worker or three order workers')
++    jobs = matrix(SCOPE)
++    return [jobs] if workers == 1 else [[j for j in jobs if j['order'] == o] for o in (0, 1, 4)]
++
++
++def runtime():
++    return dict(python=platform.python_version(), torch=torch.__version__,
++                system=platform.system(), machine=platform.machine(), hostname=platform.node(), cpu_count=os.cpu_count(), threads=2)
++
++
++def device_policy(config):
++    # No .cuda(), discovery, smoke or numeric qualification is implicit here.
++    if config.get('device') != 'cpu' or config.get('physical_GPU_ids') is not None:
++        raise PermissionError('GPU route unqualified; separate smoke/numeric review required')
++    if config.get('runtime') != runtime() or config.get('dtype_policy') != 'R7_CPU_FP32_MODEL_FP64_LATENT_V1':
++        raise ValueError('exact runtime/dtype binding')
++    schedule(config.get('workers'))
++    if config.get('threads') != 2 or config.get('retry') is not False or config.get('resume') is not False:
++        raise ValueError('two threads, no retry/resume')
++    for k in ('wall_seconds', 'output_bytes', 'job_wall_seconds', 'job_output_bytes', 'max_asset_bytes', 'max_image_pixels'):
++        if type(config.get(k)) is not int or config[k] <= 0:
++            raise ValueError('finite positive integer resource caps')
++    if config['job_output_bytes'] <= 2 * TERMINAL_RESERVE:
++        raise ValueError('terminal evidence reserve')
++    if config['output_bytes'] < 24 * config['job_output_bytes'] + 2 * TERMINAL_RESERVE:
++        raise ValueError('aggregate output cap must cover all job caps and report reserve')
++
++
++def confined(root, path):
++    root = checked_path(root)
++    p = checked_path(path)
++    if p == root or not p.is_relative_to(root):
++        raise ValueError('target path outside approved root')
++    ordinary(p)
++    return p
++
++
++def disjoint(a, b):
++    a, b = Path(a), Path(b)
++    if a == b or a in b.parents or b in a.parents:
++        raise ValueError('input/output/code roots overlap')
++
++
++def preflight(receipt, *, owned_output=None):
++    # Fail before code probes, asset paths, output creation or device discovery.
++    if receipt.get('schema') != 'R7_TARGET_SCREEN_AUTH_V1' or receipt.get('scope') != SCOPE or receipt.get('enabled') is not True:
++        raise PermissionError('TARGET_SCREEN disabled by default')
++    auth = receipt.get('user_authorization', {})
++    if auth.get('granted') is not True or auth.get('scope') != SCOPE or not auth.get('receipt_id'):
++        raise PermissionError('new exact-scope authorization required')
++    binding = receipt['binding']
++    external = receipt.get('execution_layer_review', {})
++    if (external.get('status') != 'PASS' or external.get('scope') != SCOPE
++            or not external.get('reference') or external.get('binding_sha256') != json_digest(binding)):
++        raise PermissionError('external execution review binding')
++    if binding['code_sha'] != code_identity() or binding['science_sha256'] != SCIENCE:
++        raise ValueError('exact clean code/science binding')
++    for name, expected in SCIENCE.items():
++        verified(ROOT/'docs/review/r7/input/specs'/name, expected, 1024**2)
++    if binding['jobs'] != matrix(SCOPE) or binding['seed'] != SEED:
++        raise ValueError('exact frozen matrix/seed')
++    cfg = binding['resources']; device_policy(cfg)
++    if cfg.get('resource_authorization') != {'scope': SCOPE, 'receipt_id': auth['receipt_id']}:
++        raise PermissionError('resource authorization binding')
++    docs = {}
++    for key in ('registration', 'inventory'):
++        row = binding[key]
++        docs[key] = json.loads(verified(row['path'], row['sha256'], 32*1024**2))
++    meta = dry_run(docs['registration'])
++    if binding['registration_digest'] != meta['recurrence']['registration_digest'] or binding['recurrence_digest'] != meta['recurrence']['stream_digest']:
++        raise ValueError('registration/recurrence mismatch')
++    source = binding['source_release']
++    if (source.get('status') != 'REVIEWED' or source.get('artifact_identity') != binding['inventory']['sha256']
++            or not source.get('external_review_reference') or source.get('trusted_loader_verified') is not True):
++        raise PermissionError('source artifacts PENDING or not independently reviewed')
++    sha(source['manifest_sha256']); sha(source['split_sha256'])
++    if set(docs['inventory']) != METHODS:
++        raise ValueError('exact six released artifacts')
++    cp = binding['checkpoint']; registered = docs['registration']['checkpoint']
++    if cp['sha256'] != registered['sha256'] or cp['bytes'] != registered['bytes']:
++        raise ValueError('registered original checkpoint binding')
++    root = checked_path(binding['target_root']); artifact_root = checked_path(binding['artifact_root'])
++    storage = checked_path(cfg['storage_root']); out = checked_path(binding['output_dir'])
++    if owned_output is not None:
++        record = json.loads((out/'owner.json').read_text())
++        if record != dict(owner=owned_output, binding=dict(binding_sha256=json_digest(binding))):
++            raise ValueError('existing output ownership binding')
++    if not all(p.is_dir() for p in (root, artifact_root, storage)) or (out.exists() and owned_output is None) or not out.is_relative_to(storage):
++        raise ValueError('existing input/storage roots and fresh approved output required')
++    protected = [root, artifact_root, checked_path(cp['path']), checked_path(ROOT)]
++    protected += [checked_path(binding[k]['path']) for k in ('registration', 'inventory')]
++    for p in protected:
++        disjoint(out, p)
++    disjoint(root, artifact_root); disjoint(root, checked_path(cp['path']))
++    # Metadata/stat only; do not open target bytes during preflight.
++    for row in docs['registration']['target']:
++        if row['domain'] not in ('REFUGE', 'ORIGA', 'REFUGE_Valid', 'Drishti_GS'):
++            raise ValueError('source RGB/mask domain forbidden')
++        if np.prod(row['image_size']) > cfg['max_image_pixels']:
++            raise ValueError('decoded geometry cap')
++        for kind in ('image', 'mask'):
++            confined(root, row[kind+'_path'])
++    contexts = {}
++    for name, row in docs['inventory'].items():
++        if set(row) != {'file','training_asset_file_sha256','bytes','context_sha256','context_file_sha256'}:
++            raise ValueError('exact source inventory row schema')
++        if row['file'] != name+'.pt':
++            raise ValueError('artifact filename binding')
++        raw = verified(artifact_root/row['file'], row['training_asset_file_sha256'], cfg['max_asset_bytes'])
++        if len(raw) != row['bytes']: raise ValueError('artifact length binding')
++        context = json.loads(verified(artifact_root/(name+'.context.json'), row['context_file_sha256'], 1024**2))
++        validate_context(context)
++        src = context['payload']['source']; method = context['payload']['method']
++        if (context['sha256'] != row['context_sha256'] or src['source_binding_status'] != 'BOUND'
++                or src['checkpoint_file_sha256'] != cp['sha256'] or src['source_manifest_sha256'] != source['manifest_sha256']
++                or src['source_split_sha256'] != source['split_sha256'] or method['group'] != name[0]
++                or method['mode'] != name.split('_')[1] or context['payload']['ablation'] is not None):
++            raise ValueError('trusted artifact context/provenance binding')
++        contexts[name] = context
++    # Actual tensor loading uses load_artifact in each fresh job, not this metadata check.
++    return dict(receipt=copy.deepcopy(receipt), binding=copy.deepcopy(binding), config=cfg,
++                registration=docs['registration'], inventory=docs['inventory'], contexts=contexts)
++
++
++def file_identity(path):
++    _, st = ordinary(path)
++    return (st.st_dev, st.st_ino, st.st_size, st.st_mtime_ns, st.st_ctime_ns, st.st_nlink)
++
++
++class TargetReader:
++    """Image and label capabilities are distinct; online receives image records only."""
++    def __init__(self, root, limit, kind):
++        if kind not in ('image', 'mask'): raise ValueError('read capability')
++        self.root, self.limit, self.kind = root, limit, kind
++        self.used = {}; self.counts = Counter()
++
++    def read(self, row):
++        from ..source_io import read_pixels, read_mask
++        kind = self.kind
++        p = confined(self.root, row[kind+'_path'])
++        # Register attempted input BEFORE decode, so decode failures still get after-read audit.
++        identity = file_identity(p)
++        prior = self.used.setdefault(str(p), (row[kind+'_sha256'], identity))
++        if prior != (row[kind+'_sha256'], identity): raise ValueError('target identity changed')
++        raw = verified(p, row[kind+'_sha256'], self.limit, self.counts)
++        fn = read_pixels if kind == 'image' else read_mask
++        return fn(io.BytesIO(raw), 'fundus', row['image_size'])
++
++    def after_check(self):
++        for path, (expected, identity) in self.used.items():
++            confined(self.root, path)
++            if file_identity(path) != identity: raise ValueError('target changed after read')
++            verified(path, expected, self.limit, self.counts)
++
++
++def image_records(rows):
++    return [{k: r[k] for k in ('image_path', 'image_sha256', 'image_size')} for r in rows]
++
++
++def physical(trace, arm):
++    c = trace['counts']
++    value = dict(forwards=c.get('backbone_forwards', c.get('forwards', 0)),
++                 backwards=c.get('backwards', 0), Adam=c.get('base_adam', 0))
++    expected = dict(forwards=8 if arm == 'C_BASE' else 1 if arm == 'C0' else 2,
++                    backwards=int(arm == 'C_BASE'), Adam=int(arm == 'C_BASE'))
++    if value != expected: raise ValueError('per-visit frozen physical count mismatch')
++    return value
++
++
++def online(host, rows, reader, arm, out, check):
++    """No masks, evaluator, domain, subset or scores in this call graph.
++
++    Persist the exact >=0.5 decisions consumed by the existing evaluator. All
++    1951 visits are retained privately; report filters remaining_dev unchanged.
++    """
++    counts = Counter()
++    for index, row in enumerate(rows):
++        check(); pixels = reader.read(row)
++        logits, trace = host.step(pixels)
++        if logits.requires_grad or tuple(logits.shape) != (1, 2, 512, 512) or not torch.isfinite(logits).all():
++            raise ValueError('uncommitted or nonfinite prediction')
++        counts.update(physical(trace, arm))
++        bits = np.packbits((logits.detach().cpu().sigmoid() >= .5).numpy().reshape(-1)).tobytes()
++        out.bytes(f'prediction_{index:04d}.bits', bits)
++        check()
++    return dict(counts)
++
++
++def posthoc(rows, reader, arm, order, out, check):
++    from ..p1_analysis import evaluate
++    result = []
++    for index, row in enumerate(rows):
++        check()
++        raw = (out.path/f'prediction_{index:04d}.bits').read_bytes()
++        if len(raw) != 65536: raise ValueError('prediction dimensions')
++        probability = torch.from_numpy(np.unpackbits(np.frombuffer(raw, dtype=np.uint8)).copy()).float().reshape(1, 2, 512, 512)
++        metrics = evaluate(probability, reader.read(row), 'fundus')
++        result.append(dict(arm=arm, order=order, content=row['group_id'], domain=row['domain'],
++                           subset=row['subset'], dice=[m['dice'] for m in metrics], assd=[m['assd'] for m in metrics]))
++    out.write('scalars.private.json', result)
++    return result
++
++
++def make_host(approved, arm):
++    from ..source_pilot import seed_all
++    from ..b1_host import Host
++    binding = approved['binding']; cp = binding['checkpoint']
++    raw = verified(cp['path'], cp['sha256'], approved['config']['max_asset_bytes'])
++    if len(raw) != cp['bytes']: raise ValueError('checkpoint length')
++    seed_all(SEED)
++    if arm == 'C_BASE':
++        state = torch.load(io.BytesIO(raw), map_location='cpu', weights_only=True)
++        return Host('C', state, 'cpu'), state
++    segmenter = load_model(raw)
++    if arm == 'C0':
++        # Independent trusted environment from source release, no candidate-minted identity.
++        context = copy.deepcopy(approved['contexts']['A_FULL'])
++        context['payload']['method'] = dict(schema='R7_METHOD_DIGEST_V1', group='C0', mode='ZERO', weights_sha256=None)
++        context['sha256'] = json_digest(context['payload'])
++        return OnlineHost(segmenter, expected_context=context), None
++    return load_artifact(segmenter, arm, binding['artifact_root'], approved['inventory'], approved['config']['max_asset_bytes']), None
++
++
++def error(exc): return dict(type=type(exc).__name__, message=str(exc)[:3000])
++
++
++def execute_job(approved, job, out):
++    cfg = approved['config']; b = approved['binding']; started = time.monotonic()
++    caps = dict(wall_seconds=cfg['job_wall_seconds'], output_bytes=cfg['job_output_bytes'])
++    check = lambda: resource_check(out, caps, started)
++    images = TargetReader(b['target_root'], cfg['max_asset_bytes'], 'image')
++    masks = TargetReader(b['target_root'], cfg['max_asset_bytes'], 'mask')
++    first = None; secondary = []; host = None
++    try:
++        rows = stream(approved['registration'], job['order'])
++        if len(rows) != job['arrivals'] or sum(r['subset']=='remaining_dev' for r in rows) != job['scored_contents']:
++            raise ValueError('job stream coverage')
++        host, state = make_host(approved, job['arm'])
++        counts = online(host, image_records(rows), images, job['arm'], out, check)
++        expected = dict(forwards=job['network_forwards'], backwards=job['backwards'], Adam=job['Adam'])
++        if counts != expected: raise ValueError('terminal physical counts')
++        if job['arm'] == 'C_BASE': host.finish(state)
++        else: host._check_frozen(boundary=True); host.segmenter.close()
++        # Drop all model/optimizer/state references before the first target mask read.
++        del host, state; host = None
++        posthoc(rows, masks, job['arm'], job['order'], out, check)
++        out.write('counts.json', counts)
++    except BaseException as exc:
++        first = exc
++    finally:
++        try:
++            if host is not None:
++                if hasattr(host, 'segmenter'): host.segmenter.close()
++                else:
++                    for h in host.handles: h.remove()
++        except BaseException as exc: secondary.append(error(exc)); first = first or exc
++        for reader in (images, masks):
++            try: reader.after_check()
++            except BaseException as exc: secondary.append(error(exc)); first = first or exc
++        # After-read metadata and checkpoint/artifacts remain immutable too.
++        try:
++            for key in ('registration', 'inventory', 'checkpoint'):
++                entry = b[key]; verified(entry['path'], entry['sha256'], cfg['max_asset_bytes'])
++            for name, row in approved['inventory'].items():
++                verified(Path(b['artifact_root'])/row['file'], row['training_asset_file_sha256'], cfg['max_asset_bytes'])
++                verified(Path(b['artifact_root'])/(name+'.context.json'), row['context_file_sha256'], 1024**2)
++            check()
++        except BaseException as exc: secondary.append(error(exc)); first = first or exc
++        records = [('worker.json', dict(status='FAILED' if first else 'JOB_PENDING_TERMINAL_AUDIT',
++                   target_after_check='FAILED' if secondary else 'UNCHANGED', secondary=secondary,
++                   image_IO=dict(images.counts), mask_IO=dict(masks.counts), wall_seconds=time.monotonic()-started, retry=False))]
++        if first: records.insert(0, ('first_error.json', error(first)))
++        for name, value in records:
++            try: out.evidence(name, value)
++            except BaseException as exc:
++                first = first or exc
++                try: print(json.dumps(dict(evidence_error=error(exc), first_error=error(first))), file=sys.stderr, flush=True)
++                except BaseException: pass
++    if first: raise first
++
++
++def terminal(record, cfg):
++    """Always reap and audit, including already-exited/nonzero workers."""
++    if record.get('terminal_done'):
++        if record.get('terminal_first') is not None: raise record['terminal_first']
++        return record['terminal_errors']
++    first = None; failures = []
++    process = record['process']
++    if process.poll() not in (None, 0): first = RuntimeError('worker nonzero exit '+str(process.returncode))
++    for fn in (lambda: cleanup_owned(record), lambda: resource_check(record['out'],
++               dict(wall_seconds=cfg['job_wall_seconds'], output_bytes=cfg['job_output_bytes']), record['started'])):
++        try: fn()
++        except BaseException as exc: failures.append(error(exc)); first = first or exc
++    record.update(terminal_done=True, terminal_first=first, terminal_errors=failures)
++    if first: raise first
++    return failures
++
++
++def supervise(approved, out, start):
++    """At most three live jobs, one per order lane. Fresh OS process per job."""
++    cfg = approved['config']; queues = schedule(cfg['workers']); active = {}; completed = []
++    started = time.monotonic(); first = None; secondary = []; handlers = {}
++    pending_signal = None
++    def interrupted(signum, frame):
++        nonlocal pending_signal
++        pending_signal = signum
++    def check_signal():
++        if pending_signal is not None: raise InterruptedError('screen supervisor signal '+str(pending_signal))
++    try:
++        for sig in (signal.SIGINT, signal.SIGTERM): handlers[sig] = signal.signal(sig, interrupted)
++        while active or any(queues):
++            check_signal()
++            resource_check(out, cfg, started)
++            # Audit every current worker BEFORE permitting any next dispatch.
++            for slot, rec in list(active.items()):
++                if rec['process'].poll() is None:
++                    resource_check(rec['out'], dict(wall_seconds=cfg['job_wall_seconds'], output_bytes=cfg['job_output_bytes']), rec['started'])
++                    continue
++                terminal(rec, cfg)
++                rec['out'].evidence('terminal.json', dict(exit_code=rec['process'].returncode, cleaned=rec.get('cleaned', False), errors=rec['terminal_errors']))
++                summary = json.loads((rec['out'].path/'worker.json').read_text())
++                if summary['status'] != 'JOB_PENDING_TERMINAL_AUDIT' or summary['target_after_check'] != 'UNCHANGED':
++                    raise ValueError('worker after-read evidence absent/failed')
++                rec['out'].evidence('completion.pending.json', dict(job=rec['job'], worker=slot, status='JOB_COMPLETE', terminal_resource_audit=True))
++                resource_check(rec['out'], dict(wall_seconds=cfg['job_wall_seconds'], output_bytes=cfg['job_output_bytes']), rec['started'], reserve=0)
++                (rec['out'].path/'completion.pending.json').rename(rec['out'].path/'completion.json')
++                completed.append(rec['job']); del active[slot]
++            for slot, queue in enumerate(queues):
++                check_signal()
++                if any(rec['process'].poll() not in (None, 0) for rec in active.values()):
++                    raise RuntimeError('worker nonzero exit '+str(next(rec['process'].returncode for rec in active.values() if rec['process'].returncode not in (None, 0))))
++                if slot in active or not queue: continue
++                job = queue.pop(0)
++                job_out = BudgetOutput(out.path/job['job_id'], dict(binding_sha256=json_digest(approved['binding']), job=job, worker=slot), cfg['job_output_bytes'])
++                rec = dict(job=job, out=job_out, started=time.monotonic())
++                rec['process'] = start(slot, job, job_out)
++                active[slot] = rec  # Own it before any fallible persistence.
++                check_signal()
++                job_out.write('process.json', dict(pid=rec['process'].pid, pgid=rec['process'].pid, worker=slot))
++            if active: time.sleep(.1)
++        rows = []
++        for job in matrix(SCOPE): rows.extend(json.loads((out.path/job['job_id']/'scalars.private.json').read_text()))
++        out.write('report.json', report(rows))
++    except BaseException as exc: first = exc
++    finally:
++        for sig in handlers: signal.signal(sig, signal.SIG_IGN)
++        for rec in active.values():
++            try: terminal(rec, cfg)
++            except BaseException as exc: secondary.append(dict(job=rec['job']['job_id'], first=error(exc), terminal=rec.get('terminal_errors', []))); first = first or exc
++        for sig, old in handlers.items(): signal.signal(sig, old)
++        try: resource_check(out, cfg, started)
++        except BaseException as exc: secondary.append(error(exc)); first = first or exc
++        records = [('supervisor.json', dict(complete=first is None, completed_jobs=completed, retry=False, secondary=secondary))]
++        if first: records.insert(0, ('supervisor.first_error.json', error(first)))
++        for name, value in records:
++            try: out.evidence(name, value)
++            except BaseException as exc:
++                first = first or exc
++                try: print(json.dumps(dict(evidence_error=error(exc), first_error=error(first))), file=sys.stderr, flush=True)
++                except BaseException: pass
++    if first: raise first
++    # Matrix completion also waits for all terminal evidence and report bytes.
++    out.evidence('completion.pending.json', dict(status='TARGET_SCREEN_COMPLETE_PENDING_SCIENTIFIC_REVIEW', jobs=24, automatic_nomination=False, next_execution_authorized=False))
++    resource_check(out, cfg, started, reserve=0)
++    (out.path/'completion.pending.json').rename(out.path/'completion.json')
++
++
++def process_audit(out):
++    command = subprocess.check_output(['ps', '-ww', '-p', str(os.getpid()), '-o', 'args='], text=True).strip()
++    from ..b3_runtime import FORBIDDEN
++    if any(word in command.lower() for word in FORBIDDEN): raise ValueError('non-neutral process command')
++    out.write('process_audit.json', dict(command=command, neutral=True, GPU_execution=False))
++
++
++def main():
++    path = os.environ.get('SCREEN_RECEIPT')
++    if not path: raise PermissionError('no receipt; TARGET_SCREEN disabled')
++    receipt = json.loads(Path(path).read_bytes()); approved = preflight(receipt)
++    b = approved['binding']; cfg = approved['config']
++    out = BudgetOutput(b['output_dir'], dict(binding_sha256=json_digest(b)), cfg['output_bytes'])
++    from ..b3_runtime import ENTRY
++    process_audit(out)
++    out.write('authorization.json', receipt)
++    def start(slot, job, job_out):
++        env = dict(os.environ, RUN_FILE=str(ROOT/'scripts/r7/target_screen.py'), SCREEN_CHILD='1',
++                   SCREEN_RECEIPT=str(out.path/'authorization.json'), SCREEN_JOB=job['job_id'],
++                   SCREEN_SLOT=str(slot), SCREEN_PARENT_OWNER=job_out.owner,
++                   CUDA_VISIBLE_DEVICES='', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2', PYTHONDONTWRITEBYTECODE='1')
++        with (job_out.path/'worker.log').open('xb') as log:
++            return subprocess.Popen([sys.executable, '-c', ENTRY], cwd=ROOT, env=env,
++                                    stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
++    supervise(approved, out, start)
++
++
++def child_entry():
++    # Parent-created root is expected; revalidate original authority except freshness
++    # via explicit ownership, never by weakening public preflight's fresh-output gate.
++    receipt = json.loads(Path(os.environ['SCREEN_RECEIPT']).read_bytes())
++    b = receipt['binding']; root = checked_path(b['output_dir'])
++    owner = json.loads((root/'owner.json').read_text())
++    if owner['binding'] != dict(binding_sha256=json_digest(b)): raise ValueError('parent binding')
++    approved = preflight(receipt, owned_output=owner['owner'])
++    slot = int(os.environ['SCREEN_SLOT']); job_id = os.environ['SCREEN_JOB']
++    jobs = schedule(approved['config']['workers'])
++    if slot not in range(len(jobs)): raise ValueError('worker slot')
++    job = next((j for j in jobs[slot] if j['job_id'] == job_id), None)
++    if job is None: raise ValueError('job/worker assignment')
++    p = checked_path(root/job_id); record = json.loads((p/'owner.json').read_text())
++    expected = dict(binding_sha256=json_digest(b), job=job, worker=slot)
++    if record != dict(owner=os.environ['SCREEN_PARENT_OWNER'], binding=expected): raise ValueError('job ownership')
++    out = object.__new__(BudgetOutput); out.path=p; out.owner=record['owner']; out.binding=expected
++    out.limit=approved['config']['job_output_bytes']; out.used=0; out.started=time.monotonic()
++    torch.set_num_threads(2); torch.set_default_dtype(torch.float32)
++    process_audit(out)
++    execute_job(approved, job, out)
+diff --git a/tests/r7/test_target_screen.py b/tests/r7/test_target_screen.py
+new file mode 100644
+index 0000000..70a5d9a
+--- /dev/null
++++ b/tests/r7/test_target_screen.py
+@@ -0,0 +1,327 @@
++"""Only temporary procedural files/tensors. No real target registrations used."""
++import copy
++import io
++import json
++import os
++import subprocess
++import sys
++import tempfile
++import time
++import unittest
++from collections import Counter
++from pathlib import Path
++from types import SimpleNamespace
++from unittest.mock import patch
++
++import torch
++from PIL import Image
++from common import segmenter, method, pixels
++from dpa_ctta.r7_shared.context import provenance, json_digest
++from dpa_ctta.r7_shared.preparation import prepared_artifact
++from dpa_ctta.r7_shared.host import OnlineHost
++from dpa_ctta.r7_target_screen import runner as r
++
++
++class ScreenTests(unittest.TestCase):
++    def setUp(self):
++        self.temp = tempfile.TemporaryDirectory(prefix='screen-procedural-'); self.addCleanup(self.temp.cleanup)
++        self.root = Path(self.temp.name).resolve()
++        for name in ('target', 'artifacts', 'storage'): (self.root/name).mkdir()
++        self.cfg = dict(device='cpu', physical_GPU_ids=None, runtime=r.runtime(),
++            dtype_policy='R7_CPU_FP32_MODEL_FP64_LATENT_V1', workers=3, threads=2,
++            retry=False, resume=False, wall_seconds=100, output_bytes=24*1024**2+2*r.TERMINAL_RESERVE,
++            job_wall_seconds=20, job_output_bytes=1024**2, max_asset_bytes=32*1024**2,
++            max_image_pixels=1024**2, storage_root=str(self.root/'storage'),
++            resource_authorization=dict(scope=r.SCOPE, receipt_id='procedural'))
++
++    def put(self, name, raw):
++        p = self.root/name; p.write_bytes(raw)
++        return dict(path=str(p), sha256=r.digest(raw), bytes=len(raw))
++
++    def fixture(self):
++        img = io.BytesIO(); Image.new('RGB', (8, 8), (80, 100, 120)).save(img, format='PNG')
++        mask = io.BytesIO(); Image.new('L', (8, 8), 255).save(mask, format='PNG')
++        image = self.put('target/image.png', img.getvalue()); label = self.put('target/mask.png', mask.getvalue())
++        cp = self.put('checkpoint.pt', b'procedural checkpoint metadata only')
++        row = dict(image_path=image['path'], mask_path=label['path'], image_sha256=image['sha256'], mask_sha256=label['sha256'], image_size=[8,8], domain='REFUGE', subset='remaining_dev', group_id='procedural')
++        reg = dict(checkpoint=cp, target=[row]); metadata = self.put('registration.json', json.dumps(reg).encode())
++        s = segmenter(); self.addCleanup(s.close)
++        src = provenance(); src.update(source_binding_status='BOUND', checkpoint_file_sha256=cp['sha256'], source_manifest_sha256='a'*64, source_split_sha256='b'*64)
++        inventory = {}
++        for name in sorted(r.METHODS):
++            m = method(name[0], name.endswith('STATIC')); m.freeze()
++            artifact = prepared_artifact(s, m, src)
++            data = io.BytesIO(); torch.save(dict(schema=artifact['schema'], weights=artifact['weights'], method_digest=artifact['method_digest']), data)
++            asset = self.put('artifacts/'+name+'.pt', data.getvalue())
++            context = self.put('artifacts/'+name+'.context.json', json.dumps(artifact['binding']).encode())
++            inventory[name] = dict(file=name+'.pt', bytes=asset['bytes'], training_asset_file_sha256=asset['sha256'], context_file_sha256=context['sha256'], context_sha256=artifact['binding']['sha256'])
++        inv = self.put('inventory.json', json.dumps(inventory).encode())
++        binding = dict(code_sha='f'*40, science_sha256=r.SCIENCE, jobs=r.matrix(r.SCOPE), seed=r.SEED,
++            resources=self.cfg, registration=metadata, inventory=inv, registration_digest='c'*64, recurrence_digest='d'*64,
++            source_release=dict(status='REVIEWED', artifact_identity=inv['sha256'], external_review_reference='procedural-only', trusted_loader_verified=True, manifest_sha256='a'*64, split_sha256='b'*64),
++            checkpoint=cp, target_root=str(self.root/'target'), artifact_root=str(self.root/'artifacts'), output_dir=str(self.root/'storage/run'))
++        receipt = dict(schema='R7_TARGET_SCREEN_AUTH_V1', scope=r.SCOPE, enabled=True,
++            user_authorization=dict(granted=True, scope=r.SCOPE, receipt_id='procedural'), binding=binding)
++        self.rebind(receipt)
++        return receipt, reg, s, inventory
++
++    def rebind(self, receipt):
++        receipt['execution_layer_review'] = dict(status='PASS', scope=r.SCOPE, reference='TEST_ONLY_NOT_AUTHORITY', binding_sha256=json_digest(receipt['binding']))
++
++    def approve_fixture(self, receipt):
++        with patch.object(r, 'code_identity', return_value='f'*40), patch.object(r, 'dry_run', return_value=dict(recurrence=dict(registration_digest='c'*64, stream_digest='d'*64))):
++            return r.preflight(receipt)
++
++    def test_disabled_all_scopes_before_reads(self):
++        with patch.object(r, 'verified', side_effect=AssertionError('no reads')), patch.object(r, 'code_identity', side_effect=AssertionError('no probes')):
++            for scope in ('TARGET_SCREEN','SOURCE_PREP','TARGET_MECHANISM','TARGET_EXTENSION','GPU_SMOKE'):
++                with self.assertRaises(PermissionError): r.preflight(dict(scope=scope, enabled=False))
++            with patch.dict(os.environ, {}, clear=True), self.assertRaises(PermissionError): r.main()
++
++    def test_exact_authority_code_resource_and_matrix_binding(self):
++        receipt, *_ = self.fixture(); self.approve_fixture(receipt)
++        mutations = [lambda x:x.update(scope='TARGET_MECHANISM'),
++            lambda x:x['execution_layer_review'].update(status='PENDING'),
++            lambda x:x['user_authorization'].update(granted=False),
++            lambda x:x['binding'].update(code_sha='0'*40),
++            lambda x:x['binding'].update(seed=0),
++            lambda x:x['binding']['jobs'].pop(),
++            lambda x:x['binding']['resources'].update(workers=2),
++            lambda x:x['binding']['resources'].update(retry=True),
++            lambda x:x['binding']['resources'].update(resume=True),
++            lambda x:x['binding']['source_release'].update(status='PENDING')]
++        for change in mutations:
++            candidate = copy.deepcopy(receipt); change(candidate)
++            # Code/config/matrix checks must reject even a synthetically matching review hash.
++            if candidate['scope']==r.SCOPE and candidate['execution_layer_review']['status']=='PASS': self.rebind(candidate)
++            with self.subTest(change=change), self.assertRaises((PermissionError, ValueError)): self.approve_fixture(candidate)
++        candidate=copy.deepcopy(receipt); candidate['binding']['resources']['wall_seconds']+=1
++        with self.assertRaises(PermissionError): self.approve_fixture(candidate)
++
++    def test_wrong_registration_recurrence_and_inventory_hash(self):
++        receipt, *_ = self.fixture()
++        for key in ('registration_digest','recurrence_digest'):
++            c=copy.deepcopy(receipt); c['binding'][key]='0'*64; self.rebind(c)
++            with self.assertRaises(ValueError): self.approve_fixture(c)
++        for key in ('registration','inventory'):
++            c=copy.deepcopy(receipt); c['binding'][key]['sha256']='0'*64; self.rebind(c)
++            with self.assertRaises(ValueError): self.approve_fixture(c)
++        # Actual frozen metadata validator rejects a synthetic replacement, without pixels.
++        with self.assertRaises(ValueError): r.dry_run({'target': []})
++
++    def test_trusted_loader_and_context_hashes(self):
++        receipt, _, s, inventory = self.fixture(); self.approve_fixture(receipt)
++        for name in sorted(r.METHODS):
++            host=r.load_artifact(s, name, self.root/'artifacts', inventory)
++            self.assertEqual(host.method.group, name[0]); self.assertEqual(host.method.static, name.endswith('STATIC'))
++        bad=copy.deepcopy(inventory); bad['A_FULL']['training_asset_file_sha256']='0'*64
++        with self.assertRaises(ValueError): r.load_artifact(s, 'A_FULL', self.root/'artifacts', bad)
++        bad=copy.deepcopy(inventory); bad['A_FULL']['context_sha256']='0'*64
++        with self.assertRaises(ValueError): r.load_artifact(s, 'A_FULL', self.root/'artifacts', bad)
++        changed=segmenter(); changed.model.seg_head.weight.data.add_(1)
++        with self.assertRaises(ValueError): r.load_artifact(changed, 'A_FULL', self.root/'artifacts', inventory)
++        changed.close()
++
++    def test_target_reader_paths_after_read_and_label_capability(self):
++        _, reg, _, _ = self.fixture(); row=reg['target'][0]
++        image=r.TargetReader(self.root/'target', 1024**2, 'image')
++        mask=r.TargetReader(self.root/'target', 1024**2, 'mask')
++        only=r.image_records([row])[0]; self.assertEqual(set(only), {'image_path','image_sha256','image_size'})
++        self.assertEqual(tuple(image.read(only).shape), (1,3,512,512))
++        with self.assertRaises(KeyError): mask.read(only)
++        image.after_check()
++        Path(row['image_path']).write_bytes(b'mutated')
++        with self.assertRaises(ValueError): image.after_check()
++
++    def test_traversal_symlink_hardlink_and_output_isolation(self):
++        p=self.root/'target/a'; p.write_bytes(b'x')
++        link=self.root/'target/link'; link.symlink_to(p)
++        for path in (link, self.root/'target/../target/a', self.root/'checkpoint'):
++            with self.assertRaises((ValueError,OSError)): r.confined(self.root/'target', path)
++        hard=self.root/'target/hard'; os.link(p, hard)
++        for path in (p,hard):
++            with self.assertRaises(ValueError): r.confined(self.root/'target',path)
++        receipt,*_=self.fixture()
++        for path in (self.root/'target/out', self.root/'artifacts/out', self.root/'storage'):
++            c=copy.deepcopy(receipt); c['binding']['output_dir']=str(path); self.rebind(c)
++            with self.assertRaises(ValueError): self.approve_fixture(c)
++        out=r.BudgetOutput(self.root/'storage/new', {}, 1024**2)
++        with self.assertRaises(FileExistsError): r.BudgetOutput(out.path, {}, 1024**2)
++        with self.assertRaises(ValueError): out.bytes('../escape',b'x')
++
++    def test_full_persistence_static_reset_and_instance_order_isolation(self):
++        for group in 'ABC':
++            s=segmenter(); full=method(group); full.freeze(); h=OnlineHost(s,full)
++            h.step(pixels()); before=copy.deepcopy(h.state); h.step(pixels(1))
++            self.assertEqual(h.state['counter'],2)
++            self.assertTrue(any(not torch.equal(before[k],v) for k,v in h.state.items() if isinstance(v,torch.Tensor)))
++            m=method(group,True); m.freeze(); hs=OnlineHost(s,m); hs.step(pixels()); a,_=hs.step(pixels(1))
++            independent=method(group,True); independent.freeze(); fresh=OnlineHost(s,independent); b,_=fresh.step(pixels(1))
++            self.assertTrue(torch.equal(a,b)); self.assertIsNot(hs.method,fresh.method)
++            self.assertIsNot(hs.state,fresh.state); self.assertEqual(h.visits,2); self.assertEqual(fresh.visits,1)
++            s.close()
++
++    def test_exact_nominal_counts_and_schedule(self):
++        jobs=r.matrix(r.SCOPE)
++        self.assertEqual((len(jobs),sum(j['arrivals'] for j in jobs),sum(j['network_forwards'] for j in jobs),sum(j['backwards'] for j in jobs),sum(j['Adam'] for j in jobs)),(24,46824,122913,5853,5853))
++        self.assertEqual(r.schedule(1),[jobs])
++        self.assertEqual([sum(j['network_forwards'] for j in lane) for lane in r.schedule(3)],[40971]*3)
++        self.assertEqual([set(j['order'] for j in lane) for lane in r.schedule(3)],[{0},{1},{4}])
++        self.assertEqual(r.physical(dict(counts=dict(forwards=8,backwards=1,base_adam=1)),'C_BASE'),dict(forwards=8,backwards=1,Adam=1))
++        with self.assertRaises(ValueError): r.physical(dict(counts=dict(forwards=7,backwards=1,base_adam=1)),'C_BASE')
++        for arm in r.ARMS:
++            f=8 if arm=='C_BASE' else 1 if arm=='C0' else 2
++            c=r.physical(dict(counts=dict(forwards=f,backwards=int(arm=='C_BASE'),base_adam=int(arm=='C_BASE'))),arm)
++            self.assertEqual(c['forwards']*1951,next(j for j in jobs if j['arm']==arm)['network_forwards'])
++
++    def test_online_and_posthoc_separate_and_evaluator_equivalence(self):
++        _,reg,_,_=self.fixture(); row=reg['target'][0]
++        s=segmenter(); h=OnlineHost(s); out=r.BudgetOutput(self.root/'storage/job',{},1024**2)
++        image=r.TargetReader(self.root/'target',1024**2,'image')
++        with patch('dpa_ctta.source_io.read_mask',side_effect=AssertionError('no label in online')):
++            counts=r.online(h,r.image_records([row]),image,'C0',out,lambda:None)
++        self.assertEqual(counts,dict(forwards=1,backwards=0,Adam=0))
++        h._check_frozen(boundary=True); s.close(); del h
++        scored=r.posthoc([row],r.TargetReader(self.root/'target',1024**2,'mask'),'C0',0,out,lambda:None)
++        self.assertEqual(len(scored),1); self.assertEqual(len(scored[0]['dice']),2)
++        self.assertEqual((out.path/'prediction_0000.bits').stat().st_size,65536)
++
++    def test_finite_caps_gpu_unqualified(self):
++        r.device_policy(self.cfg)
++        for key,value in [('wall_seconds',0),('job_wall_seconds',float('inf')),('output_bytes',1),('physical_GPU_ids',[0]),('device','cuda:0')]:
++            c=copy.deepcopy(self.cfg);c[key]=value
++            with self.assertRaises((PermissionError,ValueError)):r.device_policy(c)
++        out=r.BudgetOutput(self.root/'storage/job',{},1024**2)
++        with self.assertRaises(ValueError):out.bytes('large',b'x'*1024**2)
++        with self.assertRaises(TimeoutError):r.resource_check(out,dict(wall_seconds=1,output_bytes=1024**2),time.monotonic()-2)
++
++    def exited(self, out, code=0):
++        p=subprocess.Popen([sys.executable,'-c',f'raise SystemExit({code})'],start_new_session=True)
++        p.wait();return dict(process=p,out=out,started=time.monotonic())
++
++    def test_already_exited_worker_terminal_resource_audit(self):
++        out=r.BudgetOutput(self.root/'storage/job',{},1024**2);rec=self.exited(out)
++        (out.path/'rogue').write_bytes(b'x'*1024**2)
++        with self.assertRaises(ValueError):r.terminal(rec,self.cfg)
++        self.assertTrue(rec['terminal_done']);self.assertTrue(rec['cleaned'])
++        out2=r.BudgetOutput(self.root/'storage/job2',{},1024**2);rec=self.exited(out2);rec['started']-=30
++        with self.assertRaises(TimeoutError):r.terminal(rec,self.cfg)
++
++    def test_execution_first_survives_cleanup_and_evidence_no_retry(self):
++        approved=dict(config=self.cfg,binding={'procedural':True})
++        out=r.BudgetOutput(self.root/'storage/run',{},self.cfg['output_bytes']);calls=[]
++        def start(slot,job,job_out):
++            calls.append(job['job_id']);p=subprocess.Popen([sys.executable,'-c','raise SystemExit(7)'],start_new_session=True);p.wait();return p
++        with patch.object(r,'cleanup_owned',side_effect=RuntimeError('cleanup failure')), patch.object(out,'evidence',side_effect=OSError('evidence failure')):
++            with self.assertRaisesRegex(RuntimeError,'worker nonzero exit 7'):r.supervise(approved,out,start)
++        self.assertLessEqual(len(calls),3);self.assertEqual(len(set(calls)),len(calls))
++        self.assertFalse((out.path/'completion.json').exists())
++
++    def test_scheduler_all_24_fresh_jobs_three_lanes_and_report(self):
++        approved=dict(config=self.cfg,binding={'procedural':True})
++        out=r.BudgetOutput(self.root/'storage/run',{},self.cfg['output_bytes']);seen=[]
++        def start(slot,job,job_out):
++            seen.append((slot,job['job_id'],job_out.owner,job_out.path))
++            job_out.write('worker.json',dict(status='JOB_PENDING_TERMINAL_AUDIT',target_after_check='UNCHANGED'))
++            job_out.write('scalars.private.json',[dict(arm=job['arm'],order=job['order'],content='one',domain='REFUGE',subset='remaining_dev',dice=[.5,.6],assd=[None,1])])
++            return subprocess.Popen([sys.executable,'-c','pass'],start_new_session=True)
++        r.supervise(approved,out,start)
++        self.assertEqual(len(seen),24);self.assertEqual(len({x[2] for x in seen}),24);self.assertEqual(len({x[3] for x in seen}),24)
++        for slot in range(3):self.assertEqual([x[1] for x in seen if x[0]==slot],[j['job_id'] for j in r.schedule(3)[slot]])
++        result=json.loads((out.path/'report.json').read_text())
++        self.assertFalse(result['automatic_nomination']);self.assertFalse(result['next_execution_authorized'])
++        self.assertEqual({v['reference'] for v in result['paired']},{'C_BASE','A_STATIC','B_STATIC','C_STATIC'})
++        self.assertTrue(result['absolute'])
++        for _,_,_,p in seen:self.assertTrue((p/'terminal.json').exists());self.assertTrue((p/'completion.json').exists())
++
++    def test_worker_first_error_survives_after_check_failure(self):
++        receipt,reg,_,_=self.fixture();approved=self.approve_fixture(receipt)
++        out=r.BudgetOutput(self.root/'storage/job',{},1024**2)
++        job=copy.deepcopy(r.matrix(r.SCOPE)[0]);job.update(arrivals=1,scored_contents=1)
++        with patch.object(r,'stream',return_value=reg['target']),patch.object(r,'make_host',side_effect=RuntimeError('first online error')),patch.object(r.TargetReader,'after_check',side_effect=ValueError('after error')):
++            with self.assertRaisesRegex(RuntimeError,'first online error'):r.execute_job(approved,job,out)
++        self.assertEqual(json.loads((out.path/'first_error.json').read_text())['message'],'first online error')
++        self.assertEqual(json.loads((out.path/'worker.json').read_text())['status'],'FAILED')
++
++    def test_procedural_job_completes_online_before_any_mask(self):
++        receipt,reg,s,_=self.fixture();approved=self.approve_fixture(receipt)
++        out=r.BudgetOutput(self.root/'storage/job',{},1024**2)
++        job=copy.deepcopy(r.matrix(r.SCOPE)[1]);job.update(arrivals=1,scored_contents=1,network_forwards=1)
++        from dpa_ctta.source_io import read_mask
++        def label(*args,**kwargs):
++            self.assertEqual(s.handles,[])
++            return read_mask(*args,**kwargs)
++        with patch.object(r,'stream',return_value=reg['target']),patch.object(r,'make_host',return_value=(OnlineHost(s),None)),patch('dpa_ctta.source_io.read_mask',side_effect=label):
++            r.execute_job(approved,job,out)
++        result=json.loads((out.path/'worker.json').read_text())
++        self.assertEqual(result['status'],'JOB_PENDING_TERMINAL_AUDIT')
++        self.assertEqual(result['target_after_check'],'UNCHANGED')
++        self.assertFalse((out.path/'completion.json').exists())
++
++    def test_real_factory_trusted_loader_fresh_instances(self):
++        receipt,_,_,_=self.fixture();approved=self.approve_fixture(receipt)
++        with patch.object(r,'load_model',side_effect=lambda raw:segmenter()):
++            for arm in r.ARMS[1:]:
++                a,_=r.make_host(approved,arm);b,_=r.make_host(approved,arm)
++                self.assertIsNot(a.segmenter,b.segmenter)
++                if arm!='C0':
++                    self.assertIsNot(a.method,b.method);self.assertIsNot(a.state,b.state)
++                a.step(pixels());self.assertEqual(b.visits,0)
++                a.segmenter.close();b.segmenter.close()
++
++    def test_serial_scheduler_preserves_frozen_job_list(self):
++        cfg=copy.deepcopy(self.cfg);cfg['workers']=1
++        approved=dict(config=cfg,binding={'procedural':True});out=r.BudgetOutput(self.root/'storage/run',{},cfg['output_bytes']);seen=[]
++        def start(slot,job,job_out):
++            seen.append(job['job_id']);self.assertEqual(slot,0)
++            job_out.write('worker.json',dict(status='JOB_PENDING_TERMINAL_AUDIT',target_after_check='UNCHANGED'))
++            job_out.write('scalars.private.json',[dict(arm=job['arm'],order=job['order'],content='one',domain='REFUGE',subset='remaining_dev',dice=[.5,.6],assd=[None,1])])
++            return subprocess.Popen([sys.executable,'-c','pass'],start_new_session=True)
++        r.supervise(approved,out,start)
++        self.assertEqual(seen,[j['job_id'] for j in r.matrix(r.SCOPE)])
++
++    def test_running_worker_wall_cap_kills_only_owned_process(self):
++        cfg=copy.deepcopy(self.cfg);cfg['workers']=1;cfg['job_wall_seconds']=.01
++        approved=dict(config=cfg,binding={'procedural':True});out=r.BudgetOutput(self.root/'storage/run',{},cfg['output_bytes']);started=[]
++        def start(slot,job,job_out):
++            p=subprocess.Popen([sys.executable,'-c','import time; time.sleep(30)'],start_new_session=True);started.append(p);return p
++        with self.assertRaises(TimeoutError):r.supervise(approved,out,start)
++        self.assertEqual(len(started),1);self.assertIsNotNone(started[0].poll())
++        self.assertFalse((out.path/'completion.json').exists())
++
++    def test_same_content_rewrite_is_not_immutable(self):
++        _,reg,_,_=self.fixture();row=reg['target'][0]
++        reader=r.TargetReader(self.root/'target',1024**2,'image');reader.read(r.image_records([row])[0])
++        p=Path(row['image_path']);raw=p.read_bytes();p.write_bytes(raw)
++        with self.assertRaisesRegex(ValueError,'changed after read'):reader.after_check()
++
++    def test_child_rechecks_exact_authority_without_freshness_bypass(self):
++        receipt,_,_,_=self.fixture();approved=self.approve_fixture(receipt)
++        out=r.BudgetOutput(receipt['binding']['output_dir'],dict(binding_sha256=json_digest(receipt['binding'])),self.cfg['output_bytes'])
++        with self.assertRaises(ValueError):self.approve_fixture(receipt)
++        with patch.object(r,'code_identity',return_value='f'*40),patch.object(r,'dry_run',return_value=dict(recurrence=dict(registration_digest='c'*64,stream_digest='d'*64))):
++            r.preflight(receipt,owned_output=out.owner)
++            with self.assertRaises(ValueError):r.preflight(receipt,owned_output='foreign')
++
++    def test_prediction_quantization_matches_original_evaluator(self):
++        import numpy as np
++        from dpa_ctta.p1_analysis import evaluate
++        logits=torch.tensor([-1e-9,0.,1e-9,-10.,10.,-1.,1.,2.]).reshape(1,2,2,2)
++        probabilities=logits.sigmoid(); mask=(logits>0).float()
++        bits=np.packbits((probabilities>=.5).numpy().reshape(-1))
++        decoded=torch.from_numpy(np.unpackbits(bits).copy()).float().reshape(1,2,2,2)
++        self.assertEqual(evaluate(probabilities,mask,'fundus'),evaluate(decoded,mask,'fundus'))
++
++    def test_output_directory_replacement_and_links_fail(self):
++        out=r.BudgetOutput(self.root/'storage/job',{},1024**2)
++        moved=self.root/'storage/moved';out.path.rename(moved);out.path.symlink_to(moved,target_is_directory=True)
++        with self.assertRaises(ValueError):out.write('x.json',{})
++        with self.assertRaises(ValueError):r.resource_check(out,dict(wall_seconds=10,output_bytes=1024**2),time.monotonic())
++        out.path.unlink();out.path.mkdir();(out.path/'owner.json').write_bytes((moved/'owner.json').read_bytes())
++        with self.assertRaisesRegex(ValueError,'replaced'):out.write('x.json',{})
++
++    def test_cleanup_failure_is_preserved_separately(self):
++        out=r.BudgetOutput(self.root/'storage/job',{},1024**2);rec=self.exited(out,7)
++        with patch.object(r,'cleanup_owned',side_effect=RuntimeError('cleanup-specific')):
++            with self.assertRaisesRegex(RuntimeError,'nonzero exit 7'):r.terminal(rec,self.cfg)
++        self.assertEqual(rec['terminal_errors'][0]['message'],'cleanup-specific')
