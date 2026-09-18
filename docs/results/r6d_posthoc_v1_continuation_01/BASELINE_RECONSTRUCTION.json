@@ -1,0 +1,66 @@
+{
+  "primary": {
+    "C": {
+      "OD": 86.91518840155253,
+      "OC": 70.19113110937033,
+      "macro": 78.55315975546142
+    },
+    "R_BAL": {
+      "OD": 86.75671993709331,
+      "OC": 70.31359069329386,
+      "macro": 78.53515531519358
+    },
+    "R_SCALE": {
+      "OD": 86.37794798144407,
+      "OC": 69.81635828866582,
+      "macro": 78.09715313505495
+    },
+    "R_SHUFFLE": {
+      "OD": 86.30318307613271,
+      "OC": 69.7549269663347,
+      "macro": 78.0290550212337
+    }
+  },
+  "primary_comparisons_pp": {
+    "C": [
+      -0.277568521622257,
+      0.24155964108655326
+    ],
+    "R_SCALE": [
+      -0.175064082711458,
+      1.0510684429887078
+    ],
+    "R_SHUFFLE": [
+      -0.1282030345004017,
+      1.140403622420152
+    ]
+  },
+  "domain_comparisons_pp": [
+    1.7389409953260895,
+    0.31343292413919244,
+    -0.2619248952935038,
+    -1.8624667852431855
+  ],
+  "recurrence_comparisons_pp": {
+    "C": -0.8347696893473966,
+    "R_SCALE": -0.3132037196396169,
+    "R_SHUFFLE": -0.28609563221010603
+  },
+  "selection": {
+    "passed": false,
+    "checks": {
+      "C_mean": false,
+      "C_orders": false,
+      "C_recurrence": false,
+      "R_SCALE_mean": true,
+      "R_SCALE_orders": false,
+      "R_SCALE_recurrence": false,
+      "R_SHUFFLE_mean": true,
+      "R_SHUFFLE_orders": false,
+      "R_SHUFFLE_recurrence": false,
+      "domains": true
+    },
+    "next_execution_authorized": false
+  },
+  "status": "R6A_COMPLETE_NO_ADVANCE"
+}

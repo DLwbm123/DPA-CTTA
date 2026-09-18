@@ -1,0 +1,52 @@
+SHA adf8fdaa17fe68cfb2b420ee8f381f27ced6a89e
+ENV 3.10.6 Linux-6.8.0-138-generic-x86_64-with-glibc2.39
+test_aggregate_alias_wrong_text_or_regular (test_io.InputTests) ... ok
+test_alias_outside_loop_dangling_mismatch (test_io.InputTests) ... ok
+test_anchored_open_mapping_and_guard_alias_deny (test_io.InputTests) ... ok
+test_dangling_bound_target (test_io.InputTests) ... ok
+test_double_alias_regular_snapshot_and_full_analysis_fixture (test_io.InputTests) ... ok
+test_link_recreated_same_text_is_detected (test_io.InputTests) ... ok
+test_multiple_versions_never_select_newer (test_io.InputTests) ... ok
+test_payload_changes_during_copy (test_io.InputTests) ... ok
+test_pointer_absolute_parent_extra_component_and_wrong_version (test_io.InputTests) ... ok
+test_pointer_changed_since_binding (test_io.InputTests) ... ok
+test_pointer_complete_binding_and_status (test_io.InputTests) ... ok
+test_pointer_itself_symlink_or_hardlink (test_io.InputTests) ... ok
+test_preflight_and_after_failure_keep_first_error_and_cost (test_io.InputTests) ... ok
+test_results_directory_symlink (test_io.InputTests) ... ok
+test_snapshot_guard_rejects_link_hardlink_fifo_directory (test_io.InputTests) ... ok
+test_snapshot_pollution_is_detected (test_io.InputTests) ... ok
+test_source_regular_guard_rejects_link_hardlink_fifo_directory (test_io.InputTests) ... ok
+test_target_symlink_and_hardlink (test_io.InputTests) ... ok
+test_version_directory_symlink (test_io.InputTests) ... ok
+test_complete_scalar_export_fixture (test_scalar.ScalarTests) ... ok
+test_cross_prediction_gt (test_scalar.ScalarTests) ... ok
+test_cross_stream_content_pair (test_scalar.ScalarTests) ... ok
+test_cross_stream_gt (test_scalar.ScalarTests) ... ok
+test_duplicate_missing_metadata (test_scalar.ScalarTests) ... ok
+test_exact_decomposition (test_scalar.ScalarTests) ... ok
+test_export_deidentification (test_scalar.ScalarTests) ... ok
+test_fixed_early_late (test_scalar.ScalarTests) ... ok
+test_guard_denies_model_gpu_and_source_write (test_scalar.ScalarTests) ... ok
+test_hardlink_symlink_overlap_rejection (test_scalar.ScalarTests) ... ok
+test_integer_partition_boundaries (test_scalar.ScalarTests) ... ok
+test_null_denominator (test_scalar.ScalarTests) ... ok
+test_original_duplicate_rejection (test_scalar.ScalarTests) ... ok
+test_original_mutating_entrypoints_not_loadable (test_scalar.ScalarTests) ... ok
+test_original_physical_rejection (test_scalar.ScalarTests) ... ok
+test_original_scalar_join (test_scalar.ScalarTests) ... ok
+test_original_wrong_binding_and_missing (test_scalar.ScalarTests) ... ok
+test_paired_quantile_not_difference_of_quantiles (test_scalar.ScalarTests) ... ok
+test_q_count_lower_bound (test_scalar.ScalarTests) ... ok
+test_q_partition_mismatch (test_scalar.ScalarTests) ... ok
+test_quantile_ties_sparse_missing (test_scalar.ScalarTests) ... ok
+test_segment_contribution_is_not_local_mean (test_scalar.ScalarTests) ... ok
+test_snapshot_pointer_unchanged_and_tamper (test_scalar.ScalarTests) ... ok
+test_switch_chunks_all_arrivals (test_scalar.ScalarTests) ... ok
+test_weighting_domains_orders_channels (test_scalar.ScalarTests) ... COST 105.94552395003848 resource.struct_rusage(ru_utime=105.23361, ru_stime=0.44095999999999996, ru_maxrss=204800, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=121307, ru_majflt=0, ru_nswap=0, ru_inblock=296, ru_oublock=115976, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=114, ru_nivcsw=128)
+ok
+
+----------------------------------------------------------------------
+Ran 44 tests in 105.899s
+
+OK

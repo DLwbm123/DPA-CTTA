@@ -1,0 +1,1252 @@
+{
+  "inferential_status": "POST_HOC_EXPLORATORY",
+  "stored_GT_metrics_used": true,
+  "available": [
+    {
+      "arm": "C",
+      "field": "E_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "E_regional",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "E_regional_minus_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "FN",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "FN_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "FP",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "FP_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "S0",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "Sperm",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "Sw",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "TN",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "TP",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "a",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "actual_foreground_bce_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "actual_foreground_energy_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "actual_logit_gradient_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "adam_affine_displacement_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "applied_w_bg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "applied_w_fg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "area_bias",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "b",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "bce_bg_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "bce_fg_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "bce_fg_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "bn_gradient_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "cos_bal_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "cos_perm_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "empty_partition_fallback",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "f0",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "foreground_energy_shift",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "fw",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "n_bg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "n_fg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "pi",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "post_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "pre_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "q_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "q_precision",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "q_recall",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "residual_bg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "residual_fg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "residual_shuffled_dot",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "residual_weighted_dot",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "rho",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "rho_clipped",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "shuffled_bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "step",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "weighted_bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "weighted_bg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "C",
+      "field": "weighted_fg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "E_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "E_regional",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "E_regional_minus_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "FN",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "FN_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "FP",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "FP_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "S0",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "Sperm",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "Sw",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "TN",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "TP",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "a",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "actual_foreground_bce_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "actual_foreground_energy_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "actual_logit_gradient_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "adam_affine_displacement_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "applied_w_bg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "applied_w_fg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "area_bias",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "b",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "bce_bg_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "bce_fg_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "bce_fg_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "bn_gradient_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "cos_bal_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "cos_perm_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "empty_partition_fallback",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "f0",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "foreground_energy_shift",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "fw",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "n_bg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "n_fg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "pi",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "post_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "pre_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "q_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "q_precision",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "q_recall",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "residual_bg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "residual_fg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "residual_shuffled_dot",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "residual_weighted_dot",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "rho",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "rho_clipped",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "shuffled_bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "step",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "weighted_bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "weighted_bg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_BAL",
+      "field": "weighted_fg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "E_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "E_regional",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "E_regional_minus_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "FN",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "FN_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "FP",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "FP_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "S0",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "Sperm",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "Sw",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "TN",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "TP",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "a",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "actual_foreground_bce_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "actual_foreground_energy_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "actual_logit_gradient_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "adam_affine_displacement_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "applied_w_bg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "applied_w_fg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "area_bias",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "b",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "bce_bg_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "bce_fg_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "bce_fg_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "bn_gradient_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "cos_bal_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "cos_perm_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "empty_partition_fallback",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "f0",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "foreground_energy_shift",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "fw",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "n_bg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "n_fg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "pi",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "post_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "pre_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "q_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "q_precision",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "q_recall",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "residual_bg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "residual_fg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "residual_shuffled_dot",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "residual_weighted_dot",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "rho",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "rho_clipped",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "shuffled_bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "step",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "weighted_bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "weighted_bg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SCALE",
+      "field": "weighted_fg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "E_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "E_regional",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "E_regional_minus_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "FN",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "FN_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "FP",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "FP_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "S0",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "Sperm",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "Sw",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "TN",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "TP",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "a",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "actual_foreground_bce_fraction",
+      "n_defined": 0,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "actual_foreground_energy_fraction",
+      "n_defined": 0,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "actual_logit_gradient_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "adam_affine_displacement_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "applied_w_bg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "applied_w_fg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "area_bias",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "b",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "bce_bg_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "bce_fg_fraction",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "bce_fg_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "bn_gradient_l2",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "cos_bal_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "cos_perm_plain",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "empty_partition_fallback",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "f0",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "foreground_energy_shift",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "fw",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "n_bg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "n_fg",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "pi",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "post_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "pre_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "q_dice",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "q_precision",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "q_recall",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "residual_bg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "residual_fg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "residual_shuffled_dot",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "residual_weighted_dot",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "rho",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "rho_clipped",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "shuffled_bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "step",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "weighted_bce_sum",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "weighted_bg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "weighted_fg_sse",
+      "n_defined": 11706,
+      "total_rows": 11706
+    }
+  ],
+  "nulls": [
+    {
+      "arm": "R_SHUFFLE",
+      "field": "actual_foreground_bce_fraction",
+      "reason": "NOT_RECORDED_PERMUTED_PARTITION",
+      "count": 11706
+    },
+    {
+      "arm": "R_SHUFFLE",
+      "field": "actual_foreground_energy_fraction",
+      "reason": "NOT_RECORDED_PERMUTED_PARTITION",
+      "count": 11706
+    }
+  ],
+  "NOT_AVAILABLE": [
+    "GT partition-specific soft residual energy",
+    "wrong-token gradient",
+    "BN parameter-gradient direction",
+    "counterfactual half-weight model trajectory",
+    "C0 matched no-update forgetting quantity",
+    "SHUFFLE partition-specific actually applied gradient/BCE foreground share"
+  ]
+}

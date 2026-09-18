@@ -1,0 +1,50 @@
+test_aggregate_alias_wrong_text_or_regular (test_io.InputTests.test_aggregate_alias_wrong_text_or_regular) ... ok
+test_alias_outside_loop_dangling_mismatch (test_io.InputTests.test_alias_outside_loop_dangling_mismatch) ... ok
+test_anchored_open_mapping_and_guard_alias_deny (test_io.InputTests.test_anchored_open_mapping_and_guard_alias_deny) ... ok
+test_dangling_bound_target (test_io.InputTests.test_dangling_bound_target) ... ok
+test_double_alias_regular_snapshot_and_full_analysis_fixture (test_io.InputTests.test_double_alias_regular_snapshot_and_full_analysis_fixture) ... ok
+test_link_recreated_same_text_is_detected (test_io.InputTests.test_link_recreated_same_text_is_detected) ... ok
+test_multiple_versions_never_select_newer (test_io.InputTests.test_multiple_versions_never_select_newer) ... ok
+test_payload_changes_during_copy (test_io.InputTests.test_payload_changes_during_copy) ... ok
+test_pointer_absolute_parent_extra_component_and_wrong_version (test_io.InputTests.test_pointer_absolute_parent_extra_component_and_wrong_version) ... ok
+test_pointer_changed_since_binding (test_io.InputTests.test_pointer_changed_since_binding) ... ok
+test_pointer_complete_binding_and_status (test_io.InputTests.test_pointer_complete_binding_and_status) ... ok
+test_pointer_itself_symlink_or_hardlink (test_io.InputTests.test_pointer_itself_symlink_or_hardlink) ... ok
+test_preflight_and_after_failure_keep_first_error_and_cost (test_io.InputTests.test_preflight_and_after_failure_keep_first_error_and_cost) ... ok
+test_results_directory_symlink (test_io.InputTests.test_results_directory_symlink) ... ok
+test_snapshot_guard_rejects_link_hardlink_fifo_directory (test_io.InputTests.test_snapshot_guard_rejects_link_hardlink_fifo_directory) ... ok
+test_snapshot_pollution_is_detected (test_io.InputTests.test_snapshot_pollution_is_detected) ... ok
+test_source_regular_guard_rejects_link_hardlink_fifo_directory (test_io.InputTests.test_source_regular_guard_rejects_link_hardlink_fifo_directory) ... ok
+test_target_symlink_and_hardlink (test_io.InputTests.test_target_symlink_and_hardlink) ... ok
+test_version_directory_symlink (test_io.InputTests.test_version_directory_symlink) ... ok
+test_complete_scalar_export_fixture (test_scalar.ScalarTests.test_complete_scalar_export_fixture) ... ok
+test_cross_prediction_gt (test_scalar.ScalarTests.test_cross_prediction_gt) ... ok
+test_cross_stream_content_pair (test_scalar.ScalarTests.test_cross_stream_content_pair) ... ok
+test_cross_stream_gt (test_scalar.ScalarTests.test_cross_stream_gt) ... ok
+test_duplicate_missing_metadata (test_scalar.ScalarTests.test_duplicate_missing_metadata) ... ok
+test_exact_decomposition (test_scalar.ScalarTests.test_exact_decomposition) ... ok
+test_export_deidentification (test_scalar.ScalarTests.test_export_deidentification) ... ok
+test_fixed_early_late (test_scalar.ScalarTests.test_fixed_early_late) ... ok
+test_guard_denies_model_gpu_and_source_write (test_scalar.ScalarTests.test_guard_denies_model_gpu_and_source_write) ... ok
+test_hardlink_symlink_overlap_rejection (test_scalar.ScalarTests.test_hardlink_symlink_overlap_rejection) ... ok
+test_integer_partition_boundaries (test_scalar.ScalarTests.test_integer_partition_boundaries) ... ok
+test_null_denominator (test_scalar.ScalarTests.test_null_denominator) ... ok
+test_original_duplicate_rejection (test_scalar.ScalarTests.test_original_duplicate_rejection) ... ok
+test_original_mutating_entrypoints_not_loadable (test_scalar.ScalarTests.test_original_mutating_entrypoints_not_loadable) ... ok
+test_original_physical_rejection (test_scalar.ScalarTests.test_original_physical_rejection) ... ok
+test_original_scalar_join (test_scalar.ScalarTests.test_original_scalar_join) ... ok
+test_original_wrong_binding_and_missing (test_scalar.ScalarTests.test_original_wrong_binding_and_missing) ... ok
+test_paired_quantile_not_difference_of_quantiles (test_scalar.ScalarTests.test_paired_quantile_not_difference_of_quantiles) ... ok
+test_q_count_lower_bound (test_scalar.ScalarTests.test_q_count_lower_bound) ... ok
+test_q_partition_mismatch (test_scalar.ScalarTests.test_q_partition_mismatch) ... ok
+test_quantile_ties_sparse_missing (test_scalar.ScalarTests.test_quantile_ties_sparse_missing) ... ok
+test_segment_contribution_is_not_local_mean (test_scalar.ScalarTests.test_segment_contribution_is_not_local_mean) ... ok
+test_snapshot_pointer_unchanged_and_tamper (test_scalar.ScalarTests.test_snapshot_pointer_unchanged_and_tamper) ... ok
+test_switch_chunks_all_arrivals (test_scalar.ScalarTests.test_switch_chunks_all_arrivals) ... ok
+test_weighting_domains_orders_channels (test_scalar.ScalarTests.test_weighting_domains_orders_channels) ... ok
+
+----------------------------------------------------------------------
+Ran 44 tests in 33.923s
+
+OK
+COST 34.0025665841531 resource.struct_rusage(ru_utime=32.629005, ru_stime=0.391584, ru_maxrss=182484992, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=30376, ru_majflt=645, ru_nswap=0, ru_inblock=0, ru_oublock=0, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=923, ru_nivcsw=49795)

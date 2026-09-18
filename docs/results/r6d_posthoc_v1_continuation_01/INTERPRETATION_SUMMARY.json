@@ -1,0 +1,318 @@
+{
+  "inferential_status": "POST_HOC_EXPLORATORY",
+  "status": "R6D_COMPLETE_NO_NEW_HYPOTHESIS",
+  "intensity_fixed_quartiles": [
+    {
+      "variable": "a",
+      "delta_post_supported": 18,
+      "delta_post_Q4_lower": 6,
+      "delta_step_supported": 18,
+      "delta_step_Q4_lower": 6,
+      "both_halves_supported": 18,
+      "opposite_half_signs": 6
+    },
+    {
+      "variable": "foreground_energy_shift",
+      "delta_post_supported": 18,
+      "delta_post_Q4_lower": 13,
+      "delta_step_supported": 18,
+      "delta_step_Q4_lower": 13,
+      "both_halves_supported": 18,
+      "opposite_half_signs": 7
+    },
+    {
+      "variable": "adam_affine_displacement_l2",
+      "delta_post_supported": 18,
+      "delta_post_Q4_lower": 8,
+      "delta_step_supported": 18,
+      "delta_step_Q4_lower": 10,
+      "both_halves_supported": 6,
+      "opposite_half_signs": 4
+    }
+  ],
+  "registered_timing": [
+    {
+      "stream": "0",
+      "phase": "initial",
+      "metric": "delta_pre",
+      "n_unique": 336,
+      "weight_sum": 0.25,
+      "signed_contribution": 0.011759852569546099,
+      "conditional_mean": 0.047039410278184396,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "0",
+      "phase": "initial",
+      "metric": "delta_step",
+      "n_unique": 336,
+      "weight_sum": 0.25,
+      "signed_contribution": -2.6909692178442448e-05,
+      "conditional_mean": -0.00010763876871376979,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "0",
+      "phase": "initial",
+      "metric": "delta_post",
+      "n_unique": 336,
+      "weight_sum": 0.25,
+      "signed_contribution": 0.011732942877367657,
+      "conditional_mean": 0.04693177150947063,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "0",
+      "phase": "early_1_8",
+      "metric": "delta_pre",
+      "n_unique": 18,
+      "weight_sum": 0.01964387410113779,
+      "signed_contribution": 0.03711990888191323,
+      "conditional_mean": 1.8896429844133042,
+      "support": "LOW_SUPPORT"
+    },
+    {
+      "stream": "0",
+      "phase": "early_1_8",
+      "metric": "delta_step",
+      "n_unique": 18,
+      "weight_sum": 0.01964387410113779,
+      "signed_contribution": 0.0003787331076966503,
+      "conditional_mean": 0.019279960039792442,
+      "support": "LOW_SUPPORT"
+    },
+    {
+      "stream": "0",
+      "phase": "early_1_8",
+      "metric": "delta_post",
+      "n_unique": 18,
+      "weight_sum": 0.01964387410113779,
+      "signed_contribution": 0.03749864198960988,
+      "conditional_mean": 1.9089229444530966,
+      "support": "LOW_SUPPORT"
+    },
+    {
+      "stream": "0",
+      "phase": "later_9_plus",
+      "metric": "delta_pre",
+      "n_unique": 1341,
+      "weight_sum": 0.7303561258988622,
+      "signed_contribution": -0.32656585446964786,
+      "conditional_mean": -0.44713235487377817,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "0",
+      "phase": "later_9_plus",
+      "metric": "delta_step",
+      "n_unique": 1341,
+      "weight_sum": 0.7303561258988622,
+      "signed_contribution": -0.00023425201959124638,
+      "conditional_mean": -0.00032073670814076934,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "0",
+      "phase": "later_9_plus",
+      "metric": "delta_post",
+      "n_unique": 1341,
+      "weight_sum": 0.7303561258988622,
+      "signed_contribution": -0.3268001064892391,
+      "conditional_mean": -0.44745309158191887,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "1",
+      "phase": "initial",
+      "metric": "delta_pre",
+      "n_unique": 37,
+      "weight_sum": 0.25,
+      "signed_contribution": 0.08723481238082902,
+      "conditional_mean": 0.34893924952331606,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "1",
+      "phase": "initial",
+      "metric": "delta_step",
+      "n_unique": 37,
+      "weight_sum": 0.25,
+      "signed_contribution": 0.0019337914062596895,
+      "conditional_mean": 0.007735165625038758,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "1",
+      "phase": "initial",
+      "metric": "delta_post",
+      "n_unique": 37,
+      "weight_sum": 0.25,
+      "signed_contribution": 0.0891686037870887,
+      "conditional_mean": 0.3566744151483548,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "1",
+      "phase": "early_1_8",
+      "metric": "delta_pre",
+      "n_unique": 24,
+      "weight_sum": 0.012082741540005229,
+      "signed_contribution": -0.004350887426930404,
+      "conditional_mean": -0.36009107804920576,
+      "support": "LOW_SUPPORT"
+    },
+    {
+      "stream": "1",
+      "phase": "early_1_8",
+      "metric": "delta_step",
+      "n_unique": 24,
+      "weight_sum": 0.012082741540005229,
+      "signed_contribution": 7.041273596424985e-05,
+      "conditional_mean": 0.005827546317292108,
+      "support": "LOW_SUPPORT"
+    },
+    {
+      "stream": "1",
+      "phase": "early_1_8",
+      "metric": "delta_post",
+      "n_unique": 24,
+      "weight_sum": 0.012082741540005229,
+      "signed_contribution": -0.0042804746909661535,
+      "conditional_mean": -0.35426353173191366,
+      "support": "LOW_SUPPORT"
+    },
+    {
+      "stream": "1",
+      "phase": "later_9_plus",
+      "metric": "delta_pre",
+      "n_unique": 1634,
+      "weight_sum": 0.7379172584599948,
+      "signed_contribution": 0.15509141049795735,
+      "conditional_mean": 0.21017452664222439,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "1",
+      "phase": "later_9_plus",
+      "metric": "delta_step",
+      "n_unique": 1634,
+      "weight_sum": 0.7379172584599948,
+      "signed_contribution": 0.0015801014924802666,
+      "conditional_mean": 0.0021412990065822262,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "1",
+      "phase": "later_9_plus",
+      "metric": "delta_post",
+      "n_unique": 1634,
+      "weight_sum": 0.7379172584599948,
+      "signed_contribution": 0.1566715119904376,
+      "conditional_mean": 0.2123158256488066,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "4",
+      "phase": "initial",
+      "metric": "delta_pre",
+      "n_unique": 58,
+      "weight_sum": 0.043154761904761904,
+      "signed_contribution": 0.003717636117808723,
+      "conditional_mean": 0.08614660245405041,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "4",
+      "phase": "initial",
+      "metric": "delta_step",
+      "n_unique": 58,
+      "weight_sum": 0.043154761904761904,
+      "signed_contribution": 5.6718991064313205e-05,
+      "conditional_mean": 0.0013143159308696025,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "4",
+      "phase": "initial",
+      "metric": "delta_post",
+      "n_unique": 58,
+      "weight_sum": 0.043154761904761904,
+      "signed_contribution": 0.0037743551088730365,
+      "conditional_mean": 0.08746091838492003,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "4",
+      "phase": "early_1_8",
+      "metric": "delta_pre",
+      "n_unique": 198,
+      "weight_sum": 0.12088030439232399,
+      "signed_contribution": -0.030111945877191577,
+      "conditional_mean": -0.24910547693081186,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "4",
+      "phase": "early_1_8",
+      "metric": "delta_step",
+      "n_unique": 198,
+      "weight_sum": 0.12088030439232399,
+      "signed_contribution": -0.0003842725712880556,
+      "conditional_mean": -0.00317895105592121,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "4",
+      "phase": "early_1_8",
+      "metric": "delta_post",
+      "n_unique": 198,
+      "weight_sum": 0.12088030439232399,
+      "signed_contribution": -0.03049621844847964,
+      "conditional_mean": -0.2522844279867331,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "4",
+      "phase": "later_9_plus",
+      "metric": "delta_pre",
+      "n_unique": 1439,
+      "weight_sum": 0.8359649337029141,
+      "signed_contribution": -0.8073503718094966,
+      "conditional_mean": -0.9657706193886997,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "4",
+      "phase": "later_9_plus",
+      "metric": "delta_step",
+      "n_unique": 1439,
+      "weight_sum": 0.8359649337029141,
+      "signed_contribution": -0.0006974541982943028,
+      "conditional_mean": -0.0008343103522356173,
+      "support": "DESCRIPTIVE"
+    },
+    {
+      "stream": "4",
+      "phase": "later_9_plus",
+      "metric": "delta_post",
+      "n_unique": 1439,
+      "weight_sum": 0.8359649337029141,
+      "signed_contribution": -0.808047826007791,
+      "conditional_mean": -0.9666049297409354,
+      "support": "DESCRIPTIVE"
+    }
+  ],
+  "qualifications": [
+    "Q4-Q1 is a between-stratum descriptive mean contrast, not a within-image intervention.",
+    "Cells below 30 unique contents are retained in full CSVs but not used as standalone hypothesis support.",
+    "Quartile boundaries and time halves are unchanged; no threshold/window search."
+  ],
+  "new_model_execution_started": false,
+  "new_model_forwards": 0,
+  "new_model_backward_calls": 0,
+  "new_adam_calls": 0,
+  "new_vjp_calls": 0,
+  "R6A": "R6A_COMPLETE_NO_ADVANCE",
+  "R6B": "NOT_RUN",
+  "next_gpu_execution_authorized": false
+}
