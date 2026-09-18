@@ -6,7 +6,7 @@ from common import method,obs,segmenter,pixels,source_fixture
 from dpa_ctta.r7_shared.network import film
 from dpa_ctta.r7_shared.host import OnlineHost
 from dpa_ctta.r7_shared.source import (SourceTrainer,SourceData,Record,split,roles,sequence,anchors,simulate,shared_basis)
-from dpa_ctta.r7_shared.preparation import inference_from_tensors
+from dpa_ctta.r7_shared.preparation import inference_from_tensors,prepared_artifact
 from dpa_ctta.r7_shared.numerics import COUNTS
 from dpa_ctta.r7_shared.plan import real_entry,matrix,source_binding
 from dpa_ctta.r7_shared.io import Output,legacy_reader
@@ -95,10 +95,10 @@ class Contracts(unittest.TestCase):
             with self.assertRaises(ValueError):OnlineHost(s,stat,ablation=variant)
             s.close()
     def test_saved_assets_inference_binding_and_eta(self):
-        s=segmenter();m=method('B');m.freeze();w=copy.deepcopy(m.state_dict())
-        h=inference_from_tensors(s,'B',False,m.basis,w,m.digest());self.assertEqual(h.visits,0)
+        s=segmenter();m=method('B');m.freeze();artifact=prepared_artifact(s,m);w=copy.deepcopy(m.state_dict())
+        h=inference_from_tensors(s,'B',False,m.basis,w,artifact['binding']);self.assertEqual(h.visits,0)
         w['frozen_eta']*=2
-        with self.assertRaises(ValueError):inference_from_tensors(s,'B',False,m.basis,w,m.digest())
+        with self.assertRaises(ValueError):inference_from_tensors(s,'B',False,m.basis,w,artifact['binding'])
         s.close()
     def test_split_overlap_oracle_fit_only_and_roles(self):
         data,oracle=source_fixture()

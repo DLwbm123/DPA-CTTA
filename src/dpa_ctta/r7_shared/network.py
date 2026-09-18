@@ -1,8 +1,10 @@
 """Original frozen ResUNet, exact two-site FiLM, transient current-image observer."""
+import copy
 import torch
 from torch import nn
 from torch.nn import functional as F
 from .numerics import COUNTS, finite, shape, mlp
+from .context import POLICY
 from ..hosts.vptta import model_input_from_pixels
 
 
@@ -15,6 +17,7 @@ def film(h,v):
 class Segmenter(nn.Module):
     def __init__(self,model):
         super().__init__(); self.model=model.cpu().eval().requires_grad_(False)
+        self.inference_policy=copy.deepcopy(POLICY)
         self.v=None; self.capture=False; self.cache={}; self.forwards=0
         for m in model.modules():
             if isinstance(m,nn.BatchNorm2d):

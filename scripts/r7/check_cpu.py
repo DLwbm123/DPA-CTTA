@@ -11,6 +11,7 @@ root=Path(__file__).resolve().parents[2]
 sys.path[:0]=[str(root/'tests/r7'),str(root/'docs/review/r7/input/references')]
 torch.set_num_threads(2)
 from dpa_ctta.r7_shared.numerics import COUNTS
+from dpa_ctta.r7_shared.context import HASH_COST
 from dpa_ctta.b1_host import Host as Old
 actual=dict(Tensor_backward=0,autograd_grad=0,Adam_step=0,AdamW_step=0,old_backbone_forwards=0)
 for cls,method,key in [(torch.Tensor,'backward','Tensor_backward'),(torch.autograd,'grad','autograd_grad'),(torch.optim.Adam,'step','Adam_step'),(torch.optim.AdamW,'step','AdamW_step'),(Old,'_forward','old_backbone_forwards')]:
@@ -28,10 +29,10 @@ with ExitStack() as stack:
     stack.enter_context(patch('torch.load',side_effect=AssertionError('checkpoint reads forbidden')))
     for name in ('dpa_ctta.source_io.read_pixels','dpa_ctta.source_io.read_mask','dpa_ctta.r1.assets.checkpoint','dpa_ctta.r1.assets.target','dpa_ctta.source_io.source_proxy'):
         stack.enter_context(patch(name,side_effect=AssertionError('real assets forbidden')))
-    modules=os.environ.get('R7_TESTS','test_math,test_contract,test_full_network').split(',')
+    modules=os.environ.get('R7_TESTS','test_math,test_contract,test_full_network,test_context').split(',')
     result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromNames(modules))
 after=resource.getrusage(resource.RUSAGE_SELF)
-summary=dict(tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),exit_code=int(not result.wasSuccessful()),wall_seconds=time.monotonic()-start,cpu_user_seconds=after.ru_utime-before.ru_utime,cpu_system_seconds=after.ru_stime-before.ru_stime,peak_RSS=after.ru_maxrss,peak_RSS_unit='bytes' if sys.platform=='darwin' else 'KiB',python=platform.python_version(),torch=torch.__version__,platform=platform.system()+' '+platform.machine(),physical_calls=actual,procedural_counts=dict(COUNTS),real_asset_reads=0,GPU_queries_or_initializations=0,external_review='NOT_RUN')
+summary=dict(tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),exit_code=int(not result.wasSuccessful()),wall_seconds=time.monotonic()-start,cpu_user_seconds=after.ru_utime-before.ru_utime,cpu_system_seconds=after.ru_stime-before.ru_stime,peak_RSS=after.ru_maxrss,peak_RSS_unit='bytes' if sys.platform=='darwin' else 'KiB',python=platform.python_version(),torch=torch.__version__,platform=platform.system()+' '+platform.machine(),physical_calls=actual,procedural_counts=dict(COUNTS),context_hash_cost=dict(HASH_COST),real_asset_reads=0,GPU_queries_or_initializations=0,external_review='NOT_RUN')
 print('R7_CPU_RESULT '+json.dumps(summary,sort_keys=True),flush=True)
 if os.environ.get('R7_RESULT'):Path(os.environ['R7_RESULT']).write_text(json.dumps(summary,indent=2)+'\n')
 sys.exit(summary['exit_code'])

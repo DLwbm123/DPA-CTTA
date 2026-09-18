@@ -4,6 +4,7 @@ import hashlib
 import torch
 from torch import nn
 from .network import Observer
+from .context import (STATE_SCHEMA,make_context,require_context,validate_context,stamp)
 from .numerics import COUNTS,finite,shape,project
 
 class Method(nn.Module):
@@ -40,7 +41,7 @@ class Method(nn.Module):
         return h.hexdigest()
 
 class OnlineHost:
-    def __init__(self,segmenter,method=None,*,ablation=None):
+    def __init__(self,segmenter,method=None,*,ablation=None,expected_context=None):
         self.segmenter=segmenter;self.method=method;self.ablation=ablation;self.failed=False;self.first_error=None
         self.state=None if method is None else method.initial();self.visits=0
         if method:
@@ -49,11 +50,22 @@ class OnlineHost:
             if ablation is not None and (ablation not in allowed or method.static):raise ValueError('FULL-checkpoint deployment ablation only')
             if ablation=='C_CONST_R' and not method.constant_ready:raise ValueError('missing source-cal constant R')
         elif ablation:raise ValueError('C0 has no ablation')
+        if expected_context is not None:validate_context(expected_context)
+        source=None if expected_context is None else expected_context['payload']['source']
+        self._context=make_context(segmenter,method,ablation,source)
+        if expected_context is not None:require_context(self._context,expected_context)
+        self._stamp=stamp(segmenter,method,ablation)
+    def _check_frozen(self,boundary=False):
+        if stamp(self.segmenter,self.method,self.ablation)!=self._stamp:raise ValueError('frozen inference environment changed')
+        if boundary:
+            actual=make_context(self.segmenter,self.method,self.ablation,self._context['payload']['source'])
+            require_context(actual,self._context)
     @torch.no_grad()
     def step(self,current_image):
         if self.failed:raise RuntimeError('hard stopped after first error')
         before=COUNTS.copy()
         try:
+            self._check_frozen()
             if self.method is None:z=self.segmenter(current_image);next_state=None
             else:
                 _,raw,tokens=self.segmenter(current_image,observe=True)
@@ -68,10 +80,14 @@ class OnlineHost:
             self.failed=True;self.first_error=dict(type=type(exc).__name__,message=str(exc),counts=dict(COUNTS-before))
             raise
     def save_state(self):
-        return copy.deepcopy(dict(binding=None if self.method is None else self.method.digest(),ablation=self.ablation,state=self.state,visits=self.visits,failed=self.failed,first_error=self.first_error))
+        self._check_frozen(boundary=True)
+        return copy.deepcopy(dict(schema=STATE_SCHEMA,context=self._context,binding=self._context['sha256'],ablation=self.ablation,state=self.state,visits=self.visits,failed=self.failed,first_error=self.first_error))
     def load_state(self,packet):
+        if not isinstance(packet,dict) or packet.get('schema')!=STATE_SCHEMA:raise ValueError('legacy/incomplete state packet unsupported')
+        self._check_frozen(boundary=True)
+        require_context(self._context,packet.get('context'))
         if self.failed or packet.get('failed') or packet.get('first_error') is not None:raise ValueError('failed state is not resumable')
-        if packet.get('binding')!=(None if self.method is None else self.method.digest()) or packet.get('ablation')!=self.ablation:raise ValueError('state binding')
+        if packet.get('binding')!=self._context['sha256'] or packet.get('ablation')!=self.ablation:raise ValueError('state binding')
         if type(packet.get('visits')) is not int or packet['visits']<0:raise ValueError('visit counter')
         if self.method:
             self.method.validate_state(packet['state'])
