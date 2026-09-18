@@ -1,0 +1,60 @@
+{
+  "inferential_status": "POST_HOC_EXPLORATORY",
+  "analysis_sha": "ad75672e2931c5dd09ffb19f3249d6b65ec6aa0d",
+  "model_166_regressions_rerun": false,
+  "development": {
+    "tests": 24,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "suite_seconds": 0.068,
+    "total_seconds": 0.2144032910000533,
+    "note": "Earlier development state before complete-export fixture and metadata science checks."
+  },
+  "final_local": {
+    "tests": 25,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "suite_seconds": 15.863,
+    "total_seconds": 15.947236417094246,
+    "peak_rss_bytes": 182796288
+  },
+  "final_server": {
+    "tests": 25,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "suite_seconds": 49.707,
+    "total_seconds": 49.76173068396747,
+    "peak_rss_kib": 204800,
+    "python": "3.10.6",
+    "platform": "Linux x86_64"
+  },
+  "protective_test_attempts": "Each final suite deliberately rejected 5 forbidden entries in an isolated child; zero actual model/GPU calls. Tests are sequential; the fixed analysis is one process.",
+  "fixed_analysis": {
+    "preflight_attempts": 1,
+    "exit_code": 1,
+    "scalar_analysis_executed": false,
+    "snapshot_bytes": 0,
+    "work_output_bytes": 0,
+    "remote_cpu_seconds": null,
+    "remote_peak_rss": null,
+    "remote_cost_missing_reason": "Preflight rejected before in-run telemetry initialization; no timing/RSS fabricated."
+  },
+  "deployment": {
+    "first_attempt": "SyntaxError before executing remote script; retained privately",
+    "second_attempt": "PASS after correcting archive-payload string construction; no analysis retry"
+  },
+  "new_model_execution_started": false,
+  "new_model_forwards": 0,
+  "new_model_backward_calls": 0,
+  "new_adam_calls": 0,
+  "new_vjp_calls": 0,
+  "R6A": "R6A_COMPLETE_NO_ADVANCE",
+  "R6B": "NOT_RUN",
+  "next_gpu_execution_authorized": false
+}

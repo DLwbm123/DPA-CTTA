@@ -1,0 +1,59 @@
+{
+  "status": "R6D_INCOMPLETE",
+  "inferential_status": "POST_HOC_EXPLORATORY",
+  "analysis_executed": false,
+  "preflight_attempted": true,
+  "analysis_sha": "ad75672e2931c5dd09ffb19f3249d6b65ec6aa0d",
+  "analysis_spec_sha256": "ffd3c648931e27130c2c275da7ca83f7bac62906b9e9e3d51ec4b3fd62d07368",
+  "historical_binding": {
+    "run_id": "a70dc79f23db47289532792141b61f57",
+    "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+    "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+    "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+    "scope": "A"
+  },
+  "R6E": "NOT_PROPOSED",
+  "blockers": [
+    "Original root public_aggregate.json is a symlink and was rejected by regular-file preflight.",
+    "No scalar snapshot, real-data table calculation or full source before/after hashes produced."
+  ],
+  "public_files": [
+    "AGGREGATE.json",
+    "ANALYSIS_BINDING.json",
+    "CPU_TEST_LOCAL_DEVELOPMENT.log",
+    "CPU_TEST_LOCAL_FINAL.log",
+    "CPU_TEST_SERVER_FINAL.log",
+    "DELIVERY.json",
+    "DOMAIN_CHANNEL.csv",
+    "FIELD_AVAILABILITY.json",
+    "HYPOTHESIS_DECISION.md",
+    "MAIN_DECOMPOSITION.csv",
+    "ORDER_CONTRASTS.csv",
+    "PACKAGE_VERIFICATION.json",
+    "PREFLIGHT_FAILURE.log",
+    "PSEUDO_TARGET_ERRORS.csv",
+    "READONLY_AUDIT.json",
+    "RECURRENCE_SEGMENTS.csv",
+    "REPORT.md",
+    "STRATIFIED_ASSOCIATIONS.csv",
+    "SUPERVISION_SUMMARY.csv",
+    "TEST_SUMMARY.json"
+  ],
+  "private_exclusions": [
+    "Source location/configuration",
+    "Raw deployment error and raw remote stack paths",
+    "Input type inventory and process details"
+  ],
+  "automatic_retry": false,
+  "production_changes": false,
+  "new_model_execution_started": false,
+  "new_model_forwards": 0,
+  "new_model_backward_calls": 0,
+  "new_adam_calls": 0,
+  "new_vjp_calls": 0,
+  "R6A": "R6A_COMPLETE_NO_ADVANCE",
+  "R6B": "NOT_RUN",
+  "next_gpu_execution_authorized": false
+}

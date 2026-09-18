@@ -1,0 +1,32 @@
+ENV 3.10.6 Linux-6.8.0-138-generic-x86_64-with-glibc2.39
+test_complete_scalar_export_fixture (__main__.ScalarTests) ... ok
+test_cross_prediction_gt (__main__.ScalarTests) ... ok
+test_cross_stream_content_pair (__main__.ScalarTests) ... ok
+test_cross_stream_gt (__main__.ScalarTests) ... ok
+test_duplicate_missing_metadata (__main__.ScalarTests) ... ok
+test_exact_decomposition (__main__.ScalarTests) ... ok
+test_export_deidentification (__main__.ScalarTests) ... ok
+test_fixed_early_late (__main__.ScalarTests) ... ok
+test_guard_denies_model_gpu_and_source_write (__main__.ScalarTests) ... ok
+test_hardlink_symlink_overlap_rejection (__main__.ScalarTests) ... ok
+test_integer_partition_boundaries (__main__.ScalarTests) ... ok
+test_null_denominator (__main__.ScalarTests) ... ok
+test_original_duplicate_rejection (__main__.ScalarTests) ... ok
+test_original_mutating_entrypoints_not_loadable (__main__.ScalarTests) ... ok
+test_original_physical_rejection (__main__.ScalarTests) ... ok
+test_original_scalar_join (__main__.ScalarTests) ... ok
+test_original_wrong_binding_and_missing (__main__.ScalarTests) ... ok
+test_paired_quantile_not_difference_of_quantiles (__main__.ScalarTests) ... ok
+test_q_count_lower_bound (__main__.ScalarTests) ... ok
+test_q_partition_mismatch (__main__.ScalarTests) ... ok
+test_quantile_ties_sparse_missing (__main__.ScalarTests) ... ok
+test_segment_contribution_is_not_local_mean (__main__.ScalarTests) ... ok
+test_snapshot_pointer_unchanged_and_tamper (__main__.ScalarTests) ... ok
+test_switch_chunks_all_arrivals (__main__.ScalarTests) ... ok
+test_weighting_domains_orders_channels (__main__.ScalarTests) ... COST 49.76173068396747 resource.struct_rusage(ru_utime=49.480357, ru_stime=0.200989, ru_maxrss=204800, ru_ixrss=0, ru_idrss=0, ru_isrss=0, ru_minflt=50241, ru_majflt=0, ru_nswap=0, ru_inblock=176, ru_oublock=57776, ru_msgsnd=0, ru_msgrcv=0, ru_nsignals=0, ru_nvcsw=68, ru_nivcsw=74)
+ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 49.707s
+
+OK

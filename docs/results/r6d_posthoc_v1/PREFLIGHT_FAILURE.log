@@ -1,0 +1,16 @@
+R6D fixed scalar analysis starting; no model/GPU imports
+Traceback (most recent call last):
+  File "<stdin>", line 8, in <module>
+  File "[PRIVATE_PATH]", line 289, in run_path
+    return _run_module_code(code, init_globals, run_name,
+  File "[PRIVATE_PATH]", line 96, in _run_module_code
+    _run_code(code, mod_globals, init_globals,
+  File "[PRIVATE_PATH]", line 86, in _run_code
+    exec(code, run_globals)
+  File "[PRIVATE_PATH]", line 179, in <module>
+    main(read(os.environ['R6D_CONFIG']))
+  File "[PRIVATE_PATH]", line 102, in main
+    for p in sources.values():regular(p)
+  File "[PRIVATE_PATH]", line 52, in regular
+    raise ValueError('ordinary independent file required')
+ValueError: ordinary independent file required

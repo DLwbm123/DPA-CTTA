@@ -1,0 +1,31 @@
+{
+  "inferential_status": "POST_HOC_EXPLORATORY",
+  "status": "PREFLIGHT_REJECTED",
+  "rejected_entry": "historical root public_aggregate.json",
+  "reason": "symbolic link to current/public_aggregate.json",
+  "source_link_followed_by_snapshot_tool": false,
+  "source_file_content_reads_by_fixed_analysis": 0,
+  "snapshot_files": 0,
+  "work_directory_empty_after_attempt": true,
+  "source_before_after_sha256": "NOT_CAPTURED_PREFLIGHT_ABORT",
+  "original_pointer_byte_comparison": "NOT_PERFORMED",
+  "source_writes_by_analysis": 0,
+  "old_mutating_functions_called": 0,
+  "production_changes": false,
+  "raw_asset_reads": 0,
+  "model_imports": 0,
+  "gpu_queries_or_initializations": 0,
+  "limitations": [
+    "Empty work directory and inspected preflight prove no snapshot/output writing occurred; full source before/after byte audit was not reached.",
+    "Symbolic root result entry is a publication layout, not evidence of ledger corruption.",
+    "Procedural protection tests are separate from the aborted real-input preflight."
+  ],
+  "new_model_execution_started": false,
+  "new_model_forwards": 0,
+  "new_model_backward_calls": 0,
+  "new_adam_calls": 0,
+  "new_vjp_calls": 0,
+  "R6A": "R6A_COMPLETE_NO_ADVANCE",
+  "R6B": "NOT_RUN",
+  "next_gpu_execution_authorized": false
+}
