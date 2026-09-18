@@ -1,0 +1,37 @@
+# R7 Stage I implementation contract
+
+This release implements the supplied R7 tensor algorithms and CPU qualification. All real filesystem/model execution entrypoints are disabled. It does not issue an external review decision or execution receipt. The earlier GPU authorization does not apply to this stage.
+
+The original bytes in `input/` remain design artifacts. Their historical 22-test log remains unchanged. New runs of the independent reference are separate from production-module tests. The frozen scientific definitions are the four original `specs/*.json`; their independent hashes are in SCIENCE_BINDING.json. Implementation bindings and future trained assets are separate fields, never aliases for the scientific file digests.
+
+## Shared interface
+
+`r7_shared.network.Segmenter` owns a random or future externally supplied frozen original ResUNet34. It uses standard current-statistics BN and exactly up1/up3 additive expm1 FiLM. Zero intervention is bitwise identity with live derivatives. Original decoder and segmentation-head paths remain. The observer uses preprocessed RGB and res.conv1 population statistics, fit-only scaler, 134→64→32 MLP, and normalized up3 tokens projected to 64×64. Its fixed QR uses an isolated seeded generator and positive-R diagonal convention. Transient hooks clear on success and failure; original convenience feature hooks are removed only from this newly owned network copy.
+
+`source.SourceData` checks explicit source-origin records and disjoint fit/cal/val group manifests. Group IDs are supplied, never inferred from filenames. The current true source manifest, source checkpoint and exposure audit remain PENDING; procedural identities are not evidence of independent real patients. `split` implements the SHA256 sorting rule and minimum counts. Photometric simulation preserves geometry and has no target-style donor. Source datasets may only enter the tensor pipeline after the separate future SOURCE_PREP authorization; there is no enabled filesystem loader in this release.
+
+`source.oracle_all` implements 192 independent fold-specific 16-step combined-loss source proxy fits. `a_basis` constructs the 16-dimensional predictive-covariance basis from disjoint cov/probe groups, and `shared_basis` uses only fit oracle SVD for B/C. No missing rank is padded. Source projection errors and condition numbers are computed by `numerics.project`. The full 1024 source VJPs are implemented but are not run on real data in Stage I.
+
+`preparation.prepare_tensors` wires oracles, bases, fit-only scaler, six independently instantiated FULL/STATIC models, exact 1000-step task training, 256-step calibration, 64 fixed source validation episodes and independent oracle-query diagnostics. This is a tensor backend, not a launch command. `scripts/r7/run.py` and `plan.real_entry` reject all real scopes before data access, device discovery, subprocess or training. Stage I tests use bounded micro-episodes, never report those as 1000 real source steps.
+
+`SourceTrainer.episode` is a four-time differentiable unroll with clean support observation, styled support observation and styled query prediction per time. Only support updates the state. Query groups differ from support and also from that anchor's oracle support pair. Eight unique roles are selected by deterministic matching when possible; smaller folds report reuse. Task fit updates only new modules; basis/scaler/backbone remain frozen. STATIC resets before every source and target visit, and has its own independently fit/calibrated weights. Calibration freezes task modules and clears their stale gradients. Every first fit/cal numerical failure is terminal and retains error/cost counters.
+
+`OnlineHost.step(current_image)` has no labels, domain, identity, future input, style or source argument. It validates frozen parameters, computes unmodulated observer and final adapted predictions, checks the candidate state/output, then commits state and releases logits. It retains only specified state plus visit count. Errors stop the host, preserve the first exception and counts, and prevent retry/resume. State packets are bound to group, STATIC/FULL, module/basis/scaler/calibration bytes and ablation. Future trained-asset tensor loading checks the digest and B's stored calibrated step size before accepting it.
+
+## Numerical and cost accounting
+
+Backbone/MLPs are float32, small filtering/ISTA/IRLS, dictionary normalization and basis construction float64; casts preserve source gradients. Filtering uses full P and full F. Fixed variance floors and ridge are scientific constants, never adjusted on failure. The online transition uses no autograd or optimizer. A uses three Cholesky solves per update plus explicit SPD validation factorization; B exactly five ISTA iterations; C exactly three Cholesky solves. MLPs, norms, decompositions and latent iterations are separately metered. The CPU runner intercepts actual backward/autograd-grad/Adam/AdamW calls and original-C model forwards, in addition to explicit R7 model-forward counters. Mathematical test backward calls are not mislabeled as real model training.
+
+The old C core and old validator/gate/configuration files are unchanged. The narrow full-network comparison checks the existing original-C and regional-host C paths bitwise and measures 8F/1B/1Adam per visit. C0 uses the new current-statistics zero-adapter path, 1F. The old 166-model test suite is not rerun.
+
+## Metadata and storage
+
+`DRY_RUN.json` validates the exact existing registration and recurrence digest without opening any assets. It contains 24 screen jobs, 9 mechanism jobs, and three **mutually exclusive** two-group extension templates of 12 jobs each; no group is nominated and the maximum authorized extension remains zero. All templates are NOT_RUN and have null devices. Five full 1951-content metadata sequences are validated; each contains 1695 remaining-dev scores.
+
+The source nominal budget separately lists oracle, basis VJP, six-model fit/calibration and validation. Additional scaler/constant-variance/oracle-query forwards are explicit functions of source group counts; none is called free. `report.review` produces paired FULL−C and FULL−own-STATIC, domain/order/channel, separate recurrence, tails, worst domain/order and common valid ASSD denominators with null undefined. It never issues a scientific gate, automatic nomination or receipt.
+
+New output ownership rejects existing directories, traversal and changed binding. Legacy result alias reads reuse the existing R6-D fixed-version no-follow reader; aliases are metadata only, bound ordinary version payloads are read, and hard links/escape/concurrent changes are refused. No old recompute/invalidate/publish is invoked. Tests use synthetic files, not the original result store.
+
+## Method-source limits
+
+The supplied `references/PROVENANCE.md` and `PRIMARY_SOURCES.json` are archived as supplied attribution, not independent verification of publication or official reproduction. A borrows recognition evidence/codebooks/predictive covariance but is not full RP-GSSM or globally optimal Bayesian segmentation. B is finite sparse correction in adapter coordinates and inherits no medical compressed-sensing or global anti-forgetting guarantee. C is conditional low-rank evidence with variance curriculum, not front-door identification, anatomical causal separation or GUIDE's evidential classification head. No target improvement, privacy, calibration coverage or clinical validity follows from these implementation checks.

@@ -29,15 +29,15 @@ class RCA(Method):
         self.W=nn.Parameter(.9*torch.eye(32));self.G=nn.Parameter(torch.randn(32,32)*.01)
         self.bias=mlp(32,64,32);self.head=mlp(32,64,64);self.Hraw=nn.Parameter(torch.randn(64,32))
         self.cal_raw=nn.Parameter(temperature_initial(),requires_grad=False)
-        self.register_buffer('frozen_eta',torch.tensor(float('nan'),dtype=torch.float64))
+        self.register_buffer('frozen_eta',(1/(torch.linalg.matrix_norm(normalize(self.Hraw.detach().double(),0),2).square()+.1)).clone())
     def initial(self):return dict(z=torch.zeros(32,dtype=torch.float64),d=torch.zeros(32,dtype=torch.float64),counter=0)
     def set_stage(self,stage):
         super().set_stage(stage);self.cal_raw.requires_grad_(stage=='cal')
         if stage=='online':
-            with torch.no_grad():self.frozen_eta.copy_(1/(torch.linalg.matrix_norm(normalize(self.Hraw,0).double(),2).square()/temperature(self.cal_raw).double().square()+.1))
+            with torch.no_grad():self.frozen_eta.copy_(1/(torch.linalg.matrix_norm(normalize(self.Hraw.double(),0),2).square()/temperature(self.cal_raw).double().square()+.1))
     def observe(self,raw,tokens):
         shape(tokens,(64,64));d=self.observer(raw);COUNTS['method_MLP']+=2
-        return dict(d=d.double(),o=self.head(d).double(),bias=self.bias(d).double(),H=normalize(self.Hraw,0).double())
+        return dict(d=d.double(),o=self.head(d).double(),bias=self.bias(d).double(),H=normalize(self.Hraw.double(),0))
     def update(self,raw,tokens,state,ablation=None):
         self.validate_state(state);old_counter=state['counter'];state=self.initial() if self.static else state
         a=self.observe(raw,tokens);d=a['d'];diff=torch.zeros_like(d) if state['counter']==0 else d-state['d']

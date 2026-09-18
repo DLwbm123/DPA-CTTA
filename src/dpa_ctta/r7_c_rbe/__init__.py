@@ -36,7 +36,7 @@ class RBE(Method):
     def observe(self,raw,tokens):
         shape(tokens,(64,64));d=self.observer(raw);kc=attention(tokens,self.Pc);c=kc@self.Pc
         x=torch.cat((tokens-c,d.expand(64,-1)),1)
-        ka=self.query(x).softmax(-1);o=ka@self.O;h=normalize(self.mapping(c).reshape(64,8,32))
+        ka=self.query(x).softmax(-1);o=ka@self.O;h=normalize(self.mapping(c).reshape(64,8,32).double())
         r=torch.ones_like(o) if self.stage=='fit' else variance(self.reliability(x))
         COUNTS['method_MLP']+=2+(self.stage!='fit')
         return dict(kc=kc,c=c,ka=ka,o=o.double(),H=h.double(),R=r.double(),E=tokens,reconstruction=c+ka@self.Pa)

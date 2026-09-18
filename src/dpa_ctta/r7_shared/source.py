@@ -1,6 +1,8 @@
 """Tensor-only source preparation. No filesystem loaders or target substitution."""
+import functools
 import hashlib
 import math
+import time
 from dataclasses import dataclass
 import torch
 from .numerics import COUNTS, finite, seg_loss, predictive_basis, svd_basis, project
@@ -161,11 +163,22 @@ def roles(data,fold,step,anchor_ids,oracles):
         result.extend((support,query))
     return result,True
 
+def terminal_step(fn):
+    @functools.wraps(fn)
+    def call(self,*args,**kwargs):
+        if self.mode=='FAILED':raise RuntimeError('source trainer stopped at first failure')
+        before=COUNTS.copy();started=time.monotonic()
+        try:return fn(self,*args,**kwargs)
+        except Exception as exc:
+            self.mode='FAILED';self.first_error=dict(type=type(exc).__name__,message=str(exc),counts=dict(COUNTS-before),wall_seconds=time.monotonic()-started)
+            raise
+    return call
+
 class SourceTrainer:
     def __init__(self,segmenter,method,data,oracles):
         self.segmenter=segmenter;self.method=method;self.data=data;self.oracles=oracles.validate(data)
         if oracles.fold!='fit':raise ValueError('fit trainer requires fit oracle')
-        self.fit_steps=0;self.cal_steps=0;self.mode='FIT';self.gradients={}
+        self.fit_steps=0;self.cal_steps=0;self.mode='FIT';self.gradients={};self.first_error=None
         method.requires_grad_(True);method.set_stage('fit')
         self.opt=torch.optim.AdamW([p for p in method.parameters() if p.requires_grad],lr=3e-4,weight_decay=1e-4,betas=(.9,.999),eps=1e-8)
     def episode(self,fold,step,oracles):
@@ -184,8 +197,10 @@ class SourceTrainer:
             state,aux=self.method.update(raw,e,state)
             z=self.segmenter(simulate(q.image,style,f'R7_QUERY|{fold}|{step}|{t}'),self.method.ambient(state))
             losses.append(seg_loss(z,q.label)+self.method.fit_loss(aux,clean,zstar,state))
-            queries.append(dict(seg_loss=float(seg_loss(z.detach(),q.label)),proxy_mse=float((self.method.code(state).detach()-zstar).square().mean())))
+            prob=z.detach().sigmoid();dice=(2*(prob*q.label).sum((0,2,3))+1e-6)/(prob.sum((0,2,3))+q.label.sum((0,2,3))+1e-6)
+            queries.append(dict(seg_loss=float(seg_loss(z.detach(),q.label)),soft_Dice_OD_OC=dice.tolist(),proxy_mse=float((self.method.code(state).detach()-zstar).square().mean())))
         return torch.stack(losses).mean(),dict(query=queries,group_reuse=reuse,state=state)
+    @terminal_step
     def fit_step(self):
         if self.mode!='FIT' or self.fit_steps>=1000:raise ValueError('fixed fit lifecycle')
         self.opt.zero_grad(set_to_none=True);loss,audit=self.episode('fit',self.fit_steps,self.oracles)
@@ -201,7 +216,9 @@ class SourceTrainer:
         oracles.validate(self.data)
         if oracles.fold!='cal' or self.mode!='FIT' or (self.fit_steps!=1000 and not procedural_micro):raise ValueError('calibration lifecycle/fold')
         self.mode='CAL';self.cal_oracles=oracles;self.method.requires_grad_(False);self.method.set_stage('cal')
+        for p in self.method.parameters():p.grad=None
         self.cal_opt=torch.optim.Adam([p for p in self.method.parameters() if p.requires_grad],lr=1e-3,betas=(.9,.999),eps=1e-8,weight_decay=0)
+    @terminal_step
     def cal_step(self):
         if self.mode!='CAL' or self.cal_steps>=256:raise ValueError('fixed calibration lifecycle')
         step=self.cal_steps;ids=sequence('cal',step);rs,_=roles(self.data,'cal',step,ids,self.cal_oracles)

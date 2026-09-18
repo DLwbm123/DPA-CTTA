@@ -29,7 +29,9 @@ class Method(nn.Module):
             if isinstance(v,torch.Tensor):
                 shape(state[k],v.shape)
                 if state[k].dtype!=torch.float64:raise ValueError('state float64')
-        if self.group=='A':torch.linalg.cholesky(state['P'])
+        if self.group=='A':
+            if not torch.allclose(state['P'],state['P'].T,rtol=1e-10,atol=1e-12):raise ValueError('symmetric covariance')
+            torch.linalg.cholesky(state['P'])
     def digest(self):
         h=hashlib.sha256()
         h.update(f'{self.group}|{self.static}'.encode())

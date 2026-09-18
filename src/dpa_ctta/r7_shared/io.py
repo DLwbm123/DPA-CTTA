@@ -6,7 +6,7 @@ class Output:
     def __init__(self,path,binding):
         self.path=Path(path)
         if self.path.exists() or self.path.is_symlink():raise FileExistsError('new output only')
-        if self.path.parent.is_symlink():raise ValueError('symlink output parent')
+        if any(p.is_symlink() for p in [self.path.parent,*self.path.parents]):raise ValueError('symlink output ancestor')
         self.path.mkdir(parents=False)
         self.owner=uuid.uuid4().hex;self.binding=dict(binding);self.started=time.monotonic()
         self.write('owner.json',dict(owner=self.owner,binding=self.binding))
@@ -23,8 +23,14 @@ class Output:
 def legacy_reader():
     # Reuse only the separately reviewed fixed-version ordinary-file reader.
     # No historical recompute/invalidate/publish path is called.
-    import importlib.util
+    import importlib.util,sys
     path=Path(__file__).resolve().parents[3]/'analysis/r6d_posthoc_v1/pinned_io.py'
     spec=importlib.util.spec_from_file_location('r7_pinned_reader',path)
-    module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+    module=importlib.util.module_from_spec(spec)
+    old=sys.path[:]
+    cached=sys.modules.get('core')
+    if cached is not None and Path(cached.__file__).resolve()!=path.parent/'core.py':raise ValueError('foreign legacy core import')
+    sys.path.insert(0,str(path.parent))
+    try:spec.loader.exec_module(module)
+    finally:sys.path[:]=old
     return module
