@@ -1,0 +1,264 @@
+你现在负责 R7 的第一次真实 SOURCE_PREP 启动。
+
+目标：在不修改科学算法、不过度扩大审阅范围的前提下，尽快闭合真实 source binding 和精确 CPU execution authorization；满足全部执行前条件后，在已通过外部 execution-layer review 的固定实现上运行一次完整 SOURCE_PREP，并在完成后停止。不得自动进入任何 TARGET 阶段。
+
+已确认的外部状态：
+
+* Stage I review = PASS
+* SOURCE_PREP execution-layer review = PASS
+* SP1/SP2/SP3 = CLOSED
+* reviewed implementation SHA =
+  `f719c703087b38c07bdfbe7ce9dcfa62d88a12d9`
+* evidence publication SHA =
+  `ecde8ba63940eb5c660f4de01bd7a9300b18c15b`
+* source split = 111 / 23 / 25 content groups
+* patient/eye linkage = UNKNOWN / unavailable unless新的合法记录能够证明
+* checkpoint pretraining membership = UNKNOWN unless新的合法记录能够证明
+* SOURCE_PREP has not yet run
+* no TARGET stage is authorized
+* SOURCE_PREP implementation is CPU-only qualified; GPU remains NOT_RUN
+
+外部复审明确通过的是 implementation SHA `f719c703...`。不得把 evidence publication SHA `ecde8ba...` 当成 executable reviewed SHA。
+
+## A. Immutable constraints
+
+不得修改：
+
+1. A/B/C 的科学公式；
+2. COMMON_PROTOCOL/A_PSF/B_RCA/C_RBE 四份 science bytes；
+3. FULL/STATIC 的独立训练、相同预算和初始化规则；
+4. fit/cal/val 用途；
+5. 1000 fit steps + 256 calibration steps；
+6. oracle support、basis rank、seed、loss、optimizer、tolerance；
+7. TARGET 24/9/at-most-12 matrix；
+8. historical C、R6 gate、历史结果；
+9. error 时 no retry / no truncation / no best-checkpoint selection。
+
+本任务不得为“加速”减少训练步数、减少 oracle、缩小数据、跳过 validation、改 rank、改 image size 或改 seed。
+
+## B. Execute from the exact reviewed tree
+
+真实 SOURCE_PREP 必须从独立、clean checkout 执行：
+
+`HEAD == f719c703087b38c07bdfbe7ce9dcfa62d88a12d9`
+
+要求：
+
+* `git status --porcelain --untracked-files=normal` 为空；
+* 不在该 checkout 中生成 receipt、private manifest、日志或结果；
+* receipt / manifest / split / target registration / config 放在 repo 外部；
+* output_dir 放在批准的 repo/source/metadata 之外的新目录；
+* 不 checkout `ecde8ba...` 来执行训练；
+* 不修改代码来适配本机路径。
+
+若无法满足 exact reviewed SHA + clean tree，停止，不执行真实资产。
+
+## C. Close source file binding without inventing provenance
+
+首先完成真实 source binding audit。
+
+允许：
+
+* 读取已有合法 source manifest / split / provenance metadata；
+* 对将实际用于 SOURCE_PREP 的 source RGB、mask 和 checkpoint 做只读 raw-byte SHA256；
+* 核对 size、SHA256、路径边界和冻结 split；
+* 查询已有合法 metadata 中是否存在 patient_id、eye_id 或 checkpoint pretraining membership。
+
+此 binding 阶段：
+
+* 可以读取原始 bytes 计算 SHA256；
+* 不解码 RGB/mask；
+* 不反序列化 checkpoint；
+* 不把 tensor 送入 model；
+* 不使用 GPU。
+
+必须验证：
+
+1. 当前真实 checkpoint bytes 与注册 SHA/size 完全一致；
+2. 所有 SOURCE_PREP 实际 representative RGB/mask bytes 与 manifest 注册 hash 一致；
+3. frozen split 仍为 111/23/25，且没有 group crossing；
+4. 注册 target image hashes 与 source image hashes 无重叠；
+5. manifest / split / target registration / config 均得到独立 SHA256；
+6. 记录实际私有 path，但公开 evidence 只泄露允许披露的 hash/count；
+7. source root、checkpoint、metadata、output、repo 两两满足 execution-layer 的路径隔离要求。
+
+patient/eye linkage 找不到时必须保持：
+
+`PATIENT_DEPENDENCE_UNKNOWN`
+
+checkpoint 的 training/pretraining membership 找不到时必须保持：
+
+`UNKNOWN`
+
+禁止把 content-hash grouping 描述成 patient-independent。
+禁止把 checkpoint file hash 等价成“checkpoint 未见过这些数据”。
+
+如果所有真实文件 bytes 与注册身份吻合，可以把“文件身份绑定”与“科学独立性风险”明确分开记录。只有在外部审阅允许 CONTENT fallback + explicit dependence-risk 的语义下，才可形成 execution receipt 所要求的：
+
+`source_binding_status=BOUND`
+
+这个 BOUND 只表示 exact registered execution assets 已绑定，不表示 patient independence，也不表示 checkpoint pretraining exposure 已被排除。
+
+若发现任何实际 hash mismatch、split drift、target image overlap 或无法解释的 source/checkpoint provenance 变化，停止并报告，不训练。
+
+## D. Build the exact execution packet
+
+不要自行签发新的 execution-layer PASS。
+
+使用已经获得的外部 execution-layer PASS，构造一份 exact SOURCE_PREP launch packet，使 review/receipt 精确绑定：
+
+* scope = SOURCE_PREP
+* code_sha = `f719c703087b38c07bdfbe7ce9dcfa62d88a12d9`
+* four science SHA256
+* exact manifest SHA256
+* exact frozen split SHA256
+* exact target-registration SHA256
+* exact resource config SHA256
+* exact checkpoint SHA256
+* source_binding_status
+* explicit patient-dependence status
+* explicit pretraining-exposure status
+* fresh user receipt_id
+* fresh output_dir
+* finite CPU wall/output/asset/decoded-byte caps
+* workers=1
+* threads=2
+* retry=false
+* device=cpu
+* physical_GPU_ids=null
+
+不得继承任何 R6 receipt。
+不得用 Stage I receipt 代替 SOURCE_PREP receipt。
+不得创建 TARGET authorization。
+
+如果现有外部 PASS 记录没有绑定这些 exact private manifest/split/target/config hashes，则生成一个最小的 `SOURCE_PREP_LAUNCH_REVIEW_PACKET`，列出全部 hashes 和风险字段，并停止在“等待 exact launch binding review”，不要伪造 PASS。
+
+如果已有合法 exact-bound external review + user authorization，则继续 E。
+
+## E. Run exactly one real SOURCE_PREP
+
+执行前记录：
+
+* Git HEAD
+* dirty status
+* Python/Torch/platform
+* CPU/thread configuration
+* receipt hash
+* manifest/split/target/config hashes
+* checkpoint raw SHA
+* output filesystem/location
+* start timestamp
+* resource limits
+
+执行现有 reviewed entrypoint，不手工调用内部训练函数绕过 preflight。
+
+严格保持：
+
+* CPU only
+* one owned worker
+* two CPU threads
+* no GPU query or initialization
+* no retry
+* no resume
+* no silent truncation
+* no skipped phase
+* no target access
+* no post-hoc checkpoint selection
+
+预期完整科学预算仍应与 frozen 111/23/25 对应：
+
+* 135328 backbone forwards
+* 9072 source backward calls
+* 1536 calibration backward calls
+* 3072 oracle Adam
+* 1536 calibration Adam
+* 6000 AdamW
+* 1024 VJP
+
+这些是预期计数，不得为了匹配数字而篡改运行记录。实际失败时保留真实 counters。
+
+必须保留每个 phase 的真实计数、CPU/wall time 和 first error。
+任何 numerical/resource/source-after-check failure 都是终止条件。
+
+## F. Completion validation
+
+只有同时满足以下条件才报告 SOURCE_PREP completed：
+
+1. parent exit code = 0；
+2. supervisor 无未解决 failure；
+3. worker execution status =
+   `SOURCE_PREP_COMPLETE_PENDING_REVIEW`；
+4. source_after_check = UNCHANGED；
+5. 所有 mandatory phases 完成且 physical counts 精确匹配；
+6. 六个独立 artifacts 全部存在：
+   A_FULL / A_STATIC / B_FULL / B_STATIC / C_FULL / C_STATIC；
+7. 每个 artifact fit_steps=1000、cal_steps=256；
+8. trusted loader 可以用独立 retained context 重载全部 artifact；
+9. trained-file hash、context-file hash、context hash 分开记录；
+10. checkpoint effective tensor identity 被记录；
+11. 全树 output cap 和 wall cap 的 terminal audit 通过；
+12. completion.json 确实发布；
+13. source/checkpoint/metadata after-check 无变化。
+
+不要仅依据 `supervisor.complete=true` 宣称成功。
+
+## G. Deliverables
+
+完成后生成一个新的 evidence-only publication，不改变 tested implementation SHA。
+
+至少交付：
+
+* REVIEW_INDEX.md
+* DELIVERY.json
+* SOURCE_BINDING_FINAL.json
+* EXECUTION_AUTH_BINDING.json
+* SOURCE_PREP_RESULTS.json
+* SOURCE_PREP_COST.json
+* ARTIFACT_INVENTORY.json
+* ENVIRONMENT.json
+* LOG_MANIFEST.json
+* raw/公开日志
+* failure records（如果有）
+* exact implementation SHA
+* evidence publication SHA
+* artifact/context/checkpoint/effective-state hashes
+* source-after-check evidence
+
+明确区分：
+
+* tested implementation SHA
+* evidence publication SHA
+* checkpoint file SHA
+* effective frozen tensor SHA
+* six trained artifact SHAs
+* six context SHAs
+
+## H. Stop condition
+
+如果成功：
+
+R7_SOURCE_PREP_COMPLETE_PENDING_ARTIFACT_REVIEW
+stage_I_review=PASS
+source_prep_execution_layer_review=PASS
+source_binding_status=BOUND
+SOURCE_PREP=COMPLETE_PENDING_REVIEW
+TARGET_SCREEN=NOT_RUN
+TARGET_MECHANISM=NOT_RUN
+TARGET_EXTENSION=NOT_RUN
+real_target_execution_started=false
+GPU_SMOKE=NOT_RUN
+next_scope_authorized=false
+
+如果在 exact launch review/authorization 前被阻塞：
+
+R7_SOURCE_PREP_LAUNCH_PACKET_READY_FOR_REVIEW
+
+并给出唯一剩余 blocker，不要继续修改算法。
+
+如果真实执行失败：
+
+R7_SOURCE_PREP_FAILED
+
+保留 first failure、secondary failures、真实成本、已完成 phases 和 source-after-check，禁止自动重试。
+
+完成 SOURCE_PREP 后立即停止。不得自动运行 TARGET_SCREEN。

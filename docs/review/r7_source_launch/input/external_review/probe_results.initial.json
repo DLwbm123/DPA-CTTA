@@ -1,0 +1,237 @@
+{
+  "schema": "R7_EXTERNAL_BOUNDARY_PROBES_V1",
+  "implementation_sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+  "source_sha256": {
+    "io.py": "dfbbdb9a9c2a6f99af449451f9dc690502af900f23a9e832c03594a934300daa",
+    "runner.py": "f160e2ab99a899ff2994a32cdc6db2322a73df0ca4df896d41f1a0f05f848a5c"
+  },
+  "tests": 40,
+  "passed": 39,
+  "failures": 1,
+  "results": [
+    {
+      "name": "SP1_normal_preflight_no_output_creation",
+      "status": "PASS",
+      "wall_seconds": 0.0041785699999650205
+    },
+    {
+      "name": "SP1_output_dir_storage/../source/new",
+      "status": "PASS",
+      "wall_seconds": 0.0035067949999643133
+    },
+    {
+      "name": "SP1_output_dir_storage/../outside",
+      "status": "PASS",
+      "wall_seconds": 0.0038246660000140764
+    },
+    {
+      "name": "SP1_source_root_storage/../source",
+      "status": "PASS",
+      "wall_seconds": 0.002895561999991969
+    },
+    {
+      "name": "SP1_checkpoint_path_storage/../checkpoint.txt",
+      "status": "PASS",
+      "wall_seconds": 0.003460584999970706
+    },
+    {
+      "name": "SP1_noncanonical_storage_with_valid_config_digest",
+      "status": "PASS",
+      "wall_seconds": 0.0033516710000185412
+    },
+    {
+      "name": "SP1_noncanonical_manifest_independent_valid_fixture",
+      "status": "PASS",
+      "wall_seconds": 0.004169364999995651
+    },
+    {
+      "name": "SP1_noncanonical_split_independent_valid_fixture",
+      "status": "PASS",
+      "wall_seconds": 0.003984005999996043
+    },
+    {
+      "name": "SP1_noncanonical_target_independent_valid_fixture",
+      "status": "PASS",
+      "wall_seconds": 0.003852026999993541
+    },
+    {
+      "name": "SP1_noncanonical_config_independent_valid_fixture",
+      "status": "PASS",
+      "wall_seconds": 0.003263257000014619
+    },
+    {
+      "name": "SP1_symlink_parent_not_hidden",
+      "status": "PASS",
+      "wall_seconds": 0.0033810250000101405
+    },
+    {
+      "name": "SP1_missing_parent_rejected",
+      "status": "PASS",
+      "wall_seconds": 0.003601338000009946
+    },
+    {
+      "name": "SP1_output_constructor_guard",
+      "status": "PASS",
+      "wall_seconds": 0.0028641549999974814
+    },
+    {
+      "name": "SP2_start_disk_and_stderr_failures",
+      "status": "PASS",
+      "wall_seconds": 0.003089004000003115
+    },
+    {
+      "name": "SP2_nonzero_disk_and_stderr_failures",
+      "status": "PASS",
+      "wall_seconds": 0.0036469870000246374
+    },
+    {
+      "name": "SP2_timeout_disk_and_stderr_failures",
+      "status": "PASS",
+      "wall_seconds": 0.003070325999999568
+    },
+    {
+      "name": "SP2_cleanup_disk_and_stderr_failures",
+      "status": "PASS",
+      "wall_seconds": 0.003473975000019891
+    },
+    {
+      "name": "SP2_summary_only_failure_is_not_success",
+      "status": "PASS",
+      "wall_seconds": 0.003518603000031817
+    },
+    {
+      "name": "SP2_normal_supervisor",
+      "status": "PASS",
+      "wall_seconds": 0.0033971000000292406
+    },
+    {
+      "name": "SP3_already_exited_overcap_same_writer_and_supervisor_limit",
+      "status": "PASS",
+      "wall_seconds": 0.0036432210000043597
+    },
+    {
+      "name": "SP3_nonzero_overcap_and_evidence_failure_preserves_first",
+      "status": "FAIL",
+      "type": "ValueError",
+      "message": "output cap; evidence reserve retained",
+      "wall_seconds": 0.0035878870000374263
+    },
+    {
+      "name": "SP3_growth_at_final_poll_nested_payload",
+      "status": "PASS",
+      "wall_seconds": 0.0039103050000335315
+    },
+    {
+      "name": "SP3_terminal_time_1",
+      "status": "PASS",
+      "wall_seconds": 0.0035332399999674635
+    },
+    {
+      "name": "SP3_terminal_time_2",
+      "status": "PASS",
+      "wall_seconds": 0.006835400999989361
+    },
+    {
+      "name": "SP3_global_terminal_reserve",
+      "status": "PASS",
+      "wall_seconds": 0.0046324449999701756
+    },
+    {
+      "name": "SP3_writer_uses_tree_not_local_used_counter",
+      "status": "PASS",
+      "wall_seconds": 0.004257719000008819
+    },
+    {
+      "name": "SP3_nonordinary_tree_rejected",
+      "status": "PASS",
+      "wall_seconds": 0.0033545449999792254
+    },
+    {
+      "name": "SP3_hardlinked_output_rejected",
+      "status": "PASS",
+      "wall_seconds": 0.003599726000004466
+    },
+    {
+      "name": "SP3_audit_IO_and_evidence_failure_keeps_worker_first",
+      "status": "PASS",
+      "wall_seconds": 0.0031878130000109195
+    },
+    {
+      "name": "SP3_completion_time",
+      "status": "PASS",
+      "wall_seconds": 0.0038100230000281954
+    },
+    {
+      "name": "SP3_completion_bytes",
+      "status": "PASS",
+      "wall_seconds": 0.0035628200000132892
+    },
+    {
+      "name": "SP3_completion_success",
+      "status": "PASS",
+      "wall_seconds": 0.003886638999972547
+    },
+    {
+      "name": "SP3_completion_initial_tree_audit",
+      "status": "PASS",
+      "wall_seconds": 0.0042131320000180494
+    },
+    {
+      "name": "SP3_exit0_not_enough_without_worker_completion",
+      "status": "PASS",
+      "wall_seconds": 0.004207051999969735
+    },
+    {
+      "name": "cleanup_EPERM_reaped",
+      "status": "PASS",
+      "wall_seconds": 0.0028966140000079577
+    },
+    {
+      "name": "cleanup_EPERM_alive",
+      "status": "PASS",
+      "wall_seconds": 0.0029308949999631295
+    },
+    {
+      "name": "cleanup_EPERM_group_present",
+      "status": "PASS",
+      "wall_seconds": 0.0030236460000310217
+    },
+    {
+      "name": "scope_TARGET_rejected_before_metadata",
+      "status": "PASS",
+      "wall_seconds": 0.0028280499999482345
+    },
+    {
+      "name": "scope_default_entry_disabled",
+      "status": "PASS",
+      "wall_seconds": 0.0031409730000291347
+    },
+    {
+      "name": "unchanged_budget_arithmetic_no_model_calls",
+      "status": "PASS",
+      "wall_seconds": 0.002826247999962561
+    }
+  ],
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "platform": "linux",
+  "models_imported": false,
+  "actual_model_forwards": 0,
+  "actual_backward_calls": 0,
+  "checkpoint_deserializations": 0,
+  "image_decodes": 0,
+  "real_source_reads": 0,
+  "real_target_reads": 0,
+  "GPU_queries": 0,
+  "real_children_spawned": 0,
+  "interpretation": "Independent AST-selected boundary cases. NOT the submitted 32+59 tests; NOT a full SOURCE_PREP execution.",
+  "substitutes": [
+    "clock",
+    "process",
+    "signal",
+    "normal cleanup",
+    "preflight code identity",
+    "preflight metadata audit",
+    "synthetic metadata verified reader"
+  ],
+  "actual_files": "Temporary synthetic JSON/text/binary output only"
+}

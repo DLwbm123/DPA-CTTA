@@ -1,0 +1,44 @@
+{
+  "real_SOURCE_PREP": "NOT_RUN",
+  "real_SOURCE_PREP_counts": {
+    "backbone_forwards": 0,
+    "source_backward_calls": 0,
+    "calibration_backward_calls": 0,
+    "source_Adam": 0,
+    "calibration_Adam": 0,
+    "source_AdamW": 0,
+    "source_VJP": 0
+  },
+  "binding_audit": {
+    "wall_seconds": 19.993847308913246,
+    "cpu_seconds": 1.504428379,
+    "peak_RSS_KiB": 452556,
+    "IO": {
+      "read_attempts": 322,
+      "raw_reads": 322,
+      "raw_bytes_read": 214725529,
+      "verified_reads": 322,
+      "verified_bytes": 214725529
+    },
+    "IO_scope": "319 raw source/checkpoint execution assets plus three registered provenance JSON files; excludes code/metadata setup reads.",
+    "process": {
+      "exit_code": 0,
+      "transport_and_process_wall_seconds": 44.6345288339071
+    },
+    "RGB_mask_decodes": 0,
+    "checkpoint_deserializations": 0,
+    "GPU_queries_or_initializations": 0,
+    "model_forwards": 0
+  },
+  "expected_future_counts": {
+    "backbone_forwards": 135328,
+    "source_backward_calls": 9072,
+    "calibration_backward_calls": 1536,
+    "source_Adam": 3072,
+    "calibration_Adam": 1536,
+    "source_AdamW": 6000,
+    "source_VJP": 1024
+  },
+  "counts_are_not_ETA": true,
+  "implementation_test_reruns": 0
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "path": "logs/binding-audit.public.log",
+    "raw_private_log_sha256": "bb9f6724f6ee725a7dc9112a4f736c03f7dd2d414146242ad9c39b18d38b7318",
+    "raw_private_bytes": 110484,
+    "public_sha256": "cffab5570937892c8477010dc88d217d367f5b6008f81ee2ff3d08f90556b89e",
+    "public_bytes": 1829,
+    "transformation": "Startup/fold progress retained. Final structured audit row projects aggregate status/cost/count/hash fields; per-file membership/paths/stat identities, private mappings and host/NAS identifiers withheld. Original raw log remains private. Not byte-identical.",
+    "process_exit_code": 0
+  },
+  {
+    "path": "logs/packet-staging.public.log",
+    "raw_private_log_sha256": "58e11e4c58908cc7bd92c3c578a9a58f7ee57cf0f64e115157d6e14f556b942c",
+    "public_sha256": "58e11e4c58908cc7bd92c3c578a9a58f7ee57cf0f64e115157d6e14f556b942c",
+    "bytes": 210,
+    "transformation": "None; log is already aggregate-only.",
+    "process_exit_code": 0
+  }
+]

@@ -1,0 +1,235 @@
+{
+  "schema": "R7_EXTERNAL_BOUNDARY_PROBES_V1",
+  "implementation_sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+  "source_sha256": {
+    "io.py": "dfbbdb9a9c2a6f99af449451f9dc690502af900f23a9e832c03594a934300daa",
+    "runner.py": "f160e2ab99a899ff2994a32cdc6db2322a73df0ca4df896d41f1a0f05f848a5c"
+  },
+  "tests": 40,
+  "passed": 40,
+  "failures": 0,
+  "results": [
+    {
+      "name": "SP1_normal_preflight_no_output_creation",
+      "status": "PASS",
+      "wall_seconds": 0.004640336999955252
+    },
+    {
+      "name": "SP1_output_dir_storage/../source/new",
+      "status": "PASS",
+      "wall_seconds": 0.0031448889999978746
+    },
+    {
+      "name": "SP1_output_dir_storage/../outside",
+      "status": "PASS",
+      "wall_seconds": 0.0028052960000195526
+    },
+    {
+      "name": "SP1_source_root_storage/../source",
+      "status": "PASS",
+      "wall_seconds": 0.002789542000016354
+    },
+    {
+      "name": "SP1_checkpoint_path_storage/../checkpoint.txt",
+      "status": "PASS",
+      "wall_seconds": 0.0030765949999818076
+    },
+    {
+      "name": "SP1_noncanonical_storage_with_valid_config_digest",
+      "status": "PASS",
+      "wall_seconds": 0.0033459219999940615
+    },
+    {
+      "name": "SP1_noncanonical_manifest_independent_valid_fixture",
+      "status": "PASS",
+      "wall_seconds": 0.0028904150000244044
+    },
+    {
+      "name": "SP1_noncanonical_split_independent_valid_fixture",
+      "status": "PASS",
+      "wall_seconds": 0.003179059999979472
+    },
+    {
+      "name": "SP1_noncanonical_target_independent_valid_fixture",
+      "status": "PASS",
+      "wall_seconds": 0.002962953999997353
+    },
+    {
+      "name": "SP1_noncanonical_config_independent_valid_fixture",
+      "status": "PASS",
+      "wall_seconds": 0.0028509240000289537
+    },
+    {
+      "name": "SP1_symlink_parent_not_hidden",
+      "status": "PASS",
+      "wall_seconds": 0.0028036530000008497
+    },
+    {
+      "name": "SP1_missing_parent_rejected",
+      "status": "PASS",
+      "wall_seconds": 0.0033637189999922157
+    },
+    {
+      "name": "SP1_output_constructor_guard",
+      "status": "PASS",
+      "wall_seconds": 0.0029517770000211385
+    },
+    {
+      "name": "SP2_start_disk_and_stderr_failures",
+      "status": "PASS",
+      "wall_seconds": 0.0030104649999884714
+    },
+    {
+      "name": "SP2_nonzero_disk_and_stderr_failures",
+      "status": "PASS",
+      "wall_seconds": 0.004256656999984898
+    },
+    {
+      "name": "SP2_timeout_disk_and_stderr_failures",
+      "status": "PASS",
+      "wall_seconds": 0.0032905990000244856
+    },
+    {
+      "name": "SP2_cleanup_disk_and_stderr_failures",
+      "status": "PASS",
+      "wall_seconds": 0.003533845999982077
+    },
+    {
+      "name": "SP2_summary_only_failure_is_not_success",
+      "status": "PASS",
+      "wall_seconds": 0.004014922000010301
+    },
+    {
+      "name": "SP2_normal_supervisor",
+      "status": "PASS",
+      "wall_seconds": 0.003912637999974322
+    },
+    {
+      "name": "SP3_already_exited_overcap_same_writer_and_supervisor_limit",
+      "status": "PASS",
+      "wall_seconds": 0.0036331360000190216
+    },
+    {
+      "name": "SP3_nonzero_overcap_and_evidence_failure_preserves_first",
+      "status": "PASS",
+      "wall_seconds": 0.00375751400002855
+    },
+    {
+      "name": "SP3_growth_at_final_poll_nested_payload",
+      "status": "PASS",
+      "wall_seconds": 0.0036104519999753393
+    },
+    {
+      "name": "SP3_terminal_time_1",
+      "status": "PASS",
+      "wall_seconds": 0.003349517999993168
+    },
+    {
+      "name": "SP3_terminal_time_2",
+      "status": "PASS",
+      "wall_seconds": 0.0034097079999924063
+    },
+    {
+      "name": "SP3_global_terminal_reserve",
+      "status": "PASS",
+      "wall_seconds": 0.0035323139999832165
+    },
+    {
+      "name": "SP3_writer_uses_tree_not_local_used_counter",
+      "status": "PASS",
+      "wall_seconds": 0.004246230999967793
+    },
+    {
+      "name": "SP3_nonordinary_tree_rejected",
+      "status": "PASS",
+      "wall_seconds": 0.003198779999991075
+    },
+    {
+      "name": "SP3_hardlinked_output_rejected",
+      "status": "PASS",
+      "wall_seconds": 0.0036310529999923347
+    },
+    {
+      "name": "SP3_audit_IO_and_evidence_failure_keeps_worker_first",
+      "status": "PASS",
+      "wall_seconds": 0.003220281999972485
+    },
+    {
+      "name": "SP3_completion_time",
+      "status": "PASS",
+      "wall_seconds": 0.003226933000007648
+    },
+    {
+      "name": "SP3_completion_bytes",
+      "status": "PASS",
+      "wall_seconds": 0.0033975410000266493
+    },
+    {
+      "name": "SP3_completion_success",
+      "status": "PASS",
+      "wall_seconds": 0.004445040999996763
+    },
+    {
+      "name": "SP3_completion_initial_tree_audit",
+      "status": "PASS",
+      "wall_seconds": 0.00332662400001027
+    },
+    {
+      "name": "SP3_exit0_not_enough_without_worker_completion",
+      "status": "PASS",
+      "wall_seconds": 0.003515918999994483
+    },
+    {
+      "name": "cleanup_EPERM_reaped",
+      "status": "PASS",
+      "wall_seconds": 0.002643201000012141
+    },
+    {
+      "name": "cleanup_EPERM_alive",
+      "status": "PASS",
+      "wall_seconds": 0.0031006919999754246
+    },
+    {
+      "name": "cleanup_EPERM_group_present",
+      "status": "PASS",
+      "wall_seconds": 0.002917154999977356
+    },
+    {
+      "name": "scope_TARGET_rejected_before_metadata",
+      "status": "PASS",
+      "wall_seconds": 0.002926879000028748
+    },
+    {
+      "name": "scope_default_entry_disabled",
+      "status": "PASS",
+      "wall_seconds": 0.002772926999966785
+    },
+    {
+      "name": "unchanged_budget_arithmetic_no_model_calls",
+      "status": "PASS",
+      "wall_seconds": 0.002783743999998478
+    }
+  ],
+  "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+  "platform": "linux",
+  "models_imported": false,
+  "actual_model_forwards": 0,
+  "actual_backward_calls": 0,
+  "checkpoint_deserializations": 0,
+  "image_decodes": 0,
+  "real_source_reads": 0,
+  "real_target_reads": 0,
+  "GPU_queries": 0,
+  "real_children_spawned": 0,
+  "interpretation": "Independent AST-selected boundary cases. NOT the submitted 32+59 tests; NOT a full SOURCE_PREP execution.",
+  "substitutes": [
+    "clock",
+    "process",
+    "signal",
+    "normal cleanup",
+    "preflight code identity",
+    "preflight metadata audit",
+    "synthetic metadata verified reader"
+  ],
+  "actual_files": "Temporary synthetic JSON/text/binary output only"
+}

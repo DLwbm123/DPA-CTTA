@@ -1,0 +1,108 @@
+{
+  "schema": "R7_SOURCE_PREP_EXTERNAL_REREVIEW_V1",
+  "status": "R7_SOURCE_PREP_REVIEW_PASS_EXECUTION_LAYER",
+  "review_scope": "SOURCE_PREP_EXECUTION_LAYER_CPU_ONLY",
+  "implementation_sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+  "publication_sha": "ecde8ba63940eb5c660f4de01bd7a9300b18c15b",
+  "base_publication_sha": "ad95f212b8770e5006e0b1ea3520717767c7413f",
+  "previous_implementation_sha": "9fa2ce37149909687ef5be2e08aa2b32a5887903",
+  "review_date": "2026-09-18",
+  "stage_I_review": "PASS",
+  "stage_I_review_interpretation": "Preserved historical conclusion, not reissued here",
+  "source_prep_execution_layer_review": "PASS",
+  "findings": {
+    "SP1": "CLOSED",
+    "SP2": "CLOSED",
+    "SP3": "CLOSED"
+  },
+  "blocking_findings_within_reviewed_scope": [],
+  "source_binding_status": "PENDING",
+  "source_and_resource_binding_review": "NOT_COMPLETED_BY_THIS_REVIEW",
+  "execution_authorized": false,
+  "execution_receipt_issued": false,
+  "this_is_not_execution_receipt": true,
+  "user_authorization": null,
+  "resource_authorization": null,
+  "physical_GPU_ids": null,
+  "real_source_training_started": false,
+  "real_target_execution_started": false,
+  "SOURCE_PREP": "NOT_RUN",
+  "TARGET_SCREEN": "NOT_RUN",
+  "TARGET_MECHANISM": "NOT_RUN",
+  "TARGET_EXTENSION": "NOT_RUN",
+  "GPU_SMOKE": "NOT_RUN",
+  "real_effective_state_sha256": null,
+  "real_training_asset_sha256": null,
+  "submitted_acceptance": {
+    "local": {
+      "execution_tests": 32,
+      "regression_tests": 59,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "source_wall_seconds": 1.2280532910954207,
+      "regression_wall_seconds": 33.657539000036195
+    },
+    "server": {
+      "execution_tests": 32,
+      "regression_tests": 59,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "source_wall_seconds": 2.2569012250751257,
+      "regression_wall_seconds": 109.79188261507079
+    },
+    "independently_rerun_full_suites": false,
+    "basis": "Pinned submitted public logs and CPU_RESULTS, not reviewer reruns"
+  },
+  "independent_probes": {
+    "cases": 40,
+    "passed": 40,
+    "failed": 0,
+    "model_calls": 0,
+    "torch_imported": false,
+    "real_children_spawned": 0,
+    "real_asset_reads": 0,
+    "GPU_queries": 0,
+    "scope": "AST-selected exact-hash code; standard-library fixtures, not full execution",
+    "initial_probe_run": {
+      "cases": 40,
+      "passed": 39,
+      "failed": 1,
+      "cause": "Reviewer fixture injected overcap bytes before process.json, so a correct earlier output-cap failure preceded the expected worker exit error. Fixture ordering corrected; production source unchanged; initial script/results retained."
+    }
+  },
+  "source_identity": [
+    {
+      "path": "src/dpa_ctta/r7_shared/io.py",
+      "implementation_sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+      "bytes": 3793,
+      "sha256": "dfbbdb9a9c2a6f99af449451f9dc690502af900f23a9e832c03594a934300daa",
+      "github_blob_sha1": "7fc3cbbd11801f33bc7278dae6d82bd5c872f15e",
+      "published_sha256": "dfbbdb9a9c2a6f99af449451f9dc690502af900f23a9e832c03594a934300daa",
+      "sha256_matches": true,
+      "retrieval": "GitHub connector fixed-ref content, materialized locally and SHA256-verified; not a git checkout"
+    },
+    {
+      "path": "src/dpa_ctta/r7_source_prep/runner.py",
+      "implementation_sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+      "bytes": 23108,
+      "sha256": "f160e2ab99a899ff2994a32cdc6db2322a73df0ca4df896d41f1a0f05f848a5c",
+      "github_blob_sha1": "1ca8699f87511a1099c4a901977981b275e97f20",
+      "published_sha256": "f160e2ab99a899ff2994a32cdc6db2322a73df0ca4df896d41f1a0f05f848a5c",
+      "sha256_matches": true,
+      "retrieval": "GitHub connector fixed-ref content, materialized locally and SHA256-verified; not a git checkout"
+    }
+  ],
+  "limitations": [
+    "User-local new delivery ZIP and private source membership/raw logs were not accessed.",
+    "GitHub connector read succeeded; anonymous public availability was not independently verified because web/raw download failed.",
+    "No full 32+59 suite rerun, real source execution, real model/checkpoint load, image decode, or GPU qualification.",
+    "No new adversarial concurrent namespace-replacement or cryptographic authentication claims.",
+    "Output limit is checked detection/failure accounting, not a physical filesystem quota.",
+    "Supervisor complete=true is insufficient without valid audited completion publication and parent zero exit.",
+    "Unknown patient linkage and pretraining exposure remain unknown; source file bindings, risk acceptance and exact resource/user receipt are separate gates."
+  ],
+  "repository_write_performed": false,
+  "recommended_next_stage": "Source binding / explicit risk interpretation / finite CPU-resource and exact-code authorization preparation only; no automatic execution"
+}
