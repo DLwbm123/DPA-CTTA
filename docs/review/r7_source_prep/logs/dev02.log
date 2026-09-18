@@ -1,0 +1,38 @@
+test_CPU_device_route_rejects_cuda_and_unbounded_resources_without_GPU_query (test_source_prep.PreparationTests.test_CPU_device_route_rejects_cuda_and_unbounded_resources_without_GPU_query) ... ok
+test_budget_phases_full_counts_no_silent_truncation (test_source_prep.PreparationTests.test_budget_phases_full_counts_no_silent_truncation) ... ok
+test_default_entry_refuses_without_receipt (test_source_prep.PreparationTests.test_default_entry_refuses_without_receipt) ... ok
+test_disabled_wrong_scope_and_old_review_reject_before_assets (test_source_prep.PreparationTests.test_disabled_wrong_scope_and_old_review_reject_before_assets) ... ok
+test_file_digest_mismatch_rejects_before_decode (test_source_prep.PreparationTests.test_file_digest_mismatch_rejects_before_decode) ... ok
+test_metadata_split_freezes_before_decode_and_preserves_existing (test_source_prep.PreparationTests.test_metadata_split_freezes_before_decode_and_preserves_existing) ... ok
+test_output_budget_preserves_first_evidence_and_no_overwrite (test_source_prep.PreparationTests.test_output_budget_preserves_first_evidence_and_no_overwrite) ... ok
+test_output_source_overlap_and_memory_overflow_rejected (test_source_prep.PreparationTests.test_output_source_overlap_and_memory_overflow_rejected) ... ok
+test_overlap_minimum_duplicate_and_filename_group_rejected (test_source_prep.PreparationTests.test_overlap_minimum_duplicate_and_filename_group_rejected) ... ok
+test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash (test_source_prep.PreparationTests.test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash) ... ok
+test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check (test_source_prep.PreparationTests.test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check) ... ok
+test_six_artifact_release_and_independent_expected_loader (test_source_prep.PreparationTests.test_six_artifact_release_and_independent_expected_loader) ... ok
+test_source_path_escape_and_symlink_hardlink_rejected (test_source_prep.PreparationTests.test_source_path_escape_and_symlink_hardlink_rejected) ... ok
+test_supervisor_CPU_success_failure_timeout_cleanup (test_source_prep.PreparationTests.test_supervisor_CPU_success_failure_timeout_cleanup) ... ERROR
+test_synthetic_checkpoint_CPU_load_and_wrong_state_reject (test_source_prep.PreparationTests.test_synthetic_checkpoint_CPU_load_and_wrong_state_reject) ... ok
+test_target_overlap_and_bad_domain_rejected (test_source_prep.PreparationTests.test_target_overlap_and_bad_domain_rejected) ... ok
+test_worker_failure_after_check_failure_are_separate_no_retry (test_source_prep.PreparationTests.test_worker_failure_after_check_failure_are_separate_no_retry) ... ok
+
+======================================================================
+ERROR: test_supervisor_CPU_success_failure_timeout_cleanup (test_source_prep.PreparationTests.test_supervisor_CPU_success_failure_timeout_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<LOCAL_CODE>/tests/r7/test_source_prep.py", line 139, in test_supervisor_CPU_success_failure_timeout_cleanup
+    with self.assertRaises((RuntimeError,TimeoutError)):run.supervise_one(start,dict(wall_seconds=.2,output_bytes=1000000),out)
+                                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/runner.py", line 202, in supervise_one
+    if record:stop_owned(record)
+              ^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r1/supervise.py", line 31, in stop_owned
+    try:os.killpg(pgid,0)
+        ^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 1] Operation not permitted
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.953s
+
+FAILED (errors=1)
+SOURCE_PREP_CPU_RESULT {"tests": 17, "failures": 0, "errors": 1, "skipped": 0, "exit_code": 1, "wall_seconds": 0.967921125004068, "cpu_user_seconds": 0.5686789999999999, "cpu_system_seconds": 0.275611, "peak_RSS": 234373120, "peak_RSS_unit": "bytes", "python": "3.12.9", "torch": "2.6.0", "physical_calls": {"backward": 0, "VJP": 0, "Adam": 0, "AdamW": 0, "synthetic_checkpoint_loads": 5, "synthetic_image_mask_decodes": 2}, "procedural_counts": {"backbone_forwards": 2, "appearance_MLP": 1, "method_MLP": 2, "spectral_norms": 3, "ISTA_iterations": 5}, "hash_cost": {"tensor_digest_calls": 28, "tensor_bytes": 5634160, "wall_ns": 5156711, "cpu_ns": 8880000, "context_build_calls": 14, "context_wall_ns": 10316916, "context_cpu_ns": 18866000}, "real_RGB_mask_decodes": 0, "real_checkpoint_deserializations": 0, "GPU_queries_or_initializations": 0, "real_source_training": false, "source_execution_layer_review": "NOT_RUN"}

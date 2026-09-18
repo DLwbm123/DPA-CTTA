@@ -1,0 +1,137 @@
+test_A_ambient_1024_basis_and_projection (test_math.MathTests.test_A_ambient_1024_basis_and_projection) ... ok
+test_A_filter_independent_reference (test_math.MathTests.test_A_filter_independent_reference) ... <LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:42: RuntimeWarning: divide by zero encountered in matmul
+  pred_m, pred_p = f@m, f@p@f.T+q
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:42: RuntimeWarning: overflow encountered in matmul
+  pred_m, pred_p = f@m, f@p@f.T+q
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:42: RuntimeWarning: invalid value encountered in matmul
+  pred_m, pred_p = f@m, f@p@f.T+q
+ok
+test_A_full_transition_correlations_and_high_noise (test_math.MathTests.test_A_full_transition_correlations_and_high_noise) ... ok
+test_A_predictive_basis_independent_SVD_covariance (test_math.MathTests.test_A_predictive_basis_independent_SVD_covariance) ... <LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:58: RuntimeWarning: divide by zero encountered in matmul
+  precision=ridge*np.eye(n)+(jc.T*w)@jc/len(jc)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:58: RuntimeWarning: overflow encountered in matmul
+  precision=ridge*np.eye(n)+(jc.T*w)@jc/len(jc)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:58: RuntimeWarning: invalid value encountered in matmul
+  precision=ridge*np.eye(n)+(jc.T*w)@jc/len(jc)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:61: RuntimeWarning: divide by zero encountered in matmul
+  root=(vecs*np.sqrt(vals))@vecs.T
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:61: RuntimeWarning: overflow encountered in matmul
+  root=(vecs*np.sqrt(vals))@vecs.T
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:61: RuntimeWarning: invalid value encountered in matmul
+  root=(vecs*np.sqrt(vals))@vecs.T
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:62: RuntimeWarning: divide by zero encountered in matmul
+  gram=root@jp.T@jp@root;gram=(gram+gram.T)/2
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:62: RuntimeWarning: overflow encountered in matmul
+  gram=root@jp.T@jp@root;gram=(gram+gram.T)/2
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:62: RuntimeWarning: invalid value encountered in matmul
+  gram=root@jp.T@jp@root;gram=(gram+gram.T)/2
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:69: RuntimeWarning: divide by zero encountered in matmul
+  b=root@selected
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:69: RuntimeWarning: overflow encountered in matmul
+  b=root@selected
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:69: RuntimeWarning: invalid value encountered in matmul
+  b=root@selected
+ok
+test_A_tau_square_and_B_first_difference (test_math.MathTests.test_A_tau_square_and_B_first_difference) ... ok
+test_B_diagonal_closed_form_and_gradient (test_math.MathTests.test_B_diagonal_closed_form_and_gradient) ... ok
+test_B_dictionary_normalization_spectral_bounds (test_math.MathTests.test_B_dictionary_normalization_spectral_bounds) ... ok
+test_B_five_step_reference_temperature_and_monotonicity (test_math.MathTests.test_B_five_step_reference_temperature_and_monotonicity) ... <LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:82: RuntimeWarning: divide by zero encountered in matmul
+  residual=o-h@(prior+delta)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:82: RuntimeWarning: overflow encountered in matmul
+  residual=o-h@(prior+delta)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:82: RuntimeWarning: invalid value encountered in matmul
+  residual=o-h@(prior+delta)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:95: RuntimeWarning: divide by zero encountered in matmul
+  grad=h.T@(h@(prior+delta)-o)/kappa**2+mu*delta
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:95: RuntimeWarning: overflow encountered in matmul
+  grad=h.T@(h@(prior+delta)-o)/kappa**2+mu*delta
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:95: RuntimeWarning: invalid value encountered in matmul
+  grad=h.T@(h@(prior+delta)-o)/kappa**2+mu*delta
+ok
+test_C_IRLS_reference_outliers_and_fixed_steps (test_math.MathTests.test_C_IRLS_reference_outliers_and_fixed_steps) ... <LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:111: RuntimeWarning: divide by zero encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:111: RuntimeWarning: overflow encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:111: RuntimeWarning: invalid value encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:123: RuntimeWarning: divide by zero encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:123: RuntimeWarning: overflow encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:123: RuntimeWarning: invalid value encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:126: RuntimeWarning: divide by zero encountered in matmul
+  lhs=(h.T*weights)@h/o.size+lam*np.eye(prior.size)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:126: RuntimeWarning: overflow encountered in matmul
+  lhs=(h.T*weights)@h/o.size+lam*np.eye(prior.size)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:126: RuntimeWarning: invalid value encountered in matmul
+  lhs=(h.T*weights)@h/o.size+lam*np.eye(prior.size)
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:127: RuntimeWarning: divide by zero encountered in matmul
+  rhs=h.T@(weights*o)/o.size+lam*prior
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:127: RuntimeWarning: overflow encountered in matmul
+  rhs=h.T@(weights*o)/o.size+lam*prior
+<LOCAL_CODE>/docs/review/r7/input/references/MATH_REFERENCE.py:127: RuntimeWarning: invalid value encountered in matmul
+  rhs=h.T@(weights*o)/o.size+lam*prior
+ok
+test_C_calibration_only_variance_parameters (test_math.MathTests.test_C_calibration_only_variance_parameters) ... ok
+test_C_ridge_limit_mean_scaling_and_zero_residual (test_math.MathTests.test_C_ridge_limit_mean_scaling_and_zero_residual) ... ok
+test_C_variance_bounds_constant_geometric_mean (test_math.MathTests.test_C_variance_bounds_constant_geometric_mean) ... ok
+test_all_shapes_state_static_and_source_gradients (test_math.MathTests.test_all_shapes_state_static_and_source_gradients) ... ok
+test_invalid_nonfinite_spd_variance (test_math.MathTests.test_invalid_nonfinite_spd_variance) ... ok
+test_rank_failures_no_random_padding (test_math.MathTests.test_rank_failures_no_random_padding) ... ok
+test_C0_one_forward (test_contract.Contracts.test_C0_one_forward) ... ok
+test_ablation_lifecycle_and_constant_source (test_contract.Contracts.test_ablation_lifecycle_and_constant_source) ... ok
+test_batch_and_nonfinite_inputs_hard_fail (test_contract.Contracts.test_batch_and_nonfinite_inputs_hard_fail) ... ok
+test_disabled_real_entries_before_asset_read (test_contract.Contracts.test_disabled_real_entries_before_asset_read) ... ok
+test_film_bitwise_and_zero_derivative (test_contract.Contracts.test_film_bitwise_and_zero_derivative) ... ok
+test_fixed_fit_and_calibration_limits (test_contract.Contracts.test_fixed_fit_and_calibration_limits) ... ok
+test_fixed_published_alias_mapping_metadata_only (test_contract.Contracts.test_fixed_published_alias_mapping_metadata_only) ... ok
+test_fresh_output_owner_and_first_error (test_contract.Contracts.test_fresh_output_owner_and_first_error) ... ok
+test_independent_RNG_and_identical_full_static_initialization (test_contract.Contracts.test_independent_RNG_and_identical_full_static_initialization) ... ok
+test_matrix_bounds_source_pending_no_receipts (test_contract.Contracts.test_matrix_bounds_source_pending_no_receipts) ... ok
+test_no_commit_on_second_forward_failure_and_no_retry (test_contract.Contracts.test_no_commit_on_second_forward_failure_and_no_retry) ... ok
+test_observer_shapes_current_BN_and_cache_release (test_contract.Contracts.test_observer_shapes_current_BN_and_cache_release) ... ok
+test_online_two_forward_no_autograd_and_current_only (test_contract.Contracts.test_online_two_forward_no_autograd_and_current_only) ... ok
+test_oracle_16_combined_steps_support_only (test_contract.Contracts.test_oracle_16_combined_steps_support_only) ... ok
+test_reused_reader_rejects_symlink_hardlink_escape (test_contract.Contracts.test_reused_reader_rejects_symlink_hardlink_escape) ... ok
+test_same_appearance_only_B_difference_not_raw_image (test_contract.Contracts.test_same_appearance_only_B_difference_not_raw_image) ... ok
+test_saved_assets_inference_binding_and_eta (test_contract.Contracts.test_saved_assets_inference_binding_and_eta) ... ok
+test_scaler_is_fit_only_and_no_online_running_change (test_contract.Contracts.test_scaler_is_fit_only_and_no_online_running_change) ... ok
+test_scientific_review_paired_tails_and_ASSD_denominators (test_contract.Contracts.test_scientific_review_paired_tails_and_ASSD_denominators) ... ok
+test_source_constant_R_all_cal_observations_only (test_contract.Contracts.test_source_constant_R_all_cal_observations_only) ... ok
+test_source_destination_overlap_denied_before_any_write (test_contract.Contracts.test_source_destination_overlap_denied_before_any_write) ... ok
+test_source_first_failure_is_terminal (test_contract.Contracts.test_source_first_failure_is_terminal) ... ok
+test_source_fit_static_and_calibration_freeze (test_contract.Contracts.test_source_fit_static_and_calibration_freeze) ... ok
+test_source_query_labels_change_loss_not_support_state (test_contract.Contracts.test_source_query_labels_change_loss_not_support_state) ... ok
+test_source_query_pixel_cannot_update_episode_state (test_contract.Contracts.test_source_query_pixel_cannot_update_episode_state) ... ok
+test_split_overlap_oracle_fit_only_and_roles (test_contract.Contracts.test_split_overlap_oracle_fit_only_and_roles) ... ok
+test_state_corruption_binding_rejected (test_contract.Contracts.test_state_corruption_binding_rejected) ... ok
+test_state_restore_next_output_and_GT_future_independence (test_contract.Contracts.test_state_restore_next_output_and_GT_future_independence) ... ok
+test_styles_identity_fold_factors_and_local_noise (test_contract.Contracts.test_styles_identity_fold_factors_and_local_noise) ... ok
+test_A_B_C_actual_ResUNet_visits_and_source_microepisodes (test_full_network.FullNetwork.test_A_B_C_actual_ResUNet_visits_and_source_microepisodes) ... FULL_NETWORK {"group": "A", "parameters": 22554570, "method_parameters": 23633, "fit": {"cholesky_solves": 16, "spectral_norms": 4, "appearance_MLP": 8, "method_MLP": 8, "backbone_forwards": 12, "source_backward_calls": 1, "source_AdamW": 1}, "online": {"cholesky_solves": 6, "spectral_norms": 2, "appearance_MLP": 2, "method_MLP": 2, "backbone_forwards": 4}, "gradients": {"style": 0.0012672707671299577, "content": 0.00022112499573267996, "W": 0.005223543848842382, "qraw": 4.484331657295115e-05, "observer.head.0.weight": 0.0005648320657201111, "observer.head.0.bias": 7.199489482445642e-05, "observer.head.2.weight": 0.00043087737867608666, "observer.head.2.bias": 0.0002486195880919695, "head.0.weight": 0.0008749717380851507, "head.0.bias": 0.0010656289523467422, "head.2.weight": 0.000989582622423768, "head.2.bias": 0.0035613931249827147}}
+FULL_NETWORK {"group": "B", "parameters": 22554570, "method_parameters": 25281, "fit": {"spectral_norms": 12, "appearance_MLP": 8, "method_MLP": 16, "ISTA_iterations": 20, "backbone_forwards": 12, "source_backward_calls": 1, "source_AdamW": 1}, "online": {"spectral_norms": 6, "appearance_MLP": 2, "method_MLP": 4, "ISTA_iterations": 10, "backbone_forwards": 4}, "gradients": {"W": 0.0006204434903338552, "G": 5.676339060300961e-05, "Hraw": 0.0003426952753216028, "observer.head.0.weight": 0.00236346828751266, "observer.head.0.bias": 0.0003013747918885201, "observer.head.2.weight": 0.0014788442058488727, "observer.head.2.bias": 0.0008543531876057386, "bias.0.weight": 0.0005652948166243732, "bias.0.bias": 0.0007636439986526966, "bias.2.weight": 0.0011386091355234385, "bias.2.bias": 0.0023620808497071266, "head.0.weight": 0.000726242084056139, "head.0.bias": 0.0009800406405702233, "head.2.weight": 0.001806442392989993, "head.2.bias": 0.0036888495087623596}}
+FULL_NETWORK {"group": "C", "parameters": 22554570, "method_parameters": 48696, "fit": {"cholesky_solves": 12, "appearance_MLP": 8, "method_MLP": 16, "IRLS_iterations": 12, "backbone_forwards": 12, "source_backward_calls": 1, "source_AdamW": 1}, "online": {"cholesky_solves": 6, "appearance_MLP": 2, "method_MLP": 6, "IRLS_iterations": 6, "backbone_forwards": 4}, "gradients": {"Pc": 0.0005177293787710369, "Pa": 0.00021344728884287179, "O": 0.0004579004889819771, "observer.head.0.weight": 1.2428136869857553e-05, "observer.head.0.bias": 1.5837212004043977e-06, "observer.head.2.weight": 1.0404119166196324e-05, "observer.head.2.bias": 5.995862920826767e-06, "query.0.weight": 0.00017893026233650744, "query.0.bias": 1.7594327800907195e-05, "query.2.weight": 0.00015160205657593906, "query.2.bias": 4.772066677105613e-05, "mapping.0.weight": 8.900843567971606e-06, "mapping.0.bias": 6.079628292354755e-05, "mapping.2.weight": 6.095457501942292e-05, "mapping.2.bias": 0.00022433229605667293}}
+ok
+test_full_zero_identity_derivative_and_C0 (test_full_network.FullNetwork.test_full_zero_identity_derivative_and_C0) ... FULL_IDENTITY {"backbone_forwards": 3, "source_VJP": 2}
+ok
+test_original_C_random_network_narrow_preservation (test_full_network.FullNetwork.test_original_C_random_network_narrow_preservation) ... OLD_C_PRESERVATION {"network_forwards": 16, "backward_calls": 2, "Adam": 2, "bitwise": true}
+ok
+test_ablation_explicit_trusted_derivation_and_restore_mismatch (test_context.ContextTests.test_ablation_explicit_trusted_derivation_and_restore_mismatch) ... ok
+test_actual_prepare_pipeline_emits_six_bound_packages_with_mocked_training (test_context.ContextTests.test_actual_prepare_pipeline_emits_six_bound_packages_with_mocked_training) ... ok
+test_all_groups_and_C0_cross_instance_restore_and_next_output (test_context.ContextTests.test_all_groups_and_C0_cross_instance_restore_and_next_output) ... ok
+test_all_groups_and_C0_head_encoder_projection_reject_both_load_paths (test_context.ContextTests.test_all_groups_and_C0_head_encoder_projection_reject_both_load_paths) ... ok
+test_all_groups_and_C0_legacy_incomplete_packages_rejected (test_context.ContextTests.test_all_groups_and_C0_legacy_incomplete_packages_rejected) ... ok
+test_full_random_ResUNet_origin_compatibility_and_rejection (test_context.ContextTests.test_full_random_ResUNet_origin_compatibility_and_rejection) ... R7_CONTEXT_FULL_RANDOM {"model_parameters": 22554570, "counts": {"cholesky_solves": 9, "spectral_norms": 3, "appearance_MLP": 3, "method_MLP": 3, "backbone_forwards": 6}, "hash_cost": {"tensor_digest_calls": 12, "tensor_bytes": 541702896, "wall_ns": 238109832, "cpu_ns": 470903000, "context_build_calls": 6, "context_wall_ns": 244578207, "context_cpu_ns": 483761000}, "same_bytes_cross_instance": true, "changed_encoder_rejected": true}
+ok
+test_method_group_static_basis_scaler_calibration_mismatches (test_context.ContextTests.test_method_group_static_basis_scaler_calibration_mismatches) ... ok
+test_mutation_guard_no_per_visit_tensor_hash_and_boundary_rehash (test_context.ContextTests.test_mutation_guard_no_per_visit_tensor_hash_and_boundary_rehash) ... ok
+test_policy_and_actual_BN_configuration_rejected_before_forward (test_context.ContextTests.test_policy_and_actual_BN_configuration_rejected_before_forward) ... ok
+test_prepared_artifact_records_original_environment_and_rejects_drift (test_context.ContextTests.test_prepared_artifact_records_original_environment_and_rejects_drift) ... ok
+test_tampered_or_wrong_source_spec_context_rejected (test_context.ContextTests.test_tampered_or_wrong_source_spec_context_rejected) ... ok
+test_tensor_canonical_names_shape_dtype_layout_and_no_address (test_context.ContextTests.test_tensor_canonical_names_shape_dtype_layout_and_no_address) ... ok
+
+----------------------------------------------------------------------
+Ran 59 tests in 34.833s
+
+OK
+R7_CPU_RESULT {"GPU_queries_or_initializations": 0, "context_hash_cost": {"context_build_calls": 199, "context_cpu_ns": 1113532000, "context_wall_ns": 563391333, "cpu_ns": 913223000, "tensor_bytes": 978899706, "tensor_digest_calls": 407, "wall_ns": 461651500}, "cpu_system_seconds": 12.396607000000001, "cpu_user_seconds": 56.000448, "errors": 0, "exit_code": 0, "external_review": "NOT_RUN", "failures": 0, "peak_RSS": 1723351040, "peak_RSS_unit": "bytes", "physical_calls": {"AdamW_step": 6, "Adam_step": 24, "Tensor_backward": 36, "autograd_grad": 2, "old_backbone_forwards": 16}, "platform": "Darwin arm64", "procedural_counts": {"IRLS_iterations": 105, "ISTA_iterations": 240, "appearance_MLP": 391, "backbone_forwards": 479, "calibration_Adam": 6, "calibration_backward_calls": 6, "cholesky_solves": 264, "eigh": 4, "method_MLP": 967, "source_Adam": 16, "source_AdamW": 6, "source_VJP": 2, "source_backward_calls": 22, "spectral_norms": 181, "svd": 1}, "python": "3.12.9", "real_asset_reads": 0, "skipped": 0, "tests": 59, "torch": "2.6.0", "wall_seconds": 34.85526570887305}

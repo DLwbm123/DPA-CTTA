@@ -1,0 +1,134 @@
+test_CPU_device_route_rejects_cuda_and_unbounded_resources_without_GPU_query (test_source_prep.PreparationTests.test_CPU_device_route_rejects_cuda_and_unbounded_resources_without_GPU_query) ... ok
+test_budget_phases_full_counts_no_silent_truncation (test_source_prep.PreparationTests.test_budget_phases_full_counts_no_silent_truncation) ... ok
+test_default_entry_refuses_without_receipt (test_source_prep.PreparationTests.test_default_entry_refuses_without_receipt) ... ok
+test_disabled_wrong_scope_and_old_review_reject_before_assets (test_source_prep.PreparationTests.test_disabled_wrong_scope_and_old_review_reject_before_assets) ... ok
+test_file_digest_mismatch_rejects_before_decode (test_source_prep.PreparationTests.test_file_digest_mismatch_rejects_before_decode) ... ok
+test_metadata_split_freezes_before_decode_and_preserves_existing (test_source_prep.PreparationTests.test_metadata_split_freezes_before_decode_and_preserves_existing) ... ok
+test_output_budget_preserves_first_evidence_and_no_overwrite (test_source_prep.PreparationTests.test_output_budget_preserves_first_evidence_and_no_overwrite) ... ERROR
+test_output_source_overlap_and_memory_overflow_rejected (test_source_prep.PreparationTests.test_output_source_overlap_and_memory_overflow_rejected) ... ok
+test_overlap_minimum_duplicate_and_filename_group_rejected (test_source_prep.PreparationTests.test_overlap_minimum_duplicate_and_filename_group_rejected) ... ok
+test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash (test_source_prep.PreparationTests.test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash) ... ERROR
+test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check (test_source_prep.PreparationTests.test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check) ... ERROR
+test_six_artifact_release_and_independent_expected_loader (test_source_prep.PreparationTests.test_six_artifact_release_and_independent_expected_loader) ... ERROR
+test_source_path_escape_and_symlink_hardlink_rejected (test_source_prep.PreparationTests.test_source_path_escape_and_symlink_hardlink_rejected) ... ok
+test_supervisor_CPU_success_failure_timeout_cleanup (test_source_prep.PreparationTests.test_supervisor_CPU_success_failure_timeout_cleanup) ... ERROR
+test_synthetic_checkpoint_CPU_load_and_wrong_state_reject (test_source_prep.PreparationTests.test_synthetic_checkpoint_CPU_load_and_wrong_state_reject) ... ok
+test_target_overlap_and_bad_domain_rejected (test_source_prep.PreparationTests.test_target_overlap_and_bad_domain_rejected) ... ok
+test_worker_failure_after_check_failure_are_separate_no_retry (test_source_prep.PreparationTests.test_worker_failure_after_check_failure_are_separate_no_retry) ... ERROR
+
+======================================================================
+ERROR: test_output_budget_preserves_first_evidence_and_no_overwrite (test_source_prep.PreparationTests.test_output_budget_preserves_first_evidence_and_no_overwrite)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<LOCAL_CODE>/tests/r7/test_source_prep.py", line 122, in test_output_budget_preserves_first_evidence_and_no_overwrite
+    out=run.BudgetOutput(self.storage/'run',{},70000)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/runner.py", line 95, in __init__
+    def __init__(self,path,binding,limit):self.limit=limit;self.used=0;super().__init__(path,binding)
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_shared/io.py", line 9, in __init__
+    if any(p.is_symlink() for p in [self.path.parent,*self.path.parents]):raise ValueError('symlink output ancestor')
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: symlink output ancestor
+
+======================================================================
+ERROR: test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash (test_source_prep.PreparationTests.test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<LOCAL_CODE>/tests/r7/test_source_prep.py", line 77, in test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash
+    self.assertEqual(self.approved()['audit']['groups'],48)
+                     ^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/tests/r7/test_source_prep.py", line 36, in approved
+    def approved(self):return run.preflight(self.receipt)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/runner.py", line 42, in preflight
+    config=json.loads(verified(receipt['config']['path'],receipt['config']['sha256'],1024**2))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/registry.py", line 27, in verified
+    sha(expected);p,before=ordinary(path)
+                           ^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/registry.py", line 21, in ordinary
+    if any(x.is_symlink() for x in (p,*p.parents)):raise ValueError('source symlink path')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: source symlink path
+
+======================================================================
+ERROR: test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check (test_source_prep.PreparationTests.test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<LOCAL_CODE>/tests/r7/test_source_prep.py", line 64, in test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check
+    x=reader.decode(row,'image');y=reader.decode(row,'mask');self.assertEqual(tuple(x.shape),(1,3,512,512));self.assertEqual(tuple(y.shape),(1,2,512,512));self.assertTrue((y==1).all());self.assertEqual(count['RGB_decodes'],1);reader.after_check()
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/registry.py", line 94, in decode
+    raw=self.read(row[kind+'_relative'],row[kind+'_sha256'])
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/registry.py", line 91, in read
+    p=asset_path(self.root,relative);data=verified(p,expected,self.max_file_bytes,self.counts);self.identities[str(p)]=(expected,len(data));return data
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/registry.py", line 27, in verified
+    sha(expected);p,before=ordinary(path)
+                           ^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/registry.py", line 21, in ordinary
+    if any(x.is_symlink() for x in (p,*p.parents)):raise ValueError('source symlink path')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: source symlink path
+
+======================================================================
+ERROR: test_six_artifact_release_and_independent_expected_loader (test_source_prep.PreparationTests.test_six_artifact_release_and_independent_expected_loader)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<LOCAL_CODE>/tests/r7/test_source_prep.py", line 113, in test_six_artifact_release_and_independent_expected_loader
+    out=self.output();inventory=run.release(dict(models=models),s,out)
+        ^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/tests/r7/test_source_prep.py", line 37, in output
+    def output(self):return run.BudgetOutput(self.storage/'run',{},self.config['output_bytes'])
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/runner.py", line 95, in __init__
+    def __init__(self,path,binding,limit):self.limit=limit;self.used=0;super().__init__(path,binding)
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_shared/io.py", line 9, in __init__
+    if any(p.is_symlink() for p in [self.path.parent,*self.path.parents]):raise ValueError('symlink output ancestor')
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: symlink output ancestor
+
+======================================================================
+ERROR: test_supervisor_CPU_success_failure_timeout_cleanup (test_source_prep.PreparationTests.test_supervisor_CPU_success_failure_timeout_cleanup)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<LOCAL_CODE>/tests/r7/test_source_prep.py", line 135, in test_supervisor_CPU_success_failure_timeout_cleanup
+    out=run.BudgetOutput(self.storage/str(i),{},1000000);processes=[]
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/runner.py", line 95, in __init__
+    def __init__(self,path,binding,limit):self.limit=limit;self.used=0;super().__init__(path,binding)
+                                                                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_shared/io.py", line 9, in __init__
+    if any(p.is_symlink() for p in [self.path.parent,*self.path.parents]):raise ValueError('symlink output ancestor')
+                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: symlink output ancestor
+
+======================================================================
+ERROR: test_worker_failure_after_check_failure_are_separate_no_retry (test_source_prep.PreparationTests.test_worker_failure_after_check_failure_are_separate_no_retry)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<LOCAL_CODE>/tests/r7/test_source_prep.py", line 128, in test_worker_failure_after_check_failure_are_separate_no_retry
+    approved=self.approved();out=self.output();data,_=source_fixture()
+             ^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/tests/r7/test_source_prep.py", line 36, in approved
+    def approved(self):return run.preflight(self.receipt)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/runner.py", line 42, in preflight
+    config=json.loads(verified(receipt['config']['path'],receipt['config']['sha256'],1024**2))
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/registry.py", line 27, in verified
+    sha(expected);p,before=ordinary(path)
+                           ^^^^^^^^^^^^^^
+  File "<LOCAL_CODE>/src/dpa_ctta/r7_source_prep/registry.py", line 21, in ordinary
+    if any(x.is_symlink() for x in (p,*p.parents)):raise ValueError('source symlink path')
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: source symlink path
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.385s
+
+FAILED (errors=6)
+SOURCE_PREP_CPU_RESULT {"tests": 17, "failures": 0, "errors": 6, "skipped": 0, "exit_code": 1, "wall_seconds": 0.4009098750539124, "cpu_user_seconds": 0.261225, "cpu_system_seconds": 0.214579, "peak_RSS": 203849728, "peak_RSS_unit": "bytes", "python": "3.12.9", "torch": "2.6.0", "physical_calls": {"backward": 0, "VJP": 0, "Adam": 0, "AdamW": 0, "synthetic_checkpoint_loads": 2, "synthetic_image_mask_decodes": 0}, "procedural_counts": {}, "hash_cost": {"tensor_digest_calls": 12, "tensor_bytes": 2414640, "wall_ns": 2876500, "cpu_ns": 4574000, "context_build_calls": 6, "context_wall_ns": 5434457, "context_cpu_ns": 9490000}, "real_RGB_mask_decodes": 0, "real_checkpoint_deserializations": 0, "GPU_queries_or_initializations": 0, "real_source_training": false, "source_execution_layer_review": "NOT_RUN"}

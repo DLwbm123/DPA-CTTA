@@ -1,0 +1,736 @@
+diff --git a/configs/r7_source_prep.authorization.disabled.json b/configs/r7_source_prep.authorization.disabled.json
+new file mode 100644
+index 0000000..fb0f417
+--- /dev/null
++++ b/configs/r7_source_prep.authorization.disabled.json
+@@ -0,0 +1,47 @@
++{
++  "schema": "R7_SOURCE_PREP_AUTH_V1",
++  "scope": "SOURCE_PREP",
++  "enabled": false,
++  "code_sha": null,
++  "science_sha256": {
++    "COMMON_PROTOCOL.json": "a18f51317b8547067f8383ebd1125eca1697b24ce6245ca5e2733e2daa28f42d",
++    "A_PSF.json": "5e8f62ab8a39806ef5aef2dbb5b0206255d9e49c33fa3bcd68c82e78e88410bf",
++    "B_RCA.json": "9895dba31443881e50bb87d4df94f83598c0069931b35d6d000e6c2b1e61fc61",
++    "C_RBE.json": "4151c86ebec9073bca570e696c45bbecc4f10e0505698989a0be41cbe2032e86"
++  },
++  "source_binding_status": "PENDING",
++  "user_authorization": {
++    "granted": false,
++    "scope": "SOURCE_PREP",
++    "receipt_id": null
++  },
++  "execution_layer_review": {
++    "status": "NOT_RUN",
++    "scope": "SOURCE_PREP",
++    "code_sha": null,
++    "manifest_sha256": null,
++    "split_sha256": null,
++    "target_sha256": null,
++    "config_sha256": null,
++    "checkpoint_sha256": null
++  },
++  "manifest": {
++    "path": null,
++    "sha256": null
++  },
++  "split": {
++    "path": null,
++    "sha256": null
++  },
++  "target": {
++    "path": null,
++    "sha256": null
++  },
++  "config": {
++    "path": null,
++    "sha256": null
++  },
++  "source_root": null,
++  "checkpoint_path": null,
++  "output_dir": null
++}
+diff --git a/configs/r7_source_prep.defaults.json b/configs/r7_source_prep.defaults.json
+new file mode 100644
+index 0000000..a9451d4
+--- /dev/null
++++ b/configs/r7_source_prep.defaults.json
+@@ -0,0 +1,19 @@
++{
++  "schema": "R7_SOURCE_PREP_RESOURCES_V1",
++  "scope": "SOURCE_PREP",
++  "enabled": false,
++  "device": "cpu",
++  "physical_GPU_ids": null,
++  "dtype_policy": "R7_CPU_FP32_MODEL_FP64_LATENT_V1",
++  "workers": 1,
++  "threads": 2,
++  "wall_seconds": 259200,
++  "output_bytes": 536870912,
++  "max_asset_bytes": 268435456,
++  "max_decoded_bytes": 8589934592,
++  "retry": false,
++  "storage_root": null,
++  "resource_authorization": null,
++  "GPU_checks": "NOT_RUN",
++  "note": "Proposed finite CPU caps, not a measured real-training ETA or authorization; never truncate budgets to meet caps."
++}
+diff --git a/scripts/r7/check_source_prep_cpu.py b/scripts/r7/check_source_prep_cpu.py
+new file mode 100644
+index 0000000..fc6d642
+--- /dev/null
++++ b/scripts/r7/check_source_prep_cpu.py
+@@ -0,0 +1,37 @@
++"""Synthetic execution-layer acceptance; file decodes/loads use BytesIO only."""
++import io,json,os,platform,resource,sys,time,unittest
++from contextlib import ExitStack
++from pathlib import Path
++from unittest.mock import patch
++os.environ['CUDA_VISIBLE_DEVICES']='';os.environ['PYTHONDONTWRITEBYTECODE']='1'
++import torch
++from PIL import Image
++from dpa_ctta.r7_shared.numerics import COUNTS
++from dpa_ctta.r7_shared.context import HASH_COST
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses();torch.set_num_threads(2)
++root=Path(__file__).resolve().parents[2];sys.path.insert(0,str(root/'tests/r7'))
++calls=dict(backward=0,VJP=0,Adam=0,AdamW=0,synthetic_checkpoint_loads=0,synthetic_image_mask_decodes=0)
++for obj,name,key in [(torch.Tensor,'backward','backward'),(torch.autograd,'grad','VJP'),(torch.optim.Adam,'step','Adam'),(torch.optim.AdamW,'step','AdamW')]:
++ original=getattr(obj,name)
++ def wrapped(*a,_fn=original,_key=key,**kw):calls[_key]+=1;return _fn(*a,**kw)
++ setattr(obj,name,wrapped)
++original_load=torch.load;original_open=Image.open
++
++def load(source,*args,**kw):
++ if not isinstance(source,io.BytesIO):raise AssertionError('only synthetic in-memory checkpoint allowed')
++ calls['synthetic_checkpoint_loads']+=1;return original_load(source,*args,**kw)
++def image(source,*args,**kw):
++ if not isinstance(source,io.BytesIO):raise AssertionError('only encoded synthetic bytes allowed')
++ calls['synthetic_image_mask_decodes']+=1;return original_open(source,*args,**kw)
++start=time.monotonic();before=resource.getrusage(resource.RUSAGE_SELF)
++with ExitStack() as stack:
++ for name in ('_lazy_init','init','device_count','get_device_properties','is_available'):
++  stack.enter_context(patch('torch.cuda.'+name,side_effect=AssertionError('GPU forbidden')))
++ stack.enter_context(patch('torch.load',side_effect=load));stack.enter_context(patch('PIL.Image.open',side_effect=image))
++ result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromName('test_source_prep'))
++after=resource.getrusage(resource.RUSAGE_SELF)
++r=dict(tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),exit_code=int(not result.wasSuccessful()),wall_seconds=time.monotonic()-start,cpu_user_seconds=after.ru_utime-before.ru_utime,cpu_system_seconds=after.ru_stime-before.ru_stime,peak_RSS=after.ru_maxrss,peak_RSS_unit='bytes' if sys.platform=='darwin' else 'KiB',python=platform.python_version(),torch=torch.__version__,physical_calls=calls,procedural_counts=dict(COUNTS),hash_cost=dict(HASH_COST),real_RGB_mask_decodes=0,real_checkpoint_deserializations=0,GPU_queries_or_initializations=0,real_source_training=False,source_execution_layer_review='NOT_RUN')
++print('SOURCE_PREP_CPU_RESULT '+json.dumps(r),flush=True)
++if os.environ.get('SOURCE_PREP_CPU_RESULT'):Path(os.environ['SOURCE_PREP_CPU_RESULT']).write_text(json.dumps(r,indent=2)+'\n')
++raise SystemExit(r['exit_code'])
+diff --git a/scripts/r7/source_prep.py b/scripts/r7/source_prep.py
+new file mode 100644
+index 0000000..7d41aff
+--- /dev/null
++++ b/scripts/r7/source_prep.py
+@@ -0,0 +1,7 @@
++"""Neutral runpy entry; separate scope, no default source execution."""
++import os
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses()
++from dpa_ctta.r7_source_prep.runner import main,child_entry
++if __name__=='__main__':
++    child_entry() if os.environ.get('SOURCE_PREP_CHILD')=='1' else main()
+diff --git a/src/dpa_ctta/r7_shared/preparation.py b/src/dpa_ctta/r7_shared/preparation.py
+index c0e8bae..18627e4 100644
+--- a/src/dpa_ctta/r7_shared/preparation.py
++++ b/src/dpa_ctta/r7_shared/preparation.py
+@@ -34,27 +34,43 @@ def evaluate_oracles(segmenter,data,oracles):
+             rows.append(dict(anchor=aid,group=group,baseline=float(baseline),proxy=float(changed)))
+     return rows
+ 
+-def prepare_tensors(segmenter,data,*,source_provenance=None):
++def prepare_tensors(segmenter,data,*,source_provenance=None,progress=None):
+     """For separately authorized future source entry or explicitly procedural callers.
+ 
+     No disk reads, subprocess, device transfer, target loop, or publication occurs.
+     FULL/STATIC get independent same-seed parameters, same schedule and full budget.
+     """
++    mark=progress or (lambda name:None)
++    mark("identity")
+     identity_before=HASH_COST.copy()
+     source_provenance=provenance() if source_provenance is None else copy.deepcopy(source_provenance)
+     validate_provenance(source_provenance)
+     training_environment=environment(segmenter)
+     before=COUNTS.copy()
+-    oracles={f:oracle_all(segmenter,data,f) for f in ('fit','cal','val')}
+-    u=shared_basis(oracles['fit'],data);b,baudit=a_basis(segmenter,data)
+-    raw=scaler_observations(segmenter,data);outputs={}
++    oracles={}
++    for fold in ('fit','cal','val'):
++        mark('oracle_'+fold);oracles[fold]=oracle_all(segmenter,data,fold)
++    mark('shared_basis');u=shared_basis(oracles['fit'],data)
++    mark('A_basis');b,baudit=a_basis(segmenter,data)
++    mark('scaler');raw=scaler_observations(segmenter,data);outputs={}
+     for group in 'ABC':
+         for static in (False,True):
++            name=group+('_STATIC' if static else '_FULL');mark(name+'/initialize')
+             m=new_method(group,b if group=='A' else u,static);m.observer.fit_scaler(raw,'fit')
+-            trainer=SourceTrainer(segmenter,m,data,oracles['fit']);trainer.fit();trainer.start_calibration(oracles['cal']);trainer.calibrate()
++            trainer=SourceTrainer(segmenter,m,data,oracles['fit'])
++            trainer.constant_phase=lambda:mark(name+'/constant_variance')
++            mark(name+'/fit');trainer.fit()
++            mark(name+'/cal');trainer.start_calibration(oracles['cal']);trainer.calibrate()
++            mark(name+'/package')
+             projections={f:[dict(anchor=i,residual_l2=float((m.basis@m.project(o.values[:,i])-o.values[:,i]).norm()),condition=float(torch.linalg.cond(m.basis))) for i in range(o.values.shape[1])] for f,o in oracles.items()}
+-            outputs[group+('_STATIC' if static else '_FULL')]=dict(**prepared_artifact(segmenter,m,source_provenance,training_environment),projection_audit=projections,validation=trainer.validate(oracles['val']),fit_steps=trainer.fit_steps,cal_steps=trainer.cal_steps)
+-    return dict(models=outputs,oracle_query={f:evaluate_oracles(segmenter,data,o) for f,o in oracles.items()},basis_audit=baudit,cost=dict(COUNTS-before),identity_cost=dict(HASH_COST-identity_before))
++            artifact=prepared_artifact(segmenter,m,source_provenance,training_environment)
++            mark(name+'/val');validation=trainer.validate(oracles['val'])
++            outputs[name]=dict(**artifact,projection_audit=projections,validation=validation,fit_steps=trainer.fit_steps,cal_steps=trainer.cal_steps)
++    queries={}
++    for fold,o in oracles.items():
++        mark('oracle_query_'+fold);queries[fold]=evaluate_oracles(segmenter,data,o)
++    mark(None)
++    return dict(models=outputs,oracle_query=queries,basis_audit=baudit,cost=dict(COUNTS-before),identity_cost=dict(HASH_COST-identity_before))
+ 
+ def prepared_artifact(segmenter,method,source_provenance=None,training_environment=None):
+     """Capture at source release; caller must preserve this trusted metadata."""
+diff --git a/src/dpa_ctta/r7_shared/source.py b/src/dpa_ctta/r7_shared/source.py
+index 9ff44e2..655ced8 100644
+--- a/src/dpa_ctta/r7_shared/source.py
++++ b/src/dpa_ctta/r7_shared/source.py
+@@ -239,7 +239,9 @@ class SourceTrainer:
+     def calibrate(self):
+         while self.cal_steps<256:self.cal_step()
+         self.method.requires_grad_(False);self.method.set_stage('online');self.mode='FROZEN'
+-        if self.method.group=='C':self.constant_variance()
++        if self.method.group=='C':
++            if getattr(self,'constant_phase',None):self.constant_phase()
++            self.constant_variance()
+     @torch.no_grad()
+     def constant_variance(self):
+         if self.method.group!='C' or self.mode!='FROZEN':raise ValueError('constant R source cal only after calibration')
+diff --git a/src/dpa_ctta/r7_source_prep/__init__.py b/src/dpa_ctta/r7_source_prep/__init__.py
+new file mode 100644
+index 0000000..9986ea2
+--- /dev/null
++++ b/src/dpa_ctta/r7_source_prep/__init__.py
+@@ -0,0 +1 @@
++"""Separately gated source preparation; CPU backend only, disabled by default."""
+diff --git a/src/dpa_ctta/r7_source_prep/registry.py b/src/dpa_ctta/r7_source_prep/registry.py
+new file mode 100644
+index 0000000..5d6a095
+--- /dev/null
++++ b/src/dpa_ctta/r7_source_prep/registry.py
+@@ -0,0 +1,112 @@
++"""Metadata-first source registry and same-byte verified CPU decoding.
++
++No directory discovery, target loading, or checkpoint loading on import/audit.
++"""
++import copy,hashlib,io,json,os,re,stat
++from pathlib import Path
++from ..r7_shared.context import json_digest
++from ..r7_shared.source import split,SourceData,Record
++from ..r1.plan import registration_digest
++
++SOURCE='RIM_ONE_r3'
++TARGET_DIGEST='8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf'
++
++def digest(data):return hashlib.sha256(data).hexdigest()
++def sha(value):
++    if not isinstance(value,str) or not re.fullmatch('[0-9a-f]{64}',value):raise ValueError('SHA256 required')
++    return value
++
++def ordinary(path):
++    p=Path(path).absolute()
++    if any(x.is_symlink() for x in (p,*p.parents)):raise ValueError('source symlink path')
++    s=p.stat()
++    if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1:raise ValueError('ordinary unlinked source file required')
++    return p,s
++
++def verified(path,expected,max_bytes,counts=None):
++    sha(expected);p,before=ordinary(path)
++    if before.st_size>max_bytes:raise ValueError('input byte cap')
++    if counts is not None:counts.update(read_attempts=1)
++    fd=os.open(p,os.O_RDONLY|os.O_NOFOLLOW)
++    try:
++        with os.fdopen(fd,'rb') as f:
++            first=os.fstat(f.fileno());data=f.read(max_bytes+1);last=os.fstat(f.fileno())
++        if counts is not None:counts.update(raw_reads=1,raw_bytes_read=len(data))
++        after=p.stat()
++        def key(s):return s.st_dev,s.st_ino,s.st_size,s.st_mtime_ns,s.st_ctime_ns,s.st_nlink
++        if any(key(s)!=key(before) for s in (first,last,after)):raise ValueError('source changed while reading')
++        if len(data)>max_bytes or digest(data)!=expected:raise ValueError('source file digest mismatch')
++        if counts is not None:counts.update(verified_reads=1,verified_bytes=len(data))
++        return data
++    except BaseException:raise
++
++def asset_path(root,relative):
++    p=Path(relative)
++    if p.is_absolute() or '..' in p.parts or not p.parts or p.parts[0]!=SOURCE:raise ValueError('source-only relative path required')
++    return Path(root).absolute()/p
++
++def validate_manifest(manifest,target):
++    if manifest.get('schema')!='R7_SOURCE_MANIFEST_V1' or manifest.get('source')!=SOURCE:raise ValueError('source manifest schema/domain')
++    if manifest.get('target_registration_digest')!=TARGET_DIGEST or registration_digest(target)!=TARGET_DIGEST:raise ValueError('target metadata binding')
++    grouping=manifest['grouping']
++    if grouping.get('kind') not in ('PATIENT','EYE','CONTENT') or not grouping.get('evidence'):raise ValueError('documented grouping required')
++    if grouping['kind']!='PATIENT' and grouping.get('dependency_risk')!='PATIENT_DEPENDENCE_UNKNOWN':raise ValueError('nonpatient dependency risk must be explicit')
++    rows=manifest['records'];seen=set();images={};paths=set();by_group={}
++    forbidden={r['image_sha256'] for r in target['target']}
++    patients={r.get('patient_id') for r in target['target']} - {None,'UNKNOWN'}
++    for row in rows:
++        sid=row['sample_id'];g=row['group_id'];sha(row['image_sha256']);sha(row['mask_sha256'])
++        if not isinstance(g,str) or not g or sid in seen or row['domain']!=SOURCE:raise ValueError('duplicate/malformed source record')
++        if row['image_sha256'] in forbidden or row.get('patient_id') in patients:raise ValueError('source/target overlap')
++        if grouping['kind']=='CONTENT' and g!=row['image_sha256']:raise ValueError('content group must use registered image content, not filename')
++        if grouping['kind']=='PATIENT' and row.get('patient_id')!=g:raise ValueError('patient grouping evidence missing')
++        if grouping['kind']=='EYE' and row.get('eye_id')!=g:raise ValueError('eye grouping evidence missing')
++        if row['image_sha256'] in images and images[row['image_sha256']]!=g:raise ValueError('same image crosses groups')
++        images[row['image_sha256']]=g;seen.add(sid);by_group.setdefault(g,[]).append(row)
++        for key in ('image','mask'):
++            relative=row[key+'_relative'];asset_path('/',relative)
++            if (key,relative) in paths:raise ValueError('duplicate source asset path')
++            paths.add((key,relative))
++        if len(row['image_size'])!=2 or any(type(x)!=int or x<1 for x in row['image_size']):raise ValueError('image geometry')
++    checkpoint=manifest['checkpoint'];sha(checkpoint['sha256'])
++    if checkpoint['sha256']!=target['checkpoint']['sha256'] or checkpoint['bytes']!=target['checkpoint']['bytes']:raise ValueError('registered source checkpoint mismatch')
++    if not checkpoint.get('provenance') or 'pretraining_exposure' not in checkpoint:raise ValueError('checkpoint provenance/exposure audit required')
++    return by_group
++
++def freeze(manifest,target,existing=None):
++    groups=validate_manifest(manifest,target);folds=split(list(groups),existing)
++    return dict(schema='R7_SOURCE_SPLIT_V1',manifest_payload_sha256=json_digest(manifest),folds=folds,representatives={g:min(rows,key=lambda r:r['sample_id'])['sample_id'] for g,rows in groups.items()},representative_rule='smallest registered sample_id within an evidence-backed group; not a new patient',grouping=copy.deepcopy(manifest['grouping']))
++
++def audit(manifest,frozen,target):
++    groups=validate_manifest(manifest,target)
++    if frozen.get('schema')!='R7_SOURCE_SPLIT_V1' or frozen.get('manifest_payload_sha256')!=json_digest(manifest):raise ValueError('split not bound to manifest')
++    expected=freeze(manifest,target,frozen['folds'])
++    if frozen!=expected:raise ValueError('split/representatives/grouping changed')
++    return dict(groups=len(groups),records=len(manifest['records']),fold_groups={k:len(v) for k,v in frozen['folds'].items()},group_overlap=0,registered_image_target_overlap=0,patient_independence=manifest['grouping']['kind']=='PATIENT',target_patient_overlap='NOT_IDENTIFIABLE' if manifest['grouping']['kind']!='PATIENT' else 'CHECKED_WHERE_REGISTERED',decoded_RGB=0,decoded_masks=0)
++
++class Reader:
++    """Only instantiate after scope/code/science/metadata/resource authorization."""
++    def __init__(self,manifest,frozen,target,root,counts,max_file_bytes):
++        audit(manifest,frozen,target)
++        self.manifest=copy.deepcopy(manifest);self.frozen=copy.deepcopy(frozen);self.root=Path(root);self.counts=counts;self.max_file_bytes=max_file_bytes;self.identities={}
++    def read(self,relative,expected):
++        p=asset_path(self.root,relative);data=verified(p,expected,self.max_file_bytes,self.counts);self.identities[str(p)]=(expected,len(data));return data
++    def decode(self,row,kind):
++        from ..source_io import read_pixels,read_mask
++        raw=self.read(row[kind+'_relative'],row[kind+'_sha256'])
++        reader=read_pixels if kind=='image' else read_mask
++        self.counts.update(**{kind+'_decode_attempts':1})
++        result=reader(io.BytesIO(raw),'fundus',row['image_size'])
++        self.counts.update(**{('RGB_decodes' if kind=='image' else 'mask_decodes'):1})
++        return result
++    def data(self):
++        rows={r['sample_id']:r for r in self.manifest['records']};records=[]
++        for fold,groups in self.frozen['folds'].items():
++            for group in groups:
++                row=rows[self.frozen['representatives'][group]]
++                records.append(Record(group,fold,self.decode(row,'image'),self.decode(row,'mask')))
++        return SourceData(records,self.frozen['folds'])
++    def after_check(self):
++        # Each used input is re-read read-only. A failure is kept separately from
++        # the first training failure by the runner; it never triggers a retry.
++        for p,(expected,size) in self.identities.items():verified(p,expected,size,self.counts)
+diff --git a/src/dpa_ctta/r7_source_prep/runner.py b/src/dpa_ctta/r7_source_prep/runner.py
+new file mode 100644
+index 0000000..630c7a0
+--- /dev/null
++++ b/src/dpa_ctta/r7_source_prep/runner.py
+@@ -0,0 +1,250 @@
++"""Finite, separately authorized SOURCE_PREP only. No target dispatch or GPU route."""
++import copy,io,json,os,signal,subprocess,sys,time
++from collections import Counter
++from pathlib import Path
++import torch
++from .registry import verified,ordinary,audit,Reader,digest
++from ..r7_shared.context import SCIENCE,provenance,HASH_COST
++from ..r7_shared.numerics import COUNTS
++from ..r7_shared.network import Segmenter
++from ..r7_shared.preparation import prepare_tensors,inference_from_tensors
++from ..r7_shared.io import Output
++from ..r1.supervise import stop_owned
++
++ROOT=Path(__file__).resolve().parents[3]
++PHYSICAL=('backbone_forwards','source_backward_calls','source_Adam','source_AdamW','calibration_backward_calls','calibration_Adam','source_VJP')
++DEFAULTS=ROOT/'configs/r7_source_prep.defaults.json'
++
++def code_identity():
++    sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
++    if subprocess.check_output(['git','status','--porcelain','--untracked-files=normal'],cwd=ROOT,text=True).strip():raise ValueError('clean final code required')
++    return sha
++
++def device_policy(config):
++    if config.get('device')!='cpu' or config.get('physical_GPU_ids') is not None:raise ValueError('CPU-only qualified route; GPU NOT_RUN')
++    if config.get('dtype_policy')!='R7_CPU_FP32_MODEL_FP64_LATENT_V1':raise ValueError('unreviewed dtype route')
++    for key in ('wall_seconds','output_bytes','max_asset_bytes','max_decoded_bytes'):
++        if type(config.get(key)) is not int or config[key]<=0:raise ValueError('finite positive resource cap required')
++    if config.get('workers')!=1 or config.get('threads')!=2 or config.get('retry')!=False:raise ValueError('one worker/two CPU threads/no retry required')
++
++def preflight(receipt):
++    # Authority/scope are checked before config/registries, raw data or devices.
++    if receipt.get('schema')!='R7_SOURCE_PREP_AUTH_V1' or receipt.get('scope')!='SOURCE_PREP' or receipt.get('enabled') is not True:raise PermissionError('SOURCE_PREP explicitly disabled')
++    auth=receipt.get('user_authorization',{})
++    if auth.get('granted') is not True or auth.get('scope')!='SOURCE_PREP' or not auth.get('receipt_id'):raise PermissionError('new scope-specific user receipt required')
++    review=receipt.get('execution_layer_review',{})
++    actual=code_identity()
++    if review.get('status')!='PASS' or review.get('scope')!='SOURCE_PREP' or review.get('code_sha')!=actual or receipt.get('code_sha')!=actual:raise PermissionError('final execution-layer review/code mismatch')
++    if receipt.get('science_sha256')!=SCIENCE:raise ValueError('science binding')
++    for name,expected in SCIENCE.items():verified(ROOT/'docs/review/r7/input/specs'/name,expected,1024**2)
++    for key in ('manifest','split','target','config'):
++        if review.get(key+'_sha256')!=receipt[key]['sha256']:raise ValueError('review metadata/resource binding')
++    config=json.loads(verified(receipt['config']['path'],receipt['config']['sha256'],1024**2))
++    if config.get('enabled') is not True or config.get('scope')!='SOURCE_PREP':raise PermissionError('source resource configuration disabled')
++    device_policy(config)
++    if config.get('resource_authorization')!={'scope':'SOURCE_PREP','receipt_id':auth['receipt_id']}:raise PermissionError('resource authorization is not this user receipt')
++    documents={k:json.loads(verified(receipt[k]['path'],receipt[k]['sha256'],32*1024**2)) for k in ('manifest','split','target')}
++    manifest,frozen,target=(documents[k] for k in ('manifest','split','target'));info=audit(manifest,frozen,target)
++    if receipt.get('source_binding_status')!='BOUND' or review.get('checkpoint_sha256')!=manifest['checkpoint']['sha256']:raise ValueError('source file bindings pending')
++    if info['groups']*5*512*512*4>config['max_decoded_bytes']:raise ValueError('decoded source memory cap; no subsampling')
++    out=Path(receipt['output_dir']).absolute();root=Path(receipt['source_root']).absolute();storage=Path(config['storage_root']).absolute()
++    if out.exists() or out.is_symlink() or not out.is_relative_to(storage):raise ValueError('fresh approved storage required')
++    if any(x.is_symlink() for x in [out.parent,*out.parents,root,*root.parents]):raise ValueError('symlink storage/source root')
++    for protected in [root,Path(receipt['checkpoint_path']).absolute(),ROOT,*[Path(receipt[k]['path']).absolute() for k in ('manifest','split','target','config')]]:
++        if out==protected or out in protected.parents or protected in out.parents:raise ValueError('source/code/metadata output overlap')
++    return dict(receipt=copy.deepcopy(receipt),config=config,manifest=manifest,split=frozen,target=target,audit=info)
++
++def expected_counts(folds):
++    f,c,v=(len(folds[k]) for k in ('fit','cal','val'));result={}
++    for fold,n in [('fit',128),('cal',32),('val',32)]:result['oracle_'+fold]=dict(backbone_forwards=n*32,source_backward_calls=n*16,source_Adam=n*16)
++    result.update(shared_basis={},A_basis=dict(backbone_forwards=32,source_VJP=1024),scaler=dict(backbone_forwards=128*f))
++    for group in 'ABC':
++        for mode in ('FULL','STATIC'):
++            name=group+'_'+mode;result[name+'/fit']=dict(backbone_forwards=12000,source_backward_calls=1000,source_AdamW=1000);result[name+'/cal']=dict(backbone_forwards=1024,calibration_backward_calls=256,calibration_Adam=256);result[name+'/val']=dict(backbone_forwards=768)
++            if group=='C':result[name+'/constant_variance']=dict(backbone_forwards=32*c)
++    for fold,n,groups in [('fit',128,f),('cal',32,c),('val',32,v)]:result['oracle_query_'+fold]=dict(backbone_forwards=2*n*(groups-2))
++    return result
++
++class Meter:
++    def __init__(self,expected,wall_seconds,sink,counter=None):
++        self.counter=COUNTS if counter is None else counter
++        self.expected=expected;self.wall_seconds=wall_seconds;self.sink=sink;self.started=time.monotonic();self.phase=None;self.records=[];self.baseline=self.counter.copy();self.hash_before=HASH_COST.copy();self.time=self.started;self.cpu=time.process_time()
++    def check(self):
++        if time.monotonic()-self.started>=self.wall_seconds:raise TimeoutError('finite source wall cap')
++        if self.phase in self.expected:
++            for k,v in self.expected[self.phase].items():
++                if self.counter[k]-self.baseline[k]>v:raise ValueError('source phase budget exceeded: '+self.phase+'/'+k)
++    def mark(self,name,validate=True):
++        if self.phase is not None:
++            previous=self.phase;delta=self.counter-self.baseline;expected=self.expected.get(previous,{})
++            mismatch=[k for k in PHYSICAL if delta[k]!=expected.get(k,0)] if validate else []
++            row=dict(phase=previous,counts=dict(delta),hash_cost=dict(HASH_COST-self.hash_before),wall_seconds=time.monotonic()-self.time,cpu_seconds=time.process_time()-self.cpu,completed=validate and not mismatch)
++            self.phase=None;self.records.append(row);self.sink(row)
++            if mismatch:raise ValueError('source budget mismatch: '+previous+'/'+mismatch[0])
++        self.phase=name;self.baseline=self.counter.copy();self.hash_before=HASH_COST.copy();self.time=time.monotonic();self.cpu=time.process_time()
++        if validate:self.check()
++    def before_forward(self,*args):
++        self.check()
++        if self.counter["backbone_forwards"]-self.baseline["backbone_forwards"]>=self.expected.get(self.phase,{}).get("backbone_forwards",0):raise ValueError("forward phase budget exhausted")
++    def complete(self):
++        done={r['phase'] for r in self.records if r['completed']}
++        if not set(self.expected)<=done:raise ValueError('missing mandatory source phases')
++
++class BudgetOutput(Output):
++    def __init__(self,path,binding,limit):self.limit=limit;self.used=0;super().__init__(path,binding)
++    def bytes(self,name,data):
++        if Path(name).name!=name or name in ('.','..'):raise ValueError('output path')
++        if self.used+len(data)>self.limit-65536:raise ValueError('output cap; evidence reserve retained')
++        if name!='owner.json' and json.loads((self.path/'owner.json').read_text())!=dict(owner=self.owner,binding=self.binding):raise ValueError('output ownership')
++        with (self.path/name).open('xb') as f:f.write(data);f.flush();os.fsync(f.fileno())
++        self.used+=len(data)
++    def write(self,name,value):self.bytes(name,(json.dumps(value,indent=2,allow_nan=False)+'\n').encode())
++    def evidence(self,name,value):
++        if Path(name).name!=name or name in ('.','..'):raise ValueError('evidence output path')
++        if json.loads((self.path/'owner.json').read_text())!=dict(owner=self.owner,binding=self.binding):raise ValueError('evidence output ownership')
++        # Small reserved terminal evidence; never overwrite a first failure.
++        raw=(json.dumps(value,indent=2,allow_nan=False)+'\n').encode()
++        if len(raw)>16384 or self.used+len(raw)>self.limit:raise ValueError('failure evidence cap')
++        with (self.path/name).open('xb') as f:f.write(raw)
++        self.used+=len(raw)
++
++def load_model(raw):
++    from ..integrations.ctta_suite import build_reference_model
++    state=torch.load(io.BytesIO(raw),map_location='cpu',weights_only=True)
++    model,_=build_reference_model('fundus');model.load_state_dict(state,strict=True)
++    if any(t.device.type!='cpu' or t.dtype!=torch.float32 for t in model.parameters()):raise ValueError('source model CPU float32 required')
++    return Segmenter(model)
++
++def release(result,segmenter,out):
++    required={g+'_'+mode for g in 'ABC' for mode in ('FULL','STATIC')}
++    if set(result['models'])!=required:raise ValueError('six independent artifacts required')
++    inventory={}
++    for name,artifact in result['models'].items():
++        if artifact['fit_steps']!=1000 or artifact['cal_steps']!=256:raise ValueError('full source training budget required')
++        # Exercise the actual loader using independently retained expected metadata.
++        expected=copy.deepcopy(artifact['binding']);weights=artifact['weights']
++        inference_from_tensors(segmenter,name[0],name.endswith('STATIC'),weights['basis'],weights,expected)
++        payload=dict(schema=artifact['schema'],weights=weights,method_digest=artifact['method_digest'])
++        buffer=io.BytesIO();torch.save(payload,buffer);raw=buffer.getvalue();file=name+'.pt'
++        out.bytes(file,raw);out.write(name+'.context.json',expected)
++        inventory[name]=dict(file=file,training_asset_file_sha256=digest(raw),bytes=len(raw),context_sha256=expected['sha256'],context_file_sha256=digest((out.path/(name+'.context.json')).read_bytes()))
++    # No source image/mask/oracle support tensors are deployed; diagnostic arrays
++    # remain in a separate private CPU scalar/tensor file, never public by default.
++    diagnostics={k:v for k,v in result.items() if k!='models'}
++    diagnostics['validation']={k:{x:v[x] for x in ('validation','projection_audit','fit_steps','cal_steps')} for k,v in result['models'].items()}
++    buffer=io.BytesIO();torch.save(diagnostics,buffer);out.bytes('diagnostics.private.pt',buffer.getvalue())
++    out.write('artifacts.json',inventory);return inventory
++
++def load_artifact(segmenter,name,root,trusted_inventory,max_bytes=256*1024**2):
++    if name not in {g+'_'+m for g in 'ABC' for m in ('FULL','STATIC')}:raise ValueError('deployment artifact name')
++    row=trusted_inventory[name];root=Path(root)
++    if row['file']!=name+'.pt':raise ValueError('deployment asset path')
++    # Context and file digests come from a separately trusted release inventory.
++    context=json.loads(verified(root/(name+'.context.json'),row['context_file_sha256'],1024**2))
++    if context['sha256']!=row['context_sha256']:raise ValueError('release context inventory')
++    raw=verified(root/row['file'],row['training_asset_file_sha256'],max_bytes)
++    if len(raw)!=row['bytes']:raise ValueError('release asset length')
++    package=torch.load(io.BytesIO(raw),map_location='cpu',weights_only=True)
++    if package.get('schema')!='R7_PREPARED_TENSORS_V2':raise ValueError('release artifact schema')
++    weights=package['weights']
++    return inference_from_tensors(segmenter,name[0],name.endswith('STATIC'),weights['basis'],weights,context)
++
++def execute(approved,out):
++    r=approved['receipt'];cfg=approved['config'];counts=Counter();reader=Reader(approved['manifest'],approved['split'],approved['target'],r['source_root'],counts,cfg['max_asset_bytes'])
++    meter=Meter(expected_counts(approved['split']['folds']),cfg['wall_seconds'],lambda row:out.write('phase_'+str(len(meter.records))+'.json',row));segmenter=None;hook=None;first=None;after=None;checkpoint_read=False;started=time.monotonic();before=COUNTS.copy();hash_before=HASH_COST.copy()
++    try:
++        meter.mark('decode');data=reader.data();meter.check()
++        entry=approved['manifest']['checkpoint'];raw=verified(r['checkpoint_path'],entry['sha256'],cfg['max_asset_bytes'],counts)
++        if len(raw)!=entry['bytes']:raise ValueError('checkpoint size')
++        checkpoint_read=True;meter.mark('model_load');counts.update(checkpoint_deserialization_attempts=1);segmenter=load_model(raw);counts.update(checkpoint_deserializations=1);del raw
++        hook=segmenter.register_forward_pre_hook(meter.before_forward)
++        source=provenance();source.update(source_binding_status='BOUND',checkpoint_file_sha256=entry['sha256'],source_manifest_sha256=r['manifest']['sha256'],source_split_sha256=r['split']['sha256'])
++        result=prepare_tensors(segmenter,data,source_provenance=source,progress=meter.mark);meter.complete();meter.mark('release');release(result,segmenter,out);meter.mark(None)
++    except BaseException as exc:
++        first=exc
++        try:meter.mark(None,validate=False)
++        except BaseException as err:after=err
++    finally:
++        if hook is not None:hook.remove()
++        if segmenter is not None:segmenter.close()
++        try:
++            reader.after_check()
++            if checkpoint_read:verified(r['checkpoint_path'],approved['manifest']['checkpoint']['sha256'],cfg['max_asset_bytes'],counts)
++            for key in ('manifest','split','target','config'):verified(r[key]['path'],r[key]['sha256'],32*1024**2,counts)
++        except BaseException as exc:
++            if after is None:after=exc
++        summary=dict(status='FAILED' if first or after else 'SOURCE_PREP_COMPLETE_PENDING_REVIEW',counts=dict(COUNTS-before),hash_cost=dict(HASH_COST-hash_before),IO=dict(counts),wall_seconds=time.monotonic()-started,source_after_check='FAILED' if after else 'UNCHANGED',next_scope_authorized=False)
++        def error(e):return dict(type=type(e).__name__,message=str(e)[:3000])
++        for name,value in ([('first_error.json',error(first))] if first else [])+([('after_check_error.json',error(after))] if after else [])+[('execution.json',summary)]:
++            try:out.evidence(name,value)
++            except BaseException as exc:
++                print('SOURCE_PREP_EVIDENCE_WRITE_ERROR '+json.dumps(dict(file=name,error=error(exc),original_first_error=None if first is None else error(first))),file=sys.stderr,flush=True)
++                if first is None:first=exc
++
++    if first:raise first
++    if after:raise after
++    return summary
++
++def cleanup_owned(record):
++    try:stop_owned(record)
++    except PermissionError:
++        # macOS may return EPERM for signal-0 after a group exited. Accept only
++        # a reaped child AND an independent process-table proof of absent PGID.
++        p=record['process']
++        if sys.platform!='darwin' or p.poll() is None:raise
++        rows=subprocess.check_output(['ps','-A','-o','pgid='],text=True)
++        if p.pid in {int(x.strip()) for x in rows.splitlines() if x.strip()}:raise
++        record.update(cleaned=True,cleanup_probe='reaped_and_ps_group_absent_after_EPERM')
++
++def supervise_one(start,caps,out):
++    """One owned CPU child; no smoke, retry or next-stage dispatch."""
++    record=None;started=time.monotonic();handlers={};first=None;cleanup_error=None
++    def interrupted(signum,frame):raise InterruptedError('source supervisor signal '+str(signum))
++    try:
++        for sig in (signal.SIGTERM,signal.SIGINT):handlers[sig]=signal.signal(sig,interrupted)
++        process=start();record=dict(process=process);out.write('process.json',dict(pid=process.pid,pgid=process.pid))
++        while process.poll() is None:
++            if time.monotonic()-started>=caps['wall_seconds']:raise TimeoutError('source worker wall cap')
++            size=sum(p.stat().st_size for p in out.path.rglob('*') if p.is_file())
++            if size>caps['output_bytes']:raise ValueError('source worker output cap')
++            time.sleep(.1)
++        if process.returncode:raise RuntimeError('source worker nonzero exit '+str(process.returncode))
++    except BaseException as exc:first=exc
++    finally:
++        for sig in handlers:signal.signal(sig,signal.SIG_IGN)
++        try:
++            if record:cleanup_owned(record)
++        except BaseException as exc:
++            cleanup_error=exc
++            if first is None:first=exc
++        finally:
++            for sig,old in handlers.items():signal.signal(sig,old)
++        if first:out.evidence('supervisor.first_error.json',dict(type=type(first).__name__,message=str(first)[:3000]))
++        if cleanup_error:out.evidence('supervisor.cleanup_error.json',dict(type=type(cleanup_error).__name__,message=str(cleanup_error)[:3000]))
++        out.evidence('supervisor.json',dict(cleanup_probe=None if record is None else record.get('cleanup_probe','legacy_stop_owned'),exit_code=None if record is None else record['process'].returncode,wall_seconds=time.monotonic()-started,complete=first is None,cleaned=record is not None and record.get('cleaned',False),retry=False))
++    if first:raise first
++
++def main():
++    # No receipt means disabled before any real source metadata/asset or device.
++    path=os.environ.get('SOURCE_PREP_RECEIPT')
++    if not path:raise PermissionError('SOURCE_PREP receipt absent; disabled')
++    raw=Path(path).read_bytes();receipt=json.loads(raw);approved=preflight(receipt)
++    torch.set_num_threads(2);torch.set_default_dtype(torch.float32)
++    cfg=approved['config'];out=BudgetOutput(receipt['output_dir'],dict(scope='SOURCE_PREP',code_sha=receipt['code_sha'],receipt_sha256=digest(raw)),cfg['output_bytes'])
++    out.write('source_split.frozen.json',approved['split']);out.write('preflight.json',approved['audit'])
++    from ..b3_runtime import ENTRY
++    env=dict(os.environ,RUN_FILE=str(ROOT/'scripts/r7/source_prep.py'),SOURCE_PREP_CHILD='1',SOURCE_PREP_PARENT_OWNER=out.owner,CUDA_VISIBLE_DEVICES='',PYTHONDONTWRITEBYTECODE='1')
++    # Child rechecks all bindings with its own fresh output directory.
++    child_receipt=copy.deepcopy(receipt);child_receipt['output_dir']=str(out.path/'worker')
++    out.write('child.receipt.json',child_receipt);env['SOURCE_PREP_RECEIPT']=str(out.path/'child.receipt.json')
++    def start():
++        with (out.path/'worker.log').open('xb') as log:return subprocess.Popen([sys.executable,'-c',ENTRY],cwd=ROOT,env=env,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
++    supervise_one(start,cfg,out)
++    completion=json.loads((out.path/'worker/execution.json').read_text())
++    if completion['status']!='SOURCE_PREP_COMPLETE_PENDING_REVIEW' or completion['source_after_check']!='UNCHANGED':raise ValueError('worker execution completion absent or invalid')
++    out.evidence('completion.json',dict(status='SOURCE_PREP_COMPLETE_PENDING_REVIEW',execution=completion,other_scopes_authorized=False))
++
++def child_entry():
++    r=json.loads(Path(os.environ['SOURCE_PREP_RECEIPT']).read_bytes());approved=preflight(r);torch.set_num_threads(2);torch.set_default_dtype(torch.float32)
++    out=BudgetOutput(r['output_dir'],dict(scope='SOURCE_PREP',code_sha=r['code_sha']),approved['config']['output_bytes']-65536)
++    return execute(approved,out)
+diff --git a/tests/r7/test_source_prep.py b/tests/r7/test_source_prep.py
+new file mode 100644
+index 0000000..9d22dbe
+--- /dev/null
++++ b/tests/r7/test_source_prep.py
+@@ -0,0 +1,145 @@
++"""Execution-layer checks on temporary synthetic files; no real source assets."""
++import copy,io,json,os,subprocess,sys,tempfile,unittest
++from collections import Counter
++from pathlib import Path
++from unittest.mock import patch
++import numpy as np
++import torch
++from PIL import Image
++from common import Small,segmenter,method,source_fixture,pixels
++from dpa_ctta.r7_source_prep import registry as reg,runner as run
++from dpa_ctta.r7_shared.context import SCIENCE
++from dpa_ctta.r7_shared.preparation import prepared_artifact
++from dpa_ctta.r7_shared.numerics import COUNTS
++
++class PreparationTests(unittest.TestCase):
++    def setUp(self):
++        self.temp=tempfile.TemporaryDirectory();self.root=Path(self.temp.name).resolve();self.data=self.root/'data';self.data.mkdir();self.storage=self.root/'output';self.storage.mkdir()
++        self.checkpoint=self.root/'random.pt';torch.save(Small().state_dict(),self.checkpoint);raw=self.checkpoint.read_bytes()
++        self.target=dict(checkpoint=dict(sha256=reg.digest(raw),bytes=len(raw)),target=[])
++        self.tdigest=reg.registration_digest(self.target);self.patch=patch.object(reg,'TARGET_DIGEST',self.tdigest);self.patch.start()
++        rows=[]
++        for i in range(48):
++            image=np.full((8,8,3),i,dtype=np.uint8);mask=np.full((8,8),128 if i%2 else 0,dtype=np.uint8)
++            paths={};hashes={}
++            for k,a in [('image',image),('mask',mask)]:
++                relative='RIM_ONE_r3/'+k+'/'+str(i)+'.png';p=self.data/relative;p.parent.mkdir(exist_ok=True,parents=True);Image.fromarray(a).save(p);paths[k+'_relative']=relative;hashes[k+'_sha256']=reg.digest(p.read_bytes())
++            rows.append(dict(sample_id='fixture_'+str(i),group_id=hashes['image_sha256'],domain='RIM_ONE_r3',image_size=[8,8],**paths,**hashes))
++        self.manifest=dict(schema='R7_SOURCE_MANIFEST_V1',source='RIM_ONE_r3',target_registration_digest=self.tdigest,grouping=dict(kind='CONTENT',evidence='procedurally encoded distinct synthetic pixels; not patients',dependency_risk='PATIENT_DEPENDENCE_UNKNOWN'),checkpoint=dict(sha256=reg.digest(raw),bytes=len(raw),provenance='random Small fixture',pretraining_exposure='PROCEDURAL_ONLY'),records=rows)
++        self.split=reg.freeze(self.manifest,self.target)
++        self.config=json.loads(run.DEFAULTS.read_text());self.config.update(enabled=True,storage_root=str(self.storage),resource_authorization=dict(scope='SOURCE_PREP',receipt_id='SYNTHETIC_TEST_ONLY_NOT_REAL_AUTH'))
++        self.receipt=dict(schema='R7_SOURCE_PREP_AUTH_V1',scope='SOURCE_PREP',enabled=True,code_sha='synthetic-code',science_sha256=SCIENCE,source_binding_status='BOUND',user_authorization=dict(granted=True,scope='SOURCE_PREP',receipt_id='SYNTHETIC_TEST_ONLY_NOT_REAL_AUTH'),execution_layer_review=dict(status='PASS',scope='SOURCE_PREP',code_sha='synthetic-code',checkpoint_sha256=self.manifest['checkpoint']['sha256']),source_root=str(self.data),checkpoint_path=str(self.checkpoint),output_dir=str(self.storage/'run'))
++        for key,value in [('manifest',self.manifest),('split',self.split),('target',self.target),('config',self.config)]:
++            p=self.root/(key+'.json');p.write_text(json.dumps(value));self.receipt[key]=dict(path=str(p),sha256=reg.digest(p.read_bytes()));self.receipt['execution_layer_review'][key+'_sha256']=self.receipt[key]['sha256']
++        self.identity=patch.object(run,'code_identity',return_value='synthetic-code');self.identity.start()
++    def tearDown(self):self.identity.stop();self.patch.stop();self.temp.cleanup()
++    def approved(self):return run.preflight(self.receipt)
++    def output(self):return run.BudgetOutput(self.storage/'run',{},self.config['output_bytes'])
++    def test_metadata_split_freezes_before_decode_and_preserves_existing(self):
++        with patch('PIL.Image.open',side_effect=AssertionError('metadata must not decode')):
++            a=reg.audit(self.manifest,self.split,self.target);self.assertEqual(a['fold_groups'],dict(fit=33,cal=7,val=8));self.assertFalse(a['patient_independence']);self.assertEqual(self.split,reg.freeze(self.manifest,self.target,self.split['folds']))
++    def test_overlap_minimum_duplicate_and_filename_group_rejected(self):
++        for change in ('fold','minimum','duplicate','filename','patient'):
++            m=copy.deepcopy(self.manifest);s=copy.deepcopy(self.split)
++            if change=='fold':s['folds']['cal'][0]=s['folds']['fit'][0]
++            elif change=='minimum':m['records']=m['records'][:10]
++            elif change=='duplicate':m['records'].append(m['records'][0])
++            elif change=='filename':m['records'][0]['group_id']='filename_0'
++            else:m['grouping']['kind']='PATIENT'
++            with self.assertRaises(ValueError):reg.audit(m,s,self.target)
++    def test_target_overlap_and_bad_domain_rejected(self):
++        t=copy.deepcopy(self.target);t['target']=[dict(image_sha256=self.manifest['records'][0]['image_sha256'])];m=copy.deepcopy(self.manifest);m['target_registration_digest']=reg.registration_digest(t)
++        with patch.object(reg,'TARGET_DIGEST',m['target_registration_digest']):
++            with self.assertRaises(ValueError):reg.freeze(m,t)
++        m=copy.deepcopy(self.manifest);m['records'][0]['domain']='REFUGE'
++        with self.assertRaises(ValueError):reg.freeze(m,self.target)
++    def test_source_path_escape_and_symlink_hardlink_rejected(self):
++        with self.assertRaises(ValueError):reg.asset_path(self.data,'../target.png')
++        p=self.data/self.manifest['records'][0]['image_relative'];link=self.root/'link';link.symlink_to(p)
++        with self.assertRaises(ValueError):reg.verified(link,self.manifest['records'][0]['image_sha256'],100000)
++        hard=self.root/'hard';os.link(p,hard)
++        with self.assertRaises(ValueError):reg.verified(p,self.manifest['records'][0]['image_sha256'],100000)
++    def test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check(self):
++        count=Counter();reader=reg.Reader(self.manifest,self.split,self.target,self.data,count,1024**2);row=self.manifest['records'][0]
++        x=reader.decode(row,'image');y=reader.decode(row,'mask');self.assertEqual(tuple(x.shape),(1,3,512,512));self.assertEqual(tuple(y.shape),(1,2,512,512));self.assertTrue((y==1).all());self.assertEqual(count['RGB_decodes'],1);reader.after_check()
++        (self.data/row['image_relative']).write_bytes(b'changed')
++        with self.assertRaises(ValueError):reader.after_check()
++    def test_file_digest_mismatch_rejects_before_decode(self):
++        reader=reg.Reader(self.manifest,self.split,self.target,self.data,Counter(),1024**2);row=copy.deepcopy(self.manifest['records'][0]);row['image_sha256']='0'*64
++        with patch('PIL.Image.open',side_effect=AssertionError('must reject before decoder')):
++            with self.assertRaises(ValueError):reader.decode(row,'image')
++    def test_disabled_wrong_scope_and_old_review_reject_before_assets(self):
++        for key,val in [('enabled',False),('scope','TARGET_SCREEN'),('user_authorization',dict(granted=False)),('execution_layer_review',dict(status='PASS',scope='STAGE_I_IMPLEMENTATION',code_sha='synthetic-code'))]:
++            r=copy.deepcopy(self.receipt);r[key]=val
++            with patch.object(run,'verified',side_effect=AssertionError('must reject before metadata/assets')):
++                with self.assertRaises(PermissionError):run.preflight(r)
++    def test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash(self):
++        self.assertEqual(self.approved()['audit']['groups'],48)
++        for which in ('code','science','config'):
++            r=copy.deepcopy(self.receipt)
++            if which=='code':r['code_sha']='wrong'
++            elif which=='science':r['science_sha256']={}
++            else:r['config']['sha256']='0'*64
++            with self.assertRaises((ValueError,PermissionError)):run.preflight(r)
++    def test_CPU_device_route_rejects_cuda_and_unbounded_resources_without_GPU_query(self):
++        for key,val in [('device','cuda:0'),('physical_GPU_ids',[5]),('wall_seconds',0),('output_bytes',float('inf')),('dtype_policy','float16'),('workers',3)]:
++            c=dict(self.config);c[key]=val
++            with self.assertRaises(ValueError):run.device_policy(c)
++        run.device_policy(self.config)
++    def test_output_source_overlap_and_memory_overflow_rejected(self):
++        r=copy.deepcopy(self.receipt);r['output_dir']=str(self.data/'bad')
++        with self.assertRaises(ValueError):run.preflight(r)
++        c=dict(self.config,max_decoded_bytes=1);p=Path(r['config']['path']);p.write_text(json.dumps(c));r=copy.deepcopy(self.receipt);r['config']['sha256']=reg.digest(p.read_bytes());r['execution_layer_review']['config_sha256']=r['config']['sha256']
++        with self.assertRaises(ValueError):run.preflight(r)
++    def test_budget_phases_full_counts_no_silent_truncation(self):
++        expected=run.expected_counts(self.split['folds']);self.assertEqual(expected['A_basis']['source_VJP'],1024);self.assertEqual(expected['A_FULL/fit']['backbone_forwards'],12000);self.assertEqual(expected['C_STATIC/constant_variance']['backbone_forwards'],224)
++        c=Counter();m=run.Meter({'fit':dict(backbone_forwards=2)},30,lambda row:None,counter=c);m.mark('fit');m.before_forward();c['backbone_forwards']=2
++        with self.assertRaises(ValueError):m.before_forward()
++        m.mark(None);m.complete()
++        m=run.Meter({'fit':dict(backbone_forwards=2)},30,lambda row:None,counter=Counter());m.mark('fit')
++        with self.assertRaises(ValueError):m.mark(None)
++    def test_synthetic_checkpoint_CPU_load_and_wrong_state_reject(self):
++        with patch('dpa_ctta.integrations.ctta_suite.build_reference_model',side_effect=lambda task:(Small(),None)):
++            s=run.load_model(self.checkpoint.read_bytes());self.assertTrue(all(p.device.type=='cpu' and p.dtype==torch.float32 for p in s.model.parameters()));s.close()
++            raw=io.BytesIO();torch.save({'wrong':torch.ones(1)},raw)
++            with self.assertRaises(RuntimeError):run.load_model(raw.getvalue())
++    def test_six_artifact_release_and_independent_expected_loader(self):
++        s=segmenter();models={}
++        for g in 'ABC':
++            for static in (False,True):
++                m=method(g,static);m.freeze();name=g+('_STATIC' if static else '_FULL')
++                models[name]=dict(**prepared_artifact(s,m),fit_steps=1000,cal_steps=256,validation=[],projection_audit={})
++        # Synthetic artifact fixtures carry step markers only; no source fitting.
++        out=self.output();inventory=run.release(dict(models=models),s,out)
++        h=run.load_artifact(s,'B_FULL',out.path,inventory);h.step(pixels())
++        b=segmenter()
++        with torch.no_grad():b.model.seg_head.bias.add_(1)
++        before=COUNTS['backbone_forwards']
++        with self.assertRaises(ValueError):run.load_artifact(b,'B_FULL',out.path,inventory)
++        self.assertEqual(COUNTS['backbone_forwards'],before)
++        s.close();b.close()
++    def test_output_budget_preserves_first_evidence_and_no_overwrite(self):
++        out=run.BudgetOutput(self.storage/'run',{},70000)
++        with self.assertRaises(ValueError):out.bytes('large.bin',b'x'*70000)
++        with self.assertRaises(ValueError):out.evidence('../escape.json',{})
++        out.evidence('first_error.json',dict(type='first'))
++        with self.assertRaises(FileExistsError):out.evidence('first_error.json',dict(type='second'))
++        self.assertEqual(json.loads((out.path/'first_error.json').read_text())['type'],'first')
++    def test_worker_failure_after_check_failure_are_separate_no_retry(self):
++        approved=self.approved();out=self.output();data,_=source_fixture()
++        with patch.object(reg.Reader,'data',return_value=data),patch.object(reg.Reader,'after_check',side_effect=ValueError('second_after_check')),patch('dpa_ctta.integrations.ctta_suite.build_reference_model',side_effect=lambda task:(Small(),None)),patch.object(run,'prepare_tensors',side_effect=RuntimeError('first_training_failure')) as train:
++            with self.assertRaisesRegex(RuntimeError,'first_training_failure'):run.execute(approved,out)
++            self.assertEqual(train.call_count,1)
++        self.assertEqual(json.loads((out.path/'first_error.json').read_text())['message'],'first_training_failure');self.assertEqual(json.loads((out.path/'after_check_error.json').read_text())['message'],'second_after_check')
++    def test_supervisor_CPU_success_failure_timeout_cleanup(self):
++        for i,code in enumerate(('pass','raise SystemExit(3)','import time;time.sleep(10)')):
++            out=run.BudgetOutput(self.storage/str(i),{},1000000);processes=[]
++            def start():
++                p=subprocess.Popen([sys.executable,'-c',code],start_new_session=True);processes.append(p);return p
++            if i:
++                with self.assertRaises((RuntimeError,TimeoutError)):run.supervise_one(start,dict(wall_seconds=.2,output_bytes=1000000),out)
++            else:run.supervise_one(start,dict(wall_seconds=3,output_bytes=1000000),out)
++            self.assertIsNotNone(processes[0].poll());self.assertTrue(json.loads((out.path/'supervisor.json').read_text())['cleaned'])
++    def test_default_entry_refuses_without_receipt(self):
++        with patch.dict(os.environ,{},clear=True),patch.object(run,'preflight',side_effect=AssertionError('no preflight without receipt')):
++            with self.assertRaises(PermissionError):run.main()

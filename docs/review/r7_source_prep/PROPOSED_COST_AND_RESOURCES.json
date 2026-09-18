@@ -1,0 +1,160 @@
+{
+  "status": "PROPOSED_NOT_RUN",
+  "phase_exact_counts": {
+    "oracle_fit": {
+      "backbone_forwards": 4096,
+      "source_backward_calls": 2048,
+      "source_Adam": 2048
+    },
+    "oracle_cal": {
+      "backbone_forwards": 1024,
+      "source_backward_calls": 512,
+      "source_Adam": 512
+    },
+    "oracle_val": {
+      "backbone_forwards": 1024,
+      "source_backward_calls": 512,
+      "source_Adam": 512
+    },
+    "shared_basis": {},
+    "A_basis": {
+      "backbone_forwards": 32,
+      "source_VJP": 1024
+    },
+    "scaler": {
+      "backbone_forwards": 14208
+    },
+    "A_FULL/fit": {
+      "backbone_forwards": 12000,
+      "source_backward_calls": 1000,
+      "source_AdamW": 1000
+    },
+    "A_FULL/cal": {
+      "backbone_forwards": 1024,
+      "calibration_backward_calls": 256,
+      "calibration_Adam": 256
+    },
+    "A_FULL/val": {
+      "backbone_forwards": 768
+    },
+    "A_STATIC/fit": {
+      "backbone_forwards": 12000,
+      "source_backward_calls": 1000,
+      "source_AdamW": 1000
+    },
+    "A_STATIC/cal": {
+      "backbone_forwards": 1024,
+      "calibration_backward_calls": 256,
+      "calibration_Adam": 256
+    },
+    "A_STATIC/val": {
+      "backbone_forwards": 768
+    },
+    "B_FULL/fit": {
+      "backbone_forwards": 12000,
+      "source_backward_calls": 1000,
+      "source_AdamW": 1000
+    },
+    "B_FULL/cal": {
+      "backbone_forwards": 1024,
+      "calibration_backward_calls": 256,
+      "calibration_Adam": 256
+    },
+    "B_FULL/val": {
+      "backbone_forwards": 768
+    },
+    "B_STATIC/fit": {
+      "backbone_forwards": 12000,
+      "source_backward_calls": 1000,
+      "source_AdamW": 1000
+    },
+    "B_STATIC/cal": {
+      "backbone_forwards": 1024,
+      "calibration_backward_calls": 256,
+      "calibration_Adam": 256
+    },
+    "B_STATIC/val": {
+      "backbone_forwards": 768
+    },
+    "C_FULL/fit": {
+      "backbone_forwards": 12000,
+      "source_backward_calls": 1000,
+      "source_AdamW": 1000
+    },
+    "C_FULL/cal": {
+      "backbone_forwards": 1024,
+      "calibration_backward_calls": 256,
+      "calibration_Adam": 256
+    },
+    "C_FULL/val": {
+      "backbone_forwards": 768
+    },
+    "C_FULL/constant_variance": {
+      "backbone_forwards": 736
+    },
+    "C_STATIC/fit": {
+      "backbone_forwards": 12000,
+      "source_backward_calls": 1000,
+      "source_AdamW": 1000
+    },
+    "C_STATIC/cal": {
+      "backbone_forwards": 1024,
+      "calibration_backward_calls": 256,
+      "calibration_Adam": 256
+    },
+    "C_STATIC/val": {
+      "backbone_forwards": 768
+    },
+    "C_STATIC/constant_variance": {
+      "backbone_forwards": 736
+    },
+    "oracle_query_fit": {
+      "backbone_forwards": 27904
+    },
+    "oracle_query_cal": {
+      "backbone_forwards": 1344
+    },
+    "oracle_query_val": {
+      "backbone_forwards": 1472
+    }
+  },
+  "total_nominal_physical_counts": {
+    "backbone_forwards": 135328,
+    "source_backward_calls": 9072,
+    "source_Adam": 3072,
+    "source_VJP": 1024,
+    "source_AdamW": 6000,
+    "calibration_backward_calls": 1536,
+    "calibration_Adam": 1536
+  },
+  "counts_depend_on_frozen_split": {
+    "fit": 111,
+    "cal": 23,
+    "val": 25
+  },
+  "resources": {
+    "schema": "R7_SOURCE_PREP_RESOURCES_V1",
+    "scope": "SOURCE_PREP",
+    "enabled": false,
+    "device": "cpu",
+    "physical_GPU_ids": null,
+    "dtype_policy": "R7_CPU_FP32_MODEL_FP64_LATENT_V1",
+    "workers": 1,
+    "threads": 2,
+    "wall_seconds": 259200,
+    "output_bytes": 536870912,
+    "max_asset_bytes": 268435456,
+    "max_decoded_bytes": 8589934592,
+    "retry": false,
+    "storage_root": null,
+    "resource_authorization": null,
+    "GPU_checks": "NOT_RUN",
+    "note": "Proposed finite CPU caps, not a measured real-training ETA or authorization; never truncate budgets to meet caps."
+  },
+  "wall_cap_is_not_an_ETA": true,
+  "model_F_estimates_include_scaler_constant_R_oracle_query": true,
+  "extra_CPU_costs": "decoding/validation/hash/serialization/process supervision tracked separately; not included in nominal model F",
+  "GPU_id": null,
+  "resource_authorization": null,
+  "CPU_execution_authorized": false
+}
