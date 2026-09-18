@@ -1,0 +1,44 @@
+test_CPU_device_route_rejects_cuda_and_unbounded_resources_without_GPU_query (test_source_prep.PreparationTests.test_CPU_device_route_rejects_cuda_and_unbounded_resources_without_GPU_query) ... ok
+test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) ... ok
+test_SP1_output_constructor_and_parent_validation (test_source_prep.PreparationTests.test_SP1_output_constructor_and_parent_validation) ... ok
+test_SP1_storage_and_metadata_noncanonical (test_source_prep.PreparationTests.test_SP1_storage_and_metadata_noncanonical) ... ok
+test_SP2_first_error_survives_evidence_failure (test_source_prep.PreparationTests.test_SP2_first_error_survives_evidence_failure) ... ok
+test_SP2_start_timeout_cleanup_and_evidence_failures (test_source_prep.PreparationTests.test_SP2_start_timeout_cleanup_and_evidence_failures) ... 
+  test_SP2_start_timeout_cleanup_and_evidence_failures (test_source_prep.PreparationTests.test_SP2_start_timeout_cleanup_and_evidence_failures) (kind='evidence_only') ... FAIL
+test_SP3_already_exited_child_over_tree_cap (test_source_prep.PreparationTests.test_SP3_already_exited_child_over_tree_cap) ... ok
+test_SP3_global_terminal_reserve_and_evidence_budget (test_source_prep.PreparationTests.test_SP3_global_terminal_reserve_and_evidence_budget) ... ok
+test_SP3_growth_at_exit_includes_nested_records (test_source_prep.PreparationTests.test_SP3_growth_at_exit_includes_nested_records) ... ok
+test_SP3_main_completion_resource_audit (test_source_prep.PreparationTests.test_SP3_main_completion_resource_audit) ... ok
+test_SP3_terminal_wall_boundary (test_source_prep.PreparationTests.test_SP3_terminal_wall_boundary) ... ok
+test_SP3_worker_first_error_preserved_with_terminal_audit_failure (test_source_prep.PreparationTests.test_SP3_worker_first_error_preserved_with_terminal_audit_failure) ... ok
+test_budget_phases_full_counts_no_silent_truncation (test_source_prep.PreparationTests.test_budget_phases_full_counts_no_silent_truncation) ... ok
+test_default_entry_refuses_without_receipt (test_source_prep.PreparationTests.test_default_entry_refuses_without_receipt) ... ok
+test_disabled_wrong_scope_and_old_review_reject_before_assets (test_source_prep.PreparationTests.test_disabled_wrong_scope_and_old_review_reject_before_assets) ... ok
+test_file_digest_mismatch_rejects_before_decode (test_source_prep.PreparationTests.test_file_digest_mismatch_rejects_before_decode) ... ok
+test_metadata_split_freezes_before_decode_and_preserves_existing (test_source_prep.PreparationTests.test_metadata_split_freezes_before_decode_and_preserves_existing) ... ok
+test_output_budget_preserves_first_evidence_and_no_overwrite (test_source_prep.PreparationTests.test_output_budget_preserves_first_evidence_and_no_overwrite) ... ok
+test_output_source_overlap_and_memory_overflow_rejected (test_source_prep.PreparationTests.test_output_source_overlap_and_memory_overflow_rejected) ... ok
+test_overlap_minimum_duplicate_and_filename_group_rejected (test_source_prep.PreparationTests.test_overlap_minimum_duplicate_and_filename_group_rejected) ... ok
+test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash (test_source_prep.PreparationTests.test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash) ... ok
+test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check (test_source_prep.PreparationTests.test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check) ... ok
+test_six_artifact_release_and_independent_expected_loader (test_source_prep.PreparationTests.test_six_artifact_release_and_independent_expected_loader) ... ok
+test_source_path_escape_and_symlink_hardlink_rejected (test_source_prep.PreparationTests.test_source_path_escape_and_symlink_hardlink_rejected) ... ok
+test_supervisor_CPU_success_failure_timeout_cleanup (test_source_prep.PreparationTests.test_supervisor_CPU_success_failure_timeout_cleanup) ... ok
+test_synthetic_checkpoint_CPU_load_and_wrong_state_reject (test_source_prep.PreparationTests.test_synthetic_checkpoint_CPU_load_and_wrong_state_reject) ... ok
+test_target_overlap_and_bad_domain_rejected (test_source_prep.PreparationTests.test_target_overlap_and_bad_domain_rejected) ... ok
+test_worker_failure_after_check_failure_are_separate_no_retry (test_source_prep.PreparationTests.test_worker_failure_after_check_failure_are_separate_no_retry) ... ok
+
+======================================================================
+FAIL: test_SP2_start_timeout_cleanup_and_evidence_failures (test_source_prep.PreparationTests.test_SP2_start_timeout_cleanup_and_evidence_failures) (kind='evidence_only')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 193, in test_SP2_start_timeout_cleanup_and_evidence_failures
+    self.assertEqual(start.call_count,1);self.assertEqual(cleanup.call_count,int(kind!='start'));self.assertIn('supervisor.json',[n for n,v in attempts]);self.assertFalse(attempts[-1][1]['complete']);self.assertFalse(attempts[-1][1]['retry'])
+                                                                                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: True is not false
+
+----------------------------------------------------------------------
+Ran 28 tests in 1.197s
+
+FAILED (failures=1)
+SOURCE_PREP_CPU_RESULT {"tests": 28, "failures": 1, "errors": 0, "skipped": 0, "exit_code": 1, "wall_seconds": 1.214786333963275, "cpu_user_seconds": 0.648715, "cpu_system_seconds": 0.41915800000000003, "peak_RSS": 238485504, "peak_RSS_unit": "bytes", "python": "3.12.9", "torch": "2.6.0", "physical_calls": {"backward": 0, "VJP": 0, "Adam": 0, "AdamW": 0, "synthetic_checkpoint_loads": 5, "synthetic_image_mask_decodes": 2}, "procedural_counts": {"backbone_forwards": 2, "appearance_MLP": 1, "method_MLP": 2, "spectral_norms": 3, "ISTA_iterations": 5}, "hash_cost": {"tensor_digest_calls": 28, "tensor_bytes": 5634160, "wall_ns": 4657711, "cpu_ns": 8412000, "context_build_calls": 14, "context_wall_ns": 9833708, "context_cpu_ns": 18487000}, "real_RGB_mask_decodes": 0, "real_checkpoint_deserializations": 0, "GPU_queries_or_initializations": 0, "real_source_training": false, "source_execution_layer_review": "NOT_RUN"}

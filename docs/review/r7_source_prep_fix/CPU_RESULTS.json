@@ -1,0 +1,528 @@
+{
+  "implementation_sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+  "final_acceptance": {
+    "local": {
+      "source": {
+        "tests": 32,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "exit_code": 0,
+        "wall_seconds": 1.2280532910954207,
+        "cpu_user_seconds": 0.63386,
+        "cpu_system_seconds": 0.43495799999999996,
+        "peak_RSS": 241827840,
+        "peak_RSS_unit": "bytes",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "physical_calls": {
+          "backward": 0,
+          "VJP": 0,
+          "Adam": 0,
+          "AdamW": 0,
+          "synthetic_checkpoint_loads": 5,
+          "synthetic_image_mask_decodes": 2
+        },
+        "procedural_counts": {
+          "backbone_forwards": 2,
+          "appearance_MLP": 1,
+          "method_MLP": 2,
+          "spectral_norms": 3,
+          "ISTA_iterations": 5
+        },
+        "hash_cost": {
+          "tensor_digest_calls": 28,
+          "tensor_bytes": 5634160,
+          "wall_ns": 4461122,
+          "cpu_ns": 7996000,
+          "context_build_calls": 14,
+          "context_wall_ns": 9516210,
+          "context_cpu_ns": 17853000
+        },
+        "real_RGB_mask_decodes": 0,
+        "real_checkpoint_deserializations": 0,
+        "GPU_queries_or_initializations": 0,
+        "real_source_training": false,
+        "source_execution_layer_review": "NOT_RUN"
+      },
+      "regression": {
+        "tests": 59,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "exit_code": 0,
+        "wall_seconds": 33.657539000036195,
+        "cpu_user_seconds": 54.001527,
+        "cpu_system_seconds": 11.539663,
+        "peak_RSS": 1833943040,
+        "peak_RSS_unit": "bytes",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "platform": "Darwin arm64",
+        "physical_calls": {
+          "Tensor_backward": 36,
+          "autograd_grad": 2,
+          "Adam_step": 24,
+          "AdamW_step": 6,
+          "old_backbone_forwards": 16
+        },
+        "procedural_counts": {
+          "cholesky_solves": 264,
+          "eigh": 4,
+          "spectral_norms": 181,
+          "appearance_MLP": 391,
+          "method_MLP": 967,
+          "ISTA_iterations": 240,
+          "IRLS_iterations": 105,
+          "svd": 1,
+          "backbone_forwards": 479,
+          "source_backward_calls": 22,
+          "source_Adam": 16,
+          "source_AdamW": 6,
+          "calibration_backward_calls": 6,
+          "calibration_Adam": 6,
+          "source_VJP": 2
+        },
+        "context_hash_cost": {
+          "tensor_digest_calls": 407,
+          "tensor_bytes": 978899706,
+          "wall_ns": 429414288,
+          "cpu_ns": 850775000,
+          "context_build_calls": 199,
+          "context_wall_ns": 498918997,
+          "context_cpu_ns": 988551000
+        },
+        "real_asset_reads": 0,
+        "GPU_queries_or_initializations": 0,
+        "external_review": "NOT_RUN"
+      }
+    },
+    "server": {
+      "source": {
+        "tests": 32,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "exit_code": 0,
+        "wall_seconds": 2.2569012250751257,
+        "cpu_user_seconds": 1.2048719999999997,
+        "cpu_system_seconds": 0.4134,
+        "peak_RSS": 397268,
+        "peak_RSS_unit": "KiB",
+        "python": "3.10.6",
+        "torch": "2.2.1+cu121",
+        "physical_calls": {
+          "backward": 0,
+          "VJP": 0,
+          "Adam": 0,
+          "AdamW": 0,
+          "synthetic_checkpoint_loads": 5,
+          "synthetic_image_mask_decodes": 2
+        },
+        "procedural_counts": {
+          "backbone_forwards": 2,
+          "appearance_MLP": 1,
+          "method_MLP": 2,
+          "spectral_norms": 3,
+          "ISTA_iterations": 5
+        },
+        "hash_cost": {
+          "tensor_digest_calls": 28,
+          "tensor_bytes": 5634160,
+          "wall_ns": 12501901,
+          "cpu_ns": 18527180,
+          "context_build_calls": 14,
+          "context_wall_ns": 35019477,
+          "context_cpu_ns": 50939746
+        },
+        "real_RGB_mask_decodes": 0,
+        "real_checkpoint_deserializations": 0,
+        "GPU_queries_or_initializations": 0,
+        "real_source_training": false,
+        "source_execution_layer_review": "NOT_RUN"
+      },
+      "regression": {
+        "GPU_queries_or_initializations": 0,
+        "context_hash_cost": {
+          "context_build_calls": 199,
+          "context_cpu_ns": 1178950474,
+          "context_wall_ns": 941516564,
+          "cpu_ns": 923775448,
+          "tensor_bytes": 978899706,
+          "tensor_digest_calls": 407,
+          "wall_ns": 789850447
+        },
+        "cpu_system_seconds": 24.065354,
+        "cpu_user_seconds": 170.9118,
+        "errors": 0,
+        "exit_code": 0,
+        "external_review": "NOT_RUN",
+        "failures": 0,
+        "peak_RSS": 2065888,
+        "peak_RSS_unit": "KiB",
+        "physical_calls": {
+          "AdamW_step": 6,
+          "Adam_step": 24,
+          "Tensor_backward": 36,
+          "autograd_grad": 2,
+          "old_backbone_forwards": 16
+        },
+        "platform": "Linux x86_64",
+        "procedural_counts": {
+          "IRLS_iterations": 105,
+          "ISTA_iterations": 240,
+          "appearance_MLP": 391,
+          "backbone_forwards": 479,
+          "calibration_Adam": 6,
+          "calibration_backward_calls": 6,
+          "cholesky_solves": 264,
+          "eigh": 4,
+          "method_MLP": 967,
+          "source_Adam": 16,
+          "source_AdamW": 6,
+          "source_VJP": 2,
+          "source_backward_calls": 22,
+          "spectral_norms": 181,
+          "svd": 1
+        },
+        "python": "3.10.6",
+        "real_asset_reads": 0,
+        "skipped": 0,
+        "tests": 59,
+        "torch": "2.2.1+cu121",
+        "wall_seconds": 109.79188261507079
+      }
+    }
+  },
+  "per_environment_totals": {
+    "local": {
+      "tests": 91,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "procedural_forwards": 497,
+      "backward": 36,
+      "VJP": 2,
+      "Adam": 24,
+      "AdamW": 6,
+      "suite_wall_seconds": 34.885592291131616
+    },
+    "server": {
+      "tests": 91,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "procedural_forwards": 497,
+      "backward": 36,
+      "VJP": 2,
+      "Adam": 24,
+      "AdamW": 6,
+      "suite_wall_seconds": 112.04878384014592
+    }
+  },
+  "process_exit_and_elapsed": {
+    "local": [
+      {
+        "suite": "source",
+        "sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+        "process_exit_code": 0,
+        "process_wall_seconds": 2.393555416027084
+      },
+      {
+        "suite": "regression",
+        "sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+        "process_exit_code": 0,
+        "process_wall_seconds": 34.52404358400963
+      }
+    ],
+    "server": [
+      {
+        "suite": "source",
+        "sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+        "process_exit_code": 0,
+        "transport_and_process_wall_seconds": 13.820636916905642
+      },
+      {
+        "suite": "regression",
+        "sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+        "process_exit_code": 0,
+        "transport_and_process_wall_seconds": 112.98283812496811
+      }
+    ]
+  },
+  "before_fix": {
+    "production_sha": "9fa2ce37149909687ef5be2e08aa2b32a5887903",
+    "base_publication_sha": "ad95f212b8770e5006e0b1ea3520717767c7413f",
+    "tests": 4,
+    "failures": 8,
+    "errors": 1,
+    "skipped": 0,
+    "wall_seconds": 0.10180595889687538,
+    "model_forwards": 0,
+    "real_asset_reads": 0,
+    "GPU_queries": 0,
+    "exit_code": 1
+  },
+  "before_fix_note": "Own four-method synthetic probes on unchanged base production plus uncommitted test overlay; eight failures includes six SP1 subtests, one SP3 byte-cap and one SP3 time-cap method; one SP2 error. Not external reviewer annex execution. Before-fix CPU/RSS costs NOT_CAPTURED.",
+  "development": [
+    {
+      "id": "dev1",
+      "kind": "uncommitted development, not final acceptance",
+      "note": "28 methods, one failed subtest: summary write was the only evidence failure; lacked later first-error attempt. Fixed terminal failure handling and matching test semantics.",
+      "results": {
+        "tests": 28,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0,
+        "exit_code": 1,
+        "wall_seconds": 1.214786333963275,
+        "cpu_user_seconds": 0.648715,
+        "cpu_system_seconds": 0.41915800000000003,
+        "peak_RSS": 238485504,
+        "peak_RSS_unit": "bytes",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "physical_calls": {
+          "backward": 0,
+          "VJP": 0,
+          "Adam": 0,
+          "AdamW": 0,
+          "synthetic_checkpoint_loads": 5,
+          "synthetic_image_mask_decodes": 2
+        },
+        "procedural_counts": {
+          "backbone_forwards": 2,
+          "appearance_MLP": 1,
+          "method_MLP": 2,
+          "spectral_norms": 3,
+          "ISTA_iterations": 5
+        },
+        "hash_cost": {
+          "tensor_digest_calls": 28,
+          "tensor_bytes": 5634160,
+          "wall_ns": 4657711,
+          "cpu_ns": 8412000,
+          "context_build_calls": 14,
+          "context_wall_ns": 9833708,
+          "context_cpu_ns": 18487000
+        },
+        "real_RGB_mask_decodes": 0,
+        "real_checkpoint_deserializations": 0,
+        "GPU_queries_or_initializations": 0,
+        "real_source_training": false,
+        "source_execution_layer_review": "NOT_RUN"
+      }
+    },
+    {
+      "id": "dev2",
+      "kind": "uncommitted development, not final acceptance",
+      "note": "31 methods, one owned-cleanup assertion failure; underlying error not printed in this log.",
+      "results": {
+        "tests": 31,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0,
+        "exit_code": 1,
+        "wall_seconds": 1.1981605421751738,
+        "cpu_user_seconds": 0.6463850000000001,
+        "cpu_system_seconds": 0.437693,
+        "peak_RSS": 233062400,
+        "peak_RSS_unit": "bytes",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "physical_calls": {
+          "backward": 0,
+          "VJP": 0,
+          "Adam": 0,
+          "AdamW": 0,
+          "synthetic_checkpoint_loads": 5,
+          "synthetic_image_mask_decodes": 2
+        },
+        "procedural_counts": {
+          "backbone_forwards": 2,
+          "appearance_MLP": 1,
+          "method_MLP": 2,
+          "spectral_norms": 3,
+          "ISTA_iterations": 5
+        },
+        "hash_cost": {
+          "tensor_digest_calls": 28,
+          "tensor_bytes": 5634160,
+          "wall_ns": 4492042,
+          "cpu_ns": 8056000,
+          "context_build_calls": 14,
+          "context_wall_ns": 9612500,
+          "context_cpu_ns": 18043000
+        },
+        "real_RGB_mask_decodes": 0,
+        "real_checkpoint_deserializations": 0,
+        "GPU_queries_or_initializations": 0,
+        "real_source_training": false,
+        "source_execution_layer_review": "NOT_RUN"
+      }
+    },
+    {
+      "id": "dev3",
+      "kind": "uncommitted development, not final acceptance",
+      "note": "31 methods pass; before bounded-reap correction.",
+      "results": {
+        "tests": 31,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "exit_code": 0,
+        "wall_seconds": 1.208574250107631,
+        "cpu_user_seconds": 0.6436700000000001,
+        "cpu_system_seconds": 0.432564,
+        "peak_RSS": 237223936,
+        "peak_RSS_unit": "bytes",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "physical_calls": {
+          "backward": 0,
+          "VJP": 0,
+          "Adam": 0,
+          "AdamW": 0,
+          "synthetic_checkpoint_loads": 5,
+          "synthetic_image_mask_decodes": 2
+        },
+        "procedural_counts": {
+          "backbone_forwards": 2,
+          "appearance_MLP": 1,
+          "method_MLP": 2,
+          "spectral_norms": 3,
+          "ISTA_iterations": 5
+        },
+        "hash_cost": {
+          "tensor_digest_calls": 28,
+          "tensor_bytes": 5634160,
+          "wall_ns": 4463086,
+          "cpu_ns": 7967000,
+          "context_build_calls": 14,
+          "context_wall_ns": 9593252,
+          "context_cpu_ns": 18010000
+        },
+        "real_RGB_mask_decodes": 0,
+        "real_checkpoint_deserializations": 0,
+        "GPU_queries_or_initializations": 0,
+        "real_source_training": false,
+        "source_execution_layer_review": "NOT_RUN"
+      }
+    },
+    {
+      "id": "dev4",
+      "kind": "uncommitted development, not final acceptance",
+      "note": "31 methods, one owned-cleanup assertion failure with retained TimeoutError first, EPERM cleanup, exit code null. A preceding edit helper had a Python SyntaxError and changed no file; this run therefore still used the earlier cleanup fallback.",
+      "results": {
+        "tests": 31,
+        "failures": 1,
+        "errors": 0,
+        "skipped": 0,
+        "exit_code": 1,
+        "wall_seconds": 1.1112353329081088,
+        "cpu_user_seconds": 0.58598,
+        "cpu_system_seconds": 0.41774100000000003,
+        "peak_RSS": 239452160,
+        "peak_RSS_unit": "bytes",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "physical_calls": {
+          "backward": 0,
+          "VJP": 0,
+          "Adam": 0,
+          "AdamW": 0,
+          "synthetic_checkpoint_loads": 5,
+          "synthetic_image_mask_decodes": 2
+        },
+        "procedural_counts": {
+          "backbone_forwards": 2,
+          "appearance_MLP": 1,
+          "method_MLP": 2,
+          "spectral_norms": 3,
+          "ISTA_iterations": 5
+        },
+        "hash_cost": {
+          "tensor_digest_calls": 28,
+          "tensor_bytes": 5634160,
+          "wall_ns": 3401251,
+          "cpu_ns": 6790000,
+          "context_build_calls": 14,
+          "context_wall_ns": 8294917,
+          "context_cpu_ns": 16406000
+        },
+        "real_RGB_mask_decodes": 0,
+        "real_checkpoint_deserializations": 0,
+        "GPU_queries_or_initializations": 0,
+        "real_source_training": false,
+        "source_execution_layer_review": "NOT_RUN"
+      }
+    },
+    {
+      "id": "dev5",
+      "kind": "uncommitted development, not final acceptance",
+      "note": "32 methods pass after bounded owned-child wait plus process-group absence proof and added cleanup regression.",
+      "results": {
+        "tests": 32,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "exit_code": 0,
+        "wall_seconds": 1.2556577080395073,
+        "cpu_user_seconds": 0.655794,
+        "cpu_system_seconds": 0.45954,
+        "peak_RSS": 237158400,
+        "peak_RSS_unit": "bytes",
+        "python": "3.12.9",
+        "torch": "2.6.0",
+        "physical_calls": {
+          "backward": 0,
+          "VJP": 0,
+          "Adam": 0,
+          "AdamW": 0,
+          "synthetic_checkpoint_loads": 5,
+          "synthetic_image_mask_decodes": 2
+        },
+        "procedural_counts": {
+          "backbone_forwards": 2,
+          "appearance_MLP": 1,
+          "method_MLP": 2,
+          "spectral_norms": 3,
+          "ISTA_iterations": 5
+        },
+        "hash_cost": {
+          "tensor_digest_calls": 28,
+          "tensor_bytes": 5634160,
+          "wall_ns": 4228373,
+          "cpu_ns": 7838000,
+          "context_build_calls": 14,
+          "context_wall_ns": 9080709,
+          "context_cpu_ns": 17389000
+        },
+        "real_RGB_mask_decodes": 0,
+        "real_checkpoint_deserializations": 0,
+        "GPU_queries_or_initializations": 0,
+        "real_source_training": false,
+        "source_execution_layer_review": "NOT_RUN"
+      }
+    }
+  ],
+  "cleanup_diagnostic": {
+    "tests": 1,
+    "failures": 0,
+    "errors": 0,
+    "exit_code": 0,
+    "wall_seconds": 0.519,
+    "model_forwards": 0,
+    "cpu_RSS_cost": "NOT_CAPTURED",
+    "note": "Single directed real short CPU-child cleanup test, log retained; not a repeated model run."
+  },
+  "scope": {
+    "real_source_training_started": false,
+    "real_target_execution_started": false,
+    "real_asset_reads": 0,
+    "GPU_queries_or_initializations": 0,
+    "old_166_rerun": false,
+    "standalone_22_rerun": false
+  },
+  "logs": "LOG_MANIFEST.json"
+}

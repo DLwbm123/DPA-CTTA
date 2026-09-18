@@ -1,0 +1,35 @@
+{
+  "base_publication_sha": "ad95f212b8770e5006e0b1ea3520717767c7413f",
+  "implementation_sha": "f719c703087b38c07bdfbe7ce9dcfa62d88a12d9",
+  "changed_paths": [
+    "docs/review/r7_source_prep_fix/input/R7_SOURCE_PREP_EXTERNAL_REVIEW.md",
+    "src/dpa_ctta/r7_shared/io.py",
+    "src/dpa_ctta/r7_source_prep/registry.py",
+    "src/dpa_ctta/r7_source_prep/runner.py",
+    "tests/r7/test_source_prep.py"
+  ],
+  "science": {
+    "A_PSF.json": {
+      "sha256": "5e8f62ab8a39806ef5aef2dbb5b0206255d9e49c33fa3bcd68c82e78e88410bf",
+      "bytes": 3322,
+      "unchanged": true
+    },
+    "B_RCA.json": {
+      "sha256": "9895dba31443881e50bb87d4df94f83598c0069931b35d6d000e6c2b1e61fc61",
+      "bytes": 2752,
+      "unchanged": true
+    },
+    "COMMON_PROTOCOL.json": {
+      "sha256": "a18f51317b8547067f8383ebd1125eca1697b24ce6245ca5e2733e2daa28f42d",
+      "bytes": 11028,
+      "unchanged": true
+    },
+    "C_RBE.json": {
+      "sha256": "4151c86ebec9073bca570e696c45bbecc4f10e0505698989a0be41cbe2032e86",
+      "bytes": 3146,
+      "unchanged": true
+    }
+  },
+  "protected_algorithms_configs_and_historical_evidence_unchanged": true,
+  "verification": "exact Git changed-path allowlist plus required four science byte comparisons"
+}

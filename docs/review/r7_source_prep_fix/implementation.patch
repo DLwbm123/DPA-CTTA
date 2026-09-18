@@ -1,0 +1,387 @@
+diff --git a/src/dpa_ctta/r7_shared/io.py b/src/dpa_ctta/r7_shared/io.py
+index d26799d..7fc3cbb 100644
+--- a/src/dpa_ctta/r7_shared/io.py
++++ b/src/dpa_ctta/r7_shared/io.py
+@@ -1,10 +1,21 @@
+ """Fresh output ownership. Legacy aggregates use the reviewed pinned reader."""
+-import json,os,time,uuid
++import json,os,stat,time,uuid
+ from pathlib import Path
+ 
++def checked_path(path):
++    """Reject traversal/links before normalization; require real existing parents."""
++    p=Path(path)
++    if '..' in p.parts:raise ValueError('parent traversal path')
++    p=p.absolute()
++    for ancestor in (p,*p.parents):
++        if ancestor.is_symlink():raise ValueError('symlink path')
++    for parent in p.parents:
++        if not stat.S_ISDIR(parent.stat().st_mode):raise ValueError('non-directory parent')
++    return p
++
+ class Output:
+     def __init__(self,path,binding):
+-        self.path=Path(path)
++        self.path=checked_path(path)
+         if self.path.exists() or self.path.is_symlink():raise FileExistsError('new output only')
+         if any(p.is_symlink() for p in [self.path.parent,*self.path.parents]):raise ValueError('symlink output ancestor')
+         self.path.mkdir(parents=False)
+diff --git a/src/dpa_ctta/r7_source_prep/registry.py b/src/dpa_ctta/r7_source_prep/registry.py
+index 5d6a095..0b1f605 100644
+--- a/src/dpa_ctta/r7_source_prep/registry.py
++++ b/src/dpa_ctta/r7_source_prep/registry.py
+@@ -5,6 +5,7 @@ No directory discovery, target loading, or checkpoint loading on import/audit.
+ import copy,hashlib,io,json,os,re,stat
+ from pathlib import Path
+ from ..r7_shared.context import json_digest
++from ..r7_shared.io import checked_path
+ from ..r7_shared.source import split,SourceData,Record
+ from ..r1.plan import registration_digest
+ 
+@@ -17,7 +18,7 @@ def sha(value):
+     return value
+ 
+ def ordinary(path):
+-    p=Path(path).absolute()
++    p=checked_path(path)
+     if any(x.is_symlink() for x in (p,*p.parents)):raise ValueError('source symlink path')
+     s=p.stat()
+     if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1:raise ValueError('ordinary unlinked source file required')
+diff --git a/src/dpa_ctta/r7_source_prep/runner.py b/src/dpa_ctta/r7_source_prep/runner.py
+index 630c7a0..1ca8699 100644
+--- a/src/dpa_ctta/r7_source_prep/runner.py
++++ b/src/dpa_ctta/r7_source_prep/runner.py
+@@ -1,5 +1,5 @@
+ """Finite, separately authorized SOURCE_PREP only. No target dispatch or GPU route."""
+-import copy,io,json,os,signal,subprocess,sys,time
++import copy,io,json,os,signal,stat,subprocess,sys,time
+ from collections import Counter
+ from pathlib import Path
+ import torch
+@@ -8,7 +8,7 @@ from ..r7_shared.context import SCIENCE,provenance,HASH_COST
+ from ..r7_shared.numerics import COUNTS
+ from ..r7_shared.network import Segmenter
+ from ..r7_shared.preparation import prepare_tensors,inference_from_tensors
+-from ..r7_shared.io import Output
++from ..r7_shared.io import Output,checked_path
+ from ..r1.supervise import stop_owned
+ 
+ ROOT=Path(__file__).resolve().parents[3]
+@@ -43,15 +43,16 @@ def preflight(receipt):
+     if config.get('enabled') is not True or config.get('scope')!='SOURCE_PREP':raise PermissionError('source resource configuration disabled')
+     device_policy(config)
+     if config.get('resource_authorization')!={'scope':'SOURCE_PREP','receipt_id':auth['receipt_id']}:raise PermissionError('resource authorization is not this user receipt')
++    out=checked_path(receipt['output_dir']);root=checked_path(receipt['source_root']);storage=checked_path(config['storage_root'])
++    if not root.is_dir() or not storage.is_dir():raise ValueError('existing source/storage directories required')
++    if out.exists() or not out.is_relative_to(storage):raise ValueError('fresh approved storage required')
++    protected=[root,checked_path(receipt['checkpoint_path']),checked_path(ROOT),*[checked_path(receipt[k]['path']) for k in ('manifest','split','target','config')]]
++    for path in protected:
++        if out==path or out in path.parents or path in out.parents:raise ValueError('source/code/metadata output overlap')
+     documents={k:json.loads(verified(receipt[k]['path'],receipt[k]['sha256'],32*1024**2)) for k in ('manifest','split','target')}
+     manifest,frozen,target=(documents[k] for k in ('manifest','split','target'));info=audit(manifest,frozen,target)
+     if receipt.get('source_binding_status')!='BOUND' or review.get('checkpoint_sha256')!=manifest['checkpoint']['sha256']:raise ValueError('source file bindings pending')
+     if info['groups']*5*512*512*4>config['max_decoded_bytes']:raise ValueError('decoded source memory cap; no subsampling')
+-    out=Path(receipt['output_dir']).absolute();root=Path(receipt['source_root']).absolute();storage=Path(config['storage_root']).absolute()
+-    if out.exists() or out.is_symlink() or not out.is_relative_to(storage):raise ValueError('fresh approved storage required')
+-    if any(x.is_symlink() for x in [out.parent,*out.parents,root,*root.parents]):raise ValueError('symlink storage/source root')
+-    for protected in [root,Path(receipt['checkpoint_path']).absolute(),ROOT,*[Path(receipt[k]['path']).absolute() for k in ('manifest','split','target','config')]]:
+-        if out==protected or out in protected.parents or protected in out.parents:raise ValueError('source/code/metadata output overlap')
+     return dict(receipt=copy.deepcopy(receipt),config=config,manifest=manifest,split=frozen,target=target,audit=info)
+ 
+ def expected_counts(folds):
+@@ -90,11 +91,28 @@ class Meter:
+         done={r['phase'] for r in self.records if r['completed']}
+         if not set(self.expected)<=done:raise ValueError('missing mandatory source phases')
+ 
++# Parent first/cleanup/resource/evidence errors, supervisor and completion: six
++# bounded 16 KiB records reserved globally after the child has been reaped.
++TERMINAL_RESERVE=6*16384
++
++def tree_bytes(path):
++    total=0
++    for p in Path(path).rglob('*'):
++        info=p.lstat()
++        if stat.S_ISDIR(info.st_mode):continue
++        if not stat.S_ISREG(info.st_mode) or info.st_nlink!=1:raise ValueError('nonordinary output tree entry')
++        total+=info.st_size
++    return total
++
++def resource_check(out,caps,started,reserve=TERMINAL_RESERVE):
++    if time.monotonic()-started>=caps['wall_seconds']:raise TimeoutError('source worker wall cap')
++    if tree_bytes(out.path)+reserve>caps['output_bytes']:raise ValueError('source worker output cap; terminal reserve required')
++
+ class BudgetOutput(Output):
+     def __init__(self,path,binding,limit):self.limit=limit;self.used=0;super().__init__(path,binding)
+     def bytes(self,name,data):
+         if Path(name).name!=name or name in ('.','..'):raise ValueError('output path')
+-        if self.used+len(data)>self.limit-65536:raise ValueError('output cap; evidence reserve retained')
++        if tree_bytes(self.path)+len(data)>self.limit-65536:raise ValueError('output cap; evidence reserve retained')
+         if name!='owner.json' and json.loads((self.path/'owner.json').read_text())!=dict(owner=self.owner,binding=self.binding):raise ValueError('output ownership')
+         with (self.path/name).open('xb') as f:f.write(data);f.flush();os.fsync(f.fileno())
+         self.used+=len(data)
+@@ -104,7 +122,7 @@ class BudgetOutput(Output):
+         if json.loads((self.path/'owner.json').read_text())!=dict(owner=self.owner,binding=self.binding):raise ValueError('evidence output ownership')
+         # Small reserved terminal evidence; never overwrite a first failure.
+         raw=(json.dumps(value,indent=2,allow_nan=False)+'\n').encode()
+-        if len(raw)>16384 or self.used+len(raw)>self.limit:raise ValueError('failure evidence cap')
++        if len(raw)>16384 or tree_bytes(self.path)+len(raw)>self.limit:raise ValueError('failure evidence cap')
+         with (self.path/name).open('xb') as f:f.write(raw)
+         self.used+=len(raw)
+ 
+@@ -187,26 +205,39 @@ def execute(approved,out):
+ 
+ def cleanup_owned(record):
+     try:stop_owned(record)
+-    except PermissionError:
++    except PermissionError as first:
+         # macOS may return EPERM for signal-0 after a group exited. Accept only
+         # a reaped child AND an independent process-table proof of absent PGID.
+         p=record['process']
+-        if sys.platform!='darwin' or p.poll() is None:raise
++        if sys.platform!='darwin':raise
++        # SIGTERM may have succeeded just before signal-0 raised EPERM. Wait
++        # once for this owned child, without another signal or a process retry.
++        try:p.wait(timeout=.5)
++        except subprocess.TimeoutExpired:raise first
+         rows=subprocess.check_output(['ps','-A','-o','pgid='],text=True)
+         if p.pid in {int(x.strip()) for x in rows.splitlines() if x.strip()}:raise
+         record.update(cleaned=True,cleanup_probe='reaped_and_ps_group_absent_after_EPERM')
+ 
+ def supervise_one(start,caps,out):
+-    """One owned CPU child; no smoke, retry or next-stage dispatch."""
+-    record=None;started=time.monotonic();handlers={};first=None;cleanup_error=None
++    """One owned CPU child; preserve execution, cleanup and persistence failures."""
++    record=None;started=time.monotonic();handlers={};first=None;cleanup_error=None;resource_error=None;evidence_errors=[];attempted=set()
++    def error(exc):return dict(type=type(exc).__name__,message=str(exc)[:3000])
++    def persist(name,value):
++        nonlocal first
++        attempted.add(name)
++        try:out.evidence(name,value)
++        except BaseException as exc:
++            evidence_errors.append(dict(file=name,error=error(exc)))
++            if first is None:first=exc
++            # No disk retry; even a broken stderr cannot replace the first error.
++            try:print('SOURCE_PREP_EVIDENCE_WRITE_ERROR '+json.dumps(dict(file=name,error=error(exc),original_first_error=error(first))),file=sys.stderr,flush=True)
++            except BaseException:pass
+     def interrupted(signum,frame):raise InterruptedError('source supervisor signal '+str(signum))
+     try:
+         for sig in (signal.SIGTERM,signal.SIGINT):handlers[sig]=signal.signal(sig,interrupted)
+         process=start();record=dict(process=process);out.write('process.json',dict(pid=process.pid,pgid=process.pid))
+         while process.poll() is None:
+-            if time.monotonic()-started>=caps['wall_seconds']:raise TimeoutError('source worker wall cap')
+-            size=sum(p.stat().st_size for p in out.path.rglob('*') if p.is_file())
+-            if size>caps['output_bytes']:raise ValueError('source worker output cap')
++            resource_check(out,caps,started)
+             time.sleep(.1)
+         if process.returncode:raise RuntimeError('source worker nonzero exit '+str(process.returncode))
+     except BaseException as exc:first=exc
+@@ -219,10 +250,42 @@ def supervise_one(start,caps,out):
+             if first is None:first=exc
+         finally:
+             for sig,old in handlers.items():signal.signal(sig,old)
+-        if first:out.evidence('supervisor.first_error.json',dict(type=type(first).__name__,message=str(first)[:3000]))
+-        if cleanup_error:out.evidence('supervisor.cleanup_error.json',dict(type=type(cleanup_error).__name__,message=str(cleanup_error)[:3000]))
+-        out.evidence('supervisor.json',dict(cleanup_probe=None if record is None else record.get('cleanup_probe','legacy_stop_owned'),exit_code=None if record is None else record['process'].returncode,wall_seconds=time.monotonic()-started,complete=first is None,cleaned=record is not None and record.get('cleaned',False),retry=False))
++        # Always audit after exit/cleanup, including nonzero and already-exited
++        # children. A resource error never erases an earlier execution failure.
++        try:resource_check(out,caps,started)
++        except BaseException as exc:
++            resource_error=exc
++            if first is None:first=exc
++        if first:persist('supervisor.first_error.json',error(first))
++        if cleanup_error:persist('supervisor.cleanup_error.json',error(cleanup_error))
++        if resource_error:persist('supervisor.resource_error.json',error(resource_error))
++        if evidence_errors:persist('supervisor.evidence_errors.json',dict(errors=list(evidence_errors)))
++        persist('supervisor.json',dict(cleanup_probe=None if record is None else record.get('cleanup_probe','legacy_stop_owned'),exit_code=None if record is None else record['process'].returncode,wall_seconds=time.monotonic()-started,complete=first is None,cleaned=record is not None and record.get('cleaned',False),retry=False))
++        # A failure of the last summary is itself a first failure. Attempt the
++        # still-unwritten error records once; never retry or overwrite a file.
++        if first and 'supervisor.first_error.json' not in attempted:persist('supervisor.first_error.json',error(first))
++        if evidence_errors and 'supervisor.evidence_errors.json' not in attempted:persist('supervisor.evidence_errors.json',dict(errors=list(evidence_errors)))
+     if first:raise first
++    return started
++
++def publish_completion(out,caps,started):
++    # No success publication until parent/child/log bytes and terminal writes
++    # have been counted. Failed pending evidence remains, never relabeled PASS.
++    try:
++        resource_check(out,caps,started,reserve=16384)
++        completion=json.loads((out.path/'worker/execution.json').read_text())
++        if completion['status']!='SOURCE_PREP_COMPLETE_PENDING_REVIEW' or completion['source_after_check']!='UNCHANGED':raise ValueError('worker execution completion absent or invalid')
++        out.evidence('completion.pending.json',dict(status='SOURCE_PREP_COMPLETE_PENDING_REVIEW',execution=completion,other_scopes_authorized=False))
++        resource_check(out,caps,started,reserve=0)
++        if (out.path/'completion.json').exists():raise FileExistsError('completion already published')
++        (out.path/'completion.pending.json').rename(out.path/'completion.json')
++    except BaseException as first:
++        failure=dict(type=type(first).__name__,message=str(first)[:3000],complete=False,retry=False)
++        try:out.evidence('completion.error.json',failure)
++        except BaseException as exc:
++            try:print('SOURCE_PREP_COMPLETION_WRITE_ERROR '+json.dumps(dict(first=failure,evidence_error=str(exc)[:3000])),file=sys.stderr,flush=True)
++            except BaseException:pass
++        raise
+ 
+ def main():
+     # No receipt means disabled before any real source metadata/asset or device.
+@@ -239,10 +302,8 @@ def main():
+     out.write('child.receipt.json',child_receipt);env['SOURCE_PREP_RECEIPT']=str(out.path/'child.receipt.json')
+     def start():
+         with (out.path/'worker.log').open('xb') as log:return subprocess.Popen([sys.executable,'-c',ENTRY],cwd=ROOT,env=env,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
+-    supervise_one(start,cfg,out)
+-    completion=json.loads((out.path/'worker/execution.json').read_text())
+-    if completion['status']!='SOURCE_PREP_COMPLETE_PENDING_REVIEW' or completion['source_after_check']!='UNCHANGED':raise ValueError('worker execution completion absent or invalid')
+-    out.evidence('completion.json',dict(status='SOURCE_PREP_COMPLETE_PENDING_REVIEW',execution=completion,other_scopes_authorized=False))
++    started=supervise_one(start,cfg,out)
++    publish_completion(out,cfg,started)
+ 
+ def child_entry():
+     r=json.loads(Path(os.environ['SOURCE_PREP_RECEIPT']).read_bytes());approved=preflight(r);torch.set_num_threads(2);torch.set_default_dtype(torch.float32)
+diff --git a/tests/r7/test_source_prep.py b/tests/r7/test_source_prep.py
+index 9d22dbe..0736fa8 100644
+--- a/tests/r7/test_source_prep.py
++++ b/tests/r7/test_source_prep.py
+@@ -2,7 +2,8 @@
+ import copy,io,json,os,subprocess,sys,tempfile,unittest
+ from collections import Counter
+ from pathlib import Path
+-from unittest.mock import patch
++from unittest.mock import patch, Mock
++from types import SimpleNamespace
+ import numpy as np
+ import torch
+ from PIL import Image
+@@ -139,7 +140,135 @@ class PreparationTests(unittest.TestCase):
+             if i:
+                 with self.assertRaises((RuntimeError,TimeoutError)):run.supervise_one(start,dict(wall_seconds=.2,output_bytes=1000000),out)
+             else:run.supervise_one(start,dict(wall_seconds=3,output_bytes=1000000),out)
+-            self.assertIsNotNone(processes[0].poll());self.assertTrue(json.loads((out.path/'supervisor.json').read_text())['cleaned'])
++            self.assertIsNotNone(processes[0].poll());self.assertTrue(json.loads((out.path/'supervisor.json').read_text())['cleaned'],{p.name:p.read_text() for p in out.path.glob('supervisor*.json')})
+     def test_default_entry_refuses_without_receipt(self):
+         with patch.dict(os.environ,{},clear=True),patch.object(run,'preflight',side_effect=AssertionError('no preflight without receipt')):
+             with self.assertRaises(PermissionError):run.main()
++
++    def fixture_process(self,code=0):
++        return SimpleNamespace(pid=123456789,returncode=code,poll=lambda:code)
++    def test_SP1_noncanonical_paths_reject_before_assets_or_output(self):
++        cases=[('output_dir',self.storage/'..'/'data'/'new'),
++               ('output_dir',self.storage/'..'/'outside'),
++               ('output_dir',self.storage/'..'/'config.json'/'new'),
++               ('output_dir',self.storage/'..'/run.ROOT.relative_to('/')/'new'),
++               ('source_root',self.storage/'..'/'data'),
++               ('checkpoint_path',self.storage/'..'/'random.pt')]
++        for key,path in cases:
++            with self.subTest(key=key,path=str(path)):
++                r=copy.deepcopy(self.receipt);r[key]=str(path)
++                with patch.object(run,'load_model',side_effect=AssertionError('asset load')),patch.object(reg.Reader,'data',side_effect=AssertionError('asset read')):
++                    with self.assertRaises(ValueError):run.preflight(r)
++                self.assertFalse((self.data/'new').exists());self.assertFalse((self.storage/'run').exists())
++    def test_SP1_storage_and_metadata_noncanonical(self):
++        c=dict(self.config,storage_root=str(self.storage/'..'/'output'));p=Path(self.receipt['config']['path']);p.write_text(json.dumps(c))
++        r=copy.deepcopy(self.receipt);r['config']['sha256']=reg.digest(p.read_bytes());r['execution_layer_review']['config_sha256']=r['config']['sha256']
++        with self.assertRaises(ValueError):run.preflight(r)
++        r=copy.deepcopy(self.receipt);r['manifest']['path']=str(self.storage/'..'/'manifest.json')
++        with self.assertRaises(ValueError):run.preflight(r)
++    def test_SP1_output_constructor_and_parent_validation(self):
++        with self.assertRaises(ValueError):run.BudgetOutput(self.storage/'..'/'data'/'new',{},1000000)
++        link=self.storage/'link';link.symlink_to(self.data,target_is_directory=True)
++        r=copy.deepcopy(self.receipt);r['output_dir']=str(link/'new')
++        with self.assertRaises(ValueError):run.preflight(r)
++        r['output_dir']=str(self.storage/'missing'/'new')
++        with self.assertRaises((ValueError,FileNotFoundError)):run.preflight(r)
++        self.assertFalse((self.data/'new').exists())
++    def test_SP2_first_error_survives_evidence_failure(self):
++        out=self.output();attempts=[]
++        def evidence(name,value):attempts.append((name,value));raise OSError('synthetic evidence failure')
++        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)) as cleanup,patch.object(out,'evidence',side_effect=evidence),patch('sys.stderr',new=io.StringIO()) as stderr:
++            with self.assertRaisesRegex(RuntimeError,'source worker nonzero exit 3'):run.supervise_one(lambda:self.fixture_process(3),self.config,out)
++        self.assertEqual(cleanup.call_count,1);self.assertIn('supervisor.json',[n for n,v in attempts]);self.assertFalse(attempts[-1][1]['retry']);self.assertIn('synthetic evidence failure',stderr.getvalue())
++    def test_SP2_start_timeout_cleanup_and_evidence_failures(self):
++        for kind in ('start','timeout','cleanup','evidence_only'):
++            with self.subTest(kind=kind):
++                out=run.BudgetOutput(self.storage/kind,{},1000000);attempts=[];p=self.fixture_process()
++                start=Mock(side_effect=LookupError('first start')) if kind=='start' else Mock(return_value=p)
++                cleanup=Mock(side_effect=ArithmeticError('first cleanup')) if kind=='cleanup' else Mock(side_effect=lambda r:r.update(cleaned=True))
++                def evidence(name,value):attempts.append((name,value));raise OSError('first evidence')
++                expected={'start':LookupError,'timeout':TimeoutError,'cleanup':ArithmeticError,'evidence_only':OSError}[kind]
++                with patch.object(run,'cleanup_owned',cleanup),patch.object(out,'evidence',side_effect=evidence),patch('sys.stderr',new=io.StringIO()),patch.object(run.time,'monotonic',side_effect=[0]+[2 if kind=='timeout' else 0]*100):
++                    with self.assertRaises(expected):run.supervise_one(start,dict(wall_seconds=1,output_bytes=1000000),out)
++                self.assertEqual(start.call_count,1);self.assertEqual(cleanup.call_count,int(kind!='start'));self.assertIn('supervisor.json',[n for n,v in attempts]);summary=next(v for n,v in attempts if n=='supervisor.json');self.assertEqual(summary['complete'],kind=='evidence_only');self.assertFalse(summary['retry']);self.assertIn('supervisor.first_error.json',[n for n,v in attempts]);self.assertEqual(len(attempts),len({n for n,v in attempts}))
++    def test_SP3_already_exited_child_over_tree_cap(self):
++        out=self.output();(out.path/'worker.log').write_bytes(b'x'*220000)
++        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)):
++            with self.assertRaisesRegex(ValueError,'output cap'):run.supervise_one(lambda:self.fixture_process(),dict(wall_seconds=30,output_bytes=200000),out)
++        self.assertFalse(json.loads((out.path/'supervisor.json').read_text())['complete'])
++    def test_SP3_terminal_wall_boundary(self):
++        for elapsed in (1,2):
++            out=run.BudgetOutput(self.storage/str(elapsed),{},1000000)
++            with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)),patch.object(run.time,'monotonic',side_effect=[0]+[elapsed]*100):
++                with self.assertRaises(TimeoutError):run.supervise_one(lambda:self.fixture_process(),dict(wall_seconds=1,output_bytes=1000000),out)
++            self.assertFalse(json.loads((out.path/'supervisor.json').read_text())['complete'])
++    def test_SP3_growth_at_exit_includes_nested_records(self):
++        out=self.output();p=self.fixture_process();calls=[]
++        def poll():
++            calls.append(1)
++            if len(calls)==1:return None
++            (out.path/'worker').mkdir();(out.path/'worker'/'diagnostics.bin').write_bytes(b'x'*220000);return 0
++        p.poll=poll
++        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)),patch.object(run.time,'sleep'):
++            with self.assertRaisesRegex(ValueError,'output cap'):run.supervise_one(lambda:p,dict(wall_seconds=30,output_bytes=200000),out)
++        self.assertEqual(len(calls),2)
++    def test_SP3_global_terminal_reserve_and_evidence_budget(self):
++        out=run.BudgetOutput(self.storage/'reserve',{},200000);(out.path/'worker.log').write_bytes(b'x'*110000)
++        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)):
++            with self.assertRaisesRegex(ValueError,'output cap'):run.supervise_one(lambda:self.fixture_process(),dict(wall_seconds=30,output_bytes=200000),out)
++        self.assertFalse(json.loads((out.path/'supervisor.json').read_text())['complete'])
++        (out.path/'worker.log').write_bytes(b'x'*200000)
++        with self.assertRaisesRegex(ValueError,'cap'):out.evidence('late.json',{})
++        self.assertFalse((out.path/'late.json').exists())
++    def test_SP3_worker_first_error_preserved_with_terminal_audit_failure(self):
++        out=self.output();(out.path/'worker.log').write_bytes(b'x'*220000)
++        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)):
++            with self.assertRaisesRegex(RuntimeError,'nonzero exit 3'):run.supervise_one(lambda:self.fixture_process(3),dict(wall_seconds=30,output_bytes=200000),out)
++        self.assertIn('output cap',(out.path/'supervisor.resource_error.json').read_text())
++    def test_SP3_main_completion_resource_audit(self):
++        out=self.output();worker=out.path/'worker';worker.mkdir();(worker/'execution.json').write_text(json.dumps(dict(status='SOURCE_PREP_COMPLETE_PENDING_REVIEW',source_after_check='UNCHANGED')))
++        (out.path/'worker.log').write_bytes(b'x'*220000)
++        with self.assertRaisesRegex(ValueError,'output cap'):run.publish_completion(out,dict(wall_seconds=30,output_bytes=200000),run.time.monotonic())
++        self.assertFalse((out.path/'completion.json').exists())
++
++    def test_SP2_summary_failure_records_failure_without_retry(self):
++        out=self.output();original=out.evidence;attempts=[]
++        def evidence(name,value):
++            attempts.append(name)
++            if name=='supervisor.json':raise OSError('summary storage fault')
++            return original(name,value)
++        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)),patch.object(out,'evidence',side_effect=evidence),patch('sys.stderr',new=io.StringIO()):
++            with self.assertRaisesRegex(OSError,'summary storage fault'):run.supervise_one(lambda:self.fixture_process(),self.config,out)
++        self.assertIn('summary storage fault',(out.path/'supervisor.first_error.json').read_text());self.assertTrue((out.path/'supervisor.evidence_errors.json').exists());self.assertEqual(len(attempts),len(set(attempts)))
++    def test_SP3_terminal_audit_exception_preserves_worker_error(self):
++        out=self.output();original=run.tree_bytes
++        def size(path):
++            if (out.path/'process.json').exists():raise OSError('audit IO failure')
++            return original(path)
++        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)),patch.object(run,'tree_bytes',side_effect=size),patch('sys.stderr',new=io.StringIO()) as stderr:
++            with self.assertRaisesRegex(RuntimeError,'nonzero exit 3'):run.supervise_one(lambda:self.fixture_process(3),self.config,out)
++        self.assertIn('audit IO failure',stderr.getvalue())
++    def test_SP3_completion_counts_terminal_write_time_and_bytes(self):
++        for kind in ('time','bytes','success'):
++            out=run.BudgetOutput(self.storage/kind,{},1000000);worker=out.path/'worker';worker.mkdir();(worker/'execution.json').write_text(json.dumps(dict(status='SOURCE_PREP_COMPLETE_PENDING_REVIEW',source_after_check='UNCHANGED')))
++            original=out.evidence;clock=[0]
++            def evidence(name,value):
++                original(name,value)
++                if kind=='time':clock[0]=1
++                elif kind=='bytes':(out.path/'worker.log').write_bytes(b'x'*1000000)
++            with patch.object(out,'evidence',side_effect=evidence),patch.object(run.time,'monotonic',side_effect=lambda:clock[0]):
++                if kind=='success':run.publish_completion(out,dict(wall_seconds=1,output_bytes=1000000),0)
++                else:
++                    with self.assertRaises((ValueError,TimeoutError)):run.publish_completion(out,dict(wall_seconds=1,output_bytes=1000000),0)
++            self.assertEqual((out.path/'completion.json').exists(),kind=='success');self.assertEqual((out.path/'completion.pending.json').exists(),kind!='success')
++
++    def test_cleanup_EPERM_requires_bounded_reap_and_absent_group(self):
++        for state in ('reaped','alive','group_present'):
++            with self.subTest(state=state):
++                first=PermissionError('signal zero denied');p=self.fixture_process();p.wait=Mock(side_effect=subprocess.TimeoutExpired('owned child',.5)) if state=='alive' else Mock(return_value=0);record=dict(process=p)
++                with patch.object(run,'stop_owned',side_effect=first),patch.object(run.sys,'platform','darwin'),patch.object(run.subprocess,'check_output',return_value=str(p.pid) if state=='group_present' else '1\n2\n'):
++                    if state=='reaped':run.cleanup_owned(record);self.assertTrue(record['cleaned'])
++                    else:
++                        with self.assertRaises(PermissionError) as raised:run.cleanup_owned(record)
++                        self.assertIs(raised.exception,first);self.assertNotIn('cleaned',record)
++                p.wait.assert_called_once_with(timeout=.5)

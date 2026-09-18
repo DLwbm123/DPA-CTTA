@@ -1,0 +1,112 @@
+test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) ... 
+  test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='output_dir', path='<TEMP>/output/../data/new') ... FAIL
+  test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='output_dir', path='<TEMP>/output/../outside') ... FAIL
+  test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='output_dir', path='<TEMP>/output/../config.json/new') ... FAIL
+  test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='output_dir', path='<TEMP>/output/..<CHECKOUT>/new') ... FAIL
+  test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='source_root', path='<TEMP>/output/../data') ... FAIL
+  test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='checkpoint_path', path='<TEMP>/output/../random.pt') ... FAIL
+test_SP2_first_error_survives_evidence_failure (test_source_prep.PreparationTests.test_SP2_first_error_survives_evidence_failure) ... ERROR
+test_SP3_already_exited_child_over_tree_cap (test_source_prep.PreparationTests.test_SP3_already_exited_child_over_tree_cap) ... FAIL
+test_SP3_terminal_wall_boundary (test_source_prep.PreparationTests.test_SP3_terminal_wall_boundary) ... FAIL
+
+======================================================================
+ERROR: test_SP2_first_error_survives_evidence_failure (test_source_prep.PreparationTests.test_SP2_first_error_survives_evidence_failure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 181, in test_SP2_first_error_survives_evidence_failure
+    with self.assertRaisesRegex(RuntimeError,'source worker nonzero exit 3'):run.supervise_one(lambda:self.fixture_process(3),self.config,out)
+                                                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CHECKOUT>/src/dpa_ctta/r7_source_prep/runner.py", line 222, in supervise_one
+    if first:out.evidence('supervisor.first_error.json',dict(type=type(first).__name__,message=str(first)[:3000]))
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda3/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda3/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/miniconda3/lib/python3.12/unittest/mock.py", line 1204, in _execute_mock_call
+    result = effect(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 179, in evidence
+    def evidence(name,value):attempts.append((name,value));raise OSError('synthetic evidence failure')
+                                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+OSError: synthetic evidence failure
+
+======================================================================
+FAIL: test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='output_dir', path='<TEMP>/output/../data/new')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 161, in test_SP1_noncanonical_paths_reject_before_assets_or_output
+    with self.assertRaises(ValueError):run.preflight(r)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='output_dir', path='<TEMP>/output/../outside')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 161, in test_SP1_noncanonical_paths_reject_before_assets_or_output
+    with self.assertRaises(ValueError):run.preflight(r)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='output_dir', path='<TEMP>/output/../config.json/new')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 161, in test_SP1_noncanonical_paths_reject_before_assets_or_output
+    with self.assertRaises(ValueError):run.preflight(r)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='output_dir', path='<TEMP>/output/..<CHECKOUT>/new')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 161, in test_SP1_noncanonical_paths_reject_before_assets_or_output
+    with self.assertRaises(ValueError):run.preflight(r)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='source_root', path='<TEMP>/output/../data')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 161, in test_SP1_noncanonical_paths_reject_before_assets_or_output
+    with self.assertRaises(ValueError):run.preflight(r)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests.test_SP1_noncanonical_paths_reject_before_assets_or_output) (key='checkpoint_path', path='<TEMP>/output/../random.pt')
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 161, in test_SP1_noncanonical_paths_reject_before_assets_or_output
+    with self.assertRaises(ValueError):run.preflight(r)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_SP3_already_exited_child_over_tree_cap (test_source_prep.PreparationTests.test_SP3_already_exited_child_over_tree_cap)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 197, in test_SP3_already_exited_child_over_tree_cap
+    with self.assertRaisesRegex(ValueError,'output cap'):run.supervise_one(lambda:self.fixture_process(),dict(wall_seconds=30,output_bytes=200000),out)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_SP3_terminal_wall_boundary (test_source_prep.PreparationTests.test_SP3_terminal_wall_boundary)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<CHECKOUT>/tests/r7/test_source_prep.py", line 203, in test_SP3_terminal_wall_boundary
+    with self.assertRaises(TimeoutError):run.supervise_one(lambda:self.fixture_process(),dict(wall_seconds=1,output_bytes=1000000),out)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: TimeoutError not raised
+
+----------------------------------------------------------------------
+Ran 4 tests in 0.102s
+
+FAILED (failures=8, errors=1)
+BEFORE_FIX_RESULT {"production_sha": "9fa2ce37149909687ef5be2e08aa2b32a5887903", "base_publication_sha": "ad95f212b8770e5006e0b1ea3520717767c7413f", "tests": 4, "failures": 8, "errors": 1, "skipped": 0, "wall_seconds": 0.10180595889687538, "model_forwards": 0, "real_asset_reads": 0, "GPU_queries": 0, "exit_code": 1}

@@ -1,0 +1,13 @@
+# Unchanged scientific budget; repaired execution boundaries
+
+Reference [prior proposed cost/resources](../r7_source_prep/PROPOSED_COST_AND_RESOURCES.json) and [source binding](../r7_source_prep/SOURCE_BINDING.json). Both original files are unchanged. Defaults and authorization templates remain disabled and CPU-only; this turn generates no real authorization receipt.
+
+Frozen111/23/25 arithmetic: 135328 backbone forwards; 9072 source backwards +1536 calibration backwards; 3072 oracle Adam +1536 calibration Adam; 6000 AdamW; 1024 VJP. FULL/STATIC remain independent with matched full budgets. Resource failure stops rather than truncating an algorithm phase or selecting a shorter/better run. These are proposed real-run counts, not actual calls this turn and not a measured ETA. The72-hour CPU wall proposal and512MiB output cap are unchanged.
+
+Parent failure precedence is earliest execution/start/poll failure, then cleanup failure if none existed, then terminal resource failure if none existed, then evidence failure if none existed. Secondary failures get distinct records. Cleanup always precedes disk evidence; evidence errors cannot skip later attempts, replace a prior exception, or authorize retry. Completion audit failures preserve pending/failed evidence and cannot publish completion.json. A supervisor complete=true record alone is insufficient: successful source completion additionally requires the audited completion publication and a zero parent exit.
+
+The temporal cap includes start, child execution, cleanup and terminal completion writes from the supervisor start timestamp. Preflight remains metadata-only; this cap is not claimed to measure Python import or preflight time. Size accounting is actual ordinary-file bytes across the full output tree, including worker.log, parent metadata, child artifacts/diagnostics and terminal evidence. Six16KiB global terminal slots are held after cleanup. Bytes already over limit are preserved; failure evidence may fall back to bounded stderr.
+
+Source binding remains PENDING. Patient/eye linkage and pretraining membership remain UNKNOWN; CONTENT grouping does not establish patient independence. No source RGB/mask hashing/decoding or checkpoint byte loading was performed in this repair. Historical checkpoint hash metadata is not a new current-byte audit. Effective tensor/trained artifact digests remain null until future properly authorized execution produces them.
+
+Stage I PASS remains the supplied historical scope. The old execution-layer NEEDS_FIX is retained; new external execution-layer rereview is NOT_RUN. SOURCE_PREP and every target stage remain NOT_RUN. No GPU query/smoke, background model task, source fitting or target execution; no automatic continuation.
