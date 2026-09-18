@@ -5,6 +5,7 @@ No directory discovery, target loading, or checkpoint loading on import/audit.
 import copy,hashlib,io,json,os,re,stat
 from pathlib import Path
 from ..r7_shared.context import json_digest
+from ..r7_shared.io import checked_path
 from ..r7_shared.source import split,SourceData,Record
 from ..r1.plan import registration_digest
 
@@ -17,7 +18,7 @@ def sha(value):
     return value
 
 def ordinary(path):
-    p=Path(path).absolute()
+    p=checked_path(path)
     if any(x.is_symlink() for x in (p,*p.parents)):raise ValueError('source symlink path')
     s=p.stat()
     if not stat.S_ISREG(s.st_mode) or s.st_nlink!=1:raise ValueError('ordinary unlinked source file required')

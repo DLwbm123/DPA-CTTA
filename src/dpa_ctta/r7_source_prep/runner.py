@@ -1,5 +1,5 @@
 """Finite, separately authorized SOURCE_PREP only. No target dispatch or GPU route."""
-import copy,io,json,os,signal,subprocess,sys,time
+import copy,io,json,os,signal,stat,subprocess,sys,time
 from collections import Counter
 from pathlib import Path
 import torch
@@ -8,7 +8,7 @@ from ..r7_shared.context import SCIENCE,provenance,HASH_COST
 from ..r7_shared.numerics import COUNTS
 from ..r7_shared.network import Segmenter
 from ..r7_shared.preparation import prepare_tensors,inference_from_tensors
-from ..r7_shared.io import Output
+from ..r7_shared.io import Output,checked_path
 from ..r1.supervise import stop_owned
 
 ROOT=Path(__file__).resolve().parents[3]
@@ -43,15 +43,16 @@ def preflight(receipt):
     if config.get('enabled') is not True or config.get('scope')!='SOURCE_PREP':raise PermissionError('source resource configuration disabled')
     device_policy(config)
     if config.get('resource_authorization')!={'scope':'SOURCE_PREP','receipt_id':auth['receipt_id']}:raise PermissionError('resource authorization is not this user receipt')
+    out=checked_path(receipt['output_dir']);root=checked_path(receipt['source_root']);storage=checked_path(config['storage_root'])
+    if not root.is_dir() or not storage.is_dir():raise ValueError('existing source/storage directories required')
+    if out.exists() or not out.is_relative_to(storage):raise ValueError('fresh approved storage required')
+    protected=[root,checked_path(receipt['checkpoint_path']),checked_path(ROOT),*[checked_path(receipt[k]['path']) for k in ('manifest','split','target','config')]]
+    for path in protected:
+        if out==path or out in path.parents or path in out.parents:raise ValueError('source/code/metadata output overlap')
     documents={k:json.loads(verified(receipt[k]['path'],receipt[k]['sha256'],32*1024**2)) for k in ('manifest','split','target')}
     manifest,frozen,target=(documents[k] for k in ('manifest','split','target'));info=audit(manifest,frozen,target)
     if receipt.get('source_binding_status')!='BOUND' or review.get('checkpoint_sha256')!=manifest['checkpoint']['sha256']:raise ValueError('source file bindings pending')
     if info['groups']*5*512*512*4>config['max_decoded_bytes']:raise ValueError('decoded source memory cap; no subsampling')
-    out=Path(receipt['output_dir']).absolute();root=Path(receipt['source_root']).absolute();storage=Path(config['storage_root']).absolute()
-    if out.exists() or out.is_symlink() or not out.is_relative_to(storage):raise ValueError('fresh approved storage required')
-    if any(x.is_symlink() for x in [out.parent,*out.parents,root,*root.parents]):raise ValueError('symlink storage/source root')
-    for protected in [root,Path(receipt['checkpoint_path']).absolute(),ROOT,*[Path(receipt[k]['path']).absolute() for k in ('manifest','split','target','config')]]:
-        if out==protected or out in protected.parents or protected in out.parents:raise ValueError('source/code/metadata output overlap')
     return dict(receipt=copy.deepcopy(receipt),config=config,manifest=manifest,split=frozen,target=target,audit=info)
 
 def expected_counts(folds):
@@ -90,11 +91,28 @@ class Meter:
         done={r['phase'] for r in self.records if r['completed']}
         if not set(self.expected)<=done:raise ValueError('missing mandatory source phases')
 
+# Parent first/cleanup/resource/evidence errors, supervisor and completion: six
+# bounded 16 KiB records reserved globally after the child has been reaped.
+TERMINAL_RESERVE=6*16384
+
+def tree_bytes(path):
+    total=0
+    for p in Path(path).rglob('*'):
+        info=p.lstat()
+        if stat.S_ISDIR(info.st_mode):continue
+        if not stat.S_ISREG(info.st_mode) or info.st_nlink!=1:raise ValueError('nonordinary output tree entry')
+        total+=info.st_size
+    return total
+
+def resource_check(out,caps,started,reserve=TERMINAL_RESERVE):
+    if time.monotonic()-started>=caps['wall_seconds']:raise TimeoutError('source worker wall cap')
+    if tree_bytes(out.path)+reserve>caps['output_bytes']:raise ValueError('source worker output cap; terminal reserve required')
+
 class BudgetOutput(Output):
     def __init__(self,path,binding,limit):self.limit=limit;self.used=0;super().__init__(path,binding)
     def bytes(self,name,data):
         if Path(name).name!=name or name in ('.','..'):raise ValueError('output path')
-        if self.used+len(data)>self.limit-65536:raise ValueError('output cap; evidence reserve retained')
+        if tree_bytes(self.path)+len(data)>self.limit-65536:raise ValueError('output cap; evidence reserve retained')
         if name!='owner.json' and json.loads((self.path/'owner.json').read_text())!=dict(owner=self.owner,binding=self.binding):raise ValueError('output ownership')
         with (self.path/name).open('xb') as f:f.write(data);f.flush();os.fsync(f.fileno())
         self.used+=len(data)
@@ -104,7 +122,7 @@ class BudgetOutput(Output):
         if json.loads((self.path/'owner.json').read_text())!=dict(owner=self.owner,binding=self.binding):raise ValueError('evidence output ownership')
         # Small reserved terminal evidence; never overwrite a first failure.
         raw=(json.dumps(value,indent=2,allow_nan=False)+'\n').encode()
-        if len(raw)>16384 or self.used+len(raw)>self.limit:raise ValueError('failure evidence cap')
+        if len(raw)>16384 or tree_bytes(self.path)+len(raw)>self.limit:raise ValueError('failure evidence cap')
         with (self.path/name).open('xb') as f:f.write(raw)
         self.used+=len(raw)
 
@@ -187,26 +205,39 @@ def execute(approved,out):
 
 def cleanup_owned(record):
     try:stop_owned(record)
-    except PermissionError:
+    except PermissionError as first:
         # macOS may return EPERM for signal-0 after a group exited. Accept only
         # a reaped child AND an independent process-table proof of absent PGID.
         p=record['process']
-        if sys.platform!='darwin' or p.poll() is None:raise
+        if sys.platform!='darwin':raise
+        # SIGTERM may have succeeded just before signal-0 raised EPERM. Wait
+        # once for this owned child, without another signal or a process retry.
+        try:p.wait(timeout=.5)
+        except subprocess.TimeoutExpired:raise first
         rows=subprocess.check_output(['ps','-A','-o','pgid='],text=True)
         if p.pid in {int(x.strip()) for x in rows.splitlines() if x.strip()}:raise
         record.update(cleaned=True,cleanup_probe='reaped_and_ps_group_absent_after_EPERM')
 
 def supervise_one(start,caps,out):
-    """One owned CPU child; no smoke, retry or next-stage dispatch."""
-    record=None;started=time.monotonic();handlers={};first=None;cleanup_error=None
+    """One owned CPU child; preserve execution, cleanup and persistence failures."""
+    record=None;started=time.monotonic();handlers={};first=None;cleanup_error=None;resource_error=None;evidence_errors=[];attempted=set()
+    def error(exc):return dict(type=type(exc).__name__,message=str(exc)[:3000])
+    def persist(name,value):
+        nonlocal first
+        attempted.add(name)
+        try:out.evidence(name,value)
+        except BaseException as exc:
+            evidence_errors.append(dict(file=name,error=error(exc)))
+            if first is None:first=exc
+            # No disk retry; even a broken stderr cannot replace the first error.
+            try:print('SOURCE_PREP_EVIDENCE_WRITE_ERROR '+json.dumps(dict(file=name,error=error(exc),original_first_error=error(first))),file=sys.stderr,flush=True)
+            except BaseException:pass
     def interrupted(signum,frame):raise InterruptedError('source supervisor signal '+str(signum))
     try:
         for sig in (signal.SIGTERM,signal.SIGINT):handlers[sig]=signal.signal(sig,interrupted)
         process=start();record=dict(process=process);out.write('process.json',dict(pid=process.pid,pgid=process.pid))
         while process.poll() is None:
-            if time.monotonic()-started>=caps['wall_seconds']:raise TimeoutError('source worker wall cap')
-            size=sum(p.stat().st_size for p in out.path.rglob('*') if p.is_file())
-            if size>caps['output_bytes']:raise ValueError('source worker output cap')
+            resource_check(out,caps,started)
             time.sleep(.1)
         if process.returncode:raise RuntimeError('source worker nonzero exit '+str(process.returncode))
     except BaseException as exc:first=exc
@@ -219,10 +250,42 @@ def supervise_one(start,caps,out):
             if first is None:first=exc
         finally:
             for sig,old in handlers.items():signal.signal(sig,old)
-        if first:out.evidence('supervisor.first_error.json',dict(type=type(first).__name__,message=str(first)[:3000]))
-        if cleanup_error:out.evidence('supervisor.cleanup_error.json',dict(type=type(cleanup_error).__name__,message=str(cleanup_error)[:3000]))
-        out.evidence('supervisor.json',dict(cleanup_probe=None if record is None else record.get('cleanup_probe','legacy_stop_owned'),exit_code=None if record is None else record['process'].returncode,wall_seconds=time.monotonic()-started,complete=first is None,cleaned=record is not None and record.get('cleaned',False),retry=False))
+        # Always audit after exit/cleanup, including nonzero and already-exited
+        # children. A resource error never erases an earlier execution failure.
+        try:resource_check(out,caps,started)
+        except BaseException as exc:
+            resource_error=exc
+            if first is None:first=exc
+        if first:persist('supervisor.first_error.json',error(first))
+        if cleanup_error:persist('supervisor.cleanup_error.json',error(cleanup_error))
+        if resource_error:persist('supervisor.resource_error.json',error(resource_error))
+        if evidence_errors:persist('supervisor.evidence_errors.json',dict(errors=list(evidence_errors)))
+        persist('supervisor.json',dict(cleanup_probe=None if record is None else record.get('cleanup_probe','legacy_stop_owned'),exit_code=None if record is None else record['process'].returncode,wall_seconds=time.monotonic()-started,complete=first is None,cleaned=record is not None and record.get('cleaned',False),retry=False))
+        # A failure of the last summary is itself a first failure. Attempt the
+        # still-unwritten error records once; never retry or overwrite a file.
+        if first and 'supervisor.first_error.json' not in attempted:persist('supervisor.first_error.json',error(first))
+        if evidence_errors and 'supervisor.evidence_errors.json' not in attempted:persist('supervisor.evidence_errors.json',dict(errors=list(evidence_errors)))
     if first:raise first
+    return started
+
+def publish_completion(out,caps,started):
+    # No success publication until parent/child/log bytes and terminal writes
+    # have been counted. Failed pending evidence remains, never relabeled PASS.
+    try:
+        resource_check(out,caps,started,reserve=16384)
+        completion=json.loads((out.path/'worker/execution.json').read_text())
+        if completion['status']!='SOURCE_PREP_COMPLETE_PENDING_REVIEW' or completion['source_after_check']!='UNCHANGED':raise ValueError('worker execution completion absent or invalid')
+        out.evidence('completion.pending.json',dict(status='SOURCE_PREP_COMPLETE_PENDING_REVIEW',execution=completion,other_scopes_authorized=False))
+        resource_check(out,caps,started,reserve=0)
+        if (out.path/'completion.json').exists():raise FileExistsError('completion already published')
+        (out.path/'completion.pending.json').rename(out.path/'completion.json')
+    except BaseException as first:
+        failure=dict(type=type(first).__name__,message=str(first)[:3000],complete=False,retry=False)
+        try:out.evidence('completion.error.json',failure)
+        except BaseException as exc:
+            try:print('SOURCE_PREP_COMPLETION_WRITE_ERROR '+json.dumps(dict(first=failure,evidence_error=str(exc)[:3000])),file=sys.stderr,flush=True)
+            except BaseException:pass
+        raise
 
 def main():
     # No receipt means disabled before any real source metadata/asset or device.
@@ -239,10 +302,8 @@ def main():
     out.write('child.receipt.json',child_receipt);env['SOURCE_PREP_RECEIPT']=str(out.path/'child.receipt.json')
     def start():
         with (out.path/'worker.log').open('xb') as log:return subprocess.Popen([sys.executable,'-c',ENTRY],cwd=ROOT,env=env,stdin=subprocess.DEVNULL,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
-    supervise_one(start,cfg,out)
-    completion=json.loads((out.path/'worker/execution.json').read_text())
-    if completion['status']!='SOURCE_PREP_COMPLETE_PENDING_REVIEW' or completion['source_after_check']!='UNCHANGED':raise ValueError('worker execution completion absent or invalid')
-    out.evidence('completion.json',dict(status='SOURCE_PREP_COMPLETE_PENDING_REVIEW',execution=completion,other_scopes_authorized=False))
+    started=supervise_one(start,cfg,out)
+    publish_completion(out,cfg,started)
 
 def child_entry():
     r=json.loads(Path(os.environ['SOURCE_PREP_RECEIPT']).read_bytes());approved=preflight(r);torch.set_num_threads(2);torch.set_default_dtype(torch.float32)

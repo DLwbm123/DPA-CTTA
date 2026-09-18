@@ -2,7 +2,8 @@
 import copy,io,json,os,subprocess,sys,tempfile,unittest
 from collections import Counter
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import patch, Mock
+from types import SimpleNamespace
 import numpy as np
 import torch
 from PIL import Image
@@ -139,7 +140,135 @@ class PreparationTests(unittest.TestCase):
             if i:
                 with self.assertRaises((RuntimeError,TimeoutError)):run.supervise_one(start,dict(wall_seconds=.2,output_bytes=1000000),out)
             else:run.supervise_one(start,dict(wall_seconds=3,output_bytes=1000000),out)
-            self.assertIsNotNone(processes[0].poll());self.assertTrue(json.loads((out.path/'supervisor.json').read_text())['cleaned'])
+            self.assertIsNotNone(processes[0].poll());self.assertTrue(json.loads((out.path/'supervisor.json').read_text())['cleaned'],{p.name:p.read_text() for p in out.path.glob('supervisor*.json')})
     def test_default_entry_refuses_without_receipt(self):
         with patch.dict(os.environ,{},clear=True),patch.object(run,'preflight',side_effect=AssertionError('no preflight without receipt')):
             with self.assertRaises(PermissionError):run.main()
+
+    def fixture_process(self,code=0):
+        return SimpleNamespace(pid=123456789,returncode=code,poll=lambda:code)
+    def test_SP1_noncanonical_paths_reject_before_assets_or_output(self):
+        cases=[('output_dir',self.storage/'..'/'data'/'new'),
+               ('output_dir',self.storage/'..'/'outside'),
+               ('output_dir',self.storage/'..'/'config.json'/'new'),
+               ('output_dir',self.storage/'..'/run.ROOT.relative_to('/')/'new'),
+               ('source_root',self.storage/'..'/'data'),
+               ('checkpoint_path',self.storage/'..'/'random.pt')]
+        for key,path in cases:
+            with self.subTest(key=key,path=str(path)):
+                r=copy.deepcopy(self.receipt);r[key]=str(path)
+                with patch.object(run,'load_model',side_effect=AssertionError('asset load')),patch.object(reg.Reader,'data',side_effect=AssertionError('asset read')):
+                    with self.assertRaises(ValueError):run.preflight(r)
+                self.assertFalse((self.data/'new').exists());self.assertFalse((self.storage/'run').exists())
+    def test_SP1_storage_and_metadata_noncanonical(self):
+        c=dict(self.config,storage_root=str(self.storage/'..'/'output'));p=Path(self.receipt['config']['path']);p.write_text(json.dumps(c))
+        r=copy.deepcopy(self.receipt);r['config']['sha256']=reg.digest(p.read_bytes());r['execution_layer_review']['config_sha256']=r['config']['sha256']
+        with self.assertRaises(ValueError):run.preflight(r)
+        r=copy.deepcopy(self.receipt);r['manifest']['path']=str(self.storage/'..'/'manifest.json')
+        with self.assertRaises(ValueError):run.preflight(r)
+    def test_SP1_output_constructor_and_parent_validation(self):
+        with self.assertRaises(ValueError):run.BudgetOutput(self.storage/'..'/'data'/'new',{},1000000)
+        link=self.storage/'link';link.symlink_to(self.data,target_is_directory=True)
+        r=copy.deepcopy(self.receipt);r['output_dir']=str(link/'new')
+        with self.assertRaises(ValueError):run.preflight(r)
+        r['output_dir']=str(self.storage/'missing'/'new')
+        with self.assertRaises((ValueError,FileNotFoundError)):run.preflight(r)
+        self.assertFalse((self.data/'new').exists())
+    def test_SP2_first_error_survives_evidence_failure(self):
+        out=self.output();attempts=[]
+        def evidence(name,value):attempts.append((name,value));raise OSError('synthetic evidence failure')
+        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)) as cleanup,patch.object(out,'evidence',side_effect=evidence),patch('sys.stderr',new=io.StringIO()) as stderr:
+            with self.assertRaisesRegex(RuntimeError,'source worker nonzero exit 3'):run.supervise_one(lambda:self.fixture_process(3),self.config,out)
+        self.assertEqual(cleanup.call_count,1);self.assertIn('supervisor.json',[n for n,v in attempts]);self.assertFalse(attempts[-1][1]['retry']);self.assertIn('synthetic evidence failure',stderr.getvalue())
+    def test_SP2_start_timeout_cleanup_and_evidence_failures(self):
+        for kind in ('start','timeout','cleanup','evidence_only'):
+            with self.subTest(kind=kind):
+                out=run.BudgetOutput(self.storage/kind,{},1000000);attempts=[];p=self.fixture_process()
+                start=Mock(side_effect=LookupError('first start')) if kind=='start' else Mock(return_value=p)
+                cleanup=Mock(side_effect=ArithmeticError('first cleanup')) if kind=='cleanup' else Mock(side_effect=lambda r:r.update(cleaned=True))
+                def evidence(name,value):attempts.append((name,value));raise OSError('first evidence')
+                expected={'start':LookupError,'timeout':TimeoutError,'cleanup':ArithmeticError,'evidence_only':OSError}[kind]
+                with patch.object(run,'cleanup_owned',cleanup),patch.object(out,'evidence',side_effect=evidence),patch('sys.stderr',new=io.StringIO()),patch.object(run.time,'monotonic',side_effect=[0]+[2 if kind=='timeout' else 0]*100):
+                    with self.assertRaises(expected):run.supervise_one(start,dict(wall_seconds=1,output_bytes=1000000),out)
+                self.assertEqual(start.call_count,1);self.assertEqual(cleanup.call_count,int(kind!='start'));self.assertIn('supervisor.json',[n for n,v in attempts]);summary=next(v for n,v in attempts if n=='supervisor.json');self.assertEqual(summary['complete'],kind=='evidence_only');self.assertFalse(summary['retry']);self.assertIn('supervisor.first_error.json',[n for n,v in attempts]);self.assertEqual(len(attempts),len({n for n,v in attempts}))
+    def test_SP3_already_exited_child_over_tree_cap(self):
+        out=self.output();(out.path/'worker.log').write_bytes(b'x'*220000)
+        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)):
+            with self.assertRaisesRegex(ValueError,'output cap'):run.supervise_one(lambda:self.fixture_process(),dict(wall_seconds=30,output_bytes=200000),out)
+        self.assertFalse(json.loads((out.path/'supervisor.json').read_text())['complete'])
+    def test_SP3_terminal_wall_boundary(self):
+        for elapsed in (1,2):
+            out=run.BudgetOutput(self.storage/str(elapsed),{},1000000)
+            with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)),patch.object(run.time,'monotonic',side_effect=[0]+[elapsed]*100):
+                with self.assertRaises(TimeoutError):run.supervise_one(lambda:self.fixture_process(),dict(wall_seconds=1,output_bytes=1000000),out)
+            self.assertFalse(json.loads((out.path/'supervisor.json').read_text())['complete'])
+    def test_SP3_growth_at_exit_includes_nested_records(self):
+        out=self.output();p=self.fixture_process();calls=[]
+        def poll():
+            calls.append(1)
+            if len(calls)==1:return None
+            (out.path/'worker').mkdir();(out.path/'worker'/'diagnostics.bin').write_bytes(b'x'*220000);return 0
+        p.poll=poll
+        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)),patch.object(run.time,'sleep'):
+            with self.assertRaisesRegex(ValueError,'output cap'):run.supervise_one(lambda:p,dict(wall_seconds=30,output_bytes=200000),out)
+        self.assertEqual(len(calls),2)
+    def test_SP3_global_terminal_reserve_and_evidence_budget(self):
+        out=run.BudgetOutput(self.storage/'reserve',{},200000);(out.path/'worker.log').write_bytes(b'x'*110000)
+        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)):
+            with self.assertRaisesRegex(ValueError,'output cap'):run.supervise_one(lambda:self.fixture_process(),dict(wall_seconds=30,output_bytes=200000),out)
+        self.assertFalse(json.loads((out.path/'supervisor.json').read_text())['complete'])
+        (out.path/'worker.log').write_bytes(b'x'*200000)
+        with self.assertRaisesRegex(ValueError,'cap'):out.evidence('late.json',{})
+        self.assertFalse((out.path/'late.json').exists())
+    def test_SP3_worker_first_error_preserved_with_terminal_audit_failure(self):
+        out=self.output();(out.path/'worker.log').write_bytes(b'x'*220000)
+        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)):
+            with self.assertRaisesRegex(RuntimeError,'nonzero exit 3'):run.supervise_one(lambda:self.fixture_process(3),dict(wall_seconds=30,output_bytes=200000),out)
+        self.assertIn('output cap',(out.path/'supervisor.resource_error.json').read_text())
+    def test_SP3_main_completion_resource_audit(self):
+        out=self.output();worker=out.path/'worker';worker.mkdir();(worker/'execution.json').write_text(json.dumps(dict(status='SOURCE_PREP_COMPLETE_PENDING_REVIEW',source_after_check='UNCHANGED')))
+        (out.path/'worker.log').write_bytes(b'x'*220000)
+        with self.assertRaisesRegex(ValueError,'output cap'):run.publish_completion(out,dict(wall_seconds=30,output_bytes=200000),run.time.monotonic())
+        self.assertFalse((out.path/'completion.json').exists())
+
+    def test_SP2_summary_failure_records_failure_without_retry(self):
+        out=self.output();original=out.evidence;attempts=[]
+        def evidence(name,value):
+            attempts.append(name)
+            if name=='supervisor.json':raise OSError('summary storage fault')
+            return original(name,value)
+        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)),patch.object(out,'evidence',side_effect=evidence),patch('sys.stderr',new=io.StringIO()):
+            with self.assertRaisesRegex(OSError,'summary storage fault'):run.supervise_one(lambda:self.fixture_process(),self.config,out)
+        self.assertIn('summary storage fault',(out.path/'supervisor.first_error.json').read_text());self.assertTrue((out.path/'supervisor.evidence_errors.json').exists());self.assertEqual(len(attempts),len(set(attempts)))
+    def test_SP3_terminal_audit_exception_preserves_worker_error(self):
+        out=self.output();original=run.tree_bytes
+        def size(path):
+            if (out.path/'process.json').exists():raise OSError('audit IO failure')
+            return original(path)
+        with patch.object(run,'cleanup_owned',side_effect=lambda r:r.update(cleaned=True)),patch.object(run,'tree_bytes',side_effect=size),patch('sys.stderr',new=io.StringIO()) as stderr:
+            with self.assertRaisesRegex(RuntimeError,'nonzero exit 3'):run.supervise_one(lambda:self.fixture_process(3),self.config,out)
+        self.assertIn('audit IO failure',stderr.getvalue())
+    def test_SP3_completion_counts_terminal_write_time_and_bytes(self):
+        for kind in ('time','bytes','success'):
+            out=run.BudgetOutput(self.storage/kind,{},1000000);worker=out.path/'worker';worker.mkdir();(worker/'execution.json').write_text(json.dumps(dict(status='SOURCE_PREP_COMPLETE_PENDING_REVIEW',source_after_check='UNCHANGED')))
+            original=out.evidence;clock=[0]
+            def evidence(name,value):
+                original(name,value)
+                if kind=='time':clock[0]=1
+                elif kind=='bytes':(out.path/'worker.log').write_bytes(b'x'*1000000)
+            with patch.object(out,'evidence',side_effect=evidence),patch.object(run.time,'monotonic',side_effect=lambda:clock[0]):
+                if kind=='success':run.publish_completion(out,dict(wall_seconds=1,output_bytes=1000000),0)
+                else:
+                    with self.assertRaises((ValueError,TimeoutError)):run.publish_completion(out,dict(wall_seconds=1,output_bytes=1000000),0)
+            self.assertEqual((out.path/'completion.json').exists(),kind=='success');self.assertEqual((out.path/'completion.pending.json').exists(),kind!='success')
+
+    def test_cleanup_EPERM_requires_bounded_reap_and_absent_group(self):
+        for state in ('reaped','alive','group_present'):
+            with self.subTest(state=state):
+                first=PermissionError('signal zero denied');p=self.fixture_process();p.wait=Mock(side_effect=subprocess.TimeoutExpired('owned child',.5)) if state=='alive' else Mock(return_value=0);record=dict(process=p)
+                with patch.object(run,'stop_owned',side_effect=first),patch.object(run.sys,'platform','darwin'),patch.object(run.subprocess,'check_output',return_value=str(p.pid) if state=='group_present' else '1\n2\n'):
+                    if state=='reaped':run.cleanup_owned(record);self.assertTrue(record['cleaned'])
+                    else:
+                        with self.assertRaises(PermissionError) as raised:run.cleanup_owned(record)
+                        self.assertIs(raised.exception,first);self.assertNotIn('cleaned',record)
+                p.wait.assert_called_once_with(timeout=.5)

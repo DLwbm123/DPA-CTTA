@@ -1,10 +1,21 @@
 """Fresh output ownership. Legacy aggregates use the reviewed pinned reader."""
-import json,os,time,uuid
+import json,os,stat,time,uuid
 from pathlib import Path
+
+def checked_path(path):
+    """Reject traversal/links before normalization; require real existing parents."""
+    p=Path(path)
+    if '..' in p.parts:raise ValueError('parent traversal path')
+    p=p.absolute()
+    for ancestor in (p,*p.parents):
+        if ancestor.is_symlink():raise ValueError('symlink path')
+    for parent in p.parents:
+        if not stat.S_ISDIR(parent.stat().st_mode):raise ValueError('non-directory parent')
+    return p
 
 class Output:
     def __init__(self,path,binding):
-        self.path=Path(path)
+        self.path=checked_path(path)
         if self.path.exists() or self.path.is_symlink():raise FileExistsError('new output only')
         if any(p.is_symlink() for p in [self.path.parent,*self.path.parents]):raise ValueError('symlink output ancestor')
         self.path.mkdir(parents=False)
