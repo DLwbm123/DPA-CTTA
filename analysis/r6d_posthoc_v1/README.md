@@ -30,3 +30,11 @@ No production module is imported. Only named function ASTs are compiled, with ex
 - Full table contributions are checked against domain, segment, chunk and stratum partitions. Identical content across streams is joined by its private content key, never by visit or sorted score.
 
 Analysis is limited to one process, at most two configured threads, a 1800-second alarm, and 2 GiB new outputs; snapshot bytes are separately accounted. CPU/memory/I/O cost and rejected protective test attempts are distinct from the always-zero model-call budget.
+
+## Explicit input-adapter continuation 01
+
+The original input rules and failed attempt remain archived. `io_addendum/` explicitly changes only publication-alias handling. `pinned_io.py` reads the ordinary authoritative pointer first, checks its full binding and the exact published version, and audits the two expected aliases with lstat/readlink only. It copies the ordinary version payload to the original logical snapshot filename without opening either alias for content. The actual source-relative mapping and raw pointer bytes remain private.
+
+Every payload open walks from the bound source directory descriptor with O_DIRECTORY/O_NOFOLLOW and opens a single-hardlink regular leaf with O_RDONLY/O_NOFOLLOW. It compares fstat before/after the copy, the pathname identity and directory chain; pointer/alias/target identity are checked before snapshot, after snapshot and after analysis. The guard's only adjustment supplies exact paths for inspected synchronous openat calls (Python's audit event omits dir_fd), and permits explicit directory-descriptor opens. Files are matched lexically, so a dynamic alias resolving to an allowed payload is not a permitted content path. This is not a general symlink allowance or an OS sandbox.
+
+Preflight is now included in the timer, alarm and exception accounting. Main and after-audit exceptions have separate immutable logs. Unknown fields remain null/NOT_CAPTURED; no old telemetry is backfilled. Set private `prior_work_directories` to the prior stopped attempt(s); new work must be disjoint. The old 25 scalar tests are unchanged; `test_io.py` adds synthetic publication-layout and failure tests. Discover `test_*.py` in this directory to run both suites. Neither mathematical functions nor the original analysis-spec bytes are changed.

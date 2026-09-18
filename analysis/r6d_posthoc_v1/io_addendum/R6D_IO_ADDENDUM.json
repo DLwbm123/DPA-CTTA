@@ -1,0 +1,85 @@
+{
+  "schema": "R6D_PINNED_VERSION_INPUT_ADDENDUM_V1",
+  "status": "PROPOSED_REPAIR_AND_ONE_FOREGROUND_CONTINUATION_NOT_EXECUTED_HERE",
+  "classification": "INPUT_LAYOUT_ADAPTER_FIX_NOT_SCIENTIFIC_GATE_CHANGE",
+  "prior_analysis_sha": "ad75672e2931c5dd09ffb19f3249d6b65ec6aa0d",
+  "prior_analysis_publication_sha": "fad933d9c49dd1ae034a9368785381fb89c32cf4",
+  "historical_result_publication_sha": "aa732b42b03d378149028a3770879b72ebc55db3",
+  "historical_binding": {
+    "run_id": "a70dc79f23db47289532792141b61f57",
+    "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+    "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+    "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+    "scope": "A"
+  },
+  "unchanged_analysis_spec_sha256": "ffd3c648931e27130c2c275da7ca83f7bac62906b9e9e3d51ec4b3fd62d07368",
+  "pointer": {
+    "logical_path": "current_result.json",
+    "required_valid": true,
+    "required_status": "R6A_COMPLETE_NO_ADVANCE",
+    "required_result_directory": "results/7b2e24f345f0463fa8ee451888650e66",
+    "binding_must_equal_historical": true,
+    "raw_bytes_preserved": true
+  },
+  "metadata_only_aliases": {
+    "public_aggregate.json": {
+      "required_type": "symlink",
+      "required_readlink": "current/public_aggregate.json"
+    },
+    "current": {
+      "required_type": "symlink",
+      "required_readlink": "results/7b2e24f345f0463fa8ee451888650e66"
+    }
+  },
+  "aggregate_input": {
+    "source_relative_path": "results/7b2e24f345f0463fa8ee451888650e66/public_aggregate.json",
+    "snapshot_logical_path": "public_aggregate.json",
+    "required_type": "regular_non_symlink",
+    "required_nlink": 1,
+    "open_alias_for_content": false,
+    "forbid_symlink_components_below_bound_source_root": true,
+    "copy_original_bytes": true,
+    "snapshot_regular_independent_inode": true,
+    "record_source_and_snapshot_path_mapping_privately": true
+  },
+  "integrity": {
+    "original_pointer_and_alias_metadata_before_after": true,
+    "all_whitelisted_source_payload_hashes_before_after": true,
+    "pinned_source_snapshot_source_after_digest_equal": true,
+    "preserve_primary_exception_on_after_audit_failure": true,
+    "audit_hook_retained_not_claimed_as_OS_sandbox": true,
+    "source_scope": "whitelisted scalar payload bytes and inventoried metadata; not all source directory bytes",
+    "missing_audit_evidence": "NOT_CAPTURED_OR_NOT_PERFORMED_NOT_TRUE"
+  },
+  "preservation": {
+    "scientific_formulas_and_groups": true,
+    "old_science_bytes": true,
+    "old_analysis_spec_bytes": true,
+    "old_failed_attempt_and_public_report": true,
+    "production_and_historical_result_pointers": true
+  },
+  "execution_plan": {
+    "after_targeted_CPU_tests": "one_new_foreground_fixed_scalar_attempt_when_this_prompt_is_explicitly_adopted",
+    "automatic_retry": false,
+    "new_output_required": true,
+    "max_processes_fixed_analysis": 1,
+    "max_threads": 2,
+    "wall_cap_seconds": 1800,
+    "new_output_cap_bytes_excluding_snapshot": 2147483648,
+    "snapshot_IO_and_storage_accounted_separately": true,
+    "re_run_166_model_suite": false,
+    "GPU_authorized": false,
+    "R6E_authorized": false
+  },
+  "new_model_budget": {
+    "forwards": 0,
+    "backward_calls": 0,
+    "adam_calls": 0,
+    "vjp_calls": 0
+  },
+  "repair_implemented_by_this_package": false,
+  "repair_tested_by_this_package": false,
+  "remote_ledger_accessed_by_this_package": false
+}

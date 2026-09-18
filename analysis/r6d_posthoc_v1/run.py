@@ -15,15 +15,11 @@ import traceback
 sys.dont_write_bytecode = True
 from core import (ARMS, STREAMS, analysis, digest, disjoint, install_guard, public_safe,
                   read, regular, validators, write)
+from pinned_io import Reader, record_file, source_mapping, layout, check_layout
 
 
-def allowed_sources(source, control):
-    names=['receipt.json','R6_SCOPE.json','current_result.json','matrix.processes.json',
-           'processes.started.json','public_aggregate.json','packet.private.json']
-    names += [f'o{s}a{a}/{name}' for s in STREAMS for a in range(4)
-              for name in ['completion.json','unlabeled.jsonl','evaluation.jsonl']]
-    names += [f'device{i}/smoke.completion.json' for i in range(3)]
-    return {name:Path(source)/name for name in names}
+def allowed_sources(source, addendum):
+    return {name:Path(source)/relative for name,relative in source_mapping(addendum,STREAMS).items()}
 
 
 def source_inventory(source):
@@ -41,22 +37,7 @@ def source_inventory(source):
 
 
 def source_record(p, target=None):
-    regular(p);before=p.stat(); h=hashlib.sha256()
-    flags=os.O_RDONLY | getattr(os,'O_NOFOLLOW',0) | getattr(os,'O_NOATIME',0)
-    out=None
-    try:
-        if target is not None:
-            target.parent.mkdir(parents=True,exist_ok=True);out=target.open('xb')
-        with os.fdopen(os.open(p,flags),'rb') as f:
-            for b in iter(lambda:f.read(1024*1024),b''):
-                h.update(b)
-                if out:out.write(b)
-    finally:
-        if out:out.close()
-    after=p.stat()
-    state=lambda s:dict(bytes=s.st_size,mtime_ns=s.st_mtime_ns,ctime_ns=s.st_ctime_ns,mode=stat.S_IMODE(s.st_mode),inode=s.st_ino,device=s.st_dev,nlink=s.st_nlink)
-    if state(before)!=state(after):raise ValueError('source changed during read')
-    return dict(state(after),sha256=h.hexdigest())
+    return record_file(p,target)
 
 
 def check_snapshot(manifest, snapshot):
@@ -94,37 +75,66 @@ def reconstruct(rows, v, original, spec):
     return dict(primary=primary,primary_comparisons_pp=values,domain_comparisons_pp=domains,recurrence_comparisons_pp=recurrence,selection=selection,status=original['status'])
 
 
+def capture_error(errors, phase, work):
+    """Called inside except; the first exception and each after-check stay separate."""
+    kind=type(sys.exc_info()[1]).__name__
+    token=f"failure_{len(errors):02}_{phase}"
+    errors.append(dict(phase=phase,type=kind,log_token=token))
+    if work is not None:
+        with (work/(token+'.private.log')).open('x') as f:f.write(traceback.format_exc())
+
+
 def main(config):
-    begin=time.monotonic();root=Path(config['code']);source=Path(config['source']);work=Path(config['work'])
-    disjoint(source,work);disjoint(root,work)
-    work.mkdir(exist_ok=False)
-    sources=allowed_sources(source,config.get('control'))
-    for p in sources.values():regular(p)
-    inventory=source_inventory(source)
-    if any(n.endswith('failure.json') or n=='dispatch.stopped.json' for n in inventory['files']):raise ValueError('historical failure record')
-    required=sum(p.stat().st_size for p in sources.values())
-    free=os.statvfs(work).f_bavail*os.statvfs(work).f_frsize
-    if free<required+2147483648:raise OSError('snapshot plus output capacity unavailable')
-    snapshot=work/'snapshot';snapshot.mkdir()
-    # Probe only the new workspace on its actual filesystem.
-    probe=work/'storage_probe';probe.write_bytes(b'r6d');assert probe.read_bytes()==b'r6d';probe.unlink()
-    install_guard(list(sources.values()),[root],work)
-    signal.signal(signal.SIGALRM,lambda *_:(_ for _ in ()).throw(TimeoutError('1800-second wall cap')))
+    begin=time.monotonic();cpu0=resource.getrusage(resource.RUSAGE_SELF)
+    root=Path(config['code']).resolve();source=Path(config['source']).absolute();work=Path(config['work']).absolute()
+    before={};after={};snapshots={};errors=[];stage='preflight';ready=False;analysis_started=False;tables_complete=False
+    inventory=None;inventory_after=None;layout_before=None;layout_after=None;snapshot_checked=False
+    required=None;free=None;sources={};mapping={};summary={};snapshot_seconds=None
+    fixed=dict(new_model_execution_started=False,new_model_forwards=0,new_model_backward_calls=0,new_adam_calls=0,
+        new_vjp_calls=0,R6A='R6A_COMPLETE_NO_ADVANCE',R6B='NOT_RUN',next_gpu_execution_authorized=False)
+    previous_alarm=signal.signal(signal.SIGALRM,lambda *_:(_ for _ in ()).throw(TimeoutError('1800-second wall cap including preflight')))
     signal.alarm(1800)
-    before={};after={};failure=None;stage='snapshot';fixed=dict(new_model_execution_started=False,new_model_forwards=0,
-        new_model_backward_calls=0,new_adam_calls=0,new_vjp_calls=0,R6A='R6A_COMPLETE_NO_ADVANCE',R6B='NOT_RUN',next_gpu_execution_authorized=False)
     try:
-        t=time.monotonic()
-        for name,p in sources.items():before[name]=source_record(p,snapshot/name)
-        write(work/'source-before.private.json',before);check_snapshot(before,snapshot)
+        disjoint(source,work);disjoint(root,work);disjoint(source,root)
+        for old in config.get('prior_work_directories',[]):disjoint(old,work)
+        work.mkdir(exist_ok=False);ready=True
+        specpath=root/'analysis/r6d_posthoc_v1/input/R6D_ANALYSIS_SPEC.json'
+        addpath=root/'analysis/r6d_posthoc_v1/io_addendum/R6D_IO_ADDENDUM.json'
+        spec=read(specpath);addendum=read(addpath)
+        if digest(specpath)!=addendum['unchanged_analysis_spec_sha256'] or digest(addpath)!='250645247b145760e520214373b9930b8580b595165fbd1cc21ac7ec666e0b96':raise ValueError('immutable analysis/addendum bytes')
+        if addendum['historical_binding']!=spec['historical_binding']:raise ValueError('addendum binding conflict')
+        access={};reader=Reader(source,access);source=reader.root
+        mapping=source_mapping(addendum,STREAMS);sources=allowed_sources(source,addendum)
+        directories={source}
+        for p in sources.values():
+            while p.parent!=source:
+                p=p.parent;directories.add(p)
+        install_guard(sources.values(),[root],work,directories,access)
+        layout_before,pointer_raw=layout(reader,addendum)
+        write(work/'layout-before.private.json',layout_before)
+        with (work/'pointer-before.raw.json').open('xb') as f:f.write(pointer_raw)
+        write(work/'input-mapping.private.json',{n:dict(source_relative_path=r,snapshot_relative_path=n) for n,r in mapping.items()})
+        sizes={}
+        for n,r in mapping.items():
+            with reader.opened(r) as (_,__,identity):sizes[n]=identity['bytes']
+        required=sum(sizes.values());inventory=source_inventory(source)
+        if any(n.endswith('failure.json') or n=='dispatch.stopped.json' for n in inventory['files']):raise ValueError('historical failure record')
+        st=os.statvfs(work);free=st.f_bavail*st.f_frsize
+        if free<required+2147483648:raise OSError('snapshot plus output capacity unavailable')
+        probe=work/'storage_probe';probe.write_bytes(b'r6d');assert probe.read_bytes()==b'r6d';probe.unlink()
+        snapshot=work/'snapshot';snapshot.mkdir();stage='snapshot';t=time.monotonic()
+        for name,relative in mapping.items():before[name]=reader.record(relative,snapshot/name)
+        if before['current_result.json']!=layout_before['pointer_record']:raise ValueError('pointer changed before snapshot')
+        write(work/'source-before.private.json',before);check_snapshot(before,snapshot);snapshot_checked=True
+        for name in before:snapshots[name]=digest(snapshot/name)
+        check_layout(reader,addendum,layout_before)
         snapshot_seconds=time.monotonic()-t
         packet=read(snapshot/'packet.private.json');reg=packet['assets']['registration']
-        specpath=root/'analysis/r6d_posthoc_v1/input/R6D_ANALYSIS_SPEC.json';spec=read(specpath)
         v=validators(root,inventory['total_bytes'])
         if v['fingerprint']()!=spec['historical_binding']['production_fingerprint']:raise ValueError('production source fingerprint')
         if digest(root/'configs/r6_science_v1.json')!=spec['historical_binding']['science_sha256']:raise ValueError('science bytes')
         if packet['binding']!=spec['historical_binding']:raise ValueError('packet binding')
-        stage='fixed_scalar_analysis';analysis_start=time.monotonic()
+        stage='fixed_scalar_analysis';analysis_started=True;analysis_start=time.monotonic()
         receipt,rows,_=v['completed'](snapshot,reg,'A')
         if receipt['binding']!=spec['historical_binding']:raise ValueError('historical binding')
         pointer=read(snapshot/'current_result.json')
@@ -134,45 +144,66 @@ def main(config):
         summary=analysis(rows,v['stream_summary'](reg),spec,work/'public')
         summary.update(analysis_seconds=time.monotonic()-analysis_start,snapshot_seconds=snapshot_seconds)
         write(work/'public/BASELINE_RECONSTRUCTION.json',baseline)
-        write(work/'public/ANALYSIS_BINDING.json',dict(inferential_status='POST_HOC_EXPLORATORY',historical_binding=spec['historical_binding'],
-            historical_publication_sha=spec['historical_publication_sha'],analysis_sha=config['analysis_sha'],analysis_spec_sha256=digest(specpath),
-            inputs=[dict(file_token=f'input_{i:03}',bytes=x['bytes'],sha256=x['sha256']) for i,x in enumerate(before.values())],
-            source_file_mapping='PRIVATE_ONLY',validator_strategy='Audited function AST extraction without production module imports',**fixed))
-        stage='source_after_check'
-    except BaseException as exc:
-        failure=exc
-        (work/'failure.private.log').write_text(traceback.format_exc())
+        tables_complete=True;stage='source_after_check'
+    except BaseException:
+        capture_error(errors,'primary',work if ready else None)
     finally:
-        for name,p in sources.items():after[name]=source_record(p)
-        inventory_after=source_inventory(source)
-        write(work/'source-after.private.json',after)
-        unchanged=bool(before) and before==after and inventory==inventory_after
-        if not unchanged and failure is None:failure=ValueError('readonly audit mismatch')
-        pub=work/'public';pub.mkdir(exist_ok=True)
-        audit=dict(inferential_status='POST_HOC_EXPLORATORY',source_bytes_unchanged=before==after,source_metadata_unchanged=before==after,
-            source_inventory_unchanged=inventory==inventory_after,result_pointer_unchanged=before.get('current_result.json')==after.get('current_result.json'),
-            current_symlink_unchanged=inventory['symlinks']==inventory_after['symlinks'],ordinary_file_snapshot=True,
-            snapshot_bytes=required,source_output_bytes=inventory['total_bytes'],free_bytes_before=free,output_source_disjoint=True,
-            evidence=[dict(file_token=f'input_{i:03}',bytes=after[n]['bytes'],before_sha256=before.get(n,{}).get('sha256'),after_sha256=after[n]['sha256'],snapshot_sha256=digest(snapshot/n) if (snapshot/n).exists() else None) for i,n in enumerate(sources)],
-            safeguards='Whitelist scalar files; O_NOFOLLOW/O_NOATIME source reads; audit hook denies external writes, imports and process/network/device calls; no production imports',
-            limitations=['Python audit hook is not an OS sandbox; inspected code has no native/model dependency.',
-                        'Stored evaluation GT counts used offline; no raw labels read.',
-                        'mtime/ctime/mode/inode/link counts checked; filesystem-managed atime is not a semantic integrity claim.'],
-            raw_asset_reads=0,model_imports=0,gpu_queries_or_initializations=0,**fixed)
-        public_safe(audit);write(pub/'READONLY_AUDIT.json',audit)
+        if ready:
+            # Each after-check is independent; no exception replaces the first failure.
+            if layout_before is not None:
+                try:
+                    layout_after=check_layout(reader,addendum,layout_before)
+                    write(work/'layout-after.private.json',layout_after)
+                except BaseException:capture_error(errors,'after_layout',work)
+            for name in before:
+                try:after[name]=reader.record(mapping[name])
+                except BaseException:capture_error(errors,'after_payload',work)
+            if before:
+                try:
+                    check_snapshot(before,work/'snapshot')
+                    if len(before)!=len(mapping) or before!=after:raise ValueError('full source before/after mismatch')
+                except BaseException:capture_error(errors,'after_snapshot',work)
+            if inventory is not None:
+                try:
+                    inventory_after=source_inventory(source)
+                    if inventory!=inventory_after:raise ValueError('source inventory mismatch')
+                except BaseException:capture_error(errors,'after_inventory',work)
+            write(work/'source-after.private.json',after)
+            pub=work/'public';pub.mkdir(exist_ok=True)
+            full=bool(before) and len(before)==len(mapping) and len(after)==len(mapping)
+            evidence=[dict(file_token=f'input_{i:03}',bytes=before.get(n,{}).get('bytes'),before_sha256=before.get(n,{}).get('sha256'),after_sha256=after.get(n,{}).get('sha256'),snapshot_sha256=snapshots.get(n)) for i,n in enumerate(mapping)]
+            audit=dict(inferential_status='POST_HOC_EXPLORATORY',source_bytes_unchanged=before==after if full else None,
+                source_metadata_unchanged=before==after if full else None,source_inventory_unchanged=inventory==inventory_after if inventory is not None and inventory_after is not None else None,
+                result_pointer_unchanged=layout_before['pointer_record']==layout_after['pointer_record'] if layout_before and layout_after else None,
+                publication_link_metadata_unchanged=layout_before['links']==layout_after['links'] if layout_before and layout_after else None,
+                ordinary_file_snapshot=snapshot_checked if full else None,snapshot_bytes=required if snapshot_checked else None,
+                source_output_bytes=inventory['total_bytes'] if inventory else None,free_bytes_before=free,output_source_disjoint=True,
+                evidence=evidence,missing_evidence_policy='null means NOT_CAPTURED/NOT_PERFORMED; never a successful check',
+                raw_asset_reads=0,model_imports=0,gpu_queries_or_initializations=0,alias_content_reads=0,
+                safeguards='Fixed-version pointer; lstat/readlink aliases only; directory-descriptor O_DIRECTORY/O_NOFOLLOW walk; fstat and path recheck; unchanged scalar validators and audit hook.',
+                limitations=['Python audit hook is not an OS sandbox.','Byte checks cover allowlisted scalar payloads; other source files have metadata inventory only.',
+                            'Protected mtime/ctime/mode/inode/device/nlink exclude filesystem-managed atime. No source timestamp restoration.',
+                            'Concurrent hostile changes between checks cannot be ruled out absolutely; descriptor/path/layout checks detect observed replacement.'],
+                prior_attempt='fad933d9c49dd1ae034a9368785381fb89c32cf4; old missing hashes/telemetry remain NOT_CAPTURED',**fixed)
+            public_safe(audit);write(pub/'READONLY_AUDIT.json',audit)
+            write(pub/'ANALYSIS_BINDING.json',dict(inferential_status='POST_HOC_EXPLORATORY',historical_binding=spec['historical_binding'] if 'spec' in locals() else None,
+                historical_publication_sha='aa732b42b03d378149028a3770879b72ebc55db3',analysis_sha=config['analysis_sha'],
+                analysis_spec_sha256=digest(specpath) if 'specpath' in locals() else None,input_adaptation_addendum_sha256=digest(addpath) if 'addpath' in locals() else None,
+                inputs=evidence,source_file_mapping='PRIVATE_ONLY',prior_attempt='fad933d9c49dd1ae034a9368785381fb89c32cf4',**fixed))
         usage=resource.getrusage(resource.RUSAGE_SELF)
-        result=dict(analysis_executed=stage!='snapshot',analysis_status='R6D_INCOMPLETE' if failure else 'ANALYSIS_TABLES_COMPLETE_INTERPRETATION_PENDING',
-            stage=stage,failure_type=type(failure).__name__ if failure else None,wall_seconds=time.monotonic()-begin,
-            cpu_user_seconds=usage.ru_utime,cpu_system_seconds=usage.ru_stime,peak_rss_platform_units=usage.ru_maxrss,
-            peak_rss_unit='KiB on Linux; bytes on macOS',max_threads=2,processes=1,**fixed)
-        if not failure:result.update(summary)
-        result['new_output_bytes_excluding_snapshot']=sum(p.stat().st_size for p in work.rglob('*') if p.is_file() and snapshot not in p.parents)
-        if result['new_output_bytes_excluding_snapshot']>2147483648:
-            result['analysis_status']='R6D_INCOMPLETE';failure=ValueError('output cap')
-        public_safe(result);write(pub/'RUN_LOG.json',result)
-        signal.alarm(0)
-    print(json.dumps(result,allow_nan=False))
-    if failure:raise RuntimeError('R6-D failed; preserve private failure log, no automatic retry') from failure
+        result=dict(analysis_executed=analysis_started,analysis_status='R6D_INCOMPLETE' if errors or not tables_complete else 'ANALYSIS_TABLES_COMPLETE_INTERPRETATION_PENDING',
+            stage=stage,errors=errors,wall_seconds=time.monotonic()-begin,cpu_user_seconds=usage.ru_utime-cpu0.ru_utime,cpu_system_seconds=usage.ru_stime-cpu0.ru_stime,
+            peak_rss_platform_units=usage.ru_maxrss,peak_rss_unit='KiB on Linux; bytes on macOS',max_threads=2,processes=1,**fixed)
+        result.update(summary)
+        if ready:
+            result['new_output_bytes_excluding_snapshot']=sum(p.stat().st_size for p in work.rglob('*') if p.is_file() and work/'snapshot' not in p.parents)
+            if result['new_output_bytes_excluding_snapshot']>2147483648:
+                result['analysis_status']='R6D_INCOMPLETE';result['errors'].append(dict(phase='output_cap',type='ValueError'))
+            public_safe(result);write(work/'public/RUN_LOG.json',result)
+        else:result['telemetry_file']='NOT_WRITTEN_UNSAFE_OR_UNAVAILABLE_WORK_DIRECTORY'
+        signal.alarm(0);signal.signal(signal.SIGALRM,previous_alarm)
+    print(json.dumps(result,allow_nan=False),flush=True)
+    if result['analysis_status']=='R6D_INCOMPLETE':raise RuntimeError('R6-D incomplete; preserve first failure and after-check errors; no automatic retry')
 
 
 if __name__=='__main__':

@@ -52,9 +52,10 @@ def regular(p):
         raise ValueError('ordinary independent file required')
 
 
-def install_guard(read_files, read_roots, output):
+def install_guard(read_files, read_roots, output, read_directories=(), descriptor_access=None):
     """Audit-hook confinement, not an OS sandbox; no native/model libraries loaded."""
-    files = {str(Path(p).resolve()) for p in read_files}
+    files = {str(Path(p).absolute()) for p in read_files}
+    directories = {str(Path(p).absolute()) for p in read_directories}
     roots = [Path(p).resolve() for p in read_roots]
     output = Path(output).resolve()
     def inside(p, root):
@@ -65,12 +66,17 @@ def install_guard(read_files, read_roots, output):
         if event.startswith(('subprocess.', 'socket.', 'ctypes.')) or event in {'os.system', 'os.exec', 'os.posix_spawn', 'os.fork'}:
             raise PermissionError('model/GPU/process/network entry forbidden')
         if event == 'open' and not isinstance(args[0], int):
-            p = Path(args[0]).resolve()
             mode, flags = args[1], args[2]
+            request = descriptor_access.get('request') if descriptor_access else None
+            # Python's open audit event omits dir_fd. The inspected synchronous
+            # openat helper supplies its exact anchored path for this one call.
+            p = Path(request[1]) if request and args[0] == request[0] and flags == request[2] else Path(args[0]).absolute()
+            resolved = p.resolve()
             writing = (isinstance(mode, str) and any(c in mode for c in 'wax+')) or (isinstance(flags, int) and flags & (os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_TRUNC))
-            if writing and not inside(p, output):
+            if writing and not inside(resolved, output):
                 raise PermissionError('write outside new work directory')
-            if not writing and str(p) not in files and not any(inside(p, r) for r in roots + [output]):
+            directory_open = isinstance(flags, int) and flags & getattr(os, 'O_DIRECTORY', 0) and str(p) in directories
+            if not writing and not directory_open and str(p) not in files and not any(inside(resolved, r) for r in roots + [output]):
                 raise PermissionError('read outside scalar/code allowlist')
         if event in {'os.remove', 'os.rmdir', 'os.mkdir', 'os.chmod', 'os.utime', 'os.truncate', 'os.rename', 'os.link', 'os.symlink'}:
             paths = args[:2] if event in {'os.rename', 'os.link', 'os.symlink'} else args[:1]
