@@ -1,0 +1,36 @@
+PUBLIC LOG: original execution output; only private paths replaced. Raw original retained privately.
+test_C0_one_forward (test_contract.Contracts.test_C0_one_forward) ... ok
+test_ablation_lifecycle_and_constant_source (test_contract.Contracts.test_ablation_lifecycle_and_constant_source) ... ok
+test_batch_and_nonfinite_inputs_hard_fail (test_contract.Contracts.test_batch_and_nonfinite_inputs_hard_fail) ... ok
+test_disabled_real_entries_before_asset_read (test_contract.Contracts.test_disabled_real_entries_before_asset_read) ... ok
+test_film_bitwise_and_zero_derivative (test_contract.Contracts.test_film_bitwise_and_zero_derivative) ... ok
+test_fixed_fit_and_calibration_limits (test_contract.Contracts.test_fixed_fit_and_calibration_limits) ... ok
+test_fixed_published_alias_mapping_metadata_only (test_contract.Contracts.test_fixed_published_alias_mapping_metadata_only) ... ok
+test_fresh_output_owner_and_first_error (test_contract.Contracts.test_fresh_output_owner_and_first_error) ... ok
+test_independent_RNG_and_identical_full_static_initialization (test_contract.Contracts.test_independent_RNG_and_identical_full_static_initialization) ... ok
+test_matrix_bounds_source_pending_no_receipts (test_contract.Contracts.test_matrix_bounds_source_pending_no_receipts) ... ok
+test_no_commit_on_second_forward_failure_and_no_retry (test_contract.Contracts.test_no_commit_on_second_forward_failure_and_no_retry) ... ok
+test_observer_shapes_current_BN_and_cache_release (test_contract.Contracts.test_observer_shapes_current_BN_and_cache_release) ... ok
+test_online_two_forward_no_autograd_and_current_only (test_contract.Contracts.test_online_two_forward_no_autograd_and_current_only) ... ok
+test_oracle_16_combined_steps_support_only (test_contract.Contracts.test_oracle_16_combined_steps_support_only) ... ok
+test_reused_reader_rejects_symlink_hardlink_escape (test_contract.Contracts.test_reused_reader_rejects_symlink_hardlink_escape) ... ok
+test_same_appearance_only_B_difference_not_raw_image (test_contract.Contracts.test_same_appearance_only_B_difference_not_raw_image) ... ok
+test_saved_assets_inference_binding_and_eta (test_contract.Contracts.test_saved_assets_inference_binding_and_eta) ... ok
+test_scaler_is_fit_only_and_no_online_running_change (test_contract.Contracts.test_scaler_is_fit_only_and_no_online_running_change) ... ok
+test_scientific_review_paired_tails_and_ASSD_denominators (test_contract.Contracts.test_scientific_review_paired_tails_and_ASSD_denominators) ... ok
+test_source_constant_R_all_cal_observations_only (test_contract.Contracts.test_source_constant_R_all_cal_observations_only) ... ok
+test_source_destination_overlap_denied_before_any_write (test_contract.Contracts.test_source_destination_overlap_denied_before_any_write) ... ok
+test_source_first_failure_is_terminal (test_contract.Contracts.test_source_first_failure_is_terminal) ... ok
+test_source_fit_static_and_calibration_freeze (test_contract.Contracts.test_source_fit_static_and_calibration_freeze) ... ok
+test_source_query_labels_change_loss_not_support_state (test_contract.Contracts.test_source_query_labels_change_loss_not_support_state) ... ok
+test_source_query_pixel_cannot_update_episode_state (test_contract.Contracts.test_source_query_pixel_cannot_update_episode_state) ... ok
+test_split_overlap_oracle_fit_only_and_roles (test_contract.Contracts.test_split_overlap_oracle_fit_only_and_roles) ... ok
+test_state_corruption_binding_rejected (test_contract.Contracts.test_state_corruption_binding_rejected) ... ok
+test_state_restore_next_output_and_GT_future_independence (test_contract.Contracts.test_state_restore_next_output_and_GT_future_independence) ... ok
+test_styles_identity_fold_factors_and_local_noise (test_contract.Contracts.test_styles_identity_fold_factors_and_local_noise) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 5.562s
+
+OK
+R7_CPU_RESULT {"GPU_queries_or_initializations": 0, "cpu_system_seconds": 1.45847, "cpu_user_seconds": 9.057301, "errors": 0, "exit_code": 0, "external_review": "NOT_RUN", "failures": 0, "peak_RSS": 415891456, "peak_RSS_unit": "bytes", "physical_calls": {"AdamW_step": 3, "Adam_step": 19, "Tensor_backward": 23, "autograd_grad": 0, "old_backbone_forwards": 0}, "platform": "Darwin arm64", "procedural_counts": {"IRLS_iterations": 39, "ISTA_iterations": 115, "appearance_MLP": 311, "backbone_forwards": 385, "calibration_Adam": 3, "calibration_backward_calls": 3, "cholesky_solves": 118, "method_MLP": 821, "source_Adam": 16, "source_AdamW": 3, "source_backward_calls": 19, "spectral_norms": 92}, "python": "3.12.9", "real_asset_reads": 0, "skipped": 0, "tests": 29, "torch": "2.6.0", "wall_seconds": 5.577858249889687}

@@ -1,0 +1,123 @@
+PUBLIC LOG: original execution output; only private paths replaced. Raw original retained privately.
+IMPLEMENTATION_SHA 82aca2080bb80c019b0d39b4c95d21a6ba2cff3d
+ARGV_AUDIT <SERVER_ENV>/bin/python3.10 -
+test_film_zero_identity (__main__.ReferenceTests) ... ok
+test_film_zero_live_derivative (__main__.ReferenceTests) ... ok
+test_filter_against_independent_kalman_gain (__main__.ReferenceTests) ... ok
+test_filter_causality_and_reset (__main__.ReferenceTests) ... ok
+test_filter_full_transition_creates_correlations (__main__.ReferenceTests) ... ok
+test_filter_high_noise_limit (__main__.ReferenceTests) ... ok
+test_filter_rejects_non_spd (__main__.ReferenceTests) ... ok
+test_huber_definition (__main__.ReferenceTests) ... ok
+test_irls_matches_ridge_in_quadratic_regime (__main__.ReferenceTests) ... ok
+test_irls_no_observation_residual_keeps_prior (__main__.ReferenceTests) ... ok
+test_irls_observation_replication_does_not_change_mean_objective (__main__.ReferenceTests) ... ok
+test_irls_outlier_downweight_and_monotonicity (__main__.ReferenceTests) ... ok
+test_ista_diagonal_closed_form (__main__.ReferenceTests) ... ok
+test_ista_monotone_five_steps (__main__.ReferenceTests) ... ok
+test_matrix_budgets (__main__.ReferenceTests) ... ok
+test_nonfinite_and_invalid_variance_rejected (__main__.ReferenceTests) ... ok
+test_predict_only_is_no_correction (__main__.ReferenceTests) ... ok
+test_predictive_subspace_against_direct_covariance_truncation (__main__.ReferenceTests) ... ok
+test_predictive_subspace_full_rank (__main__.ReferenceTests) ... ok
+test_soft_threshold_sign_and_zero (__main__.ReferenceTests) ... ok
+test_sparse_zero_residual (__main__.ReferenceTests) ... ok
+test_stable_matrix_bound (__main__.ReferenceTests) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.185s
+
+OK
+test_A_ambient_1024_basis_and_projection (test_math.MathTests) ... ok
+test_A_filter_independent_reference (test_math.MathTests) ... ok
+test_A_full_transition_correlations_and_high_noise (test_math.MathTests) ... ok
+test_A_predictive_basis_independent_SVD_covariance (test_math.MathTests) ... ok
+test_A_tau_square_and_B_first_difference (test_math.MathTests) ... ok
+test_B_diagonal_closed_form_and_gradient (test_math.MathTests) ... ok
+test_B_dictionary_normalization_spectral_bounds (test_math.MathTests) ... ok
+test_B_five_step_reference_temperature_and_monotonicity (test_math.MathTests) ... ok
+test_C_IRLS_reference_outliers_and_fixed_steps (test_math.MathTests) ... ok
+test_C_calibration_only_variance_parameters (test_math.MathTests) ... ok
+test_C_ridge_limit_mean_scaling_and_zero_residual (test_math.MathTests) ... ok
+test_C_variance_bounds_constant_geometric_mean (test_math.MathTests) ... ok
+test_all_shapes_state_static_and_source_gradients (test_math.MathTests) ... ok
+test_invalid_nonfinite_spd_variance (test_math.MathTests) ... ok
+test_rank_failures_no_random_padding (test_math.MathTests) ... ok
+test_C0_one_forward (test_contract.Contracts) ... ok
+test_ablation_lifecycle_and_constant_source (test_contract.Contracts) ... ok
+test_batch_and_nonfinite_inputs_hard_fail (test_contract.Contracts) ... ok
+test_disabled_real_entries_before_asset_read (test_contract.Contracts) ... ok
+test_film_bitwise_and_zero_derivative (test_contract.Contracts) ... ok
+test_fixed_fit_and_calibration_limits (test_contract.Contracts) ... ok
+test_fixed_published_alias_mapping_metadata_only (test_contract.Contracts) ... ok
+test_fresh_output_owner_and_first_error (test_contract.Contracts) ... ok
+test_independent_RNG_and_identical_full_static_initialization (test_contract.Contracts) ... ok
+test_matrix_bounds_source_pending_no_receipts (test_contract.Contracts) ... ok
+test_no_commit_on_second_forward_failure_and_no_retry (test_contract.Contracts) ... ok
+test_observer_shapes_current_BN_and_cache_release (test_contract.Contracts) ... ok
+test_online_two_forward_no_autograd_and_current_only (test_contract.Contracts) ... ok
+test_oracle_16_combined_steps_support_only (test_contract.Contracts) ... ok
+test_reused_reader_rejects_symlink_hardlink_escape (test_contract.Contracts) ... ok
+test_same_appearance_only_B_difference_not_raw_image (test_contract.Contracts) ... ok
+test_saved_assets_inference_binding_and_eta (test_contract.Contracts) ... ok
+test_scaler_is_fit_only_and_no_online_running_change (test_contract.Contracts) ... ok
+test_scientific_review_paired_tails_and_ASSD_denominators (test_contract.Contracts) ... ok
+test_source_constant_R_all_cal_observations_only (test_contract.Contracts) ... ok
+test_source_destination_overlap_denied_before_any_write (test_contract.Contracts) ... ok
+test_source_first_failure_is_terminal (test_contract.Contracts) ... ok
+test_source_fit_static_and_calibration_freeze (test_contract.Contracts) ... ok
+test_source_query_labels_change_loss_not_support_state (test_contract.Contracts) ... ok
+test_source_query_pixel_cannot_update_episode_state (test_contract.Contracts) ... ok
+test_split_overlap_oracle_fit_only_and_roles (test_contract.Contracts) ... ok
+test_state_corruption_binding_rejected (test_contract.Contracts) ... ok
+test_state_restore_next_output_and_GT_future_independence (test_contract.Contracts) ... ok
+test_styles_identity_fold_factors_and_local_noise (test_contract.Contracts) ... ok
+test_A_B_C_actual_ResUNet_visits_and_source_microepisodes (test_full_network.FullNetwork) ... {
+  "scope": "independent NumPy small-matrix equations only; NOT R7 host/source-training/target/GPU verification",
+  "tests": 22,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "python": "3.10.6",
+  "numpy": "1.26.4",
+  "wall_seconds": 0.18556233891285956,
+  "model_forwards": 0,
+  "model_backwards": 0,
+  "optimizers": 0,
+  "GPU_calls": 0,
+  "real_asset_reads": 0,
+  "exit_code": 0
+}
+FULL_NETWORK {"group": "A", "parameters": 22554570, "method_parameters": 23633, "fit": {"cholesky_solves": 16, "spectral_norms": 4, "appearance_MLP": 8, "method_MLP": 8, "backbone_forwards": 12, "source_backward_calls": 1, "source_AdamW": 1}, "online": {"cholesky_solves": 6, "spectral_norms": 2, "appearance_MLP": 2, "method_MLP": 2, "backbone_forwards": 4}, "gradients": {"style": 0.0012672708835452795, "content": 0.0002211252140114084, "W": 0.005223543848842382, "qraw": 4.484332021092996e-05, "observer.head.0.weight": 0.0005648327060043812, "observer.head.0.bias": 7.199496758403257e-05, "observer.head.2.weight": 0.00043087787344120443, "observer.head.2.bias": 0.0002486198500264436, "head.0.weight": 0.000874972203746438, "head.0.bias": 0.0010656291851773858, "head.2.weight": 0.000989582622423768, "head.2.bias": 0.0035613933578133583}}
+FULL_NETWORK {"group": "B", "parameters": 22554570, "method_parameters": 25281, "fit": {"spectral_norms": 12, "appearance_MLP": 8, "method_MLP": 16, "ISTA_iterations": 20, "backbone_forwards": 12, "source_backward_calls": 1, "source_AdamW": 1}, "online": {"spectral_norms": 6, "appearance_MLP": 2, "method_MLP": 4, "ISTA_iterations": 10, "backbone_forwards": 4}, "gradients": {"W": 0.000620441569481045, "G": 5.676315049640834e-05, "Hraw": 0.0003426948678679764, "observer.head.0.weight": 0.0023634624667465687, "observer.head.0.bias": 0.0003013740060850978, "observer.head.2.weight": 0.0014788418775424361, "observer.head.2.bias": 0.0008543516742065549, "bias.0.weight": 0.0005652938853017986, "bias.0.bias": 0.0007636426598764956, "bias.2.weight": 0.001138607389293611, "bias.2.bias": 0.0023620768915861845, "head.0.weight": 0.0007262416183948517, "head.0.bias": 0.0009800399420782924, "head.2.weight": 0.0018064412288367748, "head.2.bias": 0.003688847180455923}}
+FULL_NETWORK {"group": "C", "parameters": 22554570, "method_parameters": 48696, "fit": {"cholesky_solves": 12, "appearance_MLP": 8, "method_MLP": 16, "IRLS_iterations": 12, "backbone_forwards": 12, "source_backward_calls": 1, "source_AdamW": 1}, "online": {"cholesky_solves": 6, "appearance_MLP": 2, "method_MLP": 6, "IRLS_iterations": 6, "backbone_forwards": 4}, "gradients": {"Pc": 0.0005177286802791059, "Pa": 0.00021344711421988904, "O": 0.0004579000233206898, "observer.head.0.weight": 1.2428108675521798e-05, "observer.head.0.bias": 1.5837174487387529e-06, "observer.head.2.weight": 1.0404090062365867e-05, "observer.head.2.bias": 5.995846095174784e-06, "query.0.weight": 0.00017893021868076175, "query.0.bias": 1.7594282326172106e-05, "query.2.weight": 0.00015160214388743043, "query.2.bias": 4.7720597649458796e-05, "mapping.0.weight": 8.900808097678237e-06, "mapping.0.bias": 6.079601007513702e-05, "mapping.2.weight": 6.095445860410109e-05, "mapping.2.bias": 0.00022433184494730085}}
+ok
+test_full_zero_identity_derivative_and_C0 (test_full_network.FullNetwork) ... FULL_IDENTITY {"backbone_forwards": 3, "source_VJP": 2}
+ok
+test_original_C_random_network_narrow_preservation (test_full_network.FullNetwork) ... ERROR
+
+======================================================================
+ERROR: test_original_C_random_network_narrow_preservation (test_full_network.FullNetwork)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "<PRIVATE_ROOT>/jobs/r7_cpu_20260918T073402Z/code/tests/r7/test_full_network.py", line 44, in test_original_C_random_network_narrow_preservation
+    seed_all(20260907);a=Old('C',weights,'cpu');za,ta=a.step(pixels());sa=capture(a);a.finish(weights);del a
+  File "<PRIVATE_ROOT>/jobs/r7_cpu_20260918T073402Z/code/src/dpa_ctta/r1/host.py", line 22, in __init__
+    super().__init__('C',state,device,model)
+  File "<PRIVATE_ROOT>/jobs/r7_cpu_20260918T073402Z/code/src/dpa_ctta/b1_host.py", line 79, in __init__
+    self.opt=official().GraTa(self.params,self.base,OutputPair(self.model),device=str(self.device))
+  File "<PRIVATE_ROOT>/jobs/r7_cpu_20260918T073402Z/code/src/dpa_ctta/b1_host.py", line 26, in official
+    if importlib.metadata.version('batchgenerators')!='0.25.2':raise ValueError('augmentation dependency version')
+  File "<SERVER_ENV>/lib/python3.10/importlib/metadata/__init__.py", line 984, in version
+    return distribution(distribution_name).version
+  File "<SERVER_ENV>/lib/python3.10/importlib/metadata/__init__.py", line 957, in distribution
+    return Distribution.from_name(distribution_name)
+  File "<SERVER_ENV>/lib/python3.10/importlib/metadata/__init__.py", line 548, in from_name
+    raise PackageNotFoundError(name)
+importlib.metadata.PackageNotFoundError: No package metadata was found for batchgenerators
+
+----------------------------------------------------------------------
+Ran 47 tests in 88.019s
+
+FAILED (errors=1)
+R7_CPU_RESULT {"GPU_queries_or_initializations": 0, "cpu_system_seconds": 20.714969, "cpu_user_seconds": 136.200372, "errors": 1, "exit_code": 1, "external_review": "NOT_RUN", "failures": 0, "peak_RSS": 2016344, "peak_RSS_unit": "KiB", "physical_calls": {"AdamW_step": 6, "Adam_step": 22, "Tensor_backward": 34, "autograd_grad": 2, "old_backbone_forwards": 0}, "platform": "Linux x86_64", "procedural_counts": {"IRLS_iterations": 96, "ISTA_iterations": 215, "appearance_MLP": 377, "backbone_forwards": 448, "calibration_Adam": 6, "calibration_backward_calls": 6, "cholesky_solves": 237, "eigh": 4, "method_MLP": 942, "source_Adam": 16, "source_AdamW": 6, "source_VJP": 2, "source_backward_calls": 22, "spectral_norms": 160, "svd": 1}, "python": "3.10.6", "real_asset_reads": 0, "skipped": 0, "tests": 47, "torch": "2.2.1+cu121", "wall_seconds": 88.45602484000847}

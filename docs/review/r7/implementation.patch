@@ -1,0 +1,1487 @@
+diff --git a/configs/r7_execution.defaults.json b/configs/r7_execution.defaults.json
+new file mode 100644
+index 0000000..c82b6dc
+--- /dev/null
++++ b/configs/r7_execution.defaults.json
+@@ -0,0 +1,20 @@
++{
++  "stage": "IMPLEMENTATION",
++  "execution_enabled": false,
++  "SOURCE_PREP": false,
++  "TARGET_SCREEN": false,
++  "TARGET_MECHANISM": false,
++  "TARGET_EXTENSION": false,
++  "GPU_SMOKE": false,
++  "AB": false,
++  "auto_run": false,
++  "external_review": "NOT_RUN",
++  "source_binding_ready": false,
++  "source_manifest_sha256": null,
++  "source_split_sha256": null,
++  "source_checkpoint_sha256": null,
++  "trained_modules_sha256": null,
++  "inference_binding_sha256": null,
++  "GPU_ids": null,
++  "user_receipt": null
++}
+diff --git a/scripts/r7/check_cpu.py b/scripts/r7/check_cpu.py
+new file mode 100644
+index 0000000..844d54c
+--- /dev/null
++++ b/scripts/r7/check_cpu.py
+@@ -0,0 +1,37 @@
++"""Measured CPU suite; random tensors only, no asset loaders or GPU discovery."""
++import os,sys,time,json,platform,resource,unittest
++from pathlib import Path
++from unittest.mock import patch
++from contextlib import ExitStack
++os.environ['CUDA_VISIBLE_DEVICES']='';os.environ['PYTHONDONTWRITEBYTECODE']='1'
++import torch
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses()
++root=Path(__file__).resolve().parents[2]
++sys.path[:0]=[str(root/'tests/r7'),str(root/'docs/review/r7/input/references')]
++torch.set_num_threads(2)
++from dpa_ctta.r7_shared.numerics import COUNTS
++from dpa_ctta.b1_host import Host as Old
++actual=dict(Tensor_backward=0,autograd_grad=0,Adam_step=0,AdamW_step=0,old_backbone_forwards=0)
++for cls,method,key in [(torch.Tensor,'backward','Tensor_backward'),(torch.autograd,'grad','autograd_grad'),(torch.optim.Adam,'step','Adam_step'),(torch.optim.AdamW,'step','AdamW_step'),(Old,'_forward','old_backbone_forwards')]:
++    original=getattr(cls,method)
++    def wrapped(*a,_fn=original,_key=key,**kw):
++        actual[_key]+=1;return _fn(*a,**kw)
++    setattr(cls,method,wrapped)
++start=time.monotonic();before=resource.getrusage(resource.RUSAGE_SELF)
++with ExitStack() as stack:
++    for name in ('_lazy_init','init','device_count','get_device_properties'):
++        stack.enter_context(patch('torch.cuda.'+name,side_effect=AssertionError('GPU forbidden')))
++    # Existing CPU legacy seed helpers ask availability; return a fixed CPU result
++    # without calling any CUDA discovery API or driver.
++    stack.enter_context(patch('torch.cuda.is_available',return_value=False))
++    stack.enter_context(patch('torch.load',side_effect=AssertionError('checkpoint reads forbidden')))
++    for name in ('dpa_ctta.source_io.read_pixels','dpa_ctta.source_io.read_mask','dpa_ctta.r1.assets.checkpoint','dpa_ctta.r1.assets.target','dpa_ctta.source_io.source_proxy'):
++        stack.enter_context(patch(name,side_effect=AssertionError('real assets forbidden')))
++    modules=os.environ.get('R7_TESTS','test_math,test_contract,test_full_network').split(',')
++    result=unittest.TextTestRunner(verbosity=2).run(unittest.defaultTestLoader.loadTestsFromNames(modules))
++after=resource.getrusage(resource.RUSAGE_SELF)
++summary=dict(tests=result.testsRun,failures=len(result.failures),errors=len(result.errors),skipped=len(result.skipped),exit_code=int(not result.wasSuccessful()),wall_seconds=time.monotonic()-start,cpu_user_seconds=after.ru_utime-before.ru_utime,cpu_system_seconds=after.ru_stime-before.ru_stime,peak_RSS=after.ru_maxrss,peak_RSS_unit='bytes' if sys.platform=='darwin' else 'KiB',python=platform.python_version(),torch=torch.__version__,platform=platform.system()+' '+platform.machine(),physical_calls=actual,procedural_counts=dict(COUNTS),real_asset_reads=0,GPU_queries_or_initializations=0,external_review='NOT_RUN')
++print('R7_CPU_RESULT '+json.dumps(summary,sort_keys=True),flush=True)
++if os.environ.get('R7_RESULT'):Path(os.environ['R7_RESULT']).write_text(json.dumps(summary,indent=2)+'\n')
++sys.exit(summary['exit_code'])
+diff --git a/scripts/r7/run.py b/scripts/r7/run.py
+new file mode 100644
+index 0000000..c82491b
+--- /dev/null
++++ b/scripts/r7/run.py
+@@ -0,0 +1,3 @@
++"""No real execution is enabled in this Stage I release."""
++from dpa_ctta.r7_shared.plan import real_entry
++real_entry('REAL_EXECUTION')
+diff --git a/src/dpa_ctta/r7_a_psf/__init__.py b/src/dpa_ctta/r7_a_psf/__init__.py
+new file mode 100644
+index 0000000..ec20d5a
+--- /dev/null
++++ b/src/dpa_ctta/r7_a_psf/__init__.py
+@@ -0,0 +1,52 @@
++"""A: source-proxy Gaussian filtering, not a full RP-GSSM reproduction."""
++import math
++import torch
++from torch import nn
++from ..r7_shared.host import Method
++from ..r7_shared.numerics import (COUNTS,shape,finite,solve,symmetric,stable,mlp,attention,variance,temperature,temperature_initial,gaussian_nll)
++
++def gaussian_filter(m,p,f,q,o,r):
++    n=len(m)
++    for x in (p,f,q,r):shape(x,(n,n))
++    shape(o,(n,));finite(m)
++    eye=torch.eye(n,dtype=torch.float64)
++    # Validate the prior and process covariance, even when the predicted sum is SPD.
++    torch.linalg.cholesky(p);torch.linalg.cholesky(q);torch.linalg.cholesky(r)
++    pm=f@m;pp=symmetric(f@p@f.T+q)
++    ip=solve(pp,eye);ir=solve(r,eye);precision=symmetric(ip+ir)
++    pn=symmetric(solve(precision,eye));mn=pn@(ip@pm+ir@o)
++    finite(mn,pn);return mn,pn
++
++class PSF(Method):
++    group='A';rank=16
++    def __init__(self,basis,static=False):
++        super().__init__(basis,static)
++        self.style=nn.Parameter(torch.randn(8,32)*.1);self.content=nn.Parameter(torch.randn(32,64)*.1)
++        self.head=mlp(128,64,32);self.W=nn.Parameter(torch.eye(16)*(.9/.95))
++        u=(.01-1e-4)/(1-1e-4);self.qraw=nn.Parameter(torch.full((16,),math.log(u/(1-u))))
++        self.cal_raw=nn.Parameter(temperature_initial(),requires_grad=False)
++    def initial(self):return dict(m=torch.zeros(16,dtype=torch.float64),P=torch.eye(16,dtype=torch.float64),counter=0)
++    def set_stage(self,stage):
++        super().set_stage(stage);self.cal_raw.requires_grad_(stage=='cal')
++    def observe(self,raw,tokens):
++        shape(tokens,(64,64));d=self.observer(raw);ks=attention(d,self.style);dh=ks@self.style
++        kc=attention(tokens,self.content);c=kc@self.content
++        COUNTS['method_MLP']+=1;value=self.head(torch.cat((d,dh,c.mean(0))))
++        r=variance(value[16:]).double()
++        if self.stage!='fit':r=r*temperature(self.cal_raw).double().square()
++        return dict(d=d,dhat=dh,k=kc,c=c,E=tokens,o=value[:16].double(),R=r)
++    def update(self,raw,tokens,state,ablation=None):
++        self.validate_state(state);old_counter=state['counter'];state=self.initial() if self.static else state
++        a=self.observe(raw,tokens);r=a['R']
++        if ablation=='A_ISO_OBS':r=r.mean().expand_as(r)
++        elif ablation is not None:raise ValueError('A ablation')
++        m,p=gaussian_filter(state['m'],state['P'],stable(self.W.double()),torch.diag(variance(self.qraw.double(),1.)),a['o'],torch.diag(r))
++        return dict(m=m,P=p,counter=old_counter+1),a
++    def fit_loss(self,a,clean,zstar,state):
++        content=((a['c']-clean['E'].detach()).square().mean()+(a['k']-clean['k'].detach()).square().mean())/2
++        return .1*(a['o']-zstar).square().mean()+.01*gaussian_nll(zstar,state['m'],state['P'])+.05*(a['dhat']-a['d'].detach()).square().mean()+.05*content
++    def cal_loss(self,a,zstar,state):return gaussian_nll(zstar,state['m'],state['P'])
++
++def build(basis,static=False,seed=20260918):
++    with torch.random.fork_rng(devices=[]):
++        torch.manual_seed(seed);return PSF(basis,static)
+diff --git a/src/dpa_ctta/r7_b_rca/__init__.py b/src/dpa_ctta/r7_b_rca/__init__.py
+new file mode 100644
+index 0000000..a56acc8
+--- /dev/null
++++ b/src/dpa_ctta/r7_b_rca/__init__.py
+@@ -0,0 +1,59 @@
++"""B: finite five-step adapter correction; no sparse-recovery guarantee."""
++import torch
++from torch import nn
++from ..r7_shared.host import Method
++from ..r7_shared.numerics import COUNTS,shape,finite,stable,mlp,normalize,temperature,temperature_initial,coherence
++
++def energy(delta,h,o,prior,kappa):
++    return .5*(o-h@(prior+delta)).square().sum()/kappa**2+.01*delta.abs().sum()+.05*delta.square().sum()
++
++def correct(h,o,prior,kappa=1.):
++    h,o,prior=[x.double() for x in (h,o,prior)];finite(h,o,prior)
++    shape(h,(len(o),len(prior)))
++    kappa=torch.as_tensor(kappa,dtype=torch.float64);finite(kappa)
++    if kappa<=0:raise ValueError('positive kappa')
++    COUNTS['spectral_norms']+=1
++    eta=1/(torch.linalg.matrix_norm(h,2).square()/kappa.square()+.1)
++    delta=torch.zeros_like(prior);hist=[energy(delta,h,o,prior,kappa)]
++    for _ in range(5):
++        g=h.T@(h@(prior+delta)-o)/kappa.square()+.1*delta
++        v=delta-eta*g;delta=v.sign()*(v.abs()-.01*eta).clamp_min(0)
++        COUNTS['ISTA_iterations']+=1;hist.append(energy(delta,h,o,prior,kappa))
++    finite(delta);return prior+delta,dict(delta=delta,eta=eta,energy=torch.stack(hist))
++
++class RCA(Method):
++    group='B';rank=32
++    def __init__(self,basis,static=False):
++        super().__init__(basis,static)
++        if not torch.allclose(self.basis.T@self.basis,torch.eye(32,dtype=torch.float64),atol=1e-8,rtol=1e-8):raise ValueError('U orthonormal')
++        self.W=nn.Parameter(.9*torch.eye(32));self.G=nn.Parameter(torch.randn(32,32)*.01)
++        self.bias=mlp(32,64,32);self.head=mlp(32,64,64);self.Hraw=nn.Parameter(torch.randn(64,32))
++        self.cal_raw=nn.Parameter(temperature_initial(),requires_grad=False)
++        self.register_buffer('frozen_eta',(1/(torch.linalg.matrix_norm(normalize(self.Hraw.detach().double(),0),2).square()+.1)).clone())
++    def initial(self):return dict(z=torch.zeros(32,dtype=torch.float64),d=torch.zeros(32,dtype=torch.float64),counter=0)
++    def set_stage(self,stage):
++        super().set_stage(stage);self.cal_raw.requires_grad_(stage=='cal')
++        if stage=='online':
++            with torch.no_grad():self.frozen_eta.copy_(1/(torch.linalg.matrix_norm(normalize(self.Hraw.double(),0),2).square()/temperature(self.cal_raw).double().square()+.1))
++    def observe(self,raw,tokens):
++        shape(tokens,(64,64));d=self.observer(raw);COUNTS['method_MLP']+=2
++        return dict(d=d.double(),o=self.head(d).double(),bias=self.bias(d).double(),H=normalize(self.Hraw.double(),0))
++    def update(self,raw,tokens,state,ablation=None):
++        self.validate_state(state);old_counter=state['counter'];state=self.initial() if self.static else state
++        a=self.observe(raw,tokens);d=a['d'];diff=torch.zeros_like(d) if state['counter']==0 else d-state['d']
++        prior=stable(self.W.double())@state['z']+a['bias']+stable(self.G.double(),1.)@diff
++        kappa=1. if self.stage=='fit' else temperature(self.cal_raw).double()
++        if ablation=='B_PRED_ONLY':z=prior;a.update(delta=torch.zeros_like(z),eta=None,energy=None)
++        elif ablation is None:
++            z,diag=correct(a['H'],a['o'],prior,kappa);a.update(diag)
++            if self.stage=='online' and not torch.allclose(a['eta'],self.frozen_eta,rtol=1e-10,atol=1e-12):raise ValueError('frozen eta mismatch')
++        else:raise ValueError('B ablation')
++        a.update(prior=prior,difference=diff)
++        return dict(z=z,d=d,counter=old_counter+1),a
++    def fit_loss(self,a,clean,zstar,state):
++        return .1*(state['z']-zstar).square().mean()+.1*(a['o']-a['H']@zstar).square().mean()+.001*coherence(a['H'].T)
++    def cal_loss(self,a,zstar,state):return (state['z']-zstar).square().mean()
++
++def build(basis,static=False,seed=20260918):
++    with torch.random.fork_rng(devices=[]):
++        torch.manual_seed(seed);return RCA(basis,static)
+diff --git a/src/dpa_ctta/r7_c_rbe/__init__.py b/src/dpa_ctta/r7_c_rbe/__init__.py
+new file mode 100644
+index 0000000..e900670
+--- /dev/null
++++ b/src/dpa_ctta/r7_c_rbe/__init__.py
+@@ -0,0 +1,66 @@
++"""C: conditional heteroscedastic evidence, not front-door causal identification."""
++import torch
++from torch import nn
++from ..r7_shared.host import Method
++from ..r7_shared.numerics import COUNTS,shape,finite,solve,mlp,attention,normalize,variance,coherence
++
++def energy(z,h,o,r,prior):
++    e=(o-h@z)/r.sqrt();a=e.abs()
++    return torch.where(a<=1,.5*e.square(),a-.5).mean()+.05*(z-prior).square().sum()
++
++def correct(h,o,r,prior):
++    h,o,r,prior=[x.double() for x in (h,o,r,prior)];finite(h,o,r,prior)
++    shape(h,(len(o),len(prior)));shape(r,o.shape)
++    if len(o)==0 or (r<=0).any():raise ValueError('positive evidence variance')
++    z=prior;hist=[energy(z,h,o,r,prior)];weights=[]
++    for _ in range(3):
++        e=(o-h@z)/r.sqrt();nu=1/e.abs().clamp_min(1);w=nu/r
++        lhs=(h.T*w)@h/len(o)+.1*torch.eye(len(prior),dtype=torch.float64)
++        rhs=h.T@(w*o)/len(o)+.1*prior
++        z=solve(lhs,rhs);COUNTS['IRLS_iterations']+=1
++        hist.append(energy(z,h,o,r,prior));weights.append(w)
++    return z,dict(energy=torch.stack(hist),weights=weights)
++
++class RBE(Method):
++    group='C';rank=32
++    def __init__(self,basis,static=False):
++        super().__init__(basis,static)
++        if not torch.allclose(self.basis.T@self.basis,torch.eye(32,dtype=torch.float64),atol=1e-8,rtol=1e-8):raise ValueError('U orthonormal')
++        self.Pc=nn.Parameter(torch.randn(32,64)*.1);self.Pa=nn.Parameter(torch.randn(16,64)*.1);self.O=nn.Parameter(torch.randn(16,8)*.1)
++        self.query=mlp(96,64,16);self.mapping=mlp(64,64,256);self.reliability=mlp(96,64,8)
++        self.reliability.requires_grad_(False)
++        self.register_buffer('constant_R',torch.ones(8));self.register_buffer('constant_ready',torch.tensor(False))
++    def initial(self):return dict(z=torch.zeros(32,dtype=torch.float64),counter=0)
++    def set_stage(self,stage):
++        super().set_stage(stage);self.reliability.requires_grad_(stage=='cal')
++    def observe(self,raw,tokens):
++        shape(tokens,(64,64));d=self.observer(raw);kc=attention(tokens,self.Pc);c=kc@self.Pc
++        x=torch.cat((tokens-c,d.expand(64,-1)),1)
++        ka=self.query(x).softmax(-1);o=ka@self.O;h=normalize(self.mapping(c).reshape(64,8,32).double())
++        r=torch.ones_like(o) if self.stage=='fit' else variance(self.reliability(x))
++        COUNTS['method_MLP']+=2+(self.stage!='fit')
++        return dict(kc=kc,c=c,ka=ka,o=o.double(),H=h.double(),R=r.double(),E=tokens,reconstruction=c+ka@self.Pa)
++    def update(self,raw,tokens,state,ablation=None):
++        self.validate_state(state);old_counter=state['counter'];state=self.initial() if self.static else state
++        a=self.observe(raw,tokens);r=a['R']
++        if ablation=='C_CONST_R':
++            if not self.constant_ready:raise ValueError('source-cal constant R missing')
++            r=self.constant_R.double().expand_as(r)
++        elif ablation is not None:raise ValueError('C ablation')
++        z,diag=correct(a['H'].reshape(512,32),a['o'].flatten(),r.flatten(),.9*state['z']);a.update(diag)
++        return dict(z=z,counter=old_counter+1),a
++    def fit_loss(self,a,clean,zstar,state):
++        residual=a['o']-a['H']@zstar
++        coh=(coherence(self.Pc)+coherence(self.Pa))/2
++        return .1*(state['z']-zstar).square().mean()+.1*residual.square().mean()+.05*(a['reconstruction']-a['E']).square().mean()+.05*(a['kc']-clean['kc'].detach()).square().mean()+.001*coh
++    def cal_loss(self,a,zstar,state):return .5*(a['R'].log()+(a['o']-a['H']@zstar).square()/a['R']).mean()
++    @torch.no_grad()
++    def set_constant_variance(self,r,fold):
++        if fold!='cal' or self.stage!='online' or self.constant_ready:raise ValueError('one source-cal constant R only')
++        shape(r,(8,))
++        if (r<1e-4).any() or (r>10).any():raise ValueError('constant variance range')
++        self.constant_R.copy_(r);self.constant_ready.fill_(True)
++
++def build(basis,static=False,seed=20260918):
++    with torch.random.fork_rng(devices=[]):
++        torch.manual_seed(seed);return RBE(basis,static)
+diff --git a/src/dpa_ctta/r7_shared/__init__.py b/src/dpa_ctta/r7_shared/__init__.py
+new file mode 100644
+index 0000000..dabcb5a
+--- /dev/null
++++ b/src/dpa_ctta/r7_shared/__init__.py
+@@ -0,0 +1 @@
++"""R7 Stage I: procedural CPU interfaces; real execution disabled."""
+diff --git a/src/dpa_ctta/r7_shared/host.py b/src/dpa_ctta/r7_shared/host.py
+new file mode 100644
+index 0000000..8c014ab
+--- /dev/null
++++ b/src/dpa_ctta/r7_shared/host.py
+@@ -0,0 +1,80 @@
++"""Transactional image-only host. Labels/evaluator are outside this object."""
++import copy
++import hashlib
++import torch
++from torch import nn
++from .network import Observer
++from .numerics import COUNTS,finite,shape,project
++
++class Method(nn.Module):
++    def __init__(self,basis,static=False):
++        super().__init__()
++        shape(basis,(1024,self.rank))
++        if torch.linalg.matrix_rank(basis.double())!=self.rank:raise ValueError('basis full rank')
++        self.register_buffer('basis',basis.detach().double().clone());self.observer=Observer();self.static=bool(static);self.stage='fit'
++    def project(self,v):
++        if self.group=='A':return project(self.basis,v.double())[0].detach()
++        return (self.basis.T@v.double()).detach()
++    def code(self,state):return state['m'] if self.group=='A' else state['z']
++    def ambient(self,state):return (self.basis@self.code(state)).float()
++    def freeze(self):
++        self.requires_grad_(False);self.eval();self.set_stage('online')
++    def set_stage(self,stage):
++        if stage not in ('fit','cal','online'):raise ValueError('method stage')
++        self.stage=stage
++    def validate_state(self,state):
++        initial=self.initial()
++        if set(state)!=set(initial) or type(state['counter']) is not int or state['counter']<0:raise ValueError('state schema')
++        for k,v in initial.items():
++            if isinstance(v,torch.Tensor):
++                shape(state[k],v.shape)
++                if state[k].dtype!=torch.float64:raise ValueError('state float64')
++        if self.group=='A':
++            if not torch.allclose(state['P'],state['P'].T,rtol=1e-10,atol=1e-12):raise ValueError('symmetric covariance')
++            torch.linalg.cholesky(state['P'])
++    def digest(self):
++        h=hashlib.sha256()
++        h.update(f'{self.group}|{self.static}'.encode())
++        for name,value in sorted(self.state_dict().items()):
++            h.update(name.encode());h.update(str(value.dtype).encode());h.update(str(tuple(value.shape)).encode());h.update(value.cpu().contiguous().numpy().tobytes())
++        return h.hexdigest()
++
++class OnlineHost:
++    def __init__(self,segmenter,method=None,*,ablation=None):
++        self.segmenter=segmenter;self.method=method;self.ablation=ablation;self.failed=False;self.first_error=None
++        self.state=None if method is None else method.initial();self.visits=0
++        if method:
++            if any(p.requires_grad for p in method.parameters()) or method.stage!='online' or not method.observer.fitted:raise ValueError('frozen prepared method required')
++            allowed={'A':('A_ISO_OBS',),'B':('B_PRED_ONLY',),'C':('C_CONST_R',)}[method.group]
++            if ablation is not None and (ablation not in allowed or method.static):raise ValueError('FULL-checkpoint deployment ablation only')
++            if ablation=='C_CONST_R' and not method.constant_ready:raise ValueError('missing source-cal constant R')
++        elif ablation:raise ValueError('C0 has no ablation')
++    @torch.no_grad()
++    def step(self,current_image):
++        if self.failed:raise RuntimeError('hard stopped after first error')
++        before=COUNTS.copy()
++        try:
++            if self.method is None:z=self.segmenter(current_image);next_state=None
++            else:
++                _,raw,tokens=self.segmenter(current_image,observe=True)
++                next_state,_=self.method.update(raw,tokens,self.state,ablation=self.ablation)
++                self.method.validate_state(next_state)
++                z=self.segmenter(current_image,self.method.ambient(next_state))
++                finite(z)
++            # No state commit or evaluator release until final prediction succeeds.
++            self.state=next_state;self.visits+=1
++            return z.detach(),dict(counts=dict(COUNTS-before),visit=self.visits,state_committed=True)
++        except Exception as exc:
++            self.failed=True;self.first_error=dict(type=type(exc).__name__,message=str(exc),counts=dict(COUNTS-before))
++            raise
++    def save_state(self):
++        return copy.deepcopy(dict(binding=None if self.method is None else self.method.digest(),ablation=self.ablation,state=self.state,visits=self.visits,failed=self.failed,first_error=self.first_error))
++    def load_state(self,packet):
++        if self.failed or packet.get('failed') or packet.get('first_error') is not None:raise ValueError('failed state is not resumable')
++        if packet.get('binding')!=(None if self.method is None else self.method.digest()) or packet.get('ablation')!=self.ablation:raise ValueError('state binding')
++        if type(packet.get('visits')) is not int or packet['visits']<0:raise ValueError('visit counter')
++        if self.method:
++            self.method.validate_state(packet['state'])
++            if packet['state']['counter']!=packet['visits']:raise ValueError('state visit mismatch')
++        elif packet['state'] is not None:raise ValueError('C0 state')
++        self.state=copy.deepcopy(packet['state']);self.visits=packet['visits']
+diff --git a/src/dpa_ctta/r7_shared/io.py b/src/dpa_ctta/r7_shared/io.py
+new file mode 100644
+index 0000000..d26799d
+--- /dev/null
++++ b/src/dpa_ctta/r7_shared/io.py
+@@ -0,0 +1,60 @@
++"""Fresh output ownership. Legacy aggregates use the reviewed pinned reader."""
++import json,os,time,uuid
++from pathlib import Path
++
++class Output:
++    def __init__(self,path,binding):
++        self.path=Path(path)
++        if self.path.exists() or self.path.is_symlink():raise FileExistsError('new output only')
++        if any(p.is_symlink() for p in [self.path.parent,*self.path.parents]):raise ValueError('symlink output ancestor')
++        self.path.mkdir(parents=False)
++        self.owner=uuid.uuid4().hex;self.binding=dict(binding);self.started=time.monotonic()
++        self.write('owner.json',dict(owner=self.owner,binding=self.binding))
++    def write(self,name,value):
++        if Path(name).name!=name or name in ('.','..'):raise ValueError('output path escape')
++        if name!='owner.json':
++            owner=json.loads((self.path/'owner.json').read_text())
++            if owner!=dict(owner=self.owner,binding=self.binding):raise ValueError('output owner/binding changed')
++        with (self.path/name).open('x') as f:json.dump(value,f,indent=2,allow_nan=False)
++    def fail(self,exc,counts):
++        self.write('first_error.json',dict(type=type(exc).__name__,message=str(exc)))
++        self.write('cost.json',dict(seconds=time.monotonic()-self.started,counts=counts))
++
++def legacy_reader():
++    # Reuse only the separately reviewed fixed-version ordinary-file reader.
++    # No historical recompute/invalidate/publish path is called.
++    import importlib.util,sys
++    path=Path(__file__).resolve().parents[3]/'analysis/r6d_posthoc_v1/pinned_io.py'
++    spec=importlib.util.spec_from_file_location('r7_pinned_reader',path)
++    module=importlib.util.module_from_spec(spec)
++    old=sys.path[:]
++    cached=sys.modules.get('core')
++    if cached is not None and Path(cached.__file__).resolve()!=path.parent/'core.py':raise ValueError('foreign legacy core import')
++    sys.path.insert(0,str(path.parent))
++    try:spec.loader.exec_module(module)
++    finally:sys.path[:]=old
++    return module
++
++def snapshot_published(source,destination,expected_addendum):
++    """Optional scalar input only: ordinary pinned payload, no source writes.
++
++    Validate source/output disjointness before creating any file. The old reader's
++    no-follow, nlink, in-read identity and pointer checks remain unchanged.
++    """
++    source=Path(source).absolute();destination=Path(destination).absolute()
++    a,b=source.resolve(),destination.resolve()
++    if a==b or a in b.parents or b in a.parents:raise ValueError('source/output overlap')
++    reader_module=legacy_reader();reader=reader_module.Reader(source)
++    before,raw=reader_module.layout(reader,expected_addendum)
++    out=Output(destination,expected_addendum['historical_binding'])
++    try:
++        relative=expected_addendum['aggregate_input']['source_relative_path']
++        first=reader.record(relative)
++        snap=reader.record(relative,out.path/'public_aggregate.json')
++        after=reader.record(relative)
++        if first!=snap or first!=after:raise ValueError('source payload changed')
++        reader_module.check_layout(reader,expected_addendum,before)
++        out.write('input_audit.json',dict(binding=expected_addendum['historical_binding'],payload=first,pointer=before['pointer_record'],links=before['links']))
++        return out
++    except Exception as exc:
++        out.fail(exc,{});raise
+diff --git a/src/dpa_ctta/r7_shared/network.py b/src/dpa_ctta/r7_shared/network.py
+new file mode 100644
+index 0000000..2cdb832
+--- /dev/null
++++ b/src/dpa_ctta/r7_shared/network.py
+@@ -0,0 +1,82 @@
++"""Original frozen ResUNet, exact two-site FiLM, transient current-image observer."""
++import torch
++from torch import nn
++from torch.nn import functional as F
++from .numerics import COUNTS, finite, shape, mlp
++from ..hosts.vptta import model_input_from_pixels
++
++
++def film(h,v):
++    shape(v,(512,))
++    gamma,beta=v[:256].to(h),v[256:].to(h)
++    return h + torch.expm1(.1*gamma.tanh())[None,:,None,None]*h + .1*beta.tanh()[None,:,None,None]
++
++
++class Segmenter(nn.Module):
++    def __init__(self,model):
++        super().__init__(); self.model=model.cpu().eval().requires_grad_(False)
++        self.v=None; self.capture=False; self.cache={}; self.forwards=0
++        for m in model.modules():
++            if isinstance(m,nn.BatchNorm2d):
++                m.track_running_stats=False; m.running_mean=None; m.running_var=None; m.num_batches_tracked=None
++        # Original convenience hooks retain whole patient activations; remove only
++        # this newly owned model's hooks. The backbone forward still uses local sfs.
++        for hook in getattr(model,'feature_hooks',[]): hook.remove(); hook.features=None
++        if hasattr(model,'feature_hooks'): model.feature_hooks=[]
++        modules=dict(model.named_modules())
++        if not {'up1','up3','res.conv1'}.issubset(modules): raise ValueError('original intervention sites missing')
++        self.handles=[modules['up1'].register_forward_hook(self._up1),modules['up3'].register_forward_hook(self._up3),modules['res.conv1'].register_forward_hook(self._early)]
++        with torch.random.fork_rng(devices=[]):
++            gen=torch.Generator().manual_seed(20260918)
++            q,r=torch.linalg.qr(torch.randn(256,64,generator=gen))
++        q=q*torch.where(r.diagonal()<0,-1.,1.)
++        self.register_buffer('projection',q)
++    def _up1(self,m,args,h):
++        if h.shape[1]!=256: raise ValueError('up1 channels')
++        return film(h,self.v[:512])
++    def _up3(self,m,args,h):
++        if h.shape[1]!=256: raise ValueError('up3 channels')
++        if self.capture:
++            norm=(h-h.mean((-2,-1),keepdim=True))/h.std((-2,-1),unbiased=False,keepdim=True).clamp_min(1e-6)
++            e=F.adaptive_avg_pool2d(norm,(8,8))[0].flatten(1).T@self.projection
++            self.cache['tokens']=F.layer_norm(e,(64,),eps=1e-6)
++        return film(h,self.v[512:])
++    def _early(self,m,args,h):
++        if self.capture:
++            self.cache['early']=torch.cat((h.mean((-2,-1)),h.std((-2,-1),unbiased=False)),1)[0]
++    def forward(self,pixels,v=None,observe=False):
++        if self.v is not None: raise RuntimeError('reentrant backbone')
++        x=model_input_from_pixels(pixels,'fundus')
++        if x.shape[0]!=1: raise ValueError('batch1')
++        if v is None: v=x.new_zeros(1024)
++        shape(v,(1024,)); self.v=v; self.capture=observe
++        try:
++            self.forwards+=1; COUNTS['backbone_forwards']+=1
++            result=self.model(x); z=result[0] if isinstance(result,(tuple,list)) else result
++            shape(z,(1,2,512,512))
++            if not observe: return z
++            rgb=torch.cat((x.mean((-2,-1)),x.std((-2,-1),unbiased=False)),1)[0]
++            raw=torch.cat((rgb,self.cache['early'])); tokens=self.cache['tokens']
++            shape(raw,(134,)); shape(tokens,(64,64))
++            return z,raw,tokens
++        finally:
++            self.v=None; self.capture=False; self.cache.clear()
++    def close(self):
++        for h in self.handles: h.remove()
++        self.handles=[]; self.cache.clear(); self.v=None
++
++
++class Observer(nn.Module):
++    def __init__(self):
++        super().__init__(); self.head=mlp(134,64,32)
++        self.register_buffer('mean',torch.zeros(134)); self.register_buffer('std',torch.ones(134))
++        self.register_buffer('fitted',torch.tensor(False))
++    @torch.no_grad()
++    def fit_scaler(self,raw,fold):
++        if fold!='fit' or self.fitted: raise ValueError('fit-only one-time scaler')
++        if raw.ndim!=2 or raw.shape[1]!=134 or len(raw)<2: raise ValueError('scaler shape')
++        finite(raw); self.mean.copy_(raw.mean(0));self.std.copy_(raw.std(0,unbiased=False).clamp_min(1e-6));self.fitted.fill_(True)
++    def forward(self,raw):
++        if not self.fitted: raise ValueError('fit scaler required')
++        shape(raw,(134,)); COUNTS['appearance_MLP']+=1
++        return self.head((raw-self.mean)/self.std)
+diff --git a/src/dpa_ctta/r7_shared/numerics.py b/src/dpa_ctta/r7_shared/numerics.py
+new file mode 100644
+index 0000000..e25cc60
+--- /dev/null
++++ b/src/dpa_ctta/r7_shared/numerics.py
+@@ -0,0 +1,90 @@
++"""Differentiable float64 small matrices; no adaptive jitter or fallback."""
++import math
++from collections import Counter
++import torch
++from torch import nn
++from torch.nn import functional as F
++
++COUNTS = Counter()
++
++def finite(*xs):
++    for x in xs:
++        if not isinstance(x, torch.Tensor) or not torch.isfinite(x).all():
++            raise ValueError('non-finite tensor')
++
++def shape(x, expected):
++    finite(x)
++    if tuple(x.shape) != tuple(expected): raise ValueError('tensor shape')
++
++def solve(a, b):
++    finite(a, b)
++    if a.dtype != torch.float64 or not torch.allclose(a, a.T, rtol=1e-10, atol=1e-12):
++        raise ValueError('symmetric float64 SPD required')
++    COUNTS['cholesky_solves'] += 1
++    v = torch.cholesky_solve(b[:, None] if b.ndim == 1 else b, torch.linalg.cholesky(a))
++    finite(v)
++    return v[:, 0] if b.ndim == 1 else v
++
++def symmetric(a): return (a + a.T) / 2
++
++def stable(w, rho=.95):
++    COUNTS['spectral_norms'] += 1
++    return rho * w / torch.linalg.matrix_norm(w, 2).clamp_min(1)
++
++def mlp(a, b, c): return nn.Sequential(nn.Linear(a,b), nn.GELU(), nn.Linear(b,c))
++
++def normalize(x, dim=-1): return x / x.norm(dim=dim, keepdim=True).clamp_min(1e-6)
++
++def attention(x, book): return (normalize(x) @ normalize(book).T / .2).softmax(-1)
++
++def variance(raw, maximum=10.): return 1e-4 + (maximum-1e-4) * raw.sigmoid()
++
++def temperature(raw): return .25 + 3.75 * raw.sigmoid()
++
++def temperature_initial(): return torch.tensor(math.log(.2/.8), dtype=torch.float32)
++
++def coherence(rows):
++    gram = normalize(rows) @ normalize(rows).T
++    return gram[~torch.eye(len(rows),dtype=torch.bool,device=rows.device)].square().mean()
++
++def gaussian_nll(target, m, p):
++    e = target.double()-m
++    return .5*(e @ solve(p,e) + 2*torch.linalg.cholesky(p).diagonal().log().sum() + len(m)*math.log(2*math.pi))/len(m)
++
++def seg_loss(logits, labels):
++    shape(labels, logits.shape)
++    if ((labels < 0) | (labels > 1)).any(): raise ValueError('binary channel labels in [0,1]')
++    p=logits.sigmoid(); axes=(0,2,3)
++    dice=(2*(p*labels).sum(axes)+1e-6)/(p.sum(axes)+labels.sum(axes)+1e-6)
++    return F.binary_cross_entropy_with_logits(logits,labels)+.5*(1-dice).mean()
++
++def signed_columns(q):
++    idx=q.abs().argmax(0); signs=q[idx,torch.arange(q.shape[1])].sign()
++    return q * torch.where(signs == 0, torch.ones_like(signs), signs)
++
++def svd_basis(v, rank=32):
++    finite(v)
++    v=v.double(); u,s,_=torch.linalg.svd(v,full_matrices=False); COUNTS['svd']+=1
++    if torch.linalg.matrix_rank(v) < rank: raise ValueError('SOURCE_PREP_INCOMPLETE: rank deficient')
++    return signed_columns(u[:,:rank])
++
++def predictive_basis(jcov,jprobe,curvature,rank=16):
++    jcov,jprobe,curvature=[x.double() for x in (jcov,jprobe,curvature)]
++    finite(jcov,jprobe,curvature)
++    if jcov.ndim!=2 or jprobe.ndim!=2 or jcov.shape[1]!=jprobe.shape[1] or curvature.shape!=(len(jcov),) or (curvature<0).any():
++        raise ValueError('Jacobian/curvature dimensions')
++    if rank < 1 or torch.linalg.matrix_rank(jprobe) < rank: raise ValueError('insufficient probe rank')
++    eye=torch.eye(jcov.shape[1],dtype=torch.float64)
++    cov=symmetric(solve(.01*eye+(jcov.T*curvature)@jcov/len(jcov),eye))
++    e,u=torch.linalg.eigh(cov); COUNTS['eigh']+=1
++    if (e<=0).any(): raise ValueError('nonpositive covariance')
++    root=(u*e.sqrt())@u.T
++    _,v=torch.linalg.eigh(symmetric(root@jprobe.T@jprobe@root)); COUNTS['eigh']+=1
++    basis=root@signed_columns(v[:,-rank:].flip(1)); finite(basis)
++    return basis,cov
++
++def project(basis,v):
++    finite(basis,v)
++    if torch.linalg.matrix_rank(basis)!=basis.shape[1]: raise ValueError('basis rank')
++    z=torch.linalg.lstsq(basis.double(),v.double()).solution
++    return z,dict(residual_l2=float((basis@z-v).norm()),condition=float(torch.linalg.cond(basis)))
+diff --git a/src/dpa_ctta/r7_shared/plan.py b/src/dpa_ctta/r7_shared/plan.py
+new file mode 100644
+index 0000000..31f289e
+--- /dev/null
++++ b/src/dpa_ctta/r7_shared/plan.py
+@@ -0,0 +1,36 @@
++"""Metadata only. Stage I entrypoints fail before opening assets or spawning work."""
++import hashlib,json
++from pathlib import Path
++from ..r1.plan import registration_digest
++from ..r3.plan import stream,stream_summary
++ROOT=Path(__file__).resolve().parents[3]
++INPUT=ROOT/'docs/review/r7/input'
++BASE='00ccb401942e9f1d3fed48ccb7fb3777c87714b8'
++
++def science():return {p.stem:json.loads(p.read_text()) for p in sorted((INPUT/'specs').glob('*.json'))}
++def science_hashes():return {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((INPUT/'specs').glob('*.json'))}
++def real_entry(scope,*args,**kwargs):
++    raise PermissionError('Stage I: every real source/target/smoke/AB/auto-run entrypoint is disabled')
++
++def source_binding():
++    return dict(status='SOURCE_BINDING_PENDING',source_manifest_sha256=None,source_split_sha256=None,source_checkpoint_sha256=None,source_assets_sha256=None,source_pretraining_exposure='UNKNOWN',subject_identity='UNKNOWN',reason='Stage I does not read source pixels or checkpoint; no frozen source group manifest supplied')
++
++def matrix(scope,groups=()):
++    if scope=='TARGET_SCREEN':arms=['C_BASE','C0']+[g+'_'+v for g in 'ABC' for v in ('FULL','STATIC')];orders=(0,1,4)
++    elif scope=='TARGET_MECHANISM':arms=['A_ISO_OBS','B_PRED_ONLY','C_CONST_R'];orders=(0,1,4)
++    elif scope=='TARGET_EXTENSION':
++        if len(groups)>2 or len(set(groups))!=len(groups) or any(g not in 'ABC' or len(g)!=1 for g in groups):raise ValueError('at most two explicitly selected groups')
++        arms=['C_BASE','C0']+[g+'_'+v for g in groups for v in ('FULL','STATIC')];orders=(2,3)
++    else:raise ValueError('separate exact scope')
++    return [dict(job_id=f'{scope}_{a}_{o}',arm=a,order=o,arrivals=1951,scored_contents=1695,network_forwards=1951*(8 if a=='C_BASE' else 1 if a=='C0' else 2),backwards=1951 if a=='C_BASE' else 0,Adam=1951 if a=='C_BASE' else 0,VJP=0,status='NOT_RUN',device=None) for o in orders for a in arms]
++
++def dry_run(reg):
++    common=science()['COMMON_PROTOCOL']
++    if registration_digest(reg)!=common['registration_digest']:raise ValueError('registered metadata binding')
++    summaries=[]
++    for o in range(5):
++        rows=stream(reg,o)
++        summaries.append(dict(order=o,arrivals=len(rows),unique_contents=len({r['group_id'] for r in rows}),scored_contents=sum(r['subset']=='remaining_dev' for r in rows),sequence_sha256=hashlib.sha256(json.dumps([r['group_id'] for r in rows],separators=(',',':')).encode()).hexdigest()))
++    summary=stream_summary(reg)
++    if summary['stream_digest']!=common['recurrence_digest']:raise ValueError('recurrence binding')
++    return dict(status='REGISTERED_METADATA_DRY_RUN',science_sha256=science_hashes(),screen=matrix('TARGET_SCREEN'),mechanism=matrix('TARGET_MECHANISM'),extension_templates={''.join(g):matrix('TARGET_EXTENSION',g) for g in [('A','B'),('A','C'),('B','C')]},extension_template_note='mutually exclusive hypothetical pairs; no group nominated; at most12 jobs, not36',stream=summaries,recurrence=summary,source=source_binding(),source_budget=dict(oracle_F=6144,oracle_backward=3072,oracle_Adam=3072,A_basis_F=32,A_basis_VJP=1024,fit_F=72000,fit_backward_AdamW=6000,cal_F=6144,cal_backward_Adam=1536,validation_F=6*64*12,additional='source scaler observations, oracle query evaluation, C constantR calibration observations separately metered; budget not a complete measured total'),external_review='NOT_RUN',execution_started=False)
+diff --git a/src/dpa_ctta/r7_shared/preparation.py b/src/dpa_ctta/r7_shared/preparation.py
+new file mode 100644
+index 0000000..d04a052
+--- /dev/null
++++ b/src/dpa_ctta/r7_shared/preparation.py
+@@ -0,0 +1,63 @@
++"""Complete source tensor pipeline; filesystem/real execution entry remains disabled."""
++import copy
++import hashlib
++import torch
++from .source import (oracle_all,anchors,simulate,a_basis,shared_basis,SourceTrainer)
++from .numerics import seg_loss,COUNTS
++
++def new_method(group,basis,static=False):
++    if group=='A':from ..r7_a_psf import build
++    elif group=='B':from ..r7_b_rca import build
++    elif group=='C':from ..r7_c_rbe import build
++    else:raise ValueError('group A/B/C')
++    return build(basis,static)
++
++@torch.no_grad()
++def scaler_observations(segmenter,data):
++    # Fit-only frozen backbone observations; this extra preparation cost is counted.
++    result=[]
++    for aid,style in enumerate(anchors('fit')):
++        for group in data.folds['fit']:
++            image=simulate(data.get(group,'fit').image,style,f'R7_SCALER|{aid}|{group}')
++            _,raw,_=segmenter(image,observe=True);result.append(raw)
++    return torch.stack(result)
++
++@torch.no_grad()
++def evaluate_oracles(segmenter,data,oracles):
++    oracles.validate(data);rows=[]
++    for aid,style in enumerate(anchors(oracles.fold)):
++        for group in data.folds[oracles.fold]:
++            if group in oracles.support_pairs[aid]:continue
++            record=data.get(group,oracles.fold);x=simulate(record.image,style,f'R7_ORACLE_QUERY|{oracles.fold}|{aid}|{group}')
++            baseline=seg_loss(segmenter(x),record.label);changed=seg_loss(segmenter(x,oracles.values[:,aid].float()),record.label)
++            rows.append(dict(anchor=aid,group=group,baseline=float(baseline),proxy=float(changed)))
++    return rows
++
++def prepare_tensors(segmenter,data):
++    """For separately authorized future source entry or explicitly procedural callers.
++
++    No disk reads, subprocess, device transfer, target loop, or publication occurs.
++    FULL/STATIC get independent same-seed parameters, same schedule and full budget.
++    """
++    before=COUNTS.copy()
++    oracles={f:oracle_all(segmenter,data,f) for f in ('fit','cal','val')}
++    u=shared_basis(oracles['fit'],data);b,baudit=a_basis(segmenter,data)
++    raw=scaler_observations(segmenter,data);outputs={}
++    for group in 'ABC':
++        for static in (False,True):
++            m=new_method(group,b if group=='A' else u,static);m.observer.fit_scaler(raw,'fit')
++            trainer=SourceTrainer(segmenter,m,data,oracles['fit']);trainer.fit();trainer.start_calibration(oracles['cal']);trainer.calibrate()
++            projections={f:[dict(anchor=i,residual_l2=float((m.basis@m.project(o.values[:,i])-o.values[:,i]).norm()),condition=float(torch.linalg.cond(m.basis))) for i in range(o.values.shape[1])] for f,o in oracles.items()}
++            outputs[group+('_STATIC' if static else '_FULL')]=dict(projection_audit=projections,weights=copy.deepcopy(m.state_dict()),validation=trainer.validate(oracles['val']),fit_steps=trainer.fit_steps,cal_steps=trainer.cal_steps,binding=m.digest())
++    return dict(models=outputs,oracle_query={f:evaluate_oracles(segmenter,data,o) for f,o in oracles.items()},basis_audit=baudit,cost=dict(COUNTS-before))
++
++def inference_from_tensors(segmenter,group,static,basis,weights,expected_digest,ablation=None):
++    from .host import OnlineHost
++    m=new_method(group,basis,static);m.load_state_dict(weights,strict=True)
++    # Check stored eta before freeze recomputes it; corrupt assets must not be repaired.
++    if group=='B':
++        from .numerics import normalize,temperature
++        expected=1/(torch.linalg.matrix_norm(normalize(m.Hraw.double(),0),2).square()/temperature(m.cal_raw).double().square()+.1)
++        if not torch.allclose(m.frozen_eta,expected,rtol=1e-10,atol=1e-12):raise ValueError('stored deployment eta')
++    if m.digest()!=expected_digest:raise ValueError('training/inference asset binding')
++    m.freeze();return OnlineHost(segmenter,m,ablation=ablation)
+diff --git a/src/dpa_ctta/r7_shared/report.py b/src/dpa_ctta/r7_shared/report.py
+new file mode 100644
+index 0000000..a03ed78
+--- /dev/null
++++ b/src/dpa_ctta/r7_shared/report.py
+@@ -0,0 +1,53 @@
++"""Descriptive paired scientific review. No automatic gate or next-run nomination."""
++import math
++from collections import defaultdict
++import numpy as np
++
++def review(rows):
++    """Scalar rows: arm/order/content/domain/subset/dice[OD,OC]/assd[OD,OC].
++
++    ASSD None is retained, never changed to zero. Content identifiers are used
++    privately for pairing and excluded from the aggregate returned here.
++    """
++    arms=['C_BASE','C0']+[g+'_'+v for g in 'ABC' for v in ('FULL','STATIC')]
++    lookup={};domains=set()
++    for row in rows:
++        if row['arm'] not in arms or row['order'] not in (0,1,4):raise ValueError('screen scope')
++        if row['subset']!='remaining_dev':continue
++        key=(row['arm'],row['order'],row['content'])
++        if key in lookup:raise ValueError('duplicate scalar')
++        if len(row['dice'])!=2 or len(row['assd'])!=2:raise ValueError('OD/OC')
++        if any(not math.isfinite(x) for x in row['dice']):raise ValueError('finite Dice')
++        if any(x is not None and (not math.isfinite(x) or x<0) for x in row['assd']):raise ValueError('ASSD missing/finite')
++        lookup[key]=row;domains.add(row['domain'])
++    if not domains:raise ValueError('no scored rows')
++    keys={o:{c for a,k,c in lookup if a=='C_BASE' and k==o} for o in (0,1,4)}
++    if not keys[0] or any(keys[o]!=keys[0] for o in keys):raise ValueError('same-content stream coverage')
++    for arm in arms:
++        for o in keys:
++            if {c for a,k,c in lookup if a==arm and k==o}!=keys[o]:raise ValueError('paired arm coverage')
++    absolute=[];paired=[]
++    for arm in arms:
++        for o in keys:
++            for domain in sorted(domains):
++                rr=[lookup[arm,o,c] for c in keys[o] if lookup['C_BASE',o,c]['domain']==domain]
++                if not rr or any(r['domain']!=domain for r in rr):raise ValueError('domain pairing')
++                values=np.asarray([r['dice'] for r in rr],dtype=float)
++                absolute.append(dict(arm=arm,order=o,domain=domain,n=len(rr),OD=float(values[:,0].mean()),OC=float(values[:,1].mean()),macro=float(values.mean())))
++    for g in 'ABC':
++        for ref in ('C_BASE',g+'_STATIC'):
++            for o in keys:
++                for domain in sorted(domains):
++                    pairs=[(lookup[g+'_FULL',o,c],lookup[ref,o,c]) for c in keys[o] if lookup[ref,o,c]['domain']==domain]
++                    delta=np.asarray([np.asarray(a['dice'])-b['dice'] for a,b in pairs]);macro=delta.mean(1)
++                    assd=[]
++                    for ch in range(2):
++                        valid=[a['assd'][ch]-b['assd'][ch] for a,b in pairs if a['assd'][ch] is not None and b['assd'][ch] is not None]
++                        assd.append(dict(channel=('OD','OC')[ch],common_valid=len(valid),undefined=len(pairs)-len(valid),mean_delta=float(np.mean(valid)) if valid else None))
++                    paired.append(dict(group=g,reference=ref,order=o,domain=domain,n=len(pairs),OD=float(delta[:,0].mean()),OC=float(delta[:,1].mean()),macro=float(macro.mean()),negative=int((macro<0).sum()),positive=int((macro>0).sum()),zero=int((macro==0).sum()),paired_tail_quantiles={str(q):float(np.quantile(macro,q)) for q in (.05,.25,.5,.75,.95)},ASSD=assd))
++    summary=[]
++    for g in 'ABC':
++        for ref in ('C_BASE',g+'_STATIC'):
++            selected=[r for r in paired if r['group']==g and r['reference']==ref]
++            summary.append(dict(group=g,reference=ref,primary=float(np.mean([r['macro'] for r in selected if r['order'] in (0,1)])),recurrence=float(np.mean([r['macro'] for r in selected if r['order']==4])),worst_domain_order=min(r['macro'] for r in selected)))
++    return dict(status='DESCRIPTIVE_RESEARCH_REVIEW_NOT_A_GATE',absolute=absolute,paired=paired,summary=summary,automatic_nomination=False,next_execution_authorized=False,source_and_online_costs='MUST_ATTACH_SEPARATE_MEASURED_COST_LEDGER',limitations='development contents; different orders are not new patients; no significance, equivalence or clinical safety claim')
+diff --git a/src/dpa_ctta/r7_shared/source.py b/src/dpa_ctta/r7_shared/source.py
+new file mode 100644
+index 0000000..9ff44e2
+--- /dev/null
++++ b/src/dpa_ctta/r7_shared/source.py
+@@ -0,0 +1,255 @@
++"""Tensor-only source preparation. No filesystem loaders or target substitution."""
++import functools
++import hashlib
++import math
++import time
++from dataclasses import dataclass
++import torch
++from .numerics import COUNTS, finite, seg_loss, predictive_basis, svd_basis, project
++
++RANGES=((-0.1,.1),(.7,1.3),(.7,1.5),(.8,1.2),(.8,1.2),(.8,1.2),(0,1.5),(0,.03),(0,.25))
++IDENTITY=(0.,1.,1.,1.,1.,1.,0.,0.,0.)
++
++def seed(key): return int.from_bytes(hashlib.sha256(key.encode()).digest()[:8],'big')%(2**63)
++def generator(key): return torch.Generator().manual_seed(seed(key))
++
++def split(groups,existing=None):
++    if len(groups)!=len(set(groups)): raise ValueError('duplicate groups')
++    if existing is None:
++        ordered=sorted(groups,key=lambda x:hashlib.sha256(('R7_SOURCE_SPLIT_V1|'+x).encode()).digest())
++        a,b=math.floor(.70*len(groups)),math.floor(.15*len(groups))
++        existing=dict(fit=ordered[:a],cal=ordered[a:a+b],val=ordered[a+b:])
++    if set(existing)!={'fit','cal','val'}: raise ValueError('source folds')
++    flat=[g for values in existing.values() for g in values]
++    if len(flat)!=len(set(flat)) or set(flat)!=set(groups): raise ValueError('fold overlap/coverage')
++    if any(len(existing[f])<n for f,n in [('fit',32),('cal',4),('val',4)]): raise ValueError('source fold minimum')
++    return {k:list(v) for k,v in existing.items()}
++
++def anchors(fold):
++    if fold not in ('fit','cal','val'): raise ValueError('source fold')
++    values=[]
++    for i in range(128 if fold=='fit' else 32):
++        g=generator(f'R7_STYLE_V1|20260918|{fold}|{i}');x=torch.tensor(IDENTITY)
++        if i:
++            active=3 if fold=='val' else 1+(i-1)%2
++            for j in torch.randperm(9,generator=g)[:active].tolist():
++                lo,hi=RANGES[j]; x[j]=lo+(hi-lo)*torch.rand((),generator=g)
++        values.append(x)
++    return torch.stack(values)
++
++def simulate(x,style,key):
++    finite(x,style)
++    if tuple(style.shape)!=(9,) or any(not lo<=float(v)<=hi for v,(lo,hi) in zip(style,RANGES)): raise ValueError('style range')
++    if x.shape[0:2]!=(1,3) or x.dtype!=torch.float32 or x.device.type!='cpu': raise ValueError('CPU source RGB')
++    b,c,g,r,gg,bb,sigma,noise,vignette=style.tolist()
++    y=((x-.5)*c+.5+b).clamp(0,1).pow(g)*x.new_tensor([r,gg,bb])[None,:,None,None]
++    if sigma>0:
++        radius=math.ceil(3*sigma);k=torch.arange(-radius,radius+1,dtype=x.dtype)
++        k=(-k.square()/(2*sigma*sigma)).exp(); k=k/k.sum()
++        for horizontal in (True,False):
++            weight=(k.view(1,1,1,-1) if horizontal else k.view(1,1,-1,1)).expand(3,-1,-1,-1)
++            pad=(radius,radius,0,0) if horizontal else (0,0,radius,radius)
++            y=torch.nn.functional.conv2d(torch.nn.functional.pad(y,pad,mode='reflect'),weight,groups=3)
++    if noise:y=y+noise*torch.randn(y.shape,generator=generator(key),dtype=y.dtype)
++    u=torch.linspace(-1,1,x.shape[-1]);v=torch.linspace(-1,1,x.shape[-2])
++    return (y*(1-vignette*(v[:,None].square()+u[None,:].square())/2)).clamp(0,1)
++
++@dataclass(frozen=True)
++class Record:
++    group: str
++    fold: str
++    image: torch.Tensor
++    label: torch.Tensor
++    origin: str = 'source'
++
++class SourceData:
++    def __init__(self,records,folds):
++        self.folds=split([r.group for r in records],folds); self.records={r.group:r for r in records}
++        for fold,groups in self.folds.items():
++            for group in groups:
++                r=self.records[group]
++                if r.origin!='source' or r.fold!=fold: raise ValueError('source provenance/fold')
++    def get(self,group,fold):
++        if group not in self.folds[fold]: raise ValueError('source fold leakage')
++        return self.records[group]
++
++@dataclass(frozen=True)
++class Oracles:
++    fold: str
++    values: torch.Tensor
++    support_pairs: tuple
++    def validate(self,data):
++        n=128 if self.fold=='fit' else 32
++        if self.fold not in data.folds or self.values.shape!=(1024,n) or len(self.support_pairs)!=n: raise ValueError('oracle dimensions/fold')
++        finite(self.values)
++        for pair in self.support_pairs:
++            if len(pair)!=2 or len(set(pair))!=2 or not set(pair)<=set(data.folds[self.fold]): raise ValueError('oracle support identity')
++        return self
++
++def support_pair(data,fold,index):
++    groups=data.folds[fold];g=generator(f'R7_ORACLE_PAIR|{fold}|{index}')
++    return tuple(groups[i] for i in torch.randperm(len(groups),generator=g)[:2].tolist())
++
++def oracle_one(segmenter,data,fold,index):
++    pair=support_pair(data,fold,index);style=anchors(fold)[index]
++    records=[data.get(group,fold) for group in pair]
++    images=[simulate(r.image,style,f'R7_ORACLE_NOISE|{fold}|{index}|{r.group}') for r in records]
++    v=torch.zeros(1024,requires_grad=True);opt=torch.optim.Adam([v],lr=.03,betas=(.9,.999),eps=1e-8,weight_decay=0)
++    for _ in range(16):
++        opt.zero_grad(set_to_none=True)
++        loss=sum(seg_loss(segmenter(x,v),r.label) for x,r in zip(images,records))/2+1e-3*v.square().mean()
++        finite(loss);loss.backward();COUNTS['source_backward_calls']+=1;finite(v.grad)
++        opt.step();COUNTS['source_Adam']+=1;finite(v)
++    return v.detach(),pair
++
++def oracle_all(segmenter,data,fold):
++    results=[oracle_one(segmenter,data,fold,i) for i in range(len(anchors(fold)))]
++    return Oracles(fold,torch.stack([r[0] for r in results],1),tuple(r[1] for r in results)).validate(data)
++
++def shared_basis(oracles,data):
++    oracles.validate(data)
++    if oracles.fold!='fit':raise ValueError('only fit oracle constructs basis')
++    return svd_basis(oracles.values,32)
++
++def pooled_jacobian(segmenter,data,groups):
++    rows=[];readouts=[]
++    for group in groups:
++        r=data.get(group,'fit');v=torch.zeros(1024,requires_grad=True)
++        z=segmenter(r.image,v);readout=torch.nn.functional.adaptive_avg_pool2d(z,(4,4)).flatten()
++        readouts.append(readout.detach().double())
++        for i in range(32):
++            rows.append(torch.autograd.grad(readout[i],v,retain_graph=i<31)[0].detach().double());COUNTS['source_VJP']+=1
++    return torch.stack(rows),torch.cat(readouts)
++
++def a_basis(segmenter,data):
++    groups=sorted(data.folds['fit'],key=lambda g:seed('R7_BASIS|'+g))
++    if len(groups)<32: raise ValueError('32 disjoint fit groups required')
++    jc,r=pooled_jacobian(segmenter,data,groups[:16]);jp,_=pooled_jacobian(segmenter,data,groups[16:32])
++    b,cov=predictive_basis(jc,jp,r.sigmoid()*(1-r.sigmoid()))
++    return b,dict(cov_groups=groups[:16],probe_groups=groups[16:32],covariance=cov)
++
++def sequence(fold,step):
++    bank=anchors(fold);gen=generator(f'R7_SCHEDULE|20260918|{fold}|{step}')
++    a,b=torch.randperm(len(bank),generator=gen)[:2].tolist()
++    if step%3==0:return [a,a,b,b]
++    if step%3==2:return [a,b,a,b]
++    scale=torch.tensor([hi-lo for lo,hi in RANGES]);chosen=[a]
++    for _ in range(3):
++        distances=(((bank-bank[chosen[-1]])/scale)**2).sum(1)
++        chosen.append(min((j for j in range(len(bank)) if j not in chosen),key=lambda j:(float(distances[j]),j)))
++    return chosen
++
++def roles(data,fold,step,anchor_ids,oracles):
++    # Exclude each proxy's support subjects from its query as well as its current
++    # support. A small deterministic matching selects eight unique roles if possible.
++    pool=data.folds[fold];g=generator(f'R7_ROLES|{fold}|{step}')
++    ordered=[pool[i] for i in torch.randperm(len(pool),generator=g).tolist()]
++    candidates=[ordered if slot%2==0 else [x for x in ordered if x not in oracles.support_pairs[anchor_ids[slot//2]]] for slot in range(8)]
++    assigned={}
++    def assign(slot,seen):
++        for group in candidates[slot]:
++            if group in seen: continue
++            seen.add(group)
++            if group not in assigned or assign(assigned[group],seen):assigned[group]=slot;return True
++        return False
++    if len(pool)>=8 and all(assign(i,set()) for i in range(8)):
++        result=[None]*8
++        for group,slot in assigned.items():result[slot]=group
++        return result,False
++    result=[]
++    for t in range(4):
++        support=next(x for x in ordered if t==0 or x!=result[-2])
++        query=next(x for x in ordered if x!=support and x not in oracles.support_pairs[anchor_ids[t]])
++        result.extend((support,query))
++    return result,True
++
++def terminal_step(fn):
++    @functools.wraps(fn)
++    def call(self,*args,**kwargs):
++        if self.mode=='FAILED':raise RuntimeError('source trainer stopped at first failure')
++        before=COUNTS.copy();started=time.monotonic()
++        try:return fn(self,*args,**kwargs)
++        except Exception as exc:
++            self.mode='FAILED';self.first_error=dict(type=type(exc).__name__,message=str(exc),counts=dict(COUNTS-before),wall_seconds=time.monotonic()-started)
++            raise
++    return call
++
++class SourceTrainer:
++    def __init__(self,segmenter,method,data,oracles):
++        self.segmenter=segmenter;self.method=method;self.data=data;self.oracles=oracles.validate(data)
++        if oracles.fold!='fit':raise ValueError('fit trainer requires fit oracle')
++        self.fit_steps=0;self.cal_steps=0;self.mode='FIT';self.gradients={};self.first_error=None
++        method.requires_grad_(True);method.set_stage('fit')
++        self.opt=torch.optim.AdamW([p for p in method.parameters() if p.requires_grad],lr=3e-4,weight_decay=1e-4,betas=(.9,.999),eps=1e-8)
++    def episode(self,fold,step,oracles):
++        oracles.validate(self.data)
++        if oracles.fold!=fold:raise ValueError('oracle cross fold')
++        ids=sequence(fold,step);rs,reuse=roles(self.data,fold,step,ids,oracles)
++        state=self.method.initial();losses=[];queries=[]
++        for t,aid in enumerate(ids):
++            s,q=[self.data.get(g,fold) for g in rs[2*t:2*t+2]];style=anchors(fold)[aid]
++            with torch.no_grad():
++                _,raw0,e0=self.segmenter(s.image,observe=True)
++                _,raw,e=self.segmenter(simulate(s.image,style,f'R7_SUPPORT|{fold}|{step}|{t}'),observe=True)
++            # The clean target descriptor participates only as a detached target.
++            clean=self.method.observe(raw0,e0)
++            zstar=self.method.project(oracles.values[:,aid])
++            state,aux=self.method.update(raw,e,state)
++            z=self.segmenter(simulate(q.image,style,f'R7_QUERY|{fold}|{step}|{t}'),self.method.ambient(state))
++            losses.append(seg_loss(z,q.label)+self.method.fit_loss(aux,clean,zstar,state))
++            prob=z.detach().sigmoid();dice=(2*(prob*q.label).sum((0,2,3))+1e-6)/(prob.sum((0,2,3))+q.label.sum((0,2,3))+1e-6)
++            queries.append(dict(seg_loss=float(seg_loss(z.detach(),q.label)),soft_Dice_OD_OC=dice.tolist(),proxy_mse=float((self.method.code(state).detach()-zstar).square().mean())))
++        return torch.stack(losses).mean(),dict(query=queries,group_reuse=reuse,state=state)
++    @terminal_step
++    def fit_step(self):
++        if self.mode!='FIT' or self.fit_steps>=1000:raise ValueError('fixed fit lifecycle')
++        self.opt.zero_grad(set_to_none=True);loss,audit=self.episode('fit',self.fit_steps,self.oracles)
++        finite(loss);loss.backward();COUNTS['source_backward_calls']+=1
++        for n,p in self.method.named_parameters():
++            if p.grad is not None:finite(p.grad);self.gradients[n]=float(p.grad.norm())
++        torch.nn.utils.clip_grad_norm_([p for p in self.method.parameters() if p.requires_grad],1.,error_if_nonfinite=True)
++        self.opt.step();COUNTS['source_AdamW']+=1;finite(*self.method.parameters());self.fit_steps+=1
++        return float(loss),audit
++    def fit(self):
++        while self.fit_steps<1000:self.fit_step()
++    def start_calibration(self,oracles,*,procedural_micro=False):
++        oracles.validate(self.data)
++        if oracles.fold!='cal' or self.mode!='FIT' or (self.fit_steps!=1000 and not procedural_micro):raise ValueError('calibration lifecycle/fold')
++        self.mode='CAL';self.cal_oracles=oracles;self.method.requires_grad_(False);self.method.set_stage('cal')
++        for p in self.method.parameters():p.grad=None
++        self.cal_opt=torch.optim.Adam([p for p in self.method.parameters() if p.requires_grad],lr=1e-3,betas=(.9,.999),eps=1e-8,weight_decay=0)
++    @terminal_step
++    def cal_step(self):
++        if self.mode!='CAL' or self.cal_steps>=256:raise ValueError('fixed calibration lifecycle')
++        step=self.cal_steps;ids=sequence('cal',step);rs,_=roles(self.data,'cal',step,ids,self.cal_oracles)
++        state=self.method.initial();losses=[];self.cal_opt.zero_grad(set_to_none=True)
++        for t,aid in enumerate(ids):
++            r=self.data.get(rs[2*t],'cal');image=simulate(r.image,anchors('cal')[aid],f'R7_CAL|{step}|{t}')
++            if self.method.group=='C':
++                image=(image+.04*(step+1)/256*torch.randn(image.shape,generator=generator(f'R7_CAL_RGB|{step}|{t}'))).clamp(0,1)
++            with torch.no_grad():_,raw,e=self.segmenter(image,observe=True)
++            if self.method.group=='C':e=e+.02*(step+1)/256*torch.randn(e.shape,generator=generator(f'R7_CAL_TOKEN|{step}|{t}'))
++            state,aux=self.method.update(raw,e,state)
++            losses.append(self.method.cal_loss(aux,self.method.project(self.cal_oracles.values[:,aid]),state))
++        loss=torch.stack(losses).mean();finite(loss);loss.backward();COUNTS['calibration_backward_calls']+=1
++        for p in self.method.parameters():
++            if p.requires_grad and p.grad is not None:finite(p.grad)
++        self.cal_opt.step();COUNTS['calibration_Adam']+=1;finite(*self.method.parameters());self.cal_steps+=1
++        return float(loss)
++    def calibrate(self):
++        while self.cal_steps<256:self.cal_step()
++        self.method.requires_grad_(False);self.method.set_stage('online');self.mode='FROZEN'
++        if self.method.group=='C':self.constant_variance()
++    @torch.no_grad()
++    def constant_variance(self):
++        if self.method.group!='C' or self.mode!='FROZEN':raise ValueError('constant R source cal only after calibration')
++        logs=[]
++        for aid,style in enumerate(anchors('cal')):
++            for group in self.data.folds['cal']:
++                r=self.data.get(group,'cal');image=simulate(r.image,style,f'R7_CONST_R|{aid}|{group}')
++                _,raw,e=self.segmenter(image,observe=True);logs.append(self.method.observe(raw,e)['R'].log().mean(0))
++        self.method.set_constant_variance(torch.stack(logs).mean(0).exp(),'cal')
++    @torch.no_grad()
++    def validate(self,oracles):
++        if self.mode!='FROZEN' or oracles.fold!='val':raise ValueError('held-out validation only')
++        return [self.episode('val',i,oracles)[1]['query'] for i in range(64)]
+diff --git a/tests/r7/common.py b/tests/r7/common.py
+new file mode 100644
+index 0000000..d35d2a7
+--- /dev/null
++++ b/tests/r7/common.py
+@@ -0,0 +1,46 @@
++import torch
++from torch import nn
++from dpa_ctta.r7_shared.network import Segmenter
++from dpa_ctta.r7_shared.preparation import new_method
++from dpa_ctta.r7_shared.source import Record,SourceData,Oracles,split,support_pair
++
++class Small(nn.Module):
++    """Explicit small fixture only; full ResUNet tests are separate."""
++    def __init__(self):
++        super().__init__();self.res=nn.Module();self.res.conv1=nn.Conv2d(3,64,1)
++        self.up1=nn.Sequential(nn.Conv2d(64,256,1),nn.BatchNorm2d(256))
++        self.up3=nn.Sequential(nn.Conv2d(256,256,1),nn.BatchNorm2d(256));self.seg_head=nn.Conv2d(256,2,1)
++    def forward(self,x):
++        x=torch.nn.functional.adaptive_avg_pool2d(x,(8,8));h=self.res.conv1(x);h=self.up1(h);h=self.up3(h)
++        return torch.nn.functional.interpolate(self.seg_head(h),(512,512),mode='bilinear',align_corners=False)
++
++def pixels(i=0):return torch.rand((1,3,512,512),generator=torch.Generator().manual_seed(31+i))
++def basis(rank):return torch.linalg.qr(torch.randn(1024,rank,dtype=torch.float64,generator=torch.Generator().manual_seed(92)))[0]
++def method(group,static=False):
++    m=new_method(group,basis(16 if group=='A' else 32),static)
++    m.observer.fit_scaler(torch.randn(6,134,generator=torch.Generator().manual_seed(44)),'fit');return m
++
++def obs(i=0):
++    g=torch.Generator().manual_seed(87+i);return torch.randn(134,generator=g),torch.randn(64,64,generator=g)
++
++def segmenter(full=False):
++    with torch.random.fork_rng(devices=[]):
++        torch.manual_seed(72)
++        if full:
++            from dpa_ctta.integrations.ctta_suite import build_reference_model
++            m,_=build_reference_model('fundus')
++        else:m=Small()
++    return Segmenter(m)
++
++def source_fixture():
++    groups=[f'procedural_{i}' for i in range(48)];folds=split(groups);records=[]
++    # Procedural identity metadata are distinct. Shared tensor construction does
++    # not stand in for real independent patients; it tests API/fold enforcement.
++    x=pixels();y=(x[:,:2]>.5).float()
++    for fold,gs in folds.items():
++        records.extend(Record(g,fold,x,y) for g in gs)
++    data=SourceData(records,folds);oracles={}
++    for fold in folds:
++        n=128 if fold=='fit' else 32
++        oracles[fold]=Oracles(fold,.01*torch.randn(1024,n,generator=torch.Generator().manual_seed(n)),tuple(support_pair(data,fold,i) for i in range(n))).validate(data)
++    return data,oracles
+diff --git a/tests/r7/test_contract.py b/tests/r7/test_contract.py
+new file mode 100644
+index 0000000..a278335
+--- /dev/null
++++ b/tests/r7/test_contract.py
+@@ -0,0 +1,236 @@
++import copy,inspect,json,tempfile,unittest
++from pathlib import Path
++from unittest.mock import patch
++import torch
++from common import method,obs,segmenter,pixels,source_fixture
++from dpa_ctta.r7_shared.network import film
++from dpa_ctta.r7_shared.host import OnlineHost
++from dpa_ctta.r7_shared.source import (SourceTrainer,SourceData,Record,split,roles,sequence,anchors,simulate,shared_basis)
++from dpa_ctta.r7_shared.preparation import inference_from_tensors
++from dpa_ctta.r7_shared.numerics import COUNTS
++from dpa_ctta.r7_shared.plan import real_entry,matrix,source_binding
++from dpa_ctta.r7_shared.io import Output,legacy_reader
++
++def eq(a,b):
++    if isinstance(a,torch.Tensor):return torch.equal(a,b)
++    if isinstance(a,dict):return a.keys()==b.keys() and all(eq(a[k],b[k]) for k in a)
++    return a==b
++
++class Contracts(unittest.TestCase):
++    def test_film_bitwise_and_zero_derivative(self):
++        h=torch.randn(1,256,3,3);v=torch.zeros(512,requires_grad=True);z=film(h,v)
++        self.assertTrue(torch.equal(z,h));z.sum().backward();self.assertTrue(torch.all(v.grad[256:]!=0))
++    def test_observer_shapes_current_BN_and_cache_release(self):
++        s=segmenter();x=pixels();z,raw,e=s(x,observe=True)
++        self.assertEqual(raw.shape,(134,));self.assertEqual(e.shape,(64,64));self.assertFalse(s.cache);self.assertIsNone(s.v)
++        for m in s.modules():
++            if isinstance(m,torch.nn.BatchNorm2d):self.assertFalse(m.track_running_stats);self.assertIsNone(m.running_mean)
++        self.assertFalse(any(p.requires_grad for p in s.model.parameters()));s.close()
++    def test_scaler_is_fit_only_and_no_online_running_change(self):
++        m=method('A');old=copy.deepcopy(m.observer.state_dict());m.observe(*obs())
++        self.assertTrue(eq(old,m.observer.state_dict()))
++        for fold in ('cal','val','target','fit'):
++            with self.assertRaises(ValueError):m.observer.fit_scaler(torch.randn(4,134),fold)
++    def test_independent_RNG_and_identical_full_static_initialization(self):
++        rng=torch.get_rng_state().clone()
++        for group in 'ABC':
++            a,b=method(group),method(group,True)
++            self.assertTrue(eq(a.state_dict(),b.state_dict()))
++        self.assertTrue(torch.equal(rng,torch.get_rng_state()))
++    def test_online_two_forward_no_autograd_and_current_only(self):
++        for group in 'ABC':
++            s=segmenter();m=method(group);m.freeze();h=OnlineHost(s,m)
++            with patch('torch.autograd.grad',side_effect=AssertionError('no VJP')),patch('torch.Tensor.backward',side_effect=AssertionError('no backward')):
++                z,a=h.step(pixels());self.assertEqual(a['counts']['backbone_forwards'],2)
++            for k in ('label','domain','future','sample_id'):
++                with self.assertRaises(TypeError):h.step(pixels(),**{k:None})
++            self.assertFalse(s.cache);self.assertEqual(set(h.state),set(m.initial()));s.close()
++    def test_state_restore_next_output_and_GT_future_independence(self):
++        for group in 'ABC':
++            s=segmenter();m=method(group);m.freeze();h=OnlineHost(s,m);h.step(pixels());saved=h.save_state()
++            a,_=h.step(pixels(1));state=h.save_state();h.load_state(saved)
++            # Evaluator GT/future tensors are constructed and never passed to host.
++            gt=torch.ones(1,2,512,512);future=pixels(2);del gt,future
++            b,_=h.step(pixels(1));self.assertTrue(torch.equal(a,b));self.assertTrue(eq(state,h.save_state()));s.close()
++    def test_no_commit_on_second_forward_failure_and_no_retry(self):
++        s=segmenter();m=method('B');m.freeze();h=OnlineHost(s,m);before=h.save_state();orig=s.forward;call=[0]
++        def fail(*a,**kw):
++            call[0]+=1
++            if call[0]==2:raise ValueError('fixture final failure')
++            return orig(*a,**kw)
++        with patch.object(s,'forward',side_effect=fail):
++            with self.assertRaises(ValueError):h.step(pixels())
++        self.assertTrue(eq(before['state'],h.state));self.assertEqual(h.visits,0);self.assertTrue(h.failed)
++        with self.assertRaises(RuntimeError):h.step(pixels())
++        with self.assertRaises(ValueError):h.load_state(before)
++        s.close()
++    def test_state_corruption_binding_rejected(self):
++        s=segmenter();m=method('A');m.freeze();h=OnlineHost(s,m)
++        for which in ('binding','dtype','shape','finite','counter'):
++            p=h.save_state()
++            if which=='binding':p['binding']='bad'
++            elif which=='counter':p['state']['counter']=2
++            elif which=='dtype':p['state']['m']=p['state']['m'].float()
++            elif which=='shape':p['state']['m']=torch.zeros(2,dtype=torch.float64)
++            else:p['state']['m'][0]=float('nan')
++            with self.assertRaises(ValueError):h.load_state(p)
++        s.close()
++    def test_batch_and_nonfinite_inputs_hard_fail(self):
++        for bad in (pixels().repeat(2,1,1,1),torch.full((1,3,512,512),float('nan'))):
++            s=segmenter();h=OnlineHost(s)
++            with self.assertRaises(ValueError):h.step(bad)
++            self.assertTrue(h.failed);s.close()
++    def test_C0_one_forward(self):
++        s=segmenter();z,a=OnlineHost(s).step(pixels());self.assertEqual(a['counts']['backbone_forwards'],1);s.close()
++    def test_ablation_lifecycle_and_constant_source(self):
++        for group,variant in [('A','A_ISO_OBS'),('B','B_PRED_ONLY'),('C','C_CONST_R')]:
++            s=segmenter();m=method(group);m.freeze()
++            if group=='C':
++                with self.assertRaises(ValueError):OnlineHost(s,m,ablation=variant)
++                with self.assertRaises(ValueError):m.set_constant_variance(torch.ones(8),'target')
++                m.set_constant_variance(torch.ones(8),'cal')
++            _,a=OnlineHost(s,m,ablation=variant).step(pixels());self.assertEqual(a['counts']['backbone_forwards'],2)
++            if group=='B':self.assertNotIn('ISTA_iterations',a['counts'])
++            stat=method(group,True);stat.freeze()
++            with self.assertRaises(ValueError):OnlineHost(s,stat,ablation=variant)
++            s.close()
++    def test_saved_assets_inference_binding_and_eta(self):
++        s=segmenter();m=method('B');m.freeze();w=copy.deepcopy(m.state_dict())
++        h=inference_from_tensors(s,'B',False,m.basis,w,m.digest());self.assertEqual(h.visits,0)
++        w['frozen_eta']*=2
++        with self.assertRaises(ValueError):inference_from_tensors(s,'B',False,m.basis,w,m.digest())
++        s.close()
++    def test_split_overlap_oracle_fit_only_and_roles(self):
++        data,oracle=source_fixture()
++        self.assertEqual(len(set(sum(data.folds.values(),[]))),48)
++        for step in range(3):
++            ids=sequence('fit',step);rs,reuse=roles(data,'fit',step,ids,oracle['fit'])
++            self.assertFalse(reuse);self.assertEqual(len(set(rs)),8)
++            for i,aid in enumerate(ids):self.assertNotIn(rs[2*i+1],oracle['fit'].support_pairs[aid])
++        bad=copy.deepcopy(data.folds);bad['cal'][0]=bad['fit'][0]
++        with self.assertRaises(ValueError):split(list(data.records),bad)
++        with self.assertRaises(ValueError):shared_basis(oracle['cal'],data)
++        with self.assertRaises(ValueError):data.get(data.folds['val'][0],'fit')
++        records=list(data.records.values());r=records[0];records[0]=Record(r.group,r.fold,r.image,r.label,'target')
++        with self.assertRaises(ValueError):SourceData(records,data.folds)
++    def test_styles_identity_fold_factors_and_local_noise(self):
++        rng=torch.get_rng_state().clone()
++        for fold in ('fit','cal','val'):
++            a=anchors(fold);self.assertTrue(torch.equal(a,anchors(fold)))
++            for i in range(1,len(a)):self.assertEqual(int((a[i]!=a[0]).sum()),3 if fold=='val' else 1+(i-1)%2)
++        x=pixels();self.assertTrue(torch.equal(simulate(x,anchors('fit')[0],'x'),x))
++        style=anchors('fit')[0].clone();style[7]=.03
++        self.assertTrue(torch.equal(simulate(x,style,'a'),simulate(x,style,'a')));self.assertFalse(torch.equal(simulate(x,style,'a'),simulate(x,style,'b')))
++        self.assertTrue(torch.equal(rng,torch.get_rng_state()))
++    def test_source_fit_static_and_calibration_freeze(self):
++        data,o=source_fixture()
++        for group in 'ABC':
++            s=segmenter();m=method(group,True);t=SourceTrainer(s,m,data,o['fit']);before=s.forwards
++            loss,a=t.fit_step();self.assertEqual(s.forwards-before,12);self.assertTrue(t.gradients)
++            with self.assertRaises(ValueError):t.start_calibration(o['cal'])
++            t.start_calibration(o['cal'],procedural_micro=True)
++            before={n:p.detach().clone() for n,p in m.named_parameters() if not p.requires_grad};count=s.forwards
++            t.cal_step();self.assertEqual(s.forwards-count,4)
++            for n,p in m.named_parameters():
++                if n in before:self.assertTrue(torch.equal(p,before[n]));self.assertIsNone(p.grad)
++            s.close()
++    def test_source_query_labels_change_loss_not_support_state(self):
++        data,o=source_fixture();s=segmenter();m=method('B');t=SourceTrainer(s,m,data,o['fit'])
++        a,aa=t.episode('fit',0,o['fit']);ids=sequence('fit',0);rs,_=roles(data,'fit',0,ids,o['fit'])
++        for g in rs[1::2]:
++            r=data.records[g];data.records[g]=Record(r.group,r.fold,r.image,1-r.label)
++        b,bb=t.episode('fit',0,o['fit']);self.assertNotEqual(float(a),float(b));self.assertTrue(eq(aa['state'],bb['state']))
++        with self.assertRaises(ValueError):t.episode('fit',0,o['val'])
++        s.close()
++    def test_disabled_real_entries_before_asset_read(self):
++        with patch('builtins.open',side_effect=AssertionError('no reads')):
++            for scope in ('SOURCE_PREP','TARGET_SCREEN','TARGET_MECHANISM','TARGET_EXTENSION','GPU_SMOKE','AB','AUTO'):
++                with self.assertRaises(PermissionError):real_entry(scope,enabled=True,receipt={'status':'PASS'})
++    def test_matrix_bounds_source_pending_no_receipts(self):
++        for scope,n,f in [('TARGET_SCREEN',24,122913),('TARGET_MECHANISM',9,35118),('TARGET_EXTENSION',12,66334)]:
++            rows=matrix(scope,('A','B') if scope=='TARGET_EXTENSION' else ())
++            self.assertEqual(len(rows),n);self.assertEqual(sum(x['network_forwards'] for x in rows),f)
++            self.assertTrue(all(x['status']=='NOT_RUN' and x['device'] is None for x in rows))
++        with self.assertRaises(ValueError):matrix('TARGET_EXTENSION',('A','B','C'))
++        self.assertIsNone(source_binding()['source_manifest_sha256'])
++    def test_fresh_output_owner_and_first_error(self):
++        with tempfile.TemporaryDirectory() as d:
++            p=Path(d).resolve()/'new';out=Output(p,{'sha':'fixed'});out.fail(ValueError('first'),{'F':2})
++            with self.assertRaises(FileExistsError):Output(p,{})
++            with self.assertRaises(FileExistsError):out.fail(ValueError('second'),{})
++            self.assertEqual(json.loads((p/'first_error.json').read_text())['message'],'first')
++            with self.assertRaises(ValueError):out.write('../outside',{})
++            (p/'owner.json').write_text('{}')
++            with self.assertRaises(ValueError):out.write('x.json',{})
++    def test_reused_reader_rejects_symlink_hardlink_escape(self):
++        import os
++        reader=legacy_reader()
++        with tempfile.TemporaryDirectory() as d:
++            p=Path(d);(p/'a.json').write_text('{}');(p/'link').symlink_to('a.json');os.link(p/'a.json',p/'hard')
++            r=reader.Reader(p)
++            for name in ('link','../outside','hard'):
++                with self.assertRaises((ValueError,OSError)):
++                    with r.opened(name):pass
++    def test_scientific_review_paired_tails_and_ASSD_denominators(self):
++        from dpa_ctta.r7_shared.report import review
++        rows=[]
++        for arm in ['C_BASE','C0']+[g+'_'+v for g in 'ABC' for v in ('FULL','STATIC')]:
++            for o in (0,1,4):
++                for i in range(4):
++                    rows.append(dict(arm=arm,order=o,content=str(i),domain=str(i%2),subset='remaining_dev',dice=[.5+(arm.endswith('FULL'))*.01,.6],assd=[None if i%2 else 1.,2.]))
++        r=review(rows);self.assertFalse(r['automatic_nomination']);self.assertAlmostEqual(r['summary'][0]['primary'],.005)
++        self.assertTrue(any(row['ASSD'][0]['common_valid']==0 for row in r['paired']))
++        with self.assertRaises(ValueError):review(rows[:-1])
++    def test_oracle_16_combined_steps_support_only(self):
++        from dpa_ctta.r7_shared.source import oracle_one
++        data,o=source_fixture();s=segmenter();before=COUNTS.copy();v,pair=oracle_one(s,data,'fit',0)
++        counts=COUNTS-before;self.assertEqual(counts['backbone_forwards'],32);self.assertEqual(counts['source_backward_calls'],16);self.assertEqual(counts['source_Adam'],16)
++        self.assertEqual(len(set(pair)),2);self.assertGreater(float(v.norm()),0);self.assertFalse(v.requires_grad);s.close()
++    def test_fixed_published_alias_mapping_metadata_only(self):
++        import os
++        reader=legacy_reader();root=Path(__file__).resolve().parents[2]
++        add=json.loads((root/'analysis/r6d_posthoc_v1/io_addendum/R6D_IO_ADDENDUM.json').read_text())
++        with tempfile.TemporaryDirectory() as d:
++            p=Path(d)/'source';p.mkdir();version=add['pointer']['required_result_directory'];v=p/version;v.mkdir(parents=True)
++            (v/'public_aggregate.json').write_text('{}')
++            pointer=dict(valid=True,status='R6A_COMPLETE_NO_ADVANCE',binding=add['historical_binding'],result_directory=version)
++            (p/'current_result.json').write_text(json.dumps(pointer));(p/'current').symlink_to(version);(p/'public_aggregate.json').symlink_to('current/public_aggregate.json')
++            r=reader.Reader(p);layout,_=reader.layout(r,add);reader.check_layout(r,add,layout)
++            from dpa_ctta.r7_shared.io import snapshot_published
++            out=snapshot_published(p,Path(d).resolve()/'snapshot',add)
++            self.assertEqual((out.path/'public_aggregate.json').read_text(),'{}')
++            with self.assertRaises((ValueError,OSError)):r.record('public_aggregate.json')
++            target=Path(d)/'copy.json';r.record(add['aggregate_input']['source_relative_path'],target);self.assertEqual(target.read_text(),'{}')
++            pointer['binding']={};(p/'current_result.json').write_text(json.dumps(pointer))
++            with self.assertRaises(ValueError):reader.layout(r,add)
++    def test_source_constant_R_all_cal_observations_only(self):
++        data,o=source_fixture();s=segmenter();m=method('C');t=SourceTrainer(s,m,data,o['fit'])
++        m.freeze();t.mode='FROZEN';before=s.forwards;t.constant_variance()
++        self.assertTrue(m.constant_ready);self.assertEqual(s.forwards-before,32*len(data.folds['cal']));s.close()
++    def test_source_first_failure_is_terminal(self):
++        data,o=source_fixture();s=segmenter();m=method('B');t=SourceTrainer(s,m,data,o['fit'])
++        with patch.object(t,'episode',side_effect=ValueError('first')):
++            with self.assertRaises(ValueError):t.fit_step()
++        self.assertEqual(t.first_error['message'],'first')
++        with self.assertRaises(RuntimeError):t.fit_step()
++        self.assertEqual(t.fit_steps,0);s.close()
++    def test_fixed_fit_and_calibration_limits(self):
++        data,o=source_fixture();s=segmenter();m=method('B');t=SourceTrainer(s,m,data,o['fit']);t.fit_steps=1000
++        t.start_calibration(o['cal']);t.cal_steps=256
++        with self.assertRaises(ValueError):t.cal_step()
++        self.assertEqual(t.mode,'FAILED');s.close()
++    def test_same_appearance_only_B_difference_not_raw_image(self):
++        m=method('B');raw,e=obs();s,_=m.update(raw,e,m.initial());_,a=m.update(raw,e+4,s)
++        self.assertEqual(float(a['difference'].norm()),0.)
++    def test_source_query_pixel_cannot_update_episode_state(self):
++        data,o=source_fixture();s=segmenter();m=method('A');t=SourceTrainer(s,m,data,o['fit'])
++        _,aa=t.episode('fit',0,o['fit']);ids=sequence('fit',0);rs,_=roles(data,'fit',0,ids,o['fit'])
++        for g in rs[1::2]:
++            r=data.records[g];data.records[g]=Record(r.group,r.fold,1-r.image,r.label)
++        _,bb=t.episode('fit',0,o['fit']);self.assertTrue(eq(aa['state'],bb['state']));s.close()
++    def test_source_destination_overlap_denied_before_any_write(self):
++        from dpa_ctta.r7_shared.io import snapshot_published
++        with tempfile.TemporaryDirectory() as d:
++            p=Path(d);before=list(p.iterdir())
++            with self.assertRaises(ValueError):snapshot_published(p,p/'new',{})
++            self.assertEqual(before,list(p.iterdir()))
+diff --git a/tests/r7/test_full_network.py b/tests/r7/test_full_network.py
+new file mode 100644
+index 0000000..7e901ca
+--- /dev/null
++++ b/tests/r7/test_full_network.py
+@@ -0,0 +1,48 @@
++import copy,json,unittest
++import torch
++from common import method,segmenter,pixels,source_fixture
++from dpa_ctta.r7_shared.host import OnlineHost
++from dpa_ctta.r7_shared.source import SourceTrainer,pooled_jacobian
++from dpa_ctta.r7_shared.numerics import COUNTS
++
++class FullNetwork(unittest.TestCase):
++    def test_A_B_C_actual_ResUNet_visits_and_source_microepisodes(self):
++        data,o=source_fixture()
++        for group in 'ABC':
++            s=segmenter(full=True);m=method(group);before_weights={k:v.clone() for k,v in s.model.state_dict().items()}
++            t=SourceTrainer(s,m,data,o['fit']);before=COUNTS.copy();t.fit_step()
++            fit_counts=dict(COUNTS-before);self.assertEqual(fit_counts['backbone_forwards'],12);self.assertEqual(fit_counts['source_backward_calls'],1)
++            expected={'A':['W','qraw','style','content','head.0.weight'],'B':['W','G','Hraw','head.0.weight','bias.0.weight'],'C':['Pc','Pa','O','query.0.weight','mapping.0.weight']}[group]
++            for n in expected:self.assertGreater(t.gradients[n],0,n)
++            t.start_calibration(o['cal'],procedural_micro=True);t.cal_step();m.freeze()
++            host=OnlineHost(s,m);before=COUNTS.copy()
++            for i in range(2):host.step(pixels(i))
++            online=dict(COUNTS-before);self.assertEqual(online['backbone_forwards'],4);self.assertNotIn('source_backward_calls',online)
++            for k,v in s.model.state_dict().items():self.assertTrue(torch.equal(v,before_weights[k]),k)
++            self.assertFalse(any(p.grad is not None for p in s.model.parameters()));self.assertFalse(s.cache)
++            print('FULL_NETWORK '+json.dumps(dict(group=group,parameters=sum(p.numel() for p in s.model.parameters()),method_parameters=sum(p.numel() for p in m.parameters()),fit=fit_counts,online=online,gradients=t.gradients)),flush=True)
++            s.close();del host,t,s,m,before_weights
++    def test_full_zero_identity_derivative_and_C0(self):
++        s=segmenter(full=True);x=pixels();before=COUNTS.copy()
++        with torch.no_grad():a=s(x)
++        v=torch.zeros(1024,requires_grad=True);b=s(x,v);self.assertTrue(torch.equal(a,b))
++        readout=torch.nn.functional.adaptive_avg_pool2d(b,(4,4)).flatten()
++        # A-source Jacobian plumbing on two readouts; actual 1024-VJP source basis is future work.
++        for i in range(2):
++            g=torch.autograd.grad(readout[i],v,retain_graph=i==0)[0];COUNTS['source_VJP']+=1
++            self.assertGreater(float(g.norm()),0);self.assertGreater(float(g[:512].norm()),0);self.assertGreater(float(g[512:].norm()),0)
++        _,trace=OnlineHost(s).step(x);self.assertEqual(trace['counts']['backbone_forwards'],1)
++        print('FULL_IDENTITY '+json.dumps(dict(COUNTS-before)),flush=True);s.close()
++    def test_original_C_random_network_narrow_preservation(self):
++        from dpa_ctta.r1.host import Host as Old
++        from dpa_ctta.r6_regional_consistency.host import Host as Current
++        from dpa_ctta.integrations.ctta_suite import build_reference_model
++        from dpa_ctta.b4_run import capture
++        from dpa_ctta.host_diagnostic import close
++        from dpa_ctta.source_pilot import seed_all
++        seed_all(20260907);model,_=build_reference_model('fundus');weights=copy.deepcopy(model.state_dict());del model
++        seed_all(20260907);a=Old('C',weights,'cpu');za,ta=a.step(pixels());sa=capture(a);a.finish(weights);del a
++        seed_all(20260907);b=Current('C',weights,'cpu');zb,tb=b.step(pixels());b.take_evaluation().clear()
++        close(za,zb,exact=True);close(sa,capture(b.core),exact=True)
++        self.assertEqual(tb['counts'],dict(network_forwards=8,loss_backward_calls=1,adam_calls=1,jacobian_vjp_calls=0));b.finish(weights)
++        print('OLD_C_PRESERVATION '+json.dumps(dict(network_forwards=16,backward_calls=2,Adam=2,bitwise=True)),flush=True)
+diff --git a/tests/r7/test_math.py b/tests/r7/test_math.py
+new file mode 100644
+index 0000000..5579002
+--- /dev/null
++++ b/tests/r7/test_math.py
+@@ -0,0 +1,86 @@
++import unittest
++import numpy as np
++import torch
++from common import obs,method
++from dpa_ctta.r7_shared.numerics import predictive_basis,stable,svd_basis,COUNTS
++from dpa_ctta.r7_a_psf import gaussian_filter
++from dpa_ctta.r7_b_rca import correct as sparse
++from dpa_ctta.r7_c_rbe import correct as robust
++import MATH_REFERENCE as ref
++
++class MathTests(unittest.TestCase):
++    def setUp(self):self.g=torch.Generator().manual_seed(924)
++    def rand(self,*s):return torch.randn(*s,generator=self.g,dtype=torch.float64)
++    def close(self,a,b):np.testing.assert_allclose(a.detach().numpy(),b,rtol=1e-8,atol=1e-10)
++    def test_A_filter_independent_reference(self):
++        x=self.rand(16,16);p=x@x.T+torch.eye(16);f=stable(self.rand(16,16));q=torch.eye(16,dtype=torch.float64)*.01;r=torch.diag(self.rand(16).exp());m=self.rand(16);o=self.rand(16)
++        a,b=gaussian_filter(m,p,f,q,o,r);c,d=ref.gaussian_filter(*[v.numpy() for v in (m,p,f,q,o,r)]);self.close(a,c);self.close(b,d)
++    def test_A_full_transition_correlations_and_high_noise(self):
++        f=torch.eye(16,dtype=torch.float64)*.8;f[0,1]=.2;m=self.rand(16);eye=torch.eye(16,dtype=torch.float64)
++        a,p=gaussian_filter(m,eye,f,eye*.01,self.rand(16),eye)
++        self.assertGreater(abs(float(p[0,1])),1e-5);torch.linalg.cholesky(p)
++        a,_=gaussian_filter(m,eye,f,eye*.01,self.rand(16),eye*1e12);self.close(a,(f@m).numpy())
++    def test_A_predictive_basis_independent_SVD_covariance(self):
++        jc,jp,w=self.rand(40,24),self.rand(35,24),self.rand(40).sigmoid()
++        b,c=predictive_basis(jc,jp,w,8);br,cr=ref.predictive_subspace(jc.numpy(),jp.numpy(),w.numpy(),8)
++        self.close(c,cr);self.close(b@b.T,br@br.T)
++        e,u=torch.linalg.eigh(c);root=(u*e.sqrt())@u.T
++        uu,ss,_=torch.linalg.svd(jp@root,full_matrices=False)
++        self.close(jp@b@b.T@jp.T,((uu[:,:8]*ss[:8].square())@uu[:,:8].T).numpy())
++    def test_rank_failures_no_random_padding(self):
++        with self.assertRaises(ValueError):svd_basis(torch.zeros(1024,128),32)
++        with self.assertRaises(ValueError):predictive_basis(torch.ones(8,5),torch.zeros(8,5),torch.ones(8),3)
++    def test_B_five_step_reference_temperature_and_monotonicity(self):
++        h,o,p=self.rand(64,32),self.rand(64),self.rand(32)
++        for k in (.25,1.,3.):
++            before=COUNTS['ISTA_iterations'];z,a=sparse(h,o,p,k);zr,_,ener=ref.sparse_correct(h.numpy(),o.numpy(),p.numpy(),kappa=k)
++            self.close(z,zr);self.close(a['energy'],ener);self.assertTrue(torch.all(torch.diff(a['energy'])<=1e-10));self.assertEqual(COUNTS['ISTA_iterations']-before,5)
++            self.close(a['eta'],1/(np.linalg.norm(h.numpy(),2)**2/k**2+.1))
++    def test_B_diagonal_closed_form_and_gradient(self):
++        h=torch.eye(4,dtype=torch.float64,requires_grad=True);o=torch.tensor([2.,-2.,.001,0.],dtype=torch.float64,requires_grad=True);p=torch.zeros(4,dtype=torch.float64)
++        z,_=sparse(h,o,p);self.close(z,(o.detach().sign()*(o.detach().abs()-.01).clamp_min(0)/1.1).numpy())
++        z.square().sum().backward();self.assertGreater(float(h.grad.norm()),0);self.assertGreater(float(o.grad.norm()),0)
++    def test_C_IRLS_reference_outliers_and_fixed_steps(self):
++        h,o,r,p=self.rand(512,32),self.rand(512)*4,self.rand(512).exp(),self.rand(32)
++        before=COUNTS['IRLS_iterations'];z,a=robust(h,o,r,p);zr,ener,ws=ref.robust_correct(h.numpy(),o.numpy(),r.numpy(),p.numpy())
++        self.close(z,zr);self.close(a['energy'],ener);self.assertEqual(COUNTS['IRLS_iterations']-before,3);self.assertTrue(torch.all(torch.diff(a['energy'])<=1e-10))
++        for w,wr in zip(a['weights'],ws):self.close(w,wr)
++    def test_C_ridge_limit_mean_scaling_and_zero_residual(self):
++        h=self.rand(20,4)*.1;o=self.rand(20)*.01;r=torch.ones(20,dtype=torch.float64);p=torch.zeros(4,dtype=torch.float64)
++        z,_=robust(h,o,r,p);expected=torch.linalg.solve(h.T@h/20+.1*torch.eye(4),h.T@o/20)
++        self.close(z,expected.numpy());zz,_=robust(h.repeat(2,1),o.repeat(2),r.repeat(2),p);self.close(z,zz.numpy())
++        z,a=robust(h,h@p,r,p);self.close(z,p.numpy());self.close(a['weights'][0],np.ones(20))
++    def test_invalid_nonfinite_spd_variance(self):
++        with self.assertRaises(ValueError):sparse(torch.ones(2,2),torch.ones(2),torch.zeros(2),0)
++        with self.assertRaises(ValueError):robust(torch.ones(2,2),torch.ones(2),torch.zeros(2),torch.zeros(2))
++        with self.assertRaises(ValueError):sparse(torch.full((2,2),float('nan')),torch.ones(2),torch.zeros(2))
++    def test_A_tau_square_and_B_first_difference(self):
++        raw,e=obs();a=method('A');r=a.observe(raw,e)['R'];a.set_stage('cal');a.cal_raw.data.fill_(0);self.close(a.observe(raw,e)['R'],(r*2.125**2).detach().numpy())
++        b=method('B');_,aux=b.update(raw,e,b.initial());self.assertEqual(float(aux['difference'].norm()),0)
++    def test_all_shapes_state_static_and_source_gradients(self):
++        for g in 'ABC':
++            m=method(g);raw,e=obs();s,a=m.update(raw,e,m.initial());s,a=m.update(*obs(1),s)
++            loss=m.code(s).square().sum()+m.fit_loss(a,m.observe(raw,e),torch.zeros(m.rank,dtype=torch.float64),s);loss.backward()
++            expected={'A':['W','qraw','style','content','head.0.weight'],'B':['W','G','Hraw','head.0.weight','bias.0.weight'],'C':['Pc','Pa','O','query.0.weight','mapping.0.weight']}[g]
++            for name in expected:self.assertGreater(float(dict(m.named_parameters())[name].grad.norm()),0,name)
++            stat=method(g,True);s1,_=stat.update(raw,e,stat.initial());s2,_=stat.update(raw,e,s1);self.close(stat.code(s1),stat.code(s2).detach().numpy())
++    def test_C_calibration_only_variance_parameters(self):
++        m=method('C');m.requires_grad_(False);m.set_stage('cal');s,a=m.update(*obs(),m.initial());m.cal_loss(a,torch.ones(32,dtype=torch.float64),s).backward()
++        for n,p in m.named_parameters():self.assertEqual(p.grad is not None,n.startswith('reliability.'))
++    def test_A_ambient_1024_basis_and_projection(self):
++        from dpa_ctta.r7_shared.numerics import project
++        jc,jp=self.rand(32,1024),self.rand(32,1024)
++        b,cov=predictive_basis(jc,jp,torch.full((32,),.2),16)
++        self.assertEqual(b.shape,(1024,16));self.assertEqual(int(torch.linalg.matrix_rank(b)),16)
++        z=self.rand(16);got,a=project(b,b@z);self.close(got,z.numpy());self.assertLess(a['residual_l2'],1e-9)
++    def test_B_dictionary_normalization_spectral_bounds(self):
++        m=method('B');_,a=m.update(*obs(),m.initial())
++        self.close(a['H'].norm(dim=0),np.ones(32))
++        self.assertLessEqual(float(torch.linalg.matrix_norm(stable(m.W.double()),2)),.95+1e-10)
++    def test_C_variance_bounds_constant_geometric_mean(self):
++        from dpa_ctta.r7_shared.numerics import variance
++        r=variance(torch.tensor([-100.,0,100.]));self.assertGreaterEqual(float(r.min()),1e-4-1e-10);self.assertLessEqual(float(r.max()),10.)
++        m=method('C');a=m.observe(*obs());self.assertTrue(torch.equal(a['R'],torch.ones(64,8,dtype=torch.float64)))
++        m.freeze();v=torch.stack([m.observe(*obs(i))['R'] for i in range(3)])
++        gm=v.log().mean((0,1)).exp();m.set_constant_variance(gm,'cal')
++        self.close(m.constant_R.double(),gm.float().double().numpy())

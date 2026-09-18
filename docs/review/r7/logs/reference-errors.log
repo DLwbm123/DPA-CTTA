@@ -1,0 +1,98 @@
+PUBLIC LOG: original execution output; only private paths replaced. Raw original retained privately.
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:42: RuntimeWarning: divide by zero encountered in matmul
+  pred_m, pred_p = f@m, f@p@f.T+q
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:42: RuntimeWarning: overflow encountered in matmul
+  pred_m, pred_p = f@m, f@p@f.T+q
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:42: RuntimeWarning: invalid value encountered in matmul
+  pred_m, pred_p = f@m, f@p@f.T+q
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:58: RuntimeWarning: divide by zero encountered in matmul
+  precision=ridge*np.eye(n)+(jc.T*w)@jc/len(jc)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:58: RuntimeWarning: overflow encountered in matmul
+  precision=ridge*np.eye(n)+(jc.T*w)@jc/len(jc)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:58: RuntimeWarning: invalid value encountered in matmul
+  precision=ridge*np.eye(n)+(jc.T*w)@jc/len(jc)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:61: RuntimeWarning: divide by zero encountered in matmul
+  root=(vecs*np.sqrt(vals))@vecs.T
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:61: RuntimeWarning: overflow encountered in matmul
+  root=(vecs*np.sqrt(vals))@vecs.T
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:61: RuntimeWarning: invalid value encountered in matmul
+  root=(vecs*np.sqrt(vals))@vecs.T
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:62: RuntimeWarning: divide by zero encountered in matmul
+  gram=root@jp.T@jp@root;gram=(gram+gram.T)/2
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:62: RuntimeWarning: overflow encountered in matmul
+  gram=root@jp.T@jp@root;gram=(gram+gram.T)/2
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:62: RuntimeWarning: invalid value encountered in matmul
+  gram=root@jp.T@jp@root;gram=(gram+gram.T)/2
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:69: RuntimeWarning: divide by zero encountered in matmul
+  b=root@selected
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:69: RuntimeWarning: overflow encountered in matmul
+  b=root@selected
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:69: RuntimeWarning: invalid value encountered in matmul
+  b=root@selected
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:82: RuntimeWarning: divide by zero encountered in matmul
+  residual=o-h@(prior+delta)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:82: RuntimeWarning: overflow encountered in matmul
+  residual=o-h@(prior+delta)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:82: RuntimeWarning: invalid value encountered in matmul
+  residual=o-h@(prior+delta)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:95: RuntimeWarning: divide by zero encountered in matmul
+  grad=h.T@(h@(prior+delta)-o)/kappa**2+mu*delta
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:95: RuntimeWarning: overflow encountered in matmul
+  grad=h.T@(h@(prior+delta)-o)/kappa**2+mu*delta
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:95: RuntimeWarning: invalid value encountered in matmul
+  grad=h.T@(h@(prior+delta)-o)/kappa**2+mu*delta
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:111: RuntimeWarning: divide by zero encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:111: RuntimeWarning: overflow encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:111: RuntimeWarning: invalid value encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:123: RuntimeWarning: divide by zero encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:123: RuntimeWarning: overflow encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:123: RuntimeWarning: invalid value encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:126: RuntimeWarning: divide by zero encountered in matmul
+  lhs=(h.T*weights)@h/o.size+lam*np.eye(prior.size)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:126: RuntimeWarning: overflow encountered in matmul
+  lhs=(h.T*weights)@h/o.size+lam*np.eye(prior.size)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:126: RuntimeWarning: invalid value encountered in matmul
+  lhs=(h.T*weights)@h/o.size+lam*np.eye(prior.size)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:127: RuntimeWarning: divide by zero encountered in matmul
+  rhs=h.T@(weights*o)/o.size+lam*prior
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:127: RuntimeWarning: overflow encountered in matmul
+  rhs=h.T@(weights*o)/o.size+lam*prior
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:127: RuntimeWarning: invalid value encountered in matmul
+  rhs=h.T@(weights*o)/o.size+lam*prior
+{
+  "float64_tolerance": {
+    "rtol": 1e-08,
+    "atol": 1e-10
+  },
+  "errors": {
+    "A_mean_max_abs": 4.773959005888173e-15,
+    "A_covariance_max_abs": 4.440892098500626e-15,
+    "A_basis_covariance_max_abs": 3.019806626980426e-14,
+    "A_surrogate_covariance_max_abs": 1.7763568394002505e-15,
+    "B_kappa_0.25_state_max_abs": 4.440892098500626e-16,
+    "B_kappa_0.25_energy_max_abs": 3.637978807091713e-12,
+    "B_kappa_1.0_state_max_abs": 4.440892098500626e-16,
+    "B_kappa_1.0_energy_max_abs": 2.2737367544323206e-13,
+    "B_kappa_3.0_state_max_abs": 2.220446049250313e-16,
+    "B_kappa_3.0_energy_max_abs": 2.842170943040401e-14,
+    "C_state_max_abs": 4.996003610813204e-16,
+    "C_energy_max_abs": 8.881784197001252e-16,
+    "C_weight_max_abs": 1.5987211554602254e-14
+  },
+  "backbone_forwards": 0,
+  "backwards": 0,
+  "optimizers": 0,
+  "small_matrix_counts": {
+    "spectral_norms": 4,
+    "cholesky_solves": 7,
+    "eigh": 2,
+    "ISTA_iterations": 15,
+    "IRLS_iterations": 3
+  }
+}

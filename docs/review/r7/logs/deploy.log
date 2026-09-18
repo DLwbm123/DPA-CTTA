@@ -1,0 +1,10 @@
+PUBLIC LOG: original execution output; only private paths replaced. Raw original retained privately.
+Filesystem                 Size  Used Avail Use% Mounted on
+10.75.80.85:/volume1/data   51T   22T   30T  43% /data_nas
+
+Traceback (most recent call last):
+  File "<stdin>", line 12, in <module>
+  File "<stdin>", line 9, in git
+  File "<SERVER_ENV>/lib/python3.10/subprocess.py", line 524, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'fetch', '../q.bin', 'HEAD']' returned non-zero exit status 1.

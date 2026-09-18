@@ -1,0 +1,56 @@
+{
+  "status": "METADATA_ONLY_NOT_EXECUTED",
+  "counts_variables": {
+    "n_fit": null,
+    "n_cal": null,
+    "n_val": null
+  },
+  "known_phases": [
+    {
+      "phase": "oracle_all_folds",
+      "backbone_F": 6144,
+      "backward": 3072,
+      "Adam": 3072
+    },
+    {
+      "phase": "A_predictive_basis",
+      "backbone_F": 32,
+      "VJP": 1024
+    },
+    {
+      "phase": "six_model_fit",
+      "backbone_F": 72000,
+      "backward": 6000,
+      "AdamW": 6000
+    },
+    {
+      "phase": "six_model_calibration",
+      "backbone_F": 6144,
+      "module_backward": 1536,
+      "Adam": 1536
+    },
+    {
+      "phase": "six_model_validation",
+      "backbone_F": 4608,
+      "backward": 0
+    }
+  ],
+  "additional_forward_formulas": {
+    "fit_scaler": "128*n_fit",
+    "oracle_query_evaluation": "2*(128*(n_fit-2)+32*(n_cal-2)+32*(n_val-2))",
+    "two_C_constant_R": "64*n_cal"
+  },
+  "total_backbone_F_formula": "88160+384*n_fit+128*n_cal+64*n_val",
+  "total_backward_calls": 10608,
+  "backward_through_query_or_oracle_network": 9072,
+  "calibration_module_only_backward": 1536,
+  "Adam": 4608,
+  "AdamW": 6000,
+  "VJP": 1024,
+  "latent_matrix_MLP_calls": "separately metered; not zero-cost",
+  "device": null,
+  "runtime_caps": null,
+  "caps_binding": "required after profiling and separate SOURCE_PREP authorization; none granted",
+  "source_split": "PENDING_REAL_SOURCE_METADATA",
+  "target_stages_automatically_started": false
+}

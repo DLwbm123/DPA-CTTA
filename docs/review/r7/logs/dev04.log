@@ -1,0 +1,113 @@
+PUBLIC LOG: original execution output; only private paths replaced. Raw original retained privately.
+test_A_ambient_1024_basis_and_projection (test_math.MathTests.test_A_ambient_1024_basis_and_projection) ... ok
+test_A_filter_independent_reference (test_math.MathTests.test_A_filter_independent_reference) ... <WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:42: RuntimeWarning: divide by zero encountered in matmul
+  pred_m, pred_p = f@m, f@p@f.T+q
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:42: RuntimeWarning: overflow encountered in matmul
+  pred_m, pred_p = f@m, f@p@f.T+q
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:42: RuntimeWarning: invalid value encountered in matmul
+  pred_m, pred_p = f@m, f@p@f.T+q
+ok
+test_A_full_transition_correlations_and_high_noise (test_math.MathTests.test_A_full_transition_correlations_and_high_noise) ... ok
+test_A_predictive_basis_independent_SVD_covariance (test_math.MathTests.test_A_predictive_basis_independent_SVD_covariance) ... <WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:58: RuntimeWarning: divide by zero encountered in matmul
+  precision=ridge*np.eye(n)+(jc.T*w)@jc/len(jc)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:58: RuntimeWarning: overflow encountered in matmul
+  precision=ridge*np.eye(n)+(jc.T*w)@jc/len(jc)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:58: RuntimeWarning: invalid value encountered in matmul
+  precision=ridge*np.eye(n)+(jc.T*w)@jc/len(jc)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:61: RuntimeWarning: divide by zero encountered in matmul
+  root=(vecs*np.sqrt(vals))@vecs.T
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:61: RuntimeWarning: overflow encountered in matmul
+  root=(vecs*np.sqrt(vals))@vecs.T
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:61: RuntimeWarning: invalid value encountered in matmul
+  root=(vecs*np.sqrt(vals))@vecs.T
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:62: RuntimeWarning: divide by zero encountered in matmul
+  gram=root@jp.T@jp@root;gram=(gram+gram.T)/2
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:62: RuntimeWarning: overflow encountered in matmul
+  gram=root@jp.T@jp@root;gram=(gram+gram.T)/2
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:62: RuntimeWarning: invalid value encountered in matmul
+  gram=root@jp.T@jp@root;gram=(gram+gram.T)/2
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:69: RuntimeWarning: divide by zero encountered in matmul
+  b=root@selected
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:69: RuntimeWarning: overflow encountered in matmul
+  b=root@selected
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:69: RuntimeWarning: invalid value encountered in matmul
+  b=root@selected
+ok
+test_A_tau_square_and_B_first_difference (test_math.MathTests.test_A_tau_square_and_B_first_difference) ... ok
+test_B_diagonal_closed_form_and_gradient (test_math.MathTests.test_B_diagonal_closed_form_and_gradient) ... ok
+test_B_dictionary_normalization_spectral_bounds (test_math.MathTests.test_B_dictionary_normalization_spectral_bounds) ... ok
+test_B_five_step_reference_temperature_and_monotonicity (test_math.MathTests.test_B_five_step_reference_temperature_and_monotonicity) ... <WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:82: RuntimeWarning: divide by zero encountered in matmul
+  residual=o-h@(prior+delta)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:82: RuntimeWarning: overflow encountered in matmul
+  residual=o-h@(prior+delta)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:82: RuntimeWarning: invalid value encountered in matmul
+  residual=o-h@(prior+delta)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:95: RuntimeWarning: divide by zero encountered in matmul
+  grad=h.T@(h@(prior+delta)-o)/kappa**2+mu*delta
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:95: RuntimeWarning: overflow encountered in matmul
+  grad=h.T@(h@(prior+delta)-o)/kappa**2+mu*delta
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:95: RuntimeWarning: invalid value encountered in matmul
+  grad=h.T@(h@(prior+delta)-o)/kappa**2+mu*delta
+ok
+test_C_IRLS_reference_outliers_and_fixed_steps (test_math.MathTests.test_C_IRLS_reference_outliers_and_fixed_steps) ... <WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:111: RuntimeWarning: divide by zero encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:111: RuntimeWarning: overflow encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:111: RuntimeWarning: invalid value encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:123: RuntimeWarning: divide by zero encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:123: RuntimeWarning: overflow encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:123: RuntimeWarning: invalid value encountered in matmul
+  res=(o-h@z)/np.sqrt(variance)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:126: RuntimeWarning: divide by zero encountered in matmul
+  lhs=(h.T*weights)@h/o.size+lam*np.eye(prior.size)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:126: RuntimeWarning: overflow encountered in matmul
+  lhs=(h.T*weights)@h/o.size+lam*np.eye(prior.size)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:126: RuntimeWarning: invalid value encountered in matmul
+  lhs=(h.T*weights)@h/o.size+lam*np.eye(prior.size)
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:127: RuntimeWarning: divide by zero encountered in matmul
+  rhs=h.T@(weights*o)/o.size+lam*prior
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:127: RuntimeWarning: overflow encountered in matmul
+  rhs=h.T@(weights*o)/o.size+lam*prior
+<WORKTREE>/docs/review/r7/input/references/MATH_REFERENCE.py:127: RuntimeWarning: invalid value encountered in matmul
+  rhs=h.T@(weights*o)/o.size+lam*prior
+ok
+test_C_calibration_only_variance_parameters (test_math.MathTests.test_C_calibration_only_variance_parameters) ... ok
+test_C_ridge_limit_mean_scaling_and_zero_residual (test_math.MathTests.test_C_ridge_limit_mean_scaling_and_zero_residual) ... ok
+test_C_variance_bounds_constant_geometric_mean (test_math.MathTests.test_C_variance_bounds_constant_geometric_mean) ... ok
+test_all_shapes_state_static_and_source_gradients (test_math.MathTests.test_all_shapes_state_static_and_source_gradients) ... ok
+test_invalid_nonfinite_spd_variance (test_math.MathTests.test_invalid_nonfinite_spd_variance) ... ok
+test_rank_failures_no_random_padding (test_math.MathTests.test_rank_failures_no_random_padding) ... ok
+test_C0_one_forward (test_contract.Contracts.test_C0_one_forward) ... ok
+test_ablation_lifecycle_and_constant_source (test_contract.Contracts.test_ablation_lifecycle_and_constant_source) ... ok
+test_batch_and_nonfinite_inputs_hard_fail (test_contract.Contracts.test_batch_and_nonfinite_inputs_hard_fail) ... ok
+test_disabled_real_entries_before_asset_read (test_contract.Contracts.test_disabled_real_entries_before_asset_read) ... ok
+test_film_bitwise_and_zero_derivative (test_contract.Contracts.test_film_bitwise_and_zero_derivative) ... ok
+test_fixed_published_alias_mapping_metadata_only (test_contract.Contracts.test_fixed_published_alias_mapping_metadata_only) ... ok
+test_fresh_output_owner_and_first_error (test_contract.Contracts.test_fresh_output_owner_and_first_error) ... ok
+test_independent_RNG_and_identical_full_static_initialization (test_contract.Contracts.test_independent_RNG_and_identical_full_static_initialization) ... ok
+test_matrix_bounds_source_pending_no_receipts (test_contract.Contracts.test_matrix_bounds_source_pending_no_receipts) ... ok
+test_no_commit_on_second_forward_failure_and_no_retry (test_contract.Contracts.test_no_commit_on_second_forward_failure_and_no_retry) ... ok
+test_observer_shapes_current_BN_and_cache_release (test_contract.Contracts.test_observer_shapes_current_BN_and_cache_release) ... ok
+test_online_two_forward_no_autograd_and_current_only (test_contract.Contracts.test_online_two_forward_no_autograd_and_current_only) ... ok
+test_oracle_16_combined_steps_support_only (test_contract.Contracts.test_oracle_16_combined_steps_support_only) ... ok
+test_reused_reader_rejects_symlink_hardlink_escape (test_contract.Contracts.test_reused_reader_rejects_symlink_hardlink_escape) ... ok
+test_saved_assets_inference_binding_and_eta (test_contract.Contracts.test_saved_assets_inference_binding_and_eta) ... ok
+test_scaler_is_fit_only_and_no_online_running_change (test_contract.Contracts.test_scaler_is_fit_only_and_no_online_running_change) ... ok
+test_scientific_review_paired_tails_and_ASSD_denominators (test_contract.Contracts.test_scientific_review_paired_tails_and_ASSD_denominators) ... ok
+test_source_constant_R_all_cal_observations_only (test_contract.Contracts.test_source_constant_R_all_cal_observations_only) ... ok
+test_source_first_failure_is_terminal (test_contract.Contracts.test_source_first_failure_is_terminal) ... ok
+test_source_fit_static_and_calibration_freeze (test_contract.Contracts.test_source_fit_static_and_calibration_freeze) ... ok
+test_source_query_labels_change_loss_not_support_state (test_contract.Contracts.test_source_query_labels_change_loss_not_support_state) ... ok
+test_split_overlap_oracle_fit_only_and_roles (test_contract.Contracts.test_split_overlap_oracle_fit_only_and_roles) ... ok
+test_state_corruption_binding_rejected (test_contract.Contracts.test_state_corruption_binding_rejected) ... ok
+test_state_restore_next_output_and_GT_future_independence (test_contract.Contracts.test_state_restore_next_output_and_GT_future_independence) ... ok
+test_styles_identity_fold_factors_and_local_noise (test_contract.Contracts.test_styles_identity_fold_factors_and_local_noise) ... ok
+
+----------------------------------------------------------------------
+Ran 40 tests in 4.750s
+
+OK
+R7_CPU_RESULT {"GPU_queries_or_initializations": 0, "cpu_system_seconds": 0.9970260000000001, "cpu_user_seconds": 8.063096, "errors": 0, "exit_code": 0, "external_review": "NOT_RUN", "failures": 0, "peak_RSS": 439255040, "peak_RSS_unit": "bytes", "physical_calls": {"AdamW_step": 3, "Adam_step": 19, "Tensor_backward": 28, "autograd_grad": 0, "old_backbone_forwards": 0}, "platform": "Darwin arm64", "procedural_counts": {"IRLS_iterations": 66, "ISTA_iterations": 155, "appearance_MLP": 317, "backbone_forwards": 361, "calibration_Adam": 3, "calibration_backward_calls": 3, "cholesky_solves": 137, "eigh": 4, "method_MLP": 846, "source_Adam": 16, "source_AdamW": 3, "source_backward_calls": 19, "spectral_norms": 106, "svd": 1}, "python": "3.12.9", "real_asset_reads": 0, "skipped": 0, "tests": 40, "torch": "2.6.0", "wall_seconds": 4.767444249941036}

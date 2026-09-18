@@ -1,0 +1,54 @@
+[
+  {
+    "group": "A",
+    "scope": "one frozen method observer/latent update and commit validation, procedural features, excludes two backbone forwards",
+    "matrix_API_calls": {
+      "cholesky": 8,
+      "matrix_norm": 1
+    },
+    "counters": {
+      "appearance_MLP": 1,
+      "method_MLP": 1,
+      "spectral_norms": 1,
+      "cholesky_solves": 3
+    },
+    "wall_seconds": 0.01640075002796948,
+    "backbone_forwards": 0,
+    "backward": 0,
+    "optimizers": 0
+  },
+  {
+    "group": "B",
+    "scope": "one frozen method observer/latent update and commit validation, procedural features, excludes two backbone forwards",
+    "matrix_API_calls": {
+      "matrix_norm": 3
+    },
+    "counters": {
+      "appearance_MLP": 1,
+      "method_MLP": 2,
+      "spectral_norms": 3,
+      "ISTA_iterations": 5
+    },
+    "wall_seconds": 0.002503208117559552,
+    "backbone_forwards": 0,
+    "backward": 0,
+    "optimizers": 0
+  },
+  {
+    "group": "C",
+    "scope": "one frozen method observer/latent update and commit validation, procedural features, excludes two backbone forwards",
+    "matrix_API_calls": {
+      "cholesky": 3
+    },
+    "counters": {
+      "appearance_MLP": 1,
+      "method_MLP": 3,
+      "cholesky_solves": 3,
+      "IRLS_iterations": 3
+    },
+    "wall_seconds": 0.003608457976952195,
+    "backbone_forwards": 0,
+    "backward": 0,
+    "optimizers": 0
+  }
+]
