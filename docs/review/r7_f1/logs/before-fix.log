@@ -1,0 +1,19 @@
+REVIEWED_PUBLICATION 7f129b484a5ab2b0af3efdf2ccea0eee1228969c
+{
+  "scope": "Small procedural fixture, not ResUNet",
+  "state_restore_incompatible_accepted": true,
+  "fresh_load_incompatible_accepted": true,
+  "max_abs_logit_difference": 1.0000011920928955,
+  "method_digest_same": true,
+  "measured_counts": {
+    "backbone_forwards": 6,
+    "appearance_MLP": 3,
+    "method_MLP": 6,
+    "spectral_norms": 9,
+    "ISTA_iterations": 15
+  },
+  "backward": 0,
+  "optimizers": 0,
+  "GPU_queries": 0
+}
+EXPECTED_REJECTION_ASSERTIONS: 2 FAILED on reviewed code; reproduction succeeded

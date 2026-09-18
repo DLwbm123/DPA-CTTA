@@ -1,0 +1,26 @@
+test_fresh_rejects_different_head (__main__.RequiredRejections.test_fresh_rejects_different_head) ... FAIL
+test_restore_rejects_different_head (__main__.RequiredRejections.test_restore_rejects_different_head) ... FAIL
+
+======================================================================
+FAIL: test_fresh_rejects_different_head (__main__.RequiredRejections.test_fresh_rejects_different_head)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/review/r7_f1/reproduce_reviewed_code.py", line 17, in test_fresh_rejects_different_head
+    with self.assertRaises(ValueError):inference_from_tensors(b,'B',False,m.basis,copy.deepcopy(m.state_dict()),m.digest())
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+======================================================================
+FAIL: test_restore_rejects_different_head (__main__.RequiredRejections.test_restore_rejects_different_head)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "docs/review/r7_f1/reproduce_reviewed_code.py", line 21, in test_restore_rejects_different_head
+    with self.assertRaises(ValueError):other.load_state(packet)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ValueError not raised
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.107s
+
+FAILED (failures=2)
+{"tests": 2, "failures": 2, "errors": 0, "counts": {"backbone_forwards": 2, "appearance_MLP": 1, "method_MLP": 2, "spectral_norms": 3, "ISTA_iterations": 5}, "backward": 0, "optimizers": 0}

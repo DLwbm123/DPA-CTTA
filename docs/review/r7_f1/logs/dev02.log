@@ -1,0 +1,19 @@
+test_ablation_explicit_trusted_derivation_and_restore_mismatch (test_context.ContextTests.test_ablation_explicit_trusted_derivation_and_restore_mismatch) ... ok
+test_actual_prepare_pipeline_emits_six_bound_packages_with_mocked_training (test_context.ContextTests.test_actual_prepare_pipeline_emits_six_bound_packages_with_mocked_training) ... ok
+test_all_groups_and_C0_cross_instance_restore_and_next_output (test_context.ContextTests.test_all_groups_and_C0_cross_instance_restore_and_next_output) ... ok
+test_all_groups_and_C0_head_encoder_projection_reject_both_load_paths (test_context.ContextTests.test_all_groups_and_C0_head_encoder_projection_reject_both_load_paths) ... ok
+test_all_groups_and_C0_legacy_incomplete_packages_rejected (test_context.ContextTests.test_all_groups_and_C0_legacy_incomplete_packages_rejected) ... ok
+test_full_random_ResUNet_origin_compatibility_and_rejection (test_context.ContextTests.test_full_random_ResUNet_origin_compatibility_and_rejection) ... R7_CONTEXT_FULL_RANDOM {"model_parameters": 22554570, "counts": {"backbone_forwards": 6, "appearance_MLP": 3, "method_MLP": 3, "spectral_norms": 3, "cholesky_solves": 9}, "hash_cost": {"tensor_digest_calls": 12, "tensor_bytes": 541702896, "wall_ns": 226616750, "cpu_ns": 448318000, "context_build_calls": 6, "context_wall_ns": 232548875, "context_cpu_ns": 460027000}, "same_bytes_cross_instance": true, "changed_encoder_rejected": true}
+ok
+test_method_group_static_basis_scaler_calibration_mismatches (test_context.ContextTests.test_method_group_static_basis_scaler_calibration_mismatches) ... ok
+test_mutation_guard_no_per_visit_tensor_hash_and_boundary_rehash (test_context.ContextTests.test_mutation_guard_no_per_visit_tensor_hash_and_boundary_rehash) ... ok
+test_policy_and_actual_BN_configuration_rejected_before_forward (test_context.ContextTests.test_policy_and_actual_BN_configuration_rejected_before_forward) ... ok
+test_prepared_artifact_records_original_environment_and_rejects_drift (test_context.ContextTests.test_prepared_artifact_records_original_environment_and_rejects_drift) ... ok
+test_tampered_or_wrong_source_spec_context_rejected (test_context.ContextTests.test_tampered_or_wrong_source_spec_context_rejected) ... ok
+test_tensor_canonical_names_shape_dtype_layout_and_no_address (test_context.ContextTests.test_tensor_canonical_names_shape_dtype_layout_and_no_address) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 3.770s
+
+OK
+R7_CPU_RESULT {"GPU_queries_or_initializations": 0, "context_hash_cost": {"context_build_calls": 155, "context_cpu_ns": 622396000, "context_wall_ns": 315306575, "cpu_ns": 520004000, "tensor_bytes": 601666842, "tensor_digest_calls": 319, "wall_ns": 263084490}, "cpu_system_seconds": 0.9191750000000001, "cpu_user_seconds": 5.514514, "errors": 0, "exit_code": 0, "external_review": "NOT_RUN", "failures": 0, "peak_RSS": 993525760, "peak_RSS_unit": "bytes", "physical_calls": {"AdamW_step": 0, "Adam_step": 0, "Tensor_backward": 0, "autograd_grad": 0, "old_backbone_forwards": 0}, "platform": "Darwin arm64", "procedural_counts": {"IRLS_iterations": 9, "ISTA_iterations": 25, "appearance_MLP": 14, "backbone_forwards": 31, "cholesky_solves": 27, "method_MLP": 25, "spectral_norms": 21}, "python": "3.12.9", "real_asset_reads": 0, "skipped": 0, "tests": 12, "torch": "2.6.0", "wall_seconds": 3.7788575422018766}

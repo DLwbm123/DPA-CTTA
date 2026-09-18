@@ -1,0 +1,324 @@
+{
+  "implementation_sha": "8f179ce0ca848791793a17dab0606f0bde2b3e07",
+  "final_local": {
+    "tests": 59,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exit_code": 0,
+    "wall_seconds": 41.814181457972154,
+    "cpu_user_seconds": 58.407773,
+    "cpu_system_seconds": 16.729103,
+    "peak_RSS": 1630224384,
+    "peak_RSS_unit": "bytes",
+    "python": "3.12.9",
+    "torch": "2.6.0",
+    "platform": "Darwin arm64",
+    "physical_calls": {
+      "Tensor_backward": 36,
+      "autograd_grad": 2,
+      "Adam_step": 24,
+      "AdamW_step": 6,
+      "old_backbone_forwards": 16
+    },
+    "procedural_counts": {
+      "cholesky_solves": 264,
+      "eigh": 4,
+      "spectral_norms": 181,
+      "appearance_MLP": 391,
+      "method_MLP": 967,
+      "ISTA_iterations": 240,
+      "IRLS_iterations": 105,
+      "svd": 1,
+      "backbone_forwards": 479,
+      "source_backward_calls": 22,
+      "source_Adam": 16,
+      "source_AdamW": 6,
+      "calibration_backward_calls": 6,
+      "calibration_Adam": 6,
+      "source_VJP": 2
+    },
+    "context_hash_cost": {
+      "tensor_digest_calls": 407,
+      "tensor_bytes": 978899706,
+      "wall_ns": 506185274,
+      "cpu_ns": 919723000,
+      "context_build_calls": 199,
+      "context_wall_ns": 614751543,
+      "context_cpu_ns": 1118106000
+    },
+    "real_asset_reads": 0,
+    "GPU_queries_or_initializations": 0,
+    "external_review": "NOT_RUN"
+  },
+  "final_server": {
+    "GPU_queries_or_initializations": 0,
+    "context_hash_cost": {
+      "context_build_calls": 199,
+      "context_cpu_ns": 1149247287,
+      "context_wall_ns": 996113017,
+      "cpu_ns": 882194541,
+      "tensor_bytes": 978899706,
+      "tensor_digest_calls": 407,
+      "wall_ns": 763073546
+    },
+    "cpu_system_seconds": 23.714534999999998,
+    "cpu_user_seconds": 144.002393,
+    "errors": 0,
+    "exit_code": 0,
+    "external_review": "NOT_RUN",
+    "failures": 0,
+    "peak_RSS": 2067452,
+    "peak_RSS_unit": "KiB",
+    "physical_calls": {
+      "AdamW_step": 6,
+      "Adam_step": 24,
+      "Tensor_backward": 36,
+      "autograd_grad": 2,
+      "old_backbone_forwards": 16
+    },
+    "platform": "Linux x86_64",
+    "procedural_counts": {
+      "IRLS_iterations": 105,
+      "ISTA_iterations": 240,
+      "appearance_MLP": 391,
+      "backbone_forwards": 479,
+      "calibration_Adam": 6,
+      "calibration_backward_calls": 6,
+      "cholesky_solves": 264,
+      "eigh": 4,
+      "method_MLP": 967,
+      "source_Adam": 16,
+      "source_AdamW": 6,
+      "source_VJP": 2,
+      "source_backward_calls": 22,
+      "spectral_norms": 181,
+      "svd": 1
+    },
+    "python": "3.10.6",
+    "real_asset_reads": 0,
+    "skipped": 0,
+    "tests": 59,
+    "torch": "2.2.1+cu121",
+    "wall_seconds": 89.0102864659857
+  },
+  "independent_reference_local": {
+    "scope": "independent NumPy small-matrix equations only; NOT R7 host/source-training/target/GPU verification",
+    "tests": 22,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "python": "3.12.9",
+    "numpy": "2.2.3",
+    "wall_seconds": 0.06248095887713134,
+    "model_forwards": 0,
+    "model_backwards": 0,
+    "optimizers": 0,
+    "GPU_calls": 0,
+    "real_asset_reads": 0,
+    "exit_code": 0
+  },
+  "independent_reference_server": {
+    "scope": "independent NumPy small-matrix equations only; NOT R7 host/source-training/target/GPU verification",
+    "tests": 22,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "python": "3.10.6",
+    "numpy": "1.26.4",
+    "wall_seconds": 0.18781642895191908,
+    "model_forwards": 0,
+    "model_backwards": 0,
+    "optimizers": 0,
+    "GPU_calls": 0,
+    "real_asset_reads": 0,
+    "exit_code": 0
+  },
+  "server_process_exit": {
+    "implementation_sha": "8f179ce0ca848791793a17dab0606f0bde2b3e07",
+    "ssh_exit_code": 0
+  },
+  "new_full_random_context_case": {
+    "local": {
+      "model_parameters": 22554570,
+      "counts": {
+        "cholesky_solves": 9,
+        "spectral_norms": 3,
+        "appearance_MLP": 3,
+        "method_MLP": 3,
+        "backbone_forwards": 6
+      },
+      "hash_cost": {
+        "tensor_digest_calls": 12,
+        "tensor_bytes": 541702896,
+        "wall_ns": 249654749,
+        "cpu_ns": 464392000,
+        "context_build_calls": 6,
+        "context_wall_ns": 258381959,
+        "context_cpu_ns": 480476000
+      },
+      "same_bytes_cross_instance": true,
+      "changed_encoder_rejected": true
+    },
+    "server": {
+      "model_parameters": 22554570,
+      "counts": {
+        "cholesky_solves": 9,
+        "spectral_norms": 3,
+        "appearance_MLP": 3,
+        "method_MLP": 3,
+        "backbone_forwards": 6
+      },
+      "hash_cost": {
+        "tensor_digest_calls": 12,
+        "tensor_bytes": 541702896,
+        "wall_ns": 393240644,
+        "cpu_ns": 406504459,
+        "context_build_calls": 6,
+        "context_wall_ns": 409489242,
+        "context_cpu_ns": 427688872
+      },
+      "same_bytes_cross_instance": true,
+      "changed_encoder_rejected": true
+    }
+  },
+  "forward_accounting_per_final_suite": {
+    "R7_backbone_forwards": 479,
+    "legacy_C_forwards": 16,
+    "total": 495,
+    "random_full_ResUNet": 85,
+    "Small_fixture": 410,
+    "new_context_tests_total": 31,
+    "new_context_tests_full_ResUNet": 6,
+    "new_context_tests_Small": 25
+  },
+  "physical_counts_are_not_zero": true,
+  "reference_tests_not_substitute_for_implementation_tests": true,
+  "development_runs": [
+    {
+      "name": "dev01",
+      "candidate": "uncommitted development before context timing and mocked packaging check",
+      "tests": 40,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "wall_seconds": 9.776959375012666,
+      "cpu_user_seconds": 14.16036,
+      "cpu_system_seconds": 2.803297,
+      "peak_RSS": 972046336,
+      "peak_RSS_unit": "bytes",
+      "python": "3.12.9",
+      "torch": "2.6.0",
+      "platform": "Darwin arm64",
+      "physical_calls": {
+        "Tensor_backward": 23,
+        "autograd_grad": 0,
+        "Adam_step": 19,
+        "AdamW_step": 3,
+        "old_backbone_forwards": 0
+      },
+      "procedural_counts": {
+        "backbone_forwards": 416,
+        "appearance_MLP": 325,
+        "method_MLP": 846,
+        "spectral_norms": 113,
+        "cholesky_solves": 145,
+        "ISTA_iterations": 140,
+        "IRLS_iterations": 48,
+        "source_backward_calls": 19,
+        "source_Adam": 16,
+        "source_AdamW": 3,
+        "calibration_backward_calls": 3,
+        "calibration_Adam": 3
+      },
+      "context_hash_cost": {
+        "tensor_digest_calls": 371,
+        "tensor_bytes": 612130282,
+        "wall_ns": 265599203,
+        "cpu_ns": 525242000
+      },
+      "real_asset_reads": 0,
+      "GPU_queries_or_initializations": 0,
+      "external_review": "NOT_RUN"
+    },
+    {
+      "name": "dev02",
+      "candidate": "uncommitted development before fixed implementation commit",
+      "tests": 12,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 0,
+      "wall_seconds": 3.7788575422018766,
+      "cpu_user_seconds": 5.514514,
+      "cpu_system_seconds": 0.9191750000000001,
+      "peak_RSS": 993525760,
+      "peak_RSS_unit": "bytes",
+      "python": "3.12.9",
+      "torch": "2.6.0",
+      "platform": "Darwin arm64",
+      "physical_calls": {
+        "Tensor_backward": 0,
+        "autograd_grad": 0,
+        "Adam_step": 0,
+        "AdamW_step": 0,
+        "old_backbone_forwards": 0
+      },
+      "procedural_counts": {
+        "backbone_forwards": 31,
+        "appearance_MLP": 14,
+        "method_MLP": 25,
+        "spectral_norms": 21,
+        "cholesky_solves": 27,
+        "ISTA_iterations": 25,
+        "IRLS_iterations": 9
+      },
+      "context_hash_cost": {
+        "tensor_digest_calls": 319,
+        "tensor_bytes": 601666842,
+        "wall_ns": 263084490,
+        "cpu_ns": 520004000,
+        "context_build_calls": 155,
+        "context_wall_ns": 315306575,
+        "context_cpu_ns": 622396000
+      },
+      "real_asset_reads": 0,
+      "GPU_queries_or_initializations": 0,
+      "external_review": "NOT_RUN"
+    }
+  ],
+  "before_fix": {
+    "implementation_sha": "82aca2080bb80c019b0d39b4c95d21a6ba2cff3d",
+    "checkout_publication_sha": "7f129b484a5ab2b0af3efdf2ccea0eee1228969c",
+    "observation": {
+      "tests": "observation, not rejection acceptance",
+      "Small_forwards": 6,
+      "backward": 0,
+      "optimizers": 0,
+      "max_logit_difference": 1.0000011920928955,
+      "wall_and_cpu_cost": "NOT_CAPTURED"
+    },
+    "required_rejections": {
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "exit_code": 1,
+      "Small_forwards": 2,
+      "backward": 0,
+      "optimizers": 0,
+      "unittest_reported_wall_seconds": 0.107,
+      "cpu_time": "NOT_CAPTURED"
+    },
+    "failure_meaning": "Expected rejection assertions fail on old code, preserving the defect; not final candidate failures"
+  },
+  "warning_status": {
+    "local_implementation_RuntimeWarning_lines": 33,
+    "local_reference_RuntimeWarning_lines": 15,
+    "server_combined_RuntimeWarning_lines": 0,
+    "origin": "NOT_DIAGNOSED; no suppression or mathematical changes; counts are observed warning lines, not unique scientific failures"
+  },
+  "review_status_note": "Runner external_review=NOT_RUN means no review executed by tests; delivery status is AWAITING_REREVIEW.",
+  "timing_note": "Context timers include nested tensor hashing, so do not sum overlapping timers. Development repetitions are separate, not extra independent coverage."
+}
