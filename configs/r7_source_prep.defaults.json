@@ -1,0 +1,19 @@
+{
+  "schema": "R7_SOURCE_PREP_RESOURCES_V1",
+  "scope": "SOURCE_PREP",
+  "enabled": false,
+  "device": "cpu",
+  "physical_GPU_ids": null,
+  "dtype_policy": "R7_CPU_FP32_MODEL_FP64_LATENT_V1",
+  "workers": 1,
+  "threads": 2,
+  "wall_seconds": 259200,
+  "output_bytes": 536870912,
+  "max_asset_bytes": 268435456,
+  "max_decoded_bytes": 8589934592,
+  "retry": false,
+  "storage_root": null,
+  "resource_authorization": null,
+  "GPU_checks": "NOT_RUN",
+  "note": "Proposed finite CPU caps, not a measured real-training ETA or authorization; never truncate budgets to meet caps."
+}

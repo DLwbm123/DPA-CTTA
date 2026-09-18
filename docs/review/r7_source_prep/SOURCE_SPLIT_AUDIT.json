@@ -1,0 +1,36 @@
+{
+  "groups": 159,
+  "records": 159,
+  "fold_groups": {
+    "fit": 111,
+    "cal": 23,
+    "val": 25
+  },
+  "group_overlap": 0,
+  "registered_image_target_overlap": 0,
+  "patient_independence": false,
+  "target_patient_overlap": "NOT_IDENTIFIABLE",
+  "decoded_RGB": 0,
+  "decoded_masks": 0,
+  "schema": "R7_SOURCE_SPLIT_AUDIT_V1",
+  "original_split_roles": [
+    "basis_train",
+    "critic_train",
+    "critic_validation",
+    "proxy_test"
+  ],
+  "old_split_reused": false,
+  "reason": "Legacy basis_train/critic_train/critic_validation/proxy_test is not an existing R7 fit/cal/val split. Applied the unchanged stable R7_SOURCE_SPLIT_V1 SHA256 rule.",
+  "new_split_frozen_before_any_real_pixel_decode": true,
+  "split": {
+    "sha256": "8fdb8c869319c086048a36047d184c9844a986bd52ad098ab265158acd50deb9",
+    "bytes": 30722
+  },
+  "manifest": {
+    "sha256": "39d429baceb015dbf99948bb04c9a2bfca4d087c9f452a07be9528f6ecb046d1",
+    "bytes": 87448
+  },
+  "no_original_metadata_modified": true,
+  "source_metadata_only": true,
+  "private_membership_rows_published": false
+}

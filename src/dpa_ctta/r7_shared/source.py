@@ -239,7 +239,9 @@ class SourceTrainer:
     def calibrate(self):
         while self.cal_steps<256:self.cal_step()
         self.method.requires_grad_(False);self.method.set_stage('online');self.mode='FROZEN'
-        if self.method.group=='C':self.constant_variance()
+        if self.method.group=='C':
+            if getattr(self,'constant_phase',None):self.constant_phase()
+            self.constant_variance()
     @torch.no_grad()
     def constant_variance(self):
         if self.method.group!='C' or self.mode!='FROZEN':raise ValueError('constant R source cal only after calibration')

@@ -34,27 +34,43 @@ def evaluate_oracles(segmenter,data,oracles):
             rows.append(dict(anchor=aid,group=group,baseline=float(baseline),proxy=float(changed)))
     return rows
 
-def prepare_tensors(segmenter,data,*,source_provenance=None):
+def prepare_tensors(segmenter,data,*,source_provenance=None,progress=None):
     """For separately authorized future source entry or explicitly procedural callers.
 
     No disk reads, subprocess, device transfer, target loop, or publication occurs.
     FULL/STATIC get independent same-seed parameters, same schedule and full budget.
     """
+    mark=progress or (lambda name:None)
+    mark("identity")
     identity_before=HASH_COST.copy()
     source_provenance=provenance() if source_provenance is None else copy.deepcopy(source_provenance)
     validate_provenance(source_provenance)
     training_environment=environment(segmenter)
     before=COUNTS.copy()
-    oracles={f:oracle_all(segmenter,data,f) for f in ('fit','cal','val')}
-    u=shared_basis(oracles['fit'],data);b,baudit=a_basis(segmenter,data)
-    raw=scaler_observations(segmenter,data);outputs={}
+    oracles={}
+    for fold in ('fit','cal','val'):
+        mark('oracle_'+fold);oracles[fold]=oracle_all(segmenter,data,fold)
+    mark('shared_basis');u=shared_basis(oracles['fit'],data)
+    mark('A_basis');b,baudit=a_basis(segmenter,data)
+    mark('scaler');raw=scaler_observations(segmenter,data);outputs={}
     for group in 'ABC':
         for static in (False,True):
+            name=group+('_STATIC' if static else '_FULL');mark(name+'/initialize')
             m=new_method(group,b if group=='A' else u,static);m.observer.fit_scaler(raw,'fit')
-            trainer=SourceTrainer(segmenter,m,data,oracles['fit']);trainer.fit();trainer.start_calibration(oracles['cal']);trainer.calibrate()
+            trainer=SourceTrainer(segmenter,m,data,oracles['fit'])
+            trainer.constant_phase=lambda:mark(name+'/constant_variance')
+            mark(name+'/fit');trainer.fit()
+            mark(name+'/cal');trainer.start_calibration(oracles['cal']);trainer.calibrate()
+            mark(name+'/package')
             projections={f:[dict(anchor=i,residual_l2=float((m.basis@m.project(o.values[:,i])-o.values[:,i]).norm()),condition=float(torch.linalg.cond(m.basis))) for i in range(o.values.shape[1])] for f,o in oracles.items()}
-            outputs[group+('_STATIC' if static else '_FULL')]=dict(**prepared_artifact(segmenter,m,source_provenance,training_environment),projection_audit=projections,validation=trainer.validate(oracles['val']),fit_steps=trainer.fit_steps,cal_steps=trainer.cal_steps)
-    return dict(models=outputs,oracle_query={f:evaluate_oracles(segmenter,data,o) for f,o in oracles.items()},basis_audit=baudit,cost=dict(COUNTS-before),identity_cost=dict(HASH_COST-identity_before))
+            artifact=prepared_artifact(segmenter,m,source_provenance,training_environment)
+            mark(name+'/val');validation=trainer.validate(oracles['val'])
+            outputs[name]=dict(**artifact,projection_audit=projections,validation=validation,fit_steps=trainer.fit_steps,cal_steps=trainer.cal_steps)
+    queries={}
+    for fold,o in oracles.items():
+        mark('oracle_query_'+fold);queries[fold]=evaluate_oracles(segmenter,data,o)
+    mark(None)
+    return dict(models=outputs,oracle_query=queries,basis_audit=baudit,cost=dict(COUNTS-before),identity_cost=dict(HASH_COST-identity_before))
 
 def prepared_artifact(segmenter,method,source_provenance=None,training_environment=None):
     """Capture at source release; caller must preserve this trusted metadata."""
