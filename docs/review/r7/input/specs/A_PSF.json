@@ -1,0 +1,96 @@
+{
+  "schema": "R7_TRACK_A_PSF_V1",
+  "status": "PROPOSAL_NOT_IMPLEMENTED",
+  "group": "A",
+  "name": "Probabilistic Subspace Filtering",
+  "inspiration": [
+    "RP-GSSM",
+    "MC-TTDG",
+    "low-rank Laplace"
+  ],
+  "exact_paper_replication": false,
+  "r": 16,
+  "style_codebook": {
+    "K": 8,
+    "dim": 32,
+    "softmax_temperature": 0.2
+  },
+  "content_codebook": {
+    "K": 32,
+    "dim": 64,
+    "softmax_temperature": 0.2,
+    "patient_residual": "retain original backbone content path; do not replace it by codebook reconstruction"
+  },
+  "basis": {
+    "cov_fit_images": 16,
+    "probe_fit_images": 16,
+    "disjoint_groups": true,
+    "readout": "2x4x4 average pooled original logits; dimension32",
+    "local_point": "ambient intervention v=0",
+    "GGN": "Lambda=0.01 I + Jcov.T diag(sigmoid(r)*(1-sigmoid(r))) Jcov / n_cov_rows",
+    "Sigma": "solve(Lambda,I), symmetrize float64",
+    "basis": "B=Sigma^0.5 Vtop16 of Sigma^0.5 Jprobe.T Jprobe Sigma^0.5",
+    "project_oracle": "zstar=lstsq(B,vstar), full column rank required",
+    "derivative_calls_max": 1024,
+    "covariance_claim": "local pooled-logit surrogate covariance only; not calibrated target posterior or whole network Laplace",
+    "random_basis_control": "not in initial screen"
+  },
+  "observation": {
+    "input_dim": 128,
+    "definition": "concat(d32, soft style reconstruction32, mean content reconstruction64)",
+    "head": [
+      128,
+      64,
+      32
+    ],
+    "outputs": "first16=observation o; last16 bounded logit for Rdiag in [1e-4,10]"
+  },
+  "transition": {
+    "F": "0.95*W/max(1,spectral_norm(W)); W full16x16, initial W=(0.9/0.95)I",
+    "Q": "diag(1e-4+sigmoid(qraw)*(1-1e-4)); initialize0.01",
+    "m0": 0,
+    "P0": "I16",
+    "measurement_matrix": "I16",
+    "inference": "causal information-form Gaussian update only; no smoothing",
+    "equations": [
+      "mminus=F*m",
+      "Pminus=F*P*F.T+Q",
+      "Pnew=solve(inv(Pminus)+inv(R),I)",
+      "mnew=Pnew*(solve(Pminus,mminus)+solve(R,o))"
+    ],
+    "use_cholesky_solves": true,
+    "state_dtype": "float64",
+    "no_adaptive_jitter": true
+  },
+  "fit_loss": {
+    "query_Lseg": 1,
+    "observation_MSE_to_source_proxy_z": 0.1,
+    "state_Gaussian_NLL_to_source_proxy_z": 0.01,
+    "style_reconstruction": 0.05,
+    "content_clean_reconstruction_and_coeff_consistency": 0.05
+  },
+  "calibration": {
+    "parameter": "single log temperature of observation R, tau=0.25+3.75*sigmoid(a), Rcal=tau^2*R",
+    "fit": "Gaussian NLL of source cal projected oracle under causal filtered state; only temperature updated",
+    "no_target_calibration": true
+  },
+  "static": "reset m=0,P=I before each visit; keep learned F/Q; separately train at same budget",
+  "main_ablation": "A_ISO_OBS: replace R by I*trace(R)/16 at every visit, retain full checkpoint; posterior P can still be non-isotropic",
+  "online": {
+    "backbone_forwards": 2,
+    "backward": 0,
+    "Adam": 0,
+    "VJP": 0,
+    "patient_tokens_saved": false,
+    "persistent": [
+      "m16",
+      "P16x16",
+      "visit counter"
+    ]
+  },
+  "falsifiers": [
+    "FULL fails to improve prepared STATIC under matched information",
+    "filter uncertainty increases confidence on larger held-out source code errors",
+    "content changes at same synthetic acquisition cause systematic harmful state shifts"
+  ]
+}

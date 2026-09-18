@@ -1,0 +1,386 @@
+{
+  "schema": "R7_THREE_TRACKS_SHARED_V1",
+  "status": "DESIGN_FOR_IMPLEMENTATION_NOT_RUN",
+  "base_publication_sha": "00ccb401942e9f1d3fed48ccb7fb3777c87714b8",
+  "historical_C_implementation_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+  "dependencies": {
+    "ctta_sha": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+    "grata_sha": "33ae20d664f305af34739ec54a5bec7da53ffa0b"
+  },
+  "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+  "recurrence_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+  "stage_I": {
+    "CPU_only": true,
+    "real_images_masks_checkpoint_reads": false,
+    "real_training": false,
+    "GPU_queries_or_initialization": false,
+    "metadata_read_allowed": true,
+    "external_review": "NOT_RUN",
+    "execution_enabled": false
+  },
+  "task": {
+    "name": "fundus",
+    "channels": [
+      "OD",
+      "OC"
+    ],
+    "grid": [
+      512,
+      512
+    ],
+    "all_adapt_contents": 1951,
+    "remaining_dev": 1695,
+    "primary_orders_screen": [
+      0,
+      1
+    ],
+    "recurrence": 4,
+    "extension_orders": [
+      2,
+      3
+    ],
+    "remaining_domain_counts": {
+      "REFUGE": 336,
+      "ORIGA": 586,
+      "REFUGE_Valid": 736,
+      "Drishti_GS": 37
+    }
+  },
+  "base": {
+    "model": "existing pinned ResUNet34",
+    "backbone_weights": "same registered RIM_ONE_r3 source checkpoint, not re-trained",
+    "new_methods_BN": "current per-forward batch/spatial statistics; running stats disabled; affine frozen",
+    "C": "unchanged historical C; 8 forwards, 1 backward, 1 Adam per visit",
+    "C0": "same current-statistics configuration; zero learned adapter; one forward; no online update"
+  },
+  "adapter": {
+    "sites": [
+      {
+        "path": "up1",
+        "channels": 256
+      },
+      {
+        "path": "up3",
+        "channels": 256
+      }
+    ],
+    "ambient_dimension": 1024,
+    "formula": "h_out = h + expm1(0.1*tanh(v_gamma))*h + 0.1*tanh(v_beta)",
+    "state_to_v": "v=U*z; no added static bias",
+    "zero_state": "exact identity in finite FP arithmetic with live derivative; do not branch away autograd at zero",
+    "no_seg_head_adapter": true
+  },
+  "observer": {
+    "forward": "unmodulated frozen current-statistics backbone",
+    "appearance_raw_dim": 134,
+    "appearance_definition": "input RGB mean/std (6) + res.conv1 channel mean/std (128), spatial population std",
+    "appearance_normalization": "fit-only mean/std; denominator=max(std,1e-6); no target running scaler",
+    "appearance_MLP": [
+      134,
+      64,
+      32
+    ],
+    "activation": "GELU",
+    "token_source": "up3 per-channel spatial instance normalization eps=1e-6; adaptive-average 8x8; fixed seeded 256x64 orthonormal projection; LayerNorm eps=1e-6",
+    "tokens": 64,
+    "token_dimension": 64,
+    "fixed_projection_seed": 20260918,
+    "patient_tokens_persist": false
+  },
+  "source_data": {
+    "raw_source_allowed_only_after_review": true,
+    "source_manifest_sha256": null,
+    "checkpoint_sha256": null,
+    "split_sha256": null,
+    "binding_status": "PENDING_METADATA_NOT_A_STAGE_I_CODE_BLOCKER",
+    "split_rule": "preserve valid existing subject-disjoint new-module fit/cal/val split if supplied; otherwise stable SHA256 R7_SOURCE_SPLIT_V1|group_id ordering, floor(.70*n), floor(.15*n), remainder; freeze before any source pixels",
+    "subject_identity_required_for_patient_claims": true,
+    "unknown_subject_groups": "content/eye groups permitted only with explicit dependency-risk label; never claim patient independence",
+    "minimum_fit_groups": 32,
+    "minimum_cal_groups": 4,
+    "minimum_val_groups": 4,
+    "checkpoint_pretraining_exposure": "audit separately; new-module validation is not independent validation of the old checkpoint"
+  },
+  "simulator": {
+    "version": "R7_PHOTOMETRIC_V1",
+    "seed": 20260918,
+    "preserves_geometry_and_masks": true,
+    "parameter_order": [
+      "brightness",
+      "contrast",
+      "gamma",
+      "gain_R",
+      "gain_G",
+      "gain_B",
+      "blur_sigma",
+      "noise_sigma",
+      "vignette"
+    ],
+    "ranges": [
+      [
+        -0.1,
+        0.1
+      ],
+      [
+        0.7,
+        1.3
+      ],
+      [
+        0.7,
+        1.5
+      ],
+      [
+        0.8,
+        1.2
+      ],
+      [
+        0.8,
+        1.2
+      ],
+      [
+        0.8,
+        1.2
+      ],
+      [
+        0,
+        1.5
+      ],
+      [
+        0,
+        0.03
+      ],
+      [
+        0,
+        0.25
+      ]
+    ],
+    "identity": [
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      0,
+      0
+    ],
+    "fit_anchors": 128,
+    "cal_anchors": 32,
+    "val_anchors": 32,
+    "fit_cal_active_factors": "anchor0 identity; other anchors alternate 1 and 2 active coordinates selected without replacement",
+    "val_active_factors": "anchor0 identity; other anchors exactly 3 active coordinates; held-out combinations, not clinical shifts",
+    "noise_realization": "independent per support/query image using keyed local RNG; same nuisance parameters does not mean same noise pixels",
+    "operation_order": [
+      "contrast_about_0.5",
+      "brightness",
+      "clip_0_1",
+      "gamma",
+      "RGB_gains",
+      "Gaussian_blur",
+      "Gaussian_noise",
+      "vignette",
+      "clip_0_1"
+    ],
+    "no_target_donors": true
+  },
+  "oracle": {
+    "label": "source supervised proxy intervention, not true latent domain state",
+    "anchors_all_folds": 192,
+    "support_images_per_anchor": 2,
+    "different_subject_or_group": true,
+    "ambient_v": 1024,
+    "initial_v": 0,
+    "steps": 16,
+    "optimizer": {
+      "name": "Adam",
+      "lr": 0.03,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0
+    },
+    "objective": "mean over two support images Lseg + 1e-3*mean(v^2)",
+    "Lseg": "mean BCE logits plus 0.5*mean channel soft-Dice loss; Dice smoothing 1e-6",
+    "reuse_same_v_for_support_pair": true,
+    "independent_query_required": true,
+    "fit_oracle_training_only": true,
+    "cal_val_oracles": "only calibration/evaluation targets for those folds; never basis/dictionary/task fit",
+    "online_oracle_available": false,
+    "oracle_forwards": 6144,
+    "oracle_backward_calls": 3072,
+    "oracle_adam_calls": 3072
+  },
+  "offline_training": {
+    "source_models": [
+      "A_FULL",
+      "A_STATIC",
+      "B_FULL",
+      "B_STATIC",
+      "C_FULL",
+      "C_STATIC"
+    ],
+    "fit_steps_each": 1000,
+    "episode_length": 4,
+    "curriculum": [
+      "abrupt",
+      "gradual_nearest_anchor",
+      "recurrence"
+    ],
+    "selection": "step index modulo 3; see COMMON_PROTOCOL for exact sequence",
+    "each_time": "clean support observation, styled same support observation, styled different query adapted prediction",
+    "model_forwards_per_step": 12,
+    "query_state_only_from_support_and_past": true,
+    "optimizer": {
+      "name": "AdamW",
+      "lr": 0.0003,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.0001
+    },
+    "gradient_clip_global_norm": 1.0,
+    "scheduler": null,
+    "early_stopping": false,
+    "checkpoint_selection": "fixed final step1000, not best target/source validation",
+    "training_seed": 20260918,
+    "calibration_steps_each": 256,
+    "calibration_batch": 4,
+    "calibration_optimizer_lr": 0.001,
+    "calibration_model_forwards_each_step": 4,
+    "calibration_data": "source cal only; no query label gradient into task modules",
+    "fit_forward_nominal_total": 72000,
+    "fit_optimizer_steps_total": 6000,
+    "cal_forward_nominal_total": 6144,
+    "cal_optimizer_steps_total": 1536,
+    "stateless_controls": "independently fit and calibrated at identical budgets/initial parameter seeds; reset history before each visit in fit and target",
+    "source_static_controls_not_testtime_ablation": true
+  },
+  "source_release": {
+    "deploy_only": [
+      "frozen original checkpoint",
+      "basis and observer/modules",
+      "fit scalers",
+      "calibration parameters",
+      "initial state definition",
+      "artifact manifests"
+    ],
+    "do_not_deploy": [
+      "source RGB/masks",
+      "oracle support records",
+      "target-fitted stats"
+    ],
+    "no_privacy_guarantee": true,
+    "missing_source": "do not silently substitute a target set; Stage I may be ready, real source stage remains blocked"
+  },
+  "stages": {
+    "IMPLEMENTATION": {
+      "enabled": true,
+      "real_compute": false
+    },
+    "SOURCE_PREP": {
+      "enabled": false,
+      "requires_review_scope": "SOURCE_PREP",
+      "requires_user_receipt": true
+    },
+    "TARGET_SCREEN": {
+      "enabled": false,
+      "requires_source_artifacts_and_reviewed_binding": true,
+      "requires_user_receipt": true
+    },
+    "TARGET_MECHANISM": {
+      "enabled": false
+    },
+    "TARGET_EXTENSION": {
+      "enabled": false
+    }
+  },
+  "target_screen": {
+    "arms": [
+      "C_BASE",
+      "C0",
+      "A_FULL",
+      "A_STATIC",
+      "B_FULL",
+      "B_STATIC",
+      "C_FULL",
+      "C_STATIC"
+    ],
+    "orders": [
+      0,
+      1,
+      4
+    ],
+    "jobs": 24,
+    "scored_visits_all": 46824,
+    "nominal_backbone_forwards": 122913,
+    "nominal_model_backward_calls": 5853,
+    "nominal_adam_calls": 5853,
+    "latent_updates_not_Adam": true,
+    "target_seed": 20260907,
+    "no_automatic_extension": true
+  },
+  "mechanism": {
+    "arms": [
+      "A_ISO_OBS",
+      "B_PRED_ONLY",
+      "C_CONST_R"
+    ],
+    "orders": [
+      0,
+      1,
+      4
+    ],
+    "jobs_max": 9,
+    "backbone_forwards_max": 35118,
+    "backward_Adam": 0,
+    "same_full_checkpoint_inference_ablations": true,
+    "separate_authorization": true
+  },
+  "extension": {
+    "max_groups": 2,
+    "arms": "C_BASE,C0 plus selected FULL/STATIC pairs",
+    "orders": [
+      2,
+      3
+    ],
+    "jobs_max": 12,
+    "backbone_forwards_max": 66334,
+    "model_backward_adam_max": 3902,
+    "same_contents_not_independent_patients": true
+  },
+  "screening_policy": {
+    "automatic_scientific_gate": false,
+    "full_minus_C_positive_orders_not_all_required": true,
+    "required_reporting": [
+      "absolute scores",
+      "FULL-C",
+      "FULL-own-STATIC",
+      "domain/order/channel",
+      "recurrence",
+      "paired tails",
+      "ASSD common valid denominator",
+      "source preparation and online costs"
+    ],
+    "human_review_only": true,
+    "no_posthoc_relabeling": true,
+    "old_R6_gate_unchanged": true
+  },
+  "resources": {
+    "new_GPU_ids": null,
+    "max_workers_proposal": 3,
+    "threads_per_worker": 2,
+    "runtime_caps": "bind after procedural model profiling and before real launch; must be finite; do not inherit R6 receipt",
+    "stage_I_real_compute": 0
+  },
+  "statistics": {
+    "status": "development experiment; source-oracle-calibration is a proxy",
+    "target_confidence_intervals_default": false,
+    "do_not_treat_visits_or_pixels_as_independent_subjects": true,
+    "future_confirm": "new subject data and predeclared seed repetitions, not promised available"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema": "R7_TRACK_C_RBE_V1",
+  "status": "PROPOSAL_NOT_IMPLEMENTED",
+  "group": "C",
+  "name": "Reliability-Weighted Basis Evidence",
+  "inspiration": [
+    "Bridge CBB",
+    "GUIDE noise-driven reliability"
+  ],
+  "exact_paper_replication": false,
+  "no_frontdoor_causal_claim": true,
+  "no_Dirichlet_multiclass_shortcut": true,
+  "r": 32,
+  "basis": {
+    "U": "same fixed fit-oracle top32 U as B",
+    "content_Pc_shape": [
+      32,
+      64
+    ],
+    "appearance_Pa_shape": [
+      16,
+      64
+    ],
+    "attention_temperature": 0.2,
+    "content": "kc=softmax(normalized(E)*normalized(Pc).T/.2); c=kc*Pc",
+    "style_query": "ka=softmax(MLP(concat(E-c,d32)):96->64->16); o=ka*O, O16x8",
+    "H": "MLP(c):64->64->256; reshape8x32; normalize each row by max(row_norm,1e-6)",
+    "feature_reconstruction": "c+ka*Pa; original patient feature bypass retained"
+  },
+  "noise_meta_model": {
+    "input_dim": 96,
+    "head": [
+      96,
+      64,
+      8
+    ],
+    "variance": "R=1e-4+(10-1e-4)*sigmoid(head(concat(E-c,d)))",
+    "fit_stage": "R=I during main fit; reliability weights learned only during source-cal curriculum",
+    "cal_target": "(o-H*zstar)^2 on source-cal oracle latents; observation and bases frozen",
+    "loss": "0.5*mean(log(R)+(o-H*zstar)^2/R)",
+    "curriculum": "progress=(step+1)/256; extra support RGB Gaussian std=.04*progress, feature Gaussian std=.02*progress; zstar refers to nominal anchor, not re-fit to the extra noise; independent keyed RNG",
+    "deployment_missing_features": "hard fail, no silent all-reliable fallback"
+  },
+  "update": {
+    "zminus": "0.9*zprev",
+    "lambda_prior": 0.1,
+    "huber_delta": 1.0,
+    "observations_per_visit": 512,
+    "IRLS_steps": 3,
+    "init": "z=zminus",
+    "objective": "mean Huber((o-H*z)/sqrt(R))+lambda/2*||z-zminus||^2",
+    "weights": "nu=min(1,1/abs(standardized_residual)); at residual0 nu=1",
+    "solve": "(H.T diag(nu/R) H /512 + lambda I) znew = H.T diag(nu/R)o/512 +lambda*zminus",
+    "state_dtype": "float64",
+    "differentiation_source": "differentiate unrolled3 solves; R fixed1 in main fit",
+    "online_autograd": false
+  },
+  "fit_loss": {
+    "query_Lseg": 1,
+    "state_MSE_to_proxy_z": 0.1,
+    "observation_MSE_to_H_zstar": 0.1,
+    "feature_reconstruction": 0.05,
+    "clean_styled_content_coeff_consistency": 0.05,
+    "basis_row_coherence_offdiag": 0.001
+  },
+  "static": "zprev=0 before every visit; independently fit and calibrated at same budgets",
+  "main_ablation": "C_CONST_R: replace patch variance by channelwise geometric mean source-cal variances (8 values) frozen before target; retain robust Huber and history, same full checkpoint",
+  "online": {
+    "backbone_forwards": 2,
+    "backward": 0,
+    "Adam": 0,
+    "VJP": 0,
+    "latent_IRLS_steps": 3,
+    "persistent": [
+      "z32",
+      "visit counter"
+    ],
+    "patch_tokens_or_prior_patients_saved": false
+  },
+  "falsifiers": [
+    "R predictions do not track proxy residuals under source-heldout noise",
+    "heteroscedastic robust update does not help versus frozen constant variance",
+    "basis reconstruction improves without segment improvement"
+  ]
+}

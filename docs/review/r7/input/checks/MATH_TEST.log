@@ -1,0 +1,43 @@
+test_film_zero_identity (__main__.ReferenceTests.test_film_zero_identity) ... ok
+test_film_zero_live_derivative (__main__.ReferenceTests.test_film_zero_live_derivative) ... ok
+test_filter_against_independent_kalman_gain (__main__.ReferenceTests.test_filter_against_independent_kalman_gain) ... ok
+test_filter_causality_and_reset (__main__.ReferenceTests.test_filter_causality_and_reset) ... ok
+test_filter_full_transition_creates_correlations (__main__.ReferenceTests.test_filter_full_transition_creates_correlations) ... ok
+test_filter_high_noise_limit (__main__.ReferenceTests.test_filter_high_noise_limit) ... ok
+test_filter_rejects_non_spd (__main__.ReferenceTests.test_filter_rejects_non_spd) ... ok
+test_huber_definition (__main__.ReferenceTests.test_huber_definition) ... ok
+test_irls_matches_ridge_in_quadratic_regime (__main__.ReferenceTests.test_irls_matches_ridge_in_quadratic_regime) ... ok
+test_irls_no_observation_residual_keeps_prior (__main__.ReferenceTests.test_irls_no_observation_residual_keeps_prior) ... ok
+test_irls_observation_replication_does_not_change_mean_objective (__main__.ReferenceTests.test_irls_observation_replication_does_not_change_mean_objective) ... ok
+test_irls_outlier_downweight_and_monotonicity (__main__.ReferenceTests.test_irls_outlier_downweight_and_monotonicity) ... ok
+test_ista_diagonal_closed_form (__main__.ReferenceTests.test_ista_diagonal_closed_form) ... ok
+test_ista_monotone_five_steps (__main__.ReferenceTests.test_ista_monotone_five_steps) ... ok
+test_matrix_budgets (__main__.ReferenceTests.test_matrix_budgets) ... ok
+test_nonfinite_and_invalid_variance_rejected (__main__.ReferenceTests.test_nonfinite_and_invalid_variance_rejected) ... ok
+test_predict_only_is_no_correction (__main__.ReferenceTests.test_predict_only_is_no_correction) ... ok
+test_predictive_subspace_against_direct_covariance_truncation (__main__.ReferenceTests.test_predictive_subspace_against_direct_covariance_truncation) ... ok
+test_predictive_subspace_full_rank (__main__.ReferenceTests.test_predictive_subspace_full_rank) ... ok
+test_soft_threshold_sign_and_zero (__main__.ReferenceTests.test_soft_threshold_sign_and_zero) ... ok
+test_sparse_zero_residual (__main__.ReferenceTests.test_sparse_zero_residual) ... ok
+test_stable_matrix_bound (__main__.ReferenceTests.test_stable_matrix_bound) ... ok
+
+----------------------------------------------------------------------
+Ran 22 tests in 0.015s
+
+OK
+{
+  "scope": "independent NumPy small-matrix equations only; NOT R7 host/source-training/target/GPU verification",
+  "tests": 22,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "python": "3.13.5",
+  "numpy": "2.3.5",
+  "wall_seconds": 0.01556851399993775,
+  "model_forwards": 0,
+  "model_backwards": 0,
+  "optimizers": 0,
+  "GPU_calls": 0,
+  "real_asset_reads": 0,
+  "exit_code": 0
+}

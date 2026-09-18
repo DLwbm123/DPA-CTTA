@@ -1,0 +1,133 @@
+{
+  "schema": "R7_DESIGN_PACKAGE_MANIFEST_V1",
+  "created_date": "2026-09-18",
+  "status": "DESIGN_ARTIFACTS_ONLY",
+  "files": [
+    {
+      "path": "COMMON_PROTOCOL.md",
+      "bytes": 12594,
+      "sha256": "f8714c83466d59a07830673d713b12aab7f20046d7538cfbcc7c4290f51df37d"
+    },
+    {
+      "path": "MASTER_PLAN.md",
+      "bytes": 5202,
+      "sha256": "7a0871c50f5c90fc29f93f6d1f4f156a56008fcc2804c4f573067fcc0a1d057e"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1312,
+      "sha256": "3d8338235e523ce4b3f82bd74a0a5ad108e021ee28e90bdf27024772c145c546"
+    },
+    {
+      "path": "REVIEW_CHECKLIST.md",
+      "bytes": 896,
+      "sha256": "6788bb0421b68fe19330cb07bad12811ce294f5a91912b647dcf946bc7b72321"
+    },
+    {
+      "path": "TARGET_MATRIX.json",
+      "bytes": 34497,
+      "sha256": "8208ace00966c61b881671b16df53bf66ea8b046db49c96b4a4f27f36358805c"
+    },
+    {
+      "path": "TRACK_A_PSF_METHOD.md",
+      "bytes": 4710,
+      "sha256": "595b79aafd01d4dca27632383a265096a9d1583c3baabf241c35b6f761ead0ed"
+    },
+    {
+      "path": "TRACK_B_RCA_METHOD.md",
+      "bytes": 3160,
+      "sha256": "65dffce3a82063ef46b24404d4c13c81ee8b6167c00f7161a83a1aba57c87293"
+    },
+    {
+      "path": "TRACK_C_RBE_METHOD.md",
+      "bytes": 4069,
+      "sha256": "fcef1438f79e558f07fb639be8aef0b418124f24ebecabffc02ea6b57bc7d835"
+    },
+    {
+      "path": "checks/MATH_TEST.log",
+      "bytes": 2818,
+      "sha256": "5fed02e64cadb18a801b1aa639ce9d4284a7b16ce305b6f369c039d9ba9238bd"
+    },
+    {
+      "path": "checks/MATH_TEST_RESULT.json",
+      "bytes": 387,
+      "sha256": "a7564a38ac733842882d646bd6f27e69fbceb21b7e124a36ab1a27e8ec97d932"
+    },
+    {
+      "path": "checks/PACKAGE_CONSISTENCY.json",
+      "bytes": 627,
+      "sha256": "f84a51810eb29be5173207acdcb8f952df2a3214e9469c19badf0e35a63ed962"
+    },
+    {
+      "path": "checks/test_math_reference.py",
+      "bytes": 7480,
+      "sha256": "e94e793cdde6d000680513d17191874a26ad3653396b4fc062eeb8e2c5d36c43"
+    },
+    {
+      "path": "prompts/00_MASTER_CODEX_PROMPT.md",
+      "bytes": 6994,
+      "sha256": "3893bfce8c7e942bc82254da257f7ecd1f56d8b6e2a23a85826ae3212fcc2f6b"
+    },
+    {
+      "path": "prompts/01_A_PSF_CODEX_PROMPT.md",
+      "bytes": 2288,
+      "sha256": "ee32e07c262b9fd34653b4cd90adadd24384f730f7779461175b2d5ebac2b32a"
+    },
+    {
+      "path": "prompts/02_B_RCA_CODEX_PROMPT.md",
+      "bytes": 2202,
+      "sha256": "9954770a6cf53b41732c752c5c317c225e024095f9eb76451281a7cb889d83b5"
+    },
+    {
+      "path": "prompts/03_C_RBE_CODEX_PROMPT.md",
+      "bytes": 2296,
+      "sha256": "caae4e61cb6f122cbb27461b08eddd474fdb2a9147aea38171465440e66f1b53"
+    },
+    {
+      "path": "references/MATH_REFERENCE.py",
+      "bytes": 5362,
+      "sha256": "68c42a85a7d391203c1c0bc4b5b16fee53a9401e0669722a01f5e3502ee5240b"
+    },
+    {
+      "path": "references/PRIMARY_SOURCES.json",
+      "bytes": 3399,
+      "sha256": "873a5b3337f0800f0d4580b01600e14098ab92c04ae4ebc815b94259005d2ace"
+    },
+    {
+      "path": "references/PROVENANCE.md",
+      "bytes": 3236,
+      "sha256": "d9a8b0e4754d6e96085a8e2ab11dddda810ce786bc52beb7519edeb3decdf1fa"
+    },
+    {
+      "path": "specs/A_PSF.json",
+      "bytes": 3322,
+      "sha256": "5e8f62ab8a39806ef5aef2dbb5b0206255d9e49c33fa3bcd68c82e78e88410bf"
+    },
+    {
+      "path": "specs/B_RCA.json",
+      "bytes": 2752,
+      "sha256": "9895dba31443881e50bb87d4df94f83598c0069931b35d6d000e6c2b1e61fc61"
+    },
+    {
+      "path": "specs/COMMON_PROTOCOL.json",
+      "bytes": 11028,
+      "sha256": "a18f51317b8547067f8383ebd1125eca1697b24ce6245ca5e2733e2daa28f42d"
+    },
+    {
+      "path": "specs/C_RBE.json",
+      "bytes": 3146,
+      "sha256": "4151c86ebec9073bca570e696c45bbecc4f10e0505698989a0be41cbe2032e86"
+    },
+    {
+      "path": "verify_manifest.py",
+      "bytes": 699,
+      "sha256": "9b97f398f1d836d32710adde526dbb26bc086bdeb27a0400d94f3ddddaa38bd3"
+    }
+  ],
+  "excludes": [
+    "MANIFEST.json (self-reference)"
+  ],
+  "tests_scope": "22 small-matrix NumPy checks, not production implementation",
+  "external_review": "NOT_RUN",
+  "real_compute_started": false
+}

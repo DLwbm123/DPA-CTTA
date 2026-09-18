@@ -1,0 +1,87 @@
+{
+  "schema": "R7_TRACK_B_RCA_V1",
+  "status": "PROPOSAL_NOT_IMPLEMENTED",
+  "group": "B",
+  "name": "Recurrent Corrective Atlas",
+  "inspiration": [
+    "WARP",
+    "iterative sparse coding"
+  ],
+  "exact_paper_replication": false,
+  "r": 32,
+  "basis": {
+    "U": "top32 left singular vectors of 1024x128 fit oracle matrix, uncentered, fixed afterward",
+    "project_oracle": "zstar=U.T vstar",
+    "claim": "empirical source intervention basis, not anatomical causal basis"
+  },
+  "observer": {
+    "o_MLP": [
+      32,
+      64,
+      64
+    ],
+    "dictionary_H_shape": [
+      64,
+      32
+    ],
+    "dictionary_columns": "raw columns divided by max(norm,1e-6); trainable during source fit, frozen target"
+  },
+  "transition": {
+    "A": "0.95*W/max(1,spectral_norm(W)); initialW=0.9I",
+    "B_delta_shape": [
+      32,
+      32
+    ],
+    "B_delta": "G/max(1,spectral_norm(G))",
+    "b_MLP": [
+      32,
+      64,
+      32
+    ],
+    "prediction": "zminus=A*zprev+b(d)+B_delta*(d-dprev)",
+    "first_visit": "zprev=0; dprev=current d, so difference0",
+    "raw_patient_RGB_difference_forbidden": true
+  },
+  "correction": {
+    "variable": "delta; initialize zero each visit",
+    "objective": "0.5*||o-H*(zminus+delta)||^2 + lambda*||delta||1 + 0.5*mu*||delta||^2",
+    "lambda": 0.01,
+    "mu": 0.1,
+    "ISTA_steps": 5,
+    "eta": "1/(spectral_norm(H)^2+mu)",
+    "step": "delta=soft_threshold(delta-eta*(H.T*(H*(zminus+delta)-o)+mu*delta),eta*lambda)",
+    "commit": "z=zminus+delta5",
+    "online_autograd": false,
+    "optimality_claim": "5 finite iterations, not exact sparse optimum; recurrence bound not a full segmentation guarantee"
+  },
+  "fit_loss": {
+    "query_Lseg": 1,
+    "state_MSE_to_proxy_z": 0.1,
+    "observation_MSE_to_H_zstar": 0.1,
+    "dictionary_coherence_offdiag": 0.001
+  },
+  "calibration": {
+    "parameter": "single kappa=0.25+3.75*sigmoid(a)",
+    "observation_equivalent": "scale residual energy by 1/kappa^2 in correction; eta recomputed accordingly; do not change lambda/mu",
+    "fit": "source-cal latent MSE after5 steps; only kappa updated"
+  },
+  "static": "reset zprev=0 and dprev=current d before each visit; separately source train",
+  "main_ablation": "B_PRED_ONLY: delta=0, preserve full recurrent prediction; same full checkpoint, not independently optimized",
+  "online": {
+    "backbone_forwards": 2,
+    "backward": 0,
+    "Adam": 0,
+    "VJP": 0,
+    "latent_ISTA_steps": 5,
+    "persistent": [
+      "z32",
+      "previous d32",
+      "visit counter"
+    ]
+  },
+  "falsifiers": [
+    "5step correction does not improve source-heldout or target over predictor-only",
+    "iterative objective decreases but segmentation degrades",
+    "temporal model fails against budget-matched STATIC"
+  ]
+}

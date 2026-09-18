@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "scope": "design dimensions/budgets/prompt presence only, not implementation review",
+  "checks": [
+    "24 screen trajectories and122913 forwards",
+    "9 mechanism trajectories and35118 forwards",
+    "extension at most12 trajectories and66334 forwards",
+    "full16x16 A transition avoids all-diagonal covariance degeneracy",
+    "B5 ISTA/C3 IRLS",
+    "oracle2F per1backward/Adam",
+    "source6x1000x12F and6x256x4calF",
+    "all three online2F and not exact paper replicas"
+  ],
+  "code_implementation_review": "NOT_RUN",
+  "real_source_training": "NOT_RUN",
+  "real_target_execution": "NOT_RUN"
+}
