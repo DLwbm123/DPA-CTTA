@@ -1,0 +1,402 @@
+{
+  "schema": "R6D_READONLY_POSTHOC_ANALYSIS_V1",
+  "status": "PROPOSED_NOT_EXECUTED",
+  "purpose": "Describe existing R6-A state-path and supervision-allocation differences; no old-result promotion",
+  "inferential_status": "POST_HOC_EXPLORATORY_OUTCOMES_ALREADY_KNOWN",
+  "repository": "DLwbm123/DPA-CTTA",
+  "historical_publication_sha": "aa732b42b03d378149028a3770879b72ebc55db3",
+  "historical_binding": {
+    "run_id": "a70dc79f23db47289532792141b61f57",
+    "code_sha": "c94fff7c05cec38d541c441b62a9381ee46ba076",
+    "science_sha256": "2c9cb45d4e8c8022f5a61240da36bb05fa51db4bab5588f558e60976f54d79ff",
+    "registration_digest": "8afb0a9ea4e5fe1701bd89a04778de1b2ef0fac70e7aa8ec62fe288f071ffeaf",
+    "stream_digest": "cc5fb8e0071ec9a0d25210bb34f4505359653dcc8e6bd884de47edb21b2253db",
+    "production_fingerprint": "a6ef161066d3560dc2dd540cb507bff2e4a7cadf94ab711545877c525dee2f2e",
+    "scope": "A"
+  },
+  "historical_status": "R6A_COMPLETE_NO_ADVANCE",
+  "new_model_execution_authorized": false,
+  "R6B_authorized": false,
+  "R6E_authorized": false,
+  "scope": {
+    "allowed": [
+      "existing scalar ledgers",
+      "evaluation metric counts containing GT information",
+      "registered JSON metadata",
+      "isolated procedural CPU tests",
+      "new deidentified aggregate analysis"
+    ],
+    "forbidden": [
+      "raw RGB",
+      "raw mask",
+      "source data",
+      "checkpoint",
+      "model construction",
+      "network forward",
+      "backward",
+      "Adam",
+      "VJP",
+      "GPU query/init/smoke",
+      "old result writes",
+      "production code changes",
+      "automatic model experiments",
+      "background analysis retries"
+    ],
+    "stored_GT_metrics_used": true,
+    "additional_model_calls": {
+      "forwards": 0,
+      "backwards": 0,
+      "adam": 0,
+      "vjp": 0
+    }
+  },
+  "inputs": {
+    "arms": [
+      "C",
+      "R_BAL",
+      "R_SCALE",
+      "R_SHUFFLE"
+    ],
+    "streams": [
+      0,
+      1,
+      4
+    ],
+    "jobs": 12,
+    "all_contents_per_trajectory": 1951,
+    "remaining_dev_per_trajectory": 1695,
+    "remaining_dev_domain_counts": {
+      "Drishti_GS": 37,
+      "ORIGA": 586,
+      "REFUGE": 336,
+      "REFUGE_Valid": 736
+    },
+    "expected_unlabeled_rows": 23412,
+    "expected_evaluation_rows": 23412,
+    "paired_key": [
+      "stream",
+      "group_id",
+      "channel"
+    ],
+    "cross_stream_paired_key": [
+      "group_id",
+      "channel"
+    ],
+    "channels": [
+      "OD",
+      "OC"
+    ],
+    "predictions": [
+      "pre",
+      "q",
+      "post"
+    ],
+    "raw_partition_pixels": 262144,
+    "private_location": null,
+    "private_location_policy": "Resolve existing permitted pointers; never guess or scan unrelated storage"
+  },
+  "read_only": {
+    "ordinary_file_snapshot_required": true,
+    "no_hardlinks_or_symlinks": true,
+    "source_and_output_disjoint": true,
+    "source_before_after_sha256_required": true,
+    "original_result_pointer_must_not_change": true,
+    "source_metadata_changes_forbidden": true,
+    "pythondontwritebytecode": true,
+    "banned_entrypoints": [
+      "recompute",
+      "invalidate",
+      "publish",
+      "launch",
+      "worker",
+      "trajectory",
+      "smoke"
+    ],
+    "pure_validators_only": "Audit frozen completed/replay/join/validate_metric call graph before reuse; no write side effects"
+  },
+  "baseline_reconstruction": {
+    "primary": "remaining_dev -> equal OD/OC per content -> within domain mean -> four equal domains -> streams 0/1 equal",
+    "recurrence_stream": 4,
+    "recurrence_in_primary": false,
+    "old_numerical_tolerances": "unchanged",
+    "display_rounding_check_atol_pp": 2e-06,
+    "new_decomposition_identity_atol_pp": 1e-10,
+    "new_decomposition_identity_rtol": 0,
+    "original_gate_recomputed_but_never_changed": true
+  },
+  "analysis": {
+    "D1": {
+      "controls": [
+        "C",
+        "R_SCALE",
+        "R_SHUFFLE"
+      ],
+      "unit": "percentage points (pp)",
+      "L": "post_m - pre_m",
+      "delta_post": "post_BAL - post_control",
+      "delta_pre": "pre_BAL - pre_control",
+      "delta_step": "(post_BAL-pre_BAL) - (post_control-pre_control)",
+      "identity": "delta_post = delta_pre + delta_step",
+      "stream_weight": "1 / (4 * N_domain_remaining)",
+      "primary_order_weight": "1/2 for each of stream 0,1",
+      "macro_channel_weight": "1/2 for OD,OC",
+      "signed_positive_negative_mass": true,
+      "additive_quantiles_forbidden": true,
+      "net_near_zero_explanation_ratios_forbidden": true
+    },
+    "D2": {
+      "cross_stream_contrasts": [
+        [
+          1,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "main_method_contrast": "R_BAL - C",
+      "metrics": [
+        "delta_post",
+        "delta_pre",
+        "delta_step"
+      ],
+      "segment_source": [
+        "registered chunk_schedule",
+        "registered contiguous_domain_segments"
+      ],
+      "chunk_size_reference": 64,
+      "switch_definition": "domain differs from preceding content; first content is not a switch",
+      "initial_segment_not_switch": true,
+      "same_domain_adjacent_chunks_not_switch": true,
+      "early_after_switch_visits": [
+        1,
+        8
+      ],
+      "later_after_switch_visits": "9 through segment end",
+      "all_arrivals_define_positions": true,
+      "repeated_images_in_recurrence": false,
+      "causal_forgetting_claim": false
+    },
+    "D3": {
+      "raw_fields": [
+        "n_fg",
+        "n_bg",
+        "rho",
+        "rho_clipped",
+        "fallback",
+        "applied_w_fg",
+        "applied_w_bg",
+        "S0",
+        "Sw",
+        "Sperm",
+        "a",
+        "b",
+        "residual_fg_sse",
+        "residual_bg_sse",
+        "weighted_fg_sse",
+        "weighted_bg_sse",
+        "bce_sum",
+        "bce_fg_sum",
+        "bce_bg_sum",
+        "weighted_bce_sum",
+        "shuffled_bce_sum",
+        "residual_weighted_dot",
+        "residual_shuffled_dot",
+        "actual_logit_gradient_l2",
+        "bn_gradient_l2",
+        "adam_affine_displacement_l2"
+      ],
+      "derived": {
+        "pi": "n_fg / N",
+        "bce_fg_fraction": "bce_fg_sum / bce_sum",
+        "f0": "residual_fg_sse / S0",
+        "fw": "weighted_fg_sse / Sw",
+        "foreground_energy_shift": "fw - f0",
+        "cos_bal_plain": "residual_weighted_dot / sqrt(S0*Sw)",
+        "cos_perm_plain": "residual_shuffled_dot / sqrt(S0*Sperm)",
+        "FP": "q.pred_pixels - q.intersection",
+        "FN": "q.gt_pixels - q.intersection",
+        "TP": "q.intersection",
+        "TN": "N - q.pred_pixels - q.gt_pixels + q.intersection",
+        "q_precision": "TP/(TP+FP)",
+        "q_recall": "TP/(TP+FN)",
+        "FP_fraction": "FP/N",
+        "FN_fraction": "FN/N",
+        "area_bias": "(q.pred_pixels-q.gt_pixels)/N",
+        "E_plain": "(FP+FN)/N",
+        "E_regional": "(applied_w_fg*FP+applied_w_bg*FN)/N"
+      },
+      "zero_denominator_policy": "null plus reason, not epsilon/zero",
+      "error_mass_not_loss_or_error_gradient": true,
+      "regional_quantities_in_controls": "hypothetical base BAL weights at each arm own current state",
+      "unavailable": [
+        "GT partition-specific soft residual energy",
+        "wrong-token gradient",
+        "BN parameter-gradient direction",
+        "counterfactual half-weight model trajectory"
+      ]
+    },
+    "strata": {
+      "anchor": "C at matched stream/group/channel",
+      "partition_classes": [
+        {
+          "name": "EMPTY_FG",
+          "predicate": "n_fg == 0"
+        },
+        {
+          "name": "FG_MINOR_UPPER_CAP",
+          "predicate": "n_fg > 0 and 9*n_fg < N"
+        },
+        {
+          "name": "UNCLIPPED",
+          "predicate": "9*n_fg >= N and 9*n_fg <= 8*N"
+        },
+        {
+          "name": "BG_MINOR_LOWER_CAP",
+          "predicate": "n_fg < N and 9*n_fg > 8*N"
+        },
+        {
+          "name": "EMPTY_BG",
+          "predicate": "n_fg == N"
+        }
+      ],
+      "single_variable_quartiles": [
+        "C.a",
+        "C.foreground_energy_shift",
+        "C.adam_affine_displacement_l2"
+      ],
+      "quartile_population": "finite remaining_dev rows within stream/domain/channel",
+      "quartile_method": "linear",
+      "boundary_ties": "equal values assigned to lower interval; duplicate boundaries may leave empty groups",
+      "cartesian_crossing": false,
+      "outcomes_or_GT_select_bins": false,
+      "minimum_unique_contents_for_standalone_hypothesis_support": 30,
+      "small_cells_retained_and_labelled": "LOW_SUPPORT",
+      "missing_domain_mean_policy": "no silent renormalization into partial-domain primary metric",
+      "time_confounding_check": "first vs second within-domain half, midpoint floor(N_domain_all/2), use all arrivals for rank",
+      "BAL_own_state_strata_status": "secondary, post-treatment, descriptive only"
+    },
+    "D4": {
+      "competing_explanations": [
+        "history/path gap",
+        "current-step allocation",
+        "pseudo-target error reweighting",
+        "intensity interaction",
+        "unresolved or domain/channel tradeoff"
+      ],
+      "must_report": [
+        "support",
+        "counterevidence",
+        "unidentified quantities"
+      ],
+      "hypothesis_must_be_found": false,
+      "new_gain_gate": null,
+      "p_value_screening": false,
+      "maximum_future_intervention_questions": 1
+    }
+  },
+  "conditional_future_proposal": {
+    "name": "R6-E HALF_INTENSITY",
+    "condition": "Only if diagnostic supports testable over-intensity hypothesis; not a default continuation",
+    "implementation_authorized_now": false,
+    "execution_authorized_now": false,
+    "eta": 0.5,
+    "weight": "(1-eta)+eta*w_BAL",
+    "arms": [
+      "C",
+      "R_BAL",
+      "R_HALF"
+    ],
+    "streams": [
+      0,
+      1,
+      4
+    ],
+    "max_new_jobs": 9,
+    "default_controls": "fresh contemporary C and R_BAL",
+    "visits": 17559,
+    "formal_forwards": 140472,
+    "formal_backwards": 17559,
+    "formal_adam": 17559,
+    "formal_vjp": 0,
+    "smoke": "not included; must be specified and authorized later",
+    "hyperparameter_grid": false,
+    "not_equivalent_to": [
+      "learning rate halving",
+      "ratio cap = 4",
+      "output fusion",
+      "offline Dice interpolation"
+    ],
+    "promotion_gate": "Not defined or authorized here; require separate future specification before new data"
+  },
+  "implementation": {
+    "directory": "analysis/r6d_posthoc_v1",
+    "production_changes": false,
+    "targeted_procedural_scalar_CPU_tests_required": true,
+    "rerun_166_model_regressions_required": false,
+    "analysis_may_run_after_targeted_checks_with_existing_permissions": true,
+    "max_processes": 1,
+    "max_threads": 2,
+    "wall_cap_seconds": 1800,
+    "new_output_bytes_cap": 2147483648,
+    "snapshot_bytes": "separately inspect/record actual input size before copying",
+    "automatic_retry": false,
+    "background_allowed": false
+  },
+  "outputs": [
+    "REPORT.md",
+    "MAIN_DECOMPOSITION.csv",
+    "DOMAIN_CHANNEL.csv",
+    "ORDER_CONTRASTS.csv",
+    "RECURRENCE_SEGMENTS.csv",
+    "SUPERVISION_SUMMARY.csv",
+    "PSEUDO_TARGET_ERRORS.csv",
+    "STRATIFIED_ASSOCIATIONS.csv",
+    "HYPOTHESIS_DECISION.md",
+    "ANALYSIS_BINDING.json",
+    "READONLY_AUDIT.json",
+    "FIELD_AVAILABILITY.json",
+    "DELIVERY.json"
+  ],
+  "privacy": {
+    "raw_joined_rows_public": false,
+    "raw_runtime_logs_public": false,
+    "group_id_sample_id_public": false,
+    "absolute_private_paths_public": false,
+    "PID_device_UUID_public": false
+  },
+  "completion_states": [
+    "R6D_COMPLETE_HYPOTHESIS_PROPOSED",
+    "R6D_COMPLETE_NO_NEW_HYPOTHESIS",
+    "R6D_PARTIAL_AGGREGATE_ONLY",
+    "R6D_INCOMPLETE"
+  ],
+  "final_fixed_status": {
+    "new_model_execution_started": false,
+    "R6A": "R6A_COMPLETE_NO_ADVANCE",
+    "R6B": "NOT_RUN",
+    "next_gpu_execution_authorized": false
+  },
+  "known_rounded_results_pp": {
+    "BAL_minus_C": [
+      -0.277569,
+      0.24156,
+      -0.83477
+    ],
+    "BAL_minus_SCALE": [
+      -0.175064,
+      1.051068,
+      -0.313204
+    ],
+    "BAL_minus_SHUFFLE": [
+      -0.128203,
+      1.140404,
+      -0.286096
+    ]
+  }
+}
