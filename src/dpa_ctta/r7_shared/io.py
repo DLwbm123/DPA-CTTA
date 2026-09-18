@@ -34,3 +34,27 @@ def legacy_reader():
     try:spec.loader.exec_module(module)
     finally:sys.path[:]=old
     return module
+
+def snapshot_published(source,destination,expected_addendum):
+    """Optional scalar input only: ordinary pinned payload, no source writes.
+
+    Validate source/output disjointness before creating any file. The old reader's
+    no-follow, nlink, in-read identity and pointer checks remain unchanged.
+    """
+    source=Path(source).absolute();destination=Path(destination).absolute()
+    a,b=source.resolve(),destination.resolve()
+    if a==b or a in b.parents or b in a.parents:raise ValueError('source/output overlap')
+    reader_module=legacy_reader();reader=reader_module.Reader(source)
+    before,raw=reader_module.layout(reader,expected_addendum)
+    out=Output(destination,expected_addendum['historical_binding'])
+    try:
+        relative=expected_addendum['aggregate_input']['source_relative_path']
+        first=reader.record(relative)
+        snap=reader.record(relative,out.path/'public_aggregate.json')
+        after=reader.record(relative)
+        if first!=snap or first!=after:raise ValueError('source payload changed')
+        reader_module.check_layout(reader,expected_addendum,before)
+        out.write('input_audit.json',dict(binding=expected_addendum['historical_binding'],payload=first,pointer=before['pointer_record'],links=before['links']))
+        return out
+    except Exception as exc:
+        out.fail(exc,{});raise

@@ -196,6 +196,9 @@ class Contracts(unittest.TestCase):
             pointer=dict(valid=True,status='R6A_COMPLETE_NO_ADVANCE',binding=add['historical_binding'],result_directory=version)
             (p/'current_result.json').write_text(json.dumps(pointer));(p/'current').symlink_to(version);(p/'public_aggregate.json').symlink_to('current/public_aggregate.json')
             r=reader.Reader(p);layout,_=reader.layout(r,add);reader.check_layout(r,add,layout)
+            from dpa_ctta.r7_shared.io import snapshot_published
+            out=snapshot_published(p,Path(d).resolve()/'snapshot',add)
+            self.assertEqual((out.path/'public_aggregate.json').read_text(),'{}')
             with self.assertRaises((ValueError,OSError)):r.record('public_aggregate.json')
             target=Path(d)/'copy.json';r.record(add['aggregate_input']['source_relative_path'],target);self.assertEqual(target.read_text(),'{}')
             pointer['binding']={};(p/'current_result.json').write_text(json.dumps(pointer))
@@ -225,3 +228,9 @@ class Contracts(unittest.TestCase):
         for g in rs[1::2]:
             r=data.records[g];data.records[g]=Record(r.group,r.fold,1-r.image,r.label)
         _,bb=t.episode('fit',0,o['fit']);self.assertTrue(eq(aa['state'],bb['state']));s.close()
+    def test_source_destination_overlap_denied_before_any_write(self):
+        from dpa_ctta.r7_shared.io import snapshot_published
+        with tempfile.TemporaryDirectory() as d:
+            p=Path(d);before=list(p.iterdir())
+            with self.assertRaises(ValueError):snapshot_published(p,p/'new',{})
+            self.assertEqual(before,list(p.iterdir()))
