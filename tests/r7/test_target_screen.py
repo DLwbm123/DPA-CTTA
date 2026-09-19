@@ -325,3 +325,70 @@ class ScreenTests(unittest.TestCase):
         with patch.object(r,'cleanup_owned',side_effect=RuntimeError('cleanup-specific')):
             with self.assertRaisesRegex(RuntimeError,'nonzero exit 7'):r.terminal(rec,self.cfg)
         self.assertEqual(rec['terminal_errors'][0]['message'],'cleanup-specific')
+
+    def test_cost_survives_posthoc_and_prediction_failure(self):
+        for failure in ('posthoc','prediction'):
+            with self.subTest(failure=failure):
+                receipt,reg,s,_=self.fixture();approved=self.approve_fixture(receipt)
+                out=r.BudgetOutput(self.root/('storage/'+failure),{},1024**2)
+                job=copy.deepcopy(r.matrix(r.SCOPE)[1]);job.update(arrivals=1,scored_contents=1,network_forwards=1)
+                original=out.bytes
+                def write(name,raw):
+                    if failure=='prediction' and name.startswith('prediction_'): raise OSError('prediction failure')
+                    return original(name,raw)
+                with patch.object(r,'stream',return_value=reg['target']),patch.object(r,'make_host',return_value=(OnlineHost(s),None)),patch.object(out,'bytes',side_effect=write),patch.object(r,'posthoc',side_effect=ValueError('posthoc failure')):
+                    with self.assertRaisesRegex(Exception,failure+' failure'):r.execute_job(approved,job,out)
+                cost=json.loads((out.path/'worker.json').read_text())['model_cost']
+                self.assertEqual(cost['physical'],dict(forwards=1,backwards=0,Adam=0))
+                self.assertEqual(cost['committed_visits'],1)
+                self.assertEqual(cost['prediction_files'],int(failure=='posthoc'))
+                self.assertEqual(cost['completeness'],'EXACT_OBSERVED')
+                self.assertEqual((out.path/'counts.json').exists(),failure=='posthoc')
+
+    def test_partial_step_and_cost_evidence_failure_preserve_first(self):
+        receipt,reg,s,_=self.fixture();approved=self.approve_fixture(receipt)
+        out=r.BudgetOutput(self.root/'storage/partial',{},1024**2)
+        job=copy.deepcopy(r.matrix(r.SCOPE)[1]);job.update(arrivals=1,scored_contents=1,network_forwards=1)
+        h=OnlineHost(s)
+        def failed_step(pixels):
+            s(pixels)
+            raise RuntimeError('original model failure')
+        original=out.write
+        def write(name,value):
+            if name.startswith('cost_0000'):raise OSError('cost persistence failure')
+            return original(name,value)
+        with patch.object(r,'stream',return_value=reg['target']),patch.object(r,'make_host',return_value=(h,None)),patch.object(h,'step',side_effect=failed_step),patch.object(out,'write',side_effect=write):
+            with self.assertRaisesRegex(RuntimeError,'original model failure'):r.execute_job(approved,job,out)
+        self.assertEqual(json.loads((out.path/'first_error.json').read_text())['message'],'original model failure')
+        cost=json.loads((out.path/'worker.json').read_text())['model_cost']
+        self.assertEqual(cost['physical']['forwards'],1);self.assertEqual(cost['committed_visits'],0)
+        self.assertEqual(cost['completeness'],'LOWER_BOUND');self.assertIsNotNone(cost['unobserved_tail'])
+        self.assertEqual(cost['evidence_errors'][0]['message'],'cost persistence failure')
+
+    def test_base_partial_physical_counts_are_not_visit_estimates(self):
+        h=SimpleNamespace(counts=dict(forwards=7,backwards=1,base_adam=1),steps=0)
+        cost=r.cost_state();r.capture_cost(h,'C_BASE',Counter(),cost)
+        self.assertEqual(cost['physical'],dict(forwards=7,backwards=1,Adam=1));self.assertEqual(cost['committed_visits'],0)
+
+    def test_gpu_context_cpu_resources_rejected_before_online(self):
+        receipt,*_=self.fixture()
+        inv=json.loads(Path(receipt['binding']['inventory']['path']).read_text())
+        for name,row in inv.items():
+            p=self.root/'artifacts'/(name+'.context.json');c=json.loads(p.read_text())
+            c['payload']['environment']['execution_backend']={'schema':'R7_CUDA_FP32_BACKBONE_CPU_METHOD_V1'}
+            c['sha256']=json_digest(c['payload']);raw=json.dumps(c).encode();p.write_bytes(raw)
+            row.update(context_file_sha256=r.digest(raw),context_sha256=c['sha256'])
+        raw=json.dumps(inv).encode();Path(receipt['binding']['inventory']['path']).write_bytes(raw)
+        receipt['binding']['inventory']['sha256']=r.digest(raw);receipt['binding']['source_release']['artifact_identity']=r.digest(raw);self.rebind(receipt)
+        with patch.object(r.TargetReader,'read',side_effect=AssertionError('no pixels')):
+            with self.assertRaisesRegex(ValueError,'GPU context'):self.approve_fixture(receipt)
+
+    def test_matrix_readiness_covers_all_eight_without_pixels(self):
+        receipt,*_=self.fixture();approved=self.approve_fixture(receipt);seen=[]
+        def make(a,arm):
+            seen.append(arm)
+            if arm=='C_BASE':return SimpleNamespace(finish=lambda state:None),{}
+            return SimpleNamespace(_check_frozen=lambda **kw:None,segmenter=SimpleNamespace(close=lambda:None)),None
+        with patch.object(r,'make_host',side_effect=make),patch.object(r.TargetReader,'read',side_effect=AssertionError('no pixels')):
+            evidence=r.matrix_readiness(approved)
+        self.assertEqual(seen,r.ARMS);self.assertEqual(evidence['model_forwards'],0)

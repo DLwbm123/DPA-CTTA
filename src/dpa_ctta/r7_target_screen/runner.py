@@ -1,7 +1,7 @@
 """Finite screen only. No source preparation, retries, resume or follow-on scopes.
 
 Authority files are externally reviewed inputs, not signatures or self-issued
-permissions. CPU is the existing tensor route; CUDA remains fail-closed.
+permissions. CUDA additionally requires an exact eight-arm qualification binding.
 """
 import copy
 import io
@@ -25,7 +25,8 @@ from ..r7_shared.host import OnlineHost
 from ..r7_shared.report import review as report
 from ..r7_source_prep.registry import verified, ordinary, digest, sha
 from ..r7_source_prep.runner import (code_identity, load_model, load_artifact,
-    BudgetOutput as _BudgetOutput, resource_check as _resource_check, cleanup_owned, TERMINAL_RESERVE)
+    BudgetOutput as _BudgetOutput, resource_check as _resource_check, cleanup_owned, TERMINAL_RESERVE, configure_backend)
+from ..r7_shared.numerics import COUNTS
 from ..r3.plan import stream
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -71,10 +72,19 @@ def runtime():
 
 
 def device_policy(config):
-    # No .cuda(), discovery, smoke or numeric qualification is implicit here.
-    if config.get('device') != 'cpu' or config.get('physical_GPU_ids') is not None:
-        raise PermissionError('GPU route unqualified; separate smoke/numeric review required')
-    if config.get('runtime') != runtime() or config.get('dtype_policy') != 'R7_CPU_FP32_MODEL_FP64_LATENT_V1':
+    device = config.get('device')
+    ids = config.get('physical_GPU_ids')
+    if device == 'cpu':
+        if ids is not None: raise PermissionError('CPU route cannot bind GPU IDs')
+        dtype = 'R7_CPU_FP32_MODEL_FP64_LATENT_V1'
+    elif device == 'cuda:0':
+        if (not isinstance(ids, list) or len(ids) != config.get('workers')
+                or any(type(i) is not int or i < 0 for i in ids) or len(set(ids)) != len(ids)):
+            raise PermissionError('one exact physical GPU per isolated worker')
+        if not config.get('qualification'): raise PermissionError('target GPU qualification required')
+        dtype = 'R7_CUDA_FP32_BACKBONE_CPU_METHOD_V1'
+    else: raise PermissionError('unsupported device')
+    if config.get('runtime') != runtime() or config.get('dtype_policy') != dtype:
         raise ValueError('exact runtime/dtype binding')
     schedule(config.get('workers'))
     if config.get('threads') != 2 or config.get('retry') is not False or config.get('resume') is not False:
@@ -179,7 +189,21 @@ def preflight(receipt, *, owned_output=None):
                 or method['mode'] != name.split('_')[1] or context['payload']['ablation'] is not None):
             raise ValueError('trusted artifact context/provenance binding')
         contexts[name] = context
-    # Actual tensor loading uses load_artifact in each fresh job, not this metadata check.
+    backends = [c['payload']['environment'].get('execution_backend') for c in contexts.values()]
+    expected_backend = cfg.get('execution_backend')
+    if cfg['device'] == 'cpu':
+        if any(v is not None for v in backends): raise ValueError('GPU context cannot use CPU resources')
+    else:
+        if not expected_backend or any(v != expected_backend for v in backends):
+            raise ValueError('exact source GPU backend binding')
+        q = cfg['qualification']
+        qualification = json.loads(verified(q['path'], q['sha256'], 1024**2))
+        if (qualification.get('status') != 'PASSED' or qualification.get('code_sha') != binding['code_sha']
+                or qualification.get('arms') != ARMS or qualification.get('execution_backend') != expected_backend
+                or qualification.get('physical_GPU_ids') != cfg['physical_GPU_ids']):
+            raise ValueError('eight-arm GPU qualification/code/device binding')
+    # Fresh tensor loading for the WHOLE matrix precedes every target pixel read.
+
     return dict(receipt=copy.deepcopy(receipt), binding=copy.deepcopy(binding), config=cfg,
                 registration=docs['registration'], inventory=docs['inventory'], contexts=contexts)
 
@@ -229,22 +253,54 @@ def physical(trace, arm):
     return value
 
 
-def online(host, rows, reader, arm, out, check):
+def cost_state():
+    return dict(observed={}, physical=None, committed_visits=0, prediction_files=0,
+                phase='initialization', completeness='NOT_STARTED', unobserved_tail='unknown')
+
+
+def capture_cost(host, arm, before, cost):
+    observed = dict(host.counts) if arm == 'C_BASE' else dict(COUNTS - before)
+    cost['observed'] = observed
+    cost['physical'] = dict(forwards=observed.get('forwards', observed.get('backbone_forwards', 0)),
+                            backwards=observed.get('backwards', 0), Adam=observed.get('base_adam', 0))
+    cost['committed_visits'] = host.steps if arm == 'C_BASE' else host.visits
+
+
+def online(host, rows, reader, arm, out, check, cost=None):
     """No masks, evaluator, domain, subset or scores in this call graph.
 
     Persist the exact >=0.5 decisions consumed by the existing evaluator. All
     1951 visits are retained privately; report filters remaining_dev unchanged.
     """
-    counts = Counter()
+    cost = cost_state() if cost is None else cost
+    before = COUNTS.copy(); counts = Counter()
+    capture_cost(host, arm, before, cost)
+    out.write('cost_initial.json', cost)
     for index, row in enumerate(rows):
-        check(); pixels = reader.read(row)
-        logits, trace = host.step(pixels)
-        if logits.requires_grad or tuple(logits.shape) != (1, 2, 512, 512) or not torch.isfinite(logits).all():
-            raise ValueError('uncommitted or nonfinite prediction')
-        counts.update(physical(trace, arm))
-        bits = np.packbits((logits.detach().cpu().sigmoid() >= .5).numpy().reshape(-1)).tobytes()
-        out.bytes(f'prediction_{index:04d}.bits', bits)
-        check()
+        first = None
+        try:
+            cost.update(phase='image_read', completeness='EXACT_OBSERVED', unobserved_tail=None)
+            check(); pixels = reader.read(row)
+            cost.update(phase='host_step', completeness='LOWER_BOUND', unobserved_tail='failed call may have unobserved work')
+            logits, trace = host.step(pixels)
+            cost.update(phase='prediction', completeness='EXACT_OBSERVED', unobserved_tail=None)
+            if logits.requires_grad or tuple(logits.shape) != (1, 2, 512, 512) or not torch.isfinite(logits).all():
+                raise ValueError('uncommitted or nonfinite prediction')
+            counts.update(physical(trace, arm))
+            bits = np.packbits((logits.detach().cpu().sigmoid() >= .5).numpy().reshape(-1)).tobytes()
+            out.bytes(f'prediction_{index:04d}.bits', bits)
+            cost['prediction_files'] += 1
+            check()
+        except BaseException as exc: first = exc
+        finally:
+            capture_cost(host, arm, before, cost)
+            try: out.write(f'cost_{index:04d}.json', cost)
+            except BaseException as exc:
+                cost.setdefault('evidence_errors', []).append(error(exc))
+                first = first or exc
+        if first: raise first
+    cost.update(phase='online_complete', completeness='EXACT_OBSERVED', unobserved_tail=None)
+    if cost['physical'] != dict(counts): raise ValueError('observed versus trace count mismatch')
     return dict(counts)
 
 
@@ -272,8 +328,8 @@ def make_host(approved, arm):
     seed_all(SEED)
     if arm == 'C_BASE':
         state = torch.load(io.BytesIO(raw), map_location='cpu', weights_only=True)
-        return Host('C', state, 'cpu'), state
-    segmenter = load_model(raw)
+        return Host('C', state, approved['config']['device']), state
+    segmenter = load_model(raw) if approved['config']['device'] == 'cpu' else load_model(raw, device='cuda:0')
     if arm == 'C0':
         # Independent trusted environment from source release, no candidate-minted identity.
         context = copy.deepcopy(approved['contexts']['A_FULL'])
@@ -292,21 +348,25 @@ def execute_job(approved, job, out):
     check = lambda: resource_check(out, caps, started)
     images = TargetReader(b['target_root'], cfg['max_asset_bytes'], 'image')
     masks = TargetReader(b['target_root'], cfg['max_asset_bytes'], 'mask')
-    first = None; secondary = []; host = None
+    first = None; secondary = []; host = None; cost = cost_state()
     try:
         rows = stream(approved['registration'], job['order'])
         if len(rows) != job['arrivals'] or sum(r['subset']=='remaining_dev' for r in rows) != job['scored_contents']:
             raise ValueError('job stream coverage')
         host, state = make_host(approved, job['arm'])
-        counts = online(host, image_records(rows), images, job['arm'], out, check)
+        counts = online(host, image_records(rows), images, job['arm'], out, check, cost)
         expected = dict(forwards=job['network_forwards'], backwards=job['backwards'], Adam=job['Adam'])
         if counts != expected: raise ValueError('terminal physical counts')
+        cost['phase'] = 'counts_persistence'
+        out.write('counts.json', counts)
+        cost['phase'] = 'model_close'
         if job['arm'] == 'C_BASE': host.finish(state)
         else: host._check_frozen(boundary=True); host.segmenter.close()
         # Drop all model/optimizer/state references before the first target mask read.
         del host, state; host = None
+        cost['phase'] = 'posthoc'
         posthoc(rows, masks, job['arm'], job['order'], out, check)
-        out.write('counts.json', counts)
+        cost['phase'] = 'completed'
     except BaseException as exc:
         first = exc
     finally:
@@ -330,7 +390,7 @@ def execute_job(approved, job, out):
         except BaseException as exc: secondary.append(error(exc)); first = first or exc
         records = [('worker.json', dict(status='FAILED' if first else 'JOB_PENDING_TERMINAL_AUDIT',
                    target_after_check='FAILED' if secondary else 'UNCHANGED', secondary=secondary,
-                   image_IO=dict(images.counts), mask_IO=dict(masks.counts), wall_seconds=time.monotonic()-started, retry=False))]
+                   model_cost=copy.deepcopy(cost), image_IO=dict(images.counts), mask_IO=dict(masks.counts), wall_seconds=time.monotonic()-started, retry=False))]
         if first: records.insert(0, ('first_error.json', error(first)))
         for name, value in records:
             try: out.evidence(name, value)
@@ -354,6 +414,18 @@ def terminal(record, cfg):
         try: fn()
         except BaseException as exc: failures.append(error(exc)); first = first or exc
     record.update(terminal_done=True, terminal_first=first, terminal_errors=failures)
+    # Even an uncatchable worker death has explicit last durable observations;
+    # no inference of physical calls from prediction-file or visit counts.
+    try:
+        snapshots = sorted(record['out'].path.glob('cost_[0-9]*.json'))
+        p = snapshots[-1] if snapshots else record['out'].path/'cost_initial.json'
+        last = json.loads(p.read_text()) if p.exists() else None
+        record['out'].evidence('terminal_cost.json', dict(last_durable=last,
+            completeness='LOWER_BOUND' if first else 'WORKER_EVIDENCE_REQUIRED',
+            unobserved_tail='unknown' if first else None))
+    except BaseException as exc:
+        failures.append(error(exc)); first = first or exc
+        record['terminal_first'] = first
     if first: raise first
     return failures
 
@@ -427,11 +499,27 @@ def supervise(approved, out, start):
     (out.path/'completion.pending.json').rename(out.path/'completion.json')
 
 
-def process_audit(out):
+def matrix_readiness(approved):
+    """Zero-forward fresh loading of all arms before any target reader is called."""
+    checked = []
+    for arm in ARMS:
+        host, state = make_host(approved, arm)
+        try:
+            if arm == 'C_BASE': host.finish(state)
+            else: host._check_frozen(boundary=True)
+        finally:
+            if arm != 'C_BASE': host.segmenter.close()
+        del host, state
+        checked.append(arm)
+    if approved['config']['device'] != 'cpu': torch.cuda.empty_cache()
+    return dict(arms=checked, model_forwards=0, target_pixel_reads=0)
+
+
+def process_audit(out, gpu=False):
     command = subprocess.check_output(['ps', '-ww', '-p', str(os.getpid()), '-o', 'args='], text=True).strip()
     from ..b3_runtime import FORBIDDEN
     if any(word in command.lower() for word in FORBIDDEN): raise ValueError('non-neutral process command')
-    out.write('process_audit.json', dict(command=command, neutral=True, GPU_execution=False))
+    out.write('process_audit.json', dict(command=command, neutral=True, GPU_execution=gpu))
 
 
 def main():
@@ -447,10 +535,33 @@ def main():
         env = dict(os.environ, RUN_FILE=str(ROOT/'scripts/r7/target_screen.py'), SCREEN_CHILD='1',
                    SCREEN_RECEIPT=str(out.path/'authorization.json'), SCREEN_JOB=job['job_id'],
                    SCREEN_SLOT=str(slot), SCREEN_PARENT_OWNER=job_out.owner,
-                   CUDA_VISIBLE_DEVICES='', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2', PYTHONDONTWRITEBYTECODE='1')
+                   CUDA_VISIBLE_DEVICES='' if cfg['device'] == 'cpu' else str(cfg['physical_GPU_ids'][slot]), CUBLAS_WORKSPACE_CONFIG=':4096:8', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2', PYTHONDONTWRITEBYTECODE='1')
         with (job_out.path/'worker.log').open('xb') as log:
             return subprocess.Popen([sys.executable, '-c', ENTRY], cwd=ROOT, env=env,
                                     stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+    # Readiness is its own bounded owned process, never a target job. All eight
+    # factories must load successfully before supervise can dispatch C_BASE.
+    ready = BudgetOutput(out.path/'readiness', dict(binding_sha256=json_digest(b)), cfg['job_output_bytes'])
+    env = dict(os.environ, RUN_FILE=str(ROOT/'scripts/r7/target_screen.py'), SCREEN_READY='1',
+               SCREEN_RECEIPT=str(out.path/'authorization.json'), CUDA_VISIBLE_DEVICES='' if cfg['device']=='cpu' else str(cfg['physical_GPU_ids'][0]),
+               CUBLAS_WORKSPACE_CONFIG=':4096:8', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2', PYTHONDONTWRITEBYTECODE='1')
+    rec = dict(out=ready, started=time.monotonic())
+    try:
+        with (ready.path/'worker.log').open('xb') as log:
+            rec['process'] = subprocess.Popen([sys.executable, '-c', ENTRY], cwd=ROOT, env=env,
+                stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+        while rec['process'].poll() is None:
+            resource_check(ready, dict(wall_seconds=cfg['job_wall_seconds'], output_bytes=cfg['job_output_bytes']), rec['started'])
+            time.sleep(.1)
+        terminal(rec, cfg)
+        evidence = json.loads((ready.path/'matrix_readiness.json').read_text())
+        if evidence['arms'] != ARMS: raise ValueError('incomplete matrix readiness')
+    except BaseException as first:
+        if 'process' in rec:
+            try: terminal(rec, cfg)
+            except BaseException: pass
+        out.evidence('readiness.first_error.json', error(first))
+        raise
     supervise(approved, out, start)
 
 
@@ -473,5 +584,16 @@ def child_entry():
     out = object.__new__(BudgetOutput); out.path=p; out.owner=record['owner']; out.binding=expected
     out.limit=approved['config']['job_output_bytes']; out.used=0; out.started=time.monotonic()
     torch.set_num_threads(2); torch.set_default_dtype(torch.float32)
-    process_audit(out)
+    configure_backend(approved['config'])
+    process_audit(out, approved['config']['device'] != 'cpu')
     execute_job(approved, job, out)
+
+
+def readiness_entry():
+    receipt = json.loads(Path(os.environ['SCREEN_RECEIPT']).read_bytes())
+    root = Path(receipt['binding']['output_dir'])
+    owner = json.loads((root/'owner.json').read_text())
+    approved = preflight(receipt, owned_output=owner['owner'])
+    configure_backend(approved['config']); torch.set_num_threads(2)
+    result = matrix_readiness(approved)
+    with (root/'readiness/matrix_readiness.json').open('x') as f: json.dump(result, f)
