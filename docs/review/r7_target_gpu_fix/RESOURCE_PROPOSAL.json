@@ -1,5 +1,5 @@
 {
-  "status": "UNQUALIFIED_NOT_AUTHORIZED",
+  "status": "QUALIFIED_MIXED_ROUTE_PENDING_EXTERNAL_REVIEW",
   "workers": 1,
   "physical_GPU_ids_proposed": [
     6
@@ -8,13 +8,15 @@
   "device": "RTX 3090",
   "schedule": "exact frozen 24-job order, serial",
   "threads": 2,
-  "job_wall_seconds": 14400,
+  "job_wall_seconds": 43200,
   "job_output_bytes": 268435456,
   "wall_seconds": 345600,
   "output_bytes": 7516192768,
   "retry": false,
   "resume": false,
-  "qualification_status": "FAILED",
+  "qualification_status": "PASSED_MIXED_ROUTE",
   "wall_caps_are_not_ETA": true,
-  "three_workers": "NOT_AUTHORIZED"
+  "three_workers": "NOT_AUTHORIZED",
+  "baseline_device": "cpu",
+  "CPU_baseline_speed_tradeoff": "CPU preserves historical route; qualified GPU C0/methods retain matching source contexts"
 }

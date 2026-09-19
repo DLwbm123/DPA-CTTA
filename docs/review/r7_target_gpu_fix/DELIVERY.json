@@ -1,6 +1,6 @@
 {
-  "status": "R7_TARGET_GPU_BRIDGE_AND_COST_FIX_READY_FOR_REVIEW_WITH_GPU_QUALIFICATION_FAILURE",
-  "implementation_sha": "9f7c597fc510b3621f51e995a2dcb269e2fa8cd4",
+  "status": "R7_TARGET_MIXED_ROUTE_READY_FOR_EXTERNAL_REVIEW",
+  "implementation_sha": "07ae5426ee29ab594d5d5bee196c019fdf5d61dc",
   "base_target_publication": "f5d1ef75859cf82cf039819c50732584812f4d9d",
   "source_gpu_implementation": "ba04ca46a6bae5df4f4ebb272ef4045f5ee400e5",
   "SOURCE_PREP": "COMPLETE_PRESERVED",
@@ -11,13 +11,13 @@
   "real_target_execution_started": false,
   "next_scope_authorized": false,
   "external_target_review": "NOT_RUN",
-  "GPU_TARGET_QUALIFICATION": "FAILED",
+  "GPU_TARGET_QUALIFICATION": "MIXED_ROUTE_PASSED",
   "ARTIFACT_ROUNDTRIP": "PASSED_PENDING_EXTERNAL_REVIEW",
   "tests": {
-    "target": 28,
-    "r7": 59,
-    "source_boundary": 34,
-    "total": 121,
+    "target_on_current_SHA": 30,
+    "unchanged_R7_on_9f7c597": 59,
+    "unchanged_source_boundary_on_9f7c597": 34,
+    "total_relevant_coverage": 123,
     "failures": 0
   },
   "real_target_pixel_reads": 0,
@@ -25,5 +25,17 @@
   "source_retraining": false,
   "monitor": "DELETED_NOT_RECREATED",
   "scientific_winner_issued": false,
-  "publication_branch": "review/r7-target-gpu-cost-fix-v1"
+  "publication_branch": "review/r7-target-gpu-cost-fix-v1",
+  "ALL_GPU_QUALIFICATION": "FAILED_PRESERVED",
+  "arm_devices": {
+    "C_BASE": "cpu",
+    "C0": "cuda:0",
+    "A_FULL": "cuda:0",
+    "A_STATIC": "cuda:0",
+    "B_FULL": "cuda:0",
+    "B_STATIC": "cuda:0",
+    "C_FULL": "cuda:0",
+    "C_STATIC": "cuda:0"
+  },
+  "user_requested_launch": true
 }
