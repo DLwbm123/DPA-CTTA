@@ -1,0 +1,772 @@
+{
+  "observed_utc": "2026-09-19T09:39:58.418228+00:00",
+  "status": "R7_SOURCE_PREP_COMPLETE_PENDING_ARTIFACT_REVIEW",
+  "implementation_sha": "ba04ca46a6bae5df4f4ebb272ef4045f5ee400e5",
+  "execution": {
+    "status": "SOURCE_PREP_COMPLETE_PENDING_REVIEW",
+    "counts": {
+      "backbone_forwards": 135328,
+      "source_backward_calls": 9072,
+      "source_Adam": 3072,
+      "svd": 1,
+      "source_VJP": 1024,
+      "cholesky_solves": 73921,
+      "eigh": 2,
+      "appearance_MLP": 58688,
+      "method_MLP": 102848,
+      "spectral_norms": 42240,
+      "source_AdamW": 6000,
+      "calibration_backward_calls": 1536,
+      "calibration_Adam": 1536,
+      "ISTA_iterations": 52800,
+      "IRLS_iterations": 31680
+    },
+    "hash_cost": {
+      "tensor_digest_calls": 26,
+      "tensor_bytes": 1173689608,
+      "wall_ns": 1298053050,
+      "cpu_ns": 2446053016,
+      "context_build_calls": 12,
+      "context_wall_ns": 1199696721,
+      "context_cpu_ns": 2260598144
+    },
+    "IO": {
+      "read_attempts": 642,
+      "raw_reads": 642,
+      "raw_bytes_read": 430780822,
+      "verified_reads": 642,
+      "verified_bytes": 430780822,
+      "image_decode_attempts": 159,
+      "RGB_decodes": 159,
+      "mask_decode_attempts": 159,
+      "mask_decodes": 159,
+      "checkpoint_deserialization_attempts": 1,
+      "checkpoint_deserializations": 1
+    },
+    "wall_seconds": 8646.790483675897,
+    "source_after_check": "UNCHANGED",
+    "next_scope_authorized": false
+  },
+  "supervisor": {
+    "cleanup_probe": "legacy_stop_owned",
+    "exit_code": 0,
+    "wall_seconds": 8650.284794592066,
+    "complete": true,
+    "cleaned": true,
+    "retry": false
+  },
+  "phase_count": 45,
+  "phases": [
+    {
+      "phase": "decode",
+      "counts": {},
+      "hash_cost": {},
+      "wall_seconds": 39.13109255814925,
+      "cpu_seconds": 11.866332532,
+      "completed": true
+    },
+    {
+      "phase": "model_load",
+      "counts": {},
+      "hash_cost": {},
+      "wall_seconds": 1.0613354339729995,
+      "cpu_seconds": 1.1793762350000012,
+      "completed": true
+    },
+    {
+      "phase": "identity",
+      "counts": {},
+      "hash_cost": {
+        "tensor_digest_calls": 2,
+        "tensor_bytes": 90283816,
+        "wall_ns": 138804789,
+        "cpu_ns": 262758567
+      },
+      "wall_seconds": 0.14279927592724562,
+      "cpu_seconds": 0.26874997900000075,
+      "completed": true
+    },
+    {
+      "phase": "oracle_fit",
+      "counts": {
+        "backbone_forwards": 4096,
+        "source_backward_calls": 2048,
+        "source_Adam": 2048
+      },
+      "hash_cost": {},
+      "wall_seconds": 253.32777376985177,
+      "cpu_seconds": 410.699168491,
+      "completed": true
+    },
+    {
+      "phase": "oracle_cal",
+      "counts": {
+        "backbone_forwards": 1024,
+        "source_backward_calls": 512,
+        "source_Adam": 512
+      },
+      "hash_cost": {},
+      "wall_seconds": 62.84050189005211,
+      "cpu_seconds": 102.127827379,
+      "completed": true
+    },
+    {
+      "phase": "oracle_val",
+      "counts": {
+        "backbone_forwards": 1024,
+        "source_backward_calls": 512,
+        "source_Adam": 512
+      },
+      "hash_cost": {},
+      "wall_seconds": 62.937425662064925,
+      "cpu_seconds": 102.224414551,
+      "completed": true
+    },
+    {
+      "phase": "shared_basis",
+      "counts": {
+        "svd": 1
+      },
+      "hash_cost": {},
+      "wall_seconds": 0.029493622947484255,
+      "cpu_seconds": 0.058844176000093285,
+      "completed": true
+    },
+    {
+      "phase": "A_basis",
+      "counts": {
+        "backbone_forwards": 32,
+        "source_VJP": 1024,
+        "cholesky_solves": 1,
+        "eigh": 2
+      },
+      "hash_cost": {},
+      "wall_seconds": 7.012643577065319,
+      "cpu_seconds": 12.962365790999911,
+      "completed": true
+    },
+    {
+      "phase": "scaler",
+      "counts": {
+        "backbone_forwards": 14208
+      },
+      "hash_cost": {},
+      "wall_seconds": 831.2458828589879,
+      "cpu_seconds": 1325.206785675,
+      "completed": true
+    },
+    {
+      "phase": "A_FULL/initialize",
+      "counts": {},
+      "hash_cost": {},
+      "wall_seconds": 0.39828097401186824,
+      "cpu_seconds": 0.0679532899998776,
+      "completed": true
+    },
+    {
+      "phase": "A_FULL/fit",
+      "counts": {
+        "backbone_forwards": 12000,
+        "source_backward_calls": 1000,
+        "cholesky_solves": 16000,
+        "appearance_MLP": 8000,
+        "method_MLP": 8000,
+        "spectral_norms": 4000,
+        "source_AdamW": 1000
+      },
+      "hash_cost": {},
+      "wall_seconds": 801.0127406851389,
+      "cpu_seconds": 1308.8829414069999,
+      "completed": true
+    },
+    {
+      "phase": "A_FULL/cal",
+      "counts": {
+        "backbone_forwards": 1024,
+        "cholesky_solves": 4096,
+        "appearance_MLP": 1024,
+        "method_MLP": 1024,
+        "spectral_norms": 1024,
+        "calibration_backward_calls": 256,
+        "calibration_Adam": 256
+      },
+      "hash_cost": {},
+      "wall_seconds": 68.20972891896963,
+      "cpu_seconds": 111.30646843099976,
+      "completed": true
+    },
+    {
+      "phase": "A_FULL/package",
+      "counts": {},
+      "hash_cost": {
+        "tensor_digest_calls": 2,
+        "tensor_bytes": 90283816,
+        "wall_ns": 91681738,
+        "cpu_ns": 172094317,
+        "context_build_calls": 1,
+        "context_wall_ns": 95124054,
+        "context_cpu_ns": 178530960
+      },
+      "wall_seconds": 0.24992857198230922,
+      "cpu_seconds": 0.48714388600001257,
+      "completed": true
+    },
+    {
+      "phase": "A_FULL/val",
+      "counts": {
+        "backbone_forwards": 768,
+        "cholesky_solves": 1024,
+        "appearance_MLP": 512,
+        "method_MLP": 512,
+        "spectral_norms": 256
+      },
+      "hash_cost": {},
+      "wall_seconds": 49.775232400977984,
+      "cpu_seconds": 81.07233052299989,
+      "completed": true
+    },
+    {
+      "phase": "A_STATIC/initialize",
+      "counts": {},
+      "hash_cost": {},
+      "wall_seconds": 0.03599404590204358,
+      "cpu_seconds": 0.06831830999999511,
+      "completed": true
+    },
+    {
+      "phase": "A_STATIC/fit",
+      "counts": {
+        "backbone_forwards": 12000,
+        "source_backward_calls": 1000,
+        "cholesky_solves": 16000,
+        "appearance_MLP": 8000,
+        "method_MLP": 8000,
+        "spectral_norms": 4000,
+        "source_AdamW": 1000
+      },
+      "hash_cost": {},
+      "wall_seconds": 795.5529181470629,
+      "cpu_seconds": 1300.3254335829997,
+      "completed": true
+    },
+    {
+      "phase": "A_STATIC/cal",
+      "counts": {
+        "backbone_forwards": 1024,
+        "cholesky_solves": 4096,
+        "appearance_MLP": 1024,
+        "method_MLP": 1024,
+        "spectral_norms": 1024,
+        "calibration_backward_calls": 256,
+        "calibration_Adam": 256
+      },
+      "hash_cost": {},
+      "wall_seconds": 67.86443475889973,
+      "cpu_seconds": 110.86031420099971,
+      "completed": true
+    },
+    {
+      "phase": "A_STATIC/package",
+      "counts": {},
+      "hash_cost": {
+        "tensor_digest_calls": 2,
+        "tensor_bytes": 90283816,
+        "wall_ns": 91026250,
+        "cpu_ns": 170951855,
+        "context_build_calls": 1,
+        "context_wall_ns": 94278530,
+        "context_cpu_ns": 177199559
+      },
+      "wall_seconds": 0.2900921539403498,
+      "cpu_seconds": 0.5672594719999324,
+      "completed": true
+    },
+    {
+      "phase": "A_STATIC/val",
+      "counts": {
+        "backbone_forwards": 768,
+        "cholesky_solves": 1024,
+        "appearance_MLP": 512,
+        "method_MLP": 512,
+        "spectral_norms": 256
+      },
+      "hash_cost": {},
+      "wall_seconds": 49.80603632517159,
+      "cpu_seconds": 81.21902169000077,
+      "completed": true
+    },
+    {
+      "phase": "B_FULL/initialize",
+      "counts": {},
+      "hash_cost": {},
+      "wall_seconds": 0.0442722758743912,
+      "cpu_seconds": 0.04322262699952262,
+      "completed": true
+    },
+    {
+      "phase": "B_FULL/fit",
+      "counts": {
+        "backbone_forwards": 12000,
+        "source_backward_calls": 1000,
+        "appearance_MLP": 8000,
+        "method_MLP": 16000,
+        "spectral_norms": 12000,
+        "source_AdamW": 1000,
+        "ISTA_iterations": 20000
+      },
+      "hash_cost": {},
+      "wall_seconds": 794.085242528934,
+      "cpu_seconds": 1298.3887256010003,
+      "completed": true
+    },
+    {
+      "phase": "B_FULL/cal",
+      "counts": {
+        "backbone_forwards": 1024,
+        "appearance_MLP": 1024,
+        "method_MLP": 2048,
+        "spectral_norms": 3072,
+        "calibration_backward_calls": 256,
+        "calibration_Adam": 256,
+        "ISTA_iterations": 5120
+      },
+      "hash_cost": {},
+      "wall_seconds": 67.27416731789708,
+      "cpu_seconds": 109.94366959200033,
+      "completed": true
+    },
+    {
+      "phase": "B_FULL/package",
+      "counts": {},
+      "hash_cost": {
+        "tensor_digest_calls": 2,
+        "tensor_bytes": 90283816,
+        "wall_ns": 96082845,
+        "cpu_ns": 178776310,
+        "context_build_calls": 1,
+        "context_wall_ns": 99638543,
+        "context_cpu_ns": 185327782
+      },
+      "wall_seconds": 0.17149043385870755,
+      "cpu_seconds": 0.32838032499967085,
+      "completed": true
+    },
+    {
+      "phase": "B_FULL/val",
+      "counts": {
+        "backbone_forwards": 768,
+        "appearance_MLP": 512,
+        "method_MLP": 1024,
+        "spectral_norms": 768,
+        "ISTA_iterations": 1280
+      },
+      "hash_cost": {},
+      "wall_seconds": 49.428958703996614,
+      "cpu_seconds": 80.28389041199989,
+      "completed": true
+    },
+    {
+      "phase": "B_STATIC/initialize",
+      "counts": {},
+      "hash_cost": {},
+      "wall_seconds": 0.021157775074243546,
+      "cpu_seconds": 0.04091753800003062,
+      "completed": true
+    },
+    {
+      "phase": "B_STATIC/fit",
+      "counts": {
+        "backbone_forwards": 12000,
+        "source_backward_calls": 1000,
+        "appearance_MLP": 8000,
+        "method_MLP": 16000,
+        "spectral_norms": 12000,
+        "source_AdamW": 1000,
+        "ISTA_iterations": 20000
+      },
+      "hash_cost": {},
+      "wall_seconds": 793.9845876239706,
+      "cpu_seconds": 1297.4167484079999,
+      "completed": true
+    },
+    {
+      "phase": "B_STATIC/cal",
+      "counts": {
+        "backbone_forwards": 1024,
+        "appearance_MLP": 1024,
+        "method_MLP": 2048,
+        "spectral_norms": 3072,
+        "calibration_backward_calls": 256,
+        "calibration_Adam": 256,
+        "ISTA_iterations": 5120
+      },
+      "hash_cost": {},
+      "wall_seconds": 67.42846729513258,
+      "cpu_seconds": 109.9819705179998,
+      "completed": true
+    },
+    {
+      "phase": "B_STATIC/package",
+      "counts": {},
+      "hash_cost": {
+        "tensor_digest_calls": 2,
+        "tensor_bytes": 90283816,
+        "wall_ns": 91623243,
+        "cpu_ns": 172607548,
+        "context_build_calls": 1,
+        "context_wall_ns": 95401311,
+        "context_cpu_ns": 179380819
+      },
+      "wall_seconds": 0.19962636101990938,
+      "cpu_seconds": 0.38628444200003287,
+      "completed": true
+    },
+    {
+      "phase": "B_STATIC/val",
+      "counts": {
+        "backbone_forwards": 768,
+        "appearance_MLP": 512,
+        "method_MLP": 1024,
+        "spectral_norms": 768,
+        "ISTA_iterations": 1280
+      },
+      "hash_cost": {},
+      "wall_seconds": 49.64153197989799,
+      "cpu_seconds": 80.8482718410005,
+      "completed": true
+    },
+    {
+      "phase": "C_FULL/initialize",
+      "counts": {},
+      "hash_cost": {},
+      "wall_seconds": 0.04654008615761995,
+      "cpu_seconds": 0.05170144200019422,
+      "completed": true
+    },
+    {
+      "phase": "C_FULL/fit",
+      "counts": {
+        "backbone_forwards": 12000,
+        "source_backward_calls": 1000,
+        "cholesky_solves": 12000,
+        "appearance_MLP": 8000,
+        "method_MLP": 16000,
+        "source_AdamW": 1000,
+        "IRLS_iterations": 12000
+      },
+      "hash_cost": {},
+      "wall_seconds": 810.2698441981338,
+      "cpu_seconds": 1327.6529445610004,
+      "completed": true
+    },
+    {
+      "phase": "C_FULL/cal",
+      "counts": {
+        "backbone_forwards": 1024,
+        "cholesky_solves": 3072,
+        "appearance_MLP": 1024,
+        "method_MLP": 3072,
+        "calibration_backward_calls": 256,
+        "calibration_Adam": 256,
+        "IRLS_iterations": 3072
+      },
+      "hash_cost": {},
+      "wall_seconds": 72.25623319600709,
+      "cpu_seconds": 118.19073252900125,
+      "completed": true
+    },
+    {
+      "phase": "C_FULL/constant_variance",
+      "counts": {
+        "backbone_forwards": 736,
+        "appearance_MLP": 736,
+        "method_MLP": 2208
+      },
+      "hash_cost": {},
+      "wall_seconds": 43.729242669884115,
+      "cpu_seconds": 69.87416470000062,
+      "completed": true
+    },
+    {
+      "phase": "C_FULL/package",
+      "counts": {},
+      "hash_cost": {
+        "tensor_digest_calls": 2,
+        "tensor_bytes": 90283816,
+        "wall_ns": 89258546,
+        "cpu_ns": 166974426,
+        "context_build_calls": 1,
+        "context_wall_ns": 92842043,
+        "context_cpu_ns": 174633157
+      },
+      "wall_seconds": 0.1964698089286685,
+      "cpu_seconds": 0.3807147999996232,
+      "completed": true
+    },
+    {
+      "phase": "C_FULL/val",
+      "counts": {
+        "backbone_forwards": 768,
+        "cholesky_solves": 768,
+        "appearance_MLP": 512,
+        "method_MLP": 1536,
+        "IRLS_iterations": 768
+      },
+      "hash_cost": {},
+      "wall_seconds": 49.05620389804244,
+      "cpu_seconds": 79.78921222500139,
+      "completed": true
+    },
+    {
+      "phase": "C_STATIC/initialize",
+      "counts": {},
+      "hash_cost": {},
+      "wall_seconds": 0.030639628879725933,
+      "cpu_seconds": 0.05884816500110901,
+      "completed": true
+    },
+    {
+      "phase": "C_STATIC/fit",
+      "counts": {
+        "backbone_forwards": 12000,
+        "source_backward_calls": 1000,
+        "cholesky_solves": 12000,
+        "appearance_MLP": 8000,
+        "method_MLP": 16000,
+        "source_AdamW": 1000,
+        "IRLS_iterations": 12000
+      },
+      "hash_cost": {},
+      "wall_seconds": 806.4576150758658,
+      "cpu_seconds": 1319.8603327969995,
+      "completed": true
+    },
+    {
+      "phase": "C_STATIC/cal",
+      "counts": {
+        "backbone_forwards": 1024,
+        "cholesky_solves": 3072,
+        "appearance_MLP": 1024,
+        "method_MLP": 3072,
+        "calibration_backward_calls": 256,
+        "calibration_Adam": 256,
+        "IRLS_iterations": 3072
+      },
+      "hash_cost": {},
+      "wall_seconds": 72.18803461198695,
+      "cpu_seconds": 118.23292666400084,
+      "completed": true
+    },
+    {
+      "phase": "C_STATIC/constant_variance",
+      "counts": {
+        "backbone_forwards": 736,
+        "appearance_MLP": 736,
+        "method_MLP": 2208
+      },
+      "hash_cost": {},
+      "wall_seconds": 43.79538044007495,
+      "cpu_seconds": 70.0236799459999,
+      "completed": true
+    },
+    {
+      "phase": "C_STATIC/package",
+      "counts": {},
+      "hash_cost": {
+        "tensor_digest_calls": 2,
+        "tensor_bytes": 90283816,
+        "wall_ns": 91684101,
+        "cpu_ns": 172088918,
+        "context_build_calls": 1,
+        "context_wall_ns": 95336191,
+        "context_cpu_ns": 179733983
+      },
+      "wall_seconds": 0.16746812011115253,
+      "cpu_seconds": 0.3239324950009177,
+      "completed": true
+    },
+    {
+      "phase": "C_STATIC/val",
+      "counts": {
+        "backbone_forwards": 768,
+        "cholesky_solves": 768,
+        "appearance_MLP": 512,
+        "method_MLP": 1536,
+        "IRLS_iterations": 768
+      },
+      "hash_cost": {},
+      "wall_seconds": 49.37602767604403,
+      "cpu_seconds": 80.43885231399872,
+      "completed": true
+    },
+    {
+      "phase": "oracle_query_fit",
+      "counts": {
+        "backbone_forwards": 27904
+      },
+      "hash_cost": {},
+      "wall_seconds": 1615.663518307032,
+      "cpu_seconds": 2570.786242768001,
+      "completed": true
+    },
+    {
+      "phase": "oracle_query_cal",
+      "counts": {
+        "backbone_forwards": 1344
+      },
+      "hash_cost": {},
+      "wall_seconds": 75.68769883387722,
+      "cpu_seconds": 116.24199559000044,
+      "completed": true
+    },
+    {
+      "phase": "oracle_query_val",
+      "counts": {
+        "backbone_forwards": 1472
+      },
+      "hash_cost": {},
+      "wall_seconds": 87.34292413014919,
+      "cpu_seconds": 139.03239814699918,
+      "completed": true
+    },
+    {
+      "phase": "release",
+      "counts": {},
+      "hash_cost": {
+        "tensor_digest_calls": 12,
+        "tensor_bytes": 541702896,
+        "wall_ns": 607891538,
+        "cpu_ns": 1149801075,
+        "context_build_calls": 6,
+        "context_wall_ns": 627076049,
+        "context_cpu_ns": 1185791884
+      },
+      "wall_seconds": 2.144768194993958,
+      "cpu_seconds": 1.4252809829995385,
+      "completed": true
+    }
+  ],
+  "artifacts": {
+    "A_FULL": {
+      "file": "A_FULL.pt",
+      "training_asset_file_sha256": "411beb406ed4a1ea19a918638d90652e1327a17ad5c1ade3f17c6924ea0ee353",
+      "bytes": 232099,
+      "context_sha256": "4ba5f87303c06de298b9c313c1cc58ebd700fdc09ad74b4ebb2937fd06b6c36b",
+      "context_file_sha256": "14ce5cb830eae9ce6740990b5e833d8e0d953acc223539cf693c1411a5df6453"
+    },
+    "A_STATIC": {
+      "file": "A_STATIC.pt",
+      "training_asset_file_sha256": "d380eaca6d42722e2906765940280ece65f64b34e9acaa31c0887c8a36cf1f9d",
+      "bytes": 232099,
+      "context_sha256": "74f5b546d848f2ced4ac54df5f56d52722aa05b6d8200f428c1c322853034fd7",
+      "context_file_sha256": "369d9025767116161bca1b79078f90aad057bfb304509720787b1c777ed039b1"
+    },
+    "B_FULL": {
+      "file": "B_FULL.pt",
+      "training_asset_file_sha256": "150fba218033ae91540340a68ff5c73231742861625b0497a3d6fc745acc60cc",
+      "bytes": 370967,
+      "context_sha256": "8042953f9d24b89693713a9c3ffcf1cbd06d4f5d577f54da76ca4c7169c4573b",
+      "context_file_sha256": "6ad49b01352c857c5ae87acd7aaa195f4ea7aecc20dd896815f1b9d61ca00c12"
+    },
+    "B_STATIC": {
+      "file": "B_STATIC.pt",
+      "training_asset_file_sha256": "c4255e3c139aa8b6fbf3aa4aefe36648ae2bb562a5f97b75ba95c7d1b7c6b23e",
+      "bytes": 370967,
+      "context_sha256": "b4d4a6c4a3ebf5b7957698f60c39ad5914c23f47f006bdaeb29332ec9068f2df",
+      "context_file_sha256": "1b0bac3afc3d1200fa4e312c6007268b3eb565a416b72f7315a975ef6118a6a6"
+    },
+    "C_FULL": {
+      "file": "C_FULL.pt",
+      "training_asset_file_sha256": "d71ddac0b2449f0358c0e3b5faaeff4aa927d2ce61b11cbb6da5a87295502965",
+      "bytes": 465867,
+      "context_sha256": "7d2ab5e91e9f8128b49a2ae989aa2f7aef2e7ed222382b347b60e663ba7f0d5b",
+      "context_file_sha256": "b3cf4007c4a78b71732f3b711b2a892f3d56a5938d7fc63ed0a4a82fec91a96c"
+    },
+    "C_STATIC": {
+      "file": "C_STATIC.pt",
+      "training_asset_file_sha256": "c04d8c12ddba1473ba5cb19f2887282db5e7891533aa30250c5bc8bcb70b695d",
+      "bytes": 465867,
+      "context_sha256": "397f6d594ffdea8e3e0c4e97e72b1faf712568e0e49621f1aa0a3773bb7f6d08",
+      "context_file_sha256": "7b5a8f7117f710d41f69a10f2cde1a18331566aa9acb3ecccfc87388e020befc"
+    }
+  },
+  "effective_state_sha256": "ab40d4c8f080a878e09d2bae79174d5ce0f24c06b7f9ea2f91ed7f54c7057800",
+  "validation_aggregate": {
+    "A_FULL": {
+      "fit_steps": 1000,
+      "cal_steps": 256,
+      "episodes": 64,
+      "query_rows": 256,
+      "mean_seg_loss": 0.11521425681712572,
+      "mean_soft_Dice_OD": 0.9469554899260402,
+      "mean_soft_Dice_OC": 0.7446532832691446,
+      "mean_proxy_mse": 0.04595334152453901
+    },
+    "A_STATIC": {
+      "fit_steps": 1000,
+      "cal_steps": 256,
+      "episodes": 64,
+      "query_rows": 256,
+      "mean_seg_loss": 0.11540438275551423,
+      "mean_soft_Dice_OD": 0.946961086243391,
+      "mean_soft_Dice_OC": 0.7438424684805796,
+      "mean_proxy_mse": 0.04710127906996998
+    },
+    "B_FULL": {
+      "fit_steps": 1000,
+      "cal_steps": 256,
+      "episodes": 64,
+      "query_rows": 256,
+      "mean_seg_loss": 0.11471860168967396,
+      "mean_soft_Dice_OD": 0.9470022898167372,
+      "mean_soft_Dice_OC": 0.7464330600341782,
+      "mean_proxy_mse": 3.6500264449568456
+    },
+    "B_STATIC": {
+      "fit_steps": 1000,
+      "cal_steps": 256,
+      "episodes": 64,
+      "query_rows": 256,
+      "mean_seg_loss": 0.11473534852848388,
+      "mean_soft_Dice_OD": 0.9469924289733171,
+      "mean_soft_Dice_OC": 0.7464011575793847,
+      "mean_proxy_mse": 3.656923765623807
+    },
+    "C_FULL": {
+      "fit_steps": 1000,
+      "cal_steps": 256,
+      "episodes": 64,
+      "query_rows": 256,
+      "mean_seg_loss": 0.11548103115637787,
+      "mean_soft_Dice_OD": 0.9469600508455187,
+      "mean_soft_Dice_OC": 0.743536482565105,
+      "mean_proxy_mse": 3.9316664307758025
+    },
+    "C_STATIC": {
+      "fit_steps": 1000,
+      "cal_steps": 256,
+      "episodes": 64,
+      "query_rows": 256,
+      "mean_seg_loss": 0.11548797879368067,
+      "mean_soft_Dice_OD": 0.9469585169572383,
+      "mean_soft_Dice_OC": 0.7435254601296037,
+      "mean_proxy_mse": 3.938627325571378
+    }
+  },
+  "terminal_audit": {
+    "parent_exit": 0,
+    "worker_exit": 0,
+    "no_error_records": true,
+    "output_bytes": 11602322,
+    "output_cap": 536870912,
+    "wall_cap_seconds": 259200,
+    "completion_published": true
+  },
+  "loader_evidence": "Exact implementation release invokes inference_from_tensors for each artifact with independently retained expected context before serialization; file and context hashes verified at closeout. No additional model execution performed.",
+  "external_gpu_review": "NOT_RUN",
+  "artifact_external_review": "NOT_RUN",
+  "TARGET_SCREEN": "NOT_RUN",
+  "TARGET_MECHANISM": "NOT_RUN",
+  "TARGET_EXTENSION": "NOT_RUN",
+  "next_scope_authorized": false
+}
