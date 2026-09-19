@@ -15,8 +15,8 @@ def film(h,v):
 
 
 class Segmenter(nn.Module):
-    def __init__(self,model):
-        super().__init__(); self.model=model.cpu().eval().requires_grad_(False)
+    def __init__(self,model,device='cpu'):
+        super().__init__(); self.model=model.to(device).eval().requires_grad_(False)
         self.inference_policy=copy.deepcopy(POLICY)
         self.v=None; self.capture=False; self.cache={}; self.forwards=0
         for m in model.modules():
@@ -33,7 +33,7 @@ class Segmenter(nn.Module):
             gen=torch.Generator().manual_seed(20260918)
             q,r=torch.linalg.qr(torch.randn(256,64,generator=gen))
         q=q*torch.where(r.diagonal()<0,-1.,1.)
-        self.register_buffer('projection',q)
+        self.register_buffer('projection',q.to(next(self.model.parameters()).device))
     def _up1(self,m,args,h):
         if h.shape[1]!=256: raise ValueError('up1 channels')
         return film(h,self.v[:512])
@@ -55,11 +55,14 @@ class Segmenter(nn.Module):
         shape(v,(1024,)); self.v=v; self.capture=observe
         try:
             self.forwards+=1; COUNTS['backbone_forwards']+=1
-            result=self.model(x); z=result[0] if isinstance(result,(tuple,list)) else result
+            # Keep source RNG, preprocessing, methods and losses on CPU. Device
+            # copies preserve the gradient from the backbone to CPU FiLM values.
+            result=self.model(x.to(self.projection.device)); z=result[0] if isinstance(result,(tuple,list)) else result
+            z=z.cpu()
             shape(z,(1,2,512,512))
             if not observe: return z
             rgb=torch.cat((x.mean((-2,-1)),x.std((-2,-1),unbiased=False)),1)[0]
-            raw=torch.cat((rgb,self.cache['early'])); tokens=self.cache['tokens']
+            raw=torch.cat((rgb,self.cache['early'].cpu())); tokens=self.cache['tokens'].cpu()
             shape(raw,(134,)); shape(tokens,(64,64))
             return z,raw,tokens
         finally:

@@ -21,8 +21,14 @@ def code_identity():
     return sha
 
 def device_policy(config):
-    if config.get('device')!='cpu' or config.get('physical_GPU_ids') is not None:raise ValueError('CPU-only qualified route; GPU NOT_RUN')
-    if config.get('dtype_policy')!='R7_CPU_FP32_MODEL_FP64_LATENT_V1':raise ValueError('unreviewed dtype route')
+    if config.get('device')=='cpu':
+        if config.get('physical_GPU_ids') is not None or config.get('dtype_policy')!='R7_CPU_FP32_MODEL_FP64_LATENT_V1':raise ValueError('CPU dtype/device route')
+    elif config.get('device')=='cuda:0':
+        ids=config.get('physical_GPU_ids')
+        if not isinstance(ids,list) or len(ids)!=1 or type(ids[0]) is not int or ids[0] not in (5,6,7):raise ValueError('one authorized physical GPU required')
+        if config.get('dtype_policy')!='R7_CUDA_FP32_BACKBONE_CPU_FP64_LATENT_V1':raise ValueError('GPU dtype route')
+        if os.environ.get('CUDA_VISIBLE_DEVICES')!=str(ids[0]):raise ValueError('physical GPU visibility binding')
+    else:raise ValueError('unsupported source device')
     for key in ('wall_seconds','output_bytes','max_asset_bytes','max_decoded_bytes'):
         if type(config.get(key)) is not int or config[key]<=0:raise ValueError('finite positive resource cap required')
     if config.get('workers')!=1 or config.get('threads')!=2 or config.get('retry')!=False:raise ValueError('one worker/two CPU threads/no retry required')
@@ -34,7 +40,7 @@ def preflight(receipt):
     if auth.get('granted') is not True or auth.get('scope')!='SOURCE_PREP' or not auth.get('receipt_id'):raise PermissionError('new scope-specific user receipt required')
     review=receipt.get('execution_layer_review',{})
     actual=code_identity()
-    if review.get('status')!='PASS' or review.get('scope')!='SOURCE_PREP' or review.get('code_sha')!=actual or receipt.get('code_sha')!=actual:raise PermissionError('final execution-layer review/code mismatch')
+    if review.get('status') not in ('PASS','USER_AUTHORIZED_GPU_QUALIFIED') or review.get('scope')!='SOURCE_PREP' or review.get('code_sha')!=actual or receipt.get('code_sha')!=actual:raise PermissionError('final execution-layer review/code mismatch')
     if receipt.get('science_sha256')!=SCIENCE:raise ValueError('science binding')
     for name,expected in SCIENCE.items():verified(ROOT/'docs/review/r7/input/specs'/name,expected,1024**2)
     for key in ('manifest','split','target','config'):
@@ -42,6 +48,12 @@ def preflight(receipt):
     config=json.loads(verified(receipt['config']['path'],receipt['config']['sha256'],1024**2))
     if config.get('enabled') is not True or config.get('scope')!='SOURCE_PREP':raise PermissionError('source resource configuration disabled')
     device_policy(config)
+    if config['device']!='cpu':
+        if review['status']!='USER_AUTHORIZED_GPU_QUALIFIED':raise PermissionError('new GPU transition authority required; old CPU PASS is insufficient')
+        if auth.get('gpu_transition_authorized') is not True or auth.get('base_cpu_code_sha')!='f719c703087b38c07bdfbe7ce9dcfa62d88a12d9':raise PermissionError('explicit GPU transition grant required')
+        binding=receipt['gpu_qualification'];q=json.loads(verified(binding['path'],binding['sha256'],1024**2))
+        if q.get('status')!='PASSED' or q.get('code_sha')!=actual or q.get('physical_GPU_ids')!=config['physical_GPU_ids'] or q.get('failures')!=0 or not q.get('checks'):raise ValueError('GPU qualification binding')
+    elif review['status']!='PASS':raise PermissionError('CPU route requires original review')
     if config.get('resource_authorization')!={'scope':'SOURCE_PREP','receipt_id':auth['receipt_id']}:raise PermissionError('resource authorization is not this user receipt')
     out=checked_path(receipt['output_dir']);root=checked_path(receipt['source_root']);storage=checked_path(config['storage_root'])
     if not root.is_dir() or not storage.is_dir():raise ValueError('existing source/storage directories required')
@@ -126,12 +138,24 @@ class BudgetOutput(Output):
         with (self.path/name).open('xb') as f:f.write(raw)
         self.used+=len(raw)
 
-def load_model(raw):
+def load_model(raw,device='cpu'):
     from ..integrations.ctta_suite import build_reference_model
     state=torch.load(io.BytesIO(raw),map_location='cpu',weights_only=True)
     model,_=build_reference_model('fundus');model.load_state_dict(state,strict=True)
     if any(t.device.type!='cpu' or t.dtype!=torch.float32 for t in model.parameters()):raise ValueError('source model CPU float32 required')
-    return Segmenter(model)
+    return Segmenter(model,device=device)
+
+def configure_backend(config):
+    if config['device']=='cpu':return
+    # Explicit FP32, deterministic kernels. CPU RNG and small FP64 algebra stay
+    # unchanged; no mixed precision or TF32 numerical-policy substitution.
+    if os.environ.get('CUBLAS_WORKSPACE_CONFIG')!=':4096:8':raise ValueError('deterministic cuBLAS configuration required')
+    torch.backends.cuda.matmul.allow_tf32=False
+    torch.backends.cudnn.allow_tf32=False
+    torch.backends.cudnn.benchmark=False
+    torch.backends.cudnn.deterministic=True
+    torch.use_deterministic_algorithms(True)
+    if not torch.cuda.is_available() or torch.cuda.device_count()!=1:raise ValueError('exactly one visible CUDA device required')
 
 def release(result,segmenter,out):
     required={g+'_'+mode for g in 'ABC' for mode in ('FULL','STATIC')}
@@ -174,7 +198,7 @@ def execute(approved,out):
         meter.mark('decode');data=reader.data();meter.check()
         entry=approved['manifest']['checkpoint'];raw=verified(r['checkpoint_path'],entry['sha256'],cfg['max_asset_bytes'],counts)
         if len(raw)!=entry['bytes']:raise ValueError('checkpoint size')
-        checkpoint_read=True;meter.mark('model_load');counts.update(checkpoint_deserialization_attempts=1);segmenter=load_model(raw);counts.update(checkpoint_deserializations=1);del raw
+        checkpoint_read=True;meter.mark('model_load');counts.update(checkpoint_deserialization_attempts=1);segmenter=load_model(raw,device=cfg['device']);counts.update(checkpoint_deserializations=1);del raw
         hook=segmenter.register_forward_pre_hook(meter.before_forward)
         source=provenance();source.update(source_binding_status='BOUND',checkpoint_file_sha256=entry['sha256'],source_manifest_sha256=r['manifest']['sha256'],source_split_sha256=r['split']['sha256'])
         result=prepare_tensors(segmenter,data,source_provenance=source,progress=meter.mark);meter.complete();meter.mark('release');release(result,segmenter,out);meter.mark(None)
@@ -296,7 +320,7 @@ def main():
     cfg=approved['config'];out=BudgetOutput(receipt['output_dir'],dict(scope='SOURCE_PREP',code_sha=receipt['code_sha'],receipt_sha256=digest(raw)),cfg['output_bytes'])
     out.write('source_split.frozen.json',approved['split']);out.write('preflight.json',approved['audit'])
     from ..b3_runtime import ENTRY
-    env=dict(os.environ,RUN_FILE=str(ROOT/'scripts/r7/source_prep.py'),SOURCE_PREP_CHILD='1',SOURCE_PREP_PARENT_OWNER=out.owner,CUDA_VISIBLE_DEVICES='',PYTHONDONTWRITEBYTECODE='1')
+    env=dict(os.environ,RUN_FILE=str(ROOT/'scripts/r7/source_prep.py'),SOURCE_PREP_CHILD='1',SOURCE_PREP_PARENT_OWNER=out.owner,CUDA_VISIBLE_DEVICES='' if cfg['device']=='cpu' else str(cfg['physical_GPU_ids'][0]),PYTHONDONTWRITEBYTECODE='1')
     # Child rechecks all bindings with its own fresh output directory.
     child_receipt=copy.deepcopy(receipt);child_receipt['output_dir']=str(out.path/'worker')
     out.write('child.receipt.json',child_receipt);env['SOURCE_PREP_RECEIPT']=str(out.path/'child.receipt.json')
@@ -307,5 +331,6 @@ def main():
 
 def child_entry():
     r=json.loads(Path(os.environ['SOURCE_PREP_RECEIPT']).read_bytes());approved=preflight(r);torch.set_num_threads(2);torch.set_default_dtype(torch.float32)
+    configure_backend(approved['config'])
     out=BudgetOutput(r['output_dir'],dict(scope='SOURCE_PREP',code_sha=r['code_sha']),approved['config']['output_bytes']-65536)
     return execute(approved,out)

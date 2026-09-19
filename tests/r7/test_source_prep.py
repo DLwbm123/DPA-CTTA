@@ -92,6 +92,32 @@ class PreparationTests(unittest.TestCase):
         with self.assertRaises(ValueError):run.preflight(r)
         c=dict(self.config,max_decoded_bytes=1);p=Path(r['config']['path']);p.write_text(json.dumps(c));r=copy.deepcopy(self.receipt);r['config']['sha256']=reg.digest(p.read_bytes());r['execution_layer_review']['config_sha256']=r['config']['sha256']
         with self.assertRaises(ValueError):run.preflight(r)
+
+    def test_GPU_requires_new_grant_and_exact_qualification_without_initializing(self):
+        self.config.update(device='cuda:0',physical_GPU_ids=[5],dtype_policy='R7_CUDA_FP32_BACKBONE_CPU_FP64_LATENT_V1')
+        p=Path(self.receipt['config']['path']);p.write_text(json.dumps(self.config))
+        self.receipt['config']['sha256']=reg.digest(p.read_bytes());self.receipt['execution_layer_review']['config_sha256']=reg.digest(p.read_bytes())
+        q=self.root/'qualification.json';q.write_text(json.dumps(dict(status='PASSED',code_sha='synthetic-code',physical_GPU_ids=[5],failures=0,checks=['procedural fixture'])))
+        self.receipt['gpu_qualification']=dict(path=str(q),sha256=reg.digest(q.read_bytes()))
+        with patch.dict(os.environ,CUDA_VISIBLE_DEVICES='5'),patch('torch.cuda.is_available',side_effect=AssertionError('preflight must not initialize GPU')):
+            with self.assertRaises(PermissionError):self.approved()
+            self.receipt['execution_layer_review']['status']='USER_AUTHORIZED_GPU_QUALIFIED'
+            with self.assertRaises(PermissionError):self.approved()
+            self.receipt['user_authorization'].update(gpu_transition_authorized=True,base_cpu_code_sha='f719c703087b38c07bdfbe7ce9dcfa62d88a12d9')
+            self.assertEqual(self.approved()['config']['device'],'cuda:0')
+            bad=json.loads(q.read_bytes());bad['code_sha']='wrong';q.write_text(json.dumps(bad));self.receipt['gpu_qualification']['sha256']=reg.digest(q.read_bytes())
+            with self.assertRaises(ValueError):self.approved()
+
+    def test_GPU_resource_mapping_and_backend_settings_fail_closed(self):
+        c=dict(self.config,device='cuda:0',physical_GPU_ids=[5],dtype_policy='R7_CUDA_FP32_BACKBONE_CPU_FP64_LATENT_V1')
+        with patch.dict(os.environ,CUDA_VISIBLE_DEVICES='5'):
+            run.device_policy(c)
+            for ids in ([4],[5,6],[True],[],None):
+                with self.assertRaises(ValueError):run.device_policy(dict(c,physical_GPU_ids=ids))
+        with patch.dict(os.environ,CUDA_VISIBLE_DEVICES='6'):
+            with self.assertRaises(ValueError):run.device_policy(c)
+        with patch.dict(os.environ,CUBLAS_WORKSPACE_CONFIG=''),patch('torch.cuda.is_available',side_effect=AssertionError('configuration must reject first')):
+            with self.assertRaises(ValueError):run.configure_backend(c)
     def test_budget_phases_full_counts_no_silent_truncation(self):
         expected=run.expected_counts(self.split['folds']);self.assertEqual(expected['A_basis']['source_VJP'],1024);self.assertEqual(expected['A_FULL/fit']['backbone_forwards'],12000);self.assertEqual(expected['C_STATIC/constant_variance']['backbone_forwards'],224)
         c=Counter();m=run.Meter({'fit':dict(backbone_forwards=2)},30,lambda row:None,counter=c);m.mark('fit');m.before_forward();c['backbone_forwards']=2
