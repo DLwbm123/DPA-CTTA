@@ -1,0 +1,110 @@
+{
+  "schema": "R7_THREE_SCOPE_EXTERNAL_REVIEW_V1",
+  "review_date": "2026-09-19",
+  "repository": "DLwbm123/DPA-CTTA",
+  "status": "SOURCE_REVIEW_CLOSED_WITH_DEPLOYMENT_EVIDENCE_PENDING_TARGET_NEEDS_FIX",
+  "reviewer": "ChatGPT external review in this conversation",
+  "reviewer_role": "external",
+  "scope_versions": {
+    "source_gpu_implementation": "ba04ca46a6bae5df4f4ebb272ef4045f5ee400e5",
+    "source_gpu_publication": "ea47b81727115d50abe4824d3d2ed1327377f3ab",
+    "source_completion_publication": "1936775cf7bc25dee5bcc658480da45e11e63236",
+    "target_cpu_implementation": "9de62090fb921695aacd7d68027cf7ec853bcc47",
+    "target_cpu_publication": "f5d1ef75859cf82cf039819c50732584812f4d9d"
+  },
+  "source_gpu_code_review": {
+    "status": "PASS",
+    "scope": "RETROSPECTIVE_SOURCE_PREP_GPU_DELTA_AND_SUBMITTED_QUALIFICATION",
+    "execution_backend": "R7_CUDA_FP32_BACKBONE_CPU_METHOD_V1",
+    "submitted_GPU": "RTX 3090 / physical 5 / Torch 2.2.1+cu121",
+    "claims_full_CPU_GPU_training_equivalence": false
+  },
+  "source_completion_review": {
+    "status": "PASS_SUBMITTED_COMPLETION_EVIDENCE",
+    "source_retraining_required": false,
+    "seven_frozen_counters_match": true,
+    "private_execution_independently_observed": false
+  },
+  "source_artifact_identity_review": {
+    "status": "PASS_DECLARED_RELEASE_IDENTITIES_ONLY",
+    "private_file_rehash_by_reviewer": false,
+    "serialized_real_artifact_loader_roundtrip": "NOT_VERIFIED",
+    "pre_serialization_inference_loader": "REPORTED_FOR_ALL_SIX_AND_PRESENT_IN_RELEASE_CODE",
+    "target_deployment_ready": false
+  },
+  "target_execution_layer_review": {
+    "status": "NEEDS_FIX",
+    "finding_ids": [
+      "TS-COST-1"
+    ],
+    "integration_blocker_ids": [
+      "TS-BACKEND-1"
+    ],
+    "actual_GPU_target_route_review": "NOT_RUN"
+  },
+  "findings": [
+    {
+      "id": "TS-COST-1",
+      "classification": "BLOCKING_IMPLEMENTATION_FINDING",
+      "file": "src/dpa_ctta/r7_target_screen/runner.py",
+      "implementation_sha": "9de62090fb921695aacd7d68027cf7ec853bcc47",
+      "functions": [
+        "online",
+        "execute_job"
+      ],
+      "summary": "Model counts are persisted only after posthoc; failure paths omit full/partial online model counts.",
+      "reproduction": "Three isolated control-flow cases: success control plus posthoc failure and partial online failure. No real model calls.",
+      "required_fix": "Persist online completion counters before scoring, preserve observed partial physical counts and visit commit counters on exceptions, retain first error and count-failure evidence, disclose incomplete tails rather than substituting nominal counts."
+    },
+    {
+      "id": "TS-BACKEND-1",
+      "classification": "BLOCKING_INTEGRATION_GAP_NOT_SOURCE_FAILURE",
+      "summary": "Target CPU-only device policy and make_host cannot consume GPU-bound source contexts unchanged.",
+      "required_fix": "Reviewed GPU target integration reusing source device bridge, strict original context checks, all eight arms and fixed matrix; no context stripping, retagging or self-derived expected identity.",
+      "early_gate_requirement": "Reject unsupported context/backend combinations before any arm reads target pixels; C_BASE alone does not consume source contexts."
+    },
+    {
+      "id": "ART-ROUNDTRIP-1",
+      "classification": "DEPLOYMENT_EVIDENCE_PENDING_NOT_RETRAIN_REQUEST",
+      "summary": "Real serialized six packages were byte-checked, but no fresh real-package load_artifact roundtrip is supplied.",
+      "required_evidence": "Under explicit read/GPU qualification authority, zero-training reload of all six original serialized packages using independently retained inventory/context and matching backend; publish aggregate evidence only."
+    }
+  ],
+  "submitted_tests": {
+    "source_CPU": 90,
+    "source_GPU_checks": 15,
+    "target_CPU_local": 114,
+    "independently_rerun": false
+  },
+  "reviewer_execution": {
+    "isolated_control_flow_cases": 3,
+    "model_calls": 0,
+    "optimizer_calls": 0,
+    "torch_imported": false,
+    "GPU_queries": 0,
+    "real_asset_reads": 0,
+    "project_suite_reruns": 0,
+    "server_access": false,
+    "repository_writes": false
+  },
+  "remaining_scientific_limits": [
+    "PATIENT_DEPENDENCE_UNKNOWN",
+    "checkpoint_pretraining_membership UNKNOWN",
+    "Source validation is not target benefit; repeated queries are not independent patients"
+  ],
+  "execution_authorized": false,
+  "user_launch_confirmation_issued": false,
+  "can_be_used_as_target_execution_PASS": false,
+  "SOURCE_PREP": "COMPLETE_SUBMITTED_EVIDENCE_REVIEWED",
+  "TARGET_SCREEN": "NOT_RUN",
+  "TARGET_MECHANISM": "NOT_RUN",
+  "TARGET_EXTENSION": "NOT_RUN",
+  "next_scope_authorized": false,
+  "limitations": [
+    "GitHub fixed-ref connector reads, no private checkpoints, full contexts, raw ledgers or actual runtime access.",
+    "Anonymous availability was reported by the user, not independently established; local direct download failed DNS.",
+    "Only execute_job excerpt was materialized for probes; full target source file was not independently rehashed.",
+    "Historical authorization is reported by supplied records; this review does not create or backdate launch permission.",
+    "This is a component-scoped engineering review, not a blanket scientific success or target execution approval."
+  ]
+}

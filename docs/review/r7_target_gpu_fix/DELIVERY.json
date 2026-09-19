@@ -1,0 +1,29 @@
+{
+  "status": "R7_TARGET_GPU_BRIDGE_AND_COST_FIX_READY_FOR_REVIEW_WITH_GPU_QUALIFICATION_FAILURE",
+  "implementation_sha": "9f7c597fc510b3621f51e995a2dcb269e2fa8cd4",
+  "base_target_publication": "f5d1ef75859cf82cf039819c50732584812f4d9d",
+  "source_gpu_implementation": "ba04ca46a6bae5df4f4ebb272ef4045f5ee400e5",
+  "SOURCE_PREP": "COMPLETE_PRESERVED",
+  "TARGET_SCREEN": "NOT_RUN",
+  "TARGET_MECHANISM": "NOT_RUN",
+  "TARGET_EXTENSION": "NOT_RUN",
+  "execution_authorized": false,
+  "real_target_execution_started": false,
+  "next_scope_authorized": false,
+  "external_target_review": "NOT_RUN",
+  "GPU_TARGET_QUALIFICATION": "FAILED",
+  "ARTIFACT_ROUNDTRIP": "PASSED_PENDING_EXTERNAL_REVIEW",
+  "tests": {
+    "target": 28,
+    "r7": 59,
+    "source_boundary": 34,
+    "total": 121,
+    "failures": 0
+  },
+  "real_target_pixel_reads": 0,
+  "real_source_pixel_reads": 0,
+  "source_retraining": false,
+  "monitor": "DELETED_NOT_RECREATED",
+  "scientific_winner_issued": false,
+  "publication_branch": "review/r7-target-gpu-cost-fix-v1"
+}

@@ -1,0 +1,103 @@
+{
+  "scope": "ISOLATED_EXECUTE_JOB_CONTROL_FLOW",
+  "cases": 3,
+  "assertions_passed": true,
+  "interpretation": "Controls match the current implementation; both failure cases reproduce missing persisted model-cost counts, not a successful fix.",
+  "project_test_suite_rerun": false,
+  "model_calls": 0,
+  "optimizer_calls": 0,
+  "torch_imported": false,
+  "real_asset_reads": 0,
+  "GPU_queries": 0,
+  "subprocesses_started": 0,
+  "excerpt_sha256": "4f34439e3b8ce2b437a8c918d41d4141e68cf5cd2be94632ef407e2d100162cc",
+  "source_ref": "9de62090fb921695aacd7d68027cf7ec853bcc47",
+  "source_path": "src/dpa_ctta/r7_target_screen/runner.py",
+  "full_source_Git_blob_SHA_from_connector": "5905fddc2c3b128bd3b5cd096edf284c74869b53",
+  "full_source_materialized_or_rehashed": false,
+  "results": [
+    {
+      "case": "success_control",
+      "exception": null,
+      "events": [
+        "synthetic_online_counts_returned",
+        "host_closed",
+        "posthoc_entered"
+      ],
+      "persisted_files": {
+        "counts.json": {
+          "forwards": 15608,
+          "backwards": 1951,
+          "Adam": 1951
+        },
+        "worker.json": {
+          "status": "JOB_PENDING_TERMINAL_AUDIT",
+          "target_after_check": "UNCHANGED",
+          "secondary": [],
+          "image_IO": {},
+          "mask_IO": {},
+          "wall_seconds": 0.00013593799997124734,
+          "retry": false
+        }
+      },
+      "counts_file_present": true,
+      "worker_has_model_counts": false
+    },
+    {
+      "case": "posthoc_failure",
+      "exception": {
+        "type": "ValueError",
+        "message": "SYNTHETIC_MASK_DECODE_FAILURE"
+      },
+      "events": [
+        "synthetic_online_counts_returned",
+        "host_closed",
+        "posthoc_entered"
+      ],
+      "persisted_files": {
+        "first_error.json": {
+          "type": "ValueError",
+          "message": "SYNTHETIC_MASK_DECODE_FAILURE"
+        },
+        "worker.json": {
+          "status": "FAILED",
+          "target_after_check": "UNCHANGED",
+          "secondary": [],
+          "image_IO": {},
+          "mask_IO": {},
+          "wall_seconds": 0.00012388999999757289,
+          "retry": false
+        }
+      },
+      "counts_file_present": false,
+      "worker_has_model_counts": false
+    },
+    {
+      "case": "online_partial_failure",
+      "exception": {
+        "type": "RuntimeError",
+        "message": "SYNTHETIC_ONLINE_FAILURE"
+      },
+      "events": [
+        "synthetic_partial_host_counters_available"
+      ],
+      "persisted_files": {
+        "first_error.json": {
+          "type": "RuntimeError",
+          "message": "SYNTHETIC_ONLINE_FAILURE"
+        },
+        "worker.json": {
+          "status": "FAILED",
+          "target_after_check": "UNCHANGED",
+          "secondary": [],
+          "image_IO": {},
+          "mask_IO": {},
+          "wall_seconds": 0.00012802300000203104,
+          "retry": false
+        }
+      },
+      "counts_file_present": false,
+      "worker_has_model_counts": false
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "status": "FAILED",
+  "code_sha": "9f7c597fc510b3621f51e995a2dcb269e2fa8cd4",
+  "arms": [
+    "C_BASE",
+    "C0",
+    "A_FULL",
+    "A_STATIC",
+    "B_FULL",
+    "B_STATIC",
+    "C_FULL",
+    "C_STATIC"
+  ],
+  "physical_GPU_ids": [
+    6
+  ],
+  "checks": [],
+  "real_pixel_reads": 0,
+  "real_checkpoint_loads": 0,
+  "external_review": "NOT_RUN",
+  "execution_backend": {
+    "schema": "R7_CUDA_FP32_BACKBONE_CPU_METHOD_V1",
+    "torch": "2.2.1+cu121",
+    "cuda": "12.1",
+    "cudnn": 8902,
+    "matmul_tf32": false,
+    "cudnn_tf32": false,
+    "deterministic": true,
+    "cudnn_benchmark": false
+  },
+  "first_error": {
+    "type": "AssertionError",
+    "message": "Tensor-likes are not close!\n\nMismatched elements: 12 / 524288 (0.0%)\nGreatest absolute difference: 0.0004787929356098175 at index (0, 0, 269, 353) (up to 0.0003 allowed)\nGreatest relative difference: 0.490845650434494 at index (0, 0, 198, 458) (up to 0.003 allowed)"
+  },
+  "wall_seconds": 19.67136830301024,
+  "observed_method_counts": {},
+  "observed_base_counts": {
+    "forwards": 40,
+    "backwards": 5,
+    "Adam": 5
+  }
+}
