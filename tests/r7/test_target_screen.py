@@ -392,3 +392,16 @@ class ScreenTests(unittest.TestCase):
         with patch.object(r,'make_host',side_effect=make),patch.object(r.TargetReader,'read',side_effect=AssertionError('no pixels')):
             evidence=r.matrix_readiness(approved)
         self.assertEqual(seen,r.ARMS);self.assertEqual(evidence['model_forwards'],0)
+
+    def test_GPU_route_requires_historical_CPU_baseline(self):
+        cfg=copy.deepcopy(self.cfg);cfg.update(device='cuda:0',physical_GPU_ids=[6],workers=1,dtype_policy='R7_CUDA_FP32_BACKBONE_CPU_METHOD_V1',qualification={'path':'procedural'})
+        with self.assertRaisesRegex(PermissionError,'CPU baseline'):r.device_policy(cfg)
+        cfg['baseline_device']='cuda:0'
+        with self.assertRaisesRegex(PermissionError,'CPU baseline'):r.device_policy(cfg)
+        cfg['baseline_device']='cpu';r.device_policy(cfg)
+
+    def test_real_baseline_factory_uses_CPU_even_in_GPU_route(self):
+        receipt,*_=self.fixture();approved=self.approve_fixture(receipt);approved['config'].update(device='cuda:0',baseline_device='cpu')
+        with patch.object(r.torch,'load',return_value={}),patch('dpa_ctta.b1_host.Host') as factory:
+            r.make_host(approved,'C_BASE')
+        factory.assert_called_once_with('C',{},'cpu')

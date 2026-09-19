@@ -78,6 +78,8 @@ def device_policy(config):
         if ids is not None: raise PermissionError('CPU route cannot bind GPU IDs')
         dtype = 'R7_CPU_FP32_MODEL_FP64_LATENT_V1'
     elif device == 'cuda:0':
+        if config.get('baseline_device') != 'cpu':
+            raise PermissionError('historical C requires qualified CPU baseline route')
         if (not isinstance(ids, list) or len(ids) != config.get('workers')
                 or any(type(i) is not int or i < 0 for i in ids) or len(set(ids)) != len(ids)):
             raise PermissionError('one exact physical GPU per isolated worker')
@@ -200,7 +202,8 @@ def preflight(receipt, *, owned_output=None):
         qualification = json.loads(verified(q['path'], q['sha256'], 1024**2))
         if (qualification.get('status') != 'PASSED' or qualification.get('code_sha') != binding['code_sha']
                 or qualification.get('arms') != ARMS or qualification.get('execution_backend') != expected_backend
-                or qualification.get('physical_GPU_ids') != cfg['physical_GPU_ids']):
+                or qualification.get('physical_GPU_ids') != cfg['physical_GPU_ids']
+                or qualification.get('arm_devices') != {arm: ('cpu' if arm == 'C_BASE' else 'cuda:0') for arm in ARMS}):
             raise ValueError('eight-arm GPU qualification/code/device binding')
     # Fresh tensor loading for the WHOLE matrix precedes every target pixel read.
 
@@ -328,7 +331,7 @@ def make_host(approved, arm):
     seed_all(SEED)
     if arm == 'C_BASE':
         state = torch.load(io.BytesIO(raw), map_location='cpu', weights_only=True)
-        return Host('C', state, approved['config']['device']), state
+        return Host('C', state, 'cpu'), state
     segmenter = load_model(raw) if approved['config']['device'] == 'cpu' else load_model(raw, device='cuda:0')
     if arm == 'C0':
         # Independent trusted environment from source release, no candidate-minted identity.

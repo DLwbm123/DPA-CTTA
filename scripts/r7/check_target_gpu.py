@@ -17,7 +17,7 @@ from dpa_ctta.source_pilot import seed_all
 
 def main():
  torch.set_num_threads(2);configure_backend(dict(device='cuda:0'));start=time.monotonic()
- r=dict(status='FAILED',code_sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),arms=ARMS,physical_GPU_ids=[int(os.environ['CUDA_VISIBLE_DEVICES'])],checks=[],real_pixel_reads=0,real_checkpoint_loads=0,external_review='NOT_RUN')
+ r=dict(arm_devices={arm: ('cpu' if arm=='C_BASE' else 'cuda:0') for arm in ARMS},status='FAILED',code_sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),arms=ARMS,physical_GPU_ids=[int(os.environ['CUDA_VISIBLE_DEVICES'])],checks=[],real_pixel_reads=0,real_checkpoint_loads=0,external_review='NOT_RUN')
  assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=normal'],cwd=root,text=True).strip()
  before=COUNTS.copy();base_counts=dict(forwards=0,backwards=0,Adam=0);g=None
  def check(n):r['checks'].append(n)
@@ -26,14 +26,16 @@ def main():
   # Historical C constructor uses the original unmodified algorithm on all devices.
   def base(device,n):
    seed_all(20260907);s=segmenter(full=True);s.close();h=Host('C',device=device,model=s.model)
-   z=None
+   first=None
    try:
-    for i in range(n):z,t=h.step(pixels(i));physical(t,'C_BASE')
-    return z.cpu()
+    for i in range(n):
+     z,t=h.step(pixels(i));physical(t,'C_BASE')
+     if first is None:first=z.cpu().clone()
+    return first
    finally:
     base_counts['forwards']+=h.counts['forwards'];base_counts['backwards']+=h.counts['backwards'];base_counts['Adam']+=h.counts['base_adam']
     for handle in h.handles:handle.remove()
-  a=base('cuda:0',3);b=base('cuda:0',1);c=base('cpu',1);torch.testing.assert_close(b,c,rtol=.003,atol=.0003);check('C_BASE_8F_1B_1Adam_and_CPU_GPU')
+  a=base('cpu',3);b=base('cpu',1);assert torch.equal(a,b);check('C_BASE_CPU_8F_1B_1Adam_and_fresh_repeat_exact')
   h=OnlineHost(g)
   for i in range(3):z,t=h.step(pixels(i));physical(t,'C0')
   x=OnlineHost(g);z1,_=x.step(pixels());z2,_=x.step(pixels());assert torch.equal(z1,z2);check('C0_1F_repeat')
@@ -51,7 +53,7 @@ def main():
     host._check_frozen(boundary=True);check(name+'_three_visits_loader_state')
   assert tensor_digest(tensors(g.model))==original and all(p.grad is None for p in g.model.parameters());check('frozen_backbone')
   total=dict(COUNTS-before);r['counts']=dict(forwards=total['backbone_forwards']+base_counts['forwards'],backwards=base_counts['backwards'],Adam=base_counts['Adam'],VJP=0,AdamW=0)
-  assert r['counts']==dict(forwards=87,backwards=5,Adam=5,VJP=0,AdamW=0)
+  assert r['counts']==dict(forwards=79,backwards=4,Adam=4,VJP=0,AdamW=0)
   r['status']='PASSED'
  except BaseException as e:r['first_error']=dict(type=type(e).__name__,message=str(e));traceback.print_exc()
  finally:
