@@ -1,0 +1,52 @@
+{
+  "status": "R7_SOURCE_PREP_GPU_RUNNING",
+  "observed_utc": "2026-09-19T06:46:57.992298+00:00",
+  "implementation_sha": "ba04ca46a6bae5df4f4ebb272ef4045f5ee400e5",
+  "receipt_id": "fb75b104b7154bedaf7573d9e2b0f92a",
+  "receipt_sha256": "fe1fa5aa98a909922f68c49c953107a7680ac4e2947004773b98a5506fb9f31b",
+  "SOURCE_PREP": "RUNNING",
+  "physical_GPU_ids": [
+    5
+  ],
+  "workers": 1,
+  "threads": 2,
+  "external_gpu_review": "NOT_RUN",
+  "authorization": "Explicit user approval of stopping CPU attempt, GPU adaptation/qualification and new same-budget source run",
+  "TARGET_SCREEN": "NOT_RUN",
+  "TARGET_MECHANISM": "NOT_RUN",
+  "TARGET_EXTENSION": "NOT_RUN",
+  "next_scope_authorized": false,
+  "CPU_attempt": {
+    "status": "FAILED",
+    "counts": {
+      "backbone_forwards": 4136,
+      "source_backward_calls": 2067,
+      "source_Adam": 2067
+    },
+    "hash_cost": {
+      "tensor_digest_calls": 2,
+      "tensor_bytes": 90283816,
+      "wall_ns": 65943206,
+      "cpu_ns": 65951589
+    },
+    "IO": {
+      "read_attempts": 642,
+      "raw_reads": 642,
+      "raw_bytes_read": 430780792,
+      "verified_reads": 642,
+      "verified_bytes": 430780792,
+      "image_decode_attempts": 159,
+      "RGB_decodes": 159,
+      "mask_decode_attempts": 159,
+      "mask_decodes": 159,
+      "checkpoint_deserialization_attempts": 1,
+      "checkpoint_deserializations": 1
+    },
+    "wall_seconds": 4335.49073839793,
+    "source_after_check": "UNCHANGED",
+    "next_scope_authorized": false
+  },
+  "CPU_stop_reason": "USER_STOPPED_FOR_AUTHORIZED_GPU_TRANSITION",
+  "science_modified": false,
+  "final_artifacts": "NOT_YET_AVAILABLE"
+}

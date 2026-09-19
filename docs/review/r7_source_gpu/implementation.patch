@@ -1,0 +1,268 @@
+diff --git a/scripts/r7/check_source_gpu.py b/scripts/r7/check_source_gpu.py
+new file mode 100644
+index 0000000..a3156a4
+--- /dev/null
++++ b/scripts/r7/check_source_gpu.py
+@@ -0,0 +1,73 @@
++"""Bounded random-network qualification; no real data/checkpoint or source run."""
++import copy,io,json,os,platform,subprocess,sys,time,traceback
++from pathlib import Path
++from unittest.mock import patch
++import torch
++from dpa_ctta.b3_runtime import neutral_subprocesses
++neutral_subprocesses()
++root=Path(__file__).resolve().parents[2];sys.path.insert(0,str(root/'tests/r7'))
++from common import segmenter,pixels,method,source_fixture
++from dpa_ctta.r7_source_prep.runner import configure_backend,device_policy
++from dpa_ctta.r7_shared.network import Segmenter
++from dpa_ctta.r7_shared.source import SourceTrainer,oracle_one
++from dpa_ctta.r7_shared.context import environment,tensor_digest,tensors
++from dpa_ctta.r7_shared.preparation import prepared_artifact,inference_from_tensors
++from dpa_ctta.r7_shared.numerics import COUNTS
++
++def main():
++    torch.set_num_threads(2)
++    r=dict(code_sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),status='FAILED',failures=0,checks=[],physical_GPU_ids=[int(os.environ['CUDA_VISIBLE_DEVICES'])],real_source_training=False,real_asset_reads=0,external_review='NOT_RUN',python=platform.python_version(),torch=torch.__version__)
++    assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=normal'],cwd=root,text=True).strip()
++    start=time.monotonic();before=COUNTS.copy();s=None;g=None
++    def check(name,**evidence):r['checks'].append(dict(name=name,**evidence));print(json.dumps(r['checks'][-1]),flush=True)
++    try:
++        configure_backend(dict(device='cuda:0'))
++        r['GPU_name']=torch.cuda.get_device_name(0);torch.cuda.reset_peak_memory_stats()
++        with patch('torch.load',side_effect=AssertionError('real checkpoints forbidden')):
++            s=segmenter(full=True);g=segmenter(full=True).to('cuda:0')
++        original=tensor_digest(tensors(g.model));x=pixels();v=torch.zeros(1024,requires_grad=True)
++        t=time.monotonic();zc,rc,ec=s(x,v,observe=True);gc=torch.autograd.grad(zc.square().mean(),v)[0];cpu_seconds=time.monotonic()-t
++        t=time.monotonic();zg,rg,eg=g(x,v,observe=True);gg=torch.autograd.grad(zg.square().mean(),v)[0];gpu_seconds=time.monotonic()-t
++        # Fixed acceptance tolerances declared before observing this comparison.
++        for name,a,b in [('logits',zc,zg),('raw',rc,rg),('tokens',ec,eg),('FiLM_gradient',gc,gg)]:
++            torch.testing.assert_close(a,b,rtol=3e-3,atol=3e-4)
++            check('CPU_GPU_'+name,max_abs=float((a-b).abs().max()),rtol=3e-3,atol=3e-4)
++        assert gg.norm()>0 and gg[:512].norm()>0 and gg[512:].norm()>0
++        assert all(t.device.type=='cpu' for t in (zg,rg,eg,gg))
++        check('gradient_bridge_and_CPU_method_boundary',CPU_forward_backward_seconds=cpu_seconds,GPU_forward_backward_seconds=gpu_seconds)
++        with torch.no_grad():a=g(x);b=g(x)
++        assert torch.equal(a,b);check('same_GPU_repeat_exact')
++        assert environment(g)!=environment(s);check('backend_context_distinct')
++        del zc,zg,rc,rg,ec,eg,gc,gg,a,b;s.close();s=None
++        data,oracles=source_fixture()
++        count=COUNTS.copy();oracle,_=oracle_one(g,data,'fit',0)
++        assert torch.isfinite(oracle).all() and oracle.norm()>0
++        delta=COUNTS-count;assert delta['backbone_forwards']==32 and delta['source_backward_calls']==16 and delta['source_Adam']==16
++        check('full_16_step_procedural_oracle',counts=dict(delta))
++        for group in 'ABC':
++            for static in (False,True):
++                m=method(group,static);t=SourceTrainer(g,m,data,oracles['fit']);count=COUNTS.copy()
++                loss,_=t.fit_step();assert any(v>0 for v in t.gradients.values())
++                t.start_calibration(oracles['cal'],procedural_micro=True);cal=t.cal_step();m.freeze()
++                assert t.fit_steps==1 and t.cal_steps==1
++                package=prepared_artifact(g,m);weights=package['weights'];buf=io.BytesIO();torch.save(weights,buf);buf.seek(0)
++                weights=torch.load(buf,map_location='cpu',weights_only=True)
++                inference_from_tensors(g,group,static,weights['basis'],weights,package['binding'])
++                delta=COUNTS-count;assert delta['backbone_forwards']==16 and delta['source_backward_calls']==1 and delta['source_AdamW']==1 and delta['calibration_backward_calls']==1 and delta['calibration_Adam']==1
++                check(group+('_STATIC' if static else '_FULL')+'_fit_cal_artifact',fit_loss=loss,cal_loss=cal,counts=dict(delta))
++                del t,m,weights,package
++        v=torch.zeros(1024,requires_grad=True);z=g(x,v);pool=torch.nn.functional.adaptive_avg_pool2d(z,(4,4)).flatten()
++        for i in range(2):
++            grad=torch.autograd.grad(pool[i],v,retain_graph=i==0)[0];COUNTS['source_VJP']+=1;assert torch.isfinite(grad).all() and grad.norm()>0
++        assert tensor_digest(tensors(g.model))==original and not any(p.grad is not None for p in g.model.parameters())
++        check('VJP_and_frozen_backbone',VJP=2)
++        r['status']='PASSED'
++    except BaseException as exc:
++        r['failures']=1;r['first_error']=dict(type=type(exc).__name__,message=str(exc));traceback.print_exc()
++    finally:
++        if s is not None:s.close()
++        if g is not None:g.close()
++        r.update(wall_seconds=time.monotonic()-start,counts=dict(COUNTS-before),peak_GPU_allocated_bytes=torch.cuda.max_memory_allocated(),peak_GPU_reserved_bytes=torch.cuda.max_memory_reserved())
++        Path(os.environ['GPU_QUALIFICATION_RESULT']).write_text(json.dumps(r,indent=2)+'\n');print('GPU_QUALIFICATION '+json.dumps(r),flush=True)
++    raise SystemExit(r['failures'])
++if __name__=='__main__':main()
+diff --git a/src/dpa_ctta/r7_shared/context.py b/src/dpa_ctta/r7_shared/context.py
+index 33b5d0a..3d360a2 100644
+--- a/src/dpa_ctta/r7_shared/context.py
++++ b/src/dpa_ctta/r7_shared/context.py
+@@ -91,7 +91,10 @@ def environment(segmenter):
+     for m in segmenter.model.modules():
+         if m.training:raise ValueError('frozen eval backbone required')
+         if isinstance(m,nn.BatchNorm2d) and (m.track_running_stats or m.running_mean is not None or m.running_var is not None):raise ValueError('current-statistics BN required')
+-    return dict(effective_state_sha256=tensor_digest(tensors(segmenter.model)),observer_projection_sha256=tensor_digest([('projection',segmenter.projection)]),model_layout=layout(segmenter.model),policy=copy.deepcopy(segmenter.inference_policy))
++    result=dict(effective_state_sha256=tensor_digest(tensors(segmenter.model)),observer_projection_sha256=tensor_digest([('projection',segmenter.projection)]),model_layout=layout(segmenter.model),policy=copy.deepcopy(segmenter.inference_policy))
++    if segmenter.projection.device.type=='cuda':
++        result['execution_backend']=dict(schema='R7_CUDA_FP32_BACKBONE_CPU_METHOD_V1',torch=torch.__version__,cuda=torch.version.cuda,cudnn=torch.backends.cudnn.version(),matmul_tf32=torch.backends.cuda.matmul.allow_tf32,cudnn_tf32=torch.backends.cudnn.allow_tf32,deterministic=torch.are_deterministic_algorithms_enabled(),cudnn_benchmark=torch.backends.cudnn.benchmark)
++    return result
+ 
+ def make_context(segmenter,method=None,ablation=None,source=None,*,expected_environment=None):
+     started=time.perf_counter_ns();cpu=time.process_time_ns()
+diff --git a/src/dpa_ctta/r7_shared/network.py b/src/dpa_ctta/r7_shared/network.py
+index 17e4a61..0f28d52 100644
+--- a/src/dpa_ctta/r7_shared/network.py
++++ b/src/dpa_ctta/r7_shared/network.py
+@@ -15,8 +15,8 @@ def film(h,v):
+ 
+ 
+ class Segmenter(nn.Module):
+-    def __init__(self,model):
+-        super().__init__(); self.model=model.cpu().eval().requires_grad_(False)
++    def __init__(self,model,device='cpu'):
++        super().__init__(); self.model=model.to(device).eval().requires_grad_(False)
+         self.inference_policy=copy.deepcopy(POLICY)
+         self.v=None; self.capture=False; self.cache={}; self.forwards=0
+         for m in model.modules():
+@@ -33,7 +33,7 @@ class Segmenter(nn.Module):
+             gen=torch.Generator().manual_seed(20260918)
+             q,r=torch.linalg.qr(torch.randn(256,64,generator=gen))
+         q=q*torch.where(r.diagonal()<0,-1.,1.)
+-        self.register_buffer('projection',q)
++        self.register_buffer('projection',q.to(next(self.model.parameters()).device))
+     def _up1(self,m,args,h):
+         if h.shape[1]!=256: raise ValueError('up1 channels')
+         return film(h,self.v[:512])
+@@ -55,11 +55,14 @@ class Segmenter(nn.Module):
+         shape(v,(1024,)); self.v=v; self.capture=observe
+         try:
+             self.forwards+=1; COUNTS['backbone_forwards']+=1
+-            result=self.model(x); z=result[0] if isinstance(result,(tuple,list)) else result
++            # Keep source RNG, preprocessing, methods and losses on CPU. Device
++            # copies preserve the gradient from the backbone to CPU FiLM values.
++            result=self.model(x.to(self.projection.device)); z=result[0] if isinstance(result,(tuple,list)) else result
++            z=z.cpu()
+             shape(z,(1,2,512,512))
+             if not observe: return z
+             rgb=torch.cat((x.mean((-2,-1)),x.std((-2,-1),unbiased=False)),1)[0]
+-            raw=torch.cat((rgb,self.cache['early'])); tokens=self.cache['tokens']
++            raw=torch.cat((rgb,self.cache['early'].cpu())); tokens=self.cache['tokens'].cpu()
+             shape(raw,(134,)); shape(tokens,(64,64))
+             return z,raw,tokens
+         finally:
+diff --git a/src/dpa_ctta/r7_source_prep/runner.py b/src/dpa_ctta/r7_source_prep/runner.py
+index 1ca8699..c487c33 100644
+--- a/src/dpa_ctta/r7_source_prep/runner.py
++++ b/src/dpa_ctta/r7_source_prep/runner.py
+@@ -21,8 +21,14 @@ def code_identity():
+     return sha
+ 
+ def device_policy(config):
+-    if config.get('device')!='cpu' or config.get('physical_GPU_ids') is not None:raise ValueError('CPU-only qualified route; GPU NOT_RUN')
+-    if config.get('dtype_policy')!='R7_CPU_FP32_MODEL_FP64_LATENT_V1':raise ValueError('unreviewed dtype route')
++    if config.get('device')=='cpu':
++        if config.get('physical_GPU_ids') is not None or config.get('dtype_policy')!='R7_CPU_FP32_MODEL_FP64_LATENT_V1':raise ValueError('CPU dtype/device route')
++    elif config.get('device')=='cuda:0':
++        ids=config.get('physical_GPU_ids')
++        if not isinstance(ids,list) or len(ids)!=1 or type(ids[0]) is not int or ids[0] not in (5,6,7):raise ValueError('one authorized physical GPU required')
++        if config.get('dtype_policy')!='R7_CUDA_FP32_BACKBONE_CPU_FP64_LATENT_V1':raise ValueError('GPU dtype route')
++        if os.environ.get('CUDA_VISIBLE_DEVICES')!=str(ids[0]):raise ValueError('physical GPU visibility binding')
++    else:raise ValueError('unsupported source device')
+     for key in ('wall_seconds','output_bytes','max_asset_bytes','max_decoded_bytes'):
+         if type(config.get(key)) is not int or config[key]<=0:raise ValueError('finite positive resource cap required')
+     if config.get('workers')!=1 or config.get('threads')!=2 or config.get('retry')!=False:raise ValueError('one worker/two CPU threads/no retry required')
+@@ -34,7 +40,7 @@ def preflight(receipt):
+     if auth.get('granted') is not True or auth.get('scope')!='SOURCE_PREP' or not auth.get('receipt_id'):raise PermissionError('new scope-specific user receipt required')
+     review=receipt.get('execution_layer_review',{})
+     actual=code_identity()
+-    if review.get('status')!='PASS' or review.get('scope')!='SOURCE_PREP' or review.get('code_sha')!=actual or receipt.get('code_sha')!=actual:raise PermissionError('final execution-layer review/code mismatch')
++    if review.get('status') not in ('PASS','USER_AUTHORIZED_GPU_QUALIFIED') or review.get('scope')!='SOURCE_PREP' or review.get('code_sha')!=actual or receipt.get('code_sha')!=actual:raise PermissionError('final execution-layer review/code mismatch')
+     if receipt.get('science_sha256')!=SCIENCE:raise ValueError('science binding')
+     for name,expected in SCIENCE.items():verified(ROOT/'docs/review/r7/input/specs'/name,expected,1024**2)
+     for key in ('manifest','split','target','config'):
+@@ -42,6 +48,12 @@ def preflight(receipt):
+     config=json.loads(verified(receipt['config']['path'],receipt['config']['sha256'],1024**2))
+     if config.get('enabled') is not True or config.get('scope')!='SOURCE_PREP':raise PermissionError('source resource configuration disabled')
+     device_policy(config)
++    if config['device']!='cpu':
++        if review['status']!='USER_AUTHORIZED_GPU_QUALIFIED':raise PermissionError('new GPU transition authority required; old CPU PASS is insufficient')
++        if auth.get('gpu_transition_authorized') is not True or auth.get('base_cpu_code_sha')!='f719c703087b38c07bdfbe7ce9dcfa62d88a12d9':raise PermissionError('explicit GPU transition grant required')
++        binding=receipt['gpu_qualification'];q=json.loads(verified(binding['path'],binding['sha256'],1024**2))
++        if q.get('status')!='PASSED' or q.get('code_sha')!=actual or q.get('physical_GPU_ids')!=config['physical_GPU_ids'] or q.get('failures')!=0 or not q.get('checks'):raise ValueError('GPU qualification binding')
++    elif review['status']!='PASS':raise PermissionError('CPU route requires original review')
+     if config.get('resource_authorization')!={'scope':'SOURCE_PREP','receipt_id':auth['receipt_id']}:raise PermissionError('resource authorization is not this user receipt')
+     out=checked_path(receipt['output_dir']);root=checked_path(receipt['source_root']);storage=checked_path(config['storage_root'])
+     if not root.is_dir() or not storage.is_dir():raise ValueError('existing source/storage directories required')
+@@ -126,12 +138,24 @@ class BudgetOutput(Output):
+         with (self.path/name).open('xb') as f:f.write(raw)
+         self.used+=len(raw)
+ 
+-def load_model(raw):
++def load_model(raw,device='cpu'):
+     from ..integrations.ctta_suite import build_reference_model
+     state=torch.load(io.BytesIO(raw),map_location='cpu',weights_only=True)
+     model,_=build_reference_model('fundus');model.load_state_dict(state,strict=True)
+     if any(t.device.type!='cpu' or t.dtype!=torch.float32 for t in model.parameters()):raise ValueError('source model CPU float32 required')
+-    return Segmenter(model)
++    return Segmenter(model,device=device)
++
++def configure_backend(config):
++    if config['device']=='cpu':return
++    # Explicit FP32, deterministic kernels. CPU RNG and small FP64 algebra stay
++    # unchanged; no mixed precision or TF32 numerical-policy substitution.
++    if os.environ.get('CUBLAS_WORKSPACE_CONFIG')!=':4096:8':raise ValueError('deterministic cuBLAS configuration required')
++    torch.backends.cuda.matmul.allow_tf32=False
++    torch.backends.cudnn.allow_tf32=False
++    torch.backends.cudnn.benchmark=False
++    torch.backends.cudnn.deterministic=True
++    torch.use_deterministic_algorithms(True)
++    if not torch.cuda.is_available() or torch.cuda.device_count()!=1:raise ValueError('exactly one visible CUDA device required')
+ 
+ def release(result,segmenter,out):
+     required={g+'_'+mode for g in 'ABC' for mode in ('FULL','STATIC')}
+@@ -174,7 +198,7 @@ def execute(approved,out):
+         meter.mark('decode');data=reader.data();meter.check()
+         entry=approved['manifest']['checkpoint'];raw=verified(r['checkpoint_path'],entry['sha256'],cfg['max_asset_bytes'],counts)
+         if len(raw)!=entry['bytes']:raise ValueError('checkpoint size')
+-        checkpoint_read=True;meter.mark('model_load');counts.update(checkpoint_deserialization_attempts=1);segmenter=load_model(raw);counts.update(checkpoint_deserializations=1);del raw
++        checkpoint_read=True;meter.mark('model_load');counts.update(checkpoint_deserialization_attempts=1);segmenter=load_model(raw,device=cfg['device']);counts.update(checkpoint_deserializations=1);del raw
+         hook=segmenter.register_forward_pre_hook(meter.before_forward)
+         source=provenance();source.update(source_binding_status='BOUND',checkpoint_file_sha256=entry['sha256'],source_manifest_sha256=r['manifest']['sha256'],source_split_sha256=r['split']['sha256'])
+         result=prepare_tensors(segmenter,data,source_provenance=source,progress=meter.mark);meter.complete();meter.mark('release');release(result,segmenter,out);meter.mark(None)
+@@ -296,7 +320,7 @@ def main():
+     cfg=approved['config'];out=BudgetOutput(receipt['output_dir'],dict(scope='SOURCE_PREP',code_sha=receipt['code_sha'],receipt_sha256=digest(raw)),cfg['output_bytes'])
+     out.write('source_split.frozen.json',approved['split']);out.write('preflight.json',approved['audit'])
+     from ..b3_runtime import ENTRY
+-    env=dict(os.environ,RUN_FILE=str(ROOT/'scripts/r7/source_prep.py'),SOURCE_PREP_CHILD='1',SOURCE_PREP_PARENT_OWNER=out.owner,CUDA_VISIBLE_DEVICES='',PYTHONDONTWRITEBYTECODE='1')
++    env=dict(os.environ,RUN_FILE=str(ROOT/'scripts/r7/source_prep.py'),SOURCE_PREP_CHILD='1',SOURCE_PREP_PARENT_OWNER=out.owner,CUDA_VISIBLE_DEVICES='' if cfg['device']=='cpu' else str(cfg['physical_GPU_ids'][0]),PYTHONDONTWRITEBYTECODE='1')
+     # Child rechecks all bindings with its own fresh output directory.
+     child_receipt=copy.deepcopy(receipt);child_receipt['output_dir']=str(out.path/'worker')
+     out.write('child.receipt.json',child_receipt);env['SOURCE_PREP_RECEIPT']=str(out.path/'child.receipt.json')
+@@ -307,5 +331,6 @@ def main():
+ 
+ def child_entry():
+     r=json.loads(Path(os.environ['SOURCE_PREP_RECEIPT']).read_bytes());approved=preflight(r);torch.set_num_threads(2);torch.set_default_dtype(torch.float32)
++    configure_backend(approved['config'])
+     out=BudgetOutput(r['output_dir'],dict(scope='SOURCE_PREP',code_sha=r['code_sha']),approved['config']['output_bytes']-65536)
+     return execute(approved,out)
+diff --git a/tests/r7/test_source_prep.py b/tests/r7/test_source_prep.py
+index 0736fa8..3dd5e9d 100644
+--- a/tests/r7/test_source_prep.py
++++ b/tests/r7/test_source_prep.py
+@@ -92,6 +92,32 @@ class PreparationTests(unittest.TestCase):
+         with self.assertRaises(ValueError):run.preflight(r)
+         c=dict(self.config,max_decoded_bytes=1);p=Path(r['config']['path']);p.write_text(json.dumps(c));r=copy.deepcopy(self.receipt);r['config']['sha256']=reg.digest(p.read_bytes());r['execution_layer_review']['config_sha256']=r['config']['sha256']
+         with self.assertRaises(ValueError):run.preflight(r)
++
++    def test_GPU_requires_new_grant_and_exact_qualification_without_initializing(self):
++        self.config.update(device='cuda:0',physical_GPU_ids=[5],dtype_policy='R7_CUDA_FP32_BACKBONE_CPU_FP64_LATENT_V1')
++        p=Path(self.receipt['config']['path']);p.write_text(json.dumps(self.config))
++        self.receipt['config']['sha256']=reg.digest(p.read_bytes());self.receipt['execution_layer_review']['config_sha256']=reg.digest(p.read_bytes())
++        q=self.root/'qualification.json';q.write_text(json.dumps(dict(status='PASSED',code_sha='synthetic-code',physical_GPU_ids=[5],failures=0,checks=['procedural fixture'])))
++        self.receipt['gpu_qualification']=dict(path=str(q),sha256=reg.digest(q.read_bytes()))
++        with patch.dict(os.environ,CUDA_VISIBLE_DEVICES='5'),patch('torch.cuda.is_available',side_effect=AssertionError('preflight must not initialize GPU')):
++            with self.assertRaises(PermissionError):self.approved()
++            self.receipt['execution_layer_review']['status']='USER_AUTHORIZED_GPU_QUALIFIED'
++            with self.assertRaises(PermissionError):self.approved()
++            self.receipt['user_authorization'].update(gpu_transition_authorized=True,base_cpu_code_sha='f719c703087b38c07bdfbe7ce9dcfa62d88a12d9')
++            self.assertEqual(self.approved()['config']['device'],'cuda:0')
++            bad=json.loads(q.read_bytes());bad['code_sha']='wrong';q.write_text(json.dumps(bad));self.receipt['gpu_qualification']['sha256']=reg.digest(q.read_bytes())
++            with self.assertRaises(ValueError):self.approved()
++
++    def test_GPU_resource_mapping_and_backend_settings_fail_closed(self):
++        c=dict(self.config,device='cuda:0',physical_GPU_ids=[5],dtype_policy='R7_CUDA_FP32_BACKBONE_CPU_FP64_LATENT_V1')
++        with patch.dict(os.environ,CUDA_VISIBLE_DEVICES='5'):
++            run.device_policy(c)
++            for ids in ([4],[5,6],[True],[],None):
++                with self.assertRaises(ValueError):run.device_policy(dict(c,physical_GPU_ids=ids))
++        with patch.dict(os.environ,CUDA_VISIBLE_DEVICES='6'):
++            with self.assertRaises(ValueError):run.device_policy(c)
++        with patch.dict(os.environ,CUBLAS_WORKSPACE_CONFIG=''),patch('torch.cuda.is_available',side_effect=AssertionError('configuration must reject first')):
++            with self.assertRaises(ValueError):run.configure_backend(c)
+     def test_budget_phases_full_counts_no_silent_truncation(self):
+         expected=run.expected_counts(self.split['folds']);self.assertEqual(expected['A_basis']['source_VJP'],1024);self.assertEqual(expected['A_FULL/fit']['backbone_forwards'],12000);self.assertEqual(expected['C_STATIC/constant_variance']['backbone_forwards'],224)
+         c=Counter();m=run.Meter({'fit':dict(backbone_forwards=2)},30,lambda row:None,counter=c);m.mark('fit');m.before_forward();c['backbone_forwards']=2

@@ -1,0 +1,50 @@
+{
+  "tests": 56,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "exit_code": 0,
+  "wall_seconds": 20.594258539145812,
+  "cpu_user_seconds": 27.109458,
+  "cpu_system_seconds": 3.9905170000000005,
+  "peak_RSS": 1049300,
+  "peak_RSS_unit": "KiB",
+  "python": "3.10.6",
+  "torch": "2.2.1+cu121",
+  "platform": "Linux x86_64",
+  "physical_calls": {
+    "Tensor_backward": 28,
+    "autograd_grad": 0,
+    "Adam_step": 19,
+    "AdamW_step": 3,
+    "old_backbone_forwards": 0
+  },
+  "procedural_counts": {
+    "cholesky_solves": 196,
+    "eigh": 4,
+    "spectral_norms": 141,
+    "appearance_MLP": 349,
+    "method_MLP": 891,
+    "ISTA_iterations": 190,
+    "IRLS_iterations": 75,
+    "svd": 1,
+    "backbone_forwards": 416,
+    "source_backward_calls": 19,
+    "source_Adam": 16,
+    "source_AdamW": 3,
+    "calibration_backward_calls": 3,
+    "calibration_Adam": 3
+  },
+  "context_hash_cost": {
+    "tensor_digest_calls": 399,
+    "tensor_bytes": 617764442,
+    "wall_ns": 522307558,
+    "cpu_ns": 647251039,
+    "context_build_calls": 195,
+    "context_wall_ns": 823101790,
+    "context_cpu_ns": 883904590
+  },
+  "real_asset_reads": 0,
+  "GPU_queries_or_initializations": 0,
+  "external_review": "NOT_RUN"
+}

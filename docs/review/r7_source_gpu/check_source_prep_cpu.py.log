@@ -1,0 +1,41 @@
+test_CPU_device_route_rejects_cuda_and_unbounded_resources_without_GPU_query (test_source_prep.PreparationTests) ... ok
+test_GPU_requires_new_grant_and_exact_qualification_without_initializing (test_source_prep.PreparationTests) ... ok
+test_GPU_resource_mapping_and_backend_settings_fail_closed (test_source_prep.PreparationTests) ... ok
+test_SP1_noncanonical_paths_reject_before_assets_or_output (test_source_prep.PreparationTests) ... ok
+test_SP1_output_constructor_and_parent_validation (test_source_prep.PreparationTests) ... ok
+test_SP1_storage_and_metadata_noncanonical (test_source_prep.PreparationTests) ... ok
+test_SP2_first_error_survives_evidence_failure (test_source_prep.PreparationTests) ... ok
+test_SP2_start_timeout_cleanup_and_evidence_failures (test_source_prep.PreparationTests) ... ok
+test_SP2_summary_failure_records_failure_without_retry (test_source_prep.PreparationTests) ... ok
+test_SP3_already_exited_child_over_tree_cap (test_source_prep.PreparationTests) ... ok
+test_SP3_completion_counts_terminal_write_time_and_bytes (test_source_prep.PreparationTests) ... SOURCE_PREP_COMPLETION_WRITE_ERROR {"first": {"type": "ValueError", "message": "source worker output cap; terminal reserve required", "complete": false, "retry": false}, "evidence_error": "failure evidence cap"}
+ok
+test_SP3_global_terminal_reserve_and_evidence_budget (test_source_prep.PreparationTests) ... ok
+test_SP3_growth_at_exit_includes_nested_records (test_source_prep.PreparationTests) ... ok
+test_SP3_main_completion_resource_audit (test_source_prep.PreparationTests) ... ok
+test_SP3_terminal_audit_exception_preserves_worker_error (test_source_prep.PreparationTests) ... ok
+test_SP3_terminal_wall_boundary (test_source_prep.PreparationTests) ... ok
+test_SP3_worker_first_error_preserved_with_terminal_audit_failure (test_source_prep.PreparationTests) ... ok
+test_budget_phases_full_counts_no_silent_truncation (test_source_prep.PreparationTests) ... ok
+test_cleanup_EPERM_requires_bounded_reap_and_absent_group (test_source_prep.PreparationTests) ... ok
+test_default_entry_refuses_without_receipt (test_source_prep.PreparationTests) ... ok
+test_disabled_wrong_scope_and_old_review_reject_before_assets (test_source_prep.PreparationTests) ... ok
+test_file_digest_mismatch_rejects_before_decode (test_source_prep.PreparationTests) ... ok
+test_metadata_split_freezes_before_decode_and_preserves_existing (test_source_prep.PreparationTests) ... ok
+test_output_budget_preserves_first_evidence_and_no_overwrite (test_source_prep.PreparationTests) ... ok
+test_output_source_overlap_and_memory_overflow_rejected (test_source_prep.PreparationTests) ... ok
+test_overlap_minimum_duplicate_and_filename_group_rejected (test_source_prep.PreparationTests) ... ok
+test_preflight_real_synthetic_metadata_and_wrong_code_science_resource_hash (test_source_prep.PreparationTests) ... ok
+test_same_byte_decode_real_reader_on_synthetic_PNG_and_source_after_check (test_source_prep.PreparationTests) ... ok
+test_six_artifact_release_and_independent_expected_loader (test_source_prep.PreparationTests) ... ok
+test_source_path_escape_and_symlink_hardlink_rejected (test_source_prep.PreparationTests) ... ok
+test_supervisor_CPU_success_failure_timeout_cleanup (test_source_prep.PreparationTests) ... ok
+test_synthetic_checkpoint_CPU_load_and_wrong_state_reject (test_source_prep.PreparationTests) ... ok
+test_target_overlap_and_bad_domain_rejected (test_source_prep.PreparationTests) ... ok
+test_worker_failure_after_check_failure_are_separate_no_retry (test_source_prep.PreparationTests) ... ok
+
+----------------------------------------------------------------------
+Ran 34 tests in 2.139s
+
+OK
+SOURCE_PREP_CPU_RESULT {"tests": 34, "failures": 0, "errors": 0, "skipped": 0, "exit_code": 0, "wall_seconds": 2.195900220889598, "cpu_user_seconds": 1.1730369999999999, "cpu_system_seconds": 0.441111, "peak_RSS": 395308, "peak_RSS_unit": "KiB", "python": "3.10.6", "torch": "2.2.1+cu121", "physical_calls": {"backward": 0, "VJP": 0, "Adam": 0, "AdamW": 0, "synthetic_checkpoint_loads": 5, "synthetic_image_mask_decodes": 2}, "procedural_counts": {"backbone_forwards": 2, "appearance_MLP": 1, "method_MLP": 2, "spectral_norms": 3, "ISTA_iterations": 5}, "hash_cost": {"tensor_digest_calls": 28, "tensor_bytes": 5634160, "wall_ns": 10860764, "cpu_ns": 19879329, "context_build_calls": 14, "context_wall_ns": 54526174, "context_cpu_ns": 49163732}, "real_RGB_mask_decodes": 0, "real_checkpoint_deserializations": 0, "GPU_queries_or_initializations": 0, "real_source_training": false, "source_execution_layer_review": "NOT_RUN"}

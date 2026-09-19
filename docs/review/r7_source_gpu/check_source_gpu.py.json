@@ -1,0 +1,177 @@
+{
+  "code_sha": "ba04ca46a6bae5df4f4ebb272ef4045f5ee400e5",
+  "status": "PASSED",
+  "failures": 0,
+  "checks": [
+    {
+      "name": "CPU_GPU_logits",
+      "max_abs": 0.00019782781600952148,
+      "rtol": 0.003,
+      "atol": 0.0003
+    },
+    {
+      "name": "CPU_GPU_raw",
+      "max_abs": 5.960464477539063e-08,
+      "rtol": 0.003,
+      "atol": 0.0003
+    },
+    {
+      "name": "CPU_GPU_tokens",
+      "max_abs": 0.00010132789611816406,
+      "rtol": 0.003,
+      "atol": 0.0003
+    },
+    {
+      "name": "CPU_GPU_FiLM_gradient",
+      "max_abs": 5.254878487903625e-08,
+      "rtol": 0.003,
+      "atol": 0.0003
+    },
+    {
+      "name": "gradient_bridge_and_CPU_method_boundary",
+      "CPU_forward_backward_seconds": 1.41340128518641,
+      "GPU_forward_backward_seconds": 0.4790729091037065
+    },
+    {
+      "name": "same_GPU_repeat_exact"
+    },
+    {
+      "name": "backend_context_distinct"
+    },
+    {
+      "name": "full_16_step_procedural_oracle",
+      "counts": {
+        "backbone_forwards": 32,
+        "source_backward_calls": 16,
+        "source_Adam": 16
+      }
+    },
+    {
+      "name": "A_FULL_fit_cal_artifact",
+      "fit_loss": 0.989400315489209,
+      "cal_loss": 0.5334066879601972,
+      "counts": {
+        "backbone_forwards": 16,
+        "source_backward_calls": 1,
+        "appearance_MLP": 12,
+        "method_MLP": 12,
+        "spectral_norms": 8,
+        "cholesky_solves": 32,
+        "source_AdamW": 1,
+        "calibration_backward_calls": 1,
+        "calibration_Adam": 1
+      }
+    },
+    {
+      "name": "A_STATIC_fit_cal_artifact",
+      "fit_loss": 0.9915073120803903,
+      "cal_loss": 0.7445893671244466,
+      "counts": {
+        "backbone_forwards": 16,
+        "source_backward_calls": 1,
+        "appearance_MLP": 12,
+        "method_MLP": 12,
+        "spectral_norms": 8,
+        "cholesky_solves": 32,
+        "source_AdamW": 1,
+        "calibration_backward_calls": 1,
+        "calibration_Adam": 1
+      }
+    },
+    {
+      "name": "B_FULL_fit_cal_artifact",
+      "fit_loss": 0.9589362659782438,
+      "cal_loss": 0.004598315253376329,
+      "counts": {
+        "backbone_forwards": 16,
+        "source_backward_calls": 1,
+        "appearance_MLP": 12,
+        "method_MLP": 24,
+        "spectral_norms": 24,
+        "source_AdamW": 1,
+        "calibration_backward_calls": 1,
+        "calibration_Adam": 1,
+        "ISTA_iterations": 40
+      }
+    },
+    {
+      "name": "B_STATIC_fit_cal_artifact",
+      "fit_loss": 0.9586909471482438,
+      "cal_loss": 0.002508199079503079,
+      "counts": {
+        "backbone_forwards": 16,
+        "source_backward_calls": 1,
+        "appearance_MLP": 12,
+        "method_MLP": 24,
+        "spectral_norms": 24,
+        "source_AdamW": 1,
+        "calibration_backward_calls": 1,
+        "calibration_Adam": 1,
+        "ISTA_iterations": 40
+      }
+    },
+    {
+      "name": "C_FULL_fit_cal_artifact",
+      "fit_loss": 1.0073725322606242,
+      "cal_loss": 0.8115715822526384,
+      "counts": {
+        "backbone_forwards": 16,
+        "source_backward_calls": 1,
+        "appearance_MLP": 12,
+        "method_MLP": 28,
+        "cholesky_solves": 24,
+        "source_AdamW": 1,
+        "calibration_backward_calls": 1,
+        "calibration_Adam": 1,
+        "IRLS_iterations": 24
+      }
+    },
+    {
+      "name": "C_STATIC_fit_cal_artifact",
+      "fit_loss": 1.0073688972699848,
+      "cal_loss": 0.8115811925746597,
+      "counts": {
+        "backbone_forwards": 16,
+        "source_backward_calls": 1,
+        "appearance_MLP": 12,
+        "method_MLP": 28,
+        "cholesky_solves": 24,
+        "source_AdamW": 1,
+        "calibration_backward_calls": 1,
+        "calibration_Adam": 1,
+        "IRLS_iterations": 24
+      }
+    },
+    {
+      "name": "VJP_and_frozen_backbone",
+      "VJP": 2
+    }
+  ],
+  "physical_GPU_ids": [
+    5
+  ],
+  "real_source_training": false,
+  "real_asset_reads": 0,
+  "external_review": "NOT_RUN",
+  "python": "3.10.6",
+  "torch": "2.2.1+cu121",
+  "GPU_name": "NVIDIA GeForce RTX 3090",
+  "wall_seconds": 17.12752871704288,
+  "counts": {
+    "backbone_forwards": 133,
+    "source_backward_calls": 22,
+    "source_Adam": 16,
+    "appearance_MLP": 72,
+    "method_MLP": 128,
+    "spectral_norms": 64,
+    "cholesky_solves": 112,
+    "source_AdamW": 6,
+    "calibration_backward_calls": 6,
+    "calibration_Adam": 6,
+    "ISTA_iterations": 80,
+    "IRLS_iterations": 48,
+    "source_VJP": 2
+  },
+  "peak_GPU_allocated_bytes": 1269121536,
+  "peak_GPU_reserved_bytes": 1392508928
+}
