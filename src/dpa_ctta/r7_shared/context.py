@@ -91,7 +91,10 @@ def environment(segmenter):
     for m in segmenter.model.modules():
         if m.training:raise ValueError('frozen eval backbone required')
         if isinstance(m,nn.BatchNorm2d) and (m.track_running_stats or m.running_mean is not None or m.running_var is not None):raise ValueError('current-statistics BN required')
-    return dict(effective_state_sha256=tensor_digest(tensors(segmenter.model)),observer_projection_sha256=tensor_digest([('projection',segmenter.projection)]),model_layout=layout(segmenter.model),policy=copy.deepcopy(segmenter.inference_policy))
+    result=dict(effective_state_sha256=tensor_digest(tensors(segmenter.model)),observer_projection_sha256=tensor_digest([('projection',segmenter.projection)]),model_layout=layout(segmenter.model),policy=copy.deepcopy(segmenter.inference_policy))
+    if segmenter.projection.device.type=='cuda':
+        result['execution_backend']=dict(schema='R7_CUDA_FP32_BACKBONE_CPU_METHOD_V1',torch=torch.__version__,cuda=torch.version.cuda,cudnn=torch.backends.cudnn.version(),matmul_tf32=torch.backends.cuda.matmul.allow_tf32,cudnn_tf32=torch.backends.cudnn.allow_tf32,deterministic=torch.are_deterministic_algorithms_enabled(),cudnn_benchmark=torch.backends.cudnn.benchmark)
+    return result
 
 def make_context(segmenter,method=None,ablation=None,source=None,*,expected_environment=None):
     started=time.perf_counter_ns();cpu=time.process_time_ns()
