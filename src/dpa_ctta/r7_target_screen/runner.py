@@ -538,7 +538,7 @@ def main():
         env = dict(os.environ, RUN_FILE=str(ROOT/'scripts/r7/target_screen.py'), SCREEN_CHILD='1',
                    SCREEN_RECEIPT=str(out.path/'authorization.json'), SCREEN_JOB=job['job_id'],
                    SCREEN_SLOT=str(slot), SCREEN_PARENT_OWNER=job_out.owner,
-                   CUDA_VISIBLE_DEVICES='' if cfg['device'] == 'cpu' else str(cfg['physical_GPU_ids'][slot]), CUBLAS_WORKSPACE_CONFIG=':4096:8', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2', PYTHONDONTWRITEBYTECODE='1')
+                   CUDA_VISIBLE_DEVICES='' if cfg['device'] == 'cpu' or job['arm'] == 'C_BASE' else str(cfg['physical_GPU_ids'][slot]), CUBLAS_WORKSPACE_CONFIG=':4096:8', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2', PYTHONDONTWRITEBYTECODE='1')
         with (job_out.path/'worker.log').open('xb') as log:
             return subprocess.Popen([sys.executable, '-c', ENTRY], cwd=ROOT, env=env,
                                     stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
@@ -589,8 +589,9 @@ def child_entry():
     out = object.__new__(BudgetOutput); out.path=p; out.owner=record['owner']; out.binding=expected
     out.limit=approved['config']['job_output_bytes']; out.used=0; out.started=time.monotonic()
     torch.set_num_threads(2); torch.set_default_dtype(torch.float32)
-    configure_backend(approved['config'])
-    process_audit(out, approved['config']['device'] != 'cpu')
+    gpu = approved['config']['device'] != 'cpu' and job['arm'] != 'C_BASE'
+    configure_backend(approved['config'] if gpu else dict(device='cpu'))
+    process_audit(out, gpu)
     execute_job(approved, job, out)
 
 
