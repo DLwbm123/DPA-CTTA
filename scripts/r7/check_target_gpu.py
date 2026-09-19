@@ -27,10 +27,12 @@ def main():
   def base(device,n):
    seed_all(20260907);s=segmenter(full=True);s.close();h=Host('C',device=device,model=s.model)
    z=None
-   for i in range(n):z,t=h.step(pixels(i));physical(t,'C_BASE')
-   base_counts['forwards']+=h.counts['forwards'];base_counts['backwards']+=h.counts['backwards'];base_counts['Adam']+=h.counts['base_adam']
-   for handle in h.handles:handle.remove()
-   return z.cpu()
+   try:
+    for i in range(n):z,t=h.step(pixels(i));physical(t,'C_BASE')
+    return z.cpu()
+   finally:
+    base_counts['forwards']+=h.counts['forwards'];base_counts['backwards']+=h.counts['backwards'];base_counts['Adam']+=h.counts['base_adam']
+    for handle in h.handles:handle.remove()
   a=base('cuda:0',3);b=base('cuda:0',1);c=base('cpu',1);torch.testing.assert_close(b,c,rtol=.003,atol=.0003);check('C_BASE_8F_1B_1Adam_and_CPU_GPU')
   h=OnlineHost(g)
   for i in range(3):z,t=h.step(pixels(i));physical(t,'C0')

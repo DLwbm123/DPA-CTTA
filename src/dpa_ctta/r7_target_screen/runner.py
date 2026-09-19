@@ -560,7 +560,9 @@ def main():
         if 'process' in rec:
             try: terminal(rec, cfg)
             except BaseException: pass
-        out.evidence('readiness.first_error.json', error(first))
+        try: out.evidence('readiness.first_error.json', error(first))
+        except BaseException as secondary:
+            print(json.dumps(dict(first_error=error(first), evidence_error=error(secondary))), file=sys.stderr, flush=True)
         raise
     supervise(approved, out, start)
 
