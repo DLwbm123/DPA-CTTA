@@ -1,0 +1,45 @@
+{
+  "tests": 31,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "exit_code": 0,
+  "wall_seconds": 10.13270846195519,
+  "cpu_user_seconds": 4.7908919999999995,
+  "cpu_system_seconds": 0.819239,
+  "peak_RSS": 416712,
+  "peak_RSS_unit": "KiB",
+  "python": "3.10.6",
+  "torch": "2.2.1+cu121",
+  "physical_calls": {
+    "backward": 0,
+    "VJP": 0,
+    "Adam": 0,
+    "AdamW": 0,
+    "synthetic_checkpoint_loads": 19,
+    "synthetic_image_mask_decodes": 9
+  },
+  "procedural_counts": {
+    "backbone_forwards": 48,
+    "appearance_MLP": 21,
+    "method_MLP": 42,
+    "spectral_norms": 28,
+    "cholesky_solves": 42,
+    "ISTA_iterations": 35,
+    "IRLS_iterations": 21
+  },
+  "hash_cost": {
+    "tensor_digest_calls": 292,
+    "tensor_bytes": 58756240,
+    "wall_ns": 96986304,
+    "cpu_ns": 185933400,
+    "context_build_calls": 146,
+    "context_wall_ns": 218736259,
+    "context_cpu_ns": 417655865
+  },
+  "real_RGB_mask_decodes": 0,
+  "real_checkpoint_deserializations": 0,
+  "GPU_queries_or_initializations": 0,
+  "real_source_training": false,
+  "target_execution_layer_review": "NOT_RUN"
+}
