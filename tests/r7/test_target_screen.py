@@ -405,3 +405,16 @@ class ScreenTests(unittest.TestCase):
         with patch.object(r.torch,'load',return_value={}),patch('dpa_ctta.b1_host.Host') as factory:
             r.make_host(approved,'C_BASE')
         factory.assert_called_once_with('C',{},'cpu')
+
+    def test_explicit_user_waiver_keeps_exact_binding(self):
+        receipt,*_=self.fixture()
+        receipt['execution_layer_review']['status']='USER_WAIVED'
+        with self.assertRaises(PermissionError):self.approve_fixture(receipt)
+        receipt['user_authorization']['external_review_waiver']=dict(scope=r.SCOPE,binding_sha256=json_digest(receipt['binding']),explicit=True)
+        self.approve_fixture(receipt)
+        receipt['binding']['source_release']['status']='USER_ACCEPTED_VERIFIED_ARTIFACTS'
+        receipt['execution_layer_review']['binding_sha256']=json_digest(receipt['binding'])
+        receipt['user_authorization']['external_review_waiver']['binding_sha256']=json_digest(receipt['binding'])
+        self.approve_fixture(receipt)
+        receipt['binding']['seed']+=1
+        with self.assertRaises(PermissionError):self.approve_fixture(receipt)

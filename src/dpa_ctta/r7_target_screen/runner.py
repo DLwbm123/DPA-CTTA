@@ -124,7 +124,9 @@ def preflight(receipt, *, owned_output=None):
         raise PermissionError('new exact-scope authorization required')
     binding = receipt['binding']
     external = receipt.get('execution_layer_review', {})
-    if (external.get('status') != 'PASS' or external.get('scope') != SCOPE
+    waived = (external.get('status') == 'USER_WAIVED'
+              and auth.get('external_review_waiver') == dict(scope=SCOPE, binding_sha256=json_digest(binding), explicit=True))
+    if ((external.get('status') != 'PASS' and not waived) or external.get('scope') != SCOPE
             or not external.get('reference') or external.get('binding_sha256') != json_digest(binding)):
         raise PermissionError('external execution review binding')
     if binding['code_sha'] != code_identity() or binding['science_sha256'] != SCIENCE:
@@ -144,7 +146,8 @@ def preflight(receipt, *, owned_output=None):
     if binding['registration_digest'] != meta['recurrence']['registration_digest'] or binding['recurrence_digest'] != meta['recurrence']['stream_digest']:
         raise ValueError('registration/recurrence mismatch')
     source = binding['source_release']
-    if (source.get('status') != 'REVIEWED' or source.get('artifact_identity') != binding['inventory']['sha256']
+    source_accepted = source.get('status') == 'REVIEWED' or (waived and source.get('status') == 'USER_ACCEPTED_VERIFIED_ARTIFACTS')
+    if (not source_accepted or source.get('artifact_identity') != binding['inventory']['sha256']
             or not source.get('external_review_reference') or source.get('trusted_loader_verified') is not True):
         raise PermissionError('source artifacts PENDING or not independently reviewed')
     sha(source['manifest_sha256']); sha(source['split_sha256'])
