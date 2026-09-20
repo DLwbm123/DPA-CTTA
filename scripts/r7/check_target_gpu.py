@@ -20,10 +20,11 @@ def main():
                 real_pixel_reads=0, real_checkpoint_loads=0, external_review='NOT_RUN')
     before=COUNTS.copy(); started=time.monotonic(); direct=factory=repeat=None
     try:
-        seed_all(20260907); base=segmenter(full=True); raw=io.BytesIO(); torch.save(base.model.state_dict(),raw); payload=raw.getvalue(); base.close()
-        approved=dict(binding=dict(checkpoint=dict(path='procedural',sha256=target.digest(payload),bytes=len(payload))), config=dict(device='cuda:0',max_asset_bytes=32*1024**2))
+        checkpoint = Path(os.environ['GPU_QUALIFICATION_CHECKPOINT'])
+        payload = checkpoint.read_bytes()
+        approved=dict(binding=dict(checkpoint=dict(path=str(checkpoint),sha256=target.digest(payload),bytes=len(payload))), config=dict(device='cuda:0',max_asset_bytes=512*1024**2))
         with patch.object(target,'verified',side_effect=lambda path,*args,**kwargs: payload):
-            seed_all(20260907); direct=Host('C',state=torch.load(io.BytesIO(payload),map_location='cpu',weights_only=True),device='cuda:0')
+            seed_all(20260907); direct_model=target.load_model(payload, device='cuda:0'); direct=Host('C',model=direct_model.model,device='cuda:0')
             seed_all(20260907); factory,_=target.make_host(approved,'C_BASE')
             seed_all(20260907); repeat=Host('C',state=torch.load(io.BytesIO(payload),map_location='cpu',weights_only=True),device='cuda:0')
             for i in range(16):
@@ -32,7 +33,7 @@ def main():
                 assert ta['counts']==tb['counts']==tc['counts']==dict(forwards=8,backwards=1,base_adam=1,perturb=0,restore=0)
                 assert all(torch.equal(direct.model.state_dict()[n],factory.model.state_dict()[n]) for n in direct.model.state_dict())
                 result['checks'].append(dict(name='C_BASE_GPU_reference_factory_repeat',visit=i+1,exact=True))
-            g=segmenter(full=True).to('cuda:0')
+            g=target.load_model(payload, device='cuda:0')
             for arm in target.ARMS[1:]:
                 if arm=='C0':
                     h=target.OnlineHost(g)
