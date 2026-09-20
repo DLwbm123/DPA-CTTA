@@ -1,30 +1,30 @@
 {
-  "status": "R7_TARGET_SCREEN_IMPLEMENTATION_READY_FOR_REVIEW",
-  "implementation_sha": "9de62090fb921695aacd7d68027cf7ec853bcc47",
+  "status": "R7_TARGET_SCREEN_COMPLETE_PENDING_SCIENTIFIC_REVIEW",
+  "implementation_sha": "c1763d00f4f29de1c168ccd75219199667478825",
   "base_sha": "ecde8ba63940eb5c660f4de01bd7a9300b18c15b",
   "SOURCE_PREP": "PENDING_EXTERNAL_ARTIFACT_REVIEW",
   "source_prep_dispatched_by_this_task": false,
   "artifact_identity": "PENDING",
-  "TARGET_SCREEN": "NOT_RUN",
+  "TARGET_SCREEN": "COMPLETE_PENDING_SCIENTIFIC_REVIEW",
   "TARGET_MECHANISM": "NOT_RUN",
   "TARGET_EXTENSION": "NOT_RUN",
-  "real_target_execution_started": false,
-  "execution_authorized": false,
-  "target_execution_layer_review": "NOT_RUN",
-  "physical_GPU_ids": null,
-  "GPU_SMOKE": "NOT_RUN",
-  "real_target_pixel_reads": 0,
+  "real_target_execution_started": true,
+  "execution_authorized": true,
+  "target_execution_layer_review": "USER_WAIVED",
+  "physical_GPU_ids": [5, 6, 7],
+  "GPU_SMOKE": "QUALIFIED_INTERNAL_EXTERNAL_REVIEW_NOT_RUN",
+  "real_target_pixel_reads": 46824,
   "real_source_RGB_mask_reads": 0,
-  "real_checkpoint_loads": 0,
-  "supported_execution_route_pending_external_review": "CPU_ONLY",
+  "real_checkpoint_loads": 32,
+  "supported_execution_route_pending_external_review": "GPU_FP32_C_BASE_GPU_FP32_V1",
   "scientific_winner_issued": false,
   "frozen_science_modified": false,
   "historical_166_suite_rerun": false,
   "monitor": {
-    "automation_id": "r7",
+    "automation_id": null,
     "interval": "hourly",
-    "status": "ACTIVE",
-    "execution_authorization": false
+    "status": "DISABLED",
+    "execution_authorization": true
   },
   "stop": "Implementation delivery only. Wait for exact reviewed source release and external execution binding. Heartbeat may track readiness and authorized future work; it cannot issue PASS or bypass frozen scope.",
   "tests": {
@@ -36,5 +36,5 @@
     "r7": 59,
     "reused_source_helpers": 32
   },
-  "publication_branch": "review/r7-target-screen-execution-v1"
+  "publication_branch": "review/r7-target-gpu-cost-fix-v1"
 }

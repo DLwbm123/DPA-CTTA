@@ -1,4 +1,6 @@
-# R7 TARGET_SCREEN execution shell — external review requested
+# R7 TARGET_SCREEN execution shell — GPU-first completion pending scientific review
+
+The GPU-first run completed the frozen 24-job matrix with the user-approved backend amendment. See `GPU_FIRST_COMPLETION_PUBLIC.md` for the public, source-only completion record. The execution-layer review remains `USER_WAIVED`; this package does not assert an external `PASS` or issue a scientific winner.
 
 Status: **R7_TARGET_SCREEN_IMPLEMENTATION_READY_FOR_REVIEW**. This package does not issue an execution-layer PASS. SOURCE_PREP artifacts and exact runtime authorization remain PENDING. No real target pixels, source RGB/masks, real checkpoint or GPU were accessed by this implementation task.
 
