@@ -53,7 +53,7 @@ class BudgetOutput(_BudgetOutput):
 
     def _add_used(self, amount):
         self.used += amount
-        if self.aggregate is not None:
+        if getattr(self, 'aggregate', None) is not None:
             self.aggregate._aggregate_used = getattr(self.aggregate, '_aggregate_used', self.aggregate.used) + amount
 
     def bytes(self, name, data):
