@@ -24,7 +24,7 @@ def main():
         payload = checkpoint.read_bytes()
         approved=dict(binding=dict(checkpoint=dict(path=str(checkpoint),sha256=target.digest(payload),bytes=len(payload))), config=dict(device='cuda:0',max_asset_bytes=512*1024**2))
         with patch.object(target,'verified',side_effect=lambda path,*args,**kwargs: payload):
-            seed_all(20260907); direct_model=target.load_model(payload, device='cuda:0'); direct=Host('C',model=direct_model.model,device='cuda:0')
+            seed_all(20260907); direct=Host('C',state=torch.load(io.BytesIO(payload),map_location='cpu',weights_only=True),device='cuda:0')
             seed_all(20260907); factory,_=target.make_host(approved,'C_BASE')
             seed_all(20260907); repeat=Host('C',state=torch.load(io.BytesIO(payload),map_location='cpu',weights_only=True),device='cuda:0')
             for i in range(16):
