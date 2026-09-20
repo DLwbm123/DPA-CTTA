@@ -1,0 +1,255 @@
+# R7 GPU-first TARGET_SCREEN：只读科学整理
+
+执行代码 SHA：`c1763d00f4f29de1c168ccd75219199667478825`；完成发布 SHA：`09eb77691c54d9942edb6691b4c26b46316b656a`。
+
+本目录只整理已完成运行中的 report、标量和终态证据；没有模型调用、图像/mask 重解码、checkpoint 加载、重评分或新增实验。结果是描述性审阅材料，不提名赢家。
+
+## 运行状态
+
+- 状态：`DESCRIPTIVE_RESEARCH_REVIEW_NOT_A_GATE`；自动提名：`False`；后续执行授权：`False`。
+- 24/24 jobs、每 job 1,951 arrivals、1,695 scored contents；物理计数：{'forwards': 122913, 'backwards': 5853, 'Adam': 5853}。
+- `USER_WAIVED` 保留；没有补签外部 execution/GPU PASS。
+
+## 24 个 arm/order 组合（remaining_dev）
+
+| method | order | n | OD | OC | macro Dice |
+|---|---:|---:|---:|---:|---:|
+| A_FULL | 0 | 1695 | 0.821874 | 0.665441 | 0.743657 |
+| A_FULL | 1 | 1695 | 0.821876 | 0.665440 | 0.743658 |
+| A_FULL | 4 | 1695 | 0.821868 | 0.665433 | 0.743651 |
+| A_STATIC | 0 | 1695 | 0.821947 | 0.665380 | 0.743664 |
+| A_STATIC | 1 | 1695 | 0.821947 | 0.665380 | 0.743664 |
+| A_STATIC | 4 | 1695 | 0.821947 | 0.665380 | 0.743664 |
+| B_FULL | 0 | 1695 | 0.821982 | 0.668920 | 0.745451 |
+| B_FULL | 1 | 1695 | 0.821978 | 0.668915 | 0.745446 |
+| B_FULL | 4 | 1695 | 0.821974 | 0.668908 | 0.745441 |
+| B_STATIC | 0 | 1695 | 0.822098 | 0.668661 | 0.745380 |
+| B_STATIC | 1 | 1695 | 0.822098 | 0.668661 | 0.745380 |
+| B_STATIC | 4 | 1695 | 0.822098 | 0.668661 | 0.745380 |
+| C0 | 0 | 1695 | 0.821919 | 0.665135 | 0.743527 |
+| C0 | 1 | 1695 | 0.821919 | 0.665135 | 0.743527 |
+| C0 | 4 | 1695 | 0.821919 | 0.665135 | 0.743527 |
+| C_BASE_GPU_FP32_V1 | 0 | 1695 | 0.841078 | 0.690095 | 0.765587 |
+| C_BASE_GPU_FP32_V1 | 1 | 1695 | 0.861164 | 0.695656 | 0.778410 |
+| C_BASE_GPU_FP32_V1 | 4 | 1695 | 0.850556 | 0.690674 | 0.770615 |
+| C_FULL | 0 | 1695 | 0.821937 | 0.665138 | 0.743538 |
+| C_FULL | 1 | 1695 | 0.821936 | 0.665138 | 0.743537 |
+| C_FULL | 4 | 1695 | 0.821938 | 0.665143 | 0.743540 |
+| C_STATIC | 0 | 1695 | 0.821925 | 0.665133 | 0.743529 |
+| C_STATIC | 1 | 1695 | 0.821925 | 0.665133 | 0.743529 |
+| C_STATIC | 4 | 1695 | 0.821925 | 0.665133 | 0.743529 |
+
+## 按 domain 与 order 的绝对结果
+
+完整 96 行位于 `RESULTS_PUBLIC.json` 的 `absolute_domain_order`；下表按 method/order/domain 导出全部记录。
+
+| method | order | domain | n | OD | OC | macro Dice |
+|---|---:|---|---:|---:|---:|---:|
+| A_FULL | 0 | Drishti_GS | 37 | 0.850483 | 0.607347 | 0.728915 |
+| A_FULL | 0 | ORIGA | 586 | 0.755688 | 0.575087 | 0.665388 |
+| A_FULL | 0 | REFUGE | 336 | 0.874707 | 0.825217 | 0.849962 |
+| A_FULL | 0 | REFUGE_Valid | 736 | 0.849012 | 0.667359 | 0.758186 |
+| A_FULL | 1 | Drishti_GS | 37 | 0.850395 | 0.607003 | 0.728699 |
+| A_FULL | 1 | ORIGA | 586 | 0.755686 | 0.575082 | 0.665384 |
+| A_FULL | 1 | REFUGE | 336 | 0.874732 | 0.825265 | 0.849999 |
+| A_FULL | 1 | REFUGE_Valid | 736 | 0.849012 | 0.667356 | 0.758184 |
+| A_FULL | 4 | Drishti_GS | 37 | 0.850464 | 0.607289 | 0.728877 |
+| A_FULL | 4 | ORIGA | 586 | 0.755690 | 0.575090 | 0.665390 |
+| A_FULL | 4 | REFUGE | 336 | 0.874692 | 0.825218 | 0.849955 |
+| A_FULL | 4 | REFUGE_Valid | 736 | 0.849006 | 0.667342 | 0.758174 |
+| A_STATIC | 0 | Drishti_GS | 37 | 0.850581 | 0.607354 | 0.728967 |
+| A_STATIC | 0 | ORIGA | 586 | 0.755918 | 0.575359 | 0.665638 |
+| A_STATIC | 0 | REFUGE | 336 | 0.874804 | 0.825347 | 0.850075 |
+| A_STATIC | 0 | REFUGE_Valid | 736 | 0.848950 | 0.666944 | 0.757947 |
+| A_STATIC | 1 | Drishti_GS | 37 | 0.850581 | 0.607354 | 0.728967 |
+| A_STATIC | 1 | ORIGA | 586 | 0.755918 | 0.575359 | 0.665638 |
+| A_STATIC | 1 | REFUGE | 336 | 0.874804 | 0.825347 | 0.850075 |
+| A_STATIC | 1 | REFUGE_Valid | 736 | 0.848950 | 0.666944 | 0.757947 |
+| A_STATIC | 4 | Drishti_GS | 37 | 0.850581 | 0.607354 | 0.728967 |
+| A_STATIC | 4 | ORIGA | 586 | 0.755918 | 0.575359 | 0.665638 |
+| A_STATIC | 4 | REFUGE | 336 | 0.874804 | 0.825347 | 0.850075 |
+| A_STATIC | 4 | REFUGE_Valid | 736 | 0.848950 | 0.666944 | 0.757947 |
+| B_FULL | 0 | Drishti_GS | 37 | 0.846149 | 0.596828 | 0.721488 |
+| B_FULL | 0 | ORIGA | 586 | 0.751176 | 0.567835 | 0.659506 |
+| B_FULL | 0 | REFUGE | 336 | 0.871476 | 0.824733 | 0.848105 |
+| B_FULL | 0 | REFUGE_Valid | 736 | 0.854546 | 0.681894 | 0.768220 |
+| B_FULL | 1 | Drishti_GS | 37 | 0.846150 | 0.596835 | 0.721493 |
+| B_FULL | 1 | ORIGA | 586 | 0.751172 | 0.567830 | 0.659501 |
+| B_FULL | 1 | REFUGE | 336 | 0.871467 | 0.824722 | 0.848094 |
+| B_FULL | 1 | REFUGE_Valid | 736 | 0.854546 | 0.681892 | 0.768219 |
+| B_FULL | 4 | Drishti_GS | 37 | 0.846128 | 0.596802 | 0.721465 |
+| B_FULL | 4 | ORIGA | 586 | 0.751176 | 0.567835 | 0.659505 |
+| B_FULL | 4 | REFUGE | 336 | 0.871459 | 0.824730 | 0.848095 |
+| B_FULL | 4 | REFUGE_Valid | 736 | 0.854538 | 0.681872 | 0.768205 |
+| B_STATIC | 0 | Drishti_GS | 37 | 0.846755 | 0.598411 | 0.722583 |
+| B_STATIC | 0 | ORIGA | 586 | 0.752112 | 0.569401 | 0.660757 |
+| B_STATIC | 0 | REFUGE | 336 | 0.871792 | 0.824732 | 0.848262 |
+| B_STATIC | 0 | REFUGE_Valid | 736 | 0.853895 | 0.679974 | 0.766934 |
+| B_STATIC | 1 | Drishti_GS | 37 | 0.846755 | 0.598411 | 0.722583 |
+| B_STATIC | 1 | ORIGA | 586 | 0.752112 | 0.569401 | 0.660757 |
+| B_STATIC | 1 | REFUGE | 336 | 0.871792 | 0.824732 | 0.848262 |
+| B_STATIC | 1 | REFUGE_Valid | 736 | 0.853895 | 0.679974 | 0.766934 |
+| B_STATIC | 4 | Drishti_GS | 37 | 0.846755 | 0.598411 | 0.722583 |
+| B_STATIC | 4 | ORIGA | 586 | 0.752112 | 0.569401 | 0.660757 |
+| B_STATIC | 4 | REFUGE | 336 | 0.871792 | 0.824732 | 0.848262 |
+| B_STATIC | 4 | REFUGE_Valid | 736 | 0.853895 | 0.679974 | 0.766934 |
+| C0 | 0 | Drishti_GS | 37 | 0.851013 | 0.608480 | 0.729747 |
+| C0 | 0 | ORIGA | 586 | 0.756192 | 0.575891 | 0.666041 |
+| C0 | 0 | REFUGE | 336 | 0.875062 | 0.825242 | 0.850152 |
+| C0 | 0 | REFUGE_Valid | 736 | 0.848526 | 0.665947 | 0.757236 |
+| C0 | 1 | Drishti_GS | 37 | 0.851013 | 0.608480 | 0.729747 |
+| C0 | 1 | ORIGA | 586 | 0.756192 | 0.575891 | 0.666041 |
+| C0 | 1 | REFUGE | 336 | 0.875062 | 0.825242 | 0.850152 |
+| C0 | 1 | REFUGE_Valid | 736 | 0.848526 | 0.665947 | 0.757236 |
+| C0 | 4 | Drishti_GS | 37 | 0.851013 | 0.608480 | 0.729747 |
+| C0 | 4 | ORIGA | 586 | 0.756192 | 0.575891 | 0.666041 |
+| C0 | 4 | REFUGE | 336 | 0.875062 | 0.825242 | 0.850152 |
+| C0 | 4 | REFUGE_Valid | 736 | 0.848526 | 0.665947 | 0.757236 |
+| C_BASE_GPU_FP32_V1 | 0 | Drishti_GS | 37 | 0.929495 | 0.693687 | 0.811591 |
+| C_BASE_GPU_FP32_V1 | 0 | ORIGA | 586 | 0.882571 | 0.724689 | 0.803630 |
+| C_BASE_GPU_FP32_V1 | 0 | REFUGE | 336 | 0.883772 | 0.832797 | 0.858284 |
+| C_BASE_GPU_FP32_V1 | 0 | REFUGE_Valid | 736 | 0.784105 | 0.597225 | 0.690665 |
+| C_BASE_GPU_FP32_V1 | 1 | Drishti_GS | 37 | 0.859590 | 0.612819 | 0.736204 |
+| C_BASE_GPU_FP32_V1 | 1 | ORIGA | 586 | 0.878455 | 0.698525 | 0.788490 |
+| C_BASE_GPU_FP32_V1 | 1 | REFUGE | 336 | 0.910444 | 0.810664 | 0.860554 |
+| C_BASE_GPU_FP32_V1 | 1 | REFUGE_Valid | 736 | 0.824978 | 0.645032 | 0.735005 |
+| C_BASE_GPU_FP32_V1 | 4 | Drishti_GS | 37 | 0.876784 | 0.621161 | 0.748972 |
+| C_BASE_GPU_FP32_V1 | 4 | ORIGA | 586 | 0.872534 | 0.703674 | 0.788104 |
+| C_BASE_GPU_FP32_V1 | 4 | REFUGE | 336 | 0.900017 | 0.830283 | 0.865150 |
+| C_BASE_GPU_FP32_V1 | 4 | REFUGE_Valid | 736 | 0.809158 | 0.620083 | 0.714620 |
+| C_FULL | 0 | Drishti_GS | 37 | 0.851068 | 0.608362 | 0.729715 |
+| C_FULL | 0 | ORIGA | 586 | 0.756238 | 0.575778 | 0.666008 |
+| C_FULL | 0 | REFUGE | 336 | 0.875087 | 0.825253 | 0.850170 |
+| C_FULL | 0 | REFUGE_Valid | 736 | 0.848517 | 0.666046 | 0.757281 |
+| C_FULL | 1 | Drishti_GS | 37 | 0.851067 | 0.608372 | 0.729719 |
+| C_FULL | 1 | ORIGA | 586 | 0.756238 | 0.575777 | 0.666008 |
+| C_FULL | 1 | REFUGE | 336 | 0.875086 | 0.825250 | 0.850168 |
+| C_FULL | 1 | REFUGE_Valid | 736 | 0.848516 | 0.666045 | 0.757281 |
+| C_FULL | 4 | Drishti_GS | 37 | 0.851068 | 0.608349 | 0.729709 |
+| C_FULL | 4 | ORIGA | 586 | 0.756240 | 0.575786 | 0.666013 |
+| C_FULL | 4 | REFUGE | 336 | 0.875086 | 0.825252 | 0.850169 |
+| C_FULL | 4 | REFUGE_Valid | 736 | 0.848518 | 0.666051 | 0.757285 |
+| C_STATIC | 0 | Drishti_GS | 37 | 0.851041 | 0.608492 | 0.729767 |
+| C_STATIC | 0 | ORIGA | 586 | 0.756221 | 0.575894 | 0.666058 |
+| C_STATIC | 0 | REFUGE | 336 | 0.875077 | 0.825253 | 0.850165 |
+| C_STATIC | 0 | REFUGE_Valid | 736 | 0.848510 | 0.665933 | 0.757221 |
+| C_STATIC | 1 | Drishti_GS | 37 | 0.851041 | 0.608492 | 0.729767 |
+| C_STATIC | 1 | ORIGA | 586 | 0.756221 | 0.575894 | 0.666058 |
+| C_STATIC | 1 | REFUGE | 336 | 0.875077 | 0.825253 | 0.850165 |
+| C_STATIC | 1 | REFUGE_Valid | 736 | 0.848510 | 0.665933 | 0.757221 |
+| C_STATIC | 4 | Drishti_GS | 37 | 0.851041 | 0.608492 | 0.729767 |
+| C_STATIC | 4 | ORIGA | 586 | 0.756221 | 0.575894 | 0.666058 |
+| C_STATIC | 4 | REFUGE | 336 | 0.875077 | 0.825253 | 0.850165 |
+| C_STATIC | 4 | REFUGE_Valid | 736 | 0.848510 | 0.665933 | 0.757221 |
+
+## 配对差异
+
+差异均为 FULL − reference；`own_STATIC` 是 A/B/C 各自 STATIC，`C_BASE_GPU_FP32_V1` 与 `C0` 使用同 order/domain/content 的配对。完整域级 tail quantiles、ASSD common-valid/undefined 和有效数位于 JSON 的 `contrasts`。
+
+| group | reference | order | n | OD Δ | OC Δ | macro Δ | median Δ | ASSD OD valid | ASSD OC valid |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| A_FULL | own_STATIC | 0 | 1695 | -0.000074 | 0.000061 | -0.000007 | -0.000030 | 1695 | 1695 |
+| A_FULL | own_STATIC | 1 | 1695 | -0.000072 | 0.000059 | -0.000006 | -0.000031 | 1695 | 1695 |
+| A_FULL | own_STATIC | 4 | 1695 | -0.000079 | 0.000053 | -0.000013 | -0.000035 | 1695 | 1695 |
+| B_FULL | own_STATIC | 0 | 1695 | -0.000117 | 0.000259 | 0.000071 | -0.000014 | 1695 | 1695 |
+| B_FULL | own_STATIC | 1 | 1695 | -0.000120 | 0.000253 | 0.000067 | -0.000020 | 1695 | 1695 |
+| B_FULL | own_STATIC | 4 | 1695 | -0.000124 | 0.000247 | 0.000061 | -0.000020 | 1695 | 1695 |
+| C_FULL | own_STATIC | 0 | 1695 | 0.000011 | 0.000006 | 0.000009 | 0.000016 | 1695 | 1695 |
+| C_FULL | own_STATIC | 1 | 1695 | 0.000011 | 0.000005 | 0.000008 | 0.000015 | 1695 | 1695 |
+| C_FULL | own_STATIC | 4 | 1695 | 0.000012 | 0.000010 | 0.000011 | 0.000017 | 1695 | 1695 |
+| A_FULL | C_BASE_GPU_FP32_V1 | 0 | 1695 | -0.019204 | -0.024654 | -0.021929 | -0.003615 | 1695 | 1695 |
+| A_FULL | C_BASE_GPU_FP32_V1 | 1 | 1695 | -0.039288 | -0.030216 | -0.034752 | -0.001039 | 1695 | 1695 |
+| A_FULL | C_BASE_GPU_FP32_V1 | 4 | 1695 | -0.028688 | -0.025240 | -0.026964 | -0.006832 | 1695 | 1695 |
+| B_FULL | C_BASE_GPU_FP32_V1 | 0 | 1695 | -0.019096 | -0.021176 | -0.020136 | -0.005823 | 1695 | 1695 |
+| B_FULL | C_BASE_GPU_FP32_V1 | 1 | 1695 | -0.039186 | -0.026742 | -0.032964 | 0.002220 | 1695 | 1695 |
+| B_FULL | C_BASE_GPU_FP32_V1 | 4 | 1695 | -0.028582 | -0.021765 | -0.025174 | -0.007378 | 1695 | 1695 |
+| C_FULL | C_BASE_GPU_FP32_V1 | 0 | 1695 | -0.019141 | -0.024957 | -0.022049 | -0.003335 | 1695 | 1695 |
+| C_FULL | C_BASE_GPU_FP32_V1 | 1 | 1695 | -0.039228 | -0.030518 | -0.034873 | -0.001082 | 1695 | 1695 |
+| C_FULL | C_BASE_GPU_FP32_V1 | 4 | 1695 | -0.028618 | -0.025530 | -0.027074 | -0.006598 | 1695 | 1695 |
+| A_FULL | C0 | 0 | 1695 | -0.000045 | 0.000306 | 0.000130 | -0.000015 | 1695 | 1695 |
+| A_FULL | C0 | 1 | 1695 | -0.000043 | 0.000305 | 0.000131 | -0.000016 | 1695 | 1695 |
+| A_FULL | C0 | 4 | 1695 | -0.000051 | 0.000298 | 0.000124 | -0.000013 | 1695 | 1695 |
+| B_FULL | C0 | 0 | 1695 | 0.000063 | 0.003785 | 0.001924 | -0.000242 | 1695 | 1695 |
+| B_FULL | C0 | 1 | 1695 | 0.000060 | 0.003780 | 0.001920 | -0.000242 | 1695 | 1695 |
+| B_FULL | C0 | 4 | 1695 | 0.000055 | 0.003773 | 0.001914 | -0.000242 | 1695 | 1695 |
+| C_FULL | C0 | 0 | 1695 | 0.000018 | 0.000003 | 0.000011 | 0.000015 | 1695 | 1695 |
+| C_FULL | C0 | 1 | 1695 | 0.000017 | 0.000003 | 0.000010 | 0.000015 | 1695 | 1695 |
+| C_FULL | C0 | 4 | 1695 | 0.000019 | 0.000008 | 0.000014 | 0.000022 | 1695 | 1695 |
+
+### order 4 recurrence（单独报告）
+
+order 4 不是独立患者重复；以下是 order 4 的全域配对汇总。域级 order 4 记录及最差域/order 见 JSON。
+
+| group | reference | n | OD Δ | OC Δ | macro Δ | median Δ | ASSD OD valid | ASSD OC valid |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| A_FULL | own_STATIC | 1695 | -0.000079 | 0.000053 | -0.000013 | -0.000035 | 1695 | 1695 |
+| B_FULL | own_STATIC | 1695 | -0.000124 | 0.000247 | 0.000061 | -0.000020 | 1695 | 1695 |
+| C_FULL | own_STATIC | 1695 | 0.000012 | 0.000010 | 0.000011 | 0.000017 | 1695 | 1695 |
+| A_FULL | C_BASE_GPU_FP32_V1 | 1695 | -0.028688 | -0.025240 | -0.026964 | -0.006832 | 1695 | 1695 |
+| B_FULL | C_BASE_GPU_FP32_V1 | 1695 | -0.028582 | -0.021765 | -0.025174 | -0.007378 | 1695 | 1695 |
+| C_FULL | C_BASE_GPU_FP32_V1 | 1695 | -0.028618 | -0.025530 | -0.027074 | -0.006598 | 1695 | 1695 |
+| A_FULL | C0 | 1695 | -0.000051 | 0.000298 | 0.000124 | -0.000013 | 1695 | 1695 |
+| B_FULL | C0 | 1695 | 0.000055 | 0.003773 | 0.001914 | -0.000242 | 1695 | 1695 |
+| C_FULL | C0 | 1695 | 0.000019 | 0.000008 | 0.000014 | 0.000022 | 1695 | 1695 |
+
+## 最差域/order（描述性）
+
+| group | reference | order | domain | macro Δ | n |
+|---|---|---:|---|---:|---:|
+| B_FULL | own_STATIC | 1 | ORIGA | -0.001256 | 586 |
+| B_FULL | C_BASE_GPU_FP32_V1 | 0 | ORIGA | -0.144124 | 586 |
+| B_FULL | C0 | 4 | Drishti_GS | -0.008282 | 37 |
+
+## 成本与终态证据
+
+- 启动时间（启动记录）：`2026-09-20T09:48:01.507353+00:00`。精确结束时间和端到端计时未记录；completion 文件系统观察时间为 `2026-09-20T10:39:09.927737+00:00`，仅作观察，不冒充 execution timer。
+- 三 lane 的实际重叠/并行度、lane elapsed、评分耗时、IO/审计耗时均为 `NOT_MEASURED`；每 job 已记录 online wall 保留在 JSON。
+- 没有完整 CPU 矩阵，因此不报告完整矩阵加速倍数。
+- 每个 job 的 completion 记录为 `JOB_COMPLETE` 并通过 terminal resource audit；其嵌入的历史 `job.status=NOT_RUN` 字段保留在 JSON，未被改写。
+
+| job | worker | online s | scoring s | IO/audit s | total s | F | B | Adam |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| TARGET_SCREEN_A_FULL_0 | 0 | 277.714983 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_A_FULL_1 | 1 | 277.303480 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_A_FULL_4 | 2 | 277.478976 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_A_STATIC_0 | 0 | 277.349974 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_A_STATIC_1 | 1 | 284.279579 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_A_STATIC_4 | 2 | 277.604480 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_B_FULL_0 | 0 | 282.969185 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_B_FULL_1 | 1 | 294.613535 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_B_FULL_4 | 2 | 285.156322 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_B_STATIC_0 | 0 | 294.983357 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_B_STATIC_1 | 1 | 288.658534 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_B_STATIC_4 | 2 | 288.195506 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_C0_0 | 0 | 181.549678 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 1951 | 0 | 0 |
+| TARGET_SCREEN_C0_1 | 1 | 179.378936 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 1951 | 0 | 0 |
+| TARGET_SCREEN_C0_4 | 2 | 178.510614 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 1951 | 0 | 0 |
+| TARGET_SCREEN_C_BASE_0 | 0 | 946.249225 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 15608 | 1951 | 1951 |
+| TARGET_SCREEN_C_BASE_1 | 1 | 953.055091 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 15608 | 1951 | 1951 |
+| TARGET_SCREEN_C_BASE_4 | 2 | 946.868831 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 15608 | 1951 | 1951 |
+| TARGET_SCREEN_C_FULL_0 | 0 | 291.894425 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_C_FULL_1 | 1 | 294.401421 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_C_FULL_4 | 2 | 287.610348 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_C_STATIC_0 | 0 | 285.826794 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_C_STATIC_1 | 1 | 283.650512 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+| TARGET_SCREEN_C_STATIC_4 | 2 | 287.515354 | NOT_MEASURED | NOT_MEASURED | NOT_MEASURED | 3902 | 0 | 0 |
+
+### lane 汇总
+
+| worker lane | jobs | orders | online wall sum s | F | B | Adam | elapsed/overlap |
+|---:|---:|---|---:|---:|---:|---:|---|
+| 0 | 8 | 0 | 2838.537621 | 40971 | 1951 | 1951 | NOT_MEASURED |
+| 1 | 8 | 1 | 2855.341088 | 40971 | 1951 | 1951 | NOT_MEASURED |
+| 2 | 8 | 4 | 2828.940432 | 40971 | 1951 | 1951 | NOT_MEASURED |
+
+## SOURCE_PREP 身份与历史边界
+
+- 六份 SOURCE_PREP artifact：inventory/context 的公开摘要 hash 保留在 JSON；file identity=`BOUND`，trusted-loader=`true`，source status=`USER_ACCEPTED_VERIFIED_ARTIFACTS`。这些身份字段不等于外部 PASS。
+- 旧 CPU 中断尝试单独保留：4,136 forwards、2,067 backward、2,067 Adam、4,335.491 worker seconds；不计入本轮 GPU-first wall，也没有删除。旧 GPU qualification/roundtrip 成本不在本导出中推测。
+- 旧测试按其实际 SHA 保留为历史证据；本次整理没有把旧测试冒充新代码重跑。
+
+## 缺失与限制
+
+- 精确 round end execution timestamp、端到端 wall timer、job scoring/IO/audit 分解、lane overlap 和完整 CPU 对照均缺失，已明确标记 `NOT_MEASURED`。
+- ASSD 仅报告已有标量中共同有效的配对口径；没有因缺失而删除方法或结果。
+- 本导出停止于科学整理，不自动选择赢家、不追加实验。
