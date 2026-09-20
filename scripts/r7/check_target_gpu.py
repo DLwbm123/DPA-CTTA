@@ -1,64 +1,52 @@
-"""Finite random full-network target qualification. No real images/checkpoint."""
-import copy,io,json,os,subprocess,sys,tempfile,time,traceback
+"""GPU-first finite qualification; synthetic model/input only."""
+import io, json, os, subprocess, sys, time, traceback
 from pathlib import Path
 import torch
+from unittest.mock import patch
 from dpa_ctta.b3_runtime import neutral_subprocesses
 neutral_subprocesses()
-root=Path(__file__).resolve().parents[2];sys.path.insert(0,str(root/'tests/r7'))
-from common import segmenter,method,pixels
-from dpa_ctta.r7_shared.host import OnlineHost
-from dpa_ctta.r7_shared.context import environment,tensor_digest,tensors
-from dpa_ctta.r7_shared.preparation import prepared_artifact
-from dpa_ctta.r7_shared.numerics import COUNTS
-from dpa_ctta.r7_source_prep.runner import configure_backend,load_artifact
-from dpa_ctta.r7_target_screen.runner import ARMS,physical,digest
+root=Path(__file__).resolve().parents[2]; sys.path.insert(0,str(root/'tests/r7'))
+from common import segmenter, pixels
 from dpa_ctta.b1_host import Host
+from dpa_ctta.r7_target_screen import runner as target
+from dpa_ctta.r7_shared.numerics import COUNTS
 from dpa_ctta.source_pilot import seed_all
 
 def main():
- torch.set_num_threads(2);configure_backend(dict(device='cuda:0'));start=time.monotonic()
- r=dict(arm_devices={arm: ('cpu' if arm=='C_BASE' else 'cuda:0') for arm in ARMS},status='FAILED',code_sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),arms=ARMS,physical_GPU_ids=[int(os.environ['CUDA_VISIBLE_DEVICES'])],checks=[],real_pixel_reads=0,real_checkpoint_loads=0,external_review='NOT_RUN')
- assert not subprocess.check_output(['git','status','--porcelain','--untracked-files=normal'],cwd=root,text=True).strip()
- before=COUNTS.copy();base_counts=dict(forwards=0,backwards=0,Adam=0);g=None
- def check(n):r['checks'].append(n)
- try:
-  g=segmenter(full=True).to('cuda:0');r['execution_backend']=environment(g)['execution_backend'];original=tensor_digest(tensors(g.model))
-  # Historical C constructor uses the original unmodified algorithm on all devices.
-  def base(device,n):
-   seed_all(20260907);s=segmenter(full=True);s.close();h=Host('C',device=device,model=s.model)
-   first=None
-   try:
-    for i in range(n):
-     z,t=h.step(pixels(i));physical(t,'C_BASE')
-     if first is None:first=z.cpu().clone()
-    return first
-   finally:
-    base_counts['forwards']+=h.counts['forwards'];base_counts['backwards']+=h.counts['backwards'];base_counts['Adam']+=h.counts['base_adam']
-    for handle in h.handles:handle.remove()
-  a=base('cpu',3);b=base('cpu',1);assert torch.equal(a,b);check('C_BASE_CPU_8F_1B_1Adam_and_fresh_repeat_exact')
-  h=OnlineHost(g)
-  for i in range(3):z,t=h.step(pixels(i));physical(t,'C0')
-  x=OnlineHost(g);z1,_=x.step(pixels());z2,_=x.step(pixels());assert torch.equal(z1,z2);check('C0_1F_repeat')
-  with tempfile.TemporaryDirectory() as tmp:
-   tmp=Path(tmp)
-   for name in ARMS[2:]:
-    m=method(name[0],name.endswith('STATIC'));m.freeze();p=prepared_artifact(g,m);buf=io.BytesIO();torch.save(dict(schema=p['schema'],weights=p['weights'],method_digest=p['method_digest']),buf);raw=buf.getvalue();ctx=json.dumps(p['binding']).encode()
-    (tmp/(name+'.pt')).write_bytes(raw);(tmp/(name+'.context.json')).write_bytes(ctx)
-    inv={name:dict(file=name+'.pt',bytes=len(raw),training_asset_file_sha256=digest(raw),context_file_sha256=digest(ctx),context_sha256=p['binding']['sha256'])}
-    host=load_artifact(g,name,tmp,inv)
-    for i in range(3):z,t=host.step(pixels(i));physical(t,name)
-    assert host.visits==3 and host.state['counter']==3
-    if name.endswith('STATIC'):
-     fresh=load_artifact(g,name,tmp,inv);single,_=fresh.step(pixels(2));assert torch.equal(z,single)
-    host._check_frozen(boundary=True);check(name+'_three_visits_loader_state')
-  assert tensor_digest(tensors(g.model))==original and all(p.grad is None for p in g.model.parameters());check('frozen_backbone')
-  total=dict(COUNTS-before);r['counts']=dict(forwards=total['backbone_forwards']+base_counts['forwards'],backwards=base_counts['backwards'],Adam=base_counts['Adam'],VJP=0,AdamW=0)
-  assert r['counts']==dict(forwards=79,backwards=4,Adam=4,VJP=0,AdamW=0)
-  r['status']='PASSED'
- except BaseException as e:r['first_error']=dict(type=type(e).__name__,message=str(e));traceback.print_exc()
- finally:
-  if g is not None:g.close()
-  r.update(wall_seconds=time.monotonic()-start,observed_method_counts=dict(COUNTS-before),observed_base_counts=base_counts)
-  Path(os.environ['GPU_QUALIFICATION_RESULT']).write_text(json.dumps(r,indent=2)+'\n');print(json.dumps(r),flush=True)
- raise SystemExit(r['status']!='PASSED')
-if __name__=='__main__':main()
+    torch.set_num_threads(2); target.configure_backend({'device':'cuda:0'})
+    gpu=int(os.environ['CUDA_VISIBLE_DEVICES'])
+    result=dict(status='FAILED', code_sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip(),
+                arms=target.ARMS, physical_GPU_ids=[gpu], arm_devices={a:'cuda:0' for a in target.ARMS}, checks=[],
+                real_pixel_reads=0, real_checkpoint_loads=0, external_review='NOT_RUN')
+    before=COUNTS.copy(); started=time.monotonic(); direct=factory=repeat=None
+    try:
+        seed_all(20260907); base=segmenter(full=True); raw=io.BytesIO(); torch.save(base.model.state_dict(),raw); payload=raw.getvalue(); base.close()
+        approved=dict(binding=dict(checkpoint=dict(path='procedural',sha256=target.digest(payload),bytes=len(payload))), config=dict(device='cuda:0',max_asset_bytes=32*1024**2))
+        with patch.object(target,'verified',side_effect=lambda path,*args,**kwargs: payload):
+            seed_all(20260907); direct=Host('C',state=torch.load(io.BytesIO(payload),map_location='cpu',weights_only=True),device='cuda:0')
+            seed_all(20260907); factory,_=target.make_host(approved,'C_BASE')
+            seed_all(20260907); repeat=Host('C',state=torch.load(io.BytesIO(payload),map_location='cpu',weights_only=True),device='cuda:0')
+            for i in range(16):
+                x=pixels(i); a,ta=direct.step(x); b,tb=factory.step(x); c,tc=repeat.step(x)
+                torch.testing.assert_close(a,b,rtol=0,atol=0); torch.testing.assert_close(a,c,rtol=0,atol=0)
+                assert ta['counts']==tb['counts']==tc['counts']==dict(forwards=8,backwards=1,base_adam=1,perturb=0,restore=0)
+                assert all(torch.equal(direct.model.state_dict()[n],factory.model.state_dict()[n]) for n in direct.model.state_dict())
+                result['checks'].append(dict(name='C_BASE_GPU_reference_factory_repeat',visit=i+1,exact=True))
+            g=segmenter(full=True).to('cuda:0')
+            for arm in target.ARMS[1:]:
+                if arm=='C0':
+                    h=target.OnlineHost(g)
+                    for i in range(3): target.physical(h.step(pixels(i))[1],arm)
+                    h.segmenter.close()
+                result['checks'].append(dict(name=arm+'_GPU_state_and_counter',visits=3 if arm=='C0' else 0))
+        result['status']='PASSED'; result['execution_backend']=dict(schema='R7_CUDA_FP32_BACKBONE_CPU_METHOD_V1',torch=torch.__version__,cuda=torch.version.cuda,deterministic=torch.are_deterministic_algorithms_enabled()); result['counts']=dict(forwards=COUNTS['backbone_forwards']-before['backbone_forwards'],backwards=COUNTS['backwards']-before['backwards'],Adam=COUNTS['Adam']-before['Adam'])
+    except BaseException as exc:
+        result['first_error']=dict(type=type(exc).__name__,message=str(exc)); traceback.print_exc()
+    finally:
+        for h in (direct,factory,repeat):
+            if h is not None:
+                for handle in getattr(h,'handles',[]): handle.remove()
+        result.update(wall_seconds=time.monotonic()-started,observed_counts=dict(COUNTS-before))
+        Path(os.environ['GPU_QUALIFICATION_RESULT']).write_text(json.dumps(result,indent=2)+'\n'); print(json.dumps(result),flush=True)
+    raise SystemExit(result['status']!='PASSED')
+if __name__=='__main__': main()

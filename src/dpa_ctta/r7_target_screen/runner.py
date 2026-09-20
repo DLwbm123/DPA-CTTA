@@ -45,9 +45,63 @@ class BudgetOutput(_BudgetOutput):
             raise ValueError('owned output directory replaced')
         self._directory_identity = identity
 
+    def __init__(self, path, binding, limit, compact=False, aggregate=None):
+        self.compact = compact
+        self.used = 0
+        self.aggregate = aggregate
+        super().__init__(path, binding, limit)
+
+    def _add_used(self, amount):
+        self.used += amount
+        if self.aggregate is not None:
+            self.aggregate._aggregate_used = getattr(self.aggregate, '_aggregate_used', self.aggregate.used) + amount
+
     def bytes(self, name, data):
         self.check_root()
+        if self.compact:
+            if Path(name).name != name: raise ValueError('output path')
+            if name != 'owner.json' and json.loads((self.path/'owner.json').read_text()) != dict(owner=self.owner, binding=self.binding):
+                raise ValueError('output ownership')
+            if self.used + len(data) + TERMINAL_RESERVE > self.limit:
+                raise ValueError('output cap; terminal evidence reserve required')
+            with (self.path / name).open('xb') as f:
+                f.write(data); f.flush(); os.fsync(f.fileno())
+            self._add_used(len(data))
+            return
         return super().bytes(name, data)
+
+    def write(self, name, value):
+        if self.compact:
+            return self.bytes(name, (json.dumps(value, indent=2, allow_nan=False) + '\n').encode())
+        return super().write(name, value)
+
+    def evidence(self, name, value):
+        if not self.compact:
+            return super().evidence(name, value)
+        raw = (json.dumps(value, indent=2, allow_nan=False) + '\n').encode()
+        if len(raw) > 16384: raise ValueError('failure evidence cap')
+        return self.bytes(name, raw)
+
+    def prediction(self, index, data):
+        """Compact fixed-width prediction journal for the real matrix."""
+        if not getattr(self, 'compact', False):
+            return self.bytes(f'prediction_{index:04d}.bits', data)
+        path = self.path / 'predictions.bin'
+        mode = 'r+b' if path.exists() else 'w+b'
+        with path.open(mode) as f:
+            f.seek(index * len(data)); f.write(data); f.flush(); os.fsync(f.fileno())
+        self._compact_bytes = max(getattr(self, '_compact_bytes', 0), (index + 1) * len(data))
+        delta = max(0, self._compact_bytes - getattr(self, '_compact_accounted', 0))
+        self._compact_accounted = self._compact_bytes
+        self._add_used(delta)
+
+    def cost(self, value):
+        if not getattr(self, 'compact', False):
+            return self.write(f'cost_{value.get("committed_visits", 0):04d}.json', value)
+        raw = (json.dumps(value, allow_nan=False, sort_keys=True) + '\n').encode()
+        with (self.path / 'physical_cost.jsonl').open('ab') as f:
+            f.write(raw); f.flush(); os.fsync(f.fileno())
+        self._add_used(len(raw))
 
     def evidence(self, name, value):
         self.check_root()
@@ -56,7 +110,15 @@ class BudgetOutput(_BudgetOutput):
 
 def resource_check(out, caps, started, reserve=TERMINAL_RESERVE):
     out.check_root()
-    return _resource_check(out, caps, started, reserve)
+    if time.monotonic() - started >= caps['wall_seconds']:
+        raise TimeoutError('target worker wall cap')
+    # Compact journals avoid recursive scans on every visit. A zero reserve is
+    # the terminal boundary where the complete tree is audited exactly once.
+    if reserve == 0 or not getattr(out, 'compact', False):
+        return _resource_check(out, caps, started, reserve)
+    used = getattr(out, '_aggregate_used', getattr(out, 'used', 0))
+    if used + reserve > caps['output_bytes']:
+        raise ValueError('target output cap; terminal reserve required')
 
 
 def schedule(workers):
@@ -78,8 +140,6 @@ def device_policy(config):
         if ids is not None: raise PermissionError('CPU route cannot bind GPU IDs')
         dtype = 'R7_CPU_FP32_MODEL_FP64_LATENT_V1'
     elif device == 'cuda:0':
-        if config.get('baseline_device') != 'cpu':
-            raise PermissionError('historical C requires qualified CPU baseline route')
         if (not isinstance(ids, list) or len(ids) != config.get('workers')
                 or any(type(i) is not int or i < 0 for i in ids) or len(set(ids)) != len(ids)):
             raise PermissionError('one exact physical GPU per isolated worker')
@@ -206,7 +266,7 @@ def preflight(receipt, *, owned_output=None):
         if (qualification.get('status') != 'PASSED' or qualification.get('code_sha') != binding['code_sha']
                 or qualification.get('arms') != ARMS or qualification.get('execution_backend') != expected_backend
                 or qualification.get('physical_GPU_ids') != cfg['physical_GPU_ids']
-                or qualification.get('arm_devices') != {arm: ('cpu' if arm == 'C_BASE' else 'cuda:0') for arm in ARMS}):
+                or qualification.get('arm_devices') != {arm: 'cuda:0' for arm in ARMS}):
             raise ValueError('eight-arm GPU qualification/code/device binding')
     # Fresh tensor loading for the WHOLE matrix precedes every target pixel read.
 
@@ -294,13 +354,13 @@ def online(host, rows, reader, arm, out, check, cost=None):
                 raise ValueError('uncommitted or nonfinite prediction')
             counts.update(physical(trace, arm))
             bits = np.packbits((logits.detach().cpu().sigmoid() >= .5).numpy().reshape(-1)).tobytes()
-            out.bytes(f'prediction_{index:04d}.bits', bits)
+            out.prediction(index, bits)
             cost['prediction_files'] += 1
             check()
         except BaseException as exc: first = exc
         finally:
             capture_cost(host, arm, before, cost)
-            try: out.write(f'cost_{index:04d}.json', cost)
+            try: out.cost(cost)
             except BaseException as exc:
                 cost.setdefault('evidence_errors', []).append(error(exc))
                 first = first or exc
@@ -315,7 +375,11 @@ def posthoc(rows, reader, arm, order, out, check):
     result = []
     for index, row in enumerate(rows):
         check()
-        raw = (out.path/f'prediction_{index:04d}.bits').read_bytes()
+        if getattr(out, 'compact', False):
+            with (out.path/'predictions.bin').open('rb') as stream:
+                stream.seek(index * 65536); raw = stream.read(65536)
+        else:
+            raw = (out.path/f'prediction_{index:04d}.bits').read_bytes()
         if len(raw) != 65536: raise ValueError('prediction dimensions')
         probability = torch.from_numpy(np.unpackbits(np.frombuffer(raw, dtype=np.uint8)).copy()).float().reshape(1, 2, 512, 512)
         metrics = evaluate(probability, reader.read(row), 'fundus')
@@ -334,7 +398,7 @@ def make_host(approved, arm):
     seed_all(SEED)
     if arm == 'C_BASE':
         state = torch.load(io.BytesIO(raw), map_location='cpu', weights_only=True)
-        return Host('C', state, 'cpu'), state
+        return Host('C', state, approved['config']['device']), state
     segmenter = load_model(raw) if approved['config']['device'] == 'cpu' else load_model(raw, device='cuda:0')
     if arm == 'C0':
         # Independent trusted environment from source release, no candidate-minted identity.
@@ -370,9 +434,12 @@ def execute_job(approved, job, out):
         else: host._check_frozen(boundary=True); host.segmenter.close()
         # Drop all model/optimizer/state references before the first target mask read.
         del host, state; host = None
-        cost['phase'] = 'posthoc'
-        posthoc(rows, masks, job['arm'], job['order'], out, check)
-        cost['phase'] = 'completed'
+        if not cfg.get('defer_scoring', False):
+            cost['phase'] = 'posthoc'
+            posthoc(rows, masks, job['arm'], job['order'], out, check)
+            cost['phase'] = 'completed'
+        else:
+            cost['phase'] = 'online_complete'
     except BaseException as exc:
         first = exc
     finally:
@@ -394,7 +461,8 @@ def execute_job(approved, job, out):
                 verified(Path(b['artifact_root'])/(name+'.context.json'), row['context_file_sha256'], 1024**2)
             check()
         except BaseException as exc: secondary.append(error(exc)); first = first or exc
-        records = [('worker.json', dict(status='FAILED' if first else 'JOB_PENDING_TERMINAL_AUDIT',
+        status = 'FAILED' if first else ('ONLINE_COMPLETE_SCORE_PENDING' if cfg.get('defer_scoring', False) else 'JOB_PENDING_TERMINAL_AUDIT')
+        records = [('worker.json', dict(status=status,
                    target_after_check='FAILED' if secondary else 'UNCHANGED', secondary=secondary,
                    model_cost=copy.deepcopy(cost), image_IO=dict(images.counts), mask_IO=dict(masks.counts), wall_seconds=time.monotonic()-started, retry=False))]
         if first: records.insert(0, ('first_error.json', error(first)))
@@ -436,9 +504,9 @@ def terminal(record, cfg):
     return failures
 
 
-def supervise(approved, out, start):
+def supervise(approved, out, start, start_score=None):
     """At most three live jobs, one per order lane. Fresh OS process per job."""
-    cfg = approved['config']; queues = schedule(cfg['workers']); active = {}; completed = []
+    cfg = approved['config']; queues = schedule(cfg['workers']); active = {}; scoring = {}; completed = []
     started = time.monotonic(); first = None; secondary = []; handlers = {}
     pending_signal = None
     def interrupted(signum, frame):
@@ -448,10 +516,23 @@ def supervise(approved, out, start):
         if pending_signal is not None: raise InterruptedError('screen supervisor signal '+str(pending_signal))
     try:
         for sig in (signal.SIGINT, signal.SIGTERM): handlers[sig] = signal.signal(sig, interrupted)
-        while active or any(queues):
+        while active or scoring or any(queues):
             check_signal()
             resource_check(out, cfg, started)
             # Audit every current worker BEFORE permitting any next dispatch.
+            for slot, rec in list(scoring.items()):
+                if rec['process'].poll() is None:
+                    resource_check(rec['out'], dict(wall_seconds=cfg['job_wall_seconds'], output_bytes=cfg['job_output_bytes']), rec['started'])
+                    continue
+                if rec['process'].returncode != 0:
+                    raise RuntimeError('scorer nonzero exit '+str(rec['process'].returncode))
+                rec['out'].evidence('scoring.terminal.json', dict(exit_code=0, status='SCORED'))
+                summary = json.loads((rec['out'].path/'scoring.json').read_text())
+                if summary.get('status') != 'SCORED': raise ValueError('scoring evidence absent')
+                rec['out'].evidence('completion.pending.json', dict(job=rec['job'], worker=slot, status='JOB_COMPLETE', terminal_resource_audit=True, scoring=True))
+                resource_check(rec['out'], dict(wall_seconds=cfg['job_wall_seconds'], output_bytes=cfg['job_output_bytes']), rec['started'], reserve=0)
+                (rec['out'].path/'completion.pending.json').rename(rec['out'].path/'completion.json')
+                completed.append(rec['job']); del scoring[slot]
             for slot, rec in list(active.items()):
                 if rec['process'].poll() is None:
                     resource_check(rec['out'], dict(wall_seconds=cfg['job_wall_seconds'], output_bytes=cfg['job_output_bytes']), rec['started'])
@@ -459,32 +540,37 @@ def supervise(approved, out, start):
                 terminal(rec, cfg)
                 rec['out'].evidence('terminal.json', dict(exit_code=rec['process'].returncode, cleaned=rec.get('cleaned', False), errors=rec['terminal_errors']))
                 summary = json.loads((rec['out'].path/'worker.json').read_text())
-                if summary['status'] != 'JOB_PENDING_TERMINAL_AUDIT' or summary['target_after_check'] != 'UNCHANGED':
+                if summary['status'] not in ('JOB_PENDING_TERMINAL_AUDIT', 'ONLINE_COMPLETE_SCORE_PENDING') or summary['target_after_check'] != 'UNCHANGED':
                     raise ValueError('worker after-read evidence absent/failed')
-                rec['out'].evidence('completion.pending.json', dict(job=rec['job'], worker=slot, status='JOB_COMPLETE', terminal_resource_audit=True))
-                resource_check(rec['out'], dict(wall_seconds=cfg['job_wall_seconds'], output_bytes=cfg['job_output_bytes']), rec['started'], reserve=0)
-                (rec['out'].path/'completion.pending.json').rename(rec['out'].path/'completion.json')
-                completed.append(rec['job']); del active[slot]
+                if summary['status'] == 'ONLINE_COMPLETE_SCORE_PENDING':
+                    if start_score is None: raise ValueError('scoring process binding missing')
+                    rec['process'] = start_score(slot, rec['job'], rec['out'], rec['owner'])
+                    rec['started'] = time.monotonic(); scoring[slot] = rec
+                else:
+                    rec['out'].evidence('completion.pending.json', dict(job=rec['job'], worker=slot, status='JOB_COMPLETE', terminal_resource_audit=True))
+                    resource_check(rec['out'], dict(wall_seconds=cfg['job_wall_seconds'], output_bytes=cfg['job_output_bytes']), rec['started'], reserve=0)
+                    (rec['out'].path/'completion.pending.json').rename(rec['out'].path/'completion.json'); completed.append(rec['job'])
+                del active[slot]
             for slot, queue in enumerate(queues):
                 check_signal()
                 if any(rec['process'].poll() not in (None, 0) for rec in active.values()):
                     raise RuntimeError('worker nonzero exit '+str(next(rec['process'].returncode for rec in active.values() if rec['process'].returncode not in (None, 0))))
                 if slot in active or not queue: continue
                 job = queue.pop(0)
-                job_out = BudgetOutput(out.path/job['job_id'], dict(binding_sha256=json_digest(approved['binding']), job=job, worker=slot), cfg['job_output_bytes'])
-                rec = dict(job=job, out=job_out, started=time.monotonic())
+                job_out = BudgetOutput(out.path/job['job_id'], dict(binding_sha256=json_digest(approved['binding']), job=job, worker=slot), cfg['job_output_bytes'], compact=cfg.get('compact_output', False), aggregate=out)
+                rec = dict(job=job, out=job_out, owner=job_out.owner, started=time.monotonic())
                 rec['process'] = start(slot, job, job_out)
                 active[slot] = rec  # Own it before any fallible persistence.
                 check_signal()
                 job_out.write('process.json', dict(pid=rec['process'].pid, pgid=rec['process'].pid, worker=slot))
-            if active: time.sleep(.1)
+            if active or scoring: time.sleep(.1)
         rows = []
         for job in matrix(SCOPE): rows.extend(json.loads((out.path/job['job_id']/'scalars.private.json').read_text()))
         out.write('report.json', report(rows))
     except BaseException as exc: first = exc
     finally:
         for sig in handlers: signal.signal(sig, signal.SIG_IGN)
-        for rec in active.values():
+        for rec in list(active.values()) + list(scoring.values()):
             try: terminal(rec, cfg)
             except BaseException as exc: secondary.append(dict(job=rec['job']['job_id'], first=error(exc), terminal=rec.get('terminal_errors', []))); first = first or exc
         for sig, old in handlers.items(): signal.signal(sig, old)
@@ -533,15 +619,16 @@ def main():
     if not path: raise PermissionError('no receipt; TARGET_SCREEN disabled')
     receipt = json.loads(Path(path).read_bytes()); approved = preflight(receipt)
     b = approved['binding']; cfg = approved['config']
-    out = BudgetOutput(b['output_dir'], dict(binding_sha256=json_digest(b)), cfg['output_bytes'])
+    out = BudgetOutput(b['output_dir'], dict(binding_sha256=json_digest(b)), cfg['output_bytes'], compact=cfg.get('compact_output', False))
     from ..b3_runtime import ENTRY
     process_audit(out)
     out.write('authorization.json', receipt)
+    out._aggregate_used = out.used
     def start(slot, job, job_out):
         env = dict(os.environ, RUN_FILE=str(ROOT/'scripts/r7/target_screen.py'), SCREEN_CHILD='1',
                    SCREEN_RECEIPT=str(out.path/'authorization.json'), SCREEN_JOB=job['job_id'],
                    SCREEN_SLOT=str(slot), SCREEN_PARENT_OWNER=job_out.owner,
-                   CUDA_VISIBLE_DEVICES='' if cfg['device'] == 'cpu' or job['arm'] == 'C_BASE' else str(cfg['physical_GPU_ids'][slot]), CUBLAS_WORKSPACE_CONFIG=':4096:8', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2', PYTHONDONTWRITEBYTECODE='1')
+                   CUDA_VISIBLE_DEVICES='' if cfg['device'] == 'cpu' else str(cfg['physical_GPU_ids'][slot]), CUBLAS_WORKSPACE_CONFIG=':4096:8', OMP_NUM_THREADS='2', MKL_NUM_THREADS='2', PYTHONDONTWRITEBYTECODE='1')
         with (job_out.path/'worker.log').open('xb') as log:
             return subprocess.Popen([sys.executable, '-c', ENTRY], cwd=ROOT, env=env,
                                     stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
@@ -570,7 +657,14 @@ def main():
         except BaseException as secondary:
             print(json.dumps(dict(first_error=error(first), evidence_error=error(secondary))), file=sys.stderr, flush=True)
         raise
-    supervise(approved, out, start)
+    def start_score(slot, job, job_out, owner):
+        env = dict(os.environ, RUN_FILE=str(ROOT/'scripts/r7/target_screen.py'), SCREEN_SCORE='1',
+                   SCREEN_RECEIPT=str(out.path/'authorization.json'), SCREEN_JOB=job['job_id'],
+                   CUDA_VISIBLE_DEVICES='', OMP_NUM_THREADS='1', MKL_NUM_THREADS='1', PYTHONDONTWRITEBYTECODE='1')
+        with (job_out.path/'scorer.log').open('xb') as log:
+            return subprocess.Popen([sys.executable, '-c', ENTRY], cwd=ROOT, env=env,
+                                    stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+    supervise(approved, out, start, start_score)
 
 
 def child_entry():
@@ -590,12 +684,31 @@ def child_entry():
     expected = dict(binding_sha256=json_digest(b), job=job, worker=slot)
     if record != dict(owner=os.environ['SCREEN_PARENT_OWNER'], binding=expected): raise ValueError('job ownership')
     out = object.__new__(BudgetOutput); out.path=p; out.owner=record['owner']; out.binding=expected
-    out.limit=approved['config']['job_output_bytes']; out.used=0; out.started=time.monotonic()
+    out.limit=approved['config']['job_output_bytes']; out.used=0; out.compact=approved['config'].get('compact_output', False); out.started=time.monotonic()
     torch.set_num_threads(2); torch.set_default_dtype(torch.float32)
-    gpu = approved['config']['device'] != 'cpu' and job['arm'] != 'C_BASE'
+    gpu = approved['config']['device'] != 'cpu'
     configure_backend(approved['config'] if gpu else dict(device='cpu'))
     process_audit(out, gpu)
     execute_job(approved, job, out)
+
+
+def score_entry():
+    """CPU-only scorer; it has no model, optimizer or online-state capability."""
+    receipt = json.loads(Path(os.environ['SCREEN_RECEIPT']).read_bytes())
+    binding = receipt['binding']; root = checked_path(binding['output_dir'])
+    owner = json.loads((root / os.environ['SCREEN_JOB'] / 'owner.json').read_text())
+    approved = preflight(receipt, owned_output=owner['owner'])
+    job = next(j for j in matrix(SCOPE) if j['job_id'] == os.environ['SCREEN_JOB'])
+    path = checked_path(root / job['job_id'])
+    out = object.__new__(BudgetOutput); out.path = path; out.owner = owner['owner']; out.binding = owner['binding']
+    out.limit = approved['config']['job_output_bytes']; out.compact = approved['config'].get('compact_output', False)
+    out.used = sum(p.stat().st_size for p in (path/'predictions.bin', path/'physical_cost.jsonl') if p.exists())
+    reader = TargetReader(binding['target_root'], approved['config']['max_asset_bytes'], 'mask')
+    started = time.monotonic()
+    rows = stream(approved['registration'], job['order'])
+    posthoc(rows, reader, job['arm'], job['order'], out, lambda: resource_check(out, dict(wall_seconds=approved['config']['job_wall_seconds'], output_bytes=approved['config']['job_output_bytes']), started))
+    reader.after_check()
+    out.evidence('scoring.json', dict(status='SCORED', rows=len(rows), scorer_pid=os.getpid(), model_calls=0, label_used_posthoc_only=True))
 
 
 def readiness_entry():
