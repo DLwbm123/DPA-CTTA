@@ -696,8 +696,11 @@ def score_entry():
     """CPU-only scorer; it has no model, optimizer or online-state capability."""
     receipt = json.loads(Path(os.environ['SCREEN_RECEIPT']).read_bytes())
     binding = receipt['binding']; root = checked_path(binding['output_dir'])
+    root_owner = json.loads((root / 'owner.json').read_text())
+    if root_owner['binding'] != dict(binding_sha256=json_digest(binding)):
+        raise ValueError('root output ownership binding')
     owner = json.loads((root / os.environ['SCREEN_JOB'] / 'owner.json').read_text())
-    approved = preflight(receipt, owned_output=owner['owner'])
+    approved = preflight(receipt, owned_output=root_owner['owner'])
     job = next(j for j in matrix(SCOPE) if j['job_id'] == os.environ['SCREEN_JOB'])
     path = checked_path(root / job['job_id'])
     out = object.__new__(BudgetOutput); out.path = path; out.owner = owner['owner']; out.binding = owner['binding']
