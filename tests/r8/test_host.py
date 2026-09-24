@@ -46,7 +46,8 @@ class TestHost(unittest.TestCase):
         host = OnlineHost(segmenter, method, config, source, context)
         image = torch.rand(1, 3, 512, 512)
         with tempfile.TemporaryDirectory() as directory:
-            journal = TargetJournal(Path(directory) / "job", host, "synthetic", prediction_bytes=2)
+            journal = TargetJournal(Path(directory) / "job", host, "synthetic", "0" * 64,
+                                    prediction_bytes=2)
             journal.create()
             first, trace = host.step(image)
             journal.append(b"\x00\x01", trace)

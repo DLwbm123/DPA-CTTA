@@ -4,10 +4,12 @@ import torch
 
 from ..r7_target_screen.runner import TargetReader, image_records
 from ..r7_shared.numerics import COUNTS
+from .streams import rows_sha
 
 
 def run(host, rows, target_root, journal, max_asset_bytes, guard):
     if (not rows or journal.host is not host or journal.prediction_bytes != 65536 or
+            journal.rows_sha256 != rows_sha(rows) or
             host.visits < 0 or host.visits > len(rows) or not callable(guard) or
             journal.predictions.stat().st_size != host.visits * 65536):
         raise ValueError("R8 target online job binding")

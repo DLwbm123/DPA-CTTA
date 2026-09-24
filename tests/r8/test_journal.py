@@ -25,14 +25,14 @@ class TestJournal(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "one-job"
             host = FakeHost()
-            journal = TargetJournal(root, host, "job-1", prediction_bytes=2)
+            journal = TargetJournal(root, host, "job-1", "0" * 64, prediction_bytes=2)
             journal.create()
             for visit in range(1, 53):
                 host.visits = visit
                 journal.append(bytes([visit, visit]), {"visit": visit, "counts": {"forward": 1}})
             original = journal.predictions.read_bytes()
             spent = journal.physical.stat().st_size
-            resumed = TargetJournal(root, FakeHost(), "job-1", prediction_bytes=2)
+            resumed = TargetJournal(root, FakeHost(), "job-1", "0" * 64, prediction_bytes=2)
             self.assertEqual(resumed.recover_once(), 50)
             self.assertEqual(resumed.predictions.stat().st_size, 100)
             self.assertEqual(resumed.physical.stat().st_size, spent)

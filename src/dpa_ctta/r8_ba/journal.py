@@ -48,11 +48,32 @@ def _replace(path, data):
             temporary.unlink(missing_ok=True)
 
 
+def verify_online_complete(root, job_id, context_sha256, rows_sha256, expected_visits,
+                           prediction_bytes=65536):
+    """Verify the sealed online output without constructing a model or mask reader."""
+    root = Path(root)
+    receipt = json.loads((root / "online_complete.json").read_text())
+    identity = dict(job_id=job_id, context_sha256=context_sha256, rows_sha256=rows_sha256,
+                    prediction_bytes=prediction_bytes)
+    predictions, visits = root / "predictions.bits", root / "visits.jsonl"
+    if (receipt.get("schema") != "R8_ONLINE_COMPLETE_V1" or
+            receipt.get("identity") != identity or
+            receipt.get("visits") != expected_visits or
+            receipt.get("prediction_bytes") != expected_visits * prediction_bytes or
+            predictions.stat().st_size != receipt["prediction_bytes"] or
+            visits.stat().st_size != receipt["trace_bytes"] or
+            _digest(predictions) != receipt["prediction_sha256"] or
+            _digest(visits) != receipt["trace_sha256"]):
+        raise ValueError("R8 online completion receipt mismatch")
+    return receipt
+
+
 class TargetJournal:
-    def __init__(self, root, host, job_id, prediction_bytes=65536):
+    def __init__(self, root, host, job_id, rows_sha256, prediction_bytes=65536):
         self.root = Path(root)
         self.host = host
         self.job_id = job_id
+        self.rows_sha256 = rows_sha256
         self.prediction_bytes = prediction_bytes
         self.predictions = self.root / "predictions.bits"
         self.visits = self.root / "visits.jsonl"
@@ -60,10 +81,12 @@ class TargetJournal:
 
     def _identity(self):
         return dict(job_id=self.job_id, context_sha256=self.host.context["sha256"],
+                    rows_sha256=self.rows_sha256,
                     prediction_bytes=self.prediction_bytes)
 
     def create(self):
-        if self.host.visits != 0 or not self.job_id or self.prediction_bytes <= 0:
+        if (self.host.visits != 0 or not self.job_id or self.prediction_bytes <= 0 or
+                not isinstance(self.rows_sha256, str) or len(self.rows_sha256) != 64):
             raise ValueError("R8 journal start identity")
         self.root.mkdir(parents=True, exist_ok=False)
         for path in (self.predictions, self.visits, self.physical):
@@ -116,17 +139,8 @@ class TargetJournal:
         return receipt
 
     def verified_complete(self, expected_visits):
-        receipt = json.loads((self.root / "online_complete.json").read_text())
-        if (receipt.get("schema") != "R8_ONLINE_COMPLETE_V1" or
-                receipt.get("identity") != self._identity() or
-                receipt.get("visits") != expected_visits or
-                receipt.get("prediction_bytes") != expected_visits * self.prediction_bytes or
-                self.predictions.stat().st_size != receipt["prediction_bytes"] or
-                self.visits.stat().st_size != receipt["trace_bytes"] or
-                _digest(self.predictions) != receipt["prediction_sha256"] or
-                _digest(self.visits) != receipt["trace_sha256"]):
-            raise ValueError("R8 online completion receipt mismatch")
-        return receipt
+        return verify_online_complete(self.root, self.job_id, self.host.context["sha256"],
+                                      self.rows_sha256, expected_visits, self.prediction_bytes)
 
     def checkpoint(self):
         self.host.check_frozen(boundary=True)
