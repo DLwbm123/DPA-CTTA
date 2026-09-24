@@ -12,7 +12,8 @@ from ..r7_shared.host import Method
 from ..r7_shared.network import Segmenter
 from ..r7_shared.context import POLICY
 from ..r7_shared.numerics import (COUNTS, attention, coherence, gaussian_nll, mlp,
-                                  normalize, stable, temperature, temperature_initial, variance)
+                                  normalize, stable, temperature, temperature_initial, variance,
+                                  finite, shape)
 
 
 def film(h, v, amplitude):
@@ -54,7 +55,32 @@ class R8Segmenter(Segmenter):
         self.amplitude = amplitude
         super().__init__(model, device)
         self.inference_policy = dict(POLICY, schema="R8_SEGMENTER_POLICY_V1",
-                                     FiLM=f"up1_up3_256_each_gamma_beta_expm1_{amplitude}_tanh_v1")
+                                     FiLM=f"up1_up3_256_each_gamma_beta_expm1_{amplitude}_tanh_v1",
+                                     normalized_view="direct_pinned_C_weak_strong_float32_v1")
+
+    def normalized(self, x, v=None):
+        """Run an already normalized C weak/strong view without normalizing it twice."""
+        if self.v is not None:
+            raise RuntimeError("reentrant backbone")
+        if x.device.type != "cpu" or x.dtype != torch.float32 or x.shape != (1, 3, 512, 512):
+            raise ValueError("R8 normalized view shape/device")
+        finite(x)
+        if (x < 0).any() or (x > 1).any():
+            raise ValueError("R8 normalized view range")
+        if v is None:
+            v = x.new_zeros(1024)
+        shape(v, (1024,))
+        self.v, self.capture = v, False
+        try:
+            self.forwards += 1
+            COUNTS["backbone_forwards"] += 1
+            output = self.model(x.to(self.projection.device))
+            logits = (output[0] if isinstance(output, (tuple, list)) else output).cpu()
+            shape(logits, (1, 2, 512, 512))
+            return logits
+        finally:
+            self.v, self.capture = None, False
+            self.cache.clear()
 
     def _up1(self, module, inputs, h):
         if h.shape[1] != 256:

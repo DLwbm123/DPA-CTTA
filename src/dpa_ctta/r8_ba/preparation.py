@@ -2,6 +2,7 @@
 import torch
 
 from ..r7_shared.source import simulate
+from ..r7_shared.numerics import finite
 from .oracles import a_bases, b_bases, oracle_all
 from .schedule import anchors
 
@@ -26,3 +27,13 @@ def prepare_alpha(segmenter, data):
     b = b_bases(oracles["fit"], data)
     a, audit = a_bases(segmenter, data)
     return dict(amplitude=segmenter.amplitude, oracles=oracles, B_basis=b, A_basis=a, A_basis_audit=audit)
+
+
+def gradient_scale(fit_oracles, basis):
+    """Per-coordinate source-fit proxy RMS for the three B gradient arms."""
+    if (fit_oracles.fold != "fit" or fit_oracles.values.shape != (1024, 512) or
+            basis.ndim != 2 or basis.shape[0] != 1024 or basis.shape[1] not in (32, 64)):
+        raise ValueError("R8 gradient scale fit/rank identity")
+    zstar = basis.T.double() @ fit_oracles.values.double()
+    finite(zstar)
+    return zstar.square().mean(1).sqrt().clamp_min(1e-3)

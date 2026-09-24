@@ -5,6 +5,7 @@ import torch
 from torch import nn
 
 from dpa_ctta.r7_b_rca import correct as r7_correct
+from dpa_ctta.hosts.vptta import model_input_from_pixels
 from dpa_ctta.r8_ba.methods import CurrentMLP, R8A, R8B, R8Segmenter, correct, film
 
 
@@ -69,6 +70,8 @@ class TestR8Methods(unittest.TestCase):
         zero = segmenter(image)
         v = torch.zeros(1024, requires_grad=True)
         changed = segmenter(image, v)
+        normalized = model_input_from_pixels(image, "fundus")
+        self.assertTrue(torch.equal(changed, segmenter.normalized(normalized, v)))
         self.assertTrue(torch.equal(zero, changed))
         self.assertEqual(segmenter.inference_policy["schema"], "R8_SEGMENTER_POLICY_V1")
         self.assertGreater(torch.autograd.grad(changed.mean(), v)[0].norm().item(), 0)
