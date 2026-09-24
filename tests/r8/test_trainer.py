@@ -1,4 +1,5 @@
 import unittest
+import io
 
 import torch
 
@@ -35,6 +36,10 @@ class TestTrainer(unittest.TestCase):
         trainer = SourceTrainer(TinySegmenter(), method, data, oracles, 20260924, "synthetic")
         self.assertEqual(trainer.fit_step()["query_visits"], 8)
         snapshot = trainer.snapshot()
+        buffer = io.BytesIO()
+        torch.save(snapshot, buffer)
+        buffer.seek(0)
+        snapshot = torch.load(buffer, weights_only=True)
         expected = trainer.fit_step()
         expected_weights = {k: v.clone() for k, v in method.state_dict().items()}
         trainer.restore(snapshot)

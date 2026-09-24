@@ -1,15 +1,14 @@
 """Independent 1024-step R8 source calibration and source-val selection."""
 import copy
 import math
-import random
 
-import numpy as np
 import torch
 
 from ..r7_shared.numerics import COUNTS, finite, temperature_initial
 from ..r7_shared.source import RANGES, simulate
 from .schedule import CURRICULA, anchors, episode_roles, episode_styles, generator
-from .trainer import SAVE_STEPS
+from .trainer import SAVE_STEPS, method_config
+from .rng import capture as capture_rng, restore as restore_rng
 
 
 def calibration_styles(step, bank):
@@ -88,26 +87,22 @@ class Calibrator:
             raise ValueError("R8 calibration already frozen")
         return dict(schema="R8_SOURCE_CAL_SNAPSHOT_V1", binding=self.binding,
                     amplitude=self.segmenter.amplitude, steps=self.steps,
+                    method_config=method_config(self.method), method_digest=self.method.digest(),
                     method=copy.deepcopy(self.method.state_dict()), optimizer=copy.deepcopy(self.optimizer.state_dict()),
-                    torch_rng=torch.random.get_rng_state(),
-                    cuda_rng=torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
-                    numpy_rng=np.random.get_state(), python_rng=random.getstate(), physical_counts=dict(COUNTS))
+                    rng=capture_rng(), physical_counts=dict(COUNTS))
 
     def restore(self, snapshot):
         if (snapshot.get("schema") != "R8_SOURCE_CAL_SNAPSHOT_V1" or snapshot.get("binding") != self.binding or
                 snapshot.get("amplitude") != self.segmenter.amplitude or self.method.stage != "cal" or
+                snapshot.get("method_config") != method_config(self.method) or
                 type(snapshot.get("steps")) is not int or snapshot["steps"] not in range(1025)):
             raise ValueError("R8 calibration snapshot binding/step")
         self.method.load_state_dict(snapshot["method"], strict=True)
+        if self.method.digest() != snapshot["method_digest"]:
+            raise ValueError("R8 calibration snapshot method digest")
         self.optimizer.load_state_dict(snapshot["optimizer"])
         self.steps = snapshot["steps"]
-        torch.random.set_rng_state(snapshot["torch_rng"])
-        if snapshot["cuda_rng"] is not None:
-            if not torch.cuda.is_available():
-                raise ValueError("R8 CUDA RNG unavailable")
-            torch.cuda.set_rng_state_all(snapshot["cuda_rng"])
-        np.random.set_state(snapshot["numpy_rng"])
-        random.setstate(snapshot["python_rng"])
+        restore_rng(snapshot["rng"])
         COUNTS.clear()
         COUNTS.update(snapshot["physical_counts"])
 

@@ -1,14 +1,13 @@
 """R8 source fit: 32 visits, four 8-visit TBPTT updates per episode."""
 import copy
 import math
-import random
 
-import numpy as np
 import torch
 
 from ..r7_shared.numerics import COUNTS, finite, seg_loss
 from ..r7_shared.source import simulate
 from .schedule import anchors, episode_roles, episode_styles
+from .rng import capture as capture_rng, restore as restore_rng
 
 MAX_STEPS = 16000
 SAVE_STEPS = (1000, 4000, 8000, 12000, 16000)
@@ -24,6 +23,11 @@ def lr_at(step):
 
 def detached_state(state):
     return {k: v.detach().clone() if isinstance(v, torch.Tensor) else v for k, v in state.items()}
+
+
+def method_config(method):
+    return (type(method).__name__, method.rank, method.amplitude, method.static,
+            getattr(method, "observation", None), getattr(method, "aux_multiplier", None))
 
 
 class SourceTrainer:
@@ -96,28 +100,26 @@ class SourceTrainer:
             raise ValueError("R8 fit step outside budget")
         return dict(schema="R8_SOURCE_FIT_SNAPSHOT_V1", binding=self.binding, source_seed=self.source_seed,
                     steps=self.steps, static=self.method.static, amplitude=self.segmenter.amplitude,
+                    method_config=method_config(self.method), method_digest=self.method.digest(),
                     method=copy.deepcopy(self.method.state_dict()), optimizer=copy.deepcopy(self.optimizer.state_dict()),
-                    episode_state=detached_state(self.state), torch_rng=torch.random.get_rng_state(),
-                    cuda_rng=torch.cuda.get_rng_state_all() if torch.cuda.is_available() else None,
-                    numpy_rng=np.random.get_state(), python_rng=random.getstate(), physical_counts=dict(COUNTS))
+                    episode_state=detached_state(self.state), rng=capture_rng(), physical_counts=dict(COUNTS))
 
     def restore(self, snapshot):
         if (snapshot.get("schema") != "R8_SOURCE_FIT_SNAPSHOT_V1" or snapshot.get("binding") != self.binding or
                 snapshot.get("source_seed") != self.source_seed or snapshot.get("static") != self.method.static or
                 snapshot.get("amplitude") != self.segmenter.amplitude or
+                snapshot.get("method_config") != method_config(self.method) or
                 type(snapshot.get("steps")) is not int or snapshot["steps"] not in range(MAX_STEPS + 1)):
             raise ValueError("R8 source snapshot binding/step")
+        if snapshot["episode_state"]["counter"] != 8 * (snapshot["steps"] % 4):
+            raise ValueError("R8 source episode position mismatch")
         self.method.load_state_dict(snapshot["method"], strict=True)
+        if self.method.digest() != snapshot["method_digest"]:
+            raise ValueError("R8 source snapshot method digest")
         self.optimizer.load_state_dict(snapshot["optimizer"])
         self.method.validate_state(snapshot["episode_state"])
         self.state = detached_state(snapshot["episode_state"])
         self.steps = snapshot["steps"]
-        torch.random.set_rng_state(snapshot["torch_rng"])
-        if snapshot["cuda_rng"] is not None:
-            if not torch.cuda.is_available():
-                raise ValueError("CUDA RNG unavailable during restore")
-            torch.cuda.set_rng_state_all(snapshot["cuda_rng"])
-        np.random.set_state(snapshot["numpy_rng"])
-        random.setstate(snapshot["python_rng"])
+        restore_rng(snapshot["rng"])
         COUNTS.clear()
         COUNTS.update(snapshot["physical_counts"])

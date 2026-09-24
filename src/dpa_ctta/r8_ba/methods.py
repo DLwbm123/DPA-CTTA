@@ -1,5 +1,7 @@
 """R8 A/B parameterizations; the task graph and runner are separate."""
 import math
+import hashlib
+import json
 
 import torch
 from torch import nn
@@ -8,6 +10,7 @@ from ..r7_a_psf import gaussian_filter
 from ..r7_b_rca import energy
 from ..r7_shared.host import Method
 from ..r7_shared.network import Segmenter
+from ..r7_shared.context import POLICY
 from ..r7_shared.numerics import (COUNTS, attention, coherence, gaussian_nll, mlp,
                                   normalize, stable, temperature, temperature_initial, variance)
 
@@ -17,6 +20,11 @@ def film(h, v, amplitude):
         raise ValueError("R8 FiLM shape/amplitude")
     gamma, beta = v[:256].to(h), v[256:].to(h)
     return h + torch.expm1(amplitude * gamma.tanh())[None, :, None, None] * h + amplitude * beta.tanh()[None, :, None, None]
+
+
+def _digest(method, config):
+    payload = json.dumps(config, sort_keys=True, separators=(",", ":"), allow_nan=False).encode()
+    return hashlib.sha256(b"R8_METHOD_V1\0" + payload + bytes.fromhex(Method.digest(method))).hexdigest()
 
 
 def correct(h, o, prior, kappa, steps=5):
@@ -45,6 +53,8 @@ class R8Segmenter(Segmenter):
             raise ValueError("R8 amplitude")
         self.amplitude = amplitude
         super().__init__(model, device)
+        self.inference_policy = dict(POLICY, schema="R8_SEGMENTER_POLICY_V1",
+                                     FiLM=f"up1_up3_256_each_gamma_beta_expm1_{amplitude}_tanh_v1")
 
     def _up1(self, module, inputs, h):
         if h.shape[1] != 256:
@@ -124,6 +134,9 @@ class R8A(Method):
     def cal_loss(self, a, zstar, state):
         return gaussian_nll(zstar, state["m"], state["P"])
 
+    def digest(self):
+        return _digest(self, dict(method="R8A", rank=self.rank, amplitude=self.amplitude, static=self.static))
+
 
 class R8B(Method):
     group = "B"
@@ -193,6 +206,16 @@ class R8B(Method):
     def cal_loss(self, a, zstar, state):
         return (state["z"] - zstar).square().mean()
 
+    def assert_deployment_eta(self):
+        expected = 1 / (torch.linalg.matrix_norm(normalize(self.Hraw.detach().double(), 0), 2).square() /
+                        temperature(self.cal_raw.detach()).double().square() + 0.1)
+        if not torch.allclose(self.frozen_eta, expected, rtol=1e-10, atol=1e-12):
+            raise ValueError("R8 stored ISTA step mismatch")
+
+    def digest(self):
+        return _digest(self, dict(method="R8B", rank=self.rank, amplitude=self.amplitude,
+                                  observer=self.observation, aux_multiplier=self.aux_multiplier, static=self.static))
+
 
 class CurrentMLP(Method):
     """Matched B basis and observation with no history or proxy objective."""
@@ -225,6 +248,10 @@ class CurrentMLP(Method):
 
     def cal_loss(self, a, zstar, state):
         raise ValueError("CURRENT_MLP has no calibration")
+
+    def digest(self):
+        return _digest(self, dict(method="CURRENT_MLP", rank=self.rank, amplitude=self.amplitude,
+                                  observer=self.observation))
 
 
 def build(config, basis, static=False, seed=20260924):
