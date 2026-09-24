@@ -1,0 +1,1061 @@
+{
+  "schema": "R8_BA_PERFORMANCE_ENVELOPE_PLAN_V1",
+  "date": "2026-09-24",
+  "status": "PLAN_ONLY_NOT_IMPLEMENTED_NOT_RUN",
+  "execution_enabled": false,
+  "historical_reference": {
+    "repository": "DLwbm123/DPA-CTTA",
+    "publication_sha": "f4adb85434e5ef36faecc1109f907d7a2f29d17f",
+    "r7_execution_sha": "c1763d00f4f29de1c168ccd75219199667478825",
+    "preserve_all_R7_files_and_failures": true
+  },
+  "new_scope": {
+    "suggested_branch": "experiment/r8-ba-performance-envelope-v1",
+    "old_authorization_reusable": false,
+    "old_job_resume_allowed": false,
+    "automatic_scientific_success_claim": false
+  },
+  "required_runtime_binding": {
+    "new_code_sha": null,
+    "source_checkpoint_sha256": null,
+    "source_inventory_sha256": null,
+    "source_split_sha256": null,
+    "target_registration_sha256": null,
+    "target_order_manifests_sha256": null,
+    "environment_lock_sha256": null,
+    "GPU_UUIDs": null,
+    "output_root": null,
+    "execution_authorization": null,
+    "external_review_status": "UNRESOLVED_NOT_PASS"
+  },
+  "priority": {
+    "primary_route": "B",
+    "secondary_route": "A",
+    "C": "R7_FULL_STATIC_FROZEN_CONTROL_ONLY"
+  },
+  "data": {
+    "task": "fundus",
+    "grid": [
+      512,
+      512
+    ],
+    "channels": [
+      "OD",
+      "OC"
+    ],
+    "source_checkpoint": "same registered RIM_ONE_r3 checkpoint",
+    "source_backbone_retraining": false,
+    "adapt_arrivals_per_standard_trajectory": 1951,
+    "primary_scored_contents": 1695,
+    "orders": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "primary_orders": [
+      0,
+      1
+    ],
+    "extension_orders": [
+      2,
+      3
+    ],
+    "recurrence_order": 4,
+    "source_split": "preserve existing verified fit/cal/val groups; no reshuffle",
+    "target_labels_in_online_API": false,
+    "target_labels_in_model_selection": false,
+    "new_unseen_subjects_available": "NOT_ESTABLISHED",
+    "sealed_final_data_access": false,
+    "physical_backbone_batch_size": 1,
+    "batch_rule": "Do not batch multiple support/query/target images into one current-statistics BN forward; aggregate losses across separate batch1 forwards."
+  },
+  "source_preparation": {
+    "seed": 20260924,
+    "style_anchors": {
+      "fit": 512,
+      "cal": 128,
+      "val": 128
+    },
+    "style_operations_and_ranges": "R7_PHOTOMETRIC_V1 unchanged; source-only keyed RNG, no target donors",
+    "identity_anchor_index": 0,
+    "nonidentity_active_factors": {
+      "fit": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "cal": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "val": {
+        "anchor0": "identity",
+        "anchors1_to63": "alternate1_and2",
+        "anchors64_to127": "alternate5_and6"
+      }
+    },
+    "alphas": [
+      0.1,
+      0.3
+    ],
+    "oracle": {
+      "support_groups": 2,
+      "query_groups": 2,
+      "support_query_disjoint": true,
+      "steps": 256,
+      "record_steps": [
+        16,
+        64,
+        256
+      ],
+      "optimizer": "Adam",
+      "lr": 0.03,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.0,
+      "objective": "mean_support_Lseg + 1e-3*mean(v^2)",
+      "fit_only_for_basis": true,
+      "nominal_oracle_forwards": 786432,
+      "nominal_oracle_backward_and_Adam_each": 393216
+    },
+    "B_basis": "alpha-specific uncentered fit-oracle SVD; nested rank32/rank64; no rank padding",
+    "A_basis": "alpha-specific R7 predictive covariance construction; nested rank16/rank32; float64 precision and full covariance; 2048 basis VJPs across two alphas",
+    "latent_capacity_probe": {
+      "val_anchors": 64,
+      "alphas": [
+        0.1,
+        0.3
+      ],
+      "spaces": [
+        "A16",
+        "A32",
+        "B32",
+        "B64"
+      ],
+      "direct_latent_steps": 128,
+      "support_groups": 2,
+      "query_groups": 2,
+      "nominal_extra_forwards": 131072,
+      "nominal_extra_backward_and_Adam_each": 65536,
+      "no_target_label_oracle": true,
+      "val_anchor_selection": "first32 mild plus first32 compound"
+    }
+  },
+  "configs": [
+    {
+      "id": "B_compact_global_aux1p0",
+      "route": "B",
+      "rank": 32,
+      "film_amplitude": 0.1,
+      "observer": "global",
+      "aux_multiplier": 1.0,
+      "ista_steps": 5,
+      "observation_dim": 64
+    },
+    {
+      "id": "B_compact_global_aux0p1",
+      "route": "B",
+      "rank": 32,
+      "film_amplitude": 0.1,
+      "observer": "global",
+      "aux_multiplier": 0.1,
+      "ista_steps": 5,
+      "observation_dim": 64
+    },
+    {
+      "id": "B_compact_current_tokens_aux1p0",
+      "route": "B",
+      "rank": 32,
+      "film_amplitude": 0.1,
+      "observer": "current_tokens",
+      "aux_multiplier": 1.0,
+      "ista_steps": 5,
+      "observation_dim": 64
+    },
+    {
+      "id": "B_compact_current_tokens_aux0p1",
+      "route": "B",
+      "rank": 32,
+      "film_amplitude": 0.1,
+      "observer": "current_tokens",
+      "aux_multiplier": 0.1,
+      "ista_steps": 5,
+      "observation_dim": 64
+    },
+    {
+      "id": "B_expanded_global_aux1p0",
+      "route": "B",
+      "rank": 64,
+      "film_amplitude": 0.3,
+      "observer": "global",
+      "aux_multiplier": 1.0,
+      "ista_steps": 5,
+      "observation_dim": 64
+    },
+    {
+      "id": "B_expanded_global_aux0p1",
+      "route": "B",
+      "rank": 64,
+      "film_amplitude": 0.3,
+      "observer": "global",
+      "aux_multiplier": 0.1,
+      "ista_steps": 5,
+      "observation_dim": 64
+    },
+    {
+      "id": "B_expanded_current_tokens_aux1p0",
+      "route": "B",
+      "rank": 64,
+      "film_amplitude": 0.3,
+      "observer": "current_tokens",
+      "aux_multiplier": 1.0,
+      "ista_steps": 5,
+      "observation_dim": 64
+    },
+    {
+      "id": "B_expanded_current_tokens_aux0p1",
+      "route": "B",
+      "rank": 64,
+      "film_amplitude": 0.3,
+      "observer": "current_tokens",
+      "aux_multiplier": 0.1,
+      "ista_steps": 5,
+      "observation_dim": 64
+    },
+    {
+      "id": "A_r16_a0p1",
+      "route": "A",
+      "rank": 16,
+      "film_amplitude": 0.1,
+      "observer": "R7_dual_codebook",
+      "aux_multiplier": 1.0,
+      "full_covariance": true
+    },
+    {
+      "id": "A_r16_a0p3",
+      "route": "A",
+      "rank": 16,
+      "film_amplitude": 0.3,
+      "observer": "R7_dual_codebook",
+      "aux_multiplier": 1.0,
+      "full_covariance": true
+    },
+    {
+      "id": "A_r32_a0p1",
+      "route": "A",
+      "rank": 32,
+      "film_amplitude": 0.1,
+      "observer": "R7_dual_codebook",
+      "aux_multiplier": 1.0,
+      "full_covariance": true
+    },
+    {
+      "id": "A_r32_a0p3",
+      "route": "A",
+      "rank": 32,
+      "film_amplitude": 0.3,
+      "observer": "R7_dual_codebook",
+      "aux_multiplier": 1.0,
+      "full_covariance": true
+    }
+  ],
+  "source_fit": {
+    "discovery_seeds": [
+      20260924,
+      20260925
+    ],
+    "additional_finalist_seeds": [
+      20260926,
+      20260927,
+      20260928
+    ],
+    "modes": [
+      "FULL",
+      "STATIC"
+    ],
+    "steps": 16000,
+    "checkpoints": [
+      1000,
+      4000,
+      8000,
+      12000,
+      16000
+    ],
+    "selection_checkpoint": "source-only selection among saved checkpoints; complete16000 steps regardless",
+    "optimizer": {
+      "name": "AdamW",
+      "lr": 0.0003,
+      "weight_decay": 0.0001,
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "grad_clip_global_norm": 1.0,
+      "scheduler": "linear warmup 200 steps; cosine decay to 3e-5 at step16000",
+      "scheduler_exact": "for t=1..200, lr=3e-4*t/200; t=201..16000, lr=3e-5 + 0.5*(3e-4-3e-5)*(1+cos(pi*(t-200)/15800))"
+    },
+    "macroepisode_visits": 32,
+    "TBPTT_chunk_visits": 8,
+    "optimizer_steps_per_macroepisode": 4,
+    "truncation": "detach state, never zero FULL state, at chunk boundary; reset at macroepisode boundary",
+    "curricula": [
+      "abrupt_16_16",
+      "gradual_32_nearest_without_replacement",
+      "recurrence_8_8_8_8",
+      "iid_style_32"
+    ],
+    "curriculum_selection": "macroepisode_index modulo 4",
+    "per_visit": "clean support observer + styled support observer + same-style different-group query; query never commits episode state",
+    "style_and_role_schedule_matched_between_FULL_STATIC": true,
+    "gradient_only_through_new_modules": true,
+    "early_stopping_by_performance": false,
+    "source_val": {
+      "episodes": 64,
+      "visits_per_episode": 32,
+      "compare_each_saved_checkpoint_without_calibration": true,
+      "final_selection_uses_calibrated_step16000": false,
+      "selection_uses_calibrated_saved_checkpoints": true,
+      "main_target_grid_does_not_evaluate_every_checkpoint": true,
+      "episodes_per_curriculum": {
+        "clean": 4,
+        "mild": 6,
+        "compound": 6
+      }
+    },
+    "calibration": {
+      "steps": 1024,
+      "batch_supports": 4,
+      "optimizer": "Adam",
+      "lr": 0.001,
+      "A": "single R temperature, R7 bounded parameterization",
+      "B": "single kappa; ISTA energy and step size updated consistently",
+      "task_modules_frozen": true,
+      "independent_per_saved_checkpoint": true,
+      "snapshot_count_per_route_model": 5,
+      "restart_calibration_from_fixed_initialization_each_snapshot": true
+    }
+  },
+  "source_only_selection": {
+    "routes_selected": 2,
+    "configs_per_route": 1,
+    "minimum_valid_discovery_seeds": 2,
+    "score": "For each curriculum, average Dice over first two seeds and16val episodes (4clean,6mild,6compound). Score=.5*mean_of_four_curriculum_means+.5*minimum_of_four_curriculum_means.",
+    "tie_tolerance_Dice": 1e-06,
+    "tie_breakers": [
+      "lower recorded source+online cost estimate",
+      "lexicographic config_id"
+    ],
+    "select_using_FULL_only": true,
+    "STATIC_follows_same_config": true,
+    "negative_scores_do_not_cancel_selection": true,
+    "no_target_scoring_until_selection_and_all_finalist_training_locked": true,
+    "family_with_no_two_seed_valid_config": "mark family unavailable; no new replacement config; continue independent family",
+    "per_config_checkpoint_selection": "choose a common checkpoint per config/mode using mean source-val score of first two seeds; FULL and STATIC each have their own source-selected checkpoint",
+    "STATIC_checkpoint": "independently source-selected checkpoint within that same config, not forced to the FULL checkpoint",
+    "additional_seeds": "train to16000; deploy the source-selected checkpoint index fixed by first two seeds, separately per mode",
+    "best_STATIC_across_configs": "report as a two-seed diagnostic only; no new five-seed training branch is opened"
+  },
+  "current_MLP": {
+    "training_jobs": 5,
+    "fits_steps": 16000,
+    "rank_amplitude_observer": "matched to source-selected B config",
+    "definition": "same current observer input u; MLP u->64 GELU->rank; no history, H, ISTA, or proxy auxiliary loss",
+    "loss": "query Lseg only",
+    "backbone_and_basis_frozen": true,
+    "calibration": "none",
+    "checkpoint_selection": "source-only common step from first two seeds; all five still train to16000"
+  },
+  "target": {
+    "seed_pairing": [
+      {
+        "source_seed": 20260924,
+        "target_seed": 20260907
+      },
+      {
+        "source_seed": 20260925,
+        "target_seed": 20260908
+      },
+      {
+        "source_seed": 20260926,
+        "target_seed": 20260909
+      },
+      {
+        "source_seed": 20260927,
+        "target_seed": 20260910
+      },
+      {
+        "source_seed": 20260928,
+        "target_seed": 20260911
+      }
+    ],
+    "all_grid_final_models_evaluated": false,
+    "all_standard_orders": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "baseline_stochastic": [
+      "VPTTA_NATIVE",
+      "C_CTTA_FIXED_LR",
+      "G_CTTA_RELEASE_TRANSFER"
+    ],
+    "baseline_deterministic": [
+      "N_SOURCE_EVAL",
+      "C0_CURRENT_STATS"
+    ],
+    "frozen_controls": [
+      "R7_C_FULL",
+      "R7_C_STATIC"
+    ],
+    "deterministic_controls": "one physical job per order; logical seed references are not independent repeats",
+    "paired_content_evaluator": "reuse unchanged metric definition and post-prediction label isolation",
+    "missing_baseline_result": "do not fill with paper scores or another checkpoint",
+    "all_grid_source_selected_models_evaluated": true,
+    "source_preparation_shared_across_seeds": true
+  },
+  "B_gradient_diagnostics": {
+    "arms": [
+      "B_G1",
+      "B_G3",
+      "COLD_G3"
+    ],
+    "selected_B_checkpoint_only": true,
+    "online_weight_updates": false,
+    "online_latent_autograd": true,
+    "initial_state": {
+      "B_G1": "RCA proposal",
+      "B_G3": "RCA proposal",
+      "COLD_G3": "zero each visit; no history"
+    },
+    "teacher": "six aligned weak views at zero FiLM/current-statistics frozen source model; stop-grad sigmoid average; reuse zero observation original view",
+    "strong_view": "one official pinned C RGB strong-appearance transform per visit, fixed across steps, no geometry mismatch",
+    "loss": "BCEWithLogits(strong_logits, stopped_soft_target) + 0.01*mean((u-u_initial)^2)",
+    "u": "z / clamp(sqrt(fit_mean(z_star^2)),min=1e-3); no centering",
+    "optimizer": "Adam on u only, lr selected on source-cal, betas=.9/.999 eps=1e-8 wd=0; reset moments each visit",
+    "lr_candidates": [
+      0.001,
+      0.01,
+      0.1
+    ],
+    "lr_selection": "64 fixed four-visit source-cal episodes per lr/arm; query segmentation criterion; no model gradient from query labels; choose globally per arm over first two seeds, ties lower lr",
+    "commit": "corrected z becomes next-state only in B_G1/G3; COLD_G3 commits no adaptive state",
+    "gradient_steps": {
+      "B_G1": 1,
+      "B_G3": 3,
+      "COLD_G3": 3
+    },
+    "nominal_model_F_B_Adam_per_visit": {
+      "B_G1": [
+        8,
+        1,
+        1
+      ],
+      "B_G3": [
+        10,
+        3,
+        3
+      ],
+      "COLD_G3": [
+        10,
+        3,
+        3
+      ]
+    },
+    "mandatory_name_suffix": "GRADIENT_ENABLED_NOT_ZERO_BACKWARD"
+  },
+  "same_weight_ablations": {
+    "B": [
+      "RESET_HISTORY",
+      "PRED_ONLY",
+      "ISTA_20"
+    ],
+    "A": [
+      "RESET_HISTORY",
+      "ISOTROPIC_R"
+    ],
+    "seeds": 5,
+    "orders": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "retraining": false,
+    "no_claim_best_retrained_alternative": true
+  },
+  "stress": {
+    "stochastic_or_seed_bound_arms": [
+      "VPTTA_NATIVE",
+      "C_CTTA_FIXED_LR",
+      "G_CTTA_RELEASE_TRANSFER",
+      "CURRENT_MLP",
+      "B_FULL",
+      "B_STATIC",
+      "A_FULL",
+      "A_STATIC",
+      "B_G1",
+      "B_G3"
+    ],
+    "deterministic_arms": [
+      "N_SOURCE_EVAL",
+      "C0_CURRENT_STATS"
+    ],
+    "seeds": 5,
+    "streams": {
+      "MIXED": "single keyed permutation of all1951 arrival IDs, frozen before execution",
+      "LONG10": "existing order0 repeated10 times;19510 arrivals, no between-cycle reset"
+    },
+    "labels": "new trajectories not new subjects; do not call iid/shuffle a real clinical process",
+    "score_all_cycles": true,
+    "scored_records_per_full_long_trajectory": 16950
+  },
+  "optional_external_baselines": {
+    "names": [
+      "MGIPT",
+      "PEOA_CTA",
+      "SPEGC"
+    ],
+    "default_enabled": false,
+    "max_jobs": 75,
+    "qualify_before_launch_only": true,
+    "prerequisites": [
+      "accessible pinned original implementation",
+      "same registered checkpoint or explicit different-backbone separate track",
+      "correct causal state lifecycle",
+      "matching OD_OC metrics and full manifest",
+      "all documented compatibility repairs pinned"
+    ],
+    "no_midrun_new_reproduction_project": true
+  },
+  "statistics": {
+    "primary": "mean across OD/OC, then equal four domains, then equal orders0/1, then equal five seeds for selected methods",
+    "discovery": "report two-seed grid separately from five-seed selected results",
+    "additional": "orders2/3 mean separately; order4 separately; stress each cycle; per-domain/channel; paired negative fraction, median, q05, bottom10percent mean, ASSD common_valid/undefined",
+    "seed_dispersion": "paired mean differences; do not count source/target seeds as new patients",
+    "bootstrap": "optional descriptive cluster bootstrap at known subject or otherwise content group; same resampling across arms/orders/seeds; cannot account for rerun-history counterfactuals; not fresh clinical confirmation",
+    "posthoc_envelope": "max over12 fixed configs at source-selected checkpoints and all predeclared gradient arms; observed development envelope only, not all-checkpoint oracle selection",
+    "seed_scope": "five new-module initialization/training seeds; one source backbone checkpoint, split, oracle and basis per amplitude; not five independent source-model or subject samples"
+  },
+  "resource_proposal": {
+    "max_workers": 4,
+    "workers_per_GPU": 1,
+    "aggregate_allocated_GPU_hours_cap": 1024,
+    "GPU_hour_definition": "sum of actually allocated devices times allocated worker duration; includes score/IO waiting while GPU reserved",
+    "wall_time_estimate": "NOT_MEASURED",
+    "disk_GiB_cap": 200,
+    "model_forward_calls_cap": 100000000,
+    "backward_calls_cap": 4000000,
+    "optimizer_steps_cap": 4000000,
+    "VJP_calls_cap": 50000,
+    "target_JVP_VJP_excluding_explicit_latent_backward": 0,
+    "profiling_rule": "before formal launch, measure slowest profile, conservatively sum queue cost and IO with1.3 safety factor; reject insufficient resources, never silently reduce registered matrix",
+    "cache": "source zero-FiLM raw d/E or clean features only, content/style/noise/checkpoint/preprocess hashed; no query-modulated caches, no target future cache",
+    "activation_checkpointing": "may use only with parity tests; all recomputed model forwards counted; no silent AMP"
+  },
+  "failure_resume": {
+    "old_R7_resume": false,
+    "new_source_checkpoint_interval_steps": 250,
+    "new_target_checkpoint_interval_committed_visits": 50,
+    "infrastructure_resume_max_per_job": 1,
+    "resume_requires": "new R8 scope, identical code/data/precision/device-class binding, full state and RNG/optimizer/counters, atomic committed-output offset and roundtrip equivalence",
+    "unsupported_resume": "mark job partial, do not fake continuity or restart with fresh state",
+    "numerical_failure": "stop affected job, retain failure and all cost; independent queued jobs may continue under new authorization",
+    "global_stop": [
+      "label isolation breach",
+      "content/split/checkpoint identity mismatch",
+      "shared code corruption",
+      "resource cap reached"
+    ],
+    "no_performance_based_stop": true,
+    "no_silent_ridge_lr_seed_amplitude_changes": true
+  },
+  "counts": {
+    "source_grid_training_jobs": 48,
+    "source_finalist_additional_training_jobs": 12,
+    "source_current_mlp_training_jobs": 5,
+    "source_training_jobs_total": 65,
+    "fit_optimizer_steps": 1040000,
+    "fit_query_visits": 8320000,
+    "fit_logical_forwards_no_cache_no_recompute_upper": 24960000,
+    "route_calibration_steps": 307200,
+    "target_grid_jobs": 240,
+    "target_finalist_additional_jobs": 60,
+    "target_current_mlp_jobs": 25,
+    "target_baseline_stochastic_jobs": 75,
+    "target_baseline_deterministic_jobs": 10,
+    "target_frozen_R7_C_jobs": 10,
+    "target_B_gradient_diagnostic_jobs": 75,
+    "target_same_weight_ablations_jobs": 125,
+    "target_stress_jobs": 104,
+    "optional_external_baseline_jobs_max": 75,
+    "target_standard_jobs_total": 620,
+    "target_jobs_total": 724,
+    "target_standard_arrivals": 1209620,
+    "target_stress_arrivals": 1115972,
+    "target_arrivals_total": 2325592,
+    "route_calibration_logical_forwards": 1228800,
+    "target_jobs_including_optional_max": 799,
+    "target_arrivals_including_optional_max": 2471917
+  },
+  "known_initial_source_jobs": [
+    {
+      "id": "SOURCE_B_compact_global_aux1p0_FULL_20260924",
+      "config_id": "B_compact_global_aux1p0",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_global_aux1p0_FULL_20260925",
+      "config_id": "B_compact_global_aux1p0",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_global_aux1p0_STATIC_20260924",
+      "config_id": "B_compact_global_aux1p0",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_global_aux1p0_STATIC_20260925",
+      "config_id": "B_compact_global_aux1p0",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_global_aux0p1_FULL_20260924",
+      "config_id": "B_compact_global_aux0p1",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_global_aux0p1_FULL_20260925",
+      "config_id": "B_compact_global_aux0p1",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_global_aux0p1_STATIC_20260924",
+      "config_id": "B_compact_global_aux0p1",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_global_aux0p1_STATIC_20260925",
+      "config_id": "B_compact_global_aux0p1",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_current_tokens_aux1p0_FULL_20260924",
+      "config_id": "B_compact_current_tokens_aux1p0",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_current_tokens_aux1p0_FULL_20260925",
+      "config_id": "B_compact_current_tokens_aux1p0",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_current_tokens_aux1p0_STATIC_20260924",
+      "config_id": "B_compact_current_tokens_aux1p0",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_current_tokens_aux1p0_STATIC_20260925",
+      "config_id": "B_compact_current_tokens_aux1p0",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_current_tokens_aux0p1_FULL_20260924",
+      "config_id": "B_compact_current_tokens_aux0p1",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_current_tokens_aux0p1_FULL_20260925",
+      "config_id": "B_compact_current_tokens_aux0p1",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_current_tokens_aux0p1_STATIC_20260924",
+      "config_id": "B_compact_current_tokens_aux0p1",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_compact_current_tokens_aux0p1_STATIC_20260925",
+      "config_id": "B_compact_current_tokens_aux0p1",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_global_aux1p0_FULL_20260924",
+      "config_id": "B_expanded_global_aux1p0",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_global_aux1p0_FULL_20260925",
+      "config_id": "B_expanded_global_aux1p0",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_global_aux1p0_STATIC_20260924",
+      "config_id": "B_expanded_global_aux1p0",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_global_aux1p0_STATIC_20260925",
+      "config_id": "B_expanded_global_aux1p0",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_global_aux0p1_FULL_20260924",
+      "config_id": "B_expanded_global_aux0p1",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_global_aux0p1_FULL_20260925",
+      "config_id": "B_expanded_global_aux0p1",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_global_aux0p1_STATIC_20260924",
+      "config_id": "B_expanded_global_aux0p1",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_global_aux0p1_STATIC_20260925",
+      "config_id": "B_expanded_global_aux0p1",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_current_tokens_aux1p0_FULL_20260924",
+      "config_id": "B_expanded_current_tokens_aux1p0",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_current_tokens_aux1p0_FULL_20260925",
+      "config_id": "B_expanded_current_tokens_aux1p0",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_current_tokens_aux1p0_STATIC_20260924",
+      "config_id": "B_expanded_current_tokens_aux1p0",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_current_tokens_aux1p0_STATIC_20260925",
+      "config_id": "B_expanded_current_tokens_aux1p0",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_current_tokens_aux0p1_FULL_20260924",
+      "config_id": "B_expanded_current_tokens_aux0p1",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_current_tokens_aux0p1_FULL_20260925",
+      "config_id": "B_expanded_current_tokens_aux0p1",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_current_tokens_aux0p1_STATIC_20260924",
+      "config_id": "B_expanded_current_tokens_aux0p1",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_B_expanded_current_tokens_aux0p1_STATIC_20260925",
+      "config_id": "B_expanded_current_tokens_aux0p1",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r16_a0p1_FULL_20260924",
+      "config_id": "A_r16_a0p1",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r16_a0p1_FULL_20260925",
+      "config_id": "A_r16_a0p1",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r16_a0p1_STATIC_20260924",
+      "config_id": "A_r16_a0p1",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r16_a0p1_STATIC_20260925",
+      "config_id": "A_r16_a0p1",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r16_a0p3_FULL_20260924",
+      "config_id": "A_r16_a0p3",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r16_a0p3_FULL_20260925",
+      "config_id": "A_r16_a0p3",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r16_a0p3_STATIC_20260924",
+      "config_id": "A_r16_a0p3",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r16_a0p3_STATIC_20260925",
+      "config_id": "A_r16_a0p3",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r32_a0p1_FULL_20260924",
+      "config_id": "A_r32_a0p1",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r32_a0p1_FULL_20260925",
+      "config_id": "A_r32_a0p1",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r32_a0p1_STATIC_20260924",
+      "config_id": "A_r32_a0p1",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r32_a0p1_STATIC_20260925",
+      "config_id": "A_r32_a0p1",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r32_a0p3_FULL_20260924",
+      "config_id": "A_r32_a0p3",
+      "mode": "FULL",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r32_a0p3_FULL_20260925",
+      "config_id": "A_r32_a0p3",
+      "mode": "FULL",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r32_a0p3_STATIC_20260924",
+      "config_id": "A_r32_a0p3",
+      "mode": "STATIC",
+      "source_seed": 20260924,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    },
+    {
+      "id": "SOURCE_A_r32_a0p3_STATIC_20260925",
+      "config_id": "A_r32_a0p3",
+      "mode": "STATIC",
+      "source_seed": 20260925,
+      "fit_steps": 16000,
+      "calibration_steps_per_checkpoint": 1024,
+      "calibration_checkpoint_count": 5
+    }
+  ],
+  "deliverables": [
+    "BASELINE_PARITY.md",
+    "SOURCE_CAPACITY_REPORT.md",
+    "ALL_CONFIGS.csv",
+    "SOURCE_SELECTED_CONFIGS.json",
+    "PRIMARY_RESULTS.csv",
+    "PAIRWISE_TAILS.csv",
+    "CALIBRATION_DIAGNOSTICS.csv",
+    "B_GRADIENT_DIAGNOSTICS.csv",
+    "STRESS_CURVES.csv",
+    "COST_LEDGER.jsonl",
+    "FAILURES.jsonl",
+    "FINAL_REPORT.md"
+  ],
+  "not_provided": "No runnable training runner or deployed implementation is included. This JSON is an experimental design, not a ready-to-launch config."
+}

@@ -1,0 +1,43 @@
+{
+  "status": "STATIC_PLAN_ARITHMETIC_AND_CONSISTENCY_CHECK_ONLY",
+  "checks": {
+    "configs12": true,
+    "B8_A4": true,
+    "source_job_ids_unique": true,
+    "training65": true,
+    "target724": true,
+    "arrivals2325592": true,
+    "calibration307200": true,
+    "no_live_execution": true,
+    "five_val_snapshots": true
+  },
+  "counts": {
+    "source_grid_training_jobs": 48,
+    "source_finalist_additional_training_jobs": 12,
+    "source_current_mlp_training_jobs": 5,
+    "source_training_jobs_total": 65,
+    "fit_optimizer_steps": 1040000,
+    "fit_query_visits": 8320000,
+    "fit_logical_forwards_no_cache_no_recompute_upper": 24960000,
+    "route_calibration_steps": 307200,
+    "target_grid_jobs": 240,
+    "target_finalist_additional_jobs": 60,
+    "target_current_mlp_jobs": 25,
+    "target_baseline_stochastic_jobs": 75,
+    "target_baseline_deterministic_jobs": 10,
+    "target_frozen_R7_C_jobs": 10,
+    "target_B_gradient_diagnostic_jobs": 75,
+    "target_same_weight_ablations_jobs": 125,
+    "target_stress_jobs": 104,
+    "optional_external_baseline_jobs_max": 75,
+    "target_standard_jobs_total": 620,
+    "target_jobs_total": 724,
+    "target_standard_arrivals": 1209620,
+    "target_stress_arrivals": 1115972,
+    "target_arrivals_total": 2325592,
+    "route_calibration_logical_forwards": 1228800,
+    "target_jobs_including_optional_max": 799,
+    "target_arrivals_including_optional_max": 2471917
+  },
+  "no_training_or_model_run": true
+}
