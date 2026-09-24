@@ -1,10 +1,13 @@
 import unittest
 import io
+import tempfile
+from pathlib import Path
 
 import torch
 
 from dpa_ctta.r7_shared.source import Record, SourceData
 from dpa_ctta.r8_ba.methods import R8B
+from dpa_ctta.r8_ba.journal import SourceJournal
 from dpa_ctta.r8_ba.oracles import Oracles
 from dpa_ctta.r8_ba.trainer import SourceTrainer, lr_at
 
@@ -34,7 +37,14 @@ class TestTrainer(unittest.TestCase):
         method = R8B(torch.eye(1024, dtype=torch.float64)[:, :32], 0.1)
         method.observer.fit_scaler(torch.randn(4, 134), "fit")
         trainer = SourceTrainer(TinySegmenter(), method, data, oracles, 20260924, "synthetic")
-        self.assertEqual(trainer.fit_step()["query_visits"], 8)
+        with tempfile.TemporaryDirectory() as directory:
+            journal = SourceJournal(Path(directory) / "job", trainer)
+            journal.create()
+            first = trainer.fit_step()
+            journal.append(first)
+            self.assertEqual(journal.recover_once(), 0)
+            self.assertEqual(first, trainer.fit_step())
+        self.assertEqual(first["query_visits"], 8)
         snapshot = trainer.snapshot()
         buffer = io.BytesIO()
         torch.save(snapshot, buffer)

@@ -1,10 +1,13 @@
 import unittest
+import tempfile
+from pathlib import Path
 
 import torch
 from torch import nn
 
 from dpa_ctta.r8_ba.context import SOURCE_KEYS, capture
 from dpa_ctta.r8_ba.host import OnlineHost
+from dpa_ctta.r8_ba.journal import TargetJournal
 from dpa_ctta.r8_ba.methods import R8B, R8Segmenter
 
 
@@ -42,7 +45,14 @@ class TestHost(unittest.TestCase):
             method.frozen_eta.copy_(eta)
         host = OnlineHost(segmenter, method, config, source, context)
         image = torch.rand(1, 3, 512, 512)
-        first, trace = host.step(image)
+        with tempfile.TemporaryDirectory() as directory:
+            journal = TargetJournal(Path(directory) / "job", host, "synthetic", prediction_bytes=2)
+            journal.create()
+            first, trace = host.step(image)
+            journal.append(b"\x00\x01", trace)
+            self.assertEqual(journal.recover_once(), 0)
+            replay_first, _ = host.step(image)
+            self.assertTrue(torch.equal(first, replay_first))
         self.assertEqual(trace["visit"], 1)
         self.assertEqual(trace["counts"]["backbone_forwards"], 2)
         snapshot = host.snapshot()
