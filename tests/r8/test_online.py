@@ -76,6 +76,7 @@ class TestOnline(unittest.TestCase):
                 result = run(host, rows, directory, journal, 1024, lambda: checks.append(True))
             self.assertEqual(result["visits"], 2)
             self.assertEqual(result["prediction_bytes"], 2 * 65536)
+            self.assertEqual(journal.verified_complete(2), result)
             self.assertEqual(len(checks), 4)
             self.assertEqual(FakeReader.seen, [{"image_path", "image_sha256", "image_size"}] * 2)
 

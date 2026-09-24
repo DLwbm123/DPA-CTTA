@@ -44,6 +44,4 @@ def run(host, rows, target_root, journal, max_asset_bytes, guard):
                 first = exc
     if first is not None:
         raise first
-    return dict(schema="R8_ONLINE_COMPLETE_V1", job_id=journal.job_id,
-                context_sha256=host.context["sha256"], visits=host.visits,
-                prediction_bytes=journal.predictions.stat().st_size)
+    return journal.complete(len(rows))

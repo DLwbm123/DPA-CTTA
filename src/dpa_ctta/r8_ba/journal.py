@@ -101,6 +101,33 @@ class TargetJournal:
             stream.flush()
             os.fsync(stream.fileno())
 
+    def complete(self, expected_visits):
+        if (self.host.visits != expected_visits or
+                self.predictions.stat().st_size != expected_visits * self.prediction_bytes or
+                (self.root / "online_complete.json").exists()):
+            raise ValueError("R8 target completion offset")
+        self.host.check_frozen(boundary=True)
+        receipt = dict(schema="R8_ONLINE_COMPLETE_V1", identity=self._identity(),
+                       visits=expected_visits, prediction_bytes=self.predictions.stat().st_size,
+                       prediction_sha256=_digest(self.predictions),
+                       trace_bytes=self.visits.stat().st_size,
+                       trace_sha256=_digest(self.visits))
+        _replace(self.root / "online_complete.json", json.dumps(receipt, sort_keys=True).encode())
+        return receipt
+
+    def verified_complete(self, expected_visits):
+        receipt = json.loads((self.root / "online_complete.json").read_text())
+        if (receipt.get("schema") != "R8_ONLINE_COMPLETE_V1" or
+                receipt.get("identity") != self._identity() or
+                receipt.get("visits") != expected_visits or
+                receipt.get("prediction_bytes") != expected_visits * self.prediction_bytes or
+                self.predictions.stat().st_size != receipt["prediction_bytes"] or
+                self.visits.stat().st_size != receipt["trace_bytes"] or
+                _digest(self.predictions) != receipt["prediction_sha256"] or
+                _digest(self.visits) != receipt["trace_sha256"]):
+            raise ValueError("R8 online completion receipt mismatch")
+        return receipt
+
     def checkpoint(self):
         self.host.check_frozen(boundary=True)
         visits = self.host.visits
