@@ -93,6 +93,14 @@ class TargetJournal:
         if self.host.visits % 50 == 0:
             self.checkpoint()
 
+    def record_failed_call(self, visit, counts, error):
+        record = dict(status="FAILED_CALL", visit=visit, counts=counts,
+                      error_type=type(error).__name__, error=str(error)[:3000])
+        with self.physical.open("ab") as stream:
+            stream.write((json.dumps(record, sort_keys=True, allow_nan=False) + "\n").encode())
+            stream.flush()
+            os.fsync(stream.fileno())
+
     def checkpoint(self):
         self.host.check_frozen(boundary=True)
         visits = self.host.visits
