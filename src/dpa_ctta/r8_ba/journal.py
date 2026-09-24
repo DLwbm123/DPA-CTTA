@@ -9,6 +9,7 @@ from pathlib import Path
 import torch
 
 from ..r7_shared.numerics import COUNTS
+from .trainer import SAVE_STEPS
 
 
 def _digest(path, size=None):
@@ -257,6 +258,39 @@ class SourceJournal:
         _replace(self.root / f"checkpoint.{slot}.pt", data)
         _replace(self.root / f"checkpoint.{slot}.json", json.dumps(
             dict(sha256=hashlib.sha256(data).hexdigest(), steps=steps), sort_keys=True).encode())
+        if steps in SAVE_STEPS:
+            self._archive_selected(steps, data)
+
+    def _archive_selected(self, steps, data):
+        selected = self.root / f"selected.{steps}.pt"
+        metadata = self.root / f"selected.{steps}.json"
+        expected = dict(sha256=hashlib.sha256(data).hexdigest(), steps=steps)
+        if selected.exists() or metadata.exists():
+            if not selected.is_file() or _digest(selected) != expected["sha256"]:
+                raise ValueError("R8 selected source snapshot changed")
+            if metadata.exists() and json.loads(metadata.read_text()) != expected:
+                raise ValueError("R8 selected source snapshot metadata mismatch")
+            if not metadata.exists():
+                _replace(metadata, json.dumps(expected, sort_keys=True).encode())
+        else:
+            _replace(selected, data)
+            _replace(metadata, json.dumps(expected, sort_keys=True).encode())
+
+    def selected(self, steps):
+        if steps not in SAVE_STEPS:
+            raise ValueError("R8 unplanned source snapshot")
+        path = self.root / f"selected.{steps}.pt"
+        metadata = json.loads((self.root / f"selected.{steps}.json").read_text())
+        data = path.read_bytes()
+        if metadata != dict(sha256=hashlib.sha256(data).hexdigest(), steps=steps):
+            raise ValueError("R8 selected source snapshot digest mismatch")
+        payload = torch.load(io.BytesIO(data), map_location="cpu", weights_only=True)
+        snapshot = payload["snapshot"]
+        if (payload.get("schema") != "R8_SOURCE_JOURNAL_V1" or snapshot.get("steps") != steps or
+                snapshot.get("binding") != self.trainer.binding or
+                snapshot.get("source_seed") != self.trainer.source_seed):
+            raise ValueError("R8 selected source snapshot identity mismatch")
+        return snapshot
 
     def recover_once(self):
         if not self.root.is_dir() or not self.physical.is_file() or (self.root / "recovery.json").exists():
@@ -273,12 +307,14 @@ class SourceJournal:
                 if (payload["schema"] == "R8_SOURCE_JOURNAL_V1" and
                         type(snapshot.get("steps")) is int and snapshot["steps"] % 250 == 0 and
                         snapshot["steps"] == meta["steps"]):
-                    valid.append(snapshot)
+                    valid.append((snapshot, data))
             except (OSError, ValueError, KeyError, TypeError, RuntimeError):
                 pass
         if not valid:
             raise ValueError("R8 no verified equivalent source snapshot")
-        chosen = max(valid, key=lambda snapshot: snapshot["steps"])
+        chosen, data = max(valid, key=lambda item: item[0]["steps"])
+        if chosen["steps"] in SAVE_STEPS:
+            self._archive_selected(chosen["steps"], data)
         self.trainer.restore(chosen)
         self.previous_counts = COUNTS.copy()
         _replace(self.root / "recovery.json", json.dumps(
