@@ -44,12 +44,12 @@ def _choices(fold, episode):
     return list(range(64, 128)), "compound"
 
 
-def episode_styles(fold, episode):
+def episode_styles(fold, episode, source_seed=20260924):
     if fold not in SIZES or episode < 0:
         raise ValueError("source fold/episode")
     mode = CURRICULA[episode % 4] if fold != "val" else CURRICULA[episode // 16 % 4]
     choices, severity = _choices(fold, episode)
-    rng = generator("episode", fold, episode)
+    rng = generator("episode", fold, episode, source_seed if fold == "fit" else "fixed")
     if len(choices) == 1:
         return [choices[0]] * 32, mode, severity
     perm = torch.randperm(len(choices), generator=rng).tolist()
@@ -79,12 +79,13 @@ def oracle_roles(groups, fold, anchor):
     return tuple(ordered[i] for i in perm[:4])  # two support, two held-out query
 
 
-def episode_roles(groups, fold, episode, style_ids, oracle_support):
+def episode_roles(groups, fold, episode, style_ids, oracle_support, source_seed=20260924):
     """64 roles; query never uses the current anchor's oracle support groups."""
     if fold not in SIZES or len(style_ids) != 32 or len(set(groups)) < 4:
         raise ValueError("episode roles input")
     ordered = sorted(groups)
-    perm = torch.randperm(len(ordered), generator=generator("episode_roles", fold, episode)).tolist()
+    perm = torch.randperm(len(ordered), generator=generator("episode_roles", fold, episode,
+                                                        source_seed if fold == "fit" else "fixed")).tolist()
     ordered = [ordered[i] for i in perm]
     used, roles = set(), []
     for anchor in style_ids:
