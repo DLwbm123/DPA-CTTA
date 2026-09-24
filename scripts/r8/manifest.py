@@ -38,7 +38,7 @@ def build():
         source = stage.startswith("SOURCE")
         jobs.append(dict(id=ident, stage=stage, arm=arm, mode=mode, config=config,
                          source_seed=seed if source or (seed is not None and arm not in
-                                     (*spec["target"]["baseline_stochastic"], *spec["stress"]["stochastic_or_seed_bound_arms"])) else None,
+                                     spec["target"]["baseline_stochastic"]) else None,
                          target_seed=None if source or seed is None else seed - 20260924 + 20260907,
                          order=order, arrivals=visits,
                          scored_contents=0 if source else 1695 * (10 if stage == "STRESS_LONG10" else 1),
