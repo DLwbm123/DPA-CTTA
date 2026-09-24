@@ -1,4 +1,6 @@
 import unittest
+import tempfile
+from pathlib import Path
 from types import SimpleNamespace
 
 import torch
@@ -7,6 +9,7 @@ from dpa_ctta.r7_shared.context import tensor_digest
 from dpa_ctta.b1_host import GRATA_COMMIT
 from dpa_ctta.r8_ba.context import SOURCE_KEYS, capture
 from dpa_ctta.r8_ba.gradient import GradientHost
+from dpa_ctta.r8_ba.journal import TargetJournal
 from dpa_ctta.r8_ba.methods import R8B, R8Segmenter
 from dpa_ctta.r8_ba.preparation import gradient_scale
 from test_host import Small
@@ -54,7 +57,18 @@ class TestGradient(unittest.TestCase):
                 context = capture(segmenter, method, config, source)
                 host = GradientHost(segmenter, method, config, source, context,
                                     arm, scale, 0.001, api=FakeC())
-                prediction, trace = host.step(torch.rand(1, 3, 512, 512))
+                image = torch.rand(1, 3, 512, 512)
+                if arm == "B_G1":
+                    with tempfile.TemporaryDirectory() as directory:
+                        journal = TargetJournal(Path(directory) / "job", host, "synthetic", prediction_bytes=2)
+                        journal.create()
+                        prediction, trace = host.step(image)
+                        journal.append(b"\x00\x01", trace)
+                        self.assertEqual(journal.recover_once(), 0)
+                        replay, _ = host.step(image)
+                        self.assertTrue(torch.equal(prediction, replay))
+                else:
+                    prediction, trace = host.step(image)
                 self.assertEqual(prediction.shape, (1, 2, 512, 512))
                 self.assertEqual(trace["counts"]["backbone_forwards"], expected)
                 self.assertEqual(trace["counts"]["target_backward_calls"], expected - 7)
