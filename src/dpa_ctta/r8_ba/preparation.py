@@ -2,23 +2,31 @@
 import torch
 
 from ..r7_shared.source import simulate
-from ..r7_shared.numerics import finite
+from ..r7_shared.numerics import finite, shape
 from .oracles import a_bases, b_bases, oracle_all
 from .schedule import anchors
+
+
+@torch.no_grad()
+def scaler_anchor(segmenter, data, index, style, on_group=lambda _: None):
+    """One complete fit-only anchor; independent boundaries permit exact replay."""
+    values = []
+    for group in data.folds["fit"]:
+        row = data.get(group, "fit")
+        image = simulate(row.image, style, f"R8_SCALER|{index}|{group}")
+        _, raw, _ = segmenter(image, observe=True)
+        shape(raw, (134,))
+        values.append(raw.detach().cpu())
+        on_group(group)
+    return torch.stack(values)
 
 
 @torch.no_grad()
 def scaler_observations(segmenter, data):
     """One zero-FiLM fit-only raw-observer cache shared by all 65 models."""
     bank = anchors("fit")
-    values = []
-    for index, style in enumerate(bank):
-        for group in data.folds["fit"]:
-            row = data.get(group, "fit")
-            image = simulate(row.image, style, f"R8_SCALER|{index}|{group}")
-            _, raw, _ = segmenter(image, observe=True)
-            values.append(raw.detach())
-    return torch.stack(values)
+    return torch.cat([scaler_anchor(segmenter, data, index, style)
+                      for index, style in enumerate(bank)])
 
 
 def prepare_alpha(segmenter, data):
