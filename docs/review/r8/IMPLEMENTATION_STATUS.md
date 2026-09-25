@@ -15,3 +15,5 @@ Metadata-only input audit on 2026-09-25: the preserved private R7 source manifes
 The source journal now retains separate digest-verified archives at steps 1,000/4,000/8,000/12,000/16,000, so later recovery-slot rotation cannot erase the five snapshots needed for independent calibration. The 20 synthetic R8 tests passed after this change; no real GPU profile or job has run.
 
 The CURRENT-MLP source fit path now uses the shared visit schedule with its defined query segmentation loss and no clean-observation/proxy call. A synthetic optimizer step verifies the MLP head updates. All 21 R8 synthetic tests pass; the complete runner and real resource profile remain pending.
+
+The selected-source loader now rebuilds A/B or CURRENT-MLP from a saved source point while checking the fit step, job binding, seed, method configuration, full weight digest, fitted observer, and basis. It leaves the active RNG and physical counters untouched so each independent calibration can start cleanly. All 22 R8 synthetic tests pass.

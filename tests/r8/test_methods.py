@@ -6,7 +6,8 @@ from torch import nn
 
 from dpa_ctta.r7_b_rca import correct as r7_correct
 from dpa_ctta.hosts.vptta import model_input_from_pixels
-from dpa_ctta.r8_ba.methods import CurrentMLP, R8A, R8B, R8Segmenter, correct, film
+from dpa_ctta.r8_ba.methods import CurrentMLP, R8A, R8B, R8Segmenter, correct, film, from_selected
+from dpa_ctta.r8_ba.trainer import method_config
 
 
 class Small(nn.Module):
@@ -25,6 +26,23 @@ class Small(nn.Module):
 
 
 class TestR8Methods(unittest.TestCase):
+    def test_selected_source_loader_binds_weights_basis_and_rng(self):
+        basis = torch.eye(1024, dtype=torch.float64)[:, :32]
+        config = dict(id="synthetic", route="B", rank=32, film_amplitude=0.1,
+                      observer="global", aux_multiplier=1.0)
+        for mlp in (False, True):
+            method = CurrentMLP(basis, 0.1, "global") if mlp else R8B(basis, 0.1)
+            method.observer.fit_scaler(torch.randn(4, 134), "fit")
+            snapshot = dict(steps=1000, binding="binding", source_seed=20260924,
+                            method_config=method_config(method), method=copy.deepcopy(method.state_dict()),
+                            method_digest=method.digest())
+            rng = torch.get_rng_state().clone()
+            loaded = from_selected(snapshot, config, basis, False, 20260924, "binding", mlp=mlp)
+            self.assertEqual(loaded.digest(), method.digest())
+            self.assertTrue(torch.equal(torch.get_rng_state(), rng))
+            with self.assertRaisesRegex(ValueError, "weight/basis"):
+                from_selected(snapshot, config, -basis, False, 20260924, "binding", mlp=mlp)
+
     def test_zero_film_and_rank_gradient(self):
         h = torch.randn(1, 256, 2, 2)
         for amplitude in (0.1, 0.3):

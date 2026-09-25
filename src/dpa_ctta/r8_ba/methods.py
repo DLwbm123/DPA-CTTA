@@ -295,3 +295,27 @@ def build(config, basis, static=False, seed=20260924):
     with torch.random.fork_rng(devices=[]):
         torch.manual_seed(seed)
         return cls(basis, config["film_amplitude"], static=static, **kwargs)
+
+
+def from_selected(snapshot, config, basis, static, seed, binding, mlp=False):
+    """Load one archived fit point without restoring its RNG or physical counters."""
+    from .trainer import SAVE_STEPS, method_config
+
+    if (snapshot.get("steps") not in SAVE_STEPS or snapshot.get("binding") != binding or
+            snapshot.get("source_seed") != seed):
+        raise ValueError("R8 selected source point identity")
+    if mlp:
+        if config.get("route") != "B" or static:
+            raise ValueError("R8 MLP requires selected B configuration")
+        with torch.random.fork_rng(devices=[]):
+            torch.manual_seed(seed)
+            method = CurrentMLP(basis, config["film_amplitude"], config["observer"])
+    else:
+        method = build(config, basis, static=static, seed=seed)
+    if snapshot.get("method_config") != method_config(method):
+        raise ValueError("R8 selected method configuration")
+    method.load_state_dict(snapshot["method"], strict=True)
+    if (not torch.equal(method.basis, basis.double()) or
+            not bool(method.observer.fitted) or method.digest() != snapshot.get("method_digest")):
+        raise ValueError("R8 selected source weight/basis digest")
+    return method
