@@ -6,7 +6,7 @@ from pathlib import Path
 import torch
 
 from dpa_ctta.r7_shared.source import Record, SourceData
-from dpa_ctta.r8_ba.methods import R8B
+from dpa_ctta.r8_ba.methods import CurrentMLP, R8B
 from dpa_ctta.r8_ba.journal import SourceJournal
 from dpa_ctta.r8_ba.oracles import Oracles
 from dpa_ctta.r8_ba.trainer import SourceTrainer, lr_at
@@ -26,6 +26,23 @@ class TinySegmenter:
 
 
 class TestTrainer(unittest.TestCase):
+    def test_current_mlp_fits_query_without_proxy_or_clean_observation(self):
+        torch.manual_seed(9)
+        folds = {k: [f"{k}{i}" for i in range(n)] for k, n in (("fit", 32), ("cal", 4), ("val", 4))}
+        data = SourceData([Record(g, k, torch.rand(1, 3, 8, 8),
+                                  torch.randint(2, (1, 2, 8, 8)).float())
+                           for k, groups in folds.items() for g in groups], folds)
+        support, query = tuple(folds["fit"][:2]), tuple(folds["fit"][2:4])
+        oracles = Oracles("fit", 0.1, torch.zeros(1024, 512), (support,) * 512,
+                          (query,) * 512, ((),) * 512)
+        method = CurrentMLP(torch.eye(1024, dtype=torch.float64)[:, :32], 0.1, "global")
+        method.observer.fit_scaler(torch.randn(4, 134), "fit")
+        trainer = SourceTrainer(TinySegmenter(), method, data, oracles, 20260924, "synthetic")
+        before = method.head[0].weight.detach().clone()
+        trace = trainer.fit_step()
+        self.assertEqual((trace["step"], trace["query_visits"]), (1, 8))
+        self.assertFalse(torch.equal(before, method.head[0].weight))
+
     def test_chunk_snapshot_roundtrip(self):
         torch.manual_seed(7)
         folds = {k: [f"{k}{i}" for i in range(n)] for k, n in (("fit", 32), ("cal", 4), ("val", 4))}

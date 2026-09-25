@@ -8,6 +8,7 @@ from ..r7_shared.numerics import COUNTS, finite, seg_loss
 from ..r7_shared.source import simulate
 from .schedule import anchors, episode_roles, episode_styles
 from .rng import capture as capture_rng, restore as restore_rng
+from .methods import CurrentMLP
 
 MAX_STEPS = 16000
 SAVE_STEPS = (1000, 4000, 8000, 12000, 16000)
@@ -65,17 +66,18 @@ class SourceTrainer:
             query = self.data.get(query_name, "fit")
             style = self.style_bank[anchor]
             with torch.no_grad():
-                _, clean_raw, clean_tokens = self.segmenter(support.image, observe=True)
+                if self.method.group == "A":
+                    _, clean_raw, clean_tokens = self.segmenter(support.image, observe=True)
                 styled_support = simulate(support.image, style,
                                           f"R8_FIT_SUPPORT|{self.source_seed}|{episode}|{visit}|{support_name}")
                 _, raw, tokens = self.segmenter(styled_support, observe=True)
-                clean = self.method.observe(clean_raw, clean_tokens)
+                clean = self.method.observe(clean_raw, clean_tokens) if self.method.group == "A" else None
             state, audit = self.method.update(raw, tokens, self.state)
             self.state = state
             styled_query = simulate(query.image, style,
                                     f"R8_FIT_QUERY|{self.source_seed}|{episode}|{visit}|{query_name}")
             logits = self.segmenter(styled_query, self.method.ambient(state))
-            zstar = self.method.project(self.oracles.values[:, anchor])
+            zstar = None if isinstance(self.method, CurrentMLP) else self.method.project(self.oracles.values[:, anchor])
             losses.append(seg_loss(logits, query.label) + self.method.fit_loss(audit, clean, zstar, state))
         loss = torch.stack(losses).mean()
         finite(loss)
