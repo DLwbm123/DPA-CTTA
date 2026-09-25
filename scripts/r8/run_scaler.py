@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 
 from dpa_ctta.r8_ba.inputs import bind_metadata, open_source
+from dpa_ctta.r8_ba.journal import _replace
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.resources import CAPS
 from dpa_ctta.r8_ba.scaler_journal import run_scaler
@@ -40,9 +41,15 @@ def main():
         # The zero-FiLM backbone is independent of amplitude; choose the frozen 0.1 constructor.
         with open_source(bound, config["source_root"], config["checkpoint_path"],
                          0.1, config["physical_gpu"], 256 * 1024**2,
-                         2 * 1024**3, guard) as (data, segmenter, _):
-            return run_scaler(root, segmenter, data, binding, guard,
-                              config.get("resume_failure"))
+                         2 * 1024**3, guard) as (data, segmenter, io_counts):
+            receipt = run_scaler(root, segmenter, data, binding, guard,
+                                 config.get("resume_failure"))
+        _replace(root / "worker_complete.json", json.dumps(dict(
+            schema="R8_SCALER_WORK_COMPLETE_V1", identity=identity,
+            scaler_receipt_sha256=hashlib.sha256(
+                (root / "scaler_complete.json").read_bytes()).hexdigest(),
+            source_io_counts=dict(io_counts)), sort_keys=True, allow_nan=False).encode())
+        return receipt
     except BaseException as exc:
         first = exc
         raise

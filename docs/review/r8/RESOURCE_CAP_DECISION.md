@@ -1,0 +1,7 @@
+# R8 backward cap amendment (2026-09-25)
+
+The user explicitly authorized raising only the R8 aggregate physical backward-call hard cap from 4,000,000 to **4,500,000** after a same-code, physical-GPU 5/6/7 resource projection showed 3,214,741 nominal calls and 4,179,164 with the required 1.3 safety factor. The original ZIP specification remains preserved under `docs/review/r8/input/`; `resources.py` contains the authorized runtime cap. The scientific protocol, task graph, seeds, order, learning rates, algorithms, and every other resource cap are unchanged.
+
+The calculation used registered-source image surrogate timings at code SHA `2ad5a38f422d06d98dabd6cb4a8c4317506c8213`, an exact frozen R7 C control profile, a 50-visit registered-target-RGB I/O surrogate, and native per-visit backward counts from the pinned VPTTA/C/G implementations. The source, target, and I/O profiles are private under `/data_nas/jiangsuiyang/CTTA/r8-ba-performance-envelope-v1/profile/` as `s-2ad5a38.json`, `t-2ad5a38.json`, and `i-2ad5a38.json`. The local private lower-bound report is `/Users/bominwang/Desktop/codes/CTTA/r8-ba-performance-private/resource-lower-bound-2ad5a38.json`.
+
+This amendment removes only the backward-call cap failure. It does **not** pass the full launch gate: native target snapshot/restore disk and time, aggregate physical cost enforcement, full source/target orchestration, and final same-code profile are still required. No formal R8 model or target job has started.

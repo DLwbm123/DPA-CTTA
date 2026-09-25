@@ -13,6 +13,8 @@ class TestResources(unittest.TestCase):
         spec.loader.exec_module(module)
         graph = module.build()
         weights = units(graph)
+        self.assertEqual(CAPS["backward_calls"], 4_500_000)
+        self.assertEqual(CAPS["optimizer_steps"], 4_000_000)
         self.assertEqual(sum(weights[k] for k in weights if k in
                              {"vptta", "c", "g", "zero", "r7_c", "mlp", "gradient_g1",
                               "gradient_g3", "ista20", "new_a_max", "new_b_max"}), 2325592)

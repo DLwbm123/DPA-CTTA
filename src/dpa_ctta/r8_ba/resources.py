@@ -5,7 +5,7 @@ from collections import Counter
 
 SAFETY = 1.3
 CAPS = dict(gpu_seconds=1024 * 3600, model_forwards=100_000_000,
-            backward_calls=4_000_000, optimizer_steps=4_000_000,
+            backward_calls=4_500_000, optimizer_steps=4_000_000,
             vjp_calls=50_000, disk_bytes=200 * 1024**3)
 MEASURES = tuple(CAPS) + ("peak_gpu_bytes",)
 

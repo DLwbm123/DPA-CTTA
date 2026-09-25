@@ -7,6 +7,7 @@ import time
 from pathlib import Path
 
 from dpa_ctta.r8_ba.inputs import bind_metadata, open_source
+from dpa_ctta.r8_ba.journal import _replace
 from dpa_ctta.r8_ba.oracle_journal import run_oracles
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.resources import CAPS
@@ -40,9 +41,15 @@ def main():
     try:
         with open_source(bound, config["source_root"], config["checkpoint_path"],
                          config["amplitude"], config["physical_gpu"],
-                         256 * 1024**2, 2 * 1024**3, guard) as (data, segmenter, _):
-            return run_oracles(root, segmenter, data, binding, guard,
-                               config.get("resume_failure"))
+                         256 * 1024**2, 2 * 1024**3, guard) as (data, segmenter, io_counts):
+            receipt = run_oracles(root, segmenter, data, binding, guard,
+                                  config.get("resume_failure"))
+        _replace(root / "worker_complete.json", json.dumps(dict(
+            schema="R8_ORACLE_WORK_COMPLETE_V1", identity=identity,
+            oracle_receipt_sha256=hashlib.sha256(
+                (root / "oracle_complete.json").read_bytes()).hexdigest(),
+            source_io_counts=dict(io_counts)), sort_keys=True, allow_nan=False).encode())
+        return receipt
     except BaseException as exc:
         first = exc
         raise
