@@ -53,7 +53,7 @@ def units(graph):
         else:
             route = "mlp" if job["stage"] == "SOURCE_MLP" else job["arm"].lower()
             result[f"source_fit_{route}_step"] += 16000
-            result[f"source_val_{route}_visit"] += 5 * 64 * 32
+            result[f"source_val_{route}_visit"] += 5 * 64 * 32 * (1 if route == "mlp" else 2)
             if route != "mlp":
                 result[f"source_cal_{route}_step"] += 5 * 1024
     return result

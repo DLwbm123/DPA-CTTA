@@ -12,7 +12,7 @@ import torch
 from dpa_ctta.r7_shared.numerics import COUNTS
 from dpa_ctta.r8_ba.calibration import Calibrator
 from dpa_ctta.r8_ba.inputs import bind_metadata, open_source
-from dpa_ctta.r8_ba.journal import SourceJournal, _replace
+from dpa_ctta.r8_ba.journal import SourceJournal, _replace, _reject_recorded_noninfra_failure
 from dpa_ctta.r8_ba.methods import CurrentMLP, build, from_selected
 from dpa_ctta.r8_ba.oracle_journal import load_oracles
 from dpa_ctta.r8_ba.paths import owned_source_path
@@ -129,6 +129,7 @@ def main():
     graph, job, candidate, selection_sha256 = _job_and_config(config)
     started = time.monotonic()
     root = owned_source_path(config["job_root"])
+    _reject_recorded_noninfra_failure(root)
     if (root / "worker_complete.json").exists():
         raise ValueError("R8 source job already completed")
     bound = bind_metadata(config["refs"])
@@ -192,6 +193,7 @@ def main():
                     recovered_stage = "fit"
             fit_receipt, fit_journal = _complete_fit(root, trainer)
             val_hashes = {}
+            uncal_hashes = {}
             cal_hashes = {}
             for step in SAVE_STEPS:
                 guard()
@@ -205,6 +207,20 @@ def main():
                     deployed = selected_method
                     artifact_sha = fit_receipt["selected_sha256"][str(step)]
                 else:
+                    selected_method.freeze()
+                    uncal_root = root / f"validation_uncalibrated.{step}"
+                    uncal_sha = fit_receipt["selected_sha256"][str(step)]
+                    if not (uncal_root / "val_complete.json").exists():
+                        resume_uncal = uncal_root.exists()
+                        if resume_uncal and (failure is None or recovered_stage is not None):
+                            raise ValueError("R8 incomplete uncalibrated validation requires one evidenced recovery")
+                        run_validation(root, step, uncal_sha, binding, segmenter, selected_method,
+                                       data, oracles["val"], guard,
+                                       failure if resume_uncal else None, calibrated=False)
+                        if resume_uncal:
+                            recovered_stage = "uncalibrated_validation"
+                    load_validation(root, step, uncal_sha, binding, calibrated=False)
+                    uncal_hashes[str(step)] = digest(uncal_root / "val_complete.json")
                     calibrator = Calibrator(segmenter, selected_method, data, oracles["cal"], binding)
                     cal_root = root / f"calibration.{step}"
                     if not (cal_root / "cal_complete.json").exists():
@@ -236,6 +252,7 @@ def main():
             schema="R8_SOURCE_JOB_WORK_COMPLETE_V1", binding=binding,
             binding_payload=binding_payload, fit_receipt_sha256=digest(root / "fit_complete.json"),
             calibration_receipt_sha256=cal_hashes, validation_receipt_sha256=val_hashes,
+            uncalibrated_validation_receipt_sha256=uncal_hashes,
             source_io_counts=dict(io_counts), recovered_stage=recovered_stage),
             sort_keys=True, allow_nan=False).encode())
     except BaseException as exc:

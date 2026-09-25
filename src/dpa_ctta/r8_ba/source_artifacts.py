@@ -36,6 +36,10 @@ def read_completed(root, job, config, code_sha, spec_sha256):
         if job["stage"] == "SOURCE_MLP":
             artifact, artifact_sha = selected, fit["selected_sha256"][str(step)]
         else:
+            uncal = root / f"validation_uncalibrated.{step}" / "val_complete.json"
+            if marker["uncalibrated_validation_receipt_sha256"].get(str(step)) != digest(uncal):
+                raise ValueError("R8 uncalibrated validation marker changed")
+            load_validation(root, step, fit["selected_sha256"][str(step)], binding, calibrated=False)
             cal = root / f"calibration.{step}"
             receipt = json.loads((cal / "cal_complete.json").read_text())
             artifact, artifact_sha = cal / "calibrated.pt", receipt.get("artifact_sha256")

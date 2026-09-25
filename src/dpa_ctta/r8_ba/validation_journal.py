@@ -49,14 +49,18 @@ def _physical(raw, start, completed, tail=False):
 
 
 class ValidationJournal:
-    def __init__(self, job_root, source_step, method_sha256, binding):
+    def __init__(self, job_root, source_step, method_sha256, binding, calibrated=True):
         if (source_step not in (1000, 4000, 8000, 12000, 16000) or
                 not isinstance(method_sha256, str) or len(method_sha256) != 64 or not binding):
             raise ValueError("R8 validation source artifact identity")
         self.job_root = Path(job_root)
-        self.root = self.job_root / f"validation.{source_step}"
+        if type(calibrated) is not bool:
+            raise ValueError("R8 validation calibration phase")
+        self.calibrated = calibrated
+        prefix = "validation" if calibrated else "validation_uncalibrated"
+        self.root = self.job_root / f"{prefix}.{source_step}"
         self.identity = dict(source_step=source_step, method_sha256=method_sha256,
-                             binding=binding)
+                             binding=binding, calibrated=calibrated)
         self.rows = self.root / "rows.jsonl"
         self.physical = self.root / "physical.jsonl"
         self.completed = 0
@@ -94,7 +98,8 @@ class ValidationJournal:
         if not marker.exists():
             return _physical(raw, 0, count)
         recovery = json.loads(marker.read_text())
-        if recovery.get("stage") != "validation" or recovery.get("source_step") != self.identity["source_step"]:
+        if (recovery.get("stage") != "validation" or recovery.get("source_step") != self.identity["source_step"] or
+                recovery.get("calibrated", True) != self.calibrated):
             return _physical(raw, 0, count)
         before, cut, boundary = (recovery[k] for k in
                                  ("snapshot_physical_bytes", "physical_log_bytes", "completed_episodes"))
@@ -131,7 +136,7 @@ class ValidationJournal:
                 raise ValueError("R8 numerical/resource failure cannot recover")
         self.completed = len(rows)
         _replace(self.job_root / "recovery.json", _json(dict(
-            schema="R8_SOURCE_RECOVERY_V1", stage="validation", identity=self.identity,
+            schema="R8_SOURCE_RECOVERY_V1", stage="validation", identity=self.identity, calibrated=self.calibrated,
             source_step=self.identity["source_step"], completed_episodes=self.completed,
             snapshot_physical_bytes=before, physical_log_bytes=len(raw), failure=failure)))
         self.active = True
@@ -200,8 +205,8 @@ class ValidationJournal:
 
 
 def run_validation(root, step, method_sha256, binding, segmenter, method,
-                   data, val_oracles, guard, resume_failure=None):
-    job = ValidationJournal(root, step, method_sha256, binding)
+                   data, val_oracles, guard, resume_failure=None, calibrated=True):
+    job = ValidationJournal(root, step, method_sha256, binding, calibrated)
     if resume_failure is None:
         job.create()
     else:
@@ -211,8 +216,8 @@ def run_validation(root, step, method_sha256, binding, segmenter, method,
     return job.complete()
 
 
-def load_validation(root, step, method_sha256, binding):
-    job = ValidationJournal(root, step, method_sha256, binding)
+def load_validation(root, step, method_sha256, binding, calibrated=True):
+    job = ValidationJournal(root, step, method_sha256, binding, calibrated)
     receipt = json.loads((job.root / "val_complete.json").read_text())
     rows, raw = job._rows()
     physical = job.physical.read_bytes()

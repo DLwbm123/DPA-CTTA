@@ -17,6 +17,8 @@ class TestResources(unittest.TestCase):
         self.assertEqual(weights["source_fit_b_step"], 38 * 16000)
         self.assertEqual(weights["source_fit_mlp_step"], 5 * 16000)
         self.assertNotIn("source_fit_step", weights)
+        self.assertEqual(sum(weights[f"source_val_{route}_visit"] for route in ("a", "b", "mlp")),
+                         (60 * 2 + 5) * 5 * 64 * 32)
         self.assertEqual(CAPS["backward_calls"], 4_500_000)
         self.assertEqual(CAPS["optimizer_steps"], 4_000_000)
         self.assertEqual(sum(weights[k] for k in weights if k in

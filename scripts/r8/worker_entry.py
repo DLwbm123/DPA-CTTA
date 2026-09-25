@@ -6,13 +6,14 @@ import runpy
 from pathlib import Path
 
 from dpa_ctta.r8_ba.ledger import Ledger
-from dpa_ctta.r8_ba.paths import owned_source_path
+from dpa_ctta.r8_ba.paths import owned_source_path, owned_target_path
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.worker_budget import WorkerBudget
 
 ROOT = Path(__file__).resolve().parents[2]
 ENTRIES = {"R8_ORACLE_WORK_V1": "run_oracles.py", "R8_SCALER_WORK_V1": "run_scaler.py",
-           "R8_BASES_WORK_V1": "run_bases.py", "R8_SOURCE_JOB_WORK_V1": "run_source_job.py"}
+           "R8_BASES_WORK_V1": "run_bases.py", "R8_SOURCE_JOB_WORK_V1": "run_source_job.py",
+           "R8_TARGET_JOB_WORK_V1": "run_target_job.py", "R8_SCORE_JOB_WORK_V1": "run_score_job.py"}
 
 
 def main():
@@ -26,7 +27,8 @@ def main():
     package_root = Path("/data_nas/jiangsuiyang/CTTA/r8-ba-performance-envelope-v1")
     if not ledger_root.is_relative_to(package_root / "runs") or row["identity"] != expected:
         raise ValueError("R8 aggregate ledger output/identity binding")
-    root = owned_source_path(config["job_root"])
+    root = (owned_target_path if config["schema"] in ("R8_TARGET_JOB_WORK_V1", "R8_SCORE_JOB_WORK_V1")
+            else owned_source_path)(config["job_root"])
     ledger = Ledger(ledger_root, expected)
     with WorkerBudget(ledger, row["attempt_id"], root, row["budget"], config["maximum_seconds"]):
         runpy.run_path(str(ROOT / "scripts/r8" / ENTRIES[config["schema"]]), run_name="__main__")
