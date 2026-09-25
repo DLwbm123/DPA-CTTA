@@ -31,7 +31,7 @@ class Oracles:
         return self
 
 
-def oracle_one(segmenter, data, fold, index):
+def oracle_one(segmenter, data, fold, index, on_step=None):
     if fold not in SIZES or index not in range(SIZES[fold]):
         raise ValueError("R8 oracle fold/index")
     style = anchors(fold)[index]
@@ -64,6 +64,8 @@ def oracle_one(segmenter, data, fold, index):
                     dice.append(score.tolist())
             diagnostics.append(dict(step=step, support_objective=float(loss.detach()), query_Dice=dice,
                                     ambient_norm=float(v.detach().norm()), film_amplitude=segmenter.amplitude))
+        if on_step is not None:
+            on_step(step)
     return v.detach(), names[:2], names[2:], diagnostics
 
 
