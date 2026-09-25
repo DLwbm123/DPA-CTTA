@@ -91,6 +91,10 @@ class TargetJournal:
         self.predictions = self.root / "predictions.bits"
         self.visits = self.root / "visits.jsonl"
         self.physical = self.root / "physical.jsonl"
+        self.output_hash = hashlib.sha256()
+        self.trace_hash = hashlib.sha256()
+        self.hashed_output_bytes = 0
+        self.hashed_trace_bytes = 0
 
     def _identity(self):
         return dict(job_id=self.job_id, context_sha256=self.host.context["sha256"],
@@ -126,6 +130,10 @@ class TargetJournal:
             stream.write(line)
             stream.flush()
             os.fsync(stream.fileno())
+        self.output_hash.update(packed_prediction)
+        self.trace_hash.update(line)
+        self.hashed_output_bytes += len(packed_prediction)
+        self.hashed_trace_bytes += len(line)
         if self.host.visits % 50 == 0:
             self.checkpoint()
 
@@ -143,11 +151,14 @@ class TargetJournal:
                 (self.root / "online_complete.json").exists()):
             raise ValueError("R8 target completion offset")
         self.host.check_frozen(boundary=True)
+        if (_digest(self.predictions) != self.output_hash.hexdigest() or
+                _digest(self.visits) != self.trace_hash.hexdigest()):
+            raise ValueError("R8 target committed output changed")
         receipt = dict(schema="R8_ONLINE_COMPLETE_V1", identity=self._identity(),
                        visits=expected_visits, prediction_bytes=self.predictions.stat().st_size,
-                       prediction_sha256=_digest(self.predictions),
+                       prediction_sha256=self.output_hash.hexdigest(),
                        trace_bytes=self.visits.stat().st_size,
-                       trace_sha256=_digest(self.visits))
+                       trace_sha256=self.trace_hash.hexdigest())
         _replace(self.root / "online_complete.json", json.dumps(receipt, sort_keys=True).encode())
         return receipt
 
@@ -162,10 +173,12 @@ class TargetJournal:
         if output_size != visits * self.prediction_bytes:
             raise ValueError("R8 journal checkpoint output offset")
         log_size = self.visits.stat().st_size
+        if output_size != self.hashed_output_bytes or log_size != self.hashed_trace_bytes:
+            raise ValueError("R8 target journal hash prefix offset")
         payload = dict(schema="R8_TARGET_JOURNAL_V1", identity=self._identity(),
                        host=self.host.snapshot(), output_size=output_size,
-                       output_sha256=_digest(self.predictions), log_size=log_size,
-                       log_sha256=_digest(self.visits))
+                       output_sha256=self.output_hash.hexdigest(), log_size=log_size,
+                       log_sha256=self.trace_hash.hexdigest())
         buffer = io.BytesIO()
         torch.save(payload, buffer)
         data = buffer.getvalue()
@@ -232,6 +245,14 @@ class TargetJournal:
                 stream.truncate(size)
                 stream.flush()
                 os.fsync(stream.fileno())
+        # Rebuild once after verified recovery; normal checkpoints never reread
+        # an ever-growing prediction prefix (especially the 19,510-visit stream).
+        self.output_hash, self.trace_hash = hashlib.sha256(), hashlib.sha256()
+        for path, hasher in ((self.predictions, self.output_hash), (self.visits, self.trace_hash)):
+            with path.open("rb") as stream:
+                for block in iter(lambda: stream.read(1024 * 1024), b""):
+                    hasher.update(block)
+        self.hashed_output_bytes, self.hashed_trace_bytes = chosen["output_size"], chosen["log_size"]
         return self.host.visits
 
 
