@@ -126,7 +126,7 @@ class NativeHost:
             state.update(prompt=_cpu(n.prompt.state_dict()), optimizer=_cpu(n.optimizer.state_dict()),
                          prompt_gradients={key: None if value.grad is None else _cpu(value.grad)
                                            for key, value in n.prompt.named_parameters()},
-                         memory=[(key, torch.from_numpy(value.copy())) for key, value in n.memory_bank.memory.items()],
+                         memory=[(key.hex(), torch.from_numpy(value.copy())) for key, value in n.memory_bank.memory.items()],
                          all_keys=None if not hasattr(n.memory_bank, "all_keys") else
                          torch.from_numpy(n.memory_bank.all_keys.copy()),
                          counters=[(key, module.sample_num, module.new_sample)
@@ -167,7 +167,7 @@ class NativeHost:
             for key, value in n.prompt.named_parameters():
                 saved = state["prompt_gradients"][key]
                 value.grad = None if saved is None else saved.to(value).clone()
-            n.memory_bank.memory = {key: value.numpy().copy() for key, value in state["memory"]}
+            n.memory_bank.memory = {bytes.fromhex(key): value.numpy().copy() for key, value in state["memory"]}
             if state["all_keys"] is not None:
                 n.memory_bank.all_keys = state["all_keys"].numpy().copy()
             modules = dict(n.model.named_modules())
