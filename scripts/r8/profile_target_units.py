@@ -10,9 +10,11 @@ import torch
 
 from dpa_ctta.b1_host import GRATA_COMMIT, Host as GraTaHost
 from dpa_ctta.hosts.vptta import VPTTAHost
+from dpa_ctta.p1_analysis import evaluate
 from dpa_ctta.r7_shared.context import tensor_digest
 from dpa_ctta.r7_shared.numerics import COUNTS
 from dpa_ctta.r7_source_prep.registry import verified
+from dpa_ctta.r7_source_prep.runner import load_artifact, load_model
 from dpa_ctta.r8_ba.context import SOURCE_KEYS, capture
 from dpa_ctta.r8_ba.gradient import GradientHost
 from dpa_ctta.r8_ba.host import OnlineHost
@@ -26,12 +28,14 @@ def main():
     if (config.get("schema") != "R8_TARGET_UNIT_PROFILE_CONFIG_V1" or
             config.get("physical_gpu") not in (5, 6, 7) or
             config["physical_gpu"] != int(os.environ["CUDA_VISIBLE_DEVICES"]) or
-            config.get("maximum_seconds") != 1200):
+            config.get("maximum_seconds") != 1200 or
+            not config.get("r7_artifact_root") or not config.get("r7_inventory_path") or
+            not config.get("r7_inventory_sha256")):
         raise ValueError("R8 target profile config")
     started = time.monotonic()
     result = dict(schema="R8_TARGET_UNIT_PROFILE_V1", status="IN_PROGRESS",
                   code_sha=config["code_sha"], physical_gpu=config["physical_gpu"],
-                  input="registered source RGB; no target image or label", units={})
+                  input="registered source RGB and labels for CPU scoring only; no target image or label", units={})
     COUNTS.clear()
 
     def guard():
@@ -103,9 +107,50 @@ def main():
                 worker = GradientHost(segmenter, method, gradient_config, source,
                                       expected, arm, scale, 0.001)
                 measure(category, 1, lambda worker=worker: worker.step(image)[1])
+            cal_image = data.get(sorted(data.folds["cal"])[0], "cal").image
+            method = build(b_config, basis64)
+            method.observer.fit_scaler(torch.stack(scaler), "fit")
+            method.freeze()
+            lr_config = dict(b_config, gradient_arm="B_G3", gradient_lr=0.001,
+                             scale_sha256=tensor_digest([("scale", scale)]),
+                             grata_commit=GRATA_COMMIT)
+            lr_host = GradientHost(segmenter, method, lr_config, source,
+                                   capture(segmenter, method, lr_config, source),
+                                   "B_G3", scale, 0.001)
+            measure("gradient_lr_visit", 2,
+                    lambda: [lr_host.step(cal_image)[1] for _ in range(2)])
+            label = data.get(sorted(data.folds["fit"])[0], "fit").label
             result["io_counts"] = dict(io_counts)
 
         raw = verified(config["checkpoint_path"], config["checkpoint_sha256"], 256 * 1024**2)
+        inventory = json.loads(verified(config["r7_inventory_path"],
+                                        config["r7_inventory_sha256"], 1024**2))
+        r7_segmenter = load_model(raw, device="cuda:0")
+        try:
+            r7_cost = []
+            for mode in ("FULL", "STATIC"):
+                r7_host = load_artifact(r7_segmenter, "C_" + mode,
+                                        config["r7_artifact_root"], inventory)
+                name = "r7_c_" + mode.lower()
+                measure(name, 2, lambda host=r7_host: [host.step(image)[1] for _ in range(2)])
+                r7_cost.append(result["units"].pop(name))
+            result["units"]["r7_c"] = max(r7_cost, key=lambda row: row["seconds"] / row["sample_units"])
+            result["units"]["r7_c"]["detail"] = "slower of exact frozen C_FULL/C_STATIC artifacts"
+        finally:
+            r7_segmenter.close()
+            del r7_segmenter
+            torch.cuda.empty_cache()
+
+        # Target scoring runs only after the online receipt seals and releases its GPU.
+        # Source masks exercise the same CPU evaluator without exposing a target label.
+        probability = torch.full_like(label, 0.5)
+        start_score = time.monotonic()
+        score_detail = evaluate(probability, label, "fundus")
+        result["units"]["score_visit"] = dict(sample_units=1,
+                                                seconds=time.monotonic() - start_score,
+                                                counts={}, peak_gpu_bytes=0,
+                                                gpu_seconds=0,
+                                                detail=score_detail)
         state = torch.load(io.BytesIO(raw), map_location="cpu", weights_only=True)
         torch.manual_seed(20260907)
         np.random.seed(20260907)
