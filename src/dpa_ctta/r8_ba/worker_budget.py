@@ -126,7 +126,9 @@ class WorkerBudget:
                            baseline_disk_bytes=self.baseline_disk_bytes,
                            peak_disk_bytes=peak_disk,
                            status="COMPLETE" if kind is None else "FAILED",
-                           error_type=None if kind is None else kind.__name__), stream, sort_keys=True)
+                           error_type=None if kind is None else kind.__name__,
+                           error=None if error is None else str(error)[:3000],
+                           errno=getattr(error, "errno", None)), stream, sort_keys=True)
             stream.flush()
             os.fsync(stream.fileno())
         if kind is None:

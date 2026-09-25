@@ -17,6 +17,7 @@ from dpa_ctta.r8_ba.oracles import Oracles
 from dpa_ctta.r8_ba.schedule import anchors
 from dpa_ctta.r8_ba.trainer import SourceTrainer
 from dpa_ctta.r8_ba.resources import json_size_bound
+from dpa_ctta.r8_ba.preparation import scaler_anchor
 
 
 def main():
@@ -79,6 +80,23 @@ def main():
                     result.setdefault("storage", {})[name] = max(
                         result.get("storage", {}).get(name, 0), len(buffer.getvalue()) + 4096)
 
+                def exact_continue(worker, factory, step):
+                    buffer = io.BytesIO()
+                    torch.save(worker.snapshot(), buffer)
+                    packet = torch.load(io.BytesIO(buffer.getvalue()), map_location="cpu", weights_only=True)
+                    before = COUNTS.copy()
+                    first = step(worker)
+                    physical = COUNTS - before
+                    expected = worker.method.digest()
+                    resumed = factory()
+                    resumed.restore(packet)
+                    second = step(resumed)
+                    if first != second or expected != resumed.method.digest():
+                        raise ValueError("R8 real-source snapshot continuation mismatch")
+                    COUNTS.update(physical)  # Both continuations were physically executed.
+                    result.setdefault("recovery", []).append(dict(kind=type(worker).__name__,
+                        status="EXACT_CONTINUATION_MATCH", method=worker.method.route if hasattr(worker.method, "route") else type(worker.method).__name__))
+
                 names = {fold: sorted(data.folds[fold]) for fold in ("fit", "cal", "val")}
                 def synthetic_oracles(fold):
                     pair, query = tuple(names[fold][:2]), tuple(names[fold][2:4])
@@ -120,7 +138,8 @@ def main():
                             _, raw, _ = segmenter(data.get(name, "fit").image, observe=True)
                             scaler_rows.append(raw)
 
-                measure("scaler_observation", 4, observe_scaler)
+                measure("scaler_observation", 111, lambda: scaler_anchor(segmenter, data, 0, anchors("fit")[0]))
+                observe_scaler()
                 measure("basis_vjp", 32,
                         lambda: pooled_jacobian(segmenter, data, names["fit"][:1]))
                 # A has three backbone forwards per visit; B and MLP have two.
@@ -144,12 +163,16 @@ def main():
                     measure(f"source_fit_{route}_step", 4,
                             lambda: [trainer.fit_step() for _ in range(4)])
                     storage(f"fit_{route}", dict(schema="R8_SOURCE_JOURNAL_V1", snapshot=trainer.snapshot()))
+                    exact_continue(trainer, lambda: SourceTrainer(segmenter, new_method(), data, fit,
+                        20260924, "R8_PROFILE_SYNTHETIC_ORACLE"), lambda worker: worker.fit_step())
                     if route != "mlp":
                         calibrator = Calibrator(segmenter, new_method(), data, cal,
                                                 "R8_PROFILE_SYNTHETIC_ORACLE")
                         measure(f"source_cal_{route}_step", 1, calibrator.step)
                         storage(f"cal_{route}", dict(schema="R8_CAL_JOURNAL_V1", identity={},
                                                     snapshot=calibrator.snapshot()))
+                        exact_continue(calibrator, lambda: Calibrator(segmenter, new_method(), data, cal,
+                            "R8_PROFILE_SYNTHETIC_ORACLE"), lambda worker: worker.step())
                         calibrator.method.freeze()
                         storage(f"method_{route}", dict(schema="R8_CALIBRATED_METHOD_V1", identity={},
                             method_digest=calibrator.method.digest(), method=calibrator.method.state_dict()))

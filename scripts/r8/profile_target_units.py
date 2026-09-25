@@ -176,8 +176,9 @@ def main():
                                                 counts={}, peak_gpu_bytes=0,
                                                 gpu_seconds=0,
                                                 detail=score_detail)
+        graph = json.loads((Path(__file__).resolve().parents[2] / "docs/review/r8/TASK_GRAPH.static.json").read_text())
         result.setdefault("record_bytes", {})["score_visit"] = json_size_bound(dict(
-            visit=1, cycle=1, cycle_visit=1, arm="B_G3_GRADIENT_ENABLED_NOT_ZERO_BACKWARD",
+            visit=1, cycle=1, cycle_visit=1, arm="X" * max(len(job["arm"]) for job in graph["jobs"]),
             order=1, content="0" * 64, domain="X" * 64, subset="remaining_dev", metrics=score_detail)) + 1
         state = torch.load(io.BytesIO(raw), map_location="cpu", weights_only=True)
         for arm, name in (("VPTTA_NATIVE", "vptta"), ("C_CTTA_FIXED_LR", "c"),
