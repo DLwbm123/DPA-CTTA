@@ -195,7 +195,8 @@ def main():
                 for record in records:
                     bits = np.unpackbits(np.frombuffer(predictions.read(65536), dtype=np.uint8)).copy()
                     probability = torch.from_numpy(bits).float().reshape(1,2,512,512)
-                    score_detail = evaluate(probability, reader.read(record), "fundus")
+                    source_record = dict(record, mask_path=str(Path(config["source_root"]) / record["mask_relative"]))
+                    score_detail = evaluate(probability, reader.read(source_record), "fundus")
                     output.write(json.dumps(score_detail) + "\n")
                     output.flush()
                     os.fsync(output.fileno())

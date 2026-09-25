@@ -33,6 +33,10 @@ def main():
     root = (owned_target_path if config["schema"] in ("R8_TARGET_JOB_WORK_V1", "R8_SCORE_JOB_WORK_V1")
             else owned_source_path)(config["job_root"])
     ledger = Ledger(ledger_root, expected)
+    admitted = ledger.snapshot()["attempts"][row["attempt_id"]]
+    if admitted.get("config_sha256") != hashlib.sha256(Path(os.environ["R8_WORK_CONFIG"]).read_bytes()).hexdigest():
+        ledger.stop("worker config differs from admitted job")
+        raise ValueError("R8 worker config identity")
     with WorkerBudget(ledger, row["attempt_id"], root, row["budget"], config["maximum_seconds"]):
         runpy.run_path(str(ROOT / "scripts/r8" / ENTRIES[config["schema"]]), run_name="__main__")
 

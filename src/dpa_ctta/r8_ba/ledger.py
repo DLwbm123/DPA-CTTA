@@ -78,8 +78,10 @@ class Ledger:
                 total[key] += cost[key]
         return total
 
-    def reserve(self, attempt_id, physical_gpu, budget):
+    def reserve(self, attempt_id, physical_gpu, budget, config_sha256=None):
         _cost(budget)
+        if config_sha256 is not None and re.fullmatch(r"[0-9a-f]{64}", config_sha256) is None:
+            raise ValueError("R8 reservation config digest")
         if (not isinstance(attempt_id, str) or re.fullmatch(r"[A-Za-z0-9_-]{1,128}", attempt_id) is None or
                 type(physical_gpu) is not int or physical_gpu not in (5, 6, 7) or
                 budget["gpu_seconds"] <= 0):
@@ -95,7 +97,7 @@ class Ledger:
                 self._save(state)
                 raise
             state["attempts"][attempt_id] = dict(physical_gpu=physical_gpu,
-                reserved=budget.copy(), actual=None, evidence=None)
+                reserved=budget.copy(), actual=None, evidence=None, config_sha256=config_sha256)
             self._save(state)
 
     def guard(self, attempt_id, observed):

@@ -196,7 +196,7 @@ def main():
                 config = config_for(ready, gpu, attempt)
                 path = run / (attempt + '.json')
                 write(path, config)
-                ledger.reserve(attempt, gpu, config['execution_ledger']['budget'])
+                ledger.reserve(attempt, gpu, config['execution_ledger']['budget'], digest(path))
                 env = dict(os.environ, CUDA_VISIBLE_DEVICES=str(gpu), R8_WORK_CONFIG=str(path))
                 env.pop('R8_QUEUE_CONFIG', None)
                 output = (run / (attempt + '.log')).open('xb')
