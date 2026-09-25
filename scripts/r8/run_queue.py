@@ -161,8 +161,9 @@ def main():
         elif row['kind'] in ('TARGET_JOB', 'SCORE_JOB'):
             path = source_dir / 'artifact_lock.json'
             value.update(job_id=job['id'], artifact_lock=dict(path=str(path), sha256=digest(path)))
-        if state['tasks'][row['id']].get('resume_failure'):
-            value['resume_failure'] = state['tasks'][row['id']]['resume_failure']
+        failure = state['tasks'][row['id']].get('resume_failure') or launch.get('initial_recoveries', {}).get(row['id'])
+        if failure:
+            value['resume_failure'] = failure
         budget = report['budgets'][row['id']]
         value.update(maximum_seconds=int(budget['gpu_seconds']) - 1,
                      execution_ledger=dict(root=str(run / 'ledger'), identity=identity, attempt_id=attempt, budget=budget))
@@ -198,7 +199,7 @@ def main():
                              'not positive-definite' in evidence.get('error', ''))):
                         item['status'] = 'NUMERICAL_FAILED'
                     elif (evidence.get('error_type') in ('OSError', 'TimeoutError', 'ConnectionError', 'InterruptedError') and
-                          evidence.get('errno') != 28 and len(item['attempts']) == 1 and row['kind'] != 'BASES'):
+                          evidence.get('errno') != 28 and len(item['attempts']) + launch.get('previous_attempt_counts', {}).get(row['id'], 0) == 1 and row['kind'] != 'BASES'):
                         item.update(status='PENDING', resume_failure=dict(
                             **{'class': 'INFRASTRUCTURE'}, reason=evidence.get('error') or evidence['error_type'],
                             evidence=dict(attempt=str(receipt), sha256=digest(receipt), code_sha=launch['code_sha'])))

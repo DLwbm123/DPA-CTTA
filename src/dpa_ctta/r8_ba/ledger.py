@@ -1,5 +1,9 @@
 """Shared admission ledger. Unsettled attempts retain their entire reservation."""
 import fcntl
+import hashlib
+import os
+import socket
+import tempfile
 import json
 import math
 import re
@@ -37,6 +41,13 @@ class Ledger:
                     for k, v in identity.items())):
             raise ValueError("R8 ledger identity")
         self.identity = identity.copy()
+        # All admitted workers run on one host. NFS NLM blocking locks can hang
+        # on this mount; only the lock inode is local, all state stays on NAS.
+        directory = Path(tempfile.gettempdir()) / ("l_" + str(os.getuid()))
+        directory.mkdir(mode=0o700, exist_ok=True)
+        if directory.is_symlink() or directory.stat().st_uid != os.getuid():
+            raise ValueError("R8 local ledger lock ownership")
+        self.lock_path = directory / hashlib.sha256(str(self.root.resolve()).encode()).hexdigest()
 
     def create(self, prior_cost, evidence):
         _cost(prior_cost)
@@ -46,7 +57,7 @@ class Ledger:
         self.root.mkdir(parents=True, exist_ok=False)
         (self.root / "lock").touch(exist_ok=False)
         self._save(dict(schema="R8_AGGREGATE_LEDGER_V1", identity=self.identity,
-                        caps=CAPS, prior_cost=prior_cost, prior_evidence=evidence,
+                        caps=CAPS, lock_host=socket.gethostname(), prior_cost=prior_cost, prior_evidence=evidence,
                         attempts={}, stop=None))
 
     def _save(self, state):
@@ -56,11 +67,12 @@ class Ledger:
     @contextmanager
     def _locked(self):
         # ponytail: one lock for <= 789 jobs; keep reservations at bounded work-unit boundaries.
-        with (self.root / "lock").open("r+") as lock:
+        with self.lock_path.open("a+") as lock:
             fcntl.flock(lock, fcntl.LOCK_EX)
             state = json.loads((self.root / "state.json").read_text())
             if (state.get("schema") != "R8_AGGREGATE_LEDGER_V1" or
-                    state.get("identity") != self.identity or state.get("caps") != CAPS):
+                    state.get("identity") != self.identity or state.get("caps") != CAPS or
+                    state.get("lock_host") != socket.gethostname()):
                 state["stop"] = "identity or resource-cap binding mismatch"
                 self._save(state)
                 raise RuntimeError("R8 GLOBAL STOP: ledger identity mismatch")
