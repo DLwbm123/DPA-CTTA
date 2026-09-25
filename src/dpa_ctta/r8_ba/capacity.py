@@ -7,7 +7,10 @@ from .protocol import CAPACITY_OPTIMIZER, PROTOCOL_SHA256
 from .schedule import anchors
 
 
+from .scope import SCREEN
 SPACES = {"A16": 16, "A32": 32, "B32": 32, "B64": 64}
+if SCREEN:
+    SPACES = {"A32":32, "B64":64}
 ANCHORS = tuple(range(1, 33)) + tuple(range(64, 96))
 
 

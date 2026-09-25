@@ -1,3 +1,4 @@
+from dpa_ctta.r8_ba.scope import SCREEN, GRAPH_PATH, SPEC_PATH, SOURCE_JOBS, TARGET_JOBS
 """Neutral-symlink process entry for an already admitted R8 worker."""
 import hashlib
 import json
@@ -12,7 +13,7 @@ from dpa_ctta.r8_ba.worker_budget import WorkerBudget
 from dpa_ctta.r8_ba.launch_binding import verify
 
 ROOT = Path(__file__).resolve().parents[2]
-ENTRIES = {"R8_ORACLE_WORK_V1": "run_oracles.py", "R8_SCALER_WORK_V1": "run_scaler.py",
+ENTRIES = {"R8_ORACLE_SHARD_WORK_V1": "run_oracle_shard.py", "R8_ORACLE_WORK_V1": "run_oracles.py", "R8_SCALER_WORK_V1": "run_scaler.py",
            "R8_BASES_WORK_V1": "run_bases.py", "R8_SOURCE_JOB_WORK_V1": "run_source_job.py",
            "R8_TARGET_JOB_WORK_V1": "run_target_job.py", "R8_SCORE_JOB_WORK_V1": "run_score_job.py",
            "R8_CAPACITY_WORK_V1": "run_capacity.py", "R8_GRADIENT_LR_WORK_V1": "run_gradient_lr.py"}
@@ -25,7 +26,7 @@ def main():
     verify(config, ROOT)
     row = config["execution_ledger"]
     expected = dict(code_sha=config["code_sha"], protocol_sha256=PROTOCOL_SHA256,
-                    graph_sha256=hashlib.sha256((ROOT / "docs/review/r8/TASK_GRAPH.static.json").read_bytes()).hexdigest())
+                    graph_sha256=hashlib.sha256(GRAPH_PATH.read_bytes()).hexdigest())
     ledger_root = Path(row["root"]).resolve()
     package_root = Path("/data_nas/jiangsuiyang/CTTA/r8-ba-performance-envelope-v1")
     if not ledger_root.is_relative_to(package_root / "runs") or row["identity"] != expected:

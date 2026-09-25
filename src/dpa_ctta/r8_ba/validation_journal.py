@@ -8,6 +8,7 @@ from pathlib import Path
 
 from ..r7_shared.numerics import COUNTS
 from .calibration import validate_episode
+from .trainer import SAVE_STEPS
 from .journal import _replace, _sync_dir, _reject_recorded_noninfra_failure
 from .schedule import CURRICULA
 
@@ -50,7 +51,7 @@ def _physical(raw, start, completed, tail=False):
 
 class ValidationJournal:
     def __init__(self, job_root, source_step, method_sha256, binding, calibrated=True):
-        if (source_step not in (1000, 4000, 8000, 12000, 16000) or
+        if (source_step not in SAVE_STEPS or
                 not isinstance(method_sha256, str) or len(method_sha256) != 64 or not binding):
             raise ValueError("R8 validation source artifact identity")
         self.job_root = Path(job_root)

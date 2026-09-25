@@ -5,6 +5,10 @@ from .resources import category, units
 
 
 def tasks(graph):
+    from .scope import SCREEN
+    if SCREEN:
+        from .screen import tasks as screen_tasks
+        return screen_tasks(graph)
     rows = []
     def add(key, kind, weights, dependencies=(), job=None, amplitude=None):
         rows.append(dict(id=key, kind=kind, weights=dict(worker_setup=1, **weights),

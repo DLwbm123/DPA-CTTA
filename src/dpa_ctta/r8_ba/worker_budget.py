@@ -26,6 +26,7 @@ class WorkerBudget:
         self.observed = dict.fromkeys(CAPS, 0)
         self.started = time.monotonic()
         self.baseline_disk_bytes = self._disk()
+        self.last_live_write = float("-inf")
         self.last_shared_check = float("-inf")
         self.handles, self.models = [], set()
         self.done = threading.Event()
@@ -56,6 +57,12 @@ class WorkerBudget:
             self.observed["disk_bytes"] = max(self.observed["disk_bytes"], self._disk() - self.baseline_disk_bytes)
             self.ledger.guard(self.attempt_id, self.observed)
             self.last_shared_check = now
+            if now - self.last_live_write >= 30:
+                from .journal import _replace
+                _replace(self.ledger.root / ("live-" + self.attempt_id + ".json"), json.dumps(dict(
+                    schema="R8_LIVE_PHYSICAL_COST_V1", pid=os.getpid(), updated_unix=time.time(),
+                    attempt_id=self.attempt_id, observed=self.observed), sort_keys=True).encode())
+                self.last_live_write = now
 
     def operation(self, key):
         self.observed[key] += 1

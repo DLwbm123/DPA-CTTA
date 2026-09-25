@@ -4,10 +4,13 @@ import re
 from collections import Counter
 import json
 
+from .scope import SCREEN
 SAFETY = 1.3
 CAPS = dict(gpu_seconds=1024 * 3600, model_forwards=100_000_000,
             backward_calls=4_500_000, optimizer_steps=4_000_000,
             vjp_calls=50_000, disk_bytes=200 * 1024**3)
+if SCREEN:
+    CAPS.update(gpu_seconds=60*3600, disk_bytes=16*1024**3)
 MEASURES = tuple(CAPS) + ("peak_gpu_bytes",)
 
 
@@ -60,6 +63,12 @@ def category(job):
 
 
 def units(graph):
+    if SCREEN:
+        from .screen import tasks
+        total = Counter()
+        for task in tasks(graph)[0]:
+            total.update(task["weights"])
+        return total
     if (graph.get("source_training_jobs") != 65 or graph.get("target_jobs") != 724 or
             graph.get("target_arrivals") != 2_325_592):
         raise ValueError("R8 full task graph required")

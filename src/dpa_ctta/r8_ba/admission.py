@@ -2,6 +2,8 @@
 import math
 
 from .execution_plan import tasks
+from .scope import SCREEN
+from .trainer import MAX_STEPS, SAVE_STEPS
 from .resources import CAPS, MEASURES, SAFETY, category, project, units, json_size_bound
 
 
@@ -42,6 +44,8 @@ def build(graph, source, target, io, code_sha, free_gpu_bytes, prior_cost, prior
         # Reserve the GPU lane during independent scoring too; this is deliberately
         # an upper bound on accelerator allocation time, not kernel-only timing.
         rows[name] = row
+    if SCREEN:
+        rows = {k:v for k,v in rows.items() if k in units(graph)}
     if set(rows) != set(units(graph)):
         raise ValueError('R8 measured resource unit coverage')
     plan, _ = tasks(graph)
@@ -53,6 +57,7 @@ def build(graph, source, target, io, code_sha, free_gpu_bytes, prior_cost, prior
                     SCALER=4 * (512*111*134*4 + 512*4096),
                     BASES=2 * (1024*1024*8 + 1024*144*8 + 65536),
                     CAPACITY=4*256*8192, GRADIENT_LR=4*1152*8192)
+    prepared['ORACLE_SHARD'] = prepared['ORACLE']
     for task in plan:
         kind, job = task['kind'], task['job']
         # Config, receipt, metadata and error tails, bounded independently of visits.
@@ -64,15 +69,15 @@ def build(graph, source, target, io, code_sha, free_gpu_bytes, prior_cost, prior
             source_temps.append(source['storage']['fit_' + route])
             fixed += 8 * source['storage']['fit_' + route]  # five selected + two slots + temp
             fit_name = 'source_fit_' + route + '_step'
-            fixed += 16000 * source['record_bytes'][fit_name]
+            fixed += MAX_STEPS * source['record_bytes'][fit_name]
             val_name = 'source_val_' + route + '_visit'
             # Five (ten for A/B) sets, each two JSON snapshots + result + receipt.
-            sets = 5 if route == 'mlp' else 10
+            sets = len(SAVE_STEPS)*(1 if route == 'mlp' else 2)
             fixed += sets * (64*source['record_bytes'][val_name] + 64*32*192)
             if route != 'mlp':
-                source_temps.extend([source['storage']['cal_' + route]]*5)
-                fixed += 5 * (3*source['storage']['cal_' + route] + source['storage']['method_' + route])
-                fixed += 5*1024 * source['record_bytes']['source_cal_' + route + '_step']
+                source_temps.extend([source['storage']['cal_' + route]]*len(SAVE_STEPS))
+                fixed += len(SAVE_STEPS) * (3*source['storage']['cal_' + route] + source['storage']['method_' + route])
+                fixed += len(SAVE_STEPS)*1024 * source['record_bytes']['source_cal_' + route + '_step']
         elif kind == 'TARGET_JOB':
             name = category(job)
             # The third snapshot slot is temporary; summing it per job is a safe

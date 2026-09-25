@@ -10,8 +10,9 @@ from .schedule import anchors, episode_roles, episode_styles
 from .rng import capture as capture_rng, restore as restore_rng
 from .methods import CurrentMLP
 
-MAX_STEPS = 16000
-SAVE_STEPS = (1000, 4000, 8000, 12000, 16000)
+from .scope import SCREEN
+MAX_STEPS = 4000 if SCREEN else 16000
+SAVE_STEPS = (1000, 4000) if SCREEN else (1000, 4000, 8000, 12000, 16000)
 
 
 def lr_at(step):

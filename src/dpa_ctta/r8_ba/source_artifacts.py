@@ -4,10 +4,11 @@ import json
 from pathlib import Path
 
 from .protocol import PROTOCOL_SHA256
+from .scope import SOURCE_JOBS
 from .calibration import select_checkpoint
 from .preparation import load_bases
 from .source_select import select_grid
-from .trainer import SAVE_STEPS
+from .trainer import SAVE_STEPS, MAX_STEPS
 from .validation_journal import load_validation
 
 
@@ -28,7 +29,7 @@ def read_completed(root, job, config, code_sha, spec_sha256):
         raise ValueError("R8 completed source job identity")
     fit = json.loads((root / "fit_complete.json").read_text())
     if (fit.get("binding") != binding or fit.get("source_seed") != job["source_seed"] or
-            fit.get("steps") != 16000 or fit.get("physical_sha256") != digest(root / "physical.jsonl")):
+            fit.get("steps") != MAX_STEPS or fit.get("physical_sha256") != digest(root / "physical.jsonl")):
         raise ValueError("R8 completed source fit identity")
     rows, artifacts = {}, {}
     for step in SAVE_STEPS:
@@ -83,7 +84,7 @@ def source_index(graph, configs, selection, roots, code_sha, refs, checkpoint_sh
                  bases_by_amplitude, r7_inventory):
     """Freeze the five-seed model choices after all source producers complete."""
     jobs = [row for row in graph["jobs"] if not row["arrivals"]]
-    if (len(jobs) != 65 or set(roots) != {row["id"] for row in jobs} or
+    if (len(jobs) != SOURCE_JOBS or set(roots) != {row["id"] for row in jobs} or
             selection.get("code_sha") != code_sha or selection.get("protocol_sha256") != PROTOCOL_SHA256 or
             selection.get("graph_spec_sha256") != graph["spec_sha256"]):
         raise ValueError("R8 complete source index identity")

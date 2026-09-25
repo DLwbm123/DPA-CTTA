@@ -1,0 +1,759 @@
+{
+  "authorization": "User: \u6309\u7167\u4f60\u7684\u8bbe\u8ba1\u7acb\u5373\u542f\u52a8; 2026-09-25",
+  "authorized": true,
+  "configs": [
+    {
+      "aux_multiplier": 1.0,
+      "film_amplitude": 0.3,
+      "full_covariance": true,
+      "id": "A_r32_a0p3",
+      "observer": "R7_dual_codebook",
+      "rank": 32,
+      "route": "A"
+    },
+    {
+      "aux_multiplier": 1.0,
+      "film_amplitude": 0.3,
+      "id": "B_expanded_global_aux1p0",
+      "ista_steps": 5,
+      "observation_dim": 64,
+      "observer": "global",
+      "rank": 64,
+      "route": "B"
+    }
+  ],
+  "counts": {
+    "source_fit_steps": 40000,
+    "source_jobs": 10,
+    "target_arrivals": 78040,
+    "target_jobs": 40,
+    "target_scored_records": 67800
+  },
+  "omitted": [
+    "configuration grid",
+    "additional three seeds",
+    "orders 2/3/4",
+    "MIXED and LONG10 stress",
+    "B_G1/B_G3/COLD source-LR search and target diagnostics",
+    "additional same-weight ablations",
+    "amplitude/rank capacity sweep",
+    "optional external comparators"
+  ],
+  "orders": [
+    0,
+    1
+  ],
+  "physical_gpus": [
+    5,
+    6,
+    7
+  ],
+  "proposed_limits": {
+    "deadline_behavior": "Stop and preserve incomplete jobs at deadline; never silently shrink frozen reduced scope",
+    "disk_gib": 16,
+    "gpu_hours": 60,
+    "wall_hours": 24
+  },
+  "purpose": "Initial A/B utility and temporal-state screening; no full performance envelope or convergence claim",
+  "schema": "R8_SCREEN24_AUTHORIZED_SPEC_V1",
+  "seeds": [
+    20260924,
+    20260925
+  ],
+  "source_fit": {
+    "calibration_steps_per_checkpoint": 1024,
+    "save_steps": [
+      1000,
+      4000
+    ],
+    "schedule": "Original 16000-step cosine schedule prefix through step 4000; do not rescale LR or declare convergence",
+    "selection": "soft Dice original mean/worst curriculum score, common checkpoint across two seeds per arm/mode; MLP common checkpoint across two seeds; no target-label selection",
+    "source_val_episodes": 64,
+    "source_val_visits": 32,
+    "steps": 4000,
+    "validation_before_and_after_calibration": true
+  },
+  "source_jobs": [
+    {
+      "arm": "A",
+      "config": {
+        "aux_multiplier": 1.0,
+        "film_amplitude": 0.3,
+        "full_covariance": true,
+        "id": "A_r32_a0p3",
+        "observer": "R7_dual_codebook",
+        "rank": 32,
+        "route": "A"
+      },
+      "fit_steps": 4000,
+      "id": "A_FULL_20260924",
+      "mode": "FULL",
+      "resource_weights": {
+        "source_cal_a_step": 2048,
+        "source_fit_a_step": 4000,
+        "source_val_a_visit": 8192
+      },
+      "save_steps": [
+        1000,
+        4000
+      ],
+      "source_seed": 20260924
+    },
+    {
+      "arm": "A",
+      "config": {
+        "aux_multiplier": 1.0,
+        "film_amplitude": 0.3,
+        "full_covariance": true,
+        "id": "A_r32_a0p3",
+        "observer": "R7_dual_codebook",
+        "rank": 32,
+        "route": "A"
+      },
+      "fit_steps": 4000,
+      "id": "A_FULL_20260925",
+      "mode": "FULL",
+      "resource_weights": {
+        "source_cal_a_step": 2048,
+        "source_fit_a_step": 4000,
+        "source_val_a_visit": 8192
+      },
+      "save_steps": [
+        1000,
+        4000
+      ],
+      "source_seed": 20260925
+    },
+    {
+      "arm": "A",
+      "config": {
+        "aux_multiplier": 1.0,
+        "film_amplitude": 0.3,
+        "full_covariance": true,
+        "id": "A_r32_a0p3",
+        "observer": "R7_dual_codebook",
+        "rank": 32,
+        "route": "A"
+      },
+      "fit_steps": 4000,
+      "id": "A_STATIC_20260924",
+      "mode": "STATIC",
+      "resource_weights": {
+        "source_cal_a_step": 2048,
+        "source_fit_a_step": 4000,
+        "source_val_a_visit": 8192
+      },
+      "save_steps": [
+        1000,
+        4000
+      ],
+      "source_seed": 20260924
+    },
+    {
+      "arm": "A",
+      "config": {
+        "aux_multiplier": 1.0,
+        "film_amplitude": 0.3,
+        "full_covariance": true,
+        "id": "A_r32_a0p3",
+        "observer": "R7_dual_codebook",
+        "rank": 32,
+        "route": "A"
+      },
+      "fit_steps": 4000,
+      "id": "A_STATIC_20260925",
+      "mode": "STATIC",
+      "resource_weights": {
+        "source_cal_a_step": 2048,
+        "source_fit_a_step": 4000,
+        "source_val_a_visit": 8192
+      },
+      "save_steps": [
+        1000,
+        4000
+      ],
+      "source_seed": 20260925
+    },
+    {
+      "arm": "B",
+      "config": {
+        "aux_multiplier": 1.0,
+        "film_amplitude": 0.3,
+        "id": "B_expanded_global_aux1p0",
+        "ista_steps": 5,
+        "observation_dim": 64,
+        "observer": "global",
+        "rank": 64,
+        "route": "B"
+      },
+      "fit_steps": 4000,
+      "id": "B_FULL_20260924",
+      "mode": "FULL",
+      "resource_weights": {
+        "source_cal_b_step": 2048,
+        "source_fit_b_step": 4000,
+        "source_val_b_visit": 8192
+      },
+      "save_steps": [
+        1000,
+        4000
+      ],
+      "source_seed": 20260924
+    },
+    {
+      "arm": "B",
+      "config": {
+        "aux_multiplier": 1.0,
+        "film_amplitude": 0.3,
+        "id": "B_expanded_global_aux1p0",
+        "ista_steps": 5,
+        "observation_dim": 64,
+        "observer": "global",
+        "rank": 64,
+        "route": "B"
+      },
+      "fit_steps": 4000,
+      "id": "B_FULL_20260925",
+      "mode": "FULL",
+      "resource_weights": {
+        "source_cal_b_step": 2048,
+        "source_fit_b_step": 4000,
+        "source_val_b_visit": 8192
+      },
+      "save_steps": [
+        1000,
+        4000
+      ],
+      "source_seed": 20260925
+    },
+    {
+      "arm": "B",
+      "config": {
+        "aux_multiplier": 1.0,
+        "film_amplitude": 0.3,
+        "id": "B_expanded_global_aux1p0",
+        "ista_steps": 5,
+        "observation_dim": 64,
+        "observer": "global",
+        "rank": 64,
+        "route": "B"
+      },
+      "fit_steps": 4000,
+      "id": "B_STATIC_20260924",
+      "mode": "STATIC",
+      "resource_weights": {
+        "source_cal_b_step": 2048,
+        "source_fit_b_step": 4000,
+        "source_val_b_visit": 8192
+      },
+      "save_steps": [
+        1000,
+        4000
+      ],
+      "source_seed": 20260924
+    },
+    {
+      "arm": "B",
+      "config": {
+        "aux_multiplier": 1.0,
+        "film_amplitude": 0.3,
+        "id": "B_expanded_global_aux1p0",
+        "ista_steps": 5,
+        "observation_dim": 64,
+        "observer": "global",
+        "rank": 64,
+        "route": "B"
+      },
+      "fit_steps": 4000,
+      "id": "B_STATIC_20260925",
+      "mode": "STATIC",
+      "resource_weights": {
+        "source_cal_b_step": 2048,
+        "source_fit_b_step": 4000,
+        "source_val_b_visit": 8192
+      },
+      "save_steps": [
+        1000,
+        4000
+      ],
+      "source_seed": 20260925
+    },
+    {
+      "arm": "CURRENT_MLP",
+      "config": {
+        "aux_multiplier": 1.0,
+        "film_amplitude": 0.3,
+        "id": "B_expanded_global_aux1p0",
+        "ista_steps": 5,
+        "observation_dim": 64,
+        "observer": "global",
+        "rank": 64,
+        "route": "B"
+      },
+      "fit_steps": 4000,
+      "id": "CURRENT_MLP_None_20260924",
+      "mode": null,
+      "resource_weights": {
+        "source_fit_mlp_step": 4000,
+        "source_val_mlp_visit": 4096
+      },
+      "save_steps": [
+        1000,
+        4000
+      ],
+      "source_seed": 20260924
+    },
+    {
+      "arm": "CURRENT_MLP",
+      "config": {
+        "aux_multiplier": 1.0,
+        "film_amplitude": 0.3,
+        "id": "B_expanded_global_aux1p0",
+        "ista_steps": 5,
+        "observation_dim": 64,
+        "observer": "global",
+        "rank": 64,
+        "route": "B"
+      },
+      "fit_steps": 4000,
+      "id": "CURRENT_MLP_None_20260925",
+      "mode": null,
+      "resource_weights": {
+        "source_fit_mlp_step": 4000,
+        "source_val_mlp_visit": 4096
+      },
+      "save_steps": [
+        1000,
+        4000
+      ],
+      "source_seed": 20260925
+    }
+  ],
+  "source_preparation": {
+    "amplitude": 0.3,
+    "cal_anchors": 128,
+    "capacity_lr": 0.03,
+    "capacity_spaces": [
+      "A32",
+      "B64"
+    ],
+    "capacity_steps": 128,
+    "capacity_val_anchors": 64,
+    "fit_anchors": 512,
+    "oracle_lr": 0.03,
+    "oracle_shards": [
+      {
+        "anchors": [
+          0,
+          255
+        ],
+        "fold": "fit",
+        "id": 0
+      },
+      {
+        "anchors": [
+          256,
+          511
+        ],
+        "fold": "fit",
+        "id": 1
+      },
+      {
+        "anchors_each": [
+          0,
+          127
+        ],
+        "folds": [
+          "cal",
+          "val"
+        ],
+        "id": 2
+      }
+    ],
+    "oracle_steps": 256,
+    "shard_rule": "Same per-anchor initialization, support/query, keyed styles and math. Merge all 768 by frozen ordinal only after identity/count validation; verify serial/sharded equivalence before launch.",
+    "val_anchors": 128
+  },
+  "target_jobs": [
+    {
+      "arrivals": 1951,
+      "category": "new_a_max",
+      "id": "A_FULL_20260924_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "source_id": "A_FULL_20260924",
+      "source_seed": 20260924,
+      "target_seed": 20260907
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_a_max",
+      "id": "A_FULL_20260924_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "source_id": "A_FULL_20260924",
+      "source_seed": 20260924,
+      "target_seed": 20260907
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_a_max",
+      "id": "A_FULL_20260925_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "source_id": "A_FULL_20260925",
+      "source_seed": 20260925,
+      "target_seed": 20260908
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_a_max",
+      "id": "A_FULL_20260925_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "source_id": "A_FULL_20260925",
+      "source_seed": 20260925,
+      "target_seed": 20260908
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_a_max",
+      "id": "A_STATIC_20260924_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "source_id": "A_STATIC_20260924",
+      "source_seed": 20260924,
+      "target_seed": 20260907
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_a_max",
+      "id": "A_STATIC_20260924_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "source_id": "A_STATIC_20260924",
+      "source_seed": 20260924,
+      "target_seed": 20260907
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_a_max",
+      "id": "A_STATIC_20260925_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "source_id": "A_STATIC_20260925",
+      "source_seed": 20260925,
+      "target_seed": 20260908
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_a_max",
+      "id": "A_STATIC_20260925_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "source_id": "A_STATIC_20260925",
+      "source_seed": 20260925,
+      "target_seed": 20260908
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_b_max",
+      "id": "B_FULL_20260924_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "source_id": "B_FULL_20260924",
+      "source_seed": 20260924,
+      "target_seed": 20260907
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_b_max",
+      "id": "B_FULL_20260924_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "source_id": "B_FULL_20260924",
+      "source_seed": 20260924,
+      "target_seed": 20260907
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_b_max",
+      "id": "B_FULL_20260925_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "source_id": "B_FULL_20260925",
+      "source_seed": 20260925,
+      "target_seed": 20260908
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_b_max",
+      "id": "B_FULL_20260925_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "source_id": "B_FULL_20260925",
+      "source_seed": 20260925,
+      "target_seed": 20260908
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_b_max",
+      "id": "B_STATIC_20260924_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "source_id": "B_STATIC_20260924",
+      "source_seed": 20260924,
+      "target_seed": 20260907
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_b_max",
+      "id": "B_STATIC_20260924_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "source_id": "B_STATIC_20260924",
+      "source_seed": 20260924,
+      "target_seed": 20260907
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_b_max",
+      "id": "B_STATIC_20260925_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "source_id": "B_STATIC_20260925",
+      "source_seed": 20260925,
+      "target_seed": 20260908
+    },
+    {
+      "arrivals": 1951,
+      "category": "new_b_max",
+      "id": "B_STATIC_20260925_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "source_id": "B_STATIC_20260925",
+      "source_seed": 20260925,
+      "target_seed": 20260908
+    },
+    {
+      "arrivals": 1951,
+      "category": "mlp",
+      "id": "CURRENT_MLP_None_20260924_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "source_id": "CURRENT_MLP_None_20260924",
+      "source_seed": 20260924,
+      "target_seed": 20260907
+    },
+    {
+      "arrivals": 1951,
+      "category": "mlp",
+      "id": "CURRENT_MLP_None_20260924_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "source_id": "CURRENT_MLP_None_20260924",
+      "source_seed": 20260924,
+      "target_seed": 20260907
+    },
+    {
+      "arrivals": 1951,
+      "category": "mlp",
+      "id": "CURRENT_MLP_None_20260925_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "source_id": "CURRENT_MLP_None_20260925",
+      "source_seed": 20260925,
+      "target_seed": 20260908
+    },
+    {
+      "arrivals": 1951,
+      "category": "mlp",
+      "id": "CURRENT_MLP_None_20260925_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "source_id": "CURRENT_MLP_None_20260925",
+      "source_seed": 20260925,
+      "target_seed": 20260908
+    },
+    {
+      "arm": "VPTTA_NATIVE",
+      "arrivals": 1951,
+      "category": "vptta",
+      "id": "VPTTA_NATIVE_20260907_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "target_seed": 20260907
+    },
+    {
+      "arm": "VPTTA_NATIVE",
+      "arrivals": 1951,
+      "category": "vptta",
+      "id": "VPTTA_NATIVE_20260907_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "target_seed": 20260907
+    },
+    {
+      "arm": "VPTTA_NATIVE",
+      "arrivals": 1951,
+      "category": "vptta",
+      "id": "VPTTA_NATIVE_20260908_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "target_seed": 20260908
+    },
+    {
+      "arm": "VPTTA_NATIVE",
+      "arrivals": 1951,
+      "category": "vptta",
+      "id": "VPTTA_NATIVE_20260908_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "target_seed": 20260908
+    },
+    {
+      "arm": "C_CTTA_FIXED_LR",
+      "arrivals": 1951,
+      "category": "c",
+      "id": "C_CTTA_FIXED_LR_20260907_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "target_seed": 20260907
+    },
+    {
+      "arm": "C_CTTA_FIXED_LR",
+      "arrivals": 1951,
+      "category": "c",
+      "id": "C_CTTA_FIXED_LR_20260907_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "target_seed": 20260907
+    },
+    {
+      "arm": "C_CTTA_FIXED_LR",
+      "arrivals": 1951,
+      "category": "c",
+      "id": "C_CTTA_FIXED_LR_20260908_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "target_seed": 20260908
+    },
+    {
+      "arm": "C_CTTA_FIXED_LR",
+      "arrivals": 1951,
+      "category": "c",
+      "id": "C_CTTA_FIXED_LR_20260908_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "target_seed": 20260908
+    },
+    {
+      "arm": "G_CTTA_RELEASE_TRANSFER",
+      "arrivals": 1951,
+      "category": "g",
+      "id": "G_CTTA_RELEASE_TRANSFER_20260907_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "target_seed": 20260907
+    },
+    {
+      "arm": "G_CTTA_RELEASE_TRANSFER",
+      "arrivals": 1951,
+      "category": "g",
+      "id": "G_CTTA_RELEASE_TRANSFER_20260907_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "target_seed": 20260907
+    },
+    {
+      "arm": "G_CTTA_RELEASE_TRANSFER",
+      "arrivals": 1951,
+      "category": "g",
+      "id": "G_CTTA_RELEASE_TRANSFER_20260908_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "target_seed": 20260908
+    },
+    {
+      "arm": "G_CTTA_RELEASE_TRANSFER",
+      "arrivals": 1951,
+      "category": "g",
+      "id": "G_CTTA_RELEASE_TRANSFER_20260908_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "target_seed": 20260908
+    },
+    {
+      "arm": "N_SOURCE_EVAL",
+      "arrivals": 1951,
+      "category": "zero",
+      "id": "N_SOURCE_EVAL_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "target_seed": null
+    },
+    {
+      "arm": "N_SOURCE_EVAL",
+      "arrivals": 1951,
+      "category": "zero",
+      "id": "N_SOURCE_EVAL_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "target_seed": null
+    },
+    {
+      "arm": "C0_CURRENT_STATS",
+      "arrivals": 1951,
+      "category": "zero",
+      "id": "C0_CURRENT_STATS_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "target_seed": null
+    },
+    {
+      "arm": "C0_CURRENT_STATS",
+      "arrivals": 1951,
+      "category": "zero",
+      "id": "C0_CURRENT_STATS_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "target_seed": null
+    },
+    {
+      "arm": "R7_C_FULL",
+      "arrivals": 1951,
+      "category": "r7_c",
+      "id": "R7_C_FULL_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "target_seed": null
+    },
+    {
+      "arm": "R7_C_FULL",
+      "arrivals": 1951,
+      "category": "r7_c",
+      "id": "R7_C_FULL_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "target_seed": null
+    },
+    {
+      "arm": "R7_C_STATIC",
+      "arrivals": 1951,
+      "category": "r7_c",
+      "id": "R7_C_STATIC_order0",
+      "order": 0,
+      "scored_contents": 1695,
+      "target_seed": null
+    },
+    {
+      "arm": "R7_C_STATIC",
+      "arrivals": 1951,
+      "category": "r7_c",
+      "id": "R7_C_STATIC_order1",
+      "order": 1,
+      "scored_contents": 1695,
+      "target_seed": null
+    }
+  ]
+}

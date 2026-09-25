@@ -1,3 +1,4 @@
+from dpa_ctta.r8_ba.scope import SCREEN, GRAPH_PATH, SPEC_PATH, SOURCE_JOBS, TARGET_JOBS
 """Detached fixed-matrix scheduler. Worker commands contain only neutral paths."""
 import fcntl
 import hashlib
@@ -26,6 +27,8 @@ def write(path, value):
 
 def main():
     launch = json.loads(Path(os.environ['R8_QUEUE_CONFIG']).read_text())
+    if launch.get('scope','FULL') != ('SCREEN24' if SCREEN else 'FULL'):
+        raise ValueError('R8 queue scope binding')
     verify(launch, ROOT)
     run = Path(launch['run_root']).resolve()
     package = SOURCE_ROOT.parent
@@ -34,11 +37,11 @@ def main():
     run.mkdir(parents=True, exist_ok=True)
     lock = (run / 'queue.lock').open('a+')
     fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-    graph = json.loads((ROOT / 'docs/review/r8/TASK_GRAPH.static.json').read_text())
-    configs = json.loads((ROOT / 'docs/review/r8/input/R8_EXPERIMENT_SPEC.json').read_text())['configs']
+    graph = json.loads(GRAPH_PATH.read_text())
+    configs = json.loads(SPEC_PATH.read_text())['configs']
     work, cpu_deps = tasks(graph)
     identity = dict(code_sha=launch['code_sha'], protocol_sha256=PROTOCOL_SHA256,
-                    graph_sha256=digest(ROOT / 'docs/review/r8/TASK_GRAPH.static.json'))
+                    graph_sha256=digest(GRAPH_PATH))
     report = json.loads(Path(launch['admission']['path']).read_text())
     if (digest(launch['admission']['path']) != launch['admission']['sha256'] or
             report['identity'] != identity or report['projection']['status'] != 'WITHIN_PROPOSED_CAPS' or
@@ -61,7 +64,7 @@ def main():
             raise RuntimeError('R8 prior queue has unreconciled running workers')
     else:
         ledger.create(report['prior_cost'], report['prior_evidence'])
-        state = dict(schema='R8_QUEUE_V1', identity=identity,
+        state = dict(schema='R8_QUEUE_V1', scope='SCREEN24' if SCREEN else 'FULL', started_unix=time.time(), identity=identity,
                      launch_sha256=digest(os.environ['R8_QUEUE_CONFIG']), status='RUNNING',
                      tasks={row['id']: dict(status='PENDING', attempts=[]) for row in work},
                      cpu={key: 'PENDING' for key in cpu_deps})
@@ -72,6 +75,10 @@ def main():
     target_dir.mkdir(parents=True, exist_ok=True)
     roots = {row['id']: str(source_dir / row['id']) for row in work if row['kind'] == 'SOURCE_JOB'}
     by_config = {row['id']: row for row in configs}
+    if SCREEN:
+        write(source_dir / 'predeclared.json', dict(schema='R8_SOURCE_ONLY_GRID_SELECTION_V1',
+              protocol_sha256=PROTOCOL_SHA256, selected_config={c['route']:c['id'] for c in configs},
+              selection_kind='user-authorized predeclared configurations'))
     active = {}
     stopped = False
     def stop_signal(*_):
@@ -82,7 +89,16 @@ def main():
     def done(key):
         return state['cpu'].get(key) == 'COMPLETE' or state['tasks'].get(key, {}).get('status') == 'COMPLETE'
     def run_cpu(key):
-        if key == 'grid_selection':
+        if SCREEN and key == 'oracle_0.3':
+            from dpa_ctta.r8_ba.oracle_shards import merge
+            identity = dict(code_sha=launch['code_sha'], protocol_sha256=PROTOCOL_SHA256,
+                refs=launch['refs'],checkpoint_sha256=bound['docs']['manifest']['checkpoint']['sha256'],amplitude=0.3)
+            merge(source_dir / 'oracle_0.3', [source_dir / f'oracle_shard_{i}' for i in range(3)],
+                  identity, bound['docs']['split']['folds'])
+        elif SCREEN and key == 'grid_selection':
+            from dpa_ctta.r8_ba.screen import select_grid
+            write(source_dir / 'selection.json', select_grid(graph,configs,roots,launch['code_sha']))
+        elif key == 'grid_selection':
             grid_roots = {k: roots[k] for k in cpu_deps[key]}
             costs = {}
             for candidate in configs:
@@ -97,7 +113,7 @@ def main():
         elif key == 'source_index':
             selection = json.loads((source_dir / 'selection.json').read_text())
             basis_refs = {}
-            for amplitude in ('0.1', '0.3'):
+            for amplitude in (('0.3',) if SCREEN else ('0.1', '0.3')):
                 directory = source_dir / ('bases_' + amplitude)
                 basis_refs[amplitude] = dict(root=str(directory), identity=json.loads((directory / 'worker_complete.json').read_text())['identity'])
             result = source_index(graph, configs, selection, roots, launch['code_sha'], launch['refs'],
@@ -105,8 +121,12 @@ def main():
             write(source_dir / 'source_index.json', result)
         else:
             path = source_dir / 'source_index.json'
-            result = lock_targets(json.loads(path.read_text()), digest(path), source_dir / 'gradient_lr',
-                                  {a: str(source_dir / ('capacity_' + a)) for a in ('0.1', '0.3')})
+            if SCREEN:
+                from dpa_ctta.r8_ba.screen import lock_targets as lock_screen
+                result = lock_screen(json.loads(path.read_text()), digest(path), source_dir / 'capacity_0.3')
+            else:
+                result = lock_targets(json.loads(path.read_text()), digest(path), source_dir / 'gradient_lr',
+                                      {a: str(source_dir / ('capacity_' + a)) for a in ('0.1', '0.3')})
             write(source_dir / 'artifact_lock.json', result)
         state['cpu'][key] = 'COMPLETE'
         write(state_path, state)
@@ -118,10 +138,12 @@ def main():
             value['amplitude'] = row['amplitude']
             value['oracle_root'] = str(source_dir / ('oracle_' + str(row['amplitude'])))
             value['bases_root'] = str(source_dir / ('bases_' + str(row['amplitude'])))
+        if row['kind'] == 'ORACLE_SHARD':
+            value['shard'] = int(row['id'].rsplit('_',1)[1])
         if row['kind'] == 'SOURCE_JOB':
             cid = job['config']
             if job['stage'] != 'SOURCE_GRID':
-                selection = source_dir / 'selection.json'
+                selection = source_dir / ('predeclared.json' if SCREEN else 'selection.json')
                 route = 'B' if job['stage'] == 'SOURCE_MLP' else job['arm']
                 cid = json.loads(selection.read_text())['selected_config'][route]
                 value['selection_path'] = str(selection)
@@ -147,6 +169,8 @@ def main():
         return value
     try:
         while True:
+            if SCREEN and time.time()-state['started_unix'] >= 24*3600:
+                raise RuntimeError('R8 SCREEN24 wall deadline reached; preserve incomplete jobs')
             if stopped:
                 raise RuntimeError('R8 queue interrupted; preserve all reservations')
             ledger.snapshot()
@@ -187,7 +211,7 @@ def main():
             for gpu in (5, 6, 7):
                 if gpu in active:
                     continue
-                ready = next((r for r in work if state['tasks'][r['id']]['status'] == 'PENDING' and
+                ready = next((r for r in sorted(work, key=lambda item: -report['budgets'][item['id']]['gpu_seconds']) if state['tasks'][r['id']]['status'] == 'PENDING' and
                               all(done(dep) for dep in r['dependencies'])), None)
                 if ready is None:
                     continue

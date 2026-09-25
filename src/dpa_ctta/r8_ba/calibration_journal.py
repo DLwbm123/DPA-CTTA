@@ -9,7 +9,7 @@ import torch
 
 from ..r7_shared.numerics import COUNTS
 from .journal import SourceJournal, _digest, _replace, _sync_dir, _reject_recorded_noninfra_failure
-from .trainer import SAVE_STEPS
+from .trainer import SAVE_STEPS, MAX_STEPS
 
 
 class CalibrationJournal:
@@ -28,7 +28,7 @@ class CalibrationJournal:
         selected = self.job_root / f"selected.{self.source_step}.pt"
         if (fit.get("schema") != "R8_SOURCE_FIT_COMPLETE_V1" or
                 fit.get("binding") != self.calibrator.binding or
-                fit.get("steps") != 16000 or
+                fit.get("steps") != MAX_STEPS or
                 fit["selected_sha256"].get(str(self.source_step)) != _digest(selected)):
             raise ValueError("R8 calibration fit/source point binding")
         return dict(binding=self.calibrator.binding, source_step=self.source_step,

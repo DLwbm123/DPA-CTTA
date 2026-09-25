@@ -1,3 +1,4 @@
+from dpa_ctta.r8_ba.scope import SCREEN, GRAPH_PATH, SPEC_PATH, SOURCE_JOBS, TARGET_JOBS
 """Run one frozen R8 source job through fit, calibration, and source validation."""
 import hashlib
 import io
@@ -21,7 +22,7 @@ from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.resources import CAPS
 from dpa_ctta.r8_ba.scaler_journal import load_scaler
 from dpa_ctta.r8_ba.source_run import run_calibration, run_fit
-from dpa_ctta.r8_ba.trainer import SAVE_STEPS, SourceTrainer
+from dpa_ctta.r8_ba.trainer import SAVE_STEPS, MAX_STEPS, SourceTrainer
 from dpa_ctta.r8_ba.validation_journal import load_validation, run_validation
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -42,10 +43,10 @@ def _marker(root, schema, identity, receipt_name, hash_key):
 
 
 def _job_and_config(config):
-    graph = json.loads((ROOT / "docs/review/r8/TASK_GRAPH.static.json").read_text())
-    spec = json.loads((ROOT / "docs/review/r8/input/R8_EXPERIMENT_SPEC.json").read_text())
+    graph = json.loads(GRAPH_PATH.read_text())
+    spec = json.loads(SPEC_PATH.read_text())
     if (graph.get("schema") != "R8_STATIC_TASK_GRAPH_V1" or
-            graph.get("source_training_jobs") != 65 or graph.get("target_jobs") != 724 or
+            graph.get("source_training_jobs") != SOURCE_JOBS or graph.get("target_jobs") != TARGET_JOBS or
             graph.get("protocol_sha256") != PROTOCOL_SHA256):
         raise ValueError("R8 full frozen task graph")
     matches = [row for row in graph["jobs"] if row["id"] == config.get("job_id")]
@@ -72,7 +73,7 @@ def _job_and_config(config):
             raise ValueError("R8 source-selected config identity")
         selection_sha256 = digest(selection_path)
     if (job["source_seed"] != config.get("source_seed") or
-            job["mode"] != config.get("mode") or job["fit_steps"] != 16000):
+            job["mode"] != config.get("mode") or job["fit_steps"] != MAX_STEPS):
         raise ValueError("R8 source seed/mode identity")
     return graph, job, candidate, selection_sha256
 
@@ -83,7 +84,7 @@ def _complete_fit(root, trainer):
     if (receipt.get("schema") != "R8_SOURCE_FIT_COMPLETE_V1" or
             receipt.get("binding") != trainer.binding or
             receipt.get("source_seed") != trainer.source_seed or
-            receipt.get("steps") != 16000 or
+            receipt.get("steps") != MAX_STEPS or
             receipt.get("physical_sha256") != digest(root / "physical.jsonl")):
         raise ValueError("R8 fit completion identity")
     for step in SAVE_STEPS:

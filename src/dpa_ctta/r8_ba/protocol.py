@@ -12,6 +12,7 @@ if (DECISIONS["schema"] != "R8_PROTOCOL_DECISIONS_V1" or
             optimizer="Adam", lr=0.03, betas=[0.9, 0.999], eps=1e-8,
             weight_decay=0.0, steps=128)):
     raise ValueError("R8 frozen protocol decisions changed")
-PROTOCOL_SHA256 = hashlib.sha256(_raw).hexdigest()
+from .scope import SCREEN, SPEC_PATH
+PROTOCOL_SHA256 = hashlib.sha256(_raw + (SPEC_PATH.read_bytes() if SCREEN else b"" )).hexdigest()
 CAPACITY_OPTIMIZER = DECISIONS["capacity_probe_direct_latent"]
 SELECTION_METRIC = DECISIONS["source_val_selection_metric"]

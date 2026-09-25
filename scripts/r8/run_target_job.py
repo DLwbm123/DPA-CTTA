@@ -1,3 +1,4 @@
+from dpa_ctta.r8_ba.scope import SCREEN, GRAPH_PATH, SPEC_PATH, SOURCE_JOBS, TARGET_JOBS
 """One registered R8 online trajectory, with no target mask reader in this phase."""
 import hashlib
 import json
@@ -20,8 +21,8 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def inputs(config):
-    graph = json.loads((ROOT / "docs/review/r8/TASK_GRAPH.static.json").read_text())
-    candidates = json.loads((ROOT / "docs/review/r8/input/R8_EXPERIMENT_SPEC.json").read_text())["configs"]
+    graph = json.loads(GRAPH_PATH.read_text())
+    candidates = json.loads(SPEC_PATH.read_text())["configs"]
     matches = [job for job in graph["jobs"] if job["id"] == config.get("job_id") and job["arrivals"]]
     if (len(matches) != 1 or graph.get("protocol_sha256") != PROTOCOL_SHA256 or
             config.get("protocol_sha256") != PROTOCOL_SHA256):

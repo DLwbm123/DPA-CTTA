@@ -9,7 +9,7 @@ from pathlib import Path
 import torch
 
 from ..r7_shared.numerics import COUNTS
-from .trainer import SAVE_STEPS
+from .trainer import SAVE_STEPS, MAX_STEPS
 
 
 def _digest(path, size=None):
@@ -320,7 +320,7 @@ class SourceJournal:
         return expected
 
     def complete(self):
-        if self.trainer.steps != 16000 or (self.root / "fit_complete.json").exists():
+        if self.trainer.steps != MAX_STEPS or (self.root / "fit_complete.json").exists():
             raise ValueError("R8 source fit not complete")
         raw = self.physical.read_bytes()
         recovery_path = self.root / "recovery.json"
@@ -338,7 +338,7 @@ class SourceJournal:
             final = self._check_steps(raw[cut:], recovery["steps"] + 1)
         else:
             final = self._check_steps(raw, 1)
-        if final != 16001:
+        if final != MAX_STEPS + 1:
             raise ValueError("R8 source physical completion coverage")
         selected = {}
         final_config = self.trainer.snapshot()["method_config"]
@@ -346,7 +346,7 @@ class SourceJournal:
             snapshot = self.selected(step)
             if snapshot["method_config"] != final_config:
                 raise ValueError("R8 selected source configuration mismatch")
-            if step == 16000 and snapshot["method_digest"] != self.trainer.method.digest():
+            if step == MAX_STEPS and snapshot["method_digest"] != self.trainer.method.digest():
                 raise ValueError("R8 final source method digest mismatch")
             selected[str(step)] = _digest(self.root / f"selected.{step}.pt")
         receipt = dict(schema="R8_SOURCE_FIT_COMPLETE_V1", binding=self.trainer.binding,
