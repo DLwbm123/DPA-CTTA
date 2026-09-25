@@ -109,7 +109,7 @@ class Calibrator:
 
 
 @torch.no_grad()
-def validate_episode(segmenter, method, data, val_oracles, episode):
+def validate_episode(segmenter, method, data, val_oracles, episode, on_visit=None):
     val_oracles.validate(data)
     if val_oracles.fold != "val" or val_oracles.amplitude != segmenter.amplitude or method.stage != "online":
         raise ValueError("R8 validation source/amplitude/stage")
@@ -130,6 +130,8 @@ def validate_episode(segmenter, method, data, val_oracles, episode):
         dice.append(channel.mean().item())
         zstar = method.project(val_oracles.values[:, anchor])
         proxy.append((method.code(state) - zstar).square().mean().item())
+        if on_visit is not None:
+            on_visit(visit + 1)
     return dict(episode=episode, curriculum=curriculum, severity=severity,
                 soft_Dice=sum(dice) / 32, proxy_MSE=sum(proxy) / 32, group_reuse=reuse)
 
