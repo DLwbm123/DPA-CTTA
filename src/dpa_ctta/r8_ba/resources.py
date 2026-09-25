@@ -14,7 +14,7 @@ MEASURES = tuple(CAPS) + ("peak_gpu_bytes",)
 def json_size_bound(value):
     """JSON size bound for fixed-schema records and registered string fields."""
     if value is None:
-        return 32  # Nullable metric fields may contain a finite float on another image.
+        return 25  # Nullable metric fields may contain a finite float on another image.
     if type(value) is bool:
         return 5
     if type(value) is int:
@@ -22,7 +22,7 @@ def json_size_bound(value):
     if type(value) is float:
         if not math.isfinite(value):
             raise ValueError("R8 nonfinite record template")
-        return 32
+        return 25  # Finite binary64 JSON decimals use at most 24 characters.
     if isinstance(value, str):
         return len(json.dumps(value).encode())
     if isinstance(value, (list, tuple)):

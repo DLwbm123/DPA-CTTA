@@ -12,6 +12,7 @@ from dpa_ctta.r8_ba.execution_plan import tasks
 from dpa_ctta.r8_ba.inputs import bind_metadata
 from dpa_ctta.r8_ba.journal import _replace
 from dpa_ctta.r8_ba.ledger import Ledger
+from dpa_ctta.r8_ba.launch_binding import verify
 from dpa_ctta.r8_ba.paths import SOURCE_ROOT, TARGET_ROOT
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.source_artifacts import digest, select_completed_grid, source_index, lock_targets
@@ -25,6 +26,7 @@ def write(path, value):
 
 def main():
     launch = json.loads(Path(os.environ['R8_QUEUE_CONFIG']).read_text())
+    verify(launch, ROOT)
     run = Path(launch['run_root']).resolve()
     package = SOURCE_ROOT.parent
     if not run.is_relative_to(package / 'runs') or run == package / 'runs':
@@ -45,7 +47,9 @@ def main():
     bound = bind_metadata(launch['refs'])
     common = dict(code_sha=launch['code_sha'], protocol_sha256=PROTOCOL_SHA256,
                   refs=launch['refs'], source_root=launch['source_root'], target_root=launch['target_root'],
-                  checkpoint_path=launch['checkpoint_path'])
+                  checkpoint_path=launch['checkpoint_path'], code_inventory=launch['code_inventory'],
+                  gpu_uuids=launch['gpu_uuids'], required_gpu_bytes=launch['required_gpu_bytes'],
+                  environment=launch['environment'])
     ledger = Ledger(run / 'ledger', identity)
     state_path = run / 'queue.json'
     if state_path.exists():

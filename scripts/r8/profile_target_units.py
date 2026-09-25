@@ -3,6 +3,7 @@ import io
 import json
 import os
 import time
+import tempfile
 from pathlib import Path
 
 import numpy as np
@@ -25,6 +26,8 @@ from dpa_ctta.r8_ba.oracles import Oracles
 from dpa_ctta.r8_ba.native_host import NativeHost
 from dpa_ctta.r8_ba.r7_control import FrozenR7Host
 from dpa_ctta.r8_ba.resources import json_size_bound
+from dpa_ctta.r7_target_screen.runner import TargetReader
+from dpa_ctta.r3.plan import stream as registered_stream
 from dpa_ctta.source_pilot import SourceOnlyHost
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 
@@ -156,6 +159,18 @@ def main():
                 name = "r7_c_" + mode.lower()
                 measure(name, 2, lambda host=r7_host: [host.step(image)[1] for _ in range(2)])
                 storage(name, r7_host)
+                buffer = io.BytesIO()
+                torch.save(r7_host.snapshot(), buffer)
+                packet = torch.load(io.BytesIO(buffer.getvalue()), map_location="cpu", weights_only=True)
+                before = COUNTS.copy()
+                first, trace = r7_host.step(image)
+                extra = COUNTS - before
+                r7_host.restore(packet)
+                second, restored_trace = r7_host.step(image)
+                if not torch.equal(first, second) or trace != restored_trace:
+                    raise ValueError("R8 frozen R7 control continuation mismatch")
+                COUNTS.update(extra)
+                result.setdefault("recovery", {})[name] = "EXACT_CONTINUATION_MATCH"
                 r7_cost.append(result["units"].pop(name))
             result["units"]["r7_c"] = max(r7_cost, key=lambda row: row["seconds"] / row["sample_units"])
             result["units"]["r7_c"]["detail"] = "slower of exact frozen C_FULL/C_STATIC artifacts"
@@ -168,18 +183,33 @@ def main():
 
         # Target scoring runs only after the online receipt seals and releases its GPU.
         # Source masks exercise the same CPU evaluator without exposing a target label.
-        probability = torch.full_like(label, 0.5)
-        start_score = time.monotonic()
-        score_detail = evaluate(probability, label, "fundus")
-        result["units"]["score_visit"] = dict(sample_units=1,
-                                                seconds=time.monotonic() - start_score,
-                                                counts={}, peak_gpu_bytes=0,
-                                                gpu_seconds=0,
-                                                detail=score_detail)
+        # Same mask decoder, packed-prediction reader, metric evaluator and durable
+        # scalar writes, using SOURCE masks only before the target artifact lock.
+        records = bound["docs"]["manifest"]["records"][:20]
+        reader = TargetReader(config["source_root"], 256*1024**2, "mask")
+        with tempfile.TemporaryDirectory(prefix="score-profile-", dir=Path(config["output"]).parent) as tmp:
+            bits_path = Path(tmp) / "bits.bin"
+            bits_path.write_bytes(bytes([255])*65536*len(records))
+            start_score = time.monotonic()
+            with bits_path.open("rb") as predictions, (Path(tmp)/"scalars.jsonl").open("w") as output:
+                for record in records:
+                    bits = np.unpackbits(np.frombuffer(predictions.read(65536), dtype=np.uint8)).copy()
+                    probability = torch.from_numpy(bits).float().reshape(1,2,512,512)
+                    score_detail = evaluate(probability, reader.read(record), "fundus")
+                    output.write(json.dumps(score_detail) + "\n")
+                    output.flush()
+                    os.fsync(output.fileno())
+            reader.after_check()
+            result["units"]["score_visit"] = dict(sample_units=len(records),
+                seconds=time.monotonic()-start_score, counts={}, peak_gpu_bytes=0,
+                detail="source masks, packed predictions, CPU metrics, NAS scalar writes")
         graph = json.loads((Path(__file__).resolve().parents[2] / "docs/review/r8/TASK_GRAPH.static.json").read_text())
+        registered = registered_stream(bound["docs"]["target"], 0)
         result.setdefault("record_bytes", {})["score_visit"] = json_size_bound(dict(
             visit=1, cycle=1, cycle_visit=1, arm="X" * max(len(job["arm"]) for job in graph["jobs"]),
-            order=1, content="0" * 64, domain="X" * 64, subset="remaining_dev", metrics=score_detail)) + 1
+            order=1, content=max((row["group_id"] for row in registered), key=lambda x: len(json.dumps(x))),
+            domain=max((row["domain"] for row in registered), key=lambda x: len(json.dumps(x))),
+            subset="remaining_dev", metrics=score_detail)) + 1
         state = torch.load(io.BytesIO(raw), map_location="cpu", weights_only=True)
         for arm, name in (("VPTTA_NATIVE", "vptta"), ("C_CTTA_FIXED_LR", "c"),
                           ("G_CTTA_RELEASE_TRANSFER", "g"), ("N_SOURCE_EVAL", "n_source")):

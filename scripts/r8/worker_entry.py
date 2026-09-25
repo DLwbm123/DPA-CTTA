@@ -9,6 +9,7 @@ from dpa_ctta.r8_ba.ledger import Ledger
 from dpa_ctta.r8_ba.paths import owned_source_path, owned_target_path
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.worker_budget import WorkerBudget
+from dpa_ctta.r8_ba.launch_binding import verify
 
 ROOT = Path(__file__).resolve().parents[2]
 ENTRIES = {"R8_ORACLE_WORK_V1": "run_oracles.py", "R8_SCALER_WORK_V1": "run_scaler.py",
@@ -21,6 +22,7 @@ def main():
     config = json.loads(Path(os.environ["R8_WORK_CONFIG"]).read_text())
     if config.get("schema") not in ENTRIES:
         raise ValueError("R8 worker entry not implemented for this stage")
+    verify(config, ROOT)
     row = config["execution_ledger"]
     expected = dict(code_sha=config["code_sha"], protocol_sha256=PROTOCOL_SHA256,
                     graph_sha256=hashlib.sha256((ROOT / "docs/review/r8/TASK_GRAPH.static.json").read_bytes()).hexdigest())
