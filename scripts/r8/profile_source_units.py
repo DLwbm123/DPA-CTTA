@@ -11,7 +11,7 @@ from dpa_ctta.r7_shared.source import pooled_jacobian, simulate
 from dpa_ctta.r8_ba.calibration import Calibrator, validate_episode
 from dpa_ctta.r8_ba.capacity import capacity_one
 from dpa_ctta.r8_ba.inputs import bind_metadata, open_source
-from dpa_ctta.r8_ba.methods import build
+from dpa_ctta.r8_ba.methods import CurrentMLP, build
 from dpa_ctta.r8_ba.oracles import Oracles
 from dpa_ctta.r8_ba.schedule import anchors
 from dpa_ctta.r8_ba.trainer import SourceTrainer
@@ -50,10 +50,20 @@ def main():
                     start = time.monotonic()
                     call()
                     torch.cuda.synchronize()
-                    result["units"][name] = dict(sample_units=sample_units,
-                                                  seconds=time.monotonic() - start,
-                                                  counts=dict(COUNTS - before),
-                                                  peak_gpu_bytes=torch.cuda.max_memory_allocated())
+                    row = dict(sample_units=sample_units, seconds=time.monotonic() - start,
+                               counts=dict(COUNTS - before),
+                               peak_gpu_bytes=torch.cuda.max_memory_allocated())
+                    result.setdefault("observations", {}).setdefault(name, []).append(row)
+                    previous = result["units"].get(name)
+                    if previous is not None:
+                        if previous["sample_units"] != sample_units:
+                            raise ValueError("R8 profile variant sample units")
+                        row = dict(sample_units=sample_units,
+                                   seconds=max(previous["seconds"], row["seconds"]),
+                                   peak_gpu_bytes=max(previous["peak_gpu_bytes"], row["peak_gpu_bytes"]),
+                                   counts={key: max(previous["counts"].get(key, 0), row["counts"].get(key, 0))
+                                           for key in previous["counts"].keys() | row["counts"].keys()})
+                    result["units"][name] = row
 
                 names = {fold: sorted(data.folds[fold]) for fold in ("fit", "cal", "val")}
                 def synthetic_oracles(fold):
@@ -99,24 +109,34 @@ def main():
                 measure("scaler_observation", 4, observe_scaler)
                 measure("basis_vjp", 32,
                         lambda: pooled_jacobian(segmenter, data, names["fit"][:1]))
-                method_config = dict(id="B_expanded_global_aux1p0", route="B", rank=64,
-                                     film_amplitude=0.3, observer="global", aux_multiplier=1.0)
+                # A has three backbone forwards per visit; B and MLP have two.
+                # Measure each family rather than treating the B64 step as universal.
+                for route, observation in (("a", "R7_dual_codebook"), ("b", "global"),
+                                           ("b", "current_tokens"), ("mlp", "global"),
+                                           ("mlp", "current_tokens")):
+                    rank = 32 if route == "a" else 64
+                    method_config = dict(id=f"PROFILE_{route}", route=route.upper(), rank=rank,
+                                         film_amplitude=0.3, observer=observation, aux_multiplier=1.0)
 
-                def new_method():
-                    method = build(method_config, basis)
-                    method.observer.fit_scaler(torch.stack(scaler_rows), "fit")
-                    return method
+                    def new_method():
+                        method = (CurrentMLP(basis, 0.3, observation) if route == "mlp" else
+                                  build(method_config, basis[:, :rank]))
+                        method.observer.fit_scaler(torch.stack(scaler_rows), "fit")
+                        return method
 
-                trainer = SourceTrainer(segmenter, new_method(), data, fit, 20260924,
-                                        "R8_PROFILE_SYNTHETIC_ORACLE")
-                measure("source_fit_step", 1, trainer.fit_step)
-                calibrator = Calibrator(segmenter, new_method(), data, cal,
-                                        "R8_PROFILE_SYNTHETIC_ORACLE")
-                measure("source_cal_step", 1, calibrator.step)
-                online_method = new_method()
-                online_method.freeze()
-                measure("source_val_visit", 32,
-                        lambda: validate_episode(segmenter, online_method, data, val, 0))
+                    trainer = SourceTrainer(segmenter, new_method(), data, fit, 20260924,
+                                            "R8_PROFILE_SYNTHETIC_ORACLE")
+                    # Four consecutive chunks cover a complete recurrent episode.
+                    measure(f"source_fit_{route}_step", 4,
+                            lambda: [trainer.fit_step() for _ in range(4)])
+                    if route != "mlp":
+                        calibrator = Calibrator(segmenter, new_method(), data, cal,
+                                                "R8_PROFILE_SYNTHETIC_ORACLE")
+                        measure(f"source_cal_{route}_step", 1, calibrator.step)
+                    online_method = new_method()
+                    online_method.freeze()
+                    measure(f"source_val_{route}_visit", 32,
+                            lambda: validate_episode(segmenter, online_method, data, val, 0))
                 result["io_counts"] = dict(io_counts)
             finally:
                 hook.remove()

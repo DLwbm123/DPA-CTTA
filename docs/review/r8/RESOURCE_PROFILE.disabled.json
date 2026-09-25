@@ -22,9 +22,14 @@
     "r7_c": 19510,
     "scaler_observation": 56832,
     "score_visit": 2325592,
-    "source_cal_step": 307200,
-    "source_fit_step": 1040000,
-    "source_val_visit": 665600,
+    "source_cal_a_step": 112640,
+    "source_cal_b_step": 194560,
+    "source_fit_a_step": 352000,
+    "source_fit_b_step": 608000,
+    "source_fit_mlp_step": 80000,
+    "source_val_a_visit": 225280,
+    "source_val_b_visit": 389120,
+    "source_val_mlp_visit": 51200,
     "vptta": 156080,
     "zero": 62432
   },
@@ -205,7 +210,7 @@
       "sample_units": 0,
       "vjp_calls": null
     },
-    "source_cal_step": {
+    "source_cal_a_step": {
       "backward_calls": null,
       "disk_bytes": null,
       "gpu_seconds": null,
@@ -216,7 +221,7 @@
       "sample_units": 0,
       "vjp_calls": null
     },
-    "source_fit_step": {
+    "source_cal_b_step": {
       "backward_calls": null,
       "disk_bytes": null,
       "gpu_seconds": null,
@@ -227,7 +232,62 @@
       "sample_units": 0,
       "vjp_calls": null
     },
-    "source_val_visit": {
+    "source_fit_a_step": {
+      "backward_calls": null,
+      "disk_bytes": null,
+      "gpu_seconds": null,
+      "measured": false,
+      "model_forwards": null,
+      "optimizer_steps": null,
+      "peak_gpu_bytes": null,
+      "sample_units": 0,
+      "vjp_calls": null
+    },
+    "source_fit_b_step": {
+      "backward_calls": null,
+      "disk_bytes": null,
+      "gpu_seconds": null,
+      "measured": false,
+      "model_forwards": null,
+      "optimizer_steps": null,
+      "peak_gpu_bytes": null,
+      "sample_units": 0,
+      "vjp_calls": null
+    },
+    "source_fit_mlp_step": {
+      "backward_calls": null,
+      "disk_bytes": null,
+      "gpu_seconds": null,
+      "measured": false,
+      "model_forwards": null,
+      "optimizer_steps": null,
+      "peak_gpu_bytes": null,
+      "sample_units": 0,
+      "vjp_calls": null
+    },
+    "source_val_a_visit": {
+      "backward_calls": null,
+      "disk_bytes": null,
+      "gpu_seconds": null,
+      "measured": false,
+      "model_forwards": null,
+      "optimizer_steps": null,
+      "peak_gpu_bytes": null,
+      "sample_units": 0,
+      "vjp_calls": null
+    },
+    "source_val_b_visit": {
+      "backward_calls": null,
+      "disk_bytes": null,
+      "gpu_seconds": null,
+      "measured": false,
+      "model_forwards": null,
+      "optimizer_steps": null,
+      "peak_gpu_bytes": null,
+      "sample_units": 0,
+      "vjp_calls": null
+    },
+    "source_val_mlp_visit": {
       "backward_calls": null,
       "disk_bytes": null,
       "gpu_seconds": null,

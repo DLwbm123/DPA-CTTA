@@ -45,14 +45,17 @@ def units(graph):
                      capacity_step=2 * 4 * 64 * 128,
                      scaler_observation=512 * 111,
                      basis_vjp=2048,
-                     source_fit_step=65 * 16000,
-                     source_cal_step=60 * 5 * 1024,
-                     source_val_visit=65 * 5 * 64 * 32,
                      gradient_lr_visit=3 * 3 * 2 * 64 * 4,
                      score_visit=graph["target_arrivals"])
     for job in graph["jobs"]:
         if job["arrivals"]:
             result[category(job)] += job["arrivals"]
+        else:
+            route = "mlp" if job["stage"] == "SOURCE_MLP" else job["arm"].lower()
+            result[f"source_fit_{route}_step"] += 16000
+            result[f"source_val_{route}_visit"] += 5 * 64 * 32
+            if route != "mlp":
+                result[f"source_cal_{route}_step"] += 5 * 1024
     return result
 
 

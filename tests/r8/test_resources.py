@@ -13,6 +13,10 @@ class TestResources(unittest.TestCase):
         spec.loader.exec_module(module)
         graph = module.build()
         weights = units(graph)
+        self.assertEqual(weights["source_fit_a_step"], 22 * 16000)
+        self.assertEqual(weights["source_fit_b_step"], 38 * 16000)
+        self.assertEqual(weights["source_fit_mlp_step"], 5 * 16000)
+        self.assertNotIn("source_fit_step", weights)
         self.assertEqual(CAPS["backward_calls"], 4_500_000)
         self.assertEqual(CAPS["optimizer_steps"], 4_000_000)
         self.assertEqual(sum(weights[k] for k in weights if k in
