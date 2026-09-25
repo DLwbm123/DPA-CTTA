@@ -25,6 +25,7 @@ class WorkerBudget:
         self.maximum_seconds = maximum_seconds
         self.observed = dict.fromkeys(CAPS, 0)
         self.started = time.monotonic()
+        self.baseline_disk_bytes = self._disk()
         self.last_shared_check = float("-inf")
         self.handles, self.models = [], set()
         self.done = threading.Event()
@@ -52,7 +53,7 @@ class WorkerBudget:
             self.ledger.stop("worker reservation exhausted: " + self.attempt_id)
             raise RuntimeError("R8 GLOBAL STOP: worker reservation")
         if now - self.last_shared_check >= 1:
-            self.observed["disk_bytes"] = max(self.observed["disk_bytes"], self._disk())
+            self.observed["disk_bytes"] = max(self.observed["disk_bytes"], self._disk() - self.baseline_disk_bytes)
             self.ledger.guard(self.attempt_id, self.observed)
             self.last_shared_check = now
 
@@ -69,7 +70,7 @@ class WorkerBudget:
         path = Path(path).resolve()
         if not path.is_relative_to(self.root):
             return  # Ledger metadata lives in its own pre-reserved launch directory.
-        self.observed["disk_bytes"] = max(self.observed["disk_bytes"], self._disk() + size)
+        self.observed["disk_bytes"] = max(self.observed["disk_bytes"], self._disk() + size - self.baseline_disk_bytes)
         self()
 
     def _deadline(self):
@@ -114,12 +115,16 @@ class WorkerBudget:
         torch.autograd.backward, torch.autograd.grad = self.backward, self.grad
         ACTIVE = None
         self.observed["gpu_seconds"] = time.monotonic() - self.started
-        self.observed["disk_bytes"] = max(self.observed["disk_bytes"], self._disk())
+        retained_disk = max(0, self._disk() - self.baseline_disk_bytes)
+        peak_disk = max(self.observed["disk_bytes"], retained_disk)
+        self.observed["disk_bytes"] = retained_disk
         # Failed attempts keep the full reservation. The measured attempt counters
         # are supplementary evidence; recovery must reserve fresh capacity.
         path = self.ledger.root / ("attempt-" + self.attempt_id + ".json")
         with path.open("x") as stream:
             json.dump(dict(schema="R8_PHYSICAL_ATTEMPT_V1", observed=self.observed,
+                           baseline_disk_bytes=self.baseline_disk_bytes,
+                           peak_disk_bytes=peak_disk,
                            status="COMPLETE" if kind is None else "FAILED",
                            error_type=None if kind is None else kind.__name__), stream, sort_keys=True)
             stream.flush()

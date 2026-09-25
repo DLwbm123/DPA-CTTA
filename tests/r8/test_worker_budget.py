@@ -22,12 +22,15 @@ class TestWorkerBudget(unittest.TestCase):
                           optimizer_steps=10, vjp_calls=10, disk_bytes=1024**2)
             ledger.reserve("a1", 5, budget)
             model = torch.nn.Linear(1, 1)
+            (root / "job").mkdir()
+            (root / "job" / "prior-stage-output").write_bytes(bytes(4096))
             optimizer = torch.optim.Adam(model.parameters())
             backward, grad = torch.autograd.backward, torch.autograd.grad
             with patch("os.getpid", return_value=123), patch("os.getpgrp", return_value=123), \
                     patch.dict("os.environ", {"CUDA_VISIBLE_DEVICES": "5"}):
                 with WorkerBudget(ledger, "a1", root / "job", budget, 90) as guard:
                     guard.attach_model(model)
+                    (root / "job" / "new-output").write_bytes(bytes(64))
                     for _ in range(2):
                         optimizer.zero_grad()
                         model(torch.ones(1, 1)).sum().backward()
@@ -35,6 +38,7 @@ class TestWorkerBudget(unittest.TestCase):
                         COUNTS.clear()  # A scientific snapshot restore cannot refund physical work.
                     torch.autograd.grad(model(torch.ones(1, 1)).sum(), tuple(model.parameters()))
             actual = ledger.snapshot()["attempts"]["a1"]["actual"]
+            self.assertEqual(actual["disk_bytes"], 64)
             self.assertEqual([actual[k] for k in ("model_forwards", "backward_calls", "optimizer_steps", "vjp_calls")],
                              [3, 2, 2, 1])
             self.assertIs(torch.autograd.backward, backward)

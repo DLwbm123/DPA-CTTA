@@ -1,5 +1,6 @@
 """R8 journal envelope around the unchanged, inventory-verified R7 C host."""
 import copy
+import json
 
 from ..r7_shared.context import json_digest
 from ..r7_shared.numerics import COUNTS
@@ -33,8 +34,11 @@ class FrozenR7Host:
     def snapshot(self):
         if self.native.failed:
             raise ValueError("R8 failed control cannot snapshot")
+        packet = self.native.save_state()
+        # TorchVersion is a str subclass rejected by older weights-only loaders.
+        packet["context"] = json.loads(json.dumps(packet["context"], sort_keys=True))
         return dict(schema="R8_FROZEN_R7_SNAPSHOT_V1", context_sha256=self.context["sha256"],
-                    visits=self.visits, native=self.native.save_state(), rng=capture_rng(),
+                    visits=self.visits, native=packet, rng=capture_rng(),
                     physical_counts=dict(COUNTS))
 
     def restore(self, snapshot):

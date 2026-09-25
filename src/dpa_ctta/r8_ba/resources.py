@@ -2,12 +2,35 @@
 import math
 import re
 from collections import Counter
+import json
 
 SAFETY = 1.3
 CAPS = dict(gpu_seconds=1024 * 3600, model_forwards=100_000_000,
             backward_calls=4_500_000, optimizer_steps=4_000_000,
             vjp_calls=50_000, disk_bytes=200 * 1024**3)
 MEASURES = tuple(CAPS) + ("peak_gpu_bytes",)
+
+
+def json_size_bound(value):
+    """JSON size bound for fixed-schema records and registered string fields."""
+    if value is None:
+        return 4
+    if type(value) is bool:
+        return 5
+    if type(value) is int:
+        return max(12, len(str(value)))
+    if type(value) is float:
+        if not math.isfinite(value):
+            raise ValueError("R8 nonfinite record template")
+        return 32
+    if isinstance(value, str):
+        return len(json.dumps(value).encode())
+    if isinstance(value, (list, tuple)):
+        return 2 + max(0, len(value) - 1) * 2 + sum(json_size_bound(v) for v in value)
+    if isinstance(value, dict):
+        return 2 + max(0, len(value) - 1) * 2 + sum(
+            len(json.dumps(str(k)).encode()) + 2 + json_size_bound(v) for k, v in value.items())
+    raise ValueError("R8 record template must contain JSON values")
 
 
 def category(job):
@@ -41,6 +64,7 @@ def units(graph):
             graph.get("target_arrivals") != 2_325_592):
         raise ValueError("R8 full task graph required")
     result = Counter(oracle_step=2 * (512 + 128 + 128) * 256,
+                     worker_setup=65 + 2 + 2 + 1 + 2 + 1 + 2 * 724,
                      oracle_query=2 * (512 + 128 + 128) * 3 * 2,
                      capacity_step=2 * 4 * 64 * 128,
                      scaler_observation=512 * 111,

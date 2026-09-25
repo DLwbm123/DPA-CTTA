@@ -9,7 +9,6 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
-import tarfile
 
 import torch
 from torch import nn
@@ -32,7 +31,7 @@ def checkout_root(root=None, require_pinned=True):
     if not (path / ".git").exists() or not (path / REFERENCE_PACKAGE / "src").is_dir():
         raise RuntimeError("DPA_CTTA_BASE_ROOT must be the DLwbm123/CTTA checkout root")
     commit = subprocess.run(
-        ["git", "-C", str(path), "rev-parse", "HEAD"],
+        ["git", "rev-parse", "HEAD"], cwd=path,
         check=True,
         capture_output=True,
         text=True,
@@ -58,16 +57,34 @@ def _load_models(root):
 
 def verify_tracked_files(root, paths):
     """Compare the actual critical source bytes with HEAD, even with index skip flags."""
-    archive = subprocess.run(["git", "-C", str(root), "archive", "HEAD", "--", *paths],
-                             capture_output=True, check=True).stdout
+    # Keep checkout and method names out of all child-process arguments.
+    tree = subprocess.run(["git", "ls-tree", "-rz", "HEAD"], cwd=root,
+                          capture_output=True, check=True).stdout
+    entries = []
+    for record in tree.split(b"\0"):
+        if not record:
+            continue
+        header, name = record.split(b"\t", 1)
+        name = name.decode("utf-8", "surrogateescape")
+        mode, kind, sha = header.split()
+        if kind == b"blob" and name.endswith(".py") and any(
+                name == relative or name.startswith(relative.rstrip("/") + "/") for relative in paths):
+            entries.append((name, sha))
+    blobs = subprocess.run(["git", "cat-file", "--batch"], cwd=root,
+                           input=b"".join(sha + b"\n" for _, sha in entries),
+                           capture_output=True, check=True).stdout
     tracked = set()
-    with tarfile.open(fileobj=io.BytesIO(archive)) as stream:
-        for member in stream.getmembers():
-            if not member.isfile() or not member.name.endswith(".py"):
-                continue
-            path = root / member.name
-            if path.is_symlink() or not path.is_file() or path.read_bytes() != stream.extractfile(member).read():
-                raise RuntimeError(f"dirty pinned scientific source: {member.name}")
+    with io.BytesIO(blobs) as stream:
+        for name, expected_sha in entries:
+            sha, kind, size = stream.readline().strip().split()
+            if sha != expected_sha or kind != b"blob":
+                raise RuntimeError("invalid pinned source blob")
+            raw = stream.read(int(size))
+            if len(raw) != int(size) or stream.read(1) != b"\n":
+                raise RuntimeError("truncated pinned source blob")
+            path = root / name
+            if path.is_symlink() or not path.is_file() or path.read_bytes() != raw:
+                raise RuntimeError(f"dirty pinned scientific source: {name}")
             tracked.add(path)
     for relative in paths:
         path = root / relative

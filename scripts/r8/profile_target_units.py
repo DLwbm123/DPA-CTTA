@@ -22,6 +22,10 @@ from dpa_ctta.r8_ba.host import OnlineHost
 from dpa_ctta.r8_ba.inputs import bind_metadata, open_source
 from dpa_ctta.r8_ba.methods import CurrentMLP, build
 from dpa_ctta.r8_ba.oracles import Oracles
+from dpa_ctta.r8_ba.native_host import NativeHost
+from dpa_ctta.r8_ba.r7_control import FrozenR7Host
+from dpa_ctta.r8_ba.resources import json_size_bound
+from dpa_ctta.source_pilot import SourceOnlyHost
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 
 
@@ -59,6 +63,15 @@ def main():
                                      counts=dict(COUNTS - before),
                                      peak_gpu_bytes=torch.cuda.max_memory_allocated(),
                                      detail=detail)
+        records = detail if isinstance(detail, list) else [detail]
+        if records and all(isinstance(record, dict) for record in records):
+            result.setdefault("record_bytes", {})[name] = max(json_size_bound(record) + 1 for record in records)
+
+    def storage(name, worker, native_memory=False):
+        buffer = io.BytesIO()
+        torch.save(dict(schema="R8_TARGET_JOURNAL_V1", host=worker.snapshot(), identity={}), buffer)
+        result.setdefault("storage", {})[name] = len(buffer.getvalue()) + 4096 + (128 * 1024 if native_memory else 0)
+        result.setdefault("context_bytes", {})[name] = json_size_bound(worker.context) + 4096
 
     try:
         bound = bind_metadata(config["refs"])
@@ -96,6 +109,7 @@ def main():
             for name, worker in (("new_a_max", a), ("new_b_max", b),
                                  ("ista20", long_ista), ("mlp", mlp), ("zero", zero)):
                 measure(name, 2, lambda worker=worker: [worker.step(image)[1] for _ in range(2)])
+                storage(name, worker)
 
             scale = torch.ones(64, dtype=torch.float64)
             for arm, category in (("B_G1", "gradient_g1"), ("B_G3", "gradient_g3")):
@@ -109,6 +123,7 @@ def main():
                 worker = GradientHost(segmenter, method, gradient_config, source,
                                       expected, arm, scale, 0.001)
                 measure(category, 1, lambda worker=worker: worker.step(image)[1])
+                storage(category, worker)
             cal_image = data.get(sorted(data.folds["cal"])[0], "cal").image
             method = build(b_config, basis64)
             method.observer.fit_scaler(torch.stack(scaler), "fit")
@@ -135,13 +150,17 @@ def main():
         try:
             r7_cost = []
             for mode in ("FULL", "STATIC"):
-                r7_host = load_artifact(r7_segmenter, "C_" + mode,
-                                        config["r7_artifact_root"], inventory)
+                r7_host = FrozenR7Host(load_artifact(r7_segmenter, "C_" + mode,
+                                        config["r7_artifact_root"], inventory), "R7_C_" + mode,
+                                        config["code_sha"], config["r7_inventory_sha256"])
                 name = "r7_c_" + mode.lower()
                 measure(name, 2, lambda host=r7_host: [host.step(image)[1] for _ in range(2)])
+                storage(name, r7_host)
                 r7_cost.append(result["units"].pop(name))
             result["units"]["r7_c"] = max(r7_cost, key=lambda row: row["seconds"] / row["sample_units"])
             result["units"]["r7_c"]["detail"] = "slower of exact frozen C_FULL/C_STATIC artifacts"
+            for field in ("storage", "context_bytes", "record_bytes"):
+                result[field]["r7_c"] = max(result[field]["r7_c_full"], result[field]["r7_c_static"])
         finally:
             r7_segmenter.close()
             del r7_segmenter
@@ -157,27 +176,39 @@ def main():
                                                 counts={}, peak_gpu_bytes=0,
                                                 gpu_seconds=0,
                                                 detail=score_detail)
+        result.setdefault("record_bytes", {})["score_visit"] = json_size_bound(dict(
+            visit=1, cycle=1, cycle_visit=1, arm="B_G3_GRADIENT_ENABLED_NOT_ZERO_BACKWARD",
+            order=1, content="0" * 64, domain="X" * 64, subset="remaining_dev", metrics=score_detail)) + 1
         state = torch.load(io.BytesIO(raw), map_location="cpu", weights_only=True)
-        torch.manual_seed(20260907)
-        np.random.seed(20260907)
-        native = VPTTAHost("fundus", source_state=state, device="cuda:0")
-        forwards = [0]
-        hook = native.model.register_forward_hook(lambda *_: forwards.__setitem__(0, forwards[0] + 1))
-        try:
-            measure("vptta", 6, lambda: [native.step(image).shape for _ in range(6)])
-            result["units"]["vptta"]["native_model_forwards"] = forwards[0]
-        finally:
-            hook.remove()
-        del native
-        torch.cuda.empty_cache()
-        for arm, name in (("C", "c"), ("G", "g")):
+        for arm, name in (("VPTTA_NATIVE", "vptta"), ("C_CTTA_FIXED_LR", "c"),
+                          ("G_CTTA_RELEASE_TRANSFER", "g"), ("N_SOURCE_EVAL", "n_source")):
             torch.manual_seed(20260907)
             np.random.seed(20260907)
-            worker = GraTaHost(arm, state=state, device="cuda:0")
-            measure(name, 1, lambda worker=worker: worker.step(image)[1])
-            worker.finish(state)
+            if arm == "VPTTA_NATIVE":
+                native = VPTTAHost("fundus", source_state=state, device="cuda:0")
+            elif arm == "N_SOURCE_EVAL":
+                native = SourceOnlyHost("fundus", state, device="cuda:0")
+            else:
+                native = GraTaHost(arm[0], state=state, device="cuda:0")
+            identity = dict(code_sha=config["code_sha"], protocol_sha256=PROTOCOL_SHA256,
+                            checkpoint_sha256=config["checkpoint_sha256"],
+                            registration_sha256=config["refs"]["target"]["sha256"],
+                            seed=None if arm == "N_SOURCE_EVAL" else 20260907)
+            worker = NativeHost(native, arm, identity)
+            count = 6 if name == "vptta" else 2
+            measure(name, count, lambda worker=worker: [worker.step(image)[1] for _ in range(count)])
+            storage(name, worker, native_memory=name == "vptta")
+            worker.close()
+            if name in ("c", "g"):
+                native.finish(state)
             del worker
             torch.cuda.empty_cache()
+        n = result["units"].pop("n_source")
+        # N and C0 share the zero-update category; use the slower measured path.
+        if n["seconds"] / n["sample_units"] > result["units"]["zero"]["seconds"] / result["units"]["zero"]["sample_units"]:
+            result["units"]["zero"] = n
+        for field in ("storage", "context_bytes", "record_bytes"):
+            result[field]["zero"] = max(result[field]["zero"], result[field]["n_source"])
         result["status"] = "MEASURED_SURROGATES_ONLY"
     except BaseException as exc:
         result["status"] = "FAILED"

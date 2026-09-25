@@ -23,6 +23,34 @@ from .r7_control import FrozenR7Host
 from .worker_budget import attach_model
 
 
+def load_deployed(row, candidate, source_seed, mode, mlp=False):
+    if row["config"] != candidate or row["source_seed"] != source_seed or row["mode"] != mode:
+        raise ValueError("R8 target locked source config/mode/seed")
+    raw = verified(row["artifact"]["path"], row["artifact"]["sha256"], 128 * 1024**2)
+    artifact = torch.load(io.BytesIO(raw), map_location="cpu", weights_only=True)
+    if mlp:
+        if artifact.get("schema") != "R8_SOURCE_JOURNAL_V1":
+            raise ValueError("R8 MLP selected source archive schema")
+        artifact = artifact["snapshot"]
+        if artifact.get("steps") != row["source_step"]:
+            raise ValueError("R8 MLP selected source point")
+    basis = artifact["method"]["basis"]
+    if mlp:
+        method = from_selected(artifact, candidate, basis, False, source_seed, row["binding"], mlp=True)
+        method.freeze()
+    else:
+        if (artifact.get("schema") != "R8_CALIBRATED_METHOD_V1" or
+                artifact.get("identity", {}).get("binding") != row["binding"] or
+                artifact["identity"].get("source_step") != row["source_step"]):
+            raise ValueError("R8 target calibrated source artifact binding")
+        method = build(candidate, basis, static=mode == "STATIC", seed=source_seed)
+        method.load_state_dict(artifact["method"], strict=True)
+        method.freeze()
+        if method.digest() != artifact.get("method_digest"):
+            raise ValueError("R8 target source method digest")
+    return method
+
+
 def construct(job, resolved, assets, checkpoint_raw, refs, code_sha):
     arm, candidate = resolved["arm"], resolved["config"]
     seed = job["target_seed"] if job["target_seed"] is not None else 20260907
@@ -63,25 +91,7 @@ def construct(job, resolved, assets, checkpoint_raw, refs, code_sha):
         config = dict(id=arm, film_amplitude=amplitude)
         return OnlineHost(segmenter, None, config, source, capture(segmenter, None, config, source)), segmenter.close
     row = assets["source_jobs"][resolved["source_job"]]
-    if (row["config"] != candidate or row["source_seed"] != job["source_seed"] or
-            row["mode"] != resolved["mode"]):
-        raise ValueError("R8 target locked source config/mode/seed")
-    raw = verified(row["artifact"]["path"], row["artifact"]["sha256"], 128 * 1024**2)
-    artifact = torch.load(io.BytesIO(raw), map_location="cpu", weights_only=True)
-    basis = artifact["method"]["basis"]
-    if arm == "CURRENT_MLP":
-        method = from_selected(artifact, candidate, basis, False, job["source_seed"], row["binding"], mlp=True)
-        method.freeze()
-    else:
-        if (artifact.get("schema") != "R8_CALIBRATED_METHOD_V1" or
-                artifact.get("identity", {}).get("binding") != row["binding"] or
-                artifact["identity"].get("source_step") != row["source_step"]):
-            raise ValueError("R8 target calibrated source artifact binding")
-        method = build(candidate, basis, static=resolved["mode"] == "STATIC", seed=job["source_seed"])
-        method.load_state_dict(artifact["method"], strict=True)
-        method.freeze()
-        if method.digest() != artifact.get("method_digest"):
-            raise ValueError("R8 target source method digest")
+    method = load_deployed(row, candidate, job["source_seed"], resolved["mode"], mlp=arm == "CURRENT_MLP")
     source.update(source_oracle_sha256=row["oracle_receipt_sha256"], basis_sha256=row["bases_receipt_sha256"])
     config = candidate.copy()
     if resolved["gradient"]:

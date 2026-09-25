@@ -21,7 +21,7 @@ GRATA_COMMIT='33ae20d664f305af34739ec54a5bec7da53ffa0b'
 @functools.lru_cache(maxsize=1)
 def official():
     root=Path(os.environ['DPA_GRATA_ROOT']).resolve()
-    if subprocess.check_output(['git','-C',str(root),'rev-parse','HEAD'],text=True).strip()!=GRATA_COMMIT or subprocess.check_output(['git','-C',str(root),'status','--porcelain'],text=True).strip():
+    if subprocess.check_output(['git','rev-parse','HEAD'],cwd=root,text=True).strip()!=GRATA_COMMIT or subprocess.check_output(['git','status','--porcelain'],cwd=root,text=True).strip():
         raise ValueError('dirty/wrong GraTa dependency')
     if importlib.metadata.version('batchgenerators')!='0.25.2':raise ValueError('augmentation dependency version')
     prefixes=('dataloaders','custom_optimizers')

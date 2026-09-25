@@ -1,5 +1,6 @@
 """Measure R8 source unit costs on registered inputs and one physical GPU."""
 import json
+import io
 import os
 import time
 from pathlib import Path
@@ -15,6 +16,7 @@ from dpa_ctta.r8_ba.methods import CurrentMLP, build
 from dpa_ctta.r8_ba.oracles import Oracles
 from dpa_ctta.r8_ba.schedule import anchors
 from dpa_ctta.r8_ba.trainer import SourceTrainer
+from dpa_ctta.r8_ba.resources import json_size_bound
 
 
 def main():
@@ -48,7 +50,7 @@ def main():
                     torch.cuda.reset_peak_memory_stats()
                     before = COUNTS.copy()
                     start = time.monotonic()
-                    call()
+                    detail = call()
                     torch.cuda.synchronize()
                     row = dict(sample_units=sample_units, seconds=time.monotonic() - start,
                                counts=dict(COUNTS - before),
@@ -64,6 +66,18 @@ def main():
                                    counts={key: max(previous["counts"].get(key, 0), row["counts"].get(key, 0))
                                            for key in previous["counts"].keys() | row["counts"].keys()})
                     result["units"][name] = row
+                    records = detail if isinstance(detail, list) else [detail]
+                    if records and all(isinstance(record, dict) for record in records):
+                        per_unit = {key: value // sample_units for key, value in row["counts"].items()}
+                        bound = max(json_size_bound(dict(record, counts=per_unit)) + 1 for record in records)
+                        result.setdefault("record_bytes", {})[name] = max(
+                            result.get("record_bytes", {}).get(name, 0), bound)
+
+                def storage(name, payload):
+                    buffer = io.BytesIO()
+                    torch.save(payload, buffer)
+                    result.setdefault("storage", {})[name] = max(
+                        result.get("storage", {}).get(name, 0), len(buffer.getvalue()) + 4096)
 
                 names = {fold: sorted(data.folds[fold]) for fold in ("fit", "cal", "val")}
                 def synthetic_oracles(fold):
@@ -129,10 +143,16 @@ def main():
                     # Four consecutive chunks cover a complete recurrent episode.
                     measure(f"source_fit_{route}_step", 4,
                             lambda: [trainer.fit_step() for _ in range(4)])
+                    storage(f"fit_{route}", dict(schema="R8_SOURCE_JOURNAL_V1", snapshot=trainer.snapshot()))
                     if route != "mlp":
                         calibrator = Calibrator(segmenter, new_method(), data, cal,
                                                 "R8_PROFILE_SYNTHETIC_ORACLE")
                         measure(f"source_cal_{route}_step", 1, calibrator.step)
+                        storage(f"cal_{route}", dict(schema="R8_CAL_JOURNAL_V1", identity={},
+                                                    snapshot=calibrator.snapshot()))
+                        calibrator.method.freeze()
+                        storage(f"method_{route}", dict(schema="R8_CALIBRATED_METHOD_V1", identity={},
+                            method_digest=calibrator.method.digest(), method=calibrator.method.state_dict()))
                     online_method = new_method()
                     online_method.freeze()
                     measure(f"source_val_{route}_visit", 32,

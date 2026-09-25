@@ -25,7 +25,8 @@ class Ledger:
     Reserve a bounded work unit BEFORE running it or writing its outputs. Settle
     only after durable physical evidence is available. A crashed attempt is never
     refunded by recovery; replay needs a distinct reservation. Disk costs include
-    retained outputs and the maximum temporary write footprint.
+    retained outputs and the maximum temporary write footprint. A successful
+    settlement charges retained bytes after temporary files have been removed.
     """
 
     def __init__(self, root, identity):

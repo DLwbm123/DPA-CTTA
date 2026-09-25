@@ -13,7 +13,8 @@ from dpa_ctta.r8_ba.worker_budget import WorkerBudget
 ROOT = Path(__file__).resolve().parents[2]
 ENTRIES = {"R8_ORACLE_WORK_V1": "run_oracles.py", "R8_SCALER_WORK_V1": "run_scaler.py",
            "R8_BASES_WORK_V1": "run_bases.py", "R8_SOURCE_JOB_WORK_V1": "run_source_job.py",
-           "R8_TARGET_JOB_WORK_V1": "run_target_job.py", "R8_SCORE_JOB_WORK_V1": "run_score_job.py"}
+           "R8_TARGET_JOB_WORK_V1": "run_target_job.py", "R8_SCORE_JOB_WORK_V1": "run_score_job.py",
+           "R8_CAPACITY_WORK_V1": "run_capacity.py", "R8_GRADIENT_LR_WORK_V1": "run_gradient_lr.py"}
 
 
 def main():
