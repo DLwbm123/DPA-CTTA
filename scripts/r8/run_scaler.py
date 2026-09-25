@@ -11,6 +11,7 @@ from dpa_ctta.r8_ba.journal import _replace
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.resources import CAPS
 from dpa_ctta.r8_ba.scaler_journal import run_scaler
+from dpa_ctta.r8_ba.paths import owned_source_path
 
 
 def main():
@@ -24,7 +25,7 @@ def main():
             not 0 < config["maximum_seconds"] <= CAPS["gpu_seconds"]):
         raise ValueError("R8 scaler worker config")
     started = time.monotonic()
-    root = Path(config["job_root"])
+    root = owned_source_path(config["job_root"])
     bound = bind_metadata(config["refs"])
     identity = dict(code_sha=config["code_sha"], protocol_sha256=PROTOCOL_SHA256,
                     refs=config["refs"],

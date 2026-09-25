@@ -9,6 +9,7 @@ from pathlib import Path
 from dpa_ctta.r8_ba.inputs import bind_metadata, open_source
 from dpa_ctta.r8_ba.journal import _replace
 from dpa_ctta.r8_ba.oracle_journal import run_oracles
+from dpa_ctta.r8_ba.paths import owned_source_path
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.resources import CAPS
 
@@ -26,7 +27,7 @@ def main():
             not 0 < config["maximum_seconds"] <= CAPS["gpu_seconds"]):
         raise ValueError("R8 oracle worker config")
     started = time.monotonic()
-    root = Path(config["job_root"])
+    root = owned_source_path(config["job_root"])
     bound = bind_metadata(config["refs"])
     identity = dict(code_sha=config["code_sha"], protocol_sha256=PROTOCOL_SHA256,
                     refs=config["refs"], checkpoint_sha256=bound["docs"]["manifest"]["checkpoint"]["sha256"],

@@ -67,6 +67,8 @@ class TestJournal(unittest.TestCase):
             trainer = FakeTrainer()
             journal = SourceJournal(root, trainer)
             journal.create()
+            journal.physical.write_text("".join(json.dumps({"step": i, "counts": {"forward": 1}}) + "\n"
+                                                for i in range(1, 1001)))
             trainer.steps = 1000
             journal.checkpoint()
             (root / "selected.1000.json").unlink()
@@ -79,6 +81,16 @@ class TestJournal(unittest.TestCase):
             self.assertEqual(recovered.selected(1000)["steps"], 1000)
             with self.assertRaisesRegex(ValueError, "already used"):
                 recovered.recover_once(FAILURE)
+
+    def test_numerical_failed_call_is_not_infrastructure_recovery(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "source"
+            SourceJournal(root, FakeTrainer()).create()
+            (root / "physical.jsonl").write_text(json.dumps(dict(
+                step=1, status="FAILED_CALL", counts={"forward": 1},
+                error_type="ValueError")) + "\n")
+            with self.assertRaisesRegex(ValueError, "cannot recover"):
+                SourceJournal(root, FakeTrainer()).recover_once(FAILURE)
 
     def test_checkpoint_prefix_recovery_and_one_use(self):
         with tempfile.TemporaryDirectory() as directory:

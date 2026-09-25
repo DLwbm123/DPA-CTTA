@@ -105,6 +105,14 @@ class CalibrationJournal:
         if not valid:
             raise ValueError("R8 no verified equivalent calibration snapshot")
         chosen = max(valid, key=lambda snapshot: snapshot["steps"])
+        raw = self.physical.read_bytes()
+        if SourceJournal._check_steps(raw, 1, True) < chosen["steps"] + 1:
+            raise ValueError("R8 calibration snapshot physical prefix missing")
+        if raw:
+            last = json.loads(raw.splitlines()[-1])
+            if (last.get("status") == "FAILED_CALL" and last.get("error_type") not in
+                    ("OSError", "ConnectionError", "InterruptedError", "TimeoutError")):
+                raise ValueError("R8 numerical/resource failure cannot recover")
         self.calibrator.restore(chosen)
         self.previous_counts = COUNTS.copy()
         _replace(marker, json.dumps(dict(schema="R8_SOURCE_RECOVERY_V1", stage="calibration",

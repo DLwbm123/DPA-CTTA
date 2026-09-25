@@ -11,6 +11,7 @@ from dpa_ctta.r8_ba.inputs import bind_metadata, open_source
 from dpa_ctta.r8_ba.journal import _replace
 from dpa_ctta.r8_ba.oracle_journal import load_oracles
 from dpa_ctta.r8_ba.oracles import a_bases, b_bases
+from dpa_ctta.r8_ba.paths import owned_source_path
 from dpa_ctta.r8_ba.preparation import gradient_scale, save_bases
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.resources import CAPS
@@ -28,13 +29,13 @@ def main():
             not 0 < config["maximum_seconds"] <= CAPS["gpu_seconds"]):
         raise ValueError("R8 bases worker config")
     started = time.monotonic()
-    root = Path(config["job_root"])
+    root = owned_source_path(config["job_root"])
     bound = bind_metadata(config["refs"])
     oracle_identity = dict(code_sha=config["code_sha"], protocol_sha256=PROTOCOL_SHA256,
                            refs=config["refs"],
                            checkpoint_sha256=bound["docs"]["manifest"]["checkpoint"]["sha256"],
                            amplitude=config["amplitude"])
-    oracle_root = Path(config["oracle_root"])
+    oracle_root = owned_source_path(config["oracle_root"])
     worker = json.loads((oracle_root / "worker_complete.json").read_text())
     receipt_hash = hashlib.sha256((oracle_root / "oracle_complete.json").read_bytes()).hexdigest()
     if (worker.get("schema") != "R8_ORACLE_WORK_COMPLETE_V1" or

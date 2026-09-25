@@ -272,7 +272,8 @@ class SourceJournal:
                     any(type(value) is not int or value < 0 for value in counts.values())):
                 raise ValueError("R8 source physical cost row")
             if row.get("status") == "FAILED_CALL":
-                if not allow_terminal_failure or index != len(lines) - 1:
+                if (not allow_terminal_failure or index != len(lines) - 1 or
+                        row.get("step") != expected):
                     raise ValueError("R8 source failed call not terminal")
                 continue
             if row.get("step") != expected:
@@ -390,6 +391,14 @@ class SourceJournal:
         if not valid:
             raise ValueError("R8 no verified equivalent source snapshot")
         chosen, data = max(valid, key=lambda item: item[0]["steps"])
+        raw = self.physical.read_bytes()
+        if self._check_steps(raw, 1, allow_terminal_failure=True) < chosen["steps"] + 1:
+            raise ValueError("R8 source snapshot physical prefix missing")
+        if raw:
+            last = json.loads(raw.splitlines()[-1])
+            if (last.get("status") == "FAILED_CALL" and last.get("error_type") not in
+                    ("OSError", "ConnectionError", "InterruptedError", "TimeoutError")):
+                raise ValueError("R8 numerical/resource failure cannot recover")
         if chosen["steps"] in SAVE_STEPS:
             self._archive_selected(chosen["steps"], data)
         self.trainer.restore(chosen)

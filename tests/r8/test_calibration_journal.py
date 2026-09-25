@@ -57,10 +57,13 @@ class TestCalibrationJournal(unittest.TestCase):
                 selected_sha256={"1000": digest})))
             journal = CalibrationJournal(root, 1000, FakeCalibrator())
             journal.create()
+            journal.physical.write_text("".join(json.dumps(dict(step=i, counts={"forward": 4})) + "\n"
+                                                for i in range(1, 501)))
             journal.calibrator.steps = 500
             journal.checkpoint()
-            journal.physical.write_text("".join(json.dumps(dict(step=i, counts={"forward": 4})) + "\n"
-                                                for i in range(1, 521)))
+            with journal.physical.open("a") as stream:
+                stream.write("".join(json.dumps(dict(step=i, counts={"forward": 4})) + "\n"
+                                     for i in range(501, 521)))
             resumed = CalibrationJournal(root, 1000, FakeCalibrator())
             with self.assertRaisesRegex(ValueError, "only evidenced infrastructure"):
                 resumed.recover_once(dict(FAILURE, **{"class": "NUMERICAL"}))

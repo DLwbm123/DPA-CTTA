@@ -44,6 +44,7 @@ class TestSourceWorkerMarker(unittest.TestCase):
                                              "CUDA_VISIBLE_DEVICES": "5"}), \
                         patch.object(worker, "bind_metadata", return_value=bound), \
                         patch.object(worker, "open_source", source), \
+                        patch.object(worker, "owned_source_path", lambda value: Path(value)), \
                         patch.object(worker, "run_scaler", run):
                     if fail[0]:
                         with self.assertRaisesRegex(ValueError, "source changed"):
