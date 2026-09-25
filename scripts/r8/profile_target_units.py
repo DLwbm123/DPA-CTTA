@@ -17,9 +17,11 @@ from dpa_ctta.r7_source_prep.registry import verified
 from dpa_ctta.r7_source_prep.runner import load_artifact, load_model
 from dpa_ctta.r8_ba.context import SOURCE_KEYS, capture
 from dpa_ctta.r8_ba.gradient import GradientHost
+from dpa_ctta.r8_ba.gradient_calibration import episode as gradient_cal_episode
 from dpa_ctta.r8_ba.host import OnlineHost
 from dpa_ctta.r8_ba.inputs import bind_metadata, open_source
 from dpa_ctta.r8_ba.methods import CurrentMLP, build
+from dpa_ctta.r8_ba.oracles import Oracles
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 
 
@@ -117,8 +119,12 @@ def main():
             lr_host = GradientHost(segmenter, method, lr_config, source,
                                    capture(segmenter, method, lr_config, source),
                                    "B_G3", scale, 0.001)
-            measure("gradient_lr_visit", 2,
-                    lambda: [lr_host.step(cal_image)[1] for _ in range(2)])
+            cal_names = sorted(data.folds["cal"])
+            cal_oracles = Oracles("cal", 0.3, torch.zeros(1024, 128),
+                                  (tuple(cal_names[:2]),) * 128,
+                                  (tuple(cal_names[2:4]),) * 128, ((),) * 128)
+            measure("gradient_lr_visit", 4,
+                    lambda: gradient_cal_episode(lr_host, data, cal_oracles, 0, 20260924))
             label = data.get(sorted(data.folds["fit"])[0], "fit").label
             result["io_counts"] = dict(io_counts)
 

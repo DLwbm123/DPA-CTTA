@@ -34,6 +34,8 @@ class NativeHost:
                 (identity["seed"] is not None and identity["seed"] not in range(20260907, 20260912))):
             raise ValueError("R8 native source/protocol identity")
         self.native, self.arm = native, arm
+        from .worker_budget import attach_model
+        attach_model(native.model)
         self.is_cg = arm in ("C_CTTA_FIXED_LR", "G_CTTA_RELEASE_TRANSFER")
         self.is_vptta = arm == "VPTTA_NATIVE"
         if self.is_cg and native.arm != arm[0]:

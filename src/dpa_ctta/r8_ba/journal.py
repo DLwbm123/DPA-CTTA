@@ -37,6 +37,8 @@ def _sync_dir(path):
 
 
 def _replace(path, data):
+    from .worker_budget import check_write
+    check_write(path, len(data))
     with tempfile.NamedTemporaryFile(dir=path.parent, prefix=path.name + ".", delete=False) as stream:
         temporary = Path(stream.name)
         try:
@@ -117,6 +119,8 @@ class TargetJournal:
                 self.predictions.stat().st_size != (self.host.visits - 1) * self.prediction_bytes):
             raise ValueError("R8 journal visit or prediction offset")
         line = (json.dumps(trace, sort_keys=True, allow_nan=False) + "\n").encode()
+        from .worker_budget import check_write
+        check_write(self.predictions, len(packed_prediction) + 2 * len(line))
         # Physical work remains append-only even when an uncheckpointed output tail is replayed.
         with self.physical.open("ab") as stream:
             stream.write(line)

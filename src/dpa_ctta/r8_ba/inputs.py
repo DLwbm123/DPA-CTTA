@@ -80,6 +80,8 @@ def open_source(bound, source_root, checkpoint_path, amplitude, physical_gpu,
         if any(p.device.type != "cpu" or p.dtype != torch.float32 for p in model.parameters()):
             raise ValueError("R8 source backbone dtype")
         segmenter = R8Segmenter(model, amplitude, device="cuda:0")
+        from .worker_budget import attach_model
+        attach_model(segmenter.model)
         guard()
         yield data, segmenter, counts
     except BaseException as exc:

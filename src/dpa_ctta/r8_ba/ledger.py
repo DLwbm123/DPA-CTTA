@@ -79,7 +79,7 @@ class Ledger:
 
     def reserve(self, attempt_id, physical_gpu, budget):
         _cost(budget)
-        if (not isinstance(attempt_id, str) or not attempt_id or
+        if (not isinstance(attempt_id, str) or re.fullmatch(r"[A-Za-z0-9_-]{1,128}", attempt_id) is None or
                 type(physical_gpu) is not int or physical_gpu not in (5, 6, 7) or
                 budget["gpu_seconds"] <= 0):
             raise ValueError("R8 reservation identity or GPU")
