@@ -30,6 +30,7 @@ class TestOracle(unittest.TestCase):
         self.assertEqual(value.shape, (1024,))
         self.assertEqual(len(set((*support, *query))), 4)
         self.assertEqual([d["step"] for d in diagnostics], [16, 64, 256])
+        self.assertTrue(all(d["modulation_norm"] >= 0 for d in diagnostics))
         self.assertEqual(model.forwards, 2 * 256 + 2 * 3)
         self.assertEqual(COUNTS["source_backward_calls"] - before["source_backward_calls"], 256)
         self.assertEqual(COUNTS["source_Adam"] - before["source_Adam"], 256)

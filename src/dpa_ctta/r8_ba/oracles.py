@@ -62,8 +62,13 @@ def oracle_one(segmenter, data, fold, index, on_step=None):
                     score = (2 * (prediction * row.label).sum((0, 2, 3)) + 1e-6) / (
                         prediction.sum((0, 2, 3)) + row.label.sum((0, 2, 3)) + 1e-6)
                     dice.append(score.tolist())
+                blocks = v.detach().reshape(2, 512)
+                gamma = torch.expm1(segmenter.amplitude * blocks[:, :256].tanh())
+                beta = segmenter.amplitude * blocks[:, 256:].tanh()
+                modulation_norm = float(torch.cat((gamma.flatten(), beta.flatten())).norm())
             diagnostics.append(dict(step=step, support_objective=float(loss.detach()), query_Dice=dice,
-                                    ambient_norm=float(v.detach().norm()), film_amplitude=segmenter.amplitude))
+                                    ambient_norm=float(v.detach().norm()), modulation_norm=modulation_norm,
+                                    film_amplitude=segmenter.amplitude))
         if on_step is not None:
             on_step(step)
     return v.detach(), names[:2], names[2:], diagnostics
