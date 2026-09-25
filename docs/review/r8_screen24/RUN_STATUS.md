@@ -1,5 +1,10 @@
 # Screen24 launch status
 
+## Latest: stopped at scaler worker deadline
+
+2026-09-25 15:50 UTC monitor confirmed GLOBAL STOP at 493/512 scaler anchors. Oracle/basis/capacity complete; source training and target work not started. Both scaler snapshots validate. No automatic cap override or restart. See SCALER_DEADLINE_REVIEW.md for a fully budgeted proposed continuation requiring the explicit resource-stop exception. Historical launch evidence follows.
+
+
 - State: **RUNNING**, observed 2026-09-25 12:03 UTC. This is launch verification, not completed results.
 - Effective run: `screen24-20260925T120130Z`; launched 2026-09-25 12:02:08 UTC (20:02:08 Asia/Shanghai).
 - Runtime code: `2329fb625ee023f461c23d1256162eb5514906c6`; later documentation commits do not change the deployed runtime.
