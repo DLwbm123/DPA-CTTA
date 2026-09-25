@@ -52,6 +52,7 @@ class R8Segmenter(Segmenter):
     def __init__(self, model, amplitude, device="cpu"):
         if amplitude not in (0.1, 0.3):
             raise ValueError("R8 amplitude")
+        torch.set_num_threads(2)  # The frozen observer QR and R7 control identity use two CPU threads.
         self.amplitude = amplitude
         super().__init__(model, device)
         self.inference_policy = dict(POLICY, schema="R8_SEGMENTER_POLICY_V1",
