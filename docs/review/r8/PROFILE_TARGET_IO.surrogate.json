@@ -1,0 +1,32 @@
+{
+  "arm": "UNTRAINED_B64_PROFILE_ONLY",
+  "code_sha": "db934b60d80a4273aa4d86afaeb41a61b283a1a3",
+  "elapsed_seconds": 10.920247509144247,
+  "physical_counts": {
+    "ISTA_iterations": 250,
+    "appearance_MLP": 50,
+    "backbone_forwards": 100,
+    "method_MLP": 100,
+    "spectral_norms": 150
+  },
+  "physical_gpu": 7,
+  "schema": "R8_ONLINE_IO_PROFILE_V1",
+  "status": "MEASURED_SURROGATE_ONLY",
+  "target_labels_read": 0,
+  "unit": {
+    "checkpoint_bytes": 31959,
+    "counts": {
+      "ISTA_iterations": 250,
+      "appearance_MLP": 50,
+      "backbone_forwards": 100,
+      "method_MLP": 100,
+      "spectral_norms": 150
+    },
+    "peak_gpu_bytes": 437829632,
+    "physical_bytes": 7791,
+    "prediction_bytes": 3276800,
+    "sample_units": 50,
+    "seconds": 8.696750643663108,
+    "trace_bytes": 7791
+  }
+}
