@@ -1,0 +1,51 @@
+{
+  "basis": "synthetic rank64 memory and timing surrogate; not source-fit basis qualification",
+  "code_sha": "beb6514d037d87c4e4f37628e76e9a00efd9e967",
+  "elapsed_seconds": 24.836966196075082,
+  "io_counts": {
+    "RGB_decodes": 159,
+    "image_decode_attempts": 159,
+    "mask_decode_attempts": 159,
+    "mask_decodes": 159,
+    "raw_bytes_read": 214555173,
+    "raw_reads": 319,
+    "read_attempts": 319,
+    "verified_bytes": 214555173,
+    "verified_reads": 319
+  },
+  "max_rank_source_fit_step": {
+    "counts": {
+      "ISTA_iterations": 40,
+      "appearance_MLP": 8,
+      "backbone_forwards": 16,
+      "method_MLP": 16,
+      "source_AdamW": 1,
+      "source_backward_calls": 1,
+      "spectral_norms": 24
+    },
+    "optimizer_step": 1,
+    "peak_gpu_bytes": 2317750784,
+    "query_visits": 8,
+    "seconds": 1.6081611500121653
+  },
+  "physical_counts": {
+    "ISTA_iterations": 40,
+    "appearance_MLP": 8,
+    "backbone_forwards": 21,
+    "method_MLP": 16,
+    "source_AdamW": 1,
+    "source_backward_calls": 1,
+    "spectral_norms": 24
+  },
+  "physical_gpu": 5,
+  "schema": "R8_CRITICAL_PROFILE_V1",
+  "source_metadata_groups": 159,
+  "status": "MEASURED_SURROGATE_ONLY",
+  "zero_forward": {
+    "counts": {
+      "backbone_forwards": 1
+    },
+    "peak_gpu_bytes": 404258304,
+    "seconds": 0.8780856798402965
+  }
+}
