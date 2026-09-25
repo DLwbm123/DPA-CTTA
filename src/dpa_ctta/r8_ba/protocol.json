@@ -1,0 +1,13 @@
+{
+  "schema": "R8_PROTOCOL_DECISIONS_V1",
+  "capacity_probe_direct_latent": {
+    "optimizer": "Adam",
+    "lr": 0.03,
+    "betas": [0.9, 0.999],
+    "eps": 1e-8,
+    "weight_decay": 0.0,
+    "steps": 128
+  },
+  "source_val_selection_metric": "soft_Dice",
+  "decision": "User confirmed 0.03 and soft Dice on 2026-09-25 before any real R8 job"
+}

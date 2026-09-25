@@ -9,6 +9,7 @@ from ..r7_shared.source import RANGES, simulate
 from .schedule import CURRICULA, anchors, episode_roles, episode_styles, generator
 from .trainer import SAVE_STEPS, method_config
 from .rng import capture as capture_rng, restore as restore_rng
+from .protocol import SELECTION_METRIC
 
 
 def calibration_styles(step, bank):
@@ -147,7 +148,7 @@ def score_validation(two_seed_rows):
             raise ValueError("R8 validation curriculum coverage")
     means = []
     for mode in CURRICULA:
-        values = [row["soft_Dice"] for rows in two_seed_rows for row in rows if row["curriculum"] == mode]
+        values = [row[SELECTION_METRIC] for rows in two_seed_rows for row in rows if row["curriculum"] == mode]
         if len(values) != 32 or not all(math.isfinite(x) for x in values):
             raise ValueError("R8 validation missing/invalid curriculum")
         means.append(sum(values) / 32)

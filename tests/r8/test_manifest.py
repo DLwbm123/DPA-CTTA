@@ -1,4 +1,6 @@
 import importlib.util
+import hashlib
+import json
 import unittest
 from pathlib import Path
 
@@ -12,6 +14,10 @@ class TestManifest(unittest.TestCase):
         graph = module.build()
         self.assertEqual((graph["source_training_jobs"], graph["target_jobs"],
                           graph["target_arrivals"]), (65, 724, 2325592))
+        protocol = path.parents[2] / "src/dpa_ctta/r8_ba/protocol.json"
+        self.assertEqual(graph["protocol_sha256"], hashlib.sha256(protocol.read_bytes()).hexdigest())
+        static = path.parents[2] / "docs/review/r8/TASK_GRAPH.static.json"
+        self.assertEqual(json.loads(static.read_text()), graph)
         stress = [job for job in graph["jobs"] if job["stage"].startswith("STRESS_")]
         self.assertEqual(len(stress), 104)
         for job in stress:

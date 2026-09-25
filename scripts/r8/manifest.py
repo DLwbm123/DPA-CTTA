@@ -116,6 +116,7 @@ def build():
     return dict(schema="R8_STATIC_TASK_GRAPH_V1", execution_enabled=False,
                 spec_sha256=hashlib.sha256((INPUT / "R8_EXPERIMENT_SPEC.json").read_bytes()).hexdigest(),
                 grid_sha256=hashlib.sha256((INPUT / "CONFIG_GRID.csv").read_bytes()).hexdigest(),
+                protocol_sha256=hashlib.sha256((ROOT / "src/dpa_ctta/r8_ba/protocol.json").read_bytes()).hexdigest(),
                 phase_order=["SOURCE_PROFILE_AND_BIND", "SOURCE_ORACLES_AND_BASES", "SOURCE_GRID",
                              "SOURCE_ONLY_CONFIG_AND_SNAPSHOT_SELECTION", "SOURCE_FINAL", "SOURCE_MLP",
                              "SOURCE_CAL_GRADIENT_LR_SELECTION", "LOCK_ALL_ARTIFACTS", "TARGET_GRID_AND_BASELINES_AND_ABLATIONS",
