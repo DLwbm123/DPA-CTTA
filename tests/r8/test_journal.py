@@ -92,6 +92,15 @@ class TestJournal(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "cannot recover"):
                 SourceJournal(root, FakeTrainer()).recover_once(FAILURE)
 
+    def test_worker_wall_cap_cannot_be_reclassified_after_complete_step(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory) / "source"
+            SourceJournal(root, FakeTrainer()).create()
+            (root / "worker_failures.jsonl").write_text(json.dumps(dict(
+                error_type="RuntimeError", error="worker wall cap reached")) + "\n")
+            with self.assertRaisesRegex(ValueError, "worker failure cannot recover"):
+                SourceJournal(root, FakeTrainer()).recover_once(FAILURE)
+
     def test_checkpoint_prefix_recovery_and_one_use(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory) / "one-job"

@@ -9,7 +9,7 @@ from pathlib import Path
 import torch
 
 from ..r7_shared.numerics import COUNTS
-from .journal import _replace, _sync_dir
+from .journal import _replace, _sync_dir, _reject_recorded_noninfra_failure
 from .preparation import scaler_anchor
 from .schedule import anchors
 
@@ -135,6 +135,7 @@ class ScalerJournal:
         return payload
 
     def recover_once(self, failure):
+        _reject_recorded_noninfra_failure(self.root)
         if (not isinstance(failure, dict) or failure.get("class") != "INFRASTRUCTURE" or
                 not failure.get("reason") or not isinstance(failure.get("evidence"), dict) or
                 not failure["evidence"] or not self.physical.is_file() or

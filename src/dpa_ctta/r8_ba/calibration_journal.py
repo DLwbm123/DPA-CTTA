@@ -8,7 +8,7 @@ from pathlib import Path
 import torch
 
 from ..r7_shared.numerics import COUNTS
-from .journal import SourceJournal, _digest, _replace, _sync_dir
+from .journal import SourceJournal, _digest, _replace, _sync_dir, _reject_recorded_noninfra_failure
 from .trainer import SAVE_STEPS
 
 
@@ -82,6 +82,7 @@ class CalibrationJournal:
                 not failure.get("reason") or not isinstance(failure.get("evidence"), dict) or
                 not failure["evidence"]):
             raise ValueError("R8 only evidenced infrastructure failure may recover")
+        _reject_recorded_noninfra_failure(self.job_root)
         marker = self.job_root / "recovery.json"
         if (marker.exists() or not self.physical.is_file() or
                 (self.root / "cal_complete.json").exists()):

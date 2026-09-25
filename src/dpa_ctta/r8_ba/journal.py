@@ -49,6 +49,18 @@ def _replace(path, data):
             temporary.unlink(missing_ok=True)
 
 
+def _reject_recorded_noninfra_failure(root):
+    path = Path(root) / "worker_failures.jsonl"
+    if path.exists():
+        raw = path.read_bytes()
+        if not raw or not raw.endswith(b"\n"):
+            raise ValueError("R8 worker failure evidence truncated")
+        row = json.loads(raw.splitlines()[-1])
+        if row.get("error_type") not in ("OSError", "ConnectionError",
+                                         "InterruptedError", "TimeoutError"):
+            raise ValueError("R8 numerical/resource worker failure cannot recover")
+
+
 def verify_online_complete(root, job_id, context_sha256, rows_sha256, expected_visits,
                            prediction_bytes=65536):
     """Verify the sealed online output without constructing a model or mask reader."""
@@ -192,6 +204,7 @@ class TargetJournal:
                 not failure.get("reason") or not isinstance(failure.get("evidence"), dict) or
                 not failure["evidence"]):
             raise ValueError("R8 only evidenced infrastructure failure may recover")
+        _reject_recorded_noninfra_failure(self.root)
         if (not self.root.is_dir() or not self.predictions.is_file() or
                 not self.visits.is_file() or not self.physical.is_file() or
                 (self.root / "recovery.json").exists()):
@@ -370,6 +383,7 @@ class SourceJournal:
                 not failure.get("reason") or not isinstance(failure.get("evidence"), dict) or
                 not failure["evidence"]):
             raise ValueError("R8 only evidenced infrastructure failure may recover")
+        _reject_recorded_noninfra_failure(self.root)
         if (not self.root.is_dir() or not self.physical.is_file() or
                 (self.root / "recovery.json").exists() or (self.root / "fit_complete.json").exists()):
             raise ValueError("R8 source recovery unavailable or already used")

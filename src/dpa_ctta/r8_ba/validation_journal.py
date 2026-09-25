@@ -8,7 +8,7 @@ from pathlib import Path
 
 from ..r7_shared.numerics import COUNTS
 from .calibration import validate_episode
-from .journal import _replace, _sync_dir
+from .journal import _replace, _sync_dir, _reject_recorded_noninfra_failure
 from .schedule import CURRICULA
 
 EPISODES = 64
@@ -107,6 +107,7 @@ class ValidationJournal:
         return total
 
     def recover_once(self, failure):
+        _reject_recorded_noninfra_failure(self.job_root)
         if (not isinstance(failure, dict) or failure.get("class") != "INFRASTRUCTURE" or
                 not failure.get("reason") or not isinstance(failure.get("evidence"), dict) or
                 not failure["evidence"] or not self.root.is_dir() or
