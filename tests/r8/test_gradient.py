@@ -8,6 +8,7 @@ import torch
 from dpa_ctta.r7_shared.context import tensor_digest
 from dpa_ctta.b1_host import GRATA_COMMIT
 from dpa_ctta.r8_ba.context import SOURCE_KEYS, capture
+from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.gradient import GradientHost
 from dpa_ctta.r8_ba.journal import TargetJournal
 from dpa_ctta.r8_ba.methods import R8B, R8Segmenter
@@ -54,6 +55,7 @@ class TestGradient(unittest.TestCase):
                               scale_sha256=tensor_digest([("scale", scale)]),
                               grata_commit=GRATA_COMMIT)
                 source = {key: "0" * 64 for key in SOURCE_KEYS}
+                source["protocol_sha256"] = PROTOCOL_SHA256
                 context = capture(segmenter, method, config, source)
                 host = GradientHost(segmenter, method, config, source, context,
                                     arm, scale, 0.001, api=FakeC())

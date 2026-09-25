@@ -6,15 +6,18 @@ import torch
 from torch import nn
 
 from ..r7_shared.context import json_digest, layout, tensor_digest, tensors
+from .protocol import PROTOCOL_SHA256
 
 SOURCE_KEYS = {"checkpoint_sha256", "source_manifest_sha256", "source_split_sha256",
-               "source_oracle_sha256", "basis_sha256", "spec_sha256"}
+               "source_oracle_sha256", "basis_sha256", "spec_sha256", "protocol_sha256"}
 
 
 def capture(segmenter, method, config, source):
     if not isinstance(source, dict) or set(source) != SOURCE_KEYS or any(
             not isinstance(v, str) or re.fullmatch(r"[0-9a-f]{64}", v) is None for v in source.values()):
         raise ValueError("complete R8 source identity required")
+    if source["protocol_sha256"] != PROTOCOL_SHA256:
+        raise ValueError("R8 frozen protocol identity mismatch")
     if not isinstance(config, dict) or not config.get("id"):
         raise ValueError("R8 configuration identity required")
     if segmenter.inference_policy.get("schema") != "R8_SEGMENTER_POLICY_V1":

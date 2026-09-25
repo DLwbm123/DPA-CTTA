@@ -6,6 +6,7 @@ import torch
 from torch import nn
 
 from dpa_ctta.r8_ba.context import SOURCE_KEYS, capture
+from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
 from dpa_ctta.r8_ba.host import OnlineHost
 from dpa_ctta.r8_ba.journal import TargetJournal
 from dpa_ctta.r8_ba.methods import R8B, R8Segmenter
@@ -35,6 +36,9 @@ class TestHost(unittest.TestCase):
         config = dict(id="B_compact_global_aux1p0", route="B", rank=32, film_amplitude=0.1,
                       observer="global", aux_multiplier=1.0)
         source = {key: "0" * 64 for key in SOURCE_KEYS}  # synthetic identity only
+        source["protocol_sha256"] = PROTOCOL_SHA256
+        with self.assertRaisesRegex(ValueError, "protocol identity"):
+            capture(segmenter, method, config, dict(source, protocol_sha256="0" * 64))
         context = capture(segmenter, method, config, source)
         eta = method.frozen_eta.clone()
         with torch.no_grad():
