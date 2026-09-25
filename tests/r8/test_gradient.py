@@ -65,7 +65,9 @@ class TestGradient(unittest.TestCase):
                         journal.create()
                         prediction, trace = host.step(image)
                         journal.append(b"\x00\x01", trace)
-                        self.assertEqual(journal.recover_once(), 0)
+                        self.assertEqual(journal.recover_once({"class": "INFRASTRUCTURE",
+                                                               "reason": "synthetic interruption",
+                                                               "evidence": {"exit_code": 137}}), 0)
                         replay, _ = host.step(image)
                         self.assertTrue(torch.equal(prediction, replay))
                 else:

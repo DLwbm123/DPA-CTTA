@@ -59,7 +59,8 @@ class TestTrainer(unittest.TestCase):
             journal.create()
             first = trainer.fit_step()
             journal.append(first)
-            self.assertEqual(journal.recover_once(), 0)
+            self.assertEqual(journal.recover_once({"class": "INFRASTRUCTURE", "reason": "synthetic interruption",
+                                                   "evidence": {"exit_code": 137}}), 0)
             self.assertEqual(first, trainer.fit_step())
         self.assertEqual(first["query_visits"], 8)
         snapshot = trainer.snapshot()

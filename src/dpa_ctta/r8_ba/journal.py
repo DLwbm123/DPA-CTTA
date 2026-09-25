@@ -187,7 +187,11 @@ class TargetJournal:
             return None
         return payload
 
-    def recover_once(self):
+    def recover_once(self, failure):
+        if (not isinstance(failure, dict) or failure.get("class") != "INFRASTRUCTURE" or
+                not failure.get("reason") or not isinstance(failure.get("evidence"), dict) or
+                not failure["evidence"]):
+            raise ValueError("R8 only evidenced infrastructure failure may recover")
         if (not self.root.is_dir() or not self.predictions.is_file() or
                 not self.visits.is_file() or not self.physical.is_file() or
                 (self.root / "recovery.json").exists()):
@@ -206,6 +210,7 @@ class TargetJournal:
         self.host.restore(chosen["host"])
         _replace(self.root / "recovery.json", json.dumps(
             dict(schema="R8_RECOVERY_V1", **self._identity(), visits=self.host.visits,
+                 failure=failure,
                  discarded_output_bytes=self.predictions.stat().st_size - chosen["output_size"],
                  physical_log_bytes=self.physical.stat().st_size), sort_keys=True).encode())
         for path, size in ((self.predictions, chosen["output_size"]),
@@ -245,6 +250,73 @@ class SourceJournal:
         self.previous_counts = COUNTS.copy()
         if self.trainer.steps % 250 == 0:
             self.checkpoint()
+
+    def record_failed_call(self, step, counts, error):
+        record = dict(status="FAILED_CALL", step=step, counts=counts,
+                      error_type=type(error).__name__, error=str(error)[:3000])
+        with self.physical.open("ab") as stream:
+            stream.write((json.dumps(record, sort_keys=True, allow_nan=False) + "\n").encode())
+            stream.flush()
+            os.fsync(stream.fileno())
+
+    @staticmethod
+    def _check_steps(raw, start, allow_terminal_failure=False):
+        if raw and not raw.endswith(b"\n"):
+            raise ValueError("R8 source physical log truncated")
+        expected = start
+        lines = raw.splitlines()
+        for index, line in enumerate(lines):
+            row = json.loads(line)
+            counts = row.get("counts")
+            if (not isinstance(counts, dict) or
+                    any(type(value) is not int or value < 0 for value in counts.values())):
+                raise ValueError("R8 source physical cost row")
+            if row.get("status") == "FAILED_CALL":
+                if not allow_terminal_failure or index != len(lines) - 1:
+                    raise ValueError("R8 source failed call not terminal")
+                continue
+            if row.get("step") != expected:
+                raise ValueError("R8 source physical step coverage")
+            expected += 1
+        return expected
+
+    def complete(self):
+        if self.trainer.steps != 16000 or (self.root / "fit_complete.json").exists():
+            raise ValueError("R8 source fit not complete")
+        raw = self.physical.read_bytes()
+        recovery_path = self.root / "recovery.json"
+        if recovery_path.exists():
+            recovery = json.loads(recovery_path.read_text())
+            cut = recovery["physical_log_bytes"]
+            if (recovery.get("schema") != "R8_SOURCE_RECOVERY_V1" or
+                    recovery.get("binding") != self.trainer.binding or
+                    recovery.get("source_seed") != self.trainer.source_seed or
+                    recovery.get("failure", {}).get("class") != "INFRASTRUCTURE" or
+                    type(cut) is not int or not 0 <= cut <= len(raw) or
+                    type(recovery.get("steps")) is not int or recovery["steps"] % 250 or
+                    self._check_steps(raw[:cut], 1, allow_terminal_failure=True) < recovery["steps"] + 1):
+                raise ValueError("R8 source recovery/physical log mismatch")
+            final = self._check_steps(raw[cut:], recovery["steps"] + 1)
+        else:
+            final = self._check_steps(raw, 1)
+        if final != 16001:
+            raise ValueError("R8 source physical completion coverage")
+        selected = {}
+        final_config = self.trainer.snapshot()["method_config"]
+        for step in SAVE_STEPS:
+            snapshot = self.selected(step)
+            if snapshot["method_config"] != final_config:
+                raise ValueError("R8 selected source configuration mismatch")
+            if step == 16000 and snapshot["method_digest"] != self.trainer.method.digest():
+                raise ValueError("R8 final source method digest mismatch")
+            selected[str(step)] = _digest(self.root / f"selected.{step}.pt")
+        receipt = dict(schema="R8_SOURCE_FIT_COMPLETE_V1", binding=self.trainer.binding,
+                       source_seed=self.trainer.source_seed, steps=self.trainer.steps,
+                       method_digest=self.trainer.method.digest(), selected_sha256=selected,
+                       physical_bytes=len(raw), physical_sha256=hashlib.sha256(raw).hexdigest(),
+                       recovered=recovery_path.exists())
+        _replace(self.root / "fit_complete.json", json.dumps(receipt, sort_keys=True).encode())
+        return receipt
 
     def checkpoint(self):
         steps = self.trainer.steps
@@ -292,8 +364,13 @@ class SourceJournal:
             raise ValueError("R8 selected source snapshot identity mismatch")
         return snapshot
 
-    def recover_once(self):
-        if not self.root.is_dir() or not self.physical.is_file() or (self.root / "recovery.json").exists():
+    def recover_once(self, failure):
+        if (not isinstance(failure, dict) or failure.get("class") != "INFRASTRUCTURE" or
+                not failure.get("reason") or not isinstance(failure.get("evidence"), dict) or
+                not failure["evidence"]):
+            raise ValueError("R8 only evidenced infrastructure failure may recover")
+        if (not self.root.is_dir() or not self.physical.is_file() or
+                (self.root / "recovery.json").exists() or (self.root / "fit_complete.json").exists()):
             raise ValueError("R8 source recovery unavailable or already used")
         valid = []
         for slot in (0, 1):
@@ -320,5 +397,6 @@ class SourceJournal:
         _replace(self.root / "recovery.json", json.dumps(
             dict(schema="R8_SOURCE_RECOVERY_V1", binding=self.trainer.binding,
                  source_seed=self.trainer.source_seed, steps=self.trainer.steps,
+                 failure=failure,
                  physical_log_bytes=self.physical.stat().st_size), sort_keys=True).encode())
         return self.trainer.steps

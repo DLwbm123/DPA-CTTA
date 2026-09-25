@@ -51,7 +51,8 @@ class TestHost(unittest.TestCase):
             journal.create()
             first, trace = host.step(image)
             journal.append(b"\x00\x01", trace)
-            self.assertEqual(journal.recover_once(), 0)
+            self.assertEqual(journal.recover_once({"class": "INFRASTRUCTURE", "reason": "synthetic interruption",
+                                                   "evidence": {"exit_code": 137}}), 0)
             replay_first, _ = host.step(image)
             self.assertTrue(torch.equal(first, replay_first))
         self.assertEqual(trace["visit"], 1)

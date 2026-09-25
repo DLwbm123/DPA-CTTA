@@ -17,3 +17,5 @@ The source journal now retains separate digest-verified archives at steps 1,000/
 The CURRENT-MLP source fit path now uses the shared visit schedule with its defined query segmentation loss and no clean-observation/proxy call. A synthetic optimizer step verifies the MLP head updates. All 21 R8 synthetic tests pass; the complete runner and real resource profile remain pending.
 
 The selected-source loader now rebuilds A/B or CURRENT-MLP from a saved source point while checking the fit step, job binding, seed, method configuration, full weight digest, fitted observer, and basis. It leaves the active RNG and physical counters untouched so each independent calibration can start cleanly. All 22 R8 synthetic tests pass.
+
+The source fit runner now guards every backbone forward, persists each physical step, records partial failed calls, and seals completion only after all 16,000 steps and five selected archives validate. Source and target recovery calls require an explicit evidenced infrastructure classification and remain limited to one per job. All 24 synthetic R8 tests pass. This is the fit component, not the complete 65-job source scheduler or formal launch.
