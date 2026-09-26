@@ -1,0 +1,139 @@
+{
+  "source_commit": "a9d3a43959da73ef552401342cc087d5ae8e6ba2",
+  "provenance": "S2 verified MAIN.csv; percentages and differences computed without model calls",
+  "main_metric": "mean domain, OD/OC, orders 0/1, available seeds; NOT pooled image mean",
+  "main": [
+    {
+      "method": "A_FULL",
+      "OD_percent": 83.024159991724,
+      "OC_percent": 64.9929024567738,
+      "Dice_percent": 74.00853122424891,
+      "delta_C0_pp": -1.0708889636910754,
+      "delta_VPTTA_pp": -0.39258061736278194
+    },
+    {
+      "method": "A_STATIC",
+      "OD_percent": 82.96388229675222,
+      "OC_percent": 65.46456985269621,
+      "Dice_percent": 74.21422607472421,
+      "delta_C0_pp": -0.8651941132157788,
+      "delta_VPTTA_pp": -0.18688576688748526
+    },
+    {
+      "method": "B_FULL",
+      "OD_percent": 82.93680150694236,
+      "OC_percent": 63.561440876763555,
+      "Dice_percent": 73.24912119185295,
+      "delta_C0_pp": -1.8302989960870377,
+      "delta_VPTTA_pp": -1.1519906497587442
+    },
+    {
+      "method": "B_STATIC",
+      "OD_percent": 83.01950975306302,
+      "OC_percent": 64.00037725662615,
+      "Dice_percent": 73.50994350484457,
+      "delta_C0_pp": -1.5694766830954165,
+      "delta_VPTTA_pp": -0.891168336767123
+    },
+    {
+      "method": "C0",
+      "OD_percent": 83.26985070507065,
+      "OC_percent": 66.8889896708093,
+      "Dice_percent": 75.07942018793999,
+      "delta_C0_pp": 0.0,
+      "delta_VPTTA_pp": 0.6783083463282935
+    },
+    {
+      "method": "CURRENT_MLP",
+      "OD_percent": 83.62835518372532,
+      "OC_percent": 65.10358609920073,
+      "Dice_percent": 74.36597064146302,
+      "delta_C0_pp": -0.7134495464769657,
+      "delta_VPTTA_pp": -0.03514120014867217
+    },
+    {
+      "method": "C_CTTA",
+      "OD_percent": 86.86929764547219,
+      "OC_percent": 70.19884730112105,
+      "Dice_percent": 78.53407247329662,
+      "delta_C0_pp": 3.45465228535663,
+      "delta_VPTTA_pp": 4.132960631684924
+    },
+    {
+      "method": "G_CTTA",
+      "OD_percent": 85.73450088720426,
+      "OC_percent": 68.78666370302734,
+      "Dice_percent": 77.2605822951158,
+      "delta_C0_pp": 2.1811621071758083,
+      "delta_VPTTA_pp": 2.859470453504102
+    },
+    {
+      "method": "VPTTA",
+      "OD_percent": 82.80371149447683,
+      "OC_percent": 65.99851218874655,
+      "Dice_percent": 74.4011118416117,
+      "delta_C0_pp": -0.6783083463282935,
+      "delta_VPTTA_pp": 0.0
+    },
+    {
+      "method": "N",
+      "OD_percent": 78.72579628985666,
+      "OC_percent": 57.67536707236914,
+      "Dice_percent": 68.20058168111291,
+      "delta_C0_pp": -6.87883850682708,
+      "delta_VPTTA_pp": -6.200530160498786
+    }
+  ],
+  "domain_comparison": [
+    {
+      "domain": "Drishti_GS",
+      "C0": 72.97467182607387,
+      "A": 68.90706780558806,
+      "A_delta": -4.067604020485817,
+      "A_OC_delta": -7.358210766887815,
+      "B": 66.66022280314199,
+      "B_delta": -6.314449022931882,
+      "B_OC_delta": -11.645513936840608
+    },
+    {
+      "domain": "ORIGA",
+      "C0": 66.60414694175597,
+      "A": 64.56723276461003,
+      "A_delta": -2.0369141771459454,
+      "A_OC_delta": -3.643174152085905,
+      "B": 62.55600982556435,
+      "B_delta": -4.048137116191619,
+      "B_OC_delta": -7.2738477953258425
+    },
+    {
+      "domain": "REFUGE",
+      "C0": 85.01521223869453,
+      "A": 84.29426930289814,
+      "A_delta": -0.720942935796387,
+      "A_OC_delta": -0.9503447533936367,
+      "B": 83.16869454914068,
+      "B_delta": -1.846517689553849,
+      "B_OC_delta": -2.710941521276837
+    },
+    {
+      "domain": "REFUGE_Valid",
+      "C0": 75.72364974523555,
+      "A": 78.2655550238994,
+      "A_delta": 2.5419052786638474,
+      "A_OC_delta": 4.367380816225406,
+      "B": 80.61155758956478,
+      "B_delta": 4.887907844329234,
+      "B_OC_delta": 8.320108077260272
+    }
+  ],
+  "source_urls": {
+    "S1": "https://github.com/DLwbm123/DPA-CTTA/blob/a9d3a43959da73ef552401342cc087d5ae8e6ba2/docs/review/r8_screen24/REPORT.md",
+    "S2": "https://github.com/DLwbm123/DPA-CTTA/blob/a9d3a43959da73ef552401342cc087d5ae8e6ba2/docs/review/r8_screen24/MAIN.csv",
+    "S3": "https://github.com/DLwbm123/DPA-CTTA/blob/a9d3a43959da73ef552401342cc087d5ae8e6ba2/docs/review/r8_screen24/DOMAINS.csv",
+    "S4": "https://github.com/DLwbm123/DPA-CTTA/blob/a9d3a43959da73ef552401342cc087d5ae8e6ba2/src/dpa_ctta/r8_ba/trainer.py",
+    "S5": "https://github.com/DLwbm123/DPA-CTTA/blob/a9d3a43959da73ef552401342cc087d5ae8e6ba2/src/dpa_ctta/r8_ba/host.py",
+    "S6": "https://github.com/DLwbm123/DPA-CTTA/blob/a9d3a43959da73ef552401342cc087d5ae8e6ba2/src/dpa_ctta/r8_ba/gradient.py",
+    "S7": "https://arxiv.org/abs/2306.03536",
+    "S8": "https://openaccess.thecvf.com/content/CVPR2024/html/Chen_Each_Test_Image_Deserves_A_Specific_Prompt_Continual_Test-Time_Adaptation_CVPR_2024_paper.html"
+  }
+}

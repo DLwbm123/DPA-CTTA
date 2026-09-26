@@ -1,0 +1,51 @@
+{
+  "schema": "R9_IMPLEMENTATION_VALIDATION_V1",
+  "status": "SYNTHETIC_CHECKS_PASSED_RUNTIME_NOT_ADMITTED",
+  "spec_sha256": "fffc19b355a4d0a0ae55204e743e086e07db82250c096dc83879fa0e86a602aa",
+  "base_code_sha": "a9d3a43959da73ef552401342cc087d5ae8e6ba2",
+  "environment": {
+    "python": "3.12.14",
+    "torch": "2.14.0",
+    "device": "CPU",
+    "network": "generated small autograd network"
+  },
+  "checks": {
+    "r9_unittest": {
+      "tests": 19,
+      "failures": 0,
+      "errors": 0,
+      "command": "PYTHONPATH=src python -m unittest discover -s tests/r9 -v"
+    },
+    "inherited_metadata_tests": {
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "names": [
+        "metadata_split_freezes_before_decode_and_preserves_existing",
+        "overlap_minimum_duplicate_and_filename_group_rejected",
+        "target_overlap_and_bad_domain_rejected",
+        "source_path_escape_and_symlink_hardlink_rejected",
+        "file_digest_mismatch_rejects_before_decode",
+        "fixed_published_alias_mapping_metadata_only"
+      ]
+    },
+    "plan_arithmetic": "PASS_PLANNING_ONLY"
+  },
+  "real_execution": {
+    "launched": false,
+    "private_assets_opened": false,
+    "physical_gpu_calls": 0,
+    "monitor_created": false
+  },
+  "score_storage_amendment": "USER_APPROVED_INTERNAL_SCORING_END_OF_ROUND_RELEASE",
+  "lr_source_seed_policy": "PENDING_USER_DECISION",
+  "resource_profile": "NOT_MEASURED",
+  "private_bindings": "NOT_BOUND",
+  "runtime_admission": "NOT_ESTABLISHED",
+  "limitations": [
+    "No real ResUNet34/CUDA or private-data end-to-end acceptance",
+    "No new runtime authorization",
+    "No scientific performance results",
+    "Imported input Markdown keeps original hard-line-break whitespace and its manifest bytes"
+  ]
+}
