@@ -12,6 +12,30 @@ from dpa_ctta.r8_ba.worker_budget import WorkerBudget
 
 
 class TestWorkerBudget(unittest.TestCase):
+    def test_authorized_soft_time_extends_but_aggregate_cap_stops(self):
+        import json
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            ledger = Ledger(root / "ledger", dict(code_sha="1"*40,protocol_sha256="2"*64,graph_sha256="3"*64))
+            ledger.create(dict.fromkeys(CAPS,0), "test")
+            state=ledger.snapshot();state.pop("committed_and_reserved")
+            state["relax_timing_gates"]=True;ledger._save(state)
+            budget=dict.fromkeys(CAPS,0);budget.update(gpu_seconds=10,disk_bytes=1024**2)
+            ledger.reserve("a",5,budget)
+            with patch("os.getpid",return_value=123),patch("os.getpgrp",return_value=123),patch.dict("os.environ",{"CUDA_VISIBLE_DEVICES":"5"}):
+                with WorkerBudget(ledger,"a",root/"job",budget,CAPS["gpu_seconds"]-1,True) as guard:
+                    guard.started-=100
+                    guard.last_shared_check=float("-inf")
+                    guard()
+                    self.assertGreater(ledger.snapshot()["attempts"]["a"]["reserved"]["gpu_seconds"],100)
+            ledger.reserve("b",5,budget)
+            state=ledger.snapshot();state.pop("committed_and_reserved")
+            state["prior_cost"]["gpu_seconds"]=CAPS["gpu_seconds"]-Ledger.total(state)["gpu_seconds"]-5
+            ledger._save(state)
+            with self.assertRaisesRegex(RuntimeError,"GLOBAL STOP"):
+                ledger.guard("b",dict.fromkeys(CAPS,0)|{"gpu_seconds":11})
+            self.assertIsNotNone(json.loads((ledger.root/"state.json").read_text())["stop"])
+
     def test_physical_cost_survives_logical_counter_reset(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

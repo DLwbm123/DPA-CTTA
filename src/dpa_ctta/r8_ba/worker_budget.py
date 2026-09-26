@@ -16,10 +16,13 @@ ACTIVE = None
 
 
 class WorkerBudget:
-    def __init__(self, ledger, attempt_id, root, budget, maximum_seconds):
+    def __init__(self, ledger, attempt_id, root, budget, maximum_seconds, relax_timing_gates=False, runtime_code_sha=None):
         self.ledger, self.attempt_id, self.root = ledger, attempt_id, Path(root).resolve()
         self.budget = _cost(budget).copy()
-        if (not 0 < maximum_seconds < self.budget["gpu_seconds"] or
+        self.relax_timing_gates = relax_timing_gates
+        self.runtime_code_sha = runtime_code_sha
+        self.checked_keys = tuple(k for k in CAPS if not (relax_timing_gates and k=="gpu_seconds"))
+        if (not 0 < maximum_seconds < (CAPS["gpu_seconds"] if relax_timing_gates else self.budget["gpu_seconds"]) or
                 os.getpid() != os.getpgrp()):
             raise ValueError("R8 worker requires a dedicated process group and bounded deadline")
         self.maximum_seconds = maximum_seconds
@@ -46,11 +49,11 @@ class WorkerBudget:
     def __call__(self):
         now = time.monotonic()
         self.observed["gpu_seconds"] = now - self.started
-        if self.observed["gpu_seconds"] >= self.maximum_seconds:
+        if not self.relax_timing_gates and self.observed["gpu_seconds"] >= self.maximum_seconds:
             self.ledger.stop("worker deadline reached: " + self.attempt_id)
             raise RuntimeError("R8 GLOBAL STOP: worker deadline")
-        if any(self.observed[key] >= self.budget[key] for key in CAPS if self.budget[key] > 0) or any(
-                self.observed[key] > 0 and self.budget[key] == 0 for key in CAPS):
+        if any(self.observed[key] >= self.budget[key] for key in self.checked_keys if self.budget[key] > 0) or any(
+                self.observed[key] > 0 and self.budget[key] == 0 for key in self.checked_keys):
             self.ledger.stop("worker reservation exhausted: " + self.attempt_id)
             raise RuntimeError("R8 GLOBAL STOP: worker reservation")
         if now - self.last_shared_check >= 1:
@@ -94,7 +97,7 @@ class WorkerBudget:
             raise ValueError("R8 nested physical worker budget")
         state = self.ledger.snapshot()
         attempt = state["attempts"][self.attempt_id]
-        if (attempt["reserved"] != self.budget or attempt["actual"] is not None or
+        if (bool(state.get("relax_timing_gates")) != self.relax_timing_gates or attempt["reserved"] != self.budget or attempt["actual"] is not None or
                 str(attempt["physical_gpu"]) != os.environ.get("CUDA_VISIBLE_DEVICES")):
             raise ValueError("R8 worker reservation identity")
         self()
@@ -111,7 +114,8 @@ class WorkerBudget:
             lambda optimizer, *_: self.operation("optimizer_steps")
             if isinstance(optimizer, (torch.optim.Adam, torch.optim.AdamW)) else None))
         self.watchdog = threading.Thread(target=self._deadline, daemon=True)
-        self.watchdog.start()
+        if not self.relax_timing_gates:
+            self.watchdog.start()
         return self
 
     def __exit__(self, kind, error, traceback):
@@ -130,6 +134,7 @@ class WorkerBudget:
         path = self.ledger.root / ("attempt-" + self.attempt_id + ".json")
         with path.open("x") as stream:
             json.dump(dict(schema="R8_PHYSICAL_ATTEMPT_V1", observed=self.observed,
+                           runtime_code_sha=self.runtime_code_sha, relax_timing_gates=self.relax_timing_gates,
                            baseline_disk_bytes=self.baseline_disk_bytes,
                            peak_disk_bytes=peak_disk,
                            status="COMPLETE" if kind is None else "FAILED",

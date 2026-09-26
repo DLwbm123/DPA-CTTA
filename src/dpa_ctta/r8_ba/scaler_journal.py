@@ -136,7 +136,7 @@ class ScalerJournal:
 
     def recover_once(self, failure):
         _reject_recorded_noninfra_failure(self.root)
-        if (not isinstance(failure, dict) or failure.get("class") != "INFRASTRUCTURE" or
+        if (not isinstance(failure, dict) or failure.get("class") not in ("INFRASTRUCTURE", "USER_AUTHORIZED_RESOURCE_RESUME") or
                 not failure.get("reason") or not isinstance(failure.get("evidence"), dict) or
                 not failure["evidence"] or not self.physical.is_file() or
                 (self.root / "recovery.json").exists() or

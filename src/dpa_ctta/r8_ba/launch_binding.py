@@ -22,7 +22,7 @@ def verify(config, root):
     if hashlib.sha256(raw).hexdigest() != ref['sha256']:
         raise ValueError('R8 deployed code inventory changed')
     packet = json.loads(raw)
-    if packet['code_sha'] != config['code_sha'] or not packet['files']:
+    if packet['code_sha'] != config.get('runtime_code_sha', config['code_sha']) or not packet['files']:
         raise ValueError('R8 deployed code commit binding')
     root = Path(root).resolve()
     for relative, expected in packet['files'].items():

@@ -16,6 +16,7 @@ from dpa_ctta.r8_ba.ledger import Ledger
 from dpa_ctta.r8_ba.launch_binding import verify
 from dpa_ctta.r8_ba.paths import SOURCE_ROOT, TARGET_ROOT
 from dpa_ctta.r8_ba.protocol import PROTOCOL_SHA256
+from dpa_ctta.r8_ba.resources import CAPS
 from dpa_ctta.r8_ba.source_artifacts import digest, select_completed_grid, source_index, lock_targets
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -48,7 +49,8 @@ def main():
             set(report['budgets']) != {row['id'] for row in work}):
         raise ValueError('R8 launch admission binding')
     bound = bind_metadata(launch['refs'])
-    common = dict(code_sha=launch['code_sha'], protocol_sha256=PROTOCOL_SHA256,
+    common = dict(code_sha=launch['code_sha'], runtime_code_sha=launch.get('runtime_code_sha',launch['code_sha']),
+                  relax_timing_gates=launch.get('relax_timing_gates',False), protocol_sha256=PROTOCOL_SHA256,
                   refs=launch['refs'], source_root=launch['source_root'], target_root=launch['target_root'],
                   checkpoint_path=launch['checkpoint_path'], code_inventory=launch['code_inventory'],
                   gpu_uuids=launch['gpu_uuids'], required_gpu_bytes=launch['required_gpu_bytes'],
@@ -165,18 +167,18 @@ def main():
         if failure:
             value['resume_failure'] = failure
         budget = report['budgets'][row['id']]
-        value.update(maximum_seconds=int(budget['gpu_seconds']) - 1,
+        value.update(maximum_seconds=(CAPS['gpu_seconds']-1 if launch.get('relax_timing_gates') else int(budget['gpu_seconds'])-1),
                      execution_ledger=dict(root=str(run / 'ledger'), identity=identity, attempt_id=attempt, budget=budget))
         return value
     try:
         while True:
-            if SCREEN and time.time()-state['started_unix'] >= 24*3600:
+            if SCREEN and not launch.get('relax_timing_gates') and time.time()-state['started_unix'] >= 24*3600:
                 raise RuntimeError('R8 SCREEN24 wall deadline reached; preserve incomplete jobs')
             if stopped:
                 raise RuntimeError('R8 queue interrupted; preserve all reservations')
             ledger.snapshot()
             for gpu, (process, row, output, start, deadline) in list(active.items()):
-                if time.monotonic() - start >= deadline:
+                if not launch.get('relax_timing_gates') and time.monotonic() - start >= deadline:
                     raise RuntimeError('R8 worker deadline reached')
                 code = process.poll()
                 if code is None:

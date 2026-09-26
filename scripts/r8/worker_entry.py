@@ -38,7 +38,9 @@ def main():
     if admitted.get("config_sha256") != hashlib.sha256(Path(os.environ["R8_WORK_CONFIG"]).read_bytes()).hexdigest():
         ledger.stop("worker config differs from admitted job")
         raise ValueError("R8 worker config identity")
-    with WorkerBudget(ledger, row["attempt_id"], root, row["budget"], config["maximum_seconds"]):
+    with WorkerBudget(ledger, row["attempt_id"], root, row["budget"], config["maximum_seconds"],
+                      relax_timing_gates=config.get("relax_timing_gates",False),
+                      runtime_code_sha=config.get("runtime_code_sha",config["code_sha"])):
         runpy.run_path(str(ROOT / "scripts/r8" / ENTRIES[config["schema"]]), run_name="__main__")
 
 

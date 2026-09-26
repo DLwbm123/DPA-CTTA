@@ -119,6 +119,20 @@ class Ledger:
             attempt = state["attempts"][attempt_id]
             if attempt["actual"] is not None:
                 raise ValueError("R8 settled attempt cannot execute")
+            # User-authorized timing estimates are soft. Extend only time, under
+            # the unchanged aggregate cap; failed attempts keep their reservations.
+            if state.get("relax_timing_gates") and observed["gpu_seconds"] + 30 >= attempt["reserved"]["gpu_seconds"]:
+                total = self.total(state)
+                extension = max(60, math.ceil(observed["gpu_seconds"] + 60 - attempt["reserved"]["gpu_seconds"]))
+                total["gpu_seconds"] += extension
+                try:
+                    check_caps(total)
+                except RuntimeError as exc:
+                    state["stop"] = str(exc)
+                    self._save(state)
+                    raise
+                attempt["reserved"]["gpu_seconds"] += extension
+                self._save(state)
             if any(observed[key] >= attempt["reserved"][key]
                    for key in CAPS if attempt["reserved"][key] > 0) or any(
                     observed[key] > 0 and attempt["reserved"][key] == 0 for key in CAPS):
