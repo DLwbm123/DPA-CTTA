@@ -1,3 +1,5 @@
+> **R8_SCREEN24_COMPLETE (2026-09-26).** Reduced 10-source / 40-target screen: all 67,800 principal records verified. A/B FULL did not outperform STATIC, CURRENT-MLP or C0. [Report](docs/review/r8_screen24/REPORT.md) · [aggregate results](docs/review/r8_screen24/RESULTS.json). Release branch: `experiment/r8-ba-performance-envelope-v1`. Earlier statuses below are historical; this is not the full R8 envelope.
+
 > **H1_DIAGNOSTIC_COMPLETE (2026-09-08).** GPU 7 completed 80 smoke + 200 formal Adam calls; all exits 0 and independent JSONL recomputation passed. Frozen execution `daa95d2`. [H1 report](docs/HOST_MECHANISM_DIAGNOSTIC_REPORT.md) · [execution audit](results/host_mechanism_diagnostic_v1/execution_20260908.json). Normalization-path change dominates source-clean loss; H_source_stats is a next-round draft only.
 
 # DPA-CTTA

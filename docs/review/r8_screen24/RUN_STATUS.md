@@ -1,3 +1,7 @@
+# Screen24 completion status
+
+**EXECUTION COMPLETE**: 10/10 source, 40/40 target online, 40/40 score; 67,800 principal records verified. Last completion receipt 2026-09-26 12:30:32 UTC. See [REPORT.md](REPORT.md) and [RESULTS.json](RESULTS.json). Earlier launch/stop entries below are retained history.
+
 # Screen24 launch status
 
 ## Latest: resumed with user-authorized soft timing
