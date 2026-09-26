@@ -2,7 +2,7 @@
 
 ## Latest: resumed with user-authorized soft timing
 
-2026-09-26 02:49:59 UTC resumed the same run, queue PID 1044358; actual runtime SHA 544640fe51507509a97864fe1a58c8eb0275d3d0, scientific artifact identity remains 2329fb6. The user explicitly removed timing gates. Estimated worker duration and 24-hour wall target no longer stop the queue. Real aggregate caps and scientific validation remain. Scaler recovery passed its anchor-493 boundary and advanced to 495, GPU 5 PID 1044369; old costs and completed artifacts retained. The earlier awaiting-approval/stopped entries below are historical. See TIMING_OVERRIDE.md.
+2026-09-26 02:49:59 UTC resumed the same run, queue PID 1044358; actual runtime SHA 544640fe51507509a97864fe1a58c8eb0275d3d0, scientific artifact identity remains 2329fb6. The user explicitly removed timing gates. Estimated worker duration and 24-hour wall target no longer stop the queue. Real aggregate caps and scientific validation remain. Scaler recovery completed 512/512. At 02:54 UTC, source jobs A_FULL_20260924, A_FULL_20260925 and A_STATIC_20260924 were verified advancing backward/optimizer counts on physical GPUs 5/6/7 (PIDs 1045987/1045988/1045989); old costs and completed artifacts retained. The earlier awaiting-approval/stopped entries below are historical. See TIMING_OVERRIDE.md.
 
 
 ## Latest: stopped at scaler worker deadline
