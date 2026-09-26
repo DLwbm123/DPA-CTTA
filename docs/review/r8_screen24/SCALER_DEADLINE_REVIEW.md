@@ -1,5 +1,8 @@
 # Scaler deadline stop — 2026-09-25
 
+**Superseded on 2026-09-26:** user explicitly authorized removal of timing gates. Runtime 544640f resumed the verified scaler snapshot. The proposal below is retained as historical evidence; no approval is outstanding. See TIMING_OVERRIDE.md and RUN_STATUS.md.
+
+
 Status: **GLOBAL STOP; continuation not authorized or launched**.
 
 The scaler exceeded its admitted 4,313-second worker deadline after completing 493 of 512 anchors. Queue and GPU workers have exited. Oracle 768/768, basis and capacity 128/128 are complete. Source model training and target jobs have not started. The global 60 GPU-hour / 16 GiB / 24-hour caps have not been reached.
