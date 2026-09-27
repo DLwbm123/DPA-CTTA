@@ -15,10 +15,17 @@
   "estimated_time_is_soft": true,
   "execution_authorized": false,
   "gpu_assignments": null,
-  "lr_source_policy": null,
+  "lr_source_policy": "first_two_mean",
   "max_gpu_workers": 3,
   "output_root": null,
   "profile": null,
+  "profile_authorization": null,
+  "recovery_policy": {
+    "max_extra_attempts_per_job": 1,
+    "max_jobs": 3,
+    "reserve": "per_resource_top_three_full_attempts",
+    "schema": "R9_RECOVERY_V1"
+  },
   "schema": "R9_LAUNCH_V1",
   "score_release_policy": "sealed_internal_score_release_at_end",
   "source_inventory": null,

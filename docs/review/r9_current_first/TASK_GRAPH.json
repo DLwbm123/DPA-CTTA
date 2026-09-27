@@ -22,6 +22,11 @@
     "target_total_slots_max": 771
   },
   "execution_authorized": false,
+  "lr_source_policy": "first_two_mean",
+  "lr_source_seeds": [
+    20260924,
+    20260925
+  ],
   "nodes": [
     {
       "id": "FIT_A_LEGACY_FULL_20260924",
@@ -30967,6 +30972,12 @@
       "resource": "cpu"
     }
   ],
+  "recovery_policy": {
+    "max_extra_attempts_per_job": 1,
+    "max_jobs": 3,
+    "reserve": "per_resource_top_three_full_attempts",
+    "schema": "R9_RECOVERY_V1"
+  },
   "schema": "R9_DAG_V1",
   "spec_sha256": "fffc19b355a4d0a0ae55204e743e086e07db82250c096dc83879fa0e86a602aa"
 }

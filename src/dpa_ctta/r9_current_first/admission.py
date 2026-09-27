@@ -2,7 +2,7 @@
 import math
 import re
 from pathlib import Path
-from .protocol import SPEC_SHA,CAPS,digest
+from .protocol import SPEC_SHA,CAPS,digest,RECOVERY_POLICY
 
 
 def require_authorized(config):
@@ -17,13 +17,15 @@ def require_authorized(config):
     if not root.is_absolute() or 'r9' not in root.name.lower():raise ValueError('independent absolute R9 output root required')
     for key in ('bindings','source_inventory','profile','admission','authorization'):
         if not isinstance(config.get(key),dict) or not config[key]:raise ValueError('missing R9 '+key)
-    if config.get('lr_source_policy') not in ('first_two_mean','first_only','per_seed'):raise ValueError('LR source policy unresolved')
+    if config.get('lr_source_policy')!='first_two_mean':raise ValueError('LR source policy unresolved')
     if config.get('score_release_policy')!='sealed_internal_score_release_at_end':raise ValueError('score/storage protocol unresolved')
-    choices=dict(lr_source_policy=config['lr_source_policy'],score_release_policy=config['score_release_policy'])
+    if config.get('recovery_policy')!=RECOVERY_POLICY:raise ValueError('finite recovery protocol required')
+    choices=dict(lr_source_policy=config['lr_source_policy'],score_release_policy=config['score_release_policy'],recovery_policy=RECOVERY_POLICY)
     a=config['authorization']
     if a.get('protocol_choices')!=choices:raise PermissionError('protocol choices need explicit binding')
     if a.get('code_sha')!=config['code_sha'] or a.get('spec_sha256')!=SPEC_SHA or a.get('gpu_assignments')!=gpu or a.get('output_root')!=str(root) or not a.get('user_instruction'):
         raise PermissionError('new explicit execution authorization must bind this launch')
+    if a.get('bindings_sha256')!=digest(config['bindings']) or a.get('profile_sha256')!=digest(config['profile']):raise PermissionError('explicit authorization must bind assets and measured profile')
     if config['profile'].get('code_sha')!=config['code_sha'] or config['admission'].get('profile_sha256')!=digest(config['profile']):
         raise ValueError('profile must be measured on same exact runtime')
     if config['admission'].get('status')!='PASS':raise ValueError('full matrix resource admission not passed')
@@ -35,16 +37,17 @@ def require_authorized(config):
     if set(profile.get('node_budgets',{}))!={n['id'] for n in graph()['nodes']}:raise ValueError('profile missing task budgets')
     for row in profile['node_budgets'].values():
         if set(row)!=set(CAPS) or any(type(v) not in (int,float) or not math.isfinite(v) or v<0 for v in row.values()):raise ValueError('node budget')
-    proof=projection(profile['measurements'],len(POLICIES[config['lr_source_policy']]),profile['retained_disk_bound'],profile['prior_cost'])
+    expected_binding=dict(code_sha=config['code_sha'],bindings_sha256=digest(config['bindings']),gpu_assignments=gpu,output_root=str(root))
+    if any(row.get('binding')!=expected_binding for row in profile['measurements'].values()):raise ValueError('measurement asset/GPU/root/runtime binding')
+    proof=projection(profile['measurements'],len(POLICIES[config['lr_source_policy']]),profile['retained_disk_bound'],profile['prior_cost'],profile['node_budgets'])
     if proof['status']!='PASS' or proof['upper_bound']!=config['admission']['upper_bound']:raise ValueError('full resource proof mismatch')
     totals=config['admission']['upper_bound']
     if set(totals)!=set(CAPS) or any(not math.isfinite(v) or v<0 or v>CAPS[k] for k,v in totals.items()):raise ValueError('aggregate cap')
     return root
 
 
-def project(units,measurements,retained_disk,peak_temporary_disk,prior=None,recovery_factor=2.):
-    """Worst-case all permitted single retries; no timing-only worker stop follows."""
-    if recovery_factor!=2.:raise ValueError('one full failed reservation plus one recovery')
+def project(units,measurements,retained_disk,peak_temporary_disk,prior=None,recovery_budgets=()):
+    """Full original graph plus three full extra attempts per resource, never x2."""
     if any(type(v) not in (int,float) or not math.isfinite(v) or v<0 for v in (retained_disk,peak_temporary_disk)):raise ValueError('disk bound')
     total=dict.fromkeys(CAPS,0);prior=prior or dict.fromkeys(CAPS,0)
     if set(prior)!=set(CAPS) or any(not math.isfinite(v) or v<0 for v in prior.values()):raise ValueError('prior costs')
@@ -53,7 +56,10 @@ def project(units,measurements,retained_disk,peak_temporary_disk,prior=None,reco
         if type(count) is not int or count<0 or not row.get('measured') or not row.get('evidence'):raise ValueError('measured profile units')
         if any(k not in row or type(row[k]) not in (int,float) or not math.isfinite(row[k]) or row[k]<0 for k in CAPS):raise ValueError('finite measured unit costs')
         for key in CAPS:
-            if key!='disk_bytes':total[key]+=math.ceil(row[key]*count*recovery_factor)
+            if key!='disk_bytes':total[key]+=math.ceil(row[key]*count)
     total['disk_bytes']=retained_disk+peak_temporary_disk
-    total={k:total[k]+prior[k] for k in CAPS}
-    return dict(status='PASS' if all(total[k]<=CAPS[k] for k in CAPS) else 'OVER_CAP',upper_bound=total)
+    for row in recovery_budgets:
+        if set(row)!=set(CAPS) or any(type(v) not in (int,float) or not math.isfinite(v) or v<0 for v in row.values()):raise ValueError('finite recovery budget')
+    reserve={k:sum(sorted((row[k] for row in recovery_budgets),reverse=True)[:RECOVERY_POLICY['max_jobs']]) for k in CAPS}
+    total={k:total[k]+prior[k]+reserve[k] for k in CAPS}
+    return dict(status='PASS' if all(total[k]<=CAPS[k] for k in CAPS) else 'OVER_CAP',upper_bound=total,recovery_reserve=reserve,recovery_policy=RECOVERY_POLICY)

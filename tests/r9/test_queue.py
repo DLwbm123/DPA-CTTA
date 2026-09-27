@@ -22,11 +22,12 @@ class Queue(unittest.TestCase):
                     assert args==['/tmp/e/bin/python','/tmp/w.py']
                     packet=json.loads(Path(env['R9_PACKET']).read_text());node=packet['node']['id'];executed.append(node)
                     fail=node=='first' and executed.count('first')==1
-                    f={'class':'INFRASTRUCTURE','reason':'synthetic EIO','evidence':'test receipt'} if fail else None
+                    from dpa_ctta.r9_current_first.recovery import evidence
+                    f={'class':'INFRASTRUCTURE','reason':'synthetic EIO','node':node,'attempt':packet['attempt'],'evidence':evidence(identity,node,packet['attempt'],root/'unused')} if fail else None
                     ledger=Ledger(root/'ledger',identity,[9]);actual=dict.fromkeys(CAPS,0)
                     ledger.observe(packet['attempt'],packet['token'],actual,settle=True,failed=fail)
                     (root/'attempts').mkdir(exist_ok=True)
-                    write_json(root/'attempts'/(packet['attempt']+'.json'),dict(schema='R9_ATTEMPT_V1',identity=identity,node=node,attempt=packet['attempt'],status='FAILED' if fail else 'COMPLETE',failure=f))
+                    write_json(root/'attempts'/(packet['attempt']+'.json'),dict(schema='R9_ATTEMPT_V1',identity=identity,node=node,attempt=packet['attempt'],status='FAILED' if fail else 'COMPLETE',failure=f,actual=actual))
                 def wait(self,timeout=None):return 0
             with patch.object(queue,'require_authorized',return_value=root),patch.object(queue,'verify_runtime',return_value=identity),patch.object(queue,'graph',return_value={'nodes':nodes}),patch.object(queue.subprocess,'Popen',Process),patch.object(assets,'available_memory',return_value=1024):
                 state=queue.run(config,'/tmp/w.py','/tmp/e/bin/python')

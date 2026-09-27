@@ -8,6 +8,8 @@ SPEC_PATH = ROOT/'docs/review/r9_current_first/input/R9_SPEC_AND_MATRIX.json'
 SPEC_BYTES = SPEC_PATH.read_bytes()
 SPEC = json.loads(SPEC_BYTES)
 SPEC_SHA = hashlib.sha256(SPEC_BYTES).hexdigest()
+RECOVERY_POLICY = dict(schema="R9_RECOVERY_V1", max_jobs=3, max_extra_attempts_per_job=1,
+                       reserve="per_resource_top_three_full_attempts")
 CHECKPOINTS = (4000, 8000, 12000, 16000)
 RECIPES = ('LEGACY', 'SELF', 'SELF_TASK')
 CAPS = dict(gpu_seconds=512*3600, disk_bytes=64*1024**3, model_forwards=32000000,
@@ -45,12 +47,12 @@ def graph():
     ids={n['id'] for n in nodes}
     if len(ids)!=len(nodes) or any(set(n['needs'])-ids for n in nodes):raise ValueError('invalid R9 DAG')
     return dict(schema='R9_DAG_V1',spec_sha256=SPEC_SHA,execution_authorized=False,
-                counts=SPEC['counts'],nodes=nodes)
+                counts=SPEC['counts'],recovery_policy=RECOVERY_POLICY,lr_source_policy='first_two_mean',lr_source_seeds=[20260924,20260925],nodes=nodes)
 
 
 def disabled_config():
     return dict(schema='R9_LAUNCH_V1',execution_authorized=False,spec_sha256=SPEC_SHA,
                 code_sha=None,source_inventory=None,bindings=None,gpu_assignments=None,
-                lr_source_policy=None,score_release_policy='sealed_internal_score_release_at_end',
-                output_root=None,profile=None,admission=None,authorization=None,
+                lr_source_policy="first_two_mean",recovery_policy=RECOVERY_POLICY,score_release_policy='sealed_internal_score_release_at_end',
+                output_root=None,profile=None,profile_authorization=None,admission=None,authorization=None,
                 caps=CAPS,estimated_time_is_soft=True,max_gpu_workers=3,cpu_score_workers=1)

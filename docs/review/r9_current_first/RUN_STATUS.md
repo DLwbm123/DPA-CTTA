@@ -1,13 +1,12 @@
-# R9 status
+# R9 review repair status
 
-- Review implementation prepared on the fixed Screen24 release; R8 files unchanged.
-- 19 R9 synthetic checks and 6 reused metadata/isolation checks passed.
-- No real R9 training, target adaptation, profile, remote launch or monitor.
-- User approved internal CPU scoring with final-round release and temporary prediction retirement.
-- LR source seed aggregation remains an unanswered scientific choice; no default was selected.
-- Private asset/GPU/output bindings, measured exact-code resource proof and new execution authorization remain required by the imported prompt.
+- `execution_authorized=false`; no real data, GPU profile, remote run or monitor.
+- LR policy fixed to `first_two_mean`: source seeds 20260924/20260925, one global LR per gradient arm.
+- Scientific matrix remains 43 sources, 610 core plus at most 161 sensitivity slots; training and internal-score/end-round-release definitions unchanged.
+- Four review repairs implemented; finite recovery allowance is enforced by the queue and persistent ledger.
+- 24 R9 CPU synthetic regressions and 6 inherited metadata/isolation checks passed; plan arithmetic passed.
+- Actual asset/GPU UUID/output-root bindings and real resource admission remain NOT ESTABLISHED.
+- Real profile requires separate explicit bound authorization. A full round subsequently requires explicit authorization for the new exact SHA, assets, GPU UUIDs, output root and measured profile.
 
-Read `IMPLEMENTATION.md`, `VALIDATION.json`, `LAUNCH.disabled.json` and
-`PROFILE.unmeasured.json`. Do not treat this status as a resource or scientific PASS.
-The local synthetic runtime is disposable; future real execution must use and record
-the separately bound environment and exact published runtime inventory.
+See `REVIEW_FIXES.md`, `VALIDATION.json`, `RECOVERY_PROTOCOL.json` and `LAUNCH.disabled.json`.
+This is a code review release, not a runtime or scientific PASS.

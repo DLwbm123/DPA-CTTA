@@ -1,0 +1,20 @@
+{
+  "recovery_policy": {
+    "schema": "R9_RECOVERY_V1",
+    "max_jobs": 3,
+    "max_extra_attempts_per_job": 1,
+    "reserve": "per_resource_top_three_full_attempts"
+  },
+  "execution_authorized": false,
+  "lr_source_policy": "first_two_mean",
+  "lr_source_seeds": [
+    20260924,
+    20260925
+  ],
+  "target_phases_share_job_allowance": true,
+  "compute_projection": "sum full node budgets plus per-resource top-three full extra attempts",
+  "disk_projection": "retained full matrix plus one LONG10 probability file plus top-three retained recovery outputs",
+  "claims": "durable receipt-bound, never refunded",
+  "failed_compute": "preserve full reservation and observed history",
+  "disk_accounting": "current physical occupancy plus active additional reservation"
+}

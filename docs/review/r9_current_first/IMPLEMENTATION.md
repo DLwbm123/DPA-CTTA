@@ -29,13 +29,14 @@ R8 files or reinterpret SELF as a fix to the original experiment.
 - Six gradient arms with pinned six-view C0 teacher/strong augmentation, fresh Adam,
   scaled latent updates and BN-affine-only reset. Actual per-visit hooks verify
   8F/1B/1Adam or 10F/3B/3Adam on the synthetic network.
-- Source-cal LR implementation supports the three proposed seed policies but defaults
-  to **unresolved**. It cannot run until the user's choice is bound.
+- Source-cal LR is fixed to `first_two_mean`, source seeds 20260924 and 20260925.
+  Each gradient arm selects one global LR; within 1e-8 of the best mean, choose the smaller LR.
 - Target image reader receives image-only metadata. Full source selection is locked
   before target execution/labels. Float32 probability journals are sealed before the
   separate CPU score process can read masks.
 - Finite native R9 queue, per-attempt receipts, host-local locks, atomic phase snapshots,
-  one evidenced infrastructure recovery per job, retained failed reservations, aggregate
+  one evidenced infrastructure recovery per job and at most three recovered jobs overall,
+  retained failed compute reservations, separate physical disk occupancy, aggregate
   caps and soft per-job estimates. Numerical failures are retained and independent
   ready branches can finish; identity/isolation/resource failures stop the queue.
 - Exact same-trajectory aliasing removes redundant final-16k evaluations. Historical
@@ -94,19 +95,23 @@ ResUNet34 peak memory, complete private receipt availability, or a resource PASS
 
 Uncompleted admission work is intentionally visible:
 
-1. User decision on LR source-seed aggregation (first two / first only / per-seed).
-2. New private metadata/asset/snapshot bindings and freshly chosen GPU UUIDs/output root.
-3. Authorized exact-code real source/kernel/scoring/IO profile, including fresh-fit
+1. New private metadata/asset/snapshot bindings and freshly chosen GPU UUIDs/output root.
+2. Authorized exact-code real source/kernel/scoring/IO profile, including fresh-fit
    fallback, validation/calibration, temporary disk and recovery costs.
-4. Verified runtime inventory and complete node budgets; an independently authorized
+3. Verified runtime inventory and complete node budgets; an independently authorized
    real launch. No blank profile or synthetic timing is accepted as measured proof.
 
-`profile.units()` enumerates measurement units; `profile.projection()` conservatively
-includes all 43 fresh-16k fits and one full failed reservation plus retry per unit.
-It may exceed the proposed caps. It does not assert that the package fits, and does
-not auto-increase caps, reduce work, or substitute synthetic timing. A tighter bounded
-recovery-reservation scheme would require explicit implementation/review, not editing
-an admission JSON to PASS.
+`profile.node_units()` expands the full graph, including all 43 fresh-16k fallbacks.
+Each node's budget must cover its measured units. Aggregate computation reserves all
+node budgets plus the three largest full extra attempts, independently per resource.
+Disk reserves all retained outputs, one LONG10 probability stream, and the three largest
+additional retained recovery outputs. Probability prefixes are shared across attempts,
+not allocated a second time. The ledger preserves failed compute costs and uses measured
+current storage plus active additional reservation for disk admission.
+
+See `REVIEW_FIXES.md` and `RECOVERY_PROTOCOL.json` for the review response, recovery
+limits, connected fault injection and restart/retirement semantics. No resource PASS
+is asserted: exact-code real profiling may still exceed unchanged caps.
 
 ## Runtime use after the missing bindings and authorization
 

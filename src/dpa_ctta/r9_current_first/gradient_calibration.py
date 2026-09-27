@@ -1,4 +1,4 @@
-"""Source-cal kernel; policy selection remains explicit and unapproved by default."""
+"""Source-cal kernel; fixed first-two-source mean and one global LR per gradient arm."""
 import random
 import statistics as st
 import numpy as np
@@ -10,8 +10,7 @@ from .gradient import STEPS,LATENT_LR,BN_LR
 from .selection import balanced
 from .validation import dice
 
-POLICIES={'first_two_mean':(20260924,20260925),'first_only':(20260924,),
-          'per_seed':tuple(range(20260924,20260929))}
+POLICIES={'first_two_mean':(20260924,20260925)}
 
 
 def select(rows,policy):
@@ -22,7 +21,7 @@ def select(rows,policy):
     for a in STEPS:
         per_seed={s:{lr:balanced([r for r in rows if r['arm']==a and r['lr']==lr and r['source_seed']==s],4) for lr in (BN_LR if a=='BN_RESET_G1' else LATENT_LR)} for s in seeds}
         scores[a]=per_seed
-        groups={str(s):per_seed[s] for s in seeds} if policy=='per_seed' else {'global':{lr:st.mean(per_seed[s][lr] for s in seeds) for lr in per_seed[seeds[0]]}}
+        groups={'global':{lr:st.mean(per_seed[s][lr] for s in seeds) for lr in per_seed[seeds[0]]}}
         selected[a]={key:min(lr for lr,v in values.items() if max(values.values())-v<=1e-8) for key,values in groups.items()}
     return dict(schema='R9_LR_SELECTION_V1',policy=policy,selected_lr=selected,scores=scores)
 

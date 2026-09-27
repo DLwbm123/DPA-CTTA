@@ -162,8 +162,8 @@ def dispatch(config,root,node,assignment,budget,failure):
         seal=read(jobroot/'online_complete.json')
         if (jobroot/'score_complete.json').exists():result=read(jobroot/'score_complete.json')
         else:result=score(rows,config['bindings']['target_root'],jobroot,jobid,seal['identity']['context_sha256'],lock,budget,failure)
-        retire_probabilities(jobroot);retired=read(jobroot/'probabilities_retired.json')
-        budget.ledger.release_disk(read(jobroot/'online_attempt.json')['name'],retired['bytes'],digest(retired))
+        retire_probabilities(jobroot)
+        budget.ledger.sync_disk(digest(read(jobroot/'probabilities_retired.json')))
         return result
     raise ValueError('unregistered R9 node')
 
@@ -180,6 +180,9 @@ def worker(config,node,assignment,attempt,token,failure=None):
     original=oldbudget.check_write;oldbudget.check_write=budget.check_write
     try:
         with lease(root/'leases'/node['id'],dict(identity,node=node['id'])):
+            if failure:
+                from .recovery import verify_failure
+                verify_failure(root,jobroot,node['id'],identity,failure)
             if gpu:
                 from .assets import gpu_policy
                 gpu_policy(assignment)
@@ -190,7 +193,11 @@ def worker(config,node,assignment,attempt,token,failure=None):
                 budget.observe(meter.cost,force=True)
             else:result=dispatch(config,root,node,None,budget,failure)
     except BaseException as exc:
-        failure_record=dict(node=node['id'],attempt=attempt,**{'class':failure_class(exc)},reason=str(exc),error_type=type(exc).__name__,evidence=f'attempts/{attempt}.json')
+        from .recovery import evidence
+        failure_record=dict(node=node['id'],attempt=attempt,**{'class':failure_class(exc)},reason=str(exc),error_type=type(exc).__name__,evidence={})
+        try:failure_record['evidence']=evidence(identity,node['id'],attempt,jobroot)
+        except (OSError,ValueError) as capture_error:
+            failure_record['evidence']={'capture_error':str(capture_error)}
         if failure_record['class'] in ('RESOURCE','ISOLATION','IDENTITY_OR_IMPLEMENTATION'):ledger.stop(failure_record['class']+': '+str(exc))
     finally:
         oldbudget.check_write=original
@@ -201,7 +208,7 @@ def worker(config,node,assignment,attempt,token,failure=None):
                      peak_reserved_bytes=torch.cuda.max_memory_reserved() if gpu and torch.cuda.is_initialized() else 0)
         (root/'attempts').mkdir(exist_ok=True);write_json(root/'attempts'/f'{attempt}.json',receipt)
         # A global stop intentionally prevents further ledger mutations; the complete failed reservation stays charged.
-        try:ledger.observe(attempt,token,budget.cost,settle=True,failed=failure_record is not None)
+        try:ledger.observe(attempt,token,budget.cost,settle=True,failed=failure_record is not None);ledger.sync_disk()
         except RuntimeError:
             if failure_record is None:raise
     return receipt
