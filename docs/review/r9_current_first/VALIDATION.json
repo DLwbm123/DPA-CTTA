@@ -11,7 +11,7 @@
   },
   "checks": {
     "r9_unittest": {
-      "tests": 24,
+      "tests": 25,
       "failures": 0,
       "errors": 0,
       "command": "PYTHONPATH=src python -m unittest discover -s tests/r9 -v"
@@ -30,7 +30,8 @@
       ]
     },
     "plan_arithmetic": "PASS_PLANNING_ONLY",
-    "connected_fault_injection": "5 regression methods, actual worker/queue/journal/score/retirement; synthetic CPU boundaries"
+    "connected_fault_injection": "5 regression methods, actual worker/queue/journal/score/retirement; synthetic CPU boundaries",
+    "asset_protocol_separation": "PASS: synthetic connected metadata/trainer plus digest-verified actual JSON receipt mirror; no binary asset reads"
   },
   "real_execution": {
     "launched": false,
@@ -49,7 +50,7 @@
     "No scientific performance results",
     "Imported input Markdown keeps original hard-line-break whitespace and its manifest bytes"
   ],
-  "reviewed_code_sha": "8f3222a8e897a2e03122927242800b9df5a75064",
+  "reviewed_code_sha": "224ccb2eee70dcab049f3d37ffbd1d52fb459a57",
   "lr_source_seeds": [
     20260924,
     20260925

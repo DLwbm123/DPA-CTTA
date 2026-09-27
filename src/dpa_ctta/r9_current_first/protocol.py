@@ -10,6 +10,8 @@ SPEC = json.loads(SPEC_BYTES)
 SPEC_SHA = hashlib.sha256(SPEC_BYTES).hexdigest()
 RECOVERY_POLICY = dict(schema="R9_RECOVERY_V1", max_jobs=3, max_extra_attempts_per_job=1,
                        reserve="per_resource_top_three_full_attempts")
+# Historical Screen24 asset identity; independent of the R9 16000-step runtime.
+SCREEN24_ARTIFACT_PROTOCOL_SHA = "f065dd12da5b8de0a91f251c92d6e70bbbd5df816d589a227296564198dffa6a"
 CHECKPOINTS = (4000, 8000, 12000, 16000)
 RECIPES = ('LEGACY', 'SELF', 'SELF_TASK')
 CAPS = dict(gpu_seconds=512*3600, disk_bytes=64*1024**3, model_forwards=32000000,

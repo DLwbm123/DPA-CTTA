@@ -15,7 +15,7 @@ from ..r8_ba.methods import build,CurrentMLP
 from ..r7_source_prep.registry import Reader,verified
 from ..integrations.ctta_suite import build_reference_model
 from .deployment import Segmenter
-from .protocol import parse_recipe,digest,SPEC_SHA,SPEC
+from .protocol import parse_recipe,digest,SPEC_SHA,SPEC,SCREEN24_ARTIFACT_PROTOCOL_SHA
 from .storage import load_torch
 
 
@@ -117,9 +117,8 @@ def available_memory(assignment,peak_bytes):
 
 def validate_metadata(binding):
     """Validate receipt chains before opening private images or weights."""
-    from ..r8_ba.protocol import PROTOCOL_SHA256
     candidates(binding);old=binding['r8_assets']
-    common=dict(code_sha=SPEC['scientific_artifact_sha_from_screen24'],protocol_sha256=PROTOCOL_SHA256,
+    common=dict(code_sha=SPEC['scientific_artifact_sha_from_screen24'],protocol_sha256=SCREEN24_ARTIFACT_PROTOCOL_SHA,
                 refs=binding['refs'],checkpoint_sha256=binding['checkpoint_sha256'])
     canonical=lambda value:hashlib.sha256(json.dumps(value,sort_keys=True).encode()).hexdigest()
     oracle_identity=dict(**common,amplitude=.3)
@@ -128,8 +127,13 @@ def validate_metadata(binding):
     if old['bases_identity']!=dict(**oracle_identity,oracle_receipt_sha256=binding['oracle_receipt_sha256']):raise ValueError('basis identity')
     for kind in ('oracle','bases','scaler'):
         path=Path(old[kind+'_root'])/(kind+'_complete.json')
-        verified(path,binding[kind+'_receipt_sha256'],1024**2)
+        receipt=json.loads(verified(path,binding[kind+'_receipt_sha256'],1024**2))
+        expected={'oracle':dict(binding=old['oracle_binding'],amplitude=.3),
+                  'bases':old['bases_identity'],
+                  'scaler':dict(binding=old['scaler_binding'],fold='fit',zero_film=True)}[kind]
+        if receipt.get('identity')!=expected:raise ValueError('prepared receipt identity: '+kind)
     ref=binding['screen24_index_ref'];index=json.loads(verified(ref['path'],ref['sha256'],16*1024**2))
+    if any(index.get(k)!=v for k,v in common.items()):raise ValueError('Screen24 index artifact identity')
     if index!=binding['screen24_index']:raise ValueError('Screen24 index binding')
     for route in ('A','B'):
         for seed in (20260924,20260925):
