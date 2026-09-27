@@ -1,0 +1,1034 @@
+{
+  "status": "OVER_CAP",
+  "schema": "R9_PARTIAL_MONOTONE_REJECTION_V1",
+  "code_sha": "13bd6a8cdf9c30a0a5ed7fa464c67e72301ac8c6",
+  "execution_authorized": false,
+  "profile_complete": false,
+  "proof_kind": "Partial lower bound on required conservative admission projection; omitted nonnegative units cannot restore PASS.",
+  "known_units": 112,
+  "required_units": 166,
+  "missing_units": [
+    "calibration_checkpoint/A",
+    "calibration_checkpoint/B",
+    "control/bind_assets",
+    "control/lock",
+    "control/select_recipes",
+    "cpu_score_seal_visit",
+    "cpu_score_visit",
+    "fit_checkpoint/A",
+    "fit_checkpoint/B",
+    "fit_checkpoint/MLP",
+    "journal_append",
+    "lr_episode/BN_RESET_G1",
+    "lr_episode/B_G1",
+    "lr_episode/B_G3",
+    "lr_episode/B_RESET_G3",
+    "lr_episode/COLD_G1",
+    "lr_episode/COLD_G3",
+    "lr_setup/BN_RESET_G1",
+    "lr_setup/B_G1",
+    "lr_setup/B_G3",
+    "lr_setup/B_RESET_G3",
+    "lr_setup/COLD_G1",
+    "lr_setup/COLD_G3",
+    "lr_source_setup",
+    "online/A_OUTSCALE_0.25",
+    "online/A_OUTSCALE_0.5",
+    "online/B_OUTSCALE_0.25",
+    "online/B_OUTSCALE_0.5",
+    "online/C0_CURRENT_STATS",
+    "online/G_CTTA_RELEASE_TRANSFER",
+    "online/N_SOURCE_EVAL",
+    "online_setup/A_OUTSCALE_0.25",
+    "online_setup/A_OUTSCALE_0.5",
+    "online_setup/B_OUTSCALE_0.25",
+    "online_setup/B_OUTSCALE_0.5",
+    "online_setup/C0_CURRENT_STATS",
+    "online_setup/N_SOURCE_EVAL",
+    "source_finalize/A",
+    "source_finalize/B",
+    "source_finalize/MLP",
+    "source_setup/A",
+    "source_setup/B",
+    "source_setup/MLP",
+    "target_checkpoint/A_OUTSCALE_0.25",
+    "target_checkpoint/A_OUTSCALE_0.5",
+    "target_checkpoint/B_OUTSCALE_0.25",
+    "target_checkpoint/B_OUTSCALE_0.5",
+    "target_checkpoint/C0_CURRENT_STATS",
+    "target_checkpoint/G_CTTA_RELEASE_TRANSFER",
+    "target_checkpoint/N_SOURCE_EVAL",
+    "target_journal_append",
+    "validation_checkpoint/A",
+    "validation_checkpoint/B",
+    "validation_checkpoint/MLP"
+  ],
+  "base_measured_projection_lower_bound": {
+    "backward_calls": 2109025,
+    "disk_bytes": 0,
+    "gpu_seconds": 2011519,
+    "model_forwards": 29554834,
+    "optimizer_steps": 2109025,
+    "vjp_calls": 0
+  },
+  "profile_cost": {
+    "backward_calls": 2094,
+    "disk_bytes": 159510583,
+    "gpu_seconds": 4178.286595672835,
+    "model_forwards": 48825,
+    "optimizer_steps": 2093,
+    "vjp_calls": 0
+  },
+  "profile_startup_overhead_charge_seconds": 600,
+  "caps": {
+    "backward_calls": 3000000,
+    "disk_bytes": 68719476736,
+    "gpu_seconds": 1843200,
+    "model_forwards": 32000000,
+    "optimizer_steps": 3000000,
+    "vjp_calls": 4096
+  },
+  "recovery_policy": {
+    "max_extra_attempts_per_job": 1,
+    "max_jobs": 3,
+    "reserve": "per_resource_top_three_full_attempts",
+    "schema": "R9_RECOVERY_V1"
+  },
+  "recovery_reserve": {
+    "backward_calls": 76089,
+    "disk_bytes": 0,
+    "gpu_seconds": 124053,
+    "model_forwards": 1769169,
+    "optimizer_steps": 76089,
+    "vjp_calls": 0
+  },
+  "raw_profile_digests": [
+    "58997db8ef94984e4e9f84eb392ce5ee29bfad05ea8d96cbe6589921cfb6161f",
+    "f971b4f98c13afec9c63551de9be84a8e8795b99d3c8769f69bbcb1f273a3e57"
+  ],
+  "completed_source_jobs": 0,
+  "completed_target_slots": 0,
+  "source_tasks": 43,
+  "target_slots_max": 771,
+  "target_accessed": false,
+  "remaining_profile_cancelled": true,
+  "disk_bound_complete": false,
+  "known_unit_contributions": {
+    "calibration/A": {
+      "backward_calls": 23962,
+      "disk_bytes": 0,
+      "gpu_seconds": 6627,
+      "model_forwards": 95847,
+      "optimizer_steps": 23962,
+      "vjp_calls": 0
+    },
+    "calibration/B": {
+      "backward_calls": 23962,
+      "disk_bytes": 0,
+      "gpu_seconds": 6616,
+      "model_forwards": 95847,
+      "optimizer_steps": 23962,
+      "vjp_calls": 0
+    },
+    "fit/A/LEGACY": {
+      "backward_calls": 83200,
+      "disk_bytes": 0,
+      "gpu_seconds": 143127,
+      "model_forwards": 1996801,
+      "optimizer_steps": 83200,
+      "vjp_calls": 0
+    },
+    "fit/A/SELECTED_MAX": {
+      "backward_calls": 124800,
+      "disk_bytes": 0,
+      "gpu_seconds": 214690,
+      "model_forwards": 2995201,
+      "optimizer_steps": 124800,
+      "vjp_calls": 0
+    },
+    "fit/A/SELF": {
+      "backward_calls": 83200,
+      "disk_bytes": 0,
+      "gpu_seconds": 134318,
+      "model_forwards": 1996801,
+      "optimizer_steps": 83200,
+      "vjp_calls": 0
+    },
+    "fit/A/SELF_TASK": {
+      "backward_calls": 83200,
+      "disk_bytes": 0,
+      "gpu_seconds": 96295,
+      "model_forwards": 1331200,
+      "optimizer_steps": 83200,
+      "vjp_calls": 0
+    },
+    "fit/B/LEGACY": {
+      "backward_calls": 83200,
+      "disk_bytes": 0,
+      "gpu_seconds": 108692,
+      "model_forwards": 1331200,
+      "optimizer_steps": 83200,
+      "vjp_calls": 0
+    },
+    "fit/B/SELECTED_MAX": {
+      "backward_calls": 124800,
+      "disk_bytes": 0,
+      "gpu_seconds": 163037,
+      "model_forwards": 1996800,
+      "optimizer_steps": 124800,
+      "vjp_calls": 0
+    },
+    "fit/B/SELF": {
+      "backward_calls": 83200,
+      "disk_bytes": 0,
+      "gpu_seconds": 97485,
+      "model_forwards": 1331200,
+      "optimizer_steps": 83200,
+      "vjp_calls": 0
+    },
+    "fit/B/SELF_TASK": {
+      "backward_calls": 83200,
+      "disk_bytes": 0,
+      "gpu_seconds": 96893,
+      "model_forwards": 1331200,
+      "optimizer_steps": 83200,
+      "vjp_calls": 0
+    },
+    "fit/MLP/LEGACY": {
+      "backward_calls": 41600,
+      "disk_bytes": 0,
+      "gpu_seconds": 50499,
+      "model_forwards": 665600,
+      "optimizer_steps": 41600,
+      "vjp_calls": 0
+    },
+    "fit/MLP/SELF": {
+      "backward_calls": 104000,
+      "disk_bytes": 0,
+      "gpu_seconds": 114925,
+      "model_forwards": 1664000,
+      "optimizer_steps": 104000,
+      "vjp_calls": 0
+    },
+    "online/A_LEGACY_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2369,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/A_LEGACY_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2362,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/A_PRECAL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 4156,
+      "model_forwards": 71017,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/A_RESET": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 8493,
+      "model_forwards": 147106,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/A_SELECTED_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 27234,
+      "model_forwards": 492043,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/A_SELECTED_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 27594,
+      "model_forwards": 492043,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/A_SELF_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2395,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/A_SELF_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2358,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/A_SELF_TASK_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2368,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/A_SELF_TASK_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2361,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/BN_RESET_G1": {
+      "backward_calls": 63408,
+      "disk_bytes": 0,
+      "gpu_seconds": 32232,
+      "model_forwards": 507260,
+      "optimizer_steps": 63408,
+      "vjp_calls": 0
+    },
+    "online/B_G1": {
+      "backward_calls": 63408,
+      "disk_bytes": 0,
+      "gpu_seconds": 29649,
+      "model_forwards": 507260,
+      "optimizer_steps": 63408,
+      "vjp_calls": 0
+    },
+    "online/B_G3": {
+      "backward_calls": 190223,
+      "disk_bytes": 0,
+      "gpu_seconds": 37041,
+      "model_forwards": 634075,
+      "optimizer_steps": 190223,
+      "vjp_calls": 0
+    },
+    "online/B_ISTA20": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 4162,
+      "model_forwards": 71017,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_LEGACY_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2355,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_LEGACY_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2353,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_PRECAL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 4145,
+      "model_forwards": 71017,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_PRED_ONLY": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 4207,
+      "model_forwards": 71017,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_RESET": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 8532,
+      "model_forwards": 147106,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_RESET_G3": {
+      "backward_calls": 190223,
+      "disk_bytes": 0,
+      "gpu_seconds": 36754,
+      "model_forwards": 634075,
+      "optimizer_steps": 190223,
+      "vjp_calls": 0
+    },
+    "online/B_SELECTED_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 28185,
+      "model_forwards": 492043,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_SELECTED_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 28479,
+      "model_forwards": 492043,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_SELF_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2358,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_SELF_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2353,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_SELF_TASK_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2359,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/B_SELF_TASK_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2389,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/COLD_G1": {
+      "backward_calls": 63408,
+      "disk_bytes": 0,
+      "gpu_seconds": 29166,
+      "model_forwards": 507260,
+      "optimizer_steps": 63408,
+      "vjp_calls": 0
+    },
+    "online/COLD_G3": {
+      "backward_calls": 190223,
+      "disk_bytes": 0,
+      "gpu_seconds": 36441,
+      "model_forwards": 634075,
+      "optimizer_steps": 190223,
+      "vjp_calls": 0
+    },
+    "online/C_CTTA_FIXED_LR": {
+      "backward_calls": 202904,
+      "disk_bytes": 0,
+      "gpu_seconds": 93326,
+      "model_forwards": 1623232,
+      "optimizer_steps": 202904,
+      "vjp_calls": 0
+    },
+    "online/MLP_LEGACY": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 2350,
+      "model_forwards": 40581,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/MLP_SELF": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 30744,
+      "model_forwards": 532623,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online/VPTTA_NATIVE": {
+      "backward_calls": 202904,
+      "disk_bytes": 0,
+      "gpu_seconds": 33105,
+      "model_forwards": 405808,
+      "optimizer_steps": 202904,
+      "vjp_calls": 0
+    },
+    "online_setup/A_LEGACY_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 11,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/A_LEGACY_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 17,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/A_PRECAL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 18,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/A_RESET": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 65,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/A_SELECTED_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 104,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/A_SELECTED_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 62,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/A_SELF_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 18,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/A_SELF_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 18,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/A_SELF_TASK_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 10,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/A_SELF_TASK_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 11,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/BN_RESET_G1": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 31,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_G1": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 46,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_G3": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 32,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_ISTA20": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 17,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_LEGACY_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 16,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_LEGACY_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 10,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_PRECAL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 18,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_PRED_ONLY": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 17,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_RESET": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 36,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_RESET_G3": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 32,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_SELECTED_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 63,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_SELECTED_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 65,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_SELF_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 10,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_SELF_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 10,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_SELF_TASK_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 10,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/B_SELF_TASK_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 18,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/COLD_G1": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 54,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/COLD_G3": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 32,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/C_CTTA_FIXED_LR": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 54,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/G_CTTA_RELEASE_TRANSFER": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 53,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/MLP_LEGACY": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 10,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/MLP_SELF": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 75,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "online_setup/VPTTA_NATIVE": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 50,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/A_LEGACY_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 92,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/A_LEGACY_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 52,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/A_PRECAL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 90,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/A_RESET": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 178,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/A_SELECTED_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 570,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/A_SELECTED_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 598,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/A_SELF_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 49,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/A_SELF_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 49,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/A_SELF_TASK_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 51,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/A_SELF_TASK_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 52,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/BN_RESET_G1": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 159,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_G1": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 153,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_G3": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 153,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_ISTA20": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 85,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_LEGACY_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 49,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_LEGACY_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 50,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_PRECAL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 230,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_PRED_ONLY": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 86,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_RESET": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 197,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_RESET_G3": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 178,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_SELECTED_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 581,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_SELECTED_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 576,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_SELF_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 49,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_SELF_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 51,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_SELF_TASK_FULL": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 48,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/B_SELF_TASK_STATIC": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 50,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/COLD_G1": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 152,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/COLD_G3": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 151,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/C_CTTA_FIXED_LR": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 751,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/MLP_LEGACY": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 49,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/MLP_SELF": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 629,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "target_checkpoint/VPTTA_NATIVE": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 14419,
+      "model_forwards": 0,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "validation_episode/A": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 93593,
+      "model_forwards": 1533543,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "validation_episode/B": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 93472,
+      "model_forwards": 1533543,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    },
+    "validation_episode/MLP": {
+      "backward_calls": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 35155,
+      "model_forwards": 596378,
+      "optimizer_steps": 0,
+      "vjp_calls": 0
+    }
+  },
+  "required_projection_lower_bound": {
+    "backward_calls": 2187208,
+    "disk_bytes": 159510583,
+    "gpu_seconds": 2139750.286595673,
+    "model_forwards": 31372828,
+    "optimizer_steps": 2187207,
+    "vjp_calls": 0
+  },
+  "scientific_outcome": "NOT_RUN",
+  "round_status": "INCOMPLETE",
+  "publication": "Resource rejection only; no target metrics exist.",
+  "coverage_note": "112/166 unit types have at least one valid measurement or a declared SELECTED_MAX derivation. This is not full variant coverage: validation only sampled the abrupt curriculum; supplemental modes, LR, IO and remaining baseline variants were cancelled after monotone rejection.",
+  "disk_note": "Current profile-root occupancy at certificate time only, not a full-run storage projection. Known LONG10 probability peak is separately reported; unmeasured retained-output cost is unknown.",
+  "known_long10_probability_peak_bytes": 40915435520,
+  "not_run_drivers": [
+    "coverage supplement",
+    "IO/control",
+    "complete-profile admission builder",
+    "formal queue"
+  ]
+}
