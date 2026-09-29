@@ -1,0 +1,92 @@
+"""Host-local transaction lock, configurable GPU bindings, aggregate-only hard caps."""
+import json
+import math
+import secrets
+import socket
+import time
+from pathlib import Path
+from .protocol import CAPS,RECOVERY_POLICY
+from ..r9_current_first.storage import lease,write_json
+
+
+def cost(row):
+    if set(row)!=set(CAPS) or any(type(v) not in (int,float) or not math.isfinite(v) or v<0 for v in row.values()):raise ValueError('physical ledger cost')
+    return row
+
+
+class Ledger:
+    def __init__(self,root,identity,gpus):
+        self.root=Path(root);self.identity=identity;self.gpus=set(gpus)
+    def create(self):
+        if (self.root/'state.json').exists():raise ValueError('ledger exists')
+        with lease(self.root,self.identity,blocking=True):
+            write_json(self.root/'state.json',dict(schema='R10_LEDGER_V1',identity=self.identity,host=socket.gethostname(),caps=CAPS,gpus=sorted(self.gpus),attempts={},recovery_claims={},recovery_policy=RECOVERY_POLICY,occupied_disk_bytes=0,disk_events={},stop=None))
+    def _read(self):
+        d=json.loads((self.root/'state.json').read_text())
+        if d.get('recovery_policy')!=RECOVERY_POLICY or d['identity']!=self.identity or d['caps']!=CAPS or d['gpus']!=sorted(self.gpus) or d['host']!=socket.gethostname():raise ValueError('ledger identity')
+        if d['stop']:raise RuntimeError('R10 GLOBAL STOP: '+d['stop'])
+        return d
+    @staticmethod
+    def total(d):
+        total=dict.fromkeys(CAPS,0)
+        total['disk_bytes']=d['occupied_disk_bytes']
+        for a in d['attempts'].values():
+            for k,v in cost(a['actual'] if a['actual'] is not None else a['reserved']).items():
+                if k!='disk_bytes':total[k]+=v
+            if a['status']=='RUNNING':
+                total['disk_bytes']+=max(0,a['reserved']['disk_bytes']-a.get('disk_growth_in_occupancy',0))
+        return total
+    def _cap(self,d):
+        if any(v>CAPS[k] for k,v in self.total(d).items()):
+            d['stop']='aggregate resource cap';write_json(self.root/'state.json',d);raise RuntimeError('R10 GLOBAL STOP: aggregate resource cap')
+    def reserve(self,name,gpu,budget):
+        cost(budget)
+        if gpu not in self.gpus and gpu is not None:raise ValueError('unbound GPU')
+        with lease(self.root,self.identity,blocking=True):
+            d=self._read()
+            if name in d['attempts']:raise ValueError('attempt reuse')
+            token=secrets.token_hex(16)
+            d['attempts'][name]=dict(token=token,physical_gpu=gpu,reserved=budget,actual=None,status='RUNNING',started=time.time(),disk_baseline=d['occupied_disk_bytes'])
+            self._cap(d);write_json(self.root/'state.json',d);return token
+    def observe(self,name,token,observed,settle=False,failed=False,allow_finished=False):
+        cost(observed)
+        with lease(self.root,self.identity,blocking=True):
+            d=self._read();a=d['attempts'][name]
+            if a['token']!=token:raise ValueError('attempt owner')
+            if a['status']!='RUNNING':
+                if allow_finished:return
+                raise ValueError('attempt finished')
+            observed={k:max(v,a.get('observed',{}).get(k,0)) for k,v in observed.items()}
+            # All per-job estimates are soft; actual aggregate usage remains bounded.
+            for k,v in observed.items():a['reserved'][k]=max(a['reserved'][k],v)
+            a['observed']=observed.copy();self._cap(d)
+            if settle:
+                a['status']='FAILED' if failed else 'COMPLETE'
+                if not failed:a['actual']=observed.copy()
+            write_json(self.root/'state.json',d)
+    def sync_disk(self,evidence=None):
+        """Physical occupancy is independent of cumulative compute and failed reservations.
+
+        Re-measure on restart and after deletion; no subtraction or attempt ownership
+        transfer is needed. The serial queue holds its lease during all admissions.
+        """
+        with lease(self.root,self.identity,blocking=True):
+            d=self._read()
+            d['occupied_disk_bytes']=sum(p.stat().st_size for p in self.root.parent.rglob('*') if p.is_file())
+            for a in d['attempts'].values():
+                if a['status']=='RUNNING':a['disk_growth_in_occupancy']=max(0,d['occupied_disk_bytes']-a['disk_baseline'])
+            if evidence:d['disk_events'].setdefault(evidence,dict(occupied_bytes=d['occupied_disk_bytes']))
+            self._cap(d);write_json(self.root/'state.json',d)
+
+    def claim_recovery(self,node,attempt,receipt_sha):
+        with lease(self.root,self.identity,blocking=True):
+            d=self._read();claims=d['recovery_claims']
+            if node in claims:
+                return claims[node]==dict(attempt=attempt,receipt_sha256=receipt_sha)
+            if len(claims)>=RECOVERY_POLICY['max_jobs']:return False
+            claims[node]=dict(attempt=attempt,receipt_sha256=receipt_sha)
+            write_json(self.root/'state.json',d);return True
+
+    def stop(self,reason):
+        with lease(self.root,self.identity,blocking=True):
+            d=json.loads((self.root/'state.json').read_text());d['stop']=reason;write_json(self.root/'state.json',d)

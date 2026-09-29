@@ -1,0 +1,36 @@
+{
+  "status": "PASS_PLANNING_AND_NOMINAL_TARGET_COUNT_ONLY",
+  "stage_counts": {
+    "DISCOVERY": 28,
+    "EXTENSION": 12,
+    "CONFIRMATION": 30,
+    "ABLATION": 75,
+    "BASELINE": 125,
+    "STRESS": 70
+  },
+  "counts": {
+    "source_jobs": 25,
+    "warmups": 5,
+    "post_training_jobs": 20,
+    "main_target_slots": 70,
+    "core_target_slots": 340,
+    "sensitivity_slots_max": 70,
+    "all_target_slots_max": 410,
+    "core_arrivals": 1277905,
+    "all_arrivals_max": 1414475,
+    "core_principal_visits": 1110225,
+    "all_principal_visits_max": 1228875,
+    "warmup_optimizer_steps": 10000,
+    "post_collection_rounds": 80000,
+    "post_optimizer_steps": 160000,
+    "post_initial_candidate_visits": 1280000
+  },
+  "nominal_target_calls_no_alias": {
+    "forwards": 4795558,
+    "backward_calls": 624320,
+    "optimizer_steps": 468240
+  },
+  "source_budget_warning": "Profile must use the planned verified zero-observation cache and actual kernels; no admission is asserted.",
+  "real_profile": false,
+  "remote_execution": false
+}

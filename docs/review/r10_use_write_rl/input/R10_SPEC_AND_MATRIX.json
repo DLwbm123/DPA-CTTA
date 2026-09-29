@@ -1,0 +1,5845 @@
+{
+  "schema": "R10_USE_WRITE_RL_V1",
+  "status": "PLAN_AND_REFERENCE_MATH_NOT_IMPLEMENTED_NOT_LAUNCHED",
+  "base_repository": "DLwbm123/DPA-CTTA",
+  "base_code_sha": "13bd6a8cdf9c30a0a5ed7fa464c67e72301ac8c6",
+  "final_runtime_sha": null,
+  "namespace": "r10_use_write_rl",
+  "branch": "experiment/r10-use-write-rl-v1",
+  "carrier": {
+    "source": "SCREEN24_FROZEN_DEPLOYMENT",
+    "job": "B_FULL_20260924",
+    "rank": 64,
+    "amplitude": 0.3,
+    "observer": "global",
+    "all_weights_frozen": true,
+    "selection": "fixed identity; not chosen by target score",
+    "depends_on_R9_completion": false,
+    "gradient_scale": "verified source-fit B64 scale; floor 1e-3"
+  },
+  "policy": {
+    "input_dim": 193,
+    "use_mlp": [
+      193,
+      128,
+      64,
+      9
+    ],
+    "write_mlp": [
+      193,
+      64,
+      32,
+      1
+    ],
+    "independent_networks": true,
+    "activation": "SiLU",
+    "mu_bound": 5.0,
+    "raw_gaussian_std": 0.35,
+    "gain": "sigmoid(a[0])",
+    "residual_coordinates": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "residual_scale": 0.5,
+    "write": "sigmoid(a[9])",
+    "initial_gain": 0.8,
+    "initial_write": 0.5,
+    "deployment": "raw_action=mu; no sample, verifier, reference, reward or gradient"
+  },
+  "memory": {
+    "fields": {
+      "m": 64,
+      "q": 32,
+      "h": 1
+    },
+    "initial": "all zero",
+    "difference": "h*d-q",
+    "m_update": "(1-w)*m+w*u",
+    "q_update": "(1-w)*q+w*d",
+    "h_update": "(1-w)*h+w",
+    "audit_counter_not_policy_input": true
+  },
+  "training": {
+    "policy_seeds": [
+      20260924,
+      20260925,
+      20260926,
+      20260927,
+      20260928
+    ],
+    "discovery_seeds": [
+      20260924,
+      20260925
+    ],
+    "confirmation_seeds": [
+      20260926,
+      20260927,
+      20260928
+    ],
+    "methods": [
+      "SUP_STATIC",
+      "SUP_SEQ",
+      "SUP_RET",
+      "GR_CUR",
+      "GR_SEQ",
+      "GR_RET",
+      "GR_RET_EMA"
+    ],
+    "supervised_family": [
+      "SUP_STATIC",
+      "SUP_SEQ",
+      "SUP_RET"
+    ],
+    "rl_family": [
+      "GR_CUR",
+      "GR_SEQ",
+      "GR_RET",
+      "GR_RET_EMA"
+    ],
+    "warmup_steps": 2000,
+    "warmup_batch_visits": 8,
+    "warmup_lr_peak": 0.0003,
+    "warmup_lr_final": 3e-05,
+    "warmup_lr_warmup": 100,
+    "post_rounds": 4000,
+    "group_size": 4,
+    "horizon": 4,
+    "optimizer_epochs": 2,
+    "optimizer": "AdamW",
+    "post_lr_peak": 3e-05,
+    "post_lr_final": 3e-06,
+    "post_lr_warmup_rounds": 100,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "weight_decay": 0.0001,
+    "grad_clip_norm": 1.0,
+    "checkpoints": [
+      500,
+      1000,
+      2000,
+      4000
+    ],
+    "sigma_fixed": true,
+    "candidate_group": "same prefix and exogenous source sequence",
+    "temporal_modes": [
+      "abrupt_16_16",
+      "gradual_32",
+      "recurrence_8_8_8_8",
+      "iid_style_32"
+    ],
+    "source_style_mode_hidden_from_actor": true
+  },
+  "objective": {
+    "task": "macro hard Dice for RL; macro soft Dice for post-training SUP",
+    "warmup": "existing seg_loss",
+    "retention_lambda": 0.05,
+    "retention_alpha": 20.0,
+    "retention": "exp(-20*mean(relu(D_anchor_probe-D_candidate_probe)))",
+    "retention_anchor": "same sampling policy and pre-window memory; clone readouts, no commits",
+    "reference_policy": "frozen per-seed warmup policy",
+    "ppo_old": "exact collection snapshot",
+    "ppo_clip": 0.2,
+    "policy_kl_coefficient": 0.005,
+    "kl": "analytic raw Gaussian forward KL; mean active dimensions",
+    "advantage_std_floor": 0.005,
+    "advantage_epsilon": 1e-08,
+    "advantage_clip": 5.0,
+    "reward_ema_beta": 0.99,
+    "reward_ema_initial": 0.01,
+    "all_equal_group": "zero advantage; no resampling; common KL still evaluated"
+  },
+  "validation": {
+    "episodes": 64,
+    "visits": 32,
+    "per_mode": 16,
+    "action": "deterministic mean",
+    "selection": ".5*mean(mode_hard_Dice)+.5*min(mode_hard_Dice)",
+    "checkpoint_tie": "within 1e-8 -> earlier",
+    "family_selection": "mean of first-two-seed selected validation score",
+    "family_tie_order": {
+      "SUP": [
+        "SUP_STATIC",
+        "SUP_SEQ",
+        "SUP_RET"
+      ],
+      "GR": [
+        "GR_CUR",
+        "GR_SEQ",
+        "GR_RET",
+        "GR_RET_EMA"
+      ]
+    },
+    "sampled_mean_gap": "16 source-cal episodes, 4 samples, selected checkpoint only; diagnostic, no selection"
+  },
+  "d0": {
+    "prefix_contexts_per_seed": 64,
+    "seeds": [
+      20260924,
+      20260925
+    ],
+    "candidate_use_actions": 4,
+    "write_interventions": [
+      0,
+      1
+    ],
+    "future_horizon": 4,
+    "probe_count": 2,
+    "threshold_future_difference": 0.002,
+    "scientific_early_stop": false
+  },
+  "target": {
+    "principal_orders": [
+      0,
+      1
+    ],
+    "secondary_orders": [
+      2,
+      3
+    ],
+    "recurrence_order": 4,
+    "primary": "domain equal, OD/OC equal, principal orders equal, policy seeds equal",
+    "score_release": "sealed_internal_per_trajectory__release_at_round_end",
+    "max_temporary_probability_bytes": 40915435520,
+    "endpoint_sensitivity": "all 70 main source slots at round 4000; reuse identical artifacts",
+    "clinical_claims": false
+  },
+  "resources": {
+    "gpu_worker_hours": 256,
+    "disk_bytes": 68719476736,
+    "model_forwards": 12000000,
+    "backward_calls": 2000000,
+    "optimizer_steps": 1000000,
+    "vjp_calls": 0,
+    "max_gpu_workers": 1,
+    "profile_subcaps": {
+      "gpu_worker_hours": 8,
+      "model_forwards": 250000,
+      "backward_calls": 20000,
+      "optimizer_steps": 20000
+    },
+    "recovery": {
+      "max_jobs": 3,
+      "max_extra_attempts_per_job": 1,
+      "reserve": "per-resource top-three additional full attempts"
+    },
+    "excludes_R9_budget": true,
+    "do_not_preempt_R9": true
+  },
+  "counts": {
+    "source_jobs": 25,
+    "warmups": 5,
+    "post_training_jobs": 20,
+    "main_target_slots": 70,
+    "core_target_slots": 340,
+    "sensitivity_slots_max": 70,
+    "all_target_slots_max": 410,
+    "core_arrivals": 1277905,
+    "all_arrivals_max": 1414475,
+    "core_principal_visits": 1110225,
+    "all_principal_visits_max": 1228875,
+    "warmup_optimizer_steps": 10000,
+    "post_collection_rounds": 80000,
+    "post_optimizer_steps": 160000,
+    "post_initial_candidate_visits": 1280000
+  },
+  "source_jobs": [
+    {
+      "id": "WARM_20260924",
+      "kind": "warmup",
+      "seed": 20260924,
+      "updates": 2000,
+      "needs": [
+        "ASSET_BINDING"
+      ]
+    },
+    {
+      "id": "WARM_20260925",
+      "kind": "warmup",
+      "seed": 20260925,
+      "updates": 2000,
+      "needs": [
+        "ASSET_BINDING"
+      ]
+    },
+    {
+      "id": "WARM_20260926",
+      "kind": "warmup",
+      "seed": 20260926,
+      "updates": 2000,
+      "needs": [
+        "ASSET_BINDING"
+      ]
+    },
+    {
+      "id": "WARM_20260927",
+      "kind": "warmup",
+      "seed": 20260927,
+      "updates": 2000,
+      "needs": [
+        "ASSET_BINDING"
+      ]
+    },
+    {
+      "id": "WARM_20260928",
+      "kind": "warmup",
+      "seed": 20260928,
+      "updates": 2000,
+      "needs": [
+        "ASSET_BINDING"
+      ]
+    },
+    {
+      "id": "FIT_SUP_STATIC_20260924",
+      "kind": "post_training",
+      "method": "SUP_STATIC",
+      "seed": 20260924,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260924",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_SUP_SEQ_20260924",
+      "kind": "post_training",
+      "method": "SUP_SEQ",
+      "seed": 20260924,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260924",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_SUP_RET_20260924",
+      "kind": "post_training",
+      "method": "SUP_RET",
+      "seed": 20260924,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260924",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_GR_CUR_20260924",
+      "kind": "post_training",
+      "method": "GR_CUR",
+      "seed": 20260924,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260924",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_GR_SEQ_20260924",
+      "kind": "post_training",
+      "method": "GR_SEQ",
+      "seed": 20260924,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260924",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_GR_RET_20260924",
+      "kind": "post_training",
+      "method": "GR_RET",
+      "seed": 20260924,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260924",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_GR_RET_EMA_20260924",
+      "kind": "post_training",
+      "method": "GR_RET_EMA",
+      "seed": 20260924,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260924",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_SUP_STATIC_20260925",
+      "kind": "post_training",
+      "method": "SUP_STATIC",
+      "seed": 20260925,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260925",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_SUP_SEQ_20260925",
+      "kind": "post_training",
+      "method": "SUP_SEQ",
+      "seed": 20260925,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260925",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_SUP_RET_20260925",
+      "kind": "post_training",
+      "method": "SUP_RET",
+      "seed": 20260925,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260925",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_GR_CUR_20260925",
+      "kind": "post_training",
+      "method": "GR_CUR",
+      "seed": 20260925,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260925",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_GR_SEQ_20260925",
+      "kind": "post_training",
+      "method": "GR_SEQ",
+      "seed": 20260925,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260925",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_GR_RET_20260925",
+      "kind": "post_training",
+      "method": "GR_RET",
+      "seed": 20260925,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260925",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_GR_RET_EMA_20260925",
+      "kind": "post_training",
+      "method": "GR_RET_EMA",
+      "seed": 20260925,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260925",
+        "FREEZE_PROTOCOL"
+      ]
+    },
+    {
+      "id": "FIT_SELECTED_SUP_20260926",
+      "kind": "post_training",
+      "method": "SELECTED_SUP",
+      "seed": 20260926,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260926",
+        "FAMILY_SELECTION"
+      ]
+    },
+    {
+      "id": "FIT_SELECTED_GR_20260926",
+      "kind": "post_training",
+      "method": "SELECTED_GR",
+      "seed": 20260926,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260926",
+        "FAMILY_SELECTION"
+      ]
+    },
+    {
+      "id": "FIT_SELECTED_SUP_20260927",
+      "kind": "post_training",
+      "method": "SELECTED_SUP",
+      "seed": 20260927,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260927",
+        "FAMILY_SELECTION"
+      ]
+    },
+    {
+      "id": "FIT_SELECTED_GR_20260927",
+      "kind": "post_training",
+      "method": "SELECTED_GR",
+      "seed": 20260927,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260927",
+        "FAMILY_SELECTION"
+      ]
+    },
+    {
+      "id": "FIT_SELECTED_SUP_20260928",
+      "kind": "post_training",
+      "method": "SELECTED_SUP",
+      "seed": 20260928,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260928",
+        "FAMILY_SELECTION"
+      ]
+    },
+    {
+      "id": "FIT_SELECTED_GR_20260928",
+      "kind": "post_training",
+      "method": "SELECTED_GR",
+      "seed": 20260928,
+      "collection_rounds": 4000,
+      "optimizer_epochs": 2,
+      "needs": [
+        "WARM_20260928",
+        "FAMILY_SELECTION"
+      ]
+    }
+  ],
+  "target_core_slots": [
+    {
+      "id": "DISCOVERY__SUP_STATIC__20260924__0",
+      "stage": "DISCOVERY",
+      "arm": "SUP_STATIC",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_STATIC__20260924__1",
+      "stage": "DISCOVERY",
+      "arm": "SUP_STATIC",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_SEQ__20260924__0",
+      "stage": "DISCOVERY",
+      "arm": "SUP_SEQ",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_SEQ__20260924__1",
+      "stage": "DISCOVERY",
+      "arm": "SUP_SEQ",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_RET__20260924__0",
+      "stage": "DISCOVERY",
+      "arm": "SUP_RET",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_RET__20260924__1",
+      "stage": "DISCOVERY",
+      "arm": "SUP_RET",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_CUR__20260924__0",
+      "stage": "DISCOVERY",
+      "arm": "GR_CUR",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_CUR__20260924__1",
+      "stage": "DISCOVERY",
+      "arm": "GR_CUR",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_SEQ__20260924__0",
+      "stage": "DISCOVERY",
+      "arm": "GR_SEQ",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_SEQ__20260924__1",
+      "stage": "DISCOVERY",
+      "arm": "GR_SEQ",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_RET__20260924__0",
+      "stage": "DISCOVERY",
+      "arm": "GR_RET",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_RET__20260924__1",
+      "stage": "DISCOVERY",
+      "arm": "GR_RET",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_RET_EMA__20260924__0",
+      "stage": "DISCOVERY",
+      "arm": "GR_RET_EMA",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_RET_EMA__20260924__1",
+      "stage": "DISCOVERY",
+      "arm": "GR_RET_EMA",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_STATIC__20260925__0",
+      "stage": "DISCOVERY",
+      "arm": "SUP_STATIC",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_STATIC__20260925__1",
+      "stage": "DISCOVERY",
+      "arm": "SUP_STATIC",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_SEQ__20260925__0",
+      "stage": "DISCOVERY",
+      "arm": "SUP_SEQ",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_SEQ__20260925__1",
+      "stage": "DISCOVERY",
+      "arm": "SUP_SEQ",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_RET__20260925__0",
+      "stage": "DISCOVERY",
+      "arm": "SUP_RET",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__SUP_RET__20260925__1",
+      "stage": "DISCOVERY",
+      "arm": "SUP_RET",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_CUR__20260925__0",
+      "stage": "DISCOVERY",
+      "arm": "GR_CUR",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_CUR__20260925__1",
+      "stage": "DISCOVERY",
+      "arm": "GR_CUR",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_SEQ__20260925__0",
+      "stage": "DISCOVERY",
+      "arm": "GR_SEQ",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_SEQ__20260925__1",
+      "stage": "DISCOVERY",
+      "arm": "GR_SEQ",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_RET__20260925__0",
+      "stage": "DISCOVERY",
+      "arm": "GR_RET",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_RET__20260925__1",
+      "stage": "DISCOVERY",
+      "arm": "GR_RET",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_RET_EMA__20260925__0",
+      "stage": "DISCOVERY",
+      "arm": "GR_RET_EMA",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "DISCOVERY__GR_RET_EMA__20260925__1",
+      "stage": "DISCOVERY",
+      "arm": "GR_RET_EMA",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_SUP__20260924__2",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260924,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_SUP__20260924__3",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260924,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_SUP__20260924__4",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260924,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_GR__20260924__2",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_GR",
+      "seed": 20260924,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_GR__20260924__3",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_GR",
+      "seed": 20260924,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_GR__20260924__4",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_GR",
+      "seed": 20260924,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_SUP__20260925__2",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260925,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_SUP__20260925__3",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260925,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_SUP__20260925__4",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260925,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_GR__20260925__2",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_GR",
+      "seed": 20260925,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_GR__20260925__3",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_GR",
+      "seed": 20260925,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "EXTENSION__SELECTED_GR__20260925__4",
+      "stage": "EXTENSION",
+      "arm": "SELECTED_GR",
+      "seed": 20260925,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260926__0",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260926__1",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260926__2",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260926__3",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260926__4",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260926__0",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260926__1",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260926__2",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260926__3",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260926__4",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260927__0",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260927__1",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260927__2",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260927__3",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260927__4",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260927__0",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260927__1",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260927__2",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260927__3",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260927__4",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260928__0",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260928__1",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260928__2",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260928__3",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_SUP__20260928__4",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260928__0",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260928__1",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260928__2",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260928__3",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "CONFIRMATION__SELECTED_GR__20260928__4",
+      "stage": "CONFIRMATION",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260924__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260924__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260924__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260924,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260924__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260924,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260924__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260924,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260924__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260924__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260924__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260924,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260924__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260924,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260924__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260924,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260924__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260924__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260924__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260924,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260924__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260924,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260924__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260924,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260925__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260925__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260925__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260925,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260925__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260925,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260925__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260925,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260925__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260925__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260925__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260925,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260925__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260925,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260925__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260925,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260925__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260925__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260925__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260925,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260925__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260925,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260925__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260925,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260926__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260926,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260926__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260926,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260926__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260926,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260926__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260926,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260926__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260926,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260926__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260926,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260926__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260926,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260926__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260926,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260926__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260926,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260926__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260926,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260926__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260926,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260926__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260926,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260926__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260926,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260926__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260926,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260926__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260926,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260927__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260927,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260927__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260927,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260927__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260927,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260927__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260927,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260927__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260927,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260927__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260927,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260927__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260927,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260927__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260927,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260927__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260927,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260927__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260927,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260927__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260927,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260927__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260927,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260927__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260927,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260927__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260927,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260927__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260927,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260928__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260928,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260928__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260928,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260928__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260928,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260928__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260928,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_RESET_ALL__20260928__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_RESET_ALL",
+      "seed": 20260928,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "RESET_ALL"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260928__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260928,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260928__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260928,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260928__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260928,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260928__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260928,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_FORCE_WRITE__20260928__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_FORCE_WRITE",
+      "seed": 20260928,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "FORCE_WRITE"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260928__0",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260928,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260928__1",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260928,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260928__2",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260928,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260928__3",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260928,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "ABLATION__SELECTED_GR_CONST_HALF__20260928__4",
+      "stage": "ABLATION",
+      "arm": "SELECTED_GR_CONST_HALF",
+      "seed": 20260928,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected",
+      "diagnostic": "CONST_HALF"
+    },
+    {
+      "id": "BASELINE__N_SOURCE_EVAL__det__0",
+      "stage": "BASELINE",
+      "arm": "N_SOURCE_EVAL",
+      "seed": null,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__N_SOURCE_EVAL__det__1",
+      "stage": "BASELINE",
+      "arm": "N_SOURCE_EVAL",
+      "seed": null,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__N_SOURCE_EVAL__det__2",
+      "stage": "BASELINE",
+      "arm": "N_SOURCE_EVAL",
+      "seed": null,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__N_SOURCE_EVAL__det__3",
+      "stage": "BASELINE",
+      "arm": "N_SOURCE_EVAL",
+      "seed": null,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__N_SOURCE_EVAL__det__4",
+      "stage": "BASELINE",
+      "arm": "N_SOURCE_EVAL",
+      "seed": null,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C0__det__0",
+      "stage": "BASELINE",
+      "arm": "C0",
+      "seed": null,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C0__det__1",
+      "stage": "BASELINE",
+      "arm": "C0",
+      "seed": null,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C0__det__2",
+      "stage": "BASELINE",
+      "arm": "C0",
+      "seed": null,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C0__det__3",
+      "stage": "BASELINE",
+      "arm": "C0",
+      "seed": null,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C0__det__4",
+      "stage": "BASELINE",
+      "arm": "C0",
+      "seed": null,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_FULL__det__0",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_FULL",
+      "seed": null,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_FULL__det__1",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_FULL",
+      "seed": null,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_FULL__det__2",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_FULL",
+      "seed": null,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_FULL__det__3",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_FULL",
+      "seed": null,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_FULL__det__4",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_FULL",
+      "seed": null,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_RESET__det__0",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_RESET",
+      "seed": null,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_RESET__det__1",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_RESET",
+      "seed": null,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_RESET__det__2",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_RESET",
+      "seed": null,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_RESET__det__3",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_RESET",
+      "seed": null,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_RESET__det__4",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_RESET",
+      "seed": null,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_STATIC__det__0",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_STATIC",
+      "seed": null,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_STATIC__det__1",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_STATIC",
+      "seed": null,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_STATIC__det__2",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_STATIC",
+      "seed": null,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_STATIC__det__3",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_STATIC",
+      "seed": null,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__B_CARRIER_STATIC__det__4",
+      "stage": "BASELINE",
+      "arm": "B_CARRIER_STATIC",
+      "seed": null,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260907__0",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260907,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260907__1",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260907,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260907__2",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260907,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260907__3",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260907,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260907__4",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260907,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260908__0",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260908,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260908__1",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260908,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260908__2",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260908,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260908__3",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260908,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260908__4",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260908,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260909__0",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260909,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260909__1",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260909,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260909__2",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260909,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260909__3",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260909,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260909__4",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260909,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260910__0",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260910,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260910__1",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260910,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260910__2",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260910,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260910__3",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260910,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260910__4",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260910,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260911__0",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260911,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260911__1",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260911,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260911__2",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260911,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260911__3",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260911,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__VPTTA_NATIVE__20260911__4",
+      "stage": "BASELINE",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260911,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260907__0",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260907,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260907__1",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260907,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260907__2",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260907,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260907__3",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260907,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260907__4",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260907,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260908__0",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260908,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260908__1",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260908,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260908__2",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260908,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260908__3",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260908,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260908__4",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260908,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260909__0",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260909,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260909__1",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260909,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260909__2",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260909,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260909__3",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260909,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260909__4",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260909,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260910__0",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260910,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260910__1",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260910,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260910__2",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260910,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260910__3",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260910,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260910__4",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260910,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260911__0",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260911,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260911__1",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260911,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260911__2",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260911,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260911__3",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260911,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__C_CTTA__20260911__4",
+      "stage": "BASELINE",
+      "arm": "C_CTTA",
+      "seed": 20260911,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260907__0",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260907,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260907__1",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260907,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260907__2",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260907,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260907__3",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260907,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260907__4",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260907,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260908__0",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260908,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260908__1",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260908,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260908__2",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260908,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260908__3",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260908,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260908__4",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260908,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260909__0",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260909,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260909__1",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260909,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260909__2",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260909,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260909__3",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260909,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260909__4",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260909,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260910__0",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260910,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260910__1",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260910,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260910__2",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260910,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260910__3",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260910,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260910__4",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260910,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260911__0",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260911,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260911__1",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260911,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260911__2",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260911,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260911__3",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260911,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__G_CTTA__20260911__4",
+      "stage": "BASELINE",
+      "arm": "G_CTTA",
+      "seed": 20260911,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260924__0",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260924__1",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260924__2",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260924,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260924__3",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260924,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260924__4",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260924,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260925__0",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260925__1",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260925__2",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260925,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260925__3",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260925,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260925__4",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260925,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260926__0",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260926,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260926__1",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260926,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260926__2",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260926,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260926__3",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260926,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260926__4",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260926,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260927__0",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260927,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260927__1",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260927,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260927__2",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260927,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260927__3",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260927,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260927__4",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260927,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260928__0",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260928,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260928__1",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260928,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260928__2",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260928,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260928__3",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260928,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "BASELINE__WARM_STATIC__20260928__4",
+      "stage": "BASELINE",
+      "arm": "WARM_STATIC",
+      "seed": 20260928,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__SELECTED_SUP__20260924__MIXED",
+      "stage": "STRESS",
+      "arm": "SELECTED_SUP",
+      "seed": 20260924,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_SUP__20260925__MIXED",
+      "stage": "STRESS",
+      "arm": "SELECTED_SUP",
+      "seed": 20260925,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_SUP__20260926__MIXED",
+      "stage": "STRESS",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_SUP__20260927__MIXED",
+      "stage": "STRESS",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_SUP__20260928__MIXED",
+      "stage": "STRESS",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_GR__20260924__MIXED",
+      "stage": "STRESS",
+      "arm": "SELECTED_GR",
+      "seed": 20260924,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_GR__20260925__MIXED",
+      "stage": "STRESS",
+      "arm": "SELECTED_GR",
+      "seed": 20260925,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_GR__20260926__MIXED",
+      "stage": "STRESS",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_GR__20260927__MIXED",
+      "stage": "STRESS",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_GR__20260928__MIXED",
+      "stage": "STRESS",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__N_SOURCE_EVAL__det__MIXED",
+      "stage": "STRESS",
+      "arm": "N_SOURCE_EVAL",
+      "seed": null,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C0__det__MIXED",
+      "stage": "STRESS",
+      "arm": "C0",
+      "seed": null,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__B_CARRIER_FULL__det__MIXED",
+      "stage": "STRESS",
+      "arm": "B_CARRIER_FULL",
+      "seed": null,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__B_CARRIER_RESET__det__MIXED",
+      "stage": "STRESS",
+      "arm": "B_CARRIER_RESET",
+      "seed": null,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__B_CARRIER_STATIC__det__MIXED",
+      "stage": "STRESS",
+      "arm": "B_CARRIER_STATIC",
+      "seed": null,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__VPTTA_NATIVE__20260907__MIXED",
+      "stage": "STRESS",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260907,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__VPTTA_NATIVE__20260908__MIXED",
+      "stage": "STRESS",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260908,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__VPTTA_NATIVE__20260909__MIXED",
+      "stage": "STRESS",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260909,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__VPTTA_NATIVE__20260910__MIXED",
+      "stage": "STRESS",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260910,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__VPTTA_NATIVE__20260911__MIXED",
+      "stage": "STRESS",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260911,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C_CTTA__20260907__MIXED",
+      "stage": "STRESS",
+      "arm": "C_CTTA",
+      "seed": 20260907,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C_CTTA__20260908__MIXED",
+      "stage": "STRESS",
+      "arm": "C_CTTA",
+      "seed": 20260908,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C_CTTA__20260909__MIXED",
+      "stage": "STRESS",
+      "arm": "C_CTTA",
+      "seed": 20260909,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C_CTTA__20260910__MIXED",
+      "stage": "STRESS",
+      "arm": "C_CTTA",
+      "seed": 20260910,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C_CTTA__20260911__MIXED",
+      "stage": "STRESS",
+      "arm": "C_CTTA",
+      "seed": 20260911,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__G_CTTA__20260907__MIXED",
+      "stage": "STRESS",
+      "arm": "G_CTTA",
+      "seed": 20260907,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__G_CTTA__20260908__MIXED",
+      "stage": "STRESS",
+      "arm": "G_CTTA",
+      "seed": 20260908,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__G_CTTA__20260909__MIXED",
+      "stage": "STRESS",
+      "arm": "G_CTTA",
+      "seed": 20260909,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__G_CTTA__20260910__MIXED",
+      "stage": "STRESS",
+      "arm": "G_CTTA",
+      "seed": 20260910,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__G_CTTA__20260911__MIXED",
+      "stage": "STRESS",
+      "arm": "G_CTTA",
+      "seed": 20260911,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__WARM_STATIC__20260924__MIXED",
+      "stage": "STRESS",
+      "arm": "WARM_STATIC",
+      "seed": 20260924,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__WARM_STATIC__20260925__MIXED",
+      "stage": "STRESS",
+      "arm": "WARM_STATIC",
+      "seed": 20260925,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__WARM_STATIC__20260926__MIXED",
+      "stage": "STRESS",
+      "arm": "WARM_STATIC",
+      "seed": 20260926,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__WARM_STATIC__20260927__MIXED",
+      "stage": "STRESS",
+      "arm": "WARM_STATIC",
+      "seed": 20260927,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__WARM_STATIC__20260928__MIXED",
+      "stage": "STRESS",
+      "arm": "WARM_STATIC",
+      "seed": 20260928,
+      "order": "MIXED",
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__SELECTED_SUP__20260924__LONG10",
+      "stage": "STRESS",
+      "arm": "SELECTED_SUP",
+      "seed": 20260924,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_SUP__20260925__LONG10",
+      "stage": "STRESS",
+      "arm": "SELECTED_SUP",
+      "seed": 20260925,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_SUP__20260926__LONG10",
+      "stage": "STRESS",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_SUP__20260927__LONG10",
+      "stage": "STRESS",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_SUP__20260928__LONG10",
+      "stage": "STRESS",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_GR__20260924__LONG10",
+      "stage": "STRESS",
+      "arm": "SELECTED_GR",
+      "seed": 20260924,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_GR__20260925__LONG10",
+      "stage": "STRESS",
+      "arm": "SELECTED_GR",
+      "seed": 20260925,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_GR__20260926__LONG10",
+      "stage": "STRESS",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_GR__20260927__LONG10",
+      "stage": "STRESS",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__SELECTED_GR__20260928__LONG10",
+      "stage": "STRESS",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "source_selected"
+    },
+    {
+      "id": "STRESS__N_SOURCE_EVAL__det__LONG10",
+      "stage": "STRESS",
+      "arm": "N_SOURCE_EVAL",
+      "seed": null,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C0__det__LONG10",
+      "stage": "STRESS",
+      "arm": "C0",
+      "seed": null,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__B_CARRIER_FULL__det__LONG10",
+      "stage": "STRESS",
+      "arm": "B_CARRIER_FULL",
+      "seed": null,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__B_CARRIER_RESET__det__LONG10",
+      "stage": "STRESS",
+      "arm": "B_CARRIER_RESET",
+      "seed": null,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__B_CARRIER_STATIC__det__LONG10",
+      "stage": "STRESS",
+      "arm": "B_CARRIER_STATIC",
+      "seed": null,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__VPTTA_NATIVE__20260907__LONG10",
+      "stage": "STRESS",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260907,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__VPTTA_NATIVE__20260908__LONG10",
+      "stage": "STRESS",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260908,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__VPTTA_NATIVE__20260909__LONG10",
+      "stage": "STRESS",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260909,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__VPTTA_NATIVE__20260910__LONG10",
+      "stage": "STRESS",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260910,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__VPTTA_NATIVE__20260911__LONG10",
+      "stage": "STRESS",
+      "arm": "VPTTA_NATIVE",
+      "seed": 20260911,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C_CTTA__20260907__LONG10",
+      "stage": "STRESS",
+      "arm": "C_CTTA",
+      "seed": 20260907,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C_CTTA__20260908__LONG10",
+      "stage": "STRESS",
+      "arm": "C_CTTA",
+      "seed": 20260908,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C_CTTA__20260909__LONG10",
+      "stage": "STRESS",
+      "arm": "C_CTTA",
+      "seed": 20260909,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C_CTTA__20260910__LONG10",
+      "stage": "STRESS",
+      "arm": "C_CTTA",
+      "seed": 20260910,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__C_CTTA__20260911__LONG10",
+      "stage": "STRESS",
+      "arm": "C_CTTA",
+      "seed": 20260911,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__G_CTTA__20260907__LONG10",
+      "stage": "STRESS",
+      "arm": "G_CTTA",
+      "seed": 20260907,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__G_CTTA__20260908__LONG10",
+      "stage": "STRESS",
+      "arm": "G_CTTA",
+      "seed": 20260908,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__G_CTTA__20260909__LONG10",
+      "stage": "STRESS",
+      "arm": "G_CTTA",
+      "seed": 20260909,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__G_CTTA__20260910__LONG10",
+      "stage": "STRESS",
+      "arm": "G_CTTA",
+      "seed": 20260910,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__G_CTTA__20260911__LONG10",
+      "stage": "STRESS",
+      "arm": "G_CTTA",
+      "seed": 20260911,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__WARM_STATIC__20260924__LONG10",
+      "stage": "STRESS",
+      "arm": "WARM_STATIC",
+      "seed": 20260924,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__WARM_STATIC__20260925__LONG10",
+      "stage": "STRESS",
+      "arm": "WARM_STATIC",
+      "seed": 20260925,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__WARM_STATIC__20260926__LONG10",
+      "stage": "STRESS",
+      "arm": "WARM_STATIC",
+      "seed": 20260926,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__WARM_STATIC__20260927__LONG10",
+      "stage": "STRESS",
+      "arm": "WARM_STATIC",
+      "seed": 20260927,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    },
+    {
+      "id": "STRESS__WARM_STATIC__20260928__LONG10",
+      "stage": "STRESS",
+      "arm": "WARM_STATIC",
+      "seed": 20260928,
+      "order": "LONG10",
+      "arrivals": 19510,
+      "principal_visits": 16950,
+      "needs": [
+        "SOURCE_LOCK"
+      ]
+    }
+  ],
+  "target_final4000_slots_max": [
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_STATIC__20260924__0",
+      "stage": "FINAL4000",
+      "arm": "SUP_STATIC",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_STATIC__20260924__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_STATIC__20260924__1",
+      "stage": "FINAL4000",
+      "arm": "SUP_STATIC",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_STATIC__20260924__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_SEQ__20260924__0",
+      "stage": "FINAL4000",
+      "arm": "SUP_SEQ",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_SEQ__20260924__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_SEQ__20260924__1",
+      "stage": "FINAL4000",
+      "arm": "SUP_SEQ",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_SEQ__20260924__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_RET__20260924__0",
+      "stage": "FINAL4000",
+      "arm": "SUP_RET",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_RET__20260924__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_RET__20260924__1",
+      "stage": "FINAL4000",
+      "arm": "SUP_RET",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_RET__20260924__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_CUR__20260924__0",
+      "stage": "FINAL4000",
+      "arm": "GR_CUR",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_CUR__20260924__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_CUR__20260924__1",
+      "stage": "FINAL4000",
+      "arm": "GR_CUR",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_CUR__20260924__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_SEQ__20260924__0",
+      "stage": "FINAL4000",
+      "arm": "GR_SEQ",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_SEQ__20260924__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_SEQ__20260924__1",
+      "stage": "FINAL4000",
+      "arm": "GR_SEQ",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_SEQ__20260924__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_RET__20260924__0",
+      "stage": "FINAL4000",
+      "arm": "GR_RET",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_RET__20260924__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_RET__20260924__1",
+      "stage": "FINAL4000",
+      "arm": "GR_RET",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_RET__20260924__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_RET_EMA__20260924__0",
+      "stage": "FINAL4000",
+      "arm": "GR_RET_EMA",
+      "seed": 20260924,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_RET_EMA__20260924__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_RET_EMA__20260924__1",
+      "stage": "FINAL4000",
+      "arm": "GR_RET_EMA",
+      "seed": 20260924,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_RET_EMA__20260924__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_STATIC__20260925__0",
+      "stage": "FINAL4000",
+      "arm": "SUP_STATIC",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_STATIC__20260925__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_STATIC__20260925__1",
+      "stage": "FINAL4000",
+      "arm": "SUP_STATIC",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_STATIC__20260925__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_SEQ__20260925__0",
+      "stage": "FINAL4000",
+      "arm": "SUP_SEQ",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_SEQ__20260925__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_SEQ__20260925__1",
+      "stage": "FINAL4000",
+      "arm": "SUP_SEQ",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_SEQ__20260925__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_RET__20260925__0",
+      "stage": "FINAL4000",
+      "arm": "SUP_RET",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_RET__20260925__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__SUP_RET__20260925__1",
+      "stage": "FINAL4000",
+      "arm": "SUP_RET",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__SUP_RET__20260925__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_CUR__20260925__0",
+      "stage": "FINAL4000",
+      "arm": "GR_CUR",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_CUR__20260925__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_CUR__20260925__1",
+      "stage": "FINAL4000",
+      "arm": "GR_CUR",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_CUR__20260925__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_SEQ__20260925__0",
+      "stage": "FINAL4000",
+      "arm": "GR_SEQ",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_SEQ__20260925__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_SEQ__20260925__1",
+      "stage": "FINAL4000",
+      "arm": "GR_SEQ",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_SEQ__20260925__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_RET__20260925__0",
+      "stage": "FINAL4000",
+      "arm": "GR_RET",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_RET__20260925__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_RET__20260925__1",
+      "stage": "FINAL4000",
+      "arm": "GR_RET",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_RET__20260925__1"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_RET_EMA__20260925__0",
+      "stage": "FINAL4000",
+      "arm": "GR_RET_EMA",
+      "seed": 20260925,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_RET_EMA__20260925__0"
+    },
+    {
+      "id": "FINAL4000__DISCOVERY__GR_RET_EMA__20260925__1",
+      "stage": "FINAL4000",
+      "arm": "GR_RET_EMA",
+      "seed": 20260925,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "DISCOVERY__GR_RET_EMA__20260925__1"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_SUP__20260924__2",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260924,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_SUP__20260924__2"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_SUP__20260924__3",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260924,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_SUP__20260924__3"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_SUP__20260924__4",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260924,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_SUP__20260924__4"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_GR__20260924__2",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260924,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_GR__20260924__2"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_GR__20260924__3",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260924,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_GR__20260924__3"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_GR__20260924__4",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260924,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_GR__20260924__4"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_SUP__20260925__2",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260925,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_SUP__20260925__2"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_SUP__20260925__3",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260925,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_SUP__20260925__3"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_SUP__20260925__4",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260925,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_SUP__20260925__4"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_GR__20260925__2",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260925,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_GR__20260925__2"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_GR__20260925__3",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260925,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_GR__20260925__3"
+    },
+    {
+      "id": "FINAL4000__EXTENSION__SELECTED_GR__20260925__4",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260925,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "EXTENSION__SELECTED_GR__20260925__4"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260926__0",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260926__0"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260926__1",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260926__1"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260926__2",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260926__2"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260926__3",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260926__3"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260926__4",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260926,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260926__4"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260926__0",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260926__0"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260926__1",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260926__1"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260926__2",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260926__2"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260926__3",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260926__3"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260926__4",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260926,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260926__4"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260927__0",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260927__0"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260927__1",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260927__1"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260927__2",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260927__2"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260927__3",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260927__3"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260927__4",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260927,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260927__4"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260927__0",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260927__0"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260927__1",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260927__1"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260927__2",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260927__2"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260927__3",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260927__3"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260927__4",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260927,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260927__4"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260928__0",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260928__0"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260928__1",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260928__1"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260928__2",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260928__2"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260928__3",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260928__3"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_SUP__20260928__4",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_SUP",
+      "seed": 20260928,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_SUP__20260928__4"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260928__0",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": 0,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260928__0"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260928__1",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": 1,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260928__1"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260928__2",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": 2,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260928__2"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260928__3",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": 3,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260928__3"
+    },
+    {
+      "id": "FINAL4000__CONFIRMATION__SELECTED_GR__20260928__4",
+      "stage": "FINAL4000",
+      "arm": "SELECTED_GR",
+      "seed": 20260928,
+      "order": 4,
+      "arrivals": 1951,
+      "principal_visits": 1695,
+      "needs": [
+        "SOURCE_LOCK"
+      ],
+      "checkpoint": "round_4000",
+      "alias_if_identical": "CONFIRMATION__SELECTED_GR__20260928__4"
+    }
+  ]
+}
