@@ -67,6 +67,8 @@ def use_and_write(proposed: torch.Tensor, d: torch.Tensor, memory: Memory,
         if forced_write not in (0.,.5,1.):
             raise ValueError('unregistered write diagnostic')
         write=raw_action.new_tensor(forced_write)
+    # Form complementary weights in the persistent state precision.
+    write=write.to(memory.h)
     nxt=Memory((1-write)*memory.m+write*use,
                (1-write)*memory.q+write*d,
                (1-write)*memory.h+write)

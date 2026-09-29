@@ -26,9 +26,10 @@ class Profile:
         self.scratch=self.root/'profile-scratch';self.scratch.mkdir(exist_ok=False)
         self.report=dict(schema='R10_REAL_PROFILE_V1',status='RUNNING',identity=self.identity,execution_authorized=False,measurements=[],snapshots={},trace_bytes={},source_log_bytes=0,active=None)
         self.meter=None;self.last_disk_check=0
+        self.prior=config.get("prior_profile_cost",dict.fromkeys(CAPS,0))
     def save(self):write_json(self.private/'profile-progress.json',self.report)
     def guard(self,cost):
-        if any(cost[k]>PROFILE_CAPS[k] for k in CAPS if k!='disk_bytes'):raise RuntimeError('aggregate resource cap: R10 profile')
+        if any(cost[k]+self.prior[k]>PROFILE_CAPS[k] for k in CAPS if k!='disk_bytes'):raise RuntimeError('aggregate resource cap: R10 profile')
         if time.monotonic()-self.last_disk_check>=1:
             if disk(self.root)+8*1024**2>PROFILE_CAPS['disk_bytes']:raise RuntimeError('aggregate resource cap: R10 profile disk')
             self.last_disk_check=time.monotonic()
@@ -46,7 +47,7 @@ class Profile:
             row.update(cpu_wall_seconds=elapsed/divisor if cpu else 0,max_reserved_bytes=torch.cuda.max_memory_reserved() if not cpu else 0)
             samples.append(row)
         row={k:1.3*max(s[k] for s in samples) for k in CAPS};row.update(measured=True,evidence=digest(samples),binding=self.identity,samples=samples,variant=variant,max_reserved_bytes=max(s['max_reserved_bytes'] for s in samples),cpu_wall_seconds=1.3*max(s['cpu_wall_seconds'] for s in samples))
-        self.report['measurements'].append(dict(unit=unit,row=row));self.report['cost']=self.meter.cost.copy();self.save();return row
+        self.report['measurements'].append(dict(unit=unit,row=row));self.report['cost']={k:self.meter.cost[k]+self.prior[k] for k in CAPS};self.save();return row
     def run(self):
         b=self.config['bindings'];gpu=self.config['gpu_assignments'][0]
         try:
@@ -55,7 +56,7 @@ class Profile:
                     self.source_profile(b,gpu)
                     self.online_profile(b,gpu)
                     self.report['status']='COMPLETE'
-                finally:self.report['cost']=self.meter.cost.copy();self.report['cost']['disk_bytes']=disk(self.root);self.save()
+                finally:self.report['cost']={k:self.meter.cost[k]+self.prior[k] for k in CAPS};self.report['cost']['disk_bytes']=disk(self.root);self.save()
         except BaseException as exc:
             import traceback
             self.report.update(status='FAILED',error_type=type(exc).__name__,error=str(exc),traceback=traceback.format_exc());self.save();raise

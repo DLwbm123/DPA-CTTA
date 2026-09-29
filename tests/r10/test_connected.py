@@ -80,3 +80,17 @@ class Connected(unittest.TestCase):
 
 if __name__=='__main__':
     torch.set_num_threads(2);unittest.main()
+
+
+class MixedPrecisionMemory(unittest.TestCase):
+    def test_float32_writer_float64_saturated_memory(self):
+        from dpa_ctta.r10_use_write_rl.math import Memory,use_and_write
+        h=torch.tensor(1.,dtype=torch.float64)
+        raw=torch.zeros(10,dtype=torch.float32,requires_grad=True)
+        with torch.no_grad():raw[9]=-1.
+        w=raw[9].sigmoid()
+        self.assertGreater(float((1-w)*h+w),1.)
+        memory=Memory(torch.ones(64,dtype=torch.float64),torch.ones(32,dtype=torch.float64),h)
+        use,nxt=use_and_write(torch.zeros(64,dtype=torch.float64),torch.zeros(32,dtype=torch.float64),memory,torch.ones(64,dtype=torch.float64),raw)
+        self.assertEqual(float(nxt.h),1.)
+        nxt.m.sum().backward();self.assertTrue(torch.isfinite(raw.grad).all());self.assertNotEqual(float(raw.grad[9]),0.)

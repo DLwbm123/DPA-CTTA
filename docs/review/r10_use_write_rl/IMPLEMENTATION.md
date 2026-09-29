@@ -26,3 +26,14 @@ profile-bound private authorization, serial queue and terminal report. It create
 Failed source methods remain recorded; family selection uses only complete discovery pairs,
 and unavailable dependent branches are marked BLOCKED while independent work continues.
 18 connected CPU and supplied mathematical regressions passed before real-data deployment.
+
+## Mixed precision repair
+
+The first real profile stopped in SUP_SEQ before formal execution. A float32
+writer `w=sigmoid(-1)` gives `(1-w)*float64(1)+w=1.0000000298023224` because
+its complement was rounded in float32. The state update now casts w to the
+persistent memory dtype before forming its complement. No clamp, tolerance,
+seed, objective or matrix change is used; gradients through the cast remain live.
+A saturated-memory regression reproduces the previous error and checks the fix.
+Failed profile evidence is retained. Subsequent profile guards and full admission
+include prior profile operations and time, within the original R10 limits.
