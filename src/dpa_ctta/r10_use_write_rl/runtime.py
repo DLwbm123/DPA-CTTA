@@ -52,7 +52,8 @@ def dispatch(config,root,node,gpu,budget,failure):
         result=choose_families(receipts(root));write_json(root/'selection.json',result);return result
     if kind=='lock':
         from .target import lock_sources
-        result=lock_sources(receipts(root),read(root/'selection.json'));write_json(root/'source_lock.json',result);return result
+        statuses={j['id']:read(root/'queue.json')['nodes'][j['id']]['status'] for j in SPEC['source_jobs']}
+        result=lock_sources(receipts(root),read(root/'selection.json'),statuses);write_json(root/'source_lock.json',result);return result
     if kind in ('train','d0'):
         from .assets import open_source
         from .source import Source

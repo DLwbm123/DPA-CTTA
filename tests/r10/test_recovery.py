@@ -68,3 +68,23 @@ class Recovery(unittest.TestCase):
         ns=graph();self.assertEqual(sum(n['kind']=='train' for n in ns),25);self.assertEqual(sum(n['kind']=='online' for n in ns),410)
         self.assertEqual(sum(n['kind']=='score' for n in ns),410)
         self.assertTrue(all('SOURCE_LOCK' in n['needs'] for n in ns if n['kind']=='online'))
+
+
+class TerminalBranches(unittest.TestCase):
+    def test_failure_selection_and_independent_work(self):
+        from dpa_ctta.r10_use_write_rl.queue import ready_nodes
+        from dpa_ctta.r10_use_write_rl.evaluation import choose_families
+        from dpa_ctta.r10_use_write_rl.target import lock_sources,check_lock
+        from dpa_ctta.r10_use_write_rl.protocol import SPEC
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+        rows={f'FIT_SUP_SEQ_{s}':{'selection':{'S':.6}} for s in (20260924,20260925)}
+        selected=choose_families(rows);self.assertEqual(selected['selected'],{'SUP':'SUP_SEQ','GR':None})
+        with TemporaryDirectory() as d:
+            p=Path(d);write_json(p/'selection.json',selected)
+            state={'nodes':{'failed':{'status':'FAILED'},'ok':{'status':'COMPLETE'}}}
+            nodes=[dict(id='select',kind='select',needs=['failed','ok']),dict(id='dependent',kind='d0',needs=['failed']),dict(id='independent',kind='d0',needs=['ok'])]
+            self.assertEqual([n['id'] for n in ready_nodes(p,state,nodes)],['select','independent'])
+            self.assertEqual(state['nodes']['dependent']['status'],'BLOCKED')
+        statuses={j['id']:'FAILED' for j in SPEC['source_jobs']}
+        check_lock(lock_sources({},selected,statuses))

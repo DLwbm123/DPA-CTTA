@@ -45,6 +45,34 @@ def wait_owned(process,ledger,attempt,token,gpu):
                 raise
 
 
+def ready_nodes(root,state,nodes):
+    """Failed scientific branches stay terminal while independent branches proceed."""
+    completed={k for k,v in state['nodes'].items() if v['status']=='COMPLETE'}
+    terminal=completed|{k for k,v in state['nodes'].items() if v['status'] in ('FAILED','BLOCKED')}
+    ready=[]
+    for n in nodes:
+        name=n['id']
+        if name in terminal:continue
+        needs=set(n['needs'])
+        if not needs<=terminal:continue
+        reason=None
+        if n['kind'] not in ('select','lock') and not needs<=completed:reason='dependency failed or blocked'
+        if not reason and n['kind']=='train' and n['job'].get('method','').startswith('SELECTED_'):
+            if read(root/'selection.json')['selected'][n['job']['method'].split('_')[1]] is None:reason='family has no complete discovery pair'
+        if not reason and n['kind']=='online':
+            from .factory import resolve
+            from .runtime import receipts
+            selection=read(root/'selection.json');arm=n['job']['arm']
+            if arm.startswith('SELECTED_') and selection['selected']['SUP' if arm.startswith('SELECTED_SUP') else 'GR'] is None:reason='family unavailable'
+            else:
+                try:resolve(n['job'],selection,receipts(root))
+                except KeyError as exc:reason='source unavailable: '+str(exc)
+        if reason:
+            state['nodes'][name]=dict(status='BLOCKED',reason=reason);terminal.add(name)
+        else:ready.append(n)
+    return ready
+
+
 def run(config,entry,python):
     identity=require(config);root=Path(config['output_root']);root.mkdir(parents=True,exist_ok=True)
     if any(x in (str(entry)+' '+str(python)).lower() for x in ('wangbomin','ctta','r10','use_write')):raise ValueError('neutral entry/interpreter required')
@@ -58,8 +86,7 @@ def run(config,entry,python):
         nodes=graph();launch=root/'queue'/'launch.json';write_json(launch,config)
         while True:
             completed={k for k,v in state['nodes'].items() if v['status']=='COMPLETE'}
-            terminal=completed|{k for k,v in state['nodes'].items() if v['status']=='FAILED'}
-            eligible=[n for n in nodes if n['id'] not in terminal and set(n['needs'])<=completed]
+            eligible=ready_nodes(root,state,nodes)
             if not eligible:break
             n=min(eligible,key=lambda x:(x['kind']!='score',nodes.index(x)));name=n['id'];previous=state['nodes'].get(name)
             if previous and previous['status']=='RUNNING':

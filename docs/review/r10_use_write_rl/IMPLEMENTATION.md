@@ -20,3 +20,9 @@ is measured rather than assuming every candidate repeats a zero-modulation forwa
 SUP recomputation and all native baseline backward/optimizer operations are charged.
 Actual CUDA/profile PASS and a bound private authorization are required for launch;
 the public disabled template remains false. No timer or hourly monitor is created.
+
+The finite execution entry now chains a source-only profile child, recomputed admission,
+profile-bound private authorization, serial queue and terminal report. It creates no monitor.
+Failed source methods remain recorded; family selection uses only complete discovery pairs,
+and unavailable dependent branches are marked BLOCKED while independent work continues.
+18 connected CPU and supplied mathematical regressions passed before real-data deployment.

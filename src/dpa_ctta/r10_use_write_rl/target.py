@@ -14,16 +14,21 @@ from ..r9_current_first.metrics import evaluate_probability
 PREDICTION_BYTES=2*512*512*4
 
 
-def lock_sources(receipts,selection):
-    if set(receipts)!={j['id'] for j in SPEC['source_jobs']} or any(r.get('schema')!='R10_SOURCE_COMPLETE_V1' for r in receipts.values()):raise ValueError('complete R10 source tasks required')
-    if any(receipts[j['id']].get('steps')!=(2000 if j['kind']=='warmup' else 4000) for j in SPEC['source_jobs']):raise ValueError('R10 source endpoints not complete')
-    if set(selection.get('selected',{}))!={'SUP','GR'} or any(v is None for v in selection['selected'].values()):raise ValueError('complete family selections required')
-    payload=dict(spec_sha256=SPEC_SHA,sources={k:digest(v) for k,v in receipts.items()},selection=digest(selection))
+def lock_sources(receipts,selection,statuses=None):
+    jobs={j['id']:j for j in SPEC['source_jobs']}
+    statuses=statuses or {k:'COMPLETE' for k in receipts}
+    if set(statuses)!=set(jobs) or any(v not in ('COMPLETE','FAILED','BLOCKED') for v in statuses.values()):raise ValueError('all source branches must be terminal')
+    if set(receipts)!={k for k,v in statuses.items() if v=='COMPLETE'}:raise ValueError('source status/receipt mismatch')
+    if any(r.get('schema')!='R10_SOURCE_COMPLETE_V1' or r.get('steps')!=(2000 if jobs[k]['kind']=='warmup' else 4000) for k,r in receipts.items()):raise ValueError('R10 source endpoints not complete')
+    if set(selection.get('selected',{}))!={'SUP','GR'}:raise ValueError('family selection missing')
+    payload=dict(spec_sha256=SPEC_SHA,sources={k:digest(v) for k,v in receipts.items()},statuses=statuses,selection=digest(selection))
     return dict(schema='R10_SOURCE_LOCK_V1',payload=payload,sha256=digest(payload))
 
 
 def check_lock(lock):
-    if lock.get('schema')!='R10_SOURCE_LOCK_V1' or lock.get('sha256')!=digest(lock['payload']) or lock['payload']['spec_sha256']!=SPEC_SHA or len(lock['payload']['sources'])!=25:raise ValueError('R10 source selection not sealed')
+    if lock.get('schema')!='R10_SOURCE_LOCK_V1' or lock.get('sha256')!=digest(lock['payload']) or lock['payload']['spec_sha256']!=SPEC_SHA:raise ValueError('R10 source selection not sealed')
+    p=lock['payload']
+    if set(p['statuses'])!={j['id'] for j in SPEC['source_jobs']} or set(p['sources'])!={k for k,v in p['statuses'].items() if v=='COMPLETE'}:raise ValueError('incomplete source status seal')
 
 
 def online(host,rows,data_root,job_root,job_id,source_lock,guard,failure=None):

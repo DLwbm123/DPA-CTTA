@@ -25,10 +25,13 @@ class Profile:
         self.private=self.root/'private';self.private.mkdir(parents=True,exist_ok=True)
         self.scratch=self.root/'profile-scratch';self.scratch.mkdir(exist_ok=False)
         self.report=dict(schema='R10_REAL_PROFILE_V1',status='RUNNING',identity=self.identity,execution_authorized=False,measurements=[],snapshots={},trace_bytes={},source_log_bytes=0,active=None)
-        self.meter=None
+        self.meter=None;self.last_disk_check=0
     def save(self):write_json(self.private/'profile-progress.json',self.report)
     def guard(self,cost):
-        if any(cost[k]>PROFILE_CAPS[k] for k in CAPS if k!='disk_bytes') or disk(self.root)+8*1024**2>PROFILE_CAPS['disk_bytes']:raise RuntimeError('aggregate resource cap: R10 profile')
+        if any(cost[k]>PROFILE_CAPS[k] for k in CAPS if k!='disk_bytes'):raise RuntimeError('aggregate resource cap: R10 profile')
+        if time.monotonic()-self.last_disk_check>=1:
+            if disk(self.root)+8*1024**2>PROFILE_CAPS['disk_bytes']:raise RuntimeError('aggregate resource cap: R10 profile disk')
+            self.last_disk_check=time.monotonic()
     def check(self):self.meter.check()
     def measure(self,unit,call,*,repeats=3,divisor=1,cpu=False,variant=None):
         self.report['active']=dict(unit=unit,variant=variant);self.save();samples=[]
