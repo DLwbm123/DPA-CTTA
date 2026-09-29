@@ -24,6 +24,27 @@ class B1Tests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):official();torch.set_num_threads(2)
 
+    def test_meter_counts_base_adam_once_without_changing_native_steps(self):
+        from dpa_ctta.r9_current_first.physical import Meter
+        for arm,expected in [('C',(8,1,1)),('G',(9,2,1))]:
+            seed_all(20260907);model=Tiny();initial=copy.deepcopy(model.state_dict())
+            measured=Host(arm,model=copy.deepcopy(model));reference=Host(arm,model=copy.deepcopy(model))
+            x=torch.linspace(.01,.99,3*12*12).reshape(1,3,12,12)
+            with Meter(measured.model) as meter:
+                for i in range(2):
+                    before=meter.cost.copy();pred,meta=measured.normalized_step(x)
+                    self.assertEqual(tuple(meter.cost[k]-before[k] for k in ('model_forwards','backward_calls','optimizer_steps')),expected)
+                    self.assertEqual(meta['counts']['base_adam'],1)
+            for _ in range(2):ref,_=reference.normalized_step(x)
+            close(pred,ref,exact=True);close(measured.base.state_dict(),reference.base.state_dict(),exact=True)
+            self.assertEqual(meter.cost['vjp_calls'],0)
+            measured.finish(initial);reference.finish(initial)
+        p=nn.Parameter(torch.tensor(1.));opt=torch.optim.AdamW([p])
+        with Meter(None) as meter:
+            p.square().backward();opt.step()
+        self.assertEqual(meter.cost['optimizer_steps'],1)
+
+
     def test_source_parity_and_strict_mapping(self):
         model,_=build_reference_model('fundus');state=copy.deepcopy(model.state_dict())
         source=SourceOnlyHost('fundus',state);x=torch.rand(1,3,512,512)

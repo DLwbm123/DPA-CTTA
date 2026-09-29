@@ -3,7 +3,7 @@
 Base: `13bd6a8cdf9c30a0a5ed7fa464c67e72301ac8c6`.
 The supplied input specification is preserved verbatim. R10 uses its own namespace,
 25-source/410-target graph, source selection lock, authorization, profile projection,
-256-hour ledger, attempt receipts and final score release. R9 files are unchanged.
+256-hour ledger, attempt receipts and final score release. R9 protocol and experiments are unchanged.
 
 The frozen B mathematics and generic serialization/journals/metrics are reused.
 The independent use/write networks, connected source PPO/SUP objectives, exact
@@ -37,3 +37,15 @@ seed, objective or matrix change is used; gradients through the cast remain live
 A saturated-memory regression reproduces the previous error and checks the fix.
 Failed profile evidence is retained. Subsequent profile guards and full admission
 include prior profile operations and time, within the original R10 limits.
+
+## Native optimizer accounting repair
+
+The next real profile recorded G as 9 forwards, 2 backwards and 2 optimizer
+steps, while the independent native host recorded its one actual Adam update.
+The shared physical meter counted both the GraTa orchestration wrapper and its
+base Adam. It now excludes optimizer wrappers with a base optimizer and counts
+the delegated base step through its own hook. Both R10 profiling and execution
+use this meter; the frozen 9F/2B/1Adam contract is unchanged. A pinned native C/G
+regression checks repeated steps, measured counts and exact optimizer/output
+parity, plus direct AdamW accounting. Prior failed costs retain the conservative
+double counts. Existing R9 deployments and ledgers are not modified.

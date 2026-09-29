@@ -12,6 +12,11 @@ class Meter:
         handle=model.register_forward_pre_hook(lambda *_:self.tick('model_forwards'));self.handles.append(handle);return handle
     def tick(self,key):
         self.cost[key]+=1;self.check()
+    def optimizer_step(self,optimizer,*_):
+        # GraTa orchestrates perturb/restore and delegates its one Adam update.
+        # The base optimizer has its own global hook; count that actual step only.
+        if not isinstance(getattr(optimizer,'base_optimizer',None),torch.optim.Optimizer):
+            self.tick('optimizer_steps')
     def check(self):
         self.cost['gpu_seconds']=time.monotonic()-self.started
         self.guard(self.cost)
@@ -21,7 +26,7 @@ class Meter:
         def backward(*a,**kw):self.tick('backward_calls');return self.backward(*a,**kw)
         def grad(*a,**kw):self.tick('vjp_calls');return self.grad(*a,**kw)
         torch.autograd.backward,torch.autograd.grad=backward,grad
-        self.handles=[register_optimizer_step_pre_hook(lambda *_:self.tick('optimizer_steps'))]
+        self.handles=[register_optimizer_step_pre_hook(self.optimizer_step)]
         if self.model is not None:self.attach(self.model)
         try:self.check()
         except BaseException:
