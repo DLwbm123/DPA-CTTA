@@ -213,7 +213,7 @@ def launch(c,phase,deadline,attempt=0,failure=None):
     logfile=root/'logs'/(phase.replace(':','_')+f'.{attempt}.log');logfile.parent.mkdir(exist_ok=True)
     with logfile.open('ab') as log:
         p=subprocess.Popen([sys.executable,os.environ['RUN_ENTRY']],env=env,stdout=log,stderr=subprocess.STDOUT,start_new_session=True)
-        save(root/'active_process.json',dict(pid=p.pid,pgid=p.pid,phase=phase,deadline=deadline,active=True))
+        save(root/'active_process.json',dict(pid=p.pid,pgid=p.pid,phase=phase,deadline=deadline,active=True,start_ticks=Path(f'/proc/{p.pid}/stat').read_text().split()[21]))
         timed_out=False
         try:p.wait(timeout=max(.1,deadline-time.time()))
         except subprocess.TimeoutExpired:timed_out=True;terminate_group(p)
@@ -288,10 +288,31 @@ def report(c,state):
     for order in range(2):
         by={r['method']:r for r in summary if r['order']==order};a=by['GR_RET_EMA']['Dice_macro']
         for other in ('N','G','GR_RET_EMA_CONST_HALF'):
-            b=by[other]['Dice_macro'];delta.append(dict(order=order,comparison='R10-'+other,Dice_macro_delta=None if a is None or b is None else a-b))
+            b=by[other]['Dice_macro'];entry=dict(order=order,comparison='R10-'+other,Dice_macro_delta=None if a is None or b is None else a-b)
+            for metric in ('Dice_OD','Dice_OC'):
+                x,y=by['GR_RET_EMA'][metric],by[other][metric];entry[metric+'_delta']=None if x is None or y is None else x-y
+            delta.append(entry)
     save(root/'differences.json',delta)
     lines=[f'# {ID}',f'Status: {state["status"]}',f'Code: {c["code_sha"]}',f'Training tier: {c["tier"]}; requested WARM={c["warm"]}, POST={c["post"]}; source state={state["source"]}.','Single policy seed; fixed carrier; two development streams. No family selection, SUP comparison, cross-seed or blind-test claim.','Unfinished entries are missing, never zero. All trajectories use the same content cohort.',f'Actual wall seconds: {ledger["actual_wall_seconds"]:.3f}; GPU-worker seconds: {ledger["gpu_worker_seconds"]:.3f}; historical charged seconds: {c["origin"]["history_charged_seconds"]}.','\n```json',json.dumps(dict(results=summary,differences=delta,domains=details,behavior=traces,attempts=attempts),indent=2),'```']
     (root/'REPORT.md').write_text('\n'.join(lines)+'\n');return summary
+
+def watch():
+    """An independent parent enforces the absolute closing deadline as well."""
+    c=config();root=Path(c['output_root']);deadline=epoch(c['origin']['absolute_deadline'])
+    if time.time()>=deadline:raise TimeoutError('absolute run deadline')
+    env=dict(os.environ,RUN_MODE='supervise',RUN_CONFIG_SHA=sha(c))
+    p=subprocess.Popen([sys.executable,os.environ['RUN_ENTRY']],env=env,start_new_session=True)
+    save(root/'watchdog.json',dict(pid=os.getpid(),supervisor_pid=p.pid,absolute_deadline=deadline))
+    try:return p.wait(timeout=deadline-time.time())
+    finally:
+        active=root/'active_process.json'
+        if active.exists():
+            a=read(active);stat=Path(f"/proc/{a['pid']}/stat")
+            if a.get('active') and stat.exists() and stat.read_text().split()[21]==a.get('start_ticks'):
+                try:os.killpg(a['pgid'],signal.SIGKILL)
+                except ProcessLookupError:pass
+        if p.poll() is None:terminate_group(p)
+
 
 def main():
     mode=os.environ.get('RUN_MODE')
@@ -301,4 +322,5 @@ def main():
     elif mode=='smoke':
         c=config();r=launch(c,'smoke',epoch(c['origin']['preflight_deadline']));print(json.dumps(r));sys.exit(0 if r['status']=='COMPLETE' else 1)
     elif mode=='supervise':print(json.dumps(supervise()))
+    elif mode=='watch':sys.exit(watch())
     else:raise ValueError('explicit run mode required')
