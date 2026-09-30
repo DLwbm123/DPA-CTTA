@@ -1,0 +1,36 @@
+{
+  "does_writer_change_future": {
+    "answer": "Fixed-source writer interventions do change future probabilities (max recorded channel-mean absolute difference 0.00065862369; mask flip fraction 0.00065517426). Learned SUP writer target advantage is -0.00307pp, -0.00378pp; numerical change alone is not useful target performance.",
+    "caveat": "Source intervention consequences do not establish deployable target benefit.",
+    "learned_SUP_writer_delta": [
+      -3.070639725235007e-05,
+      -3.779285672049701e-05
+    ],
+    "source_mask_flip_max": 0.0006551742553710938,
+    "source_probability_change_max": 0.0006586236850125715
+  },
+  "next_research_line": {
+    "SUP_RET_research_signal": false,
+    "SUP_STATIC_research_signal": false,
+    "SUP_writer_retest_signal": false,
+    "answer": "Prioritize current-image normalization/carrier validity; this run does not justify adding further policy complexity on frozen B.",
+    "automatic_followon_authorized": false,
+    "best_new_two_order_mean": "C0_CURRENT_STATS"
+  },
+  "where_improvement_comes_from": {
+    "R10_minus_B_PARENT": [
+      -0.005732665098342975,
+      -0.005885838280795847
+    ],
+    "R10_minus_C0": [
+      -0.028100672855053695,
+      -0.028246512342781763
+    ],
+    "answer": "R10-C0: -2.81007pp, -2.82465pp; R10-parent B: -0.57327pp, -0.58858pp; post-WARM at fixed writer: -0.54845pp, -0.54146pp. Matched current-statistics C0 already matches or exceeds R10, so R10-N does not establish a policy/RL gain.",
+    "interpretation": "Compare matched normalization, carrier and post-use controls; do not attribute R10-N to RL without these controls.",
+    "post_minus_WARM_fixed_writer": [
+      -0.005484529823494101,
+      -0.005414603780018579
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "audit_checks": {
+    "actual_post1024_loaded": true,
+    "old_policy_and_half_identical_actor": true,
+    "report_pairing_and_embargo_passed": true,
+    "source_control_routes_and_counts_passed": true,
+    "source_only_counterfactual_unit_test_passed": true,
+    "telemetry_preserves_SUP_updates": true,
+    "writer_in_saved_optimizer": true
+  },
+  "code_sha": "fa32e7fc40629280d04ed1770979984193bace68",
+  "config_sha256": "b1579024e2f4be35a1ffd749d7b56bfdc011c8caacbdf7b892c813ec6833ff9c",
+  "free_gpu_bytes": 25295847424,
+  "preflight_code_sha": "fe07c9f43155b45d7eaddee47d7e25f95f88fbc7",
+  "preflight_config_sha256": "904ac173412c04c9cff6360ea7e0dfcf6678af6ec9066019d9ead8157f755fd1",
+  "preflight_elapsed_seconds": 918.5324339866638,
+  "profile_status": "COMPLETE",
+  "profile_to_final_changes": "unchanged Trainer/AuditTrainer/source/factory math; added counterfactual exact operation guard, complete reports and branch-admission/terminal status bookkeeping",
+  "projection": {
+    "candidates": [
+      {
+        "admitted": true,
+        "method": "SUP_RET",
+        "source_seconds": 6518.203038871289,
+        "target_seconds": 1573.630392932892
+      },
+      {
+        "admitted": true,
+        "method": "SUP_STATIC",
+        "source_seconds": 4289.929317376018,
+        "target_seconds": 786.815196466446
+      }
+    ],
+    "per_target_including_score_seconds": 393.407598233223,
+    "safety_factor": 1.3,
+    "source_cost_rule": "max(old complete-block conservative rate,new 32-round rate*1.3), plus 16 validation and 120s startup/checkpoint/I/O",
+    "source_counterfactual_seconds": 365.25618804186587,
+    "source_training_seconds": 10808.132356247308,
+    "stage_a_seconds": 4299.332170374096,
+    "stage_b_target_seconds": 2360.445589399338
+  },
+  "status": "PASS",
+  "tests_passed": 5
+}

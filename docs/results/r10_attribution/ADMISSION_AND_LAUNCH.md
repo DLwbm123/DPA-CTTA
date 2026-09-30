@@ -26,3 +26,7 @@ Both complete training branches are admitted once, based only on costs. Formal o
 Directed audit found the actual POST1024 actor in original GR/HALF deployments, shared actor identity and writer membership in all 12 saved optimizer parameter tensors. WARM→POST use/write L2 changes were 0.234612/0.236576; parameter change alone is not proof of useful learning. Original target writer standard deviation was 0.0002234/0.0002224, with max absolute deviation from .5 of 0.001529634. Missing original separate sampled-gate distributions and advantage norms remain explicitly NOT_RECORDED; new frozen-copy source probes are labeled separately and perform no optimizer update.
 
 New target scores remain private until terminal run state. No performance-driven selection, new recipe, seed, WARM rerun, backbone/basis change, or automatic follow-on experiment. The queue produces REPORT plus ATTRIBUTION, WRITER_DIAGNOSTICS, SOURCE_COUNTERFACTUAL, COST_AND_STATUS and resource/score receipts. Final results still require collection after execution. Only local commits; no push.
+
+## Final status
+
+The run is COMPLETE. See [REPORT.md](REPORT.md), [RESULTS.csv](RESULTS.csv) and [COMPLETION_RECEIPTS.json](COMPLETION_RECEIPTS.json) for final evidence.
