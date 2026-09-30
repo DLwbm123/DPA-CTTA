@@ -31,8 +31,8 @@ def check_lock(lock):
     if set(p['statuses'])!={j['id'] for j in SPEC['source_jobs']} or set(p['sources'])!={k for k,v in p['statuses'].items() if v=='COMPLETE'}:raise ValueError('incomplete source status seal')
 
 
-def online(host,rows,data_root,job_root,job_id,source_lock,guard,failure=None):
-    check_lock(source_lock)
+def online(host,rows,data_root,job_root,job_id,source_lock,guard,failure=None,lock_validator=None):
+    (lock_validator or check_lock)(source_lock)
     journal=TargetJournal(job_root,host,job_id,rows_sha(rows),prediction_bytes=PREDICTION_BYTES)
     if failure:journal.recover_once(failure)
     else:journal.create()
@@ -49,8 +49,8 @@ def online(host,rows,data_root,job_root,job_id,source_lock,guard,failure=None):
     receipt=journal.complete(len(rows));write_json(Path(job_root)/'source_lock.json',source_lock);return receipt
 
 
-def score(rows,data_root,job_root,job_id,context_sha256,source_lock,guard,failure=None):
-    check_lock(source_lock);root=Path(job_root)
+def score(rows,data_root,job_root,job_id,context_sha256,source_lock,guard,failure=None,lock_validator=None):
+    (lock_validator or check_lock)(source_lock);root=Path(job_root)
     if json.loads((root/'source_lock.json').read_text())!=source_lock:raise ValueError('source lock changed')
     seal=verify_online_complete(root,job_id,context_sha256,rows_sha(rows),len(rows),PREDICTION_BYTES)
     out=root/'scalars.private.jsonl';saved=root/'score_checkpoint.json';first=0

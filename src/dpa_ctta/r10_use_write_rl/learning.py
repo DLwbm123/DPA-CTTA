@@ -31,10 +31,12 @@ def restore_rng(s):
 
 
 class Trainer:
-    def __init__(self,actor,controller,source,seed,method,binding,reference=None,guard=lambda:None):
+    def __init__(self,actor,controller,source,seed,method,binding,reference=None,guard=lambda:None,total=None):
         self.actor,self.controller,self.source=actor,controller,source
         self.seed,self.method,self.binding=seed,method,binding;self.guard=guard
         if method not in ('WARM','SUP_STATIC','SUP_SEQ','SUP_RET','GR_CUR','GR_SEQ','GR_RET','GR_RET_EMA'):raise ValueError('method')
+        self.total=(2000 if method=='WARM' else 4000) if total is None else total
+        if type(self.total) is not int or self.total<=100:raise ValueError('scheduler length')
         self.actor.train_writer(method not in ('WARM','SUP_STATIC','GR_CUR'))
         self.reference=copy.deepcopy(reference if reference is not None else actor).eval();self.reference.requires_grad_(False)
         self.opt=optimizer(actor,3e-4 if method=='WARM' else 3e-5)
@@ -59,7 +61,7 @@ class Trainer:
             vals.append(soft_dice(logits,item['label']).reshape(2) if soft else logits.new_tensor(dice(logits.sigmoid(),item['label'])[0]))
         return torch.stack(vals)
     def step(self):
-        total=2000 if self.method=='WARM' else 4000
+        total=self.total
         if self.steps>=total:raise ValueError('training exhausted')
         rate=lr(self.steps,total,3e-4 if self.method=='WARM' else 3e-5,3e-5 if self.method=='WARM' else 3e-6)
         for g in self.opt.param_groups:g['lr']=rate
@@ -138,9 +140,10 @@ class Trainer:
             losses.append(float(loss.detach()));clips.append(float(((ratio<.8)|(ratio>1.2)).double().mean()));kls.append(float(kl.detach()))
         return dict(loss=sum(losses)/2,reward_mean=float(rewards.mean()),reward_std=float(rewards.std(unbiased=False)),zero_advantage_fraction=float((adv==0).double().mean()),KL=sum(kls)/2,clip_fraction=clips,ema=self.ema,epochs=2)
     def snapshot(self):
-        return dict(schema='R10_TRAIN_V1',binding=self.binding,method=self.method,seed=self.seed,steps=self.steps,
+        return dict(schema='R10_TRAIN_V1',binding=self.binding,method=self.method,seed=self.seed,steps=self.steps,total=self.total,
                     actor=copy.deepcopy(self.actor.state_dict()),reference=copy.deepcopy(self.reference.state_dict()),optimizer=copy.deepcopy(self.opt.state_dict()),ema=self.ema,rng=rng_state(),boundary='complete_two_epoch_round' if self.method!='WARM' else 'complete_warmup_update')
     def restore(self,s):
         if s['schema']!='R10_TRAIN_V1' or (s['binding'],s['method'],s['seed'])!=(self.binding,self.method,self.seed):raise ValueError('training identity')
-        if not 0<=s['steps']<=(2000 if self.method=='WARM' else 4000):raise ValueError('training cursor')
+        if s.get('total',2000 if self.method=='WARM' else 4000)!=self.total:raise ValueError('scheduler identity')
+        if not 0<=s['steps']<=self.total:raise ValueError('training cursor')
         self.actor.load_state_dict(s['actor']);self.reference.load_state_dict(s['reference']);self.opt.load_state_dict(s['optimizer']);self.steps=s['steps'];self.ema=s['ema'];restore_rng(s['rng'])
