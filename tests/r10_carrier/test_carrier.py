@@ -15,7 +15,7 @@ class Carrier(unittest.TestCase):
             self.assertTrue(torch.equal(out,h if a==0 else native if a==1 else h+a*(native-h)))
             if a==.25:self.assertFalse(torch.allclose(out,film(h,a*v,.3)))
     def test_native_full_and_reset_states_ignore_readout(self):
-        torch.manual_seed(4);basis=torch.linalg.qr(torch.randn(1024,64)).Q
+        torch.manual_seed(4);basis=torch.linalg.qr(torch.randn(1024,64,dtype=torch.float64)).Q
         m=R8B(basis,.3,'global');m.observer.fitted.fill_(True);m.freeze()
         states=[m.initial() for _ in range(3)]
         for _ in range(4):
