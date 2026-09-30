@@ -70,3 +70,26 @@ class Core(unittest.TestCase):
                 outputs.append((p/'predictions.bits').read_bytes());states.append(h.snapshot())
         self.assertEqual(outputs[0],outputs[1])
         for k in ('m','q','h'):self.assertTrue(torch.equal(states[0]['memory'][k],states[1]['memory'][k]))
+
+    def test_report_domain_weighting_deltas_and_trace(self):
+        from datetime import datetime,timezone
+        from dpa_ctta.r10_12h_core.run import report,save,ARMS
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);(root/'attempts').mkdir();save(root/'RESOURCE_LEDGER.json',{})
+            jobs=[dict(id=f'{a}{o}',arm=a,order=o) for a in ARMS for o in range(2)]
+            c=dict(output_root=tmp,jobs=jobs,code_sha='a'*40,tier='B',warm=1000,post=1024,origin=dict(T0=datetime.now(timezone.utc).isoformat(),history_charged_seconds=6048))
+            state=dict(status='COMPLETE',source='COMPLETE',jobs={j['id']:'COMPLETE' for j in jobs})
+            for j in jobs:
+                p=root/'target'/j['id'];p.mkdir(parents=True);save(p/'score_complete.json',{})
+                delta=.02 if j['arm']=='GR_RET_EMA' else 0;rows=[]
+                for domain in (0,0,1,2,3):
+                    values=(.1,.2) if domain==0 else (.8,.6)
+                    rows.append(dict(domain=domain,subset='remaining_dev',metrics=[dict(channel=k,dice=v+delta) for k,v in zip(('OD','OC'),values)]))
+                (p/'scalars.private.jsonl').write_text('\n'.join(__import__('json').dumps(r) for r in rows))
+                (p/'visits.jsonl').write_text('{"write":0.5,"mass":1.0}\n')
+            rows=report(c,state)
+            n=next(r for r in rows if r['method']=='N')
+            self.assertAlmostEqual(n['Dice_macro'],.5625);self.assertAlmostEqual(n['Dice_pooled'],.48)
+            d=__import__('json').loads((root/'differences.json').read_text())[0]
+            for k in ('Dice_macro_delta','Dice_OD_delta','Dice_OC_delta'):self.assertAlmostEqual(d[k],.02)
+            self.assertEqual(__import__('json').loads((root/'behavior.json').read_text())[0]['means']['write'],.5)
