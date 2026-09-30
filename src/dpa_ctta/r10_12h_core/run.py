@@ -228,6 +228,7 @@ def launch(c,phase,deadline,attempt=0,failure=None):
 
 def supervise():
     c=config();root=Path(c['output_root']);origin=c['origin'];normal=epoch(origin['normal_compute_deadline']);hard=epoch(origin['compute_deadline'])
+    if time.time()>epoch(origin['preflight_deadline']):raise TimeoutError('PREFLIGHT_INCOMPLETE')
     auth=read(root/'private'/'authorization.json')
     if auth['config_sha256']!=sha(c) or auth['code_sha']!=c['code_sha']:raise ValueError('private authorization binding')
     from ..r9_current_first.storage import lease
@@ -273,7 +274,7 @@ def report(c,state):
             item.update(visits=len(rows),scored=sum(r['subset']=='remaining_dev' for r in rows),Dice_macro=statistics.mean(means.values()),Dice_pooled=statistics.mean(pool))
             for ch,val in means.items():item['Dice_'+ch.upper()]=val
             for (domain,ch),vs in sorted(cells.items()):details.append(dict(method=j['arm'],order=j['order'],domain=domain,channel=ch,dice=statistics.mean(vs),n=len(vs)))
-            tracepath=p/'trace.jsonl'
+            tracepath=p/'visits.jsonl'
             if tracepath.exists():
                 values=[json.loads(x) for x in tracepath.read_text().splitlines()]
                 traces.append(dict(method=j['arm'],order=j['order'],n=len(values),means={k:statistics.mean(x[k] for x in values if k in x) for k in ('write','gain','state_norm','mass') if any(k in x for x in values)}))

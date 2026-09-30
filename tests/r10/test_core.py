@@ -50,3 +50,23 @@ class Core(unittest.TestCase):
                     with self.assertRaises(ProcessLookupError):os.kill(child,0)
             finally:
                 if p.poll() is None:terminate_group(p)
+
+    def test_target_masks_never_reach_online_host(self):
+        from dpa_ctta.r10_use_write_rl.target import online
+        class Images:
+            def __init__(self,*a):assert a[-1]=='image'
+            def read(self,row):
+                assert set(row)=={'image_path','image_sha256','image_size'}
+                return torch.ones(134)
+            def after_check(self):pass
+        c=Controller(carrier(),torch.ones(64,dtype=torch.float64));a=Actor(9)
+        outputs=[];states=[]
+        with tempfile.TemporaryDirectory() as tmp:
+            for label in ('zero','one'):
+                h=Host(ToySegmenter(),c,a,'same');p=Path(tmp)/label
+                row=dict(group_id='i',domain='private',subset='remaining_dev',image_path='same',image_sha256='a'*64,image_size=1,mask_path=label)
+                with patch('dpa_ctta.r10_use_write_rl.target.TargetReader',Images):
+                    online(h,[row],'unused',p,label,{},lambda:None,lock_validator=lambda _:None)
+                outputs.append((p/'predictions.bits').read_bytes());states.append(h.snapshot())
+        self.assertEqual(outputs[0],outputs[1])
+        for k in ('m','q','h'):self.assertTrue(torch.equal(states[0]['memory'][k],states[1]['memory'][k]))
