@@ -96,7 +96,7 @@ def worker():
 
 def admit():
     c=config();root=Path(c['output_root']);z=read(root/'ZERO_PARITY.json');old=read(Path(c['previous_root'])/'RESOURCE_LEDGER.json')
-    if read(root/'attempts/preflight.0.json')['status']!='COMPLETE' or not z['passed']:raise ValueError('zero parity not qualified')
+    if read(root/'attempts'/f"preflight.{c.get('preflight_attempt',0)}.json")['status']!='COMPLETE' or not z['passed']:raise ValueError('zero parity not qualified')
     native=max(a['wall_seconds'] for a in old['attempts'] if a['phase'].startswith('online:B_PARENT_FULL'))
     scorer=max(a['wall_seconds'] for a in old['attempts'] if a['phase'].startswith('score:'))
     extra=max(0,z['timings']['B_FULL_1']-z['timings']['NATIVE_B'])/32
@@ -117,14 +117,14 @@ def supervise():
     with lease(root/'supervisor',dict(experiment_id=ID,config_sha256=sha(c))):
         if (root/'execution_started.json').exists():raise ValueError('existing run requires ledger reconciliation')
         save(root/'execution_started.json',dict(at=time.time(),config_sha256=sha(c)))
-        state=dict(experiment_id=ID,status='RUNNING',source='NOT_RUN',jobs={j['id']:'NOT_RUN' for j in c['jobs']},recovery_used=False);save(root/'RUN_STATE.json',state)
+        state=dict(experiment_id=ID,status='RUNNING',source='NOT_RUN',jobs={j['id']:'NOT_RUN' for j in c['jobs']},recovery_used=False,engineering_repairs=c.get('engineering_repairs',[]));save(root/'RUN_STATE.json',state)
         def run(phase,deadline):
-            r=launch(c,phase,min(normal,deadline))
+            r=launch(c,phase,min(normal,deadline),c.get('source_attempt',0) if phase=='source' else 0)
             if r['status']=='FAILED' and r['failure']['class']=='INFRASTRUCTURE' and phase!='source' and not state['recovery_used']:
                 state['recovery_used']=True;save(root/'RUN_STATE.json',state);r=launch(c,phase,min(hard,deadline+1800,time.time()+1800),1,r['failure'])
             return r
         try:
-            state['source']='RUNNING';save(root/'RUN_STATE.json',state);r=run('source',time.time()+1800);state['source']=r['status'];save(root/'RUN_STATE.json',state)
+            state['source']='RUNNING';save(root/'RUN_STATE.json',state);r=run('source',c.get('source_stage_deadline',time.time()+1800));state['source']=r['status'];save(root/'RUN_STATE.json',state)
             if r['status']!='COMPLETE':raise RuntimeError('paired source comparison failed')
             deadline=time.time()+3600
             for j in c['jobs']:
@@ -161,7 +161,7 @@ def main():
     mode=os.environ['RUN_MODE']
     if mode=='prepare':print(json.dumps(dict(status='PREPARED',reused=len(prepare()['reused_results']))))
     elif mode=='worker':r=worker();__import__('sys').exit(0 if r['status']=='COMPLETE' else 1)
-    elif mode=='preflight':c=config();r=launch(c,'preflight',epoch(c['origin']['preflight_deadline']));print(json.dumps(r));__import__('sys').exit(0 if r['status']=='COMPLETE' else 1)
+    elif mode=='preflight':c=config();r=launch(c,'preflight',epoch(c['origin']['preflight_deadline']),c.get('preflight_attempt',0));print(json.dumps(r));__import__('sys').exit(0 if r['status']=='COMPLETE' else 1)
     elif mode=='admit':print(json.dumps(admit()))
     elif mode=='supervise':print(json.dumps(supervise()))
     elif mode=='watch':__import__('sys').exit(watch())

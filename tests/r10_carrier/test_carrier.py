@@ -44,3 +44,9 @@ class Carrier(unittest.TestCase):
         rows['B_FULL_1',0][0]['content']='wrong'
         with self.assertRaises(ValueError):interaction(rows,0)
         with self.assertRaises(ValueError):report({},dict(status='RUNNING',jobs={}))
+    def test_source_trace_handles_native_one_based_visit(self):
+        from dpa_ctta.r10_carrier.source import source_trace
+        native=dict(visit=1,state_committed=True,counts={'forwards':1},B_state_sha256='private state',output_alpha=.25)
+        row=source_trace('B_FULL_READOUT_025',16,0,'mode',native)
+        self.assertEqual(row['visit'],0);self.assertEqual(row['output_alpha'],.25)
+        self.assertNotIn('counts',row);self.assertEqual(native['visit'],1)

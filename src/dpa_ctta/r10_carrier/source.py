@@ -65,6 +65,10 @@ def preflight(c,guard):
         for h in handles:h.remove()
         for _,close in hosts.values():close()
 
+def source_trace(condition,index,visit,mode,trace):
+    return dict(condition=condition,episode=index,visit=visit,mode=mode,
+        **{k:v for k,v in trace.items() if k not in ('visit','counts','B_state_sha256')})
+
 @torch.no_grad()
 def comparison(c,guard):
     root=Path(c['output_root']);rows=[];diagnostics=[];start=time.time();hosts={};handles=[]
@@ -79,7 +83,7 @@ def comparison(c,guard):
                     guard();image,label,mode=source_item(src,index,visit)
                     for k,(host,_) in hosts.items():
                         logits,trace=host.step(image);hard,sd=dice(logits.sigmoid(),label);collected[k].append(hard);soft[k].append(sd)
-                        diagnostics.append(dict(condition=k,episode=index,visit=visit,mode=mode,**{k:v for k,v in trace.items() if k not in ('counts','B_state_sha256')}))
+                        diagnostics.append(source_trace(k,index,visit,mode,trace))
                     if not equal_state(hosts['B_FULL_1'][0].state,hosts['B_FULL_READOUT_025'][0].state):raise ValueError('source FULL readout changed native state')
                     if not equal_state(hosts['B_RESET_1'][0].state,hosts['B_RESET_READOUT_025'][0].state):raise ValueError('source RESET readout changed native state')
                 modecounts[mode]+=1
