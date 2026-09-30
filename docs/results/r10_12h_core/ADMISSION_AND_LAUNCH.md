@@ -1,5 +1,7 @@
 # R10_12H_CORE_V1 admission and launch
 
+Historical launch snapshot. Final status is COMPLETE; see [REPORT.md](REPORT.md).
+
 Status observed at 2026-09-30 03:24:07 UTC: **RUNNING, not complete**. Source WARM had completed 54/1000 physical updates, with an atomic checkpoint at update 50. POST, validation and all eight target trajectories were NOT_RUN at this observation. No result or difference is available yet.
 
 Execution branch: `experiment/r10-12h-core-v1`.

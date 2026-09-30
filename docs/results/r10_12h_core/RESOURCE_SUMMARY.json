@@ -1,0 +1,325 @@
+{
+  "actual_wall_seconds": 7170.102459669113,
+  "gpu_worker_seconds": 5650.104507576209,
+  "history_charged_seconds": 6064.481842329726,
+  "new_cap_seconds": 36000,
+  "operations": {
+    "backward_calls": 14164,
+    "model_forwards": 78560,
+    "optimizer_steps": 5102,
+    "vjp_calls": 0
+  },
+  "disk_bytes": 246854774,
+  "preflight_seconds": 900.0629739761353,
+  "recovery_used": false,
+  "status": "COMPLETE",
+  "T0": "2026-09-30T03:07:54+00:00",
+  "finished_at": "2026-09-30T13:07:23+08:00",
+  "collected_at": "2026-09-30T17:30:50+08:00",
+  "elapsed_to_collection_seconds": 22976.650953054428,
+  "attempts": [
+    {
+      "phase": "online:GR_RET_EMA_CONST_HALF_o0",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 205.74269756814465,
+        "model_forwards": 2048,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 207.34198689460754,
+      "started": 1790744266.1342099,
+      "ended": 1790744473.4761968
+    },
+    {
+      "phase": "online:GR_RET_EMA_CONST_HALF_o1",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 213.03752649296075,
+        "model_forwards": 2048,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 213.58598804473877,
+      "started": 1790744551.6300697,
+      "ended": 1790744765.2160575
+    },
+    {
+      "phase": "online:GR_RET_EMA_o0",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 210.27388095203787,
+        "model_forwards": 2048,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 210.84920477867126,
+      "started": 1790743680.4167764,
+      "ended": 1790743891.2659812
+    },
+    {
+      "phase": "online:GR_RET_EMA_o1",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 210.77062912797555,
+        "model_forwards": 2048,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 211.4993588924408,
+      "started": 1790743969.5383103,
+      "ended": 1790744181.0376687
+    },
+    {
+      "phase": "online:G_o0",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 2048,
+        "disk_bytes": 0,
+        "gpu_seconds": 648.5134788239375,
+        "model_forwards": 9216,
+        "optimizer_steps": 1024,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 649.067636013031,
+      "started": 1790742226.9159296,
+      "ended": 1790742875.9835653
+    },
+    {
+      "phase": "online:G_o1",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 2048,
+        "disk_bytes": 0,
+        "gpu_seconds": 648.7569381920621,
+        "model_forwards": 9216,
+        "optimizer_steps": 1024,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 649.2941975593567,
+      "started": 1790742952.314634,
+      "ended": 1790743601.6088314
+    },
+    {
+      "phase": "online:N_o0",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 159.05784121109173,
+        "model_forwards": 1024,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 159.57319736480713,
+      "started": 1790741763.9863389,
+      "ended": 1790741923.559536
+    },
+    {
+      "phase": "online:N_o1",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 150.72467197710648,
+        "model_forwards": 1024,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 151.27954864501953,
+      "started": 1790742001.8074868,
+      "ended": 1790742153.0870352
+    },
+    {
+      "phase": "score:GR_RET_EMA_CONST_HALF_o0",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 74.09778428077698,
+      "started": 1790744475.7312586,
+      "ended": 1790744549.8290424
+    },
+    {
+      "phase": "score:GR_RET_EMA_CONST_HALF_o1",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 75.9531729221344,
+      "started": 1790744767.3895838,
+      "ended": 1790744843.3427556
+    },
+    {
+      "phase": "score:GR_RET_EMA_o0",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 74.02718257904053,
+      "started": 1790743893.682373,
+      "ended": 1790743967.7095547
+    },
+    {
+      "phase": "score:GR_RET_EMA_o1",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 81.03524136543274,
+      "started": 1790744183.253441,
+      "ended": 1790744264.2886817
+    },
+    {
+      "phase": "score:G_o0",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 70.71648025512695,
+      "started": 1790742878.4486623,
+      "ended": 1790742949.1651416
+    },
+    {
+      "phase": "score:G_o1",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 74.55756974220276,
+      "started": 1790743603.9866352,
+      "ended": 1790743678.5442038
+    },
+    {
+      "phase": "score:N_o0",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 74.40145921707153,
+      "started": 1790741925.5946615,
+      "ended": 1790741999.9961195
+    },
+    {
+      "phase": "score:N_o1",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 69.83272695541382,
+      "started": 1790742155.2304282,
+      "ended": 1790742225.0631545
+    },
+    {
+      "phase": "smoke",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 20,
+        "disk_bytes": 0,
+        "gpu_seconds": 20.79264531796798,
+        "model_forwards": 96,
+        "optimizer_steps": 6,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 21.41301679611206,
+      "started": 1790738379.5340986,
+      "ended": 1790738400.9471154
+    },
+    {
+      "phase": "source",
+      "attempt": "0",
+      "status": "COMPLETE",
+      "failure": null,
+      "cost": {
+        "backward_calls": 10048,
+        "disk_bytes": 0,
+        "gpu_seconds": 3182.434197912924,
+        "model_forwards": 49792,
+        "optimizer_steps": 3048,
+        "vjp_calls": 0
+      },
+      "wall_seconds": 3183.115939617157,
+      "started": 1790738578.0446472,
+      "ended": 1790741761.1605866
+    }
+  ],
+  "failures": 0,
+  "recoveries": 0,
+  "source_stage_wall_seconds": 3183.115939617157,
+  "target_stage_elapsed_seconds": 3079.3564167022705,
+  "scoring_worker_seconds": 594.6216173171997
+}
