@@ -152,7 +152,7 @@ def admit():
     costs={m:max(audit['profiles'][m]['conservative_seconds_per_round'],oldp['measurements']['train/'+m]['gpu_seconds'])*1024+val+120 for m in ('SUP_RET','SUP_STATIC')}
     selected=[];candidates=[]
     for method,targets in (('SUP_RET',4),('SUP_STATIC',2)):
-        proposed=selected+[method];train=sum(costs[m] for m in proposed);n=4+2*('SUP_STATIC' in proposed)
+        proposed=selected+[method];train=sum(costs[m] for m in proposed);n=sum(4 if m=='SUP_RET' else 2 for m in proposed)
         ok=train<=4*3600 and n*target_each<=3600 and stage_a<=1.5*3600 and stage_a+train+n*target_each<epoch(c['origin']['normal_compute_deadline'])-time.time()
         candidates.append(dict(method=method,source_seconds=costs[method],target_seconds=targets*target_each,admitted=ok))
         if ok:selected.append(method)
@@ -196,6 +196,9 @@ def supervise():
                 method='SUP_STATIC' if job['arm']=='SUP_STATIC' else 'SUP_RET'
                 if job['arm'] in B_ARMS and method in c['training']:trajectory(job,deadline)
         except BaseException as e:state['stop_reason']=str(e);traceback.print_exc()
+        for group in ('jobs','training'):
+            for key,value in state[group].items():
+                if value in ('RUNNING','NOT_RUN'):state[group][key]='NOT_RUN_STOPPED'
         state['status']='COMPLETE' if all(v=='COMPLETE' for v in state['jobs'].values()) and state['counterfactual']=='COMPLETE' and all(v=='COMPLETE' for v in state['training'].values()) else 'PARTIAL';state['ended']=time.time();save(root/'RUN_STATE.json',state)
         from .report import report
         report(c,state);return state

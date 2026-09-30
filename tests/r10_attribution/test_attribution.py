@@ -40,3 +40,39 @@ class Attribution(unittest.TestCase):
             with self.assertRaises(ValueError):check_lock(lock)
         self.assertEqual([sum(i//16==m for i in CONTEXTS) for m in range(4)],[8]*4)
         self.assertEqual(gates([.5,.6])['max_abs_from_half'],.6-.5)
+
+    def test_paired_reporting_and_embargo(self):
+        from dpa_ctta.r10_attribution.report import paired,means,report
+        a=[]
+        for i,d in enumerate((0,0,1,2,3)):
+            a.append(dict(visit=i+1,content=str(i),domain=d,subset='remaining_dev',metrics=[dict(channel='OD',dice=.2 if d==0 else .8),dict(channel='OC',dice=.1 if d==0 else .6)]))
+        b=copy.deepcopy(a)
+        for r in b:
+            for m in r['metrics']:m['dice']-=.02
+        self.assertAlmostEqual(means(a)['Dice_macro'],.5625)
+        self.assertAlmostEqual(paired(a,b)['domain_equal_delta'],.02)
+        b[0]['content']='different'
+        with self.assertRaises(ValueError):paired(a,b)
+        with self.assertRaises(ValueError):report({},dict(status='RUNNING',jobs={}))
+
+    def test_counterfactual_full_context_schedule(self):
+        from unittest.mock import patch
+        from types import SimpleNamespace
+        from dpa_ctta.r10_attribution.audit import counterfactual
+        from dpa_ctta.r10_12h_core.run import OPS
+        c=Controller(carrier(),torch.ones(64,dtype=torch.float64));s=ToySource(c);s.controller=c
+        cost=dict.fromkeys(OPS,0);visited=set();original_item=s.item;original_segmenter=s.segmenter
+        def item(fold,seed,episode,visit):
+            if (episode,visit) not in visited:cost['model_forwards']+=1;visited.add((episode,visit))
+            return original_item(fold,seed,episode,visit)
+        def segment(*args,**kw):cost['model_forwards']+=1;return original_segmenter(*args,**kw)
+        s.item=item;s.segmenter=segment;s.schedule=lambda fold,i,seed:(None,None,str(i//16))
+        class Guard:
+            meter=SimpleNamespace(cost=cost)
+            def __call__(self):pass
+        with tempfile.TemporaryDirectory() as tmp,patch('dpa_ctta.r10_attribution.audit.actor_at',return_value=(Actor(8),{})):
+            r=counterfactual(dict(output_root=tmp,previous_root='unused',counterfactual_contexts=CONTEXTS),s,Guard())
+            self.assertEqual(r,dict(contexts=32,future_segmentations=1536));self.assertEqual(cost['model_forwards'],2496)
+            saved=__import__('json').loads((Path(tmp)/'SOURCE_COUNTERFACTUAL.private.json').read_text())
+            self.assertEqual(len(saved['rows']),32)
+            self.assertEqual(set(saved['rows'][0]['horizons']),{'4','16'})

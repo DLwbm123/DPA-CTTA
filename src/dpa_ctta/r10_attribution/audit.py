@@ -98,7 +98,9 @@ def counterfactual(c,source,guard):
     from ..r10_use_write_rl.math import Memory,use_and_write
     from ..r10_use_write_rl.controller import detached
     from ..r9_current_first.validation import dice
-    root=Path(c['output_root']);actor,_=actor_at(c['previous_root'],'POST');actor.eval();actor.requires_grad_(False);rows=[];before=guard.meter.cost.copy();start=time.time()
+    root=Path(c['output_root'])
+    if len(c['counterfactual_contexts'])!=32:raise ValueError('exactly 32 preselected source contexts required')
+    actor,_=actor_at(c['previous_root'],'POST');actor.eval();actor.requires_grad_(False);rows=[];before=guard.meter.cost.copy();start=time.time()
     for index in c['counterfactual_contexts']:
         guard();state=Memory.zero();mode=source.schedule('val',index,SEED)[2]
         for v in range(12):
@@ -126,5 +128,8 @@ def counterfactual(c,source,guard):
             chosen=future[:h];ms={w:{metric:[statistics.mean(r['metrics'][str(w)][metric][ch] for r in chosen) for ch in range(2)] for metric in ('hard','soft')} for w in (0.,.5,1.)}
             row['horizons'][str(h)]=dict(metrics={str(k):v for k,v in ms.items()},delta_vs_half={str(w):{metric:[ms[w][metric][ch]-ms[.5][metric][ch] for ch in range(2)] for metric in ('hard','soft')} for w in (0.,1.)},probability_and_masks={str(w):dict(probability_MAE=[statistics.mean(r['changes'][str(w)]['probability_MAE'][ch] for r in chosen) for ch in range(2)],mask_flip_fraction=[statistics.mean(r['changes'][str(w)]['mask_flip_fraction'][ch] for r in chosen) for ch in range(2)],probability_max=max(r['changes'][str(w)]['probability_max'] for r in chosen)) for w in (0.,1.)},finite_candidate_best_gain=max(statistics.mean(ms[w]['hard']) for w in ms)-statistics.mean(ms[.5]['hard']))
         rows.append(row);save(root/'SOURCE_COUNTERFACTUAL.private.json',dict(status='RUNNING',rows=rows))
+    observed=tuple(guard.meter.cost[k]-before[k] for k in OPS)
+    if observed!=(2496,0,0,0):raise ValueError('counterfactual actual forward/gradient contract: '+str(observed))
+    if sorted(__import__('collections').Counter(r['mode'] for r in rows).values())!=[8]*4:raise ValueError('counterfactual mode coverage')
     result=dict(status='COMPLETE',contexts=32,future_segmentations=1536,current_segmentations=32,horizons=[4,16],rows=rows,cost={k:guard.meter.cost[k]-before[k] for k in OPS},wall_seconds=time.time()-start,label='finite-candidate source diagnostic; optimistic selection, not an upper bound or target performance')
     save(root/'SOURCE_COUNTERFACTUAL.private.json',result);return dict(contexts=len(rows),future_segmentations=1536)
