@@ -1,0 +1,95 @@
+{
+  "T0": "2026-09-30T14:16:06.144414+00:00",
+  "absolute_deadline": "2026-09-30T17:16:06.144414+00:00",
+  "actual_wall_seconds": 2067.4057743549347,
+  "automatic_report_wall_seconds": 1900.2565097808838,
+  "closed_at_epoch": 1790779833.5501883,
+  "closed_package_charged_seconds": 26824.54791908525,
+  "closing_note": "Includes terminal anonymous collection and closing work through this receipt; zero extra GPU computation. T0 unchanged.",
+  "compute_deadline": "2026-09-30T16:46:06.144414+00:00",
+  "disk_bytes": 225398572,
+  "experiment_id": "R10_CARRIER_DECISION_3H_V1",
+  "gpu_worker_seconds": 107.9944557803683,
+  "new_cap_seconds": 10800,
+  "normal_compute_deadline": "2026-09-30T16:16:06.144414+00:00",
+  "operations": {
+    "backward_calls": 0,
+    "model_forwards": 961,
+    "optimizer_steps": 0,
+    "vjp_calls": 0
+  },
+  "preflight_deadline": "2026-09-30T14:46:06.144414+00:00",
+  "prior_attribution_actual_wall_seconds": 11522.557842731476,
+  "prior_attribution_gpu_worker_seconds": 9539.269568504766,
+  "prior_package_charged_seconds": 24757.142144730315,
+  "recovery_used": false,
+  "status": "PREFLIGHT_INCOMPLETE",
+  "attempts": [
+    {
+      "attempt": "0",
+      "config_sha256": "56774e1f6c32143a28e74cca558ecba6e64d8c822e53334615fab127f50e57bb",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 47.147731334436685,
+        "model_forwards": 480,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790778720.5557399,
+      "failure": null,
+      "phase": "preflight",
+      "started": 1790778672.8310568,
+      "status": "COMPLETE",
+      "wall_seconds": 47.72468328475952
+    },
+    {
+      "attempt": "1",
+      "config_sha256": "fd6ee1622b879ff50f62719b8588d64b51330fe1c2fc3726890b4f7b27ca5083",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 44.87778091710061,
+        "model_forwards": 480,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790779229.8200767,
+      "failure": null,
+      "phase": "preflight",
+      "started": 1790779184.3780842,
+      "status": "COMPLETE",
+      "wall_seconds": 45.44199275970459
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "9ad2db6009a7383660f70422548a855175052eee06925dee396d54b0278a231d",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 15.968943528831005,
+        "model_forwards": 1,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790778930.404693,
+      "failure": {
+        "class": "IDENTITY_OR_IMPLEMENTATION",
+        "error_type": "TypeError",
+        "evidence": {
+          "attempt": "0",
+          "config_sha256": "9ad2db6009a7383660f70422548a855175052eee06925dee396d54b0278a231d",
+          "phase": "source"
+        },
+        "reason": "dict() got multiple values for keyword argument 'visit'"
+      },
+      "phase": "source",
+      "started": 1790778913.7617288,
+      "status": "FAILED",
+      "wall_seconds": 16.642964601516724
+    }
+  ],
+  "closing_collected_epoch": 1790779853.2235148,
+  "prior_plus_report_charge_seconds": 26824.54791908525,
+  "accounting_note": "actual_wall_seconds covers T0 through the closed collection receipt, including repairs, failed attempts and closing work. automatic_report_wall_seconds separately records the earlier generated report. GPU-worker time is separately reported, not added again. Closing until local delivery is recorded separately; original T0 and deadlines remain unchanged."
+}
