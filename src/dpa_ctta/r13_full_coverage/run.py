@@ -104,20 +104,20 @@ def target(c,guard,phase,failure):
     try:return online(host,rows,c['bindings']['target_root'],p,j['id'],lk,guard,failure,check_lock)
     finally:handle.remove();close()
 
-def worker():
+def worker(c=None,qualification=preflight,target_action=target,qualification_forwards=192):
     import torch
     from ..r9_current_first.physical import Meter
     from ..r10_use_write_rl.assets import gpu_policy
     from ..r10_use_write_rl.runtime import classification
-    c=config();phase=os.environ['RUN_PHASE'];guard=Guard(c,phase);start=time.time();meter=None;failure=None;result=None;attempt=os.environ.get('RUN_ATTEMPT','0');prior=json.loads(os.environ['RUN_FAILURE']) if os.environ.get('RUN_FAILURE') else None
+    c=config() if c is None else c;phase=os.environ['RUN_PHASE'];guard=Guard(c,phase);start=time.time();meter=None;failure=None;result=None;attempt=os.environ.get('RUN_ATTEMPT','0');prior=json.loads(os.environ['RUN_FAILURE']) if os.environ.get('RUN_FAILURE') else None
     torch.set_num_threads(2);torch.set_num_interop_threads(2)
     try:
-        if phase.startswith('score:'):result=target(c,guard,phase,prior)
+        if phase.startswith('score:'):result=target_action(c,guard,phase,prior)
         else:
             gpu_policy(c['gpu_assignments'][0])
             with Meter(None,guard.observe) as meter:
-                guard.meter=meter;result=preflight(c,guard) if phase=='preflight' else target(c,guard,phase,prior)
-                if any(meter.cost[k] for k in OPS[1:]) or phase=='preflight' and meter.cost['model_forwards']!=192:raise ValueError('source/no-update count')
+                guard.meter=meter;result=qualification(c,guard) if phase=='preflight' else target_action(c,guard,phase,prior)
+                if any(meter.cost[k] for k in OPS[1:]) or phase=='preflight' and meter.cost['model_forwards']!=qualification_forwards:raise ValueError('source/no-update count')
     except BaseException as e:
         failure=dict(reason=str(e),error_type=type(e).__name__,**{'class':'RESOURCE' if isinstance(e,TimeoutError) else classification(e)},evidence=dict(phase=phase,attempt=attempt,config_sha256=sha(c)));traceback.print_exc()
     r=dict(phase=phase,attempt=attempt,status='FAILED' if failure else 'COMPLETE',failure=failure,result=result,cost=meter.cost if meter else dict.fromkeys((*OPS,'gpu_seconds'),0),started=start,ended=time.time(),wall_seconds=time.time()-start,config_sha256=sha(c));save(Path(c['output_root'])/'attempts'/(phase.replace(':','_')+'.'+attempt+'.json'),r);return r
@@ -157,8 +157,8 @@ def supervise():
             if v in ('RUNNING','NOT_RUN'):state['jobs'][k]='NOT_RUN_STOPPED'
         state.update(status='COMPLETE' if all(v=='COMPLETE' for v in state['jobs'].values()) else 'PARTIAL',ended=time.time());save(root/'RUN_STATE.json',state);report(c,state);return state
 
-def watch():
-    c=config();root=Path(c['output_root']);deadline=epoch(c['origin']['absolute_deadline']);p=subprocess.Popen([sys.executable,os.environ['RUN_ENTRY']],env=dict(os.environ,RUN_MODE='supervise',RUN_CONFIG_SHA=sha(c)),start_new_session=True);save(root/'watchdog.json',dict(pid=os.getpid(),supervisor_pid=p.pid,absolute_deadline=deadline))
+def watch(c=None):
+    c=config() if c is None else c;root=Path(c['output_root']);deadline=epoch(c['origin']['absolute_deadline']);p=subprocess.Popen([sys.executable,os.environ['RUN_ENTRY']],env=dict(os.environ,RUN_MODE='supervise',RUN_CONFIG_SHA=sha(c)),start_new_session=True);save(root/'watchdog.json',dict(pid=os.getpid(),supervisor_pid=p.pid,absolute_deadline=deadline))
     try:return p.wait(timeout=max(.1,deadline-time.time()))
     finally:
         f=root/'active_process.json'
