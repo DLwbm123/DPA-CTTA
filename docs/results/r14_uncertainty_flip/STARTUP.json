@@ -1,0 +1,350 @@
+{
+  "experiment_id": "R14_UNCERTAINTY_FLIP_V1",
+  "status": "RUNNING_RESULTS_PENDING",
+  "execution_sha": "e72aaf359561b25d22f9b3efe594c5f644338472",
+  "config_sha256": "5c9cc22ae98be6767064e3d9c16412c9cc7072dfdc0fe16e02a8657c94e7309f",
+  "origin": {
+    "T0": "2026-10-01T17:57:44.588031+00:00",
+    "T0_epoch": 1790877464.588031,
+    "absolute_deadline": "2026-10-01T19:57:44.588031+00:00",
+    "authority": "Autonomous frozen successor three; fixed original-confidence uncertainty gate, no parameter scan or target selection",
+    "campaign_id": "CTTA_AUTONOMOUS_20261001",
+    "compute_deadline": "2026-10-01T19:42:44.588031+00:00",
+    "experiment_id": "R14_UNCERTAINTY_FLIP_V1",
+    "new_cap_seconds": 7200,
+    "normal_compute_deadline": "2026-10-01T19:27:44.588031+00:00",
+    "preflight_deadline": "2026-10-01T18:27:44.588031+00:00",
+    "prior_gpu_worker_seconds": 3267.843767839484,
+    "prior_package_charged_seconds": 35801.91626553797,
+    "round": 3
+  },
+  "jobs": [
+    {
+      "arm": "U10_H025",
+      "id": "U10_H025_o0",
+      "order": 0,
+      "seed": 20260924
+    },
+    {
+      "arm": "U10_H025",
+      "id": "U10_H025_o1",
+      "order": 1,
+      "seed": 20260924
+    }
+  ],
+  "gate": [
+    0.4,
+    0.6
+  ],
+  "weights": [
+    0.75,
+    0.25
+  ],
+  "admission": {
+    "admitted": true,
+    "safety_factor": 1.3,
+    "source_seconds": 228.8501471720636,
+    "target_seconds": 3285.5609843606712
+  },
+  "qualification": {
+    "checks": [
+      {
+        "eligible_fraction": 0.0021953582763671875,
+        "episode": 0,
+        "equation_exact": true,
+        "mode": "abrupt_16_16",
+        "protected_probability_exact": true,
+        "visit": 0
+      },
+      {
+        "eligible_fraction": 0.0021686553955078125,
+        "episode": 0,
+        "equation_exact": true,
+        "mode": "abrupt_16_16",
+        "protected_probability_exact": true,
+        "visit": 4
+      },
+      {
+        "eligible_fraction": 0.0019397735595703125,
+        "episode": 0,
+        "equation_exact": true,
+        "mode": "abrupt_16_16",
+        "protected_probability_exact": true,
+        "visit": 8
+      },
+      {
+        "eligible_fraction": 0.0029850006103515625,
+        "episode": 0,
+        "equation_exact": true,
+        "mode": "abrupt_16_16",
+        "protected_probability_exact": true,
+        "visit": 12
+      },
+      {
+        "eligible_fraction": 0.0029850006103515625,
+        "episode": 0,
+        "equation_exact": true,
+        "mode": "abrupt_16_16",
+        "protected_probability_exact": true,
+        "visit": 16
+      },
+      {
+        "eligible_fraction": 0.0029850006103515625,
+        "episode": 0,
+        "equation_exact": true,
+        "mode": "abrupt_16_16",
+        "protected_probability_exact": true,
+        "visit": 20
+      },
+      {
+        "eligible_fraction": 0.0029850006103515625,
+        "episode": 0,
+        "equation_exact": true,
+        "mode": "abrupt_16_16",
+        "protected_probability_exact": true,
+        "visit": 24
+      },
+      {
+        "eligible_fraction": 0.0029850006103515625,
+        "episode": 0,
+        "equation_exact": true,
+        "mode": "abrupt_16_16",
+        "protected_probability_exact": true,
+        "visit": 28
+      },
+      {
+        "eligible_fraction": 0.0016536712646484375,
+        "episode": 16,
+        "equation_exact": true,
+        "mode": "gradual_32",
+        "protected_probability_exact": true,
+        "visit": 0
+      },
+      {
+        "eligible_fraction": 0.0019397735595703125,
+        "episode": 16,
+        "equation_exact": true,
+        "mode": "gradual_32",
+        "protected_probability_exact": true,
+        "visit": 4
+      },
+      {
+        "eligible_fraction": 0.0023746490478515625,
+        "episode": 16,
+        "equation_exact": true,
+        "mode": "gradual_32",
+        "protected_probability_exact": true,
+        "visit": 8
+      },
+      {
+        "eligible_fraction": 0.0025157928466796875,
+        "episode": 16,
+        "equation_exact": true,
+        "mode": "gradual_32",
+        "protected_probability_exact": true,
+        "visit": 12
+      },
+      {
+        "eligible_fraction": 0.0025157928466796875,
+        "episode": 16,
+        "equation_exact": true,
+        "mode": "gradual_32",
+        "protected_probability_exact": true,
+        "visit": 16
+      },
+      {
+        "eligible_fraction": 0.0025157928466796875,
+        "episode": 16,
+        "equation_exact": true,
+        "mode": "gradual_32",
+        "protected_probability_exact": true,
+        "visit": 20
+      },
+      {
+        "eligible_fraction": 0.0025157928466796875,
+        "episode": 16,
+        "equation_exact": true,
+        "mode": "gradual_32",
+        "protected_probability_exact": true,
+        "visit": 24
+      },
+      {
+        "eligible_fraction": 0.0025157928466796875,
+        "episode": 16,
+        "equation_exact": true,
+        "mode": "gradual_32",
+        "protected_probability_exact": true,
+        "visit": 28
+      },
+      {
+        "eligible_fraction": 0.00199127197265625,
+        "episode": 32,
+        "equation_exact": true,
+        "mode": "recurrence_8_8_8_8",
+        "protected_probability_exact": true,
+        "visit": 0
+      },
+      {
+        "eligible_fraction": 0.0025920867919921875,
+        "episode": 32,
+        "equation_exact": true,
+        "mode": "recurrence_8_8_8_8",
+        "protected_probability_exact": true,
+        "visit": 4
+      },
+      {
+        "eligible_fraction": 0.0023899078369140625,
+        "episode": 32,
+        "equation_exact": true,
+        "mode": "recurrence_8_8_8_8",
+        "protected_probability_exact": true,
+        "visit": 8
+      },
+      {
+        "eligible_fraction": 0.0018177032470703125,
+        "episode": 32,
+        "equation_exact": true,
+        "mode": "recurrence_8_8_8_8",
+        "protected_probability_exact": true,
+        "visit": 12
+      },
+      {
+        "eligible_fraction": 0.0018177032470703125,
+        "episode": 32,
+        "equation_exact": true,
+        "mode": "recurrence_8_8_8_8",
+        "protected_probability_exact": true,
+        "visit": 16
+      },
+      {
+        "eligible_fraction": 0.0018177032470703125,
+        "episode": 32,
+        "equation_exact": true,
+        "mode": "recurrence_8_8_8_8",
+        "protected_probability_exact": true,
+        "visit": 20
+      },
+      {
+        "eligible_fraction": 0.0018177032470703125,
+        "episode": 32,
+        "equation_exact": true,
+        "mode": "recurrence_8_8_8_8",
+        "protected_probability_exact": true,
+        "visit": 24
+      },
+      {
+        "eligible_fraction": 0.0018177032470703125,
+        "episode": 32,
+        "equation_exact": true,
+        "mode": "recurrence_8_8_8_8",
+        "protected_probability_exact": true,
+        "visit": 28
+      },
+      {
+        "eligible_fraction": 0.0024356842041015625,
+        "episode": 48,
+        "equation_exact": true,
+        "mode": "iid_style_32",
+        "protected_probability_exact": true,
+        "visit": 0
+      },
+      {
+        "eligible_fraction": 0.0021686553955078125,
+        "episode": 48,
+        "equation_exact": true,
+        "mode": "iid_style_32",
+        "protected_probability_exact": true,
+        "visit": 4
+      },
+      {
+        "eligible_fraction": 0.0021305084228515625,
+        "episode": 48,
+        "equation_exact": true,
+        "mode": "iid_style_32",
+        "protected_probability_exact": true,
+        "visit": 8
+      },
+      {
+        "eligible_fraction": 0.00167083740234375,
+        "episode": 48,
+        "equation_exact": true,
+        "mode": "iid_style_32",
+        "protected_probability_exact": true,
+        "visit": 12
+      },
+      {
+        "eligible_fraction": 0.00167083740234375,
+        "episode": 48,
+        "equation_exact": true,
+        "mode": "iid_style_32",
+        "protected_probability_exact": true,
+        "visit": 16
+      },
+      {
+        "eligible_fraction": 0.00167083740234375,
+        "episode": 48,
+        "equation_exact": true,
+        "mode": "iid_style_32",
+        "protected_probability_exact": true,
+        "visit": 20
+      },
+      {
+        "eligible_fraction": 0.00167083740234375,
+        "episode": 48,
+        "equation_exact": true,
+        "mode": "iid_style_32",
+        "protected_probability_exact": true,
+        "visit": 24
+      },
+      {
+        "eligible_fraction": 0.00167083740234375,
+        "episode": 48,
+        "equation_exact": true,
+        "mode": "iid_style_32",
+        "protected_probability_exact": true,
+        "visit": 28
+      }
+    ],
+    "config_sha256": "904b34220aae4717a7e20079cc76cd27f70ceaf382361488270572fd3873bb6f",
+    "images": 32,
+    "logical_visits": 96,
+    "model_forwards": 160,
+    "parameters_BN_unchanged": true,
+    "passed": true,
+    "timings": {
+      "C0": 6.54060774249956,
+      "CV_H025": 9.223579593002796,
+      "U10_H025": 3.5024109217338264
+    }
+  },
+  "CPU_qualification": {
+    "status": "PASS",
+    "wall_seconds": 1.8038272857666016,
+    "GPU_seconds": 0
+  },
+  "source_progress": {
+    "status": "RUNNING",
+    "completed_episodes": 7,
+    "planned_episodes": 16,
+    "episodes": null,
+    "new_visits": null
+  },
+  "runtime_state": {
+    "experiment_id": "R14_UNCERTAINTY_FLIP_V1",
+    "jobs": {
+      "U10_H025_o0": "NOT_RUN",
+      "U10_H025_o1": "NOT_RUN"
+    },
+    "recovery_used": false,
+    "source": "RUNNING",
+    "status": "RUNNING"
+  },
+  "checked_at": 1790878151.2582302,
+  "new_target_visits": 3902,
+  "new_target_primary": 3390,
+  "old_baselines": "C0/quarter/GraTa full1951/1695 reused with original seals; no repeated scientific trajectories",
+  "neutral_argv_verified": true,
+  "physical_GPU5_verified": true,
+  "log_errors_absent": true,
+  "patient_dependence": "Unknown; exposed original development cohort, two orders share content; not independent confirmation"
+}
