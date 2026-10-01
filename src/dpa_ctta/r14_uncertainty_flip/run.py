@@ -15,12 +15,12 @@ def config():
 
 def lock(c,name):
     if name not in ('C0','CV_H025',NAME):raise ValueError('unregistered condition')
-    p=dict(experiment_id=ID,condition=name,config_sha256=sha(c),weights=[.75,.25],gate=[.4,.6] if name==NAME else None,checkpoint_sha256=c['bindings']['checkpoint_sha256'])
+    p=dict(experiment_id=ID,condition=name,config_sha256=sha(c),weights=[1.] if name=='C0' else [.75,.25],gate=[.4,.6] if name==NAME else None,checkpoint_sha256=c['bindings']['checkpoint_sha256'])
     return dict(schema=ID+'_LOCK',payload=p,sha256=sha(p))
 
 def check_lock(l):
     p=l.get('payload',{});n=p.get('condition')
-    if l.get('schema')!=ID+'_LOCK' or l.get('sha256')!=sha(p) or p.get('experiment_id')!=ID or n not in ('C0','CV_H025',NAME) or p.get('weights')!=[.75,.25] or p.get('gate')!=([.4,.6] if n==NAME else None) or (LOW,HIGH,WEIGHTS)!=(.4,.6,(.75,.25)):raise ValueError('gate/weight identity')
+    if l.get('schema')!=ID+'_LOCK' or l.get('sha256')!=sha(p) or p.get('experiment_id')!=ID or n not in ('C0','CV_H025',NAME) or p.get('weights')!=([1.] if n=='C0' else [.75,.25]) or p.get('gate')!=([.4,.6] if n==NAME else None) or (LOW,HIGH,WEIGHTS)!=(.4,.6,(.75,.25)):raise ValueError('gate/weight identity')
 
 def sealed(part):
     p=Path(part['path']);on=read(p/'online_complete.json');sc=read(p/'score_complete.json')
