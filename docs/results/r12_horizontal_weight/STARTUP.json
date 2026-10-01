@@ -1,0 +1,153 @@
+{
+  "experiment_id": "R12_HORIZONTAL_WEIGHT_V1",
+  "checked_at": 1790871123.1975954,
+  "code_sha": "c3f1667db64a88831cda060c1e1ca5865c61a501",
+  "config_sha256": "718f02a62f573f62081d8b59a6513886df95772caa8629bb990c57eeb0923350",
+  "state": {
+    "engineering_repairs": [],
+    "experiment_id": "R12_HORIZONTAL_WEIGHT_V1",
+    "jobs": {
+      "CV_H025_o0": "NOT_RUN",
+      "CV_H025_o1": "NOT_RUN",
+      "H_ONLY_o0": "NOT_RUN",
+      "H_ONLY_o1": "NOT_RUN"
+    },
+    "recovery_used": false,
+    "source": "RUNNING",
+    "status": "RUNNING"
+  },
+  "source_progress": {
+    "status": "RUNNING",
+    "completed_episodes": 5,
+    "planned_episodes": 16
+  },
+  "origin": {
+    "T0": "2026-10-01T15:59:05.170496+00:00",
+    "T0_epoch": 1790870345.1704965,
+    "absolute_deadline": "2026-10-01T17:59:05.170496+00:00",
+    "authority": "User authorized autonomous independent successors; follow-up one of at most four in 24h campaign.",
+    "campaign_id": "CTTA_AUTONOMOUS_20261001",
+    "compute_deadline": "2026-10-01T17:44:05.170496+00:00",
+    "experiment_id": "R12_HORIZONTAL_WEIGHT_V1",
+    "new_cap_seconds": 7200,
+    "normal_compute_deadline": "2026-10-01T17:29:05.170496+00:00",
+    "preflight_deadline": "2026-10-01T16:29:05.170496+00:00",
+    "prior_gpu_worker_seconds": 853.9283602484502,
+    "prior_package_charged_seconds": 31689.185216953978
+  },
+  "admission": {
+    "admitted": true,
+    "safety_factor": 1.3,
+    "source_seconds": 621.8598525941372,
+    "target_seconds": 2201.6822317978144
+  },
+  "preflight": {
+    "passed": true,
+    "visits": 32,
+    "parameters_and_buffers_unchanged": true,
+    "timings": {
+      "C0": 5.038678018376231,
+      "CV_H025": 6.498793485108763,
+      "CV_H2": 5.963413470890373,
+      "H_ONLY": 4.89622332341969
+    },
+    "attempt": {
+      "attempt": "0",
+      "config_sha256": "a06b2f2bec3e11348d9af72ba6e00e30d0edee3d1204b2d61de693ccc61538d9",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 52.308265279978514,
+        "model_forwards": 224,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790870836.942242,
+      "failure": null,
+      "phase": "preflight",
+      "result": {
+        "passed": true,
+        "visits": 32
+      },
+      "started": 1790870784.000551,
+      "status": "COMPLETE",
+      "wall_seconds": 52.941691160202026
+    }
+  },
+  "manifests": [
+    {
+      "principal": 888,
+      "sha256": "16aecbe1fdcb03767ba6c814df4e97bdb5e563d32da07ab414633ac713ecbc7c",
+      "strata": {
+        "Drishti_GS|legacy_dev": 17,
+        "Drishti_GS|p1_extension_dev": 17,
+        "Drishti_GS|remaining_dev": 19,
+        "ORIGA|legacy_dev": 17,
+        "ORIGA|p1_extension_dev": 17,
+        "ORIGA|remaining_dev": 307,
+        "REFUGE_Valid|legacy_dev": 17,
+        "REFUGE_Valid|p1_extension_dev": 17,
+        "REFUGE_Valid|remaining_dev": 386,
+        "REFUGE|legacy_dev": 17,
+        "REFUGE|p1_extension_dev": 17,
+        "REFUGE|remaining_dev": 176
+      },
+      "visits": 1024
+    },
+    {
+      "principal": 888,
+      "sha256": "f09b6da9fe531752d51223389455d9fc1af71a33ae9b68d0e168fb72039b4bb9",
+      "strata": {
+        "Drishti_GS|legacy_dev": 17,
+        "Drishti_GS|p1_extension_dev": 17,
+        "Drishti_GS|remaining_dev": 19,
+        "ORIGA|legacy_dev": 17,
+        "ORIGA|p1_extension_dev": 17,
+        "ORIGA|remaining_dev": 307,
+        "REFUGE_Valid|legacy_dev": 17,
+        "REFUGE_Valid|p1_extension_dev": 17,
+        "REFUGE_Valid|remaining_dev": 386,
+        "REFUGE|legacy_dev": 17,
+        "REFUGE|p1_extension_dev": 17,
+        "REFUGE|remaining_dev": 176
+      },
+      "visits": 1024
+    }
+  ],
+  "checkpoint_sha256": "88b7d8902d23fb1c15b27668e0bf02599f8298aa45c38ae90279ae5a1d42bdf0",
+  "jobs": [
+    {
+      "arm": "CV_H025",
+      "id": "CV_H025_o0",
+      "order": 0,
+      "seed": 20260924
+    },
+    {
+      "arm": "CV_H025",
+      "id": "CV_H025_o1",
+      "order": 1,
+      "seed": 20260924
+    },
+    {
+      "arm": "H_ONLY",
+      "id": "H_ONLY_o0",
+      "order": 0,
+      "seed": 20260924
+    },
+    {
+      "arm": "H_ONLY",
+      "id": "H_ONLY_o1",
+      "order": 1,
+      "seed": 20260924
+    }
+  ],
+  "source_conditions": [
+    "C0",
+    "CV_H2",
+    "CV_H025",
+    "H_ONLY"
+  ],
+  "argv_neutral_verified": true,
+  "gpu_index": 5,
+  "tests_passed": 2
+}
