@@ -82,6 +82,7 @@ def worker():
                 elif phase=='source':result=comparison(c,guard)
                 else:result=target(c,guard,phase,old_failure)
                 if meter.cost['backward_calls'] or meter.cost['optimizer_steps'] or meter.cost['vjp_calls']:raise ValueError('no-training contract')
+                if phase in ('preflight','source') and meter.cost['model_forwards']!={'preflight':224,'source':3072}[phase]:raise ValueError('source/qualification physical forward count mismatch')
     except BaseException as e:
         failure=dict(reason=str(e),error_type=type(e).__name__,**{'class':'RESOURCE' if isinstance(e,TimeoutError) else classification(e)},evidence=dict(phase=phase,attempt=attempt,config_sha256=sha(c)));traceback.print_exc()
     record=dict(phase=phase,attempt=attempt,status='FAILED' if failure else 'COMPLETE',failure=failure,result=result,cost=meter.cost if meter else dict.fromkeys((*OPS,'gpu_seconds'),0),started=start,ended=time.time(),wall_seconds=time.time()-start,config_sha256=sha(c))
