@@ -1,0 +1,299 @@
+{
+  "T0": "2026-10-01T15:59:05.170496+00:00",
+  "T0_epoch": 1790870345.1704965,
+  "absolute_deadline": "2026-10-01T17:59:05.170496+00:00",
+  "actual_wall_seconds": 2533.2032124996185,
+  "attempts": [
+    {
+      "attempt": "0",
+      "config_sha256": "718f02a62f573f62081d8b59a6513886df95772caa8629bb990c57eeb0923350",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 323.76814715610817,
+        "model_forwards": 2048,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790871697.1521182,
+      "failure": null,
+      "phase": "online:CV_H025_o0",
+      "result": {
+        "identity": {
+          "context_sha256": "aa1c6601927476c4a69067030dafb6cea6b3523f2e26d55ba63354eaabfb1a07",
+          "job_id": "CV_H025_o0",
+          "prediction_bytes": 2097152,
+          "rows_sha256": "16aecbe1fdcb03767ba6c814df4e97bdb5e563d32da07ab414633ac713ecbc7c"
+        },
+        "prediction_bytes": 2147483648,
+        "prediction_sha256": "cd27ccd6f993af636403f6a7472f67ee0b2b0dc94b9c4cfef9b0e7a2351801e5",
+        "schema": "R8_ONLINE_COMPLETE_V1",
+        "trace_bytes": 325997,
+        "trace_sha256": "c4e8abee645a5d40a0f6679e55eb0214437e66d854d7a86e913616f2aa661ec7",
+        "visits": 1024
+      },
+      "started": 1790871372.5243552,
+      "status": "COMPLETE",
+      "wall_seconds": 324.6277632713318
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "718f02a62f573f62081d8b59a6513886df95772caa8629bb990c57eeb0923350",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 296.0411230949685,
+        "model_forwards": 2048,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790872078.0470264,
+      "failure": null,
+      "phase": "online:CV_H025_o1",
+      "result": {
+        "identity": {
+          "context_sha256": "aa1c6601927476c4a69067030dafb6cea6b3523f2e26d55ba63354eaabfb1a07",
+          "job_id": "CV_H025_o1",
+          "prediction_bytes": 2097152,
+          "rows_sha256": "f09b6da9fe531752d51223389455d9fc1af71a33ae9b68d0e168fb72039b4bb9"
+        },
+        "prediction_bytes": 2147483648,
+        "prediction_sha256": "338ef3a915e1ff25f623ff1b678722338ffbcd64281b6fdc1f55cae74018d01f",
+        "schema": "R8_ONLINE_COMPLETE_V1",
+        "trace_bytes": 325997,
+        "trace_sha256": "09c5ac55f4fdb67cbdfa6c9a1aca47ceca35b81842fcf3018c20fdc990d6b91f",
+        "visits": 1024
+      },
+      "started": 1790871781.354541,
+      "status": "COMPLETE",
+      "wall_seconds": 296.6924855709076
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "718f02a62f573f62081d8b59a6513886df95772caa8629bb990c57eeb0923350",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 254.15419155778363,
+        "model_forwards": 1024,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790872407.376357,
+      "failure": null,
+      "phase": "online:H_ONLY_o0",
+      "result": {
+        "identity": {
+          "context_sha256": "5287a8cad1ac689bf46fbe8673f9a49347ec0a671ad53946545f8d00d019c569",
+          "job_id": "H_ONLY_o0",
+          "prediction_bytes": 2097152,
+          "rows_sha256": "16aecbe1fdcb03767ba6c814df4e97bdb5e563d32da07ab414633ac713ecbc7c"
+        },
+        "prediction_bytes": 2147483648,
+        "prediction_sha256": "a3b9786b12d2869ea4f6424918e1dceff3a0b7b388ba9930197a925e693fda8f",
+        "schema": "R8_ONLINE_COMPLETE_V1",
+        "trace_bytes": 307851,
+        "trace_sha256": "25e2960f75e46333fa9274490f1a3b6fe9fa6f985e176dc6163902b7c100ea61",
+        "visits": 1024
+      },
+      "started": 1790872152.6116307,
+      "status": "COMPLETE",
+      "wall_seconds": 254.76472663879395
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "718f02a62f573f62081d8b59a6513886df95772caa8629bb990c57eeb0923350",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 316.9340420579538,
+        "model_forwards": 1024,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790872800.5916812,
+      "failure": null,
+      "phase": "online:H_ONLY_o1",
+      "result": {
+        "identity": {
+          "context_sha256": "5287a8cad1ac689bf46fbe8673f9a49347ec0a671ad53946545f8d00d019c569",
+          "job_id": "H_ONLY_o1",
+          "prediction_bytes": 2097152,
+          "rows_sha256": "f09b6da9fe531752d51223389455d9fc1af71a33ae9b68d0e168fb72039b4bb9"
+        },
+        "prediction_bytes": 2147483648,
+        "prediction_sha256": "67969d8faed1bc940bcc5e4329b0bfd42f4809b834ef2727237eb1c20c15a673",
+        "schema": "R8_ONLINE_COMPLETE_V1",
+        "trace_bytes": 307851,
+        "trace_sha256": "b1dc06fe439af6351de4c71934526d31a85a8de4c534c5375c225a9ed6cd9566",
+        "visits": 1024
+      },
+      "started": 1790872483.0372472,
+      "status": "COMPLETE",
+      "wall_seconds": 317.5544340610504
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "a06b2f2bec3e11348d9af72ba6e00e30d0edee3d1204b2d61de693ccc61538d9",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 52.308265279978514,
+        "model_forwards": 224,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790870836.942242,
+      "failure": null,
+      "phase": "preflight",
+      "result": {
+        "passed": true,
+        "visits": 32
+      },
+      "started": 1790870784.000551,
+      "status": "COMPLETE",
+      "wall_seconds": 52.941691160202026
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "718f02a62f573f62081d8b59a6513886df95772caa8629bb990c57eeb0923350",
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790871779.5076237,
+      "failure": null,
+      "phase": "score:CV_H025_o0",
+      "result": {
+        "online_sha256": "c07e1998bf8a732ce8bebeed12861125a8236557394d3ae0cf35bfd1a8731d16",
+        "principal": 888,
+        "scalar_sha256": "6afec72f2e47b15eb4b6a6f518446c9565ac5cc849c4be99e3e0d73d9ab62915",
+        "schema": "R10_SCORE_COMPLETE_V1",
+        "source_lock_sha256": "6deb596d7168cf829a1ece6fde0f7a11e1a36e92b2977888210944837108a759",
+        "visits": 1024
+      },
+      "started": 1790871699.5863767,
+      "status": "COMPLETE",
+      "wall_seconds": 79.92124772071838
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "718f02a62f573f62081d8b59a6513886df95772caa8629bb990c57eeb0923350",
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790872150.9940326,
+      "failure": null,
+      "phase": "score:CV_H025_o1",
+      "result": {
+        "online_sha256": "65a436161ed628e16fbfb0ec6788a1848f49663de56933127e42bed32d7a0e25",
+        "principal": 888,
+        "scalar_sha256": "b1d19fa9b30f67ac8b63924e03534cc0c194c9caaa389b783ef66906e327076c",
+        "schema": "R10_SCORE_COMPLETE_V1",
+        "source_lock_sha256": "6deb596d7168cf829a1ece6fde0f7a11e1a36e92b2977888210944837108a759",
+        "visits": 1024
+      },
+      "started": 1790872080.0811443,
+      "status": "COMPLETE",
+      "wall_seconds": 70.91288876533508
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "718f02a62f573f62081d8b59a6513886df95772caa8629bb990c57eeb0923350",
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790872481.3918724,
+      "failure": null,
+      "phase": "score:H_ONLY_o0",
+      "result": {
+        "online_sha256": "38ec3f6d4a72635f8e3f230dbe53f72d97c3a20510c3671c31ee6d8e1faa9b15",
+        "principal": 888,
+        "scalar_sha256": "da242fb97765bf4edc9253cec7b72096b96dd18bb7c71c21d876fbc9f795b55e",
+        "schema": "R10_SCORE_COMPLETE_V1",
+        "source_lock_sha256": "4e7e5eafd287358d96386f03c02f55432e48240c9dbe4105e2c7df24ae43c56f",
+        "visits": 1024
+      },
+      "started": 1790872409.4263222,
+      "status": "COMPLETE",
+      "wall_seconds": 71.96555089950562
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "718f02a62f573f62081d8b59a6513886df95772caa8629bb990c57eeb0923350",
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790872876.5486221,
+      "failure": null,
+      "phase": "score:H_ONLY_o1",
+      "result": {
+        "online_sha256": "4484343392610fa83f054e533bf418374d2d55698f2cb9939e1b86a1cd459870",
+        "principal": 888,
+        "scalar_sha256": "562b05633d9dfad89ebb1d2f861a43bcb99e08869939c5278f5f5d7c2e3d35af",
+        "schema": "R10_SCORE_COMPLETE_V1",
+        "source_lock_sha256": "4e7e5eafd287358d96386f03c02f55432e48240c9dbe4105e2c7df24ae43c56f",
+        "visits": 1024
+      },
+      "started": 1790872802.6731703,
+      "status": "COMPLETE",
+      "wall_seconds": 73.87545228004456
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "718f02a62f573f62081d8b59a6513886df95772caa8629bb990c57eeb0923350",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 397.56612828886136,
+        "model_forwards": 3072,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790871369.1540797,
+      "failure": null,
+      "phase": "source",
+      "result": {
+        "episodes": 16,
+        "visits": 2048
+      },
+      "started": 1790870971.0237083,
+      "status": "COMPLETE",
+      "wall_seconds": 398.13037157058716
+    }
+  ],
+  "authority": "User authorized autonomous independent successors; follow-up one of at most four in 24h campaign.",
+  "campaign_id": "CTTA_AUTONOMOUS_20261001",
+  "compute_deadline": "2026-10-01T17:44:05.170496+00:00",
+  "disk_bytes": 120323188,
+  "experiment_id": "R12_HORIZONTAL_WEIGHT_V1",
+  "gpu_worker_seconds": 1640.771897435654,
+  "new_cap_seconds": 7200,
+  "normal_compute_deadline": "2026-10-01T17:29:05.170496+00:00",
+  "operations": {
+    "backward_calls": 0,
+    "model_forwards": 9440,
+    "optimizer_steps": 0,
+    "vjp_calls": 0
+  },
+  "preflight_deadline": "2026-10-01T16:29:05.170496+00:00",
+  "prior_gpu_worker_seconds": 853.9283602484502,
+  "prior_package_charged_seconds": 31689.185216953978,
+  "recovery_used": false,
+  "status": "COMPLETE"
+}
