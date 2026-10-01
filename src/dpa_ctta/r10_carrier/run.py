@@ -21,6 +21,16 @@ def check_lock(x):
     r=x['payload']['resolved']
     if r!=resolved(r['diagnostic_condition']):raise ValueError('unregistered intervention')
 
+def supervisor_lease(c):
+    from ..r9_current_first.storage import lease
+    # Queue exclusion is stable across repairs; authorization checks the exact config.
+    return lease(Path(c['output_root'])/'supervisor_control',dict(experiment_id=ID))
+
+def charged_wall(c,now=None):
+    now=time.time() if now is None else now
+    renewal=c.get('renewal')
+    return renewal['previous_charged_seconds']+now-renewal['started_epoch'] if renewal else now-epoch(c['origin']['T0'])
+
 def prepare():
     from ..r8_ba.streams import rows_sha
     from ..r8_ba.journal import _digest
@@ -110,11 +120,10 @@ def admit():
     return c['admission']
 
 def supervise():
-    from ..r9_current_first.storage import lease
     from .report import report
     c=config();root=Path(c['output_root']);auth=read(root/'private/authorization.json');normal=epoch(c['origin']['normal_compute_deadline']);hard=epoch(c['origin']['compute_deadline'])
     if auth['config_sha256']!=sha(c) or auth['code_sha']!=c['code_sha'] or time.time()>epoch(c['origin']['preflight_deadline']):raise ValueError('authorization/deadline')
-    with lease(root/'supervisor',dict(experiment_id=ID,config_sha256=sha(c))):
+    with supervisor_lease(c):
         if (root/'execution_started.json').exists():raise ValueError('existing run requires ledger reconciliation')
         save(root/'execution_started.json',dict(at=time.time(),config_sha256=sha(c)))
         state=dict(experiment_id=ID,status='RUNNING',source='NOT_RUN',jobs={j['id']:'NOT_RUN' for j in c['jobs']},recovery_used=False,engineering_repairs=c.get('engineering_repairs',[]));save(root/'RUN_STATE.json',state)

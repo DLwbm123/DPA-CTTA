@@ -7,6 +7,17 @@ from dpa_ctta.r10_carrier.diagnostic import ReadoutSegmenter,CONDITIONS,resolved
 from dpa_ctta.r10_carrier.run import lock,check_lock
 
 class Carrier(unittest.TestCase):
+    def test_repaired_config_keeps_exclusive_queue_and_previous_charge(self):
+        import tempfile
+        from dpa_ctta.r10_carrier.run import supervisor_lease,charged_wall
+        with tempfile.TemporaryDirectory() as root:
+            a=dict(output_root=root,code_sha='old');b=dict(output_root=root,code_sha='new')
+            with supervisor_lease(a):
+                with self.assertRaises(BlockingIOError):
+                    with supervisor_lease(b):pass
+            with supervisor_lease(b):pass
+        c=dict(renewal=dict(previous_charged_seconds=2067.4,started_epoch=1000))
+        self.assertAlmostEqual(charged_wall(c,1060),2127.4)
     def test_exact_readout_endpoints_and_nonlinear_location(self):
         torch.manual_seed(8);h=torch.randn(1,256,2,2);v=torch.randn(512)*2
         for a in (0.,.25,1.):

@@ -27,6 +27,7 @@ def latest_snapshot(p):
     _,meta,m=max(candidates,key=lambda x:x[0]);return load_torch(meta.with_suffix('.pt'),m['sha256'])['host']
 
 def report(c,state):
+    from .run import charged_wall
     if state['status']=='RUNNING' or any(s=='RUNNING' for s in state['jobs'].values()):raise ValueError('target embargo')
     root=Path(c['output_root']);allrows={};table=[];domains=[];diag=[];traces={};receipts={}
     jobs=[(j,root,'NEW',state['jobs'][j['id']]) for j in c['jobs']]+[(x['job'],Path(x['root']),'REUSED','REUSED_COMPLETE') for x in c['reused_results']]
@@ -110,7 +111,7 @@ def report(c,state):
         rs=[json.loads(x) for x in (core/'target'/f'GR_RET_EMA_o{o}'/'visits.jsonl').read_text().splitlines()]
         oldr10.append(dict(order=o,gain=distribution([r['gain'] for r in rs if 'gain' in r]),residual_relative_candidate=distribution([r['residual_relative_candidate'] for r in rs if 'residual_relative_candidate' in r]),note='Saved R10 logs only; no old target rerun. Residual support is the first eight basis coordinates, verified from execution-version Controller.act; this is an action-space limitation, not proof of the score gap root cause.'))
     save(root/'OLD_R10_DIAGNOSTICS.json',oldr10)
-    attempts=[read(p) for p in sorted((root/'attempts').glob('*.json'))];ledger=read(root/'RESOURCE_LEDGER.json');ledger.update(status=state['status'],actual_wall_seconds=time.time()-epoch(c['origin']['T0']),gpu_worker_seconds=sum(a['cost'].get('gpu_seconds',0) for a in attempts),operations={k:sum(a['cost'].get(k,0) for a in attempts) for k in OPS},attempts=attempts,recovery_used=state['recovery_used'],disk_bytes=sum(p.stat().st_size for p in root.rglob('*') if p.is_file()));save(root/'RESOURCE_LEDGER.json',ledger)
+    attempts=[read(p) for p in sorted((root/'attempts').glob('*.json'))];ledger=read(root/'RESOURCE_LEDGER.json');ledger.update(status=state['status'],actual_wall_seconds=charged_wall(c),elapsed_since_original_T0_seconds=time.time()-epoch(c['origin']['T0']),renewal=c.get('renewal'),gpu_worker_seconds=sum(a['cost'].get('gpu_seconds',0) for a in attempts),operations={k:sum(a['cost'].get(k,0) for a in attempts) for k in OPS},attempts=attempts,recovery_used=state['recovery_used'],disk_bytes=sum(p.stat().st_size for p in root.rglob('*') if p.is_file()));save(root/'RESOURCE_LEDGER.json',ledger)
     get=lambda a,b:[next((r['delta'] for r in contrasts if r['left']==a and r['right']==b and r['order']==o and r['domain']=='ALL' and r['channel']=='macro'),None) for o in (0,1)]
     signals={k:dict(delta_vs_C0=get(k,'C0'),meets_retest_scale=False) for k in LEVELS if k!='B_ZERO'}
     for x in signals.values():xs=x['delta_vs_C0'];x['meets_retest_scale']=all(v is not None and v>0 for v in xs) and statistics.mean(xs)>=.005
