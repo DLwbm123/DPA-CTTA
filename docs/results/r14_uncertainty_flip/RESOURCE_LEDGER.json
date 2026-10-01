@@ -1,0 +1,186 @@
+{
+  "T0": "2026-10-01T17:57:44.588031+00:00",
+  "T0_epoch": 1790877464.588031,
+  "absolute_deadline": "2026-10-01T19:57:44.588031+00:00",
+  "actual_wall_seconds": 1870.9436573982239,
+  "attempts": [
+    {
+      "attempt": "0",
+      "config_sha256": "5c9cc22ae98be6767064e3d9c16412c9cc7072dfdc0fe16e02a8657c94e7309f",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 423.88581015588716,
+        "model_forwards": 3902,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790878615.5386345,
+      "failure": null,
+      "phase": "online:U10_H025_o0",
+      "result": {
+        "identity": {
+          "context_sha256": "9b86c3ae917340c139de45b64909b21a354cf722cf884faf207b2a77416c3917",
+          "job_id": "U10_H025_o0",
+          "prediction_bytes": 2097152,
+          "rows_sha256": "0a9d9ad25d95f21dff0e531a4aee979a49334c19a8aa10c502d3466fd9afddcd"
+        },
+        "prediction_bytes": 4091543552,
+        "prediction_sha256": "d8b926863d8f358234327f02c082309ad0ab890c7a2889eb6dc61c002aa113d2",
+        "schema": "R8_ONLINE_COMPLETE_V1",
+        "trace_bytes": 683761,
+        "trace_sha256": "59e8dd6d6d23e1712416c22508af33ccbf8e798f6a5c868cf09709c2c1c396a4",
+        "visits": 1951
+      },
+      "started": 1790878191.1051266,
+      "status": "COMPLETE",
+      "wall_seconds": 424.4335081577301
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "5c9cc22ae98be6767064e3d9c16412c9cc7072dfdc0fe16e02a8657c94e7309f",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 418.1721230871044,
+        "model_forwards": 3902,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790879188.7737675,
+      "failure": null,
+      "phase": "online:U10_H025_o1",
+      "result": {
+        "identity": {
+          "context_sha256": "9b86c3ae917340c139de45b64909b21a354cf722cf884faf207b2a77416c3917",
+          "job_id": "U10_H025_o1",
+          "prediction_bytes": 2097152,
+          "rows_sha256": "42a634d7104d62affcc7067e1d4f020949a4f32c4bce07934d706751f4e9aae1"
+        },
+        "prediction_bytes": 4091543552,
+        "prediction_sha256": "1acda7c07ebee500be075c6fbe0a87cf52249a9636d2433a3e173e1a7340fd1d",
+        "schema": "R8_ONLINE_COMPLETE_V1",
+        "trace_bytes": 683761,
+        "trace_sha256": "8f3b50f04253bf1aedf9e0f0b087cc08b39e8d0cb9fabb2d7b302306e70a17c4",
+        "visits": 1951
+      },
+      "started": 1790878769.9464397,
+      "status": "COMPLETE",
+      "wall_seconds": 418.82732796669006
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "904b34220aae4717a7e20079cc76cd27f70ceaf382361488270572fd3873bb6f",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 36.103924660012126,
+        "model_forwards": 160,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790878050.1617053,
+      "failure": null,
+      "phase": "preflight",
+      "result": {
+        "passed": true,
+        "visits": 96
+      },
+      "started": 1790878013.3919127,
+      "status": "COMPLETE",
+      "wall_seconds": 36.769792556762695
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "5c9cc22ae98be6767064e3d9c16412c9cc7072dfdc0fe16e02a8657c94e7309f",
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790878768.222369,
+      "failure": null,
+      "phase": "score:U10_H025_o0",
+      "result": {
+        "online_sha256": "8ceff57049c6081b8aed21519f44b5166a7cc2a855ab73c802a79dad0be76e28",
+        "principal": 1695,
+        "scalar_sha256": "98c20f111cb4cbffd19a1af519f29b4c39782d63d31fe03b4acf9343b35ba887",
+        "schema": "R10_SCORE_COMPLETE_V1",
+        "source_lock_sha256": "a6f89e27926745d1df698dedd11a4f5ecf874812820e17b1f6aff58a1593abf6",
+        "visits": 1951
+      },
+      "started": 1790878618.0841982,
+      "status": "COMPLETE",
+      "wall_seconds": 150.13817191123962
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "5c9cc22ae98be6767064e3d9c16412c9cc7072dfdc0fe16e02a8657c94e7309f",
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790879333.0118506,
+      "failure": null,
+      "phase": "score:U10_H025_o1",
+      "result": {
+        "online_sha256": "88569f440f1adb93167f84a54df661700597675fe6b6f3fddaf45616e436efb0",
+        "principal": 1695,
+        "scalar_sha256": "58480c19a040bdc117db43a9d9db29e843b55401c9549e8e5736d0b3a926b165",
+        "schema": "R10_SCORE_COMPLETE_V1",
+        "source_lock_sha256": "a6f89e27926745d1df698dedd11a4f5ecf874812820e17b1f6aff58a1593abf6",
+        "visits": 1951
+      },
+      "started": 1790879191.0114777,
+      "status": "COMPLETE",
+      "wall_seconds": 142.00037360191345
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "5c9cc22ae98be6767064e3d9c16412c9cc7072dfdc0fe16e02a8657c94e7309f",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 80.17674370808527,
+        "model_forwards": 1024,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790878189.0644073,
+      "failure": null,
+      "phase": "source",
+      "result": {
+        "episodes": 16,
+        "visits": 512
+      },
+      "started": 1790878108.2444816,
+      "status": "COMPLETE",
+      "wall_seconds": 80.8199257850647
+    }
+  ],
+  "authority": "Autonomous frozen successor three; fixed original-confidence uncertainty gate, no parameter scan or target selection",
+  "campaign_id": "CTTA_AUTONOMOUS_20261001",
+  "compute_deadline": "2026-10-01T19:42:44.588031+00:00",
+  "disk_bytes": 121510768,
+  "experiment_id": "R14_UNCERTAINTY_FLIP_V1",
+  "gpu_worker_seconds": 958.338601611089,
+  "new_cap_seconds": 7200,
+  "normal_compute_deadline": "2026-10-01T19:27:44.588031+00:00",
+  "operations": {
+    "backward_calls": 0,
+    "model_forwards": 8988,
+    "optimizer_steps": 0,
+    "vjp_calls": 0
+  },
+  "preflight_deadline": "2026-10-01T18:27:44.588031+00:00",
+  "prior_gpu_worker_seconds": 3267.843767839484,
+  "prior_package_charged_seconds": 35801.91626553797,
+  "recovery_used": false,
+  "round": 3,
+  "status": "COMPLETE"
+}
