@@ -1,0 +1,43 @@
+{
+  "active_deadlines": {
+    "T0": "2026-09-30T14:16:06.144414+00:00",
+    "absolute_deadline": "2026-10-01T05:14:09.912814+00:00",
+    "compute_deadline": "2026-10-01T04:44:09.912814+00:00",
+    "experiment_id": "R10_CARRIER_DECISION_3H_V1",
+    "new_cap_seconds": 10800,
+    "normal_compute_deadline": "2026-10-01T04:14:09.912814+00:00",
+    "preflight_deadline": "2026-10-01T03:18:37.318589+00:00",
+    "prior_attribution_actual_wall_seconds": 11522.557842731476,
+    "prior_attribution_gpu_worker_seconds": 9539.269568504766,
+    "prior_package_charged_seconds": 24757.142144730315
+  },
+  "code_sha": "1084fe1c9ffc030388fbe4c6ebecbd80b1bf64a5",
+  "config_sha256": "746c648a338cca94d48f57211068c43c4de3bc8bd825a9c2bdf653c51bf7d825",
+  "renewal": {
+    "authority": "Human explicitly requested: 你能否解决这些 冲突，尽快开始实验",
+    "monitoring_authorized": false,
+    "no_new_scientific_scope": true,
+    "original_T0": "2026-09-30T14:16:06.144414+00:00",
+    "original_config_sha256": "09080af7940e5f17c2e2f76a396756e61594dedb7774a1580eba3e814696e335",
+    "original_execution_code_sha": "da5edaf9714a1c1ee569958c6e4f333189bc8e7a",
+    "original_origin": {
+      "T0": "2026-09-30T14:16:06.144414+00:00",
+      "absolute_deadline": "2026-09-30T17:16:06.144414+00:00",
+      "compute_deadline": "2026-09-30T16:46:06.144414+00:00",
+      "experiment_id": "R10_CARRIER_DECISION_3H_V1",
+      "new_cap_seconds": 10800,
+      "normal_compute_deadline": "2026-09-30T16:16:06.144414+00:00",
+      "preflight_deadline": "2026-09-30T14:46:06.144414+00:00",
+      "prior_attribution_actual_wall_seconds": 11522.557842731476,
+      "prior_attribution_gpu_worker_seconds": 9539.269568504766,
+      "prior_package_charged_seconds": 24757.142144730315
+    },
+    "previous_charged_seconds": 2067.4057743549347,
+    "push_authorized": false,
+    "remaining_seconds": 8732.594225645065,
+    "schedule_exception": "Explicit renewed start after original terminated deadline; use only unspent cumulative 3h quota. Historical T0, charges, failures and original deadlines remain preserved. Closed inactive gap is separately recorded, not new GPU work.",
+    "started_epoch": 1790822917.3185887
+  },
+  "source_zero_parity": "Reused matched source checks; no source math, model, data, BN, readout or recurrence change in this repair",
+  "tests_passed": 8
+}

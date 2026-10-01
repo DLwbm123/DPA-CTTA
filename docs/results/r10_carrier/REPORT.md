@@ -1,3 +1,5 @@
+> Historical closed-attempt report. A human-authorized renewed attempt is now RUNNING; see [RENEWED_LAUNCH.md](RENEWED_LAUNCH.md). The incomplete tables below describe the previous attempt, not current renewed progress.
+
 # R10_CARRIER_DECISION_3H_V1 — 未完成收束
 
 本轮终态为 **PREFLIGHT_INCOMPLETE**，不是完整载体去留实验完成。初始 T0 为北京时间 2026-09-30 22:16:06.144414；30 分钟预检截止为 22:46:06.144414，未重置或延长。
