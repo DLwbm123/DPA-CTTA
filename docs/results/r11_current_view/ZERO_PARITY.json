@@ -1,0 +1,1044 @@
+{
+  "backbone_and_BN": {
+    "CV_H2": {
+      "BN": {
+        "bnout": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.0.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.0.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.1.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.1.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.2.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.2.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.0.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.0.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.0.downsample.1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.1.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.1.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.2.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.2.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.3.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.3.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.0.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.0.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.0.downsample.1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.1.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.1.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.2.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.2.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.3.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.3.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.4.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.4.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.5.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.5.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.0.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.0.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.0.downsample.1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.1.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.1.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.2.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.2.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "up1.bn": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "up2.bn": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "up3.bn": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "up4.bn": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        }
+      },
+      "parameters": "ab40d4c8f080a878e09d2bae79174d5ce0f24c06b7f9ea2f91ed7f54c7057800"
+    },
+    "IDENTITY": {
+      "BN": {
+        "bnout": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.0.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.0.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.1.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.1.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.2.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer1.2.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.0.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.0.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.0.downsample.1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.1.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.1.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.2.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.2.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.3.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer2.3.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.0.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.0.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.0.downsample.1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.1.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.1.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.2.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.2.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.3.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.3.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.4.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.4.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.5.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer3.5.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.0.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.0.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.0.downsample.1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.1.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.1.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.2.bn1": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "res.layer4.2.bn2": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "up1.bn": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "up2.bn": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "up3.bn": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        },
+        "up4.bn": {
+          "affine": true,
+          "dtype": "torch.float32",
+          "eps": 1e-05,
+          "num_batches_tracked": null,
+          "running_mean": null,
+          "running_var": null,
+          "track_running_stats": false,
+          "training": false
+        }
+      },
+      "parameters": "ab40d4c8f080a878e09d2bae79174d5ce0f24c06b7f9ea2f91ed7f54c7057800"
+    }
+  },
+  "config_sha256": "d39c17db3feb5d429199c7c7834685cedaff4ba2ca780e0bcfeaa14bb669e2e1",
+  "modes": {
+    "abrupt_16_16": 8,
+    "gradual_32": 8,
+    "iid_style_32": 8,
+    "recurrence_8_8_8_8": 8
+  },
+  "parameters_and_buffers_unchanged": true,
+  "passed": true,
+  "rows": [
+    {
+      "episode": 0,
+      "identity_exact": true,
+      "mode": "abrupt_16_16",
+      "visit": 0
+    },
+    {
+      "episode": 0,
+      "identity_exact": true,
+      "mode": "abrupt_16_16",
+      "visit": 4
+    },
+    {
+      "episode": 0,
+      "identity_exact": true,
+      "mode": "abrupt_16_16",
+      "visit": 8
+    },
+    {
+      "episode": 0,
+      "identity_exact": true,
+      "mode": "abrupt_16_16",
+      "visit": 12
+    },
+    {
+      "episode": 0,
+      "identity_exact": true,
+      "mode": "abrupt_16_16",
+      "visit": 16
+    },
+    {
+      "episode": 0,
+      "identity_exact": true,
+      "mode": "abrupt_16_16",
+      "visit": 20
+    },
+    {
+      "episode": 0,
+      "identity_exact": true,
+      "mode": "abrupt_16_16",
+      "visit": 24
+    },
+    {
+      "episode": 0,
+      "identity_exact": true,
+      "mode": "abrupt_16_16",
+      "visit": 28
+    },
+    {
+      "episode": 16,
+      "identity_exact": true,
+      "mode": "gradual_32",
+      "visit": 0
+    },
+    {
+      "episode": 16,
+      "identity_exact": true,
+      "mode": "gradual_32",
+      "visit": 4
+    },
+    {
+      "episode": 16,
+      "identity_exact": true,
+      "mode": "gradual_32",
+      "visit": 8
+    },
+    {
+      "episode": 16,
+      "identity_exact": true,
+      "mode": "gradual_32",
+      "visit": 12
+    },
+    {
+      "episode": 16,
+      "identity_exact": true,
+      "mode": "gradual_32",
+      "visit": 16
+    },
+    {
+      "episode": 16,
+      "identity_exact": true,
+      "mode": "gradual_32",
+      "visit": 20
+    },
+    {
+      "episode": 16,
+      "identity_exact": true,
+      "mode": "gradual_32",
+      "visit": 24
+    },
+    {
+      "episode": 16,
+      "identity_exact": true,
+      "mode": "gradual_32",
+      "visit": 28
+    },
+    {
+      "episode": 32,
+      "identity_exact": true,
+      "mode": "recurrence_8_8_8_8",
+      "visit": 0
+    },
+    {
+      "episode": 32,
+      "identity_exact": true,
+      "mode": "recurrence_8_8_8_8",
+      "visit": 4
+    },
+    {
+      "episode": 32,
+      "identity_exact": true,
+      "mode": "recurrence_8_8_8_8",
+      "visit": 8
+    },
+    {
+      "episode": 32,
+      "identity_exact": true,
+      "mode": "recurrence_8_8_8_8",
+      "visit": 12
+    },
+    {
+      "episode": 32,
+      "identity_exact": true,
+      "mode": "recurrence_8_8_8_8",
+      "visit": 16
+    },
+    {
+      "episode": 32,
+      "identity_exact": true,
+      "mode": "recurrence_8_8_8_8",
+      "visit": 20
+    },
+    {
+      "episode": 32,
+      "identity_exact": true,
+      "mode": "recurrence_8_8_8_8",
+      "visit": 24
+    },
+    {
+      "episode": 32,
+      "identity_exact": true,
+      "mode": "recurrence_8_8_8_8",
+      "visit": 28
+    },
+    {
+      "episode": 48,
+      "identity_exact": true,
+      "mode": "iid_style_32",
+      "visit": 0
+    },
+    {
+      "episode": 48,
+      "identity_exact": true,
+      "mode": "iid_style_32",
+      "visit": 4
+    },
+    {
+      "episode": 48,
+      "identity_exact": true,
+      "mode": "iid_style_32",
+      "visit": 8
+    },
+    {
+      "episode": 48,
+      "identity_exact": true,
+      "mode": "iid_style_32",
+      "visit": 12
+    },
+    {
+      "episode": 48,
+      "identity_exact": true,
+      "mode": "iid_style_32",
+      "visit": 16
+    },
+    {
+      "episode": 48,
+      "identity_exact": true,
+      "mode": "iid_style_32",
+      "visit": 20
+    },
+    {
+      "episode": 48,
+      "identity_exact": true,
+      "mode": "iid_style_32",
+      "visit": 24
+    },
+    {
+      "episode": 48,
+      "identity_exact": true,
+      "mode": "iid_style_32",
+      "visit": 28
+    }
+  ],
+  "schema": "R11_ZERO_PARITY_V1",
+  "timings": {
+    "CV_H2": 5.550131602678448,
+    "IDENTITY": 4.173879018053412
+  },
+  "visits": 32,
+  "wall_seconds": 28.824323177337646
+}

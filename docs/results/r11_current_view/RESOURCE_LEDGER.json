@@ -1,0 +1,205 @@
+{
+  "T0": "2026-10-01T14:22:56.911138+00:00",
+  "T0_epoch": 1790864576.9111383,
+  "absolute_deadline": "2026-10-01T15:52:56.911138+00:00",
+  "actual_wall_seconds": 1977.0037064552307,
+  "attempts": [
+    {
+      "attempt": "0",
+      "config_sha256": "d59dba79bda27e2300c4110b59028d4cf87a23de5c78d8a49b1fd7a19e0b243c",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 332.7231558589265,
+        "model_forwards": 2048,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790866083.6440556,
+      "failure": null,
+      "phase": "online:CV_H2_o0",
+      "result": {
+        "identity": {
+          "context_sha256": "482c60e9c15ba06cccc9f1d20b58e654f98260e7034ed72a7d5705ed242f463b",
+          "job_id": "CV_H2_o0",
+          "prediction_bytes": 2097152,
+          "rows_sha256": "16aecbe1fdcb03767ba6c814df4e97bdb5e563d32da07ab414633ac713ecbc7c"
+        },
+        "prediction_bytes": 2147483648,
+        "prediction_sha256": "e9bd9790e2b0c265022becf03b39557fd8ee65357c4dd7fe7dcce1be4ff792a4",
+        "schema": "R8_ONLINE_COMPLETE_V1",
+        "trace_bytes": 304510,
+        "trace_sha256": "83883d983fbf1d182e904509d63fbcb768a5a15d6fbccb4a1c6b7f3da53126f0",
+        "visits": 1024
+      },
+      "started": 1790865750.443898,
+      "status": "COMPLETE",
+      "wall_seconds": 333.2001578807831
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "d59dba79bda27e2300c4110b59028d4cf87a23de5c78d8a49b1fd7a19e0b243c",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 311.7718912498094,
+        "model_forwards": 2048,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790866479.1896415,
+      "failure": null,
+      "phase": "online:CV_H2_o1",
+      "result": {
+        "identity": {
+          "context_sha256": "482c60e9c15ba06cccc9f1d20b58e654f98260e7034ed72a7d5705ed242f463b",
+          "job_id": "CV_H2_o1",
+          "prediction_bytes": 2097152,
+          "rows_sha256": "f09b6da9fe531752d51223389455d9fc1af71a33ae9b68d0e168fb72039b4bb9"
+        },
+        "prediction_bytes": 2147483648,
+        "prediction_sha256": "40c4be4c481cff7e332618c6a3d7d499e51fb30eaa5664c167d844651e8c03af",
+        "schema": "R8_ONLINE_COMPLETE_V1",
+        "trace_bytes": 304510,
+        "trace_sha256": "726396508b4112fb0a145fbcfc3bea1e98219f7a859cae530a5bede137252e5f",
+        "visits": 1024
+      },
+      "started": 1790866166.8690956,
+      "status": "COMPLETE",
+      "wall_seconds": 312.32054591178894
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "c720469f469b89ba5f591a9ca77dd1844b0f817ac6ec1f5211e783ddbfa3d7c1",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 54.796231776010245,
+        "model_forwards": 256,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790865392.6312025,
+      "failure": null,
+      "phase": "preflight",
+      "result": {
+        "passed": true,
+        "visits": 32
+      },
+      "started": 1790865337.1388226,
+      "status": "COMPLETE",
+      "wall_seconds": 55.492379903793335
+    },
+    {
+      "attempt": "1",
+      "config_sha256": "d39c17db3feb5d429199c7c7834685cedaff4ba2ca780e0bcfeaa14bb669e2e1",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 29.21059010270983,
+        "model_forwards": 128,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790865582.0283277,
+      "failure": null,
+      "phase": "preflight",
+      "result": {
+        "passed": true,
+        "visits": 32
+      },
+      "started": 1790865550.6813734,
+      "status": "COMPLETE",
+      "wall_seconds": 31.346954345703125
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "d59dba79bda27e2300c4110b59028d4cf87a23de5c78d8a49b1fd7a19e0b243c",
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790866163.6826262,
+      "failure": null,
+      "phase": "score:CV_H2_o0",
+      "result": {
+        "online_sha256": "f7a9670ac75b8ff5e7b7daa58483c826c8c28293caf6e8187f07ccf63ce6ea5e",
+        "principal": 888,
+        "scalar_sha256": "019d53b722f972a3d35328703f35053237aafec2aef7149ba44589d5ad2a45f7",
+        "schema": "R10_SCORE_COMPLETE_V1",
+        "source_lock_sha256": "056ab736a620ce6bc61fafc80d2cc8c4ef8bc84a9d193709cde8ae855bced562",
+        "visits": 1024
+      },
+      "started": 1790866085.7224677,
+      "status": "COMPLETE",
+      "wall_seconds": 77.96016025543213
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "d59dba79bda27e2300c4110b59028d4cf87a23de5c78d8a49b1fd7a19e0b243c",
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790866552.8079352,
+      "failure": null,
+      "phase": "score:CV_H2_o1",
+      "result": {
+        "online_sha256": "c5e5a317326aa335ef0d9fa48cfe03cf861c64e32288c4972fd830983f8809ff",
+        "principal": 888,
+        "scalar_sha256": "ad19f8fad5729b9f7923ba3d3801a086746dd4d2f632292e8540241665400e30",
+        "schema": "R10_SCORE_COMPLETE_V1",
+        "source_lock_sha256": "056ab736a620ce6bc61fafc80d2cc8c4ef8bc84a9d193709cde8ae855bced562",
+        "visits": 1024
+      },
+      "started": 1790866481.3167555,
+      "status": "COMPLETE",
+      "wall_seconds": 71.49118089675903
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "d59dba79bda27e2300c4110b59028d4cf87a23de5c78d8a49b1fd7a19e0b243c",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 125.42649126099423,
+        "model_forwards": 1024,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790865748.2613354,
+      "failure": null,
+      "phase": "source",
+      "result": {
+        "episodes": 16,
+        "visits": 512
+      },
+      "started": 1790865622.224199,
+      "status": "COMPLETE",
+      "wall_seconds": 126.03713655471802
+    }
+  ],
+  "authority": "Human requested design and execute the next experiment after withdrawing RL from the main line.",
+  "compute_deadline": "2026-10-01T15:37:56.911138+00:00",
+  "disk_bytes": 116667295,
+  "experiment_id": "R11_CURRENT_VIEW_V1",
+  "gpu_worker_seconds": 853.9283602484502,
+  "new_cap_seconds": 5400,
+  "normal_compute_deadline": "2026-10-01T15:22:56.911138+00:00",
+  "operations": {
+    "model_forwards": 5504,
+    "backward_calls": 0,
+    "optimizer_steps": 0,
+    "vjp_calls": 0
+  },
+  "preflight_deadline": "2026-10-01T14:52:56.911138+00:00",
+  "prior_package_charged_seconds": 29712.181510498747,
+  "recovery_used": false,
+  "status": "COMPLETE"
+}
