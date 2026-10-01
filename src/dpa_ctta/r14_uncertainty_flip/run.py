@@ -72,19 +72,19 @@ def preflight(c,guard):
         for h in handles:h.remove()
         for _,close in hosts.values():close()
 
-def source(c,guard):
+def source(c,guard,name=NAME,host_factory=construct,lock_factory=lock):
     import torch
     from ..r10_carrier.source import data
     from ..r10_carrier.diagnostic import source_item
     from ..r9_current_first.validation import dice
-    h,close=construct(NAME,c,lock(c,NAME));handle=guard.meter.attach(h.segmenter.model);root=Path(c['output_root']);rows=[]
+    h,close=host_factory(name,c,lock_factory(c,name));handle=guard.meter.attach(h.segmenter.model);root=Path(c['output_root']);rows=[]
     try:
         with torch.no_grad(),data(c,guard) as src:
             for i in c['source_indices']:
                 hard=[];soft=[];eligible=[]
                 for v in range(32):
                     guard();image,label,mode=source_item(src,i,v);z,t=h.step(image);hd,sd=dice(z.sigmoid(),label);hard.append(hd);soft.append(sd);eligible.append(t['uncertain_fraction'])
-                h.check_frozen(True);hd=torch.tensor(hard,dtype=torch.float64).mean(0);sd=torch.tensor(soft,dtype=torch.float64).mean(0);rows.append(dict(condition=NAME,episode=i,mode=mode,visits=32,hard_OD=float(hd[0]),hard_OC=float(hd[1]),hard_Dice=float(hd.mean()),soft_OD=float(sd[0]),soft_OC=float(sd[1]),soft_Dice=float(sd.mean()),eligible_fraction=sum(eligible)/32));save(root/'SOURCE_COMPARISON.json',dict(status='RUNNING',new_rows=rows,completed_episodes=len(rows),planned_episodes=16))
+                h.check_frozen(True);hd=torch.tensor(hard,dtype=torch.float64).mean(0);sd=torch.tensor(soft,dtype=torch.float64).mean(0);rows.append(dict(condition=name,episode=i,mode=mode,visits=32,hard_OD=float(hd[0]),hard_OC=float(hd[1]),hard_Dice=float(hd.mean()),soft_OD=float(sd[0]),soft_OC=float(sd[1]),soft_Dice=float(sd.mean()),eligible_fraction=sum(eligible)/32));save(root/'SOURCE_COMPARISON.json',dict(status='RUNNING',new_rows=rows,completed_episodes=len(rows),planned_episodes=16))
         if guard.meter.cost['model_forwards']!=1024 or len(rows)!=16:raise ValueError('source exact count')
         if sha(read(c['reused_source_path']))!=c['reused_source_sha256']:raise ValueError('old source changed')
         save(root/'SOURCE_COMPARISON.json',dict(status='COMPLETE',new_rows=rows,reused_rows=c['source_reference'],new_visits=512,episodes=16,indices=c['source_indices'],selection=False));return dict(visits=512,episodes=16)
