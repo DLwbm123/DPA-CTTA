@@ -16,7 +16,7 @@ class Checks(unittest.TestCase):
             self.assertTrue(torch.allclose(z.sigmoid(),expected.expand_as(z),atol=1e-7))
             if name=='H_ONLY':self.assertTrue(torch.equal(z,torch.ones_like(x)))
             s=h.snapshot();h.step(x);h.restore(s);self.assertEqual(h.visits,1)
-            h.weights=(1.,)
+            h.weights=(.9,)
             with self.assertRaises(ValueError):h.step(x)
     def test_locked_weight_rejection(self):
         c={'bindings':{'checkpoint_sha256':'toy'}};lk=lock(c,'CV_H025');check_lock(lk);lk['payload']['weights']=[.5,.5]
