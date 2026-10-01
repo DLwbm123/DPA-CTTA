@@ -1,5 +1,5 @@
 {
-  "ended": 1790779664.5537674,
+  "ended": 1790825799.898223,
   "engineering_repairs": [
     {
       "at": 1790779147.7008862,
@@ -10,36 +10,27 @@
       "original_T0_preserved": true,
       "previous_code_sha": "959311c46a8b6791ad4f760a4831dc2d76f6752c",
       "reason": "duplicate source telemetry visit keyword; no readout, B state, data, model or science change"
+    },
+    {
+      "at": 1790823037.693052,
+      "old_failure_costs_retained": true,
+      "original_T0_preserved": true,
+      "previous_code_sha": "da5edaf9714a1c1ee569958c6e4f333189bc8e7a",
+      "reason": "Stable per-experiment supervisor exclusion; exact mutable config checked by authorization separately. Prior inactive config-specific lock retained untouched."
     }
   ],
   "experiment_id": "R10_CARRIER_DECISION_3H_V1",
   "jobs": {
-    "B_FULL_READOUT_025_o0": "NOT_RUN_PREFLIGHT_INCOMPLETE",
-    "B_FULL_READOUT_025_o1": "NOT_RUN_PREFLIGHT_INCOMPLETE",
-    "B_RESET_1_o0": "NOT_RUN_PREFLIGHT_INCOMPLETE",
-    "B_RESET_1_o1": "NOT_RUN_PREFLIGHT_INCOMPLETE",
-    "B_RESET_READOUT_025_o0": "NOT_RUN_PREFLIGHT_INCOMPLETE",
-    "B_RESET_READOUT_025_o1": "NOT_RUN_PREFLIGHT_INCOMPLETE",
-    "B_ZERO_o0": "NOT_RUN_PREFLIGHT_INCOMPLETE",
-    "B_ZERO_o1": "NOT_RUN_PREFLIGHT_INCOMPLETE"
+    "B_FULL_READOUT_025_o0": "COMPLETE",
+    "B_FULL_READOUT_025_o1": "COMPLETE",
+    "B_RESET_1_o0": "COMPLETE",
+    "B_RESET_1_o1": "COMPLETE",
+    "B_RESET_READOUT_025_o0": "COMPLETE",
+    "B_RESET_READOUT_025_o1": "COMPLETE",
+    "B_ZERO_o0": "COMPLETE",
+    "B_ZERO_o1": "COMPLETE"
   },
-  "owned_processes_remaining": 0,
   "recovery_used": false,
-  "source": "FAILED_INCOMPLETE",
-  "startup_failures": [
-    {
-      "formal_source_forwards": 1,
-      "reason": "duplicate source trace visit keyword",
-      "revision": 1,
-      "target_visits": 0
-    },
-    {
-      "formal_source_forwards": 0,
-      "reason": "owner identity/host changed: inactive revision-1 config lease owner persisted",
-      "revision": 2,
-      "target_visits": 0
-    }
-  ],
-  "status": "PREFLIGHT_INCOMPLETE",
-  "stop_reason": "Revalidated revision 2 did not acquire supervisor lease: inactive owner retained revision-1 config identity. Original 30-minute preflight deadline elapsed before reconciliation; no new worker launched."
+  "source": "COMPLETE",
+  "status": "COMPLETE"
 }

@@ -3316,9 +3316,71 @@
     }
   ],
   "schema": "CARRIER_ZERO_PARITY_V1",
-  "target_compatible_probability_seals": [],
-  "target_direct_pixel_parity": "Unavailable or different; inspect parity records",
-  "target_internal_state_proofs": [],
+  "target_compatible_probability_seals": [
+    {
+      "C0_prediction_sha256": "5211ec6e1846377b114ffdeb86a8ada69d2642f9e1b6209942df7ec03e434d05",
+      "compatible_dtype": "little endian float32 sigmoid probabilities",
+      "order": 0,
+      "same_bytes": true,
+      "same_predictions": true,
+      "zero_prediction_sha256": "5211ec6e1846377b114ffdeb86a8ada69d2642f9e1b6209942df7ec03e434d05"
+    },
+    {
+      "C0_prediction_sha256": "674ece50a5c1c6253821228acc0710ceae4cf060c510103c126097baa9fa919b",
+      "compatible_dtype": "little endian float32 sigmoid probabilities",
+      "order": 1,
+      "same_bytes": true,
+      "same_predictions": true,
+      "zero_prediction_sha256": "674ece50a5c1c6253821228acc0710ceae4cf060c510103c126097baa9fa919b"
+    }
+  ],
+  "target_direct_pixel_parity": "Identical compatible whole-trajectory float32 probability digests",
+  "target_internal_state_proofs": [
+    {
+      "left": "B_ZERO",
+      "order": 0,
+      "right": "B_FULL_READOUT_025",
+      "state_trajectory_exact": true,
+      "visits": 1024
+    },
+    {
+      "left": "B_RESET_1",
+      "order": 0,
+      "right": "B_RESET_READOUT_025",
+      "state_trajectory_exact": true,
+      "visits": 1024
+    },
+    {
+      "last_available_checkpoint_visit": 1000,
+      "left": "B_FULL_READOUT_025",
+      "note": "Old target journal retains checkpoints through visit1000, not a visit1024 final-state snapshot.",
+      "order": 0,
+      "right": "old B_FULL_1",
+      "state_checkpoint_exact": true
+    },
+    {
+      "left": "B_ZERO",
+      "order": 1,
+      "right": "B_FULL_READOUT_025",
+      "state_trajectory_exact": true,
+      "visits": 1024
+    },
+    {
+      "left": "B_RESET_1",
+      "order": 1,
+      "right": "B_RESET_READOUT_025",
+      "state_trajectory_exact": true,
+      "visits": 1024
+    },
+    {
+      "last_available_checkpoint_visit": 1000,
+      "left": "B_FULL_READOUT_025",
+      "note": "Old target journal retains checkpoints through visit1000, not a visit1024 final-state snapshot.",
+      "order": 1,
+      "right": "old B_FULL_1",
+      "state_checkpoint_exact": true
+    }
+  ],
   "timings": {
     "B_FULL_1": 3.624112630728632,
     "B_FULL_READOUT_025": 3.4487971807830036,

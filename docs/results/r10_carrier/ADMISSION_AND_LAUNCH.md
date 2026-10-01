@@ -9,3 +9,7 @@ Original T0 and the 22:46:06 preflight deadline were preserved. A deadline asser
 ## Renewed start
 
 A later human instruction authorized repairs and starting within the remaining cumulative budget. Source execution is confirmed; see [RENEWED_LAUNCH.md](RENEWED_LAUNCH.md). Earlier stopped receipts remain preserved.
+
+## Completed renewed execution
+
+Final status COMPLETE at 2026-10-01 11:36:39 Asia/Shanghai. See [REPORT.md](REPORT.md) and [RUN_RECEIPTS.json](RUN_RECEIPTS.json). New 8 trajectories and independent scoring are complete; prior failed attempts remain retained.

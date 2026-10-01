@@ -15,3 +15,7 @@ GPU 5 worker, supervisor and watchdog are alive with neutral command lines. The 
 Frozen matrix: five source controls × 16 episodes × 32 visits; four new target conditions × the same two 1024-arrival manifests. Old N/G/C0/B results remain paired reuse. New target scores remain embargoed until terminal state. Old failed receipts and anonymous tables are historical, not new outcomes. No new training, alpha search, seed, dataset, monitor or GitHub push.
 
 The previous incomplete report is retained in REPORT.md with a historical-status banner. Final renewed results are pending; launching does not constitute completion.
+
+## Completed renewed execution
+
+Final status COMPLETE at 2026-10-01 11:36:39 Asia/Shanghai. See [REPORT.md](REPORT.md) and [RUN_RECEIPTS.json](RUN_RECEIPTS.json). New 8 trajectories and independent scoring are complete; prior failed attempts remain retained.

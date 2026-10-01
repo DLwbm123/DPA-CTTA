@@ -1,17 +1,17 @@
 {
   "experiment_id": "R10_CARRIER_DECISION_3H_V1",
   "base_sha": "2547c35f40ed6b401fd0b13935168ef72ceba161",
-  "code_sha": "da5edaf9714a1c1ee569958c6e4f333189bc8e7a",
+  "code_sha": "1084fe1c9ffc030388fbe4c6ebecbd80b1bf64a5",
   "previous_code_sha": "fa32e7fc40629280d04ed1770979984193bace68",
   "previous_config_sha256": "b1579024e2f4be35a1ffd749d7b56bfdc011c8caacbdf7b892c813ec6833ff9c",
   "origin": {
     "T0": "2026-09-30T14:16:06.144414+00:00",
-    "absolute_deadline": "2026-09-30T17:16:06.144414+00:00",
-    "compute_deadline": "2026-09-30T16:46:06.144414+00:00",
+    "absolute_deadline": "2026-10-01T05:14:09.912814+00:00",
+    "compute_deadline": "2026-10-01T04:44:09.912814+00:00",
     "experiment_id": "R10_CARRIER_DECISION_3H_V1",
     "new_cap_seconds": 10800,
-    "normal_compute_deadline": "2026-09-30T16:16:06.144414+00:00",
-    "preflight_deadline": "2026-09-30T14:46:06.144414+00:00",
+    "normal_compute_deadline": "2026-10-01T04:14:09.912814+00:00",
+    "preflight_deadline": "2026-10-01T03:18:37.318589+00:00",
     "prior_attribution_actual_wall_seconds": 11522.557842731476,
     "prior_attribution_gpu_worker_seconds": 9539.269568504766,
     "prior_package_charged_seconds": 24757.142144730315
@@ -207,12 +207,44 @@
       "original_T0_preserved": true,
       "previous_code_sha": "959311c46a8b6791ad4f760a4831dc2d76f6752c",
       "reason": "duplicate source telemetry visit keyword; no readout, B state, data, model or science change"
+    },
+    {
+      "at": 1790823037.693052,
+      "old_failure_costs_retained": true,
+      "original_T0_preserved": true,
+      "previous_code_sha": "da5edaf9714a1c1ee569958c6e4f333189bc8e7a",
+      "reason": "Stable per-experiment supervisor exclusion; exact mutable config checked by authorization separately. Prior inactive config-specific lock retained untouched."
     }
   ],
-  "source_stage_deadline": 1790780713.7617288,
-  "config_sha256": "09080af7940e5f17c2e2f76a396756e61594dedb7774a1580eba3e814696e335",
+  "source_stage_deadline": 1790824717.3185887,
+  "renewal": {
+    "authority": "Human explicitly requested: 你能否解决这些 冲突，尽快开始实验",
+    "monitoring_authorized": false,
+    "no_new_scientific_scope": true,
+    "original_T0": "2026-09-30T14:16:06.144414+00:00",
+    "original_config_sha256": "09080af7940e5f17c2e2f76a396756e61594dedb7774a1580eba3e814696e335",
+    "original_execution_code_sha": "da5edaf9714a1c1ee569958c6e4f333189bc8e7a",
+    "original_origin": {
+      "T0": "2026-09-30T14:16:06.144414+00:00",
+      "absolute_deadline": "2026-09-30T17:16:06.144414+00:00",
+      "compute_deadline": "2026-09-30T16:46:06.144414+00:00",
+      "experiment_id": "R10_CARRIER_DECISION_3H_V1",
+      "new_cap_seconds": 10800,
+      "normal_compute_deadline": "2026-09-30T16:16:06.144414+00:00",
+      "preflight_deadline": "2026-09-30T14:46:06.144414+00:00",
+      "prior_attribution_actual_wall_seconds": 11522.557842731476,
+      "prior_attribution_gpu_worker_seconds": 9539.269568504766,
+      "prior_package_charged_seconds": 24757.142144730315
+    },
+    "previous_charged_seconds": 2067.4057743549347,
+    "push_authorized": false,
+    "remaining_seconds": 8732.594225645065,
+    "schedule_exception": "Explicit renewed start after original terminated deadline; use only unspent cumulative 3h quota. Historical T0, charges, failures and original deadlines remain preserved. Closed inactive gap is separately recorded, not new GPU work.",
+    "started_epoch": 1790822917.3185887
+  },
+  "config_sha256": "746c648a338cca94d48f57211068c43c4de3bc8bd825a9c2bdf653c51bf7d825",
   "configuration_status": "FROZEN",
-  "execution_status": "PREFLIGHT_INCOMPLETE",
+  "execution_status": "COMPLETE",
   "manifests": [
     {
       "principal": 888,
