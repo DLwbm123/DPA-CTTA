@@ -1,0 +1,164 @@
+{
+  "T0": "2026-10-01T17:04:06.579447+00:00",
+  "T0_epoch": 1790874246.579447,
+  "absolute_deadline": "2026-10-01T19:04:06.579447+00:00",
+  "actual_wall_seconds": 1579.5278360843658,
+  "attempts": [
+    {
+      "attempt": "0",
+      "config_sha256": "331968d2a1ad6051331cb6cf5552eba593a4a0cd3093d60e5b51d426fe159903",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 355.0119053130038,
+        "model_forwards": 1854,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790875291.6150627,
+      "failure": null,
+      "phase": "online:CV_H025_o0",
+      "result": {
+        "identity": {
+          "context_sha256": "ee7941d3dcca67b08c0409f3bf28d9cc7b151dbfc6e0006f97e7275f5baaf305",
+          "job_id": "CV_H025_o0",
+          "prediction_bytes": 2097152,
+          "rows_sha256": "19f9aec2a8cb78d793a7a83d15aa7586cc5c720804336e0141befdd4a779509f"
+        },
+        "prediction_bytes": 1944059904,
+        "prediction_sha256": "47c8f5de863317e65c1a1a5e97c6763ecdcddf4cf407dc5c732b25c832162d14",
+        "schema": "R8_ONLINE_COMPLETE_V1",
+        "trace_bytes": 295015,
+        "trace_sha256": "af60a890a7b5020f1f0031e1aa51413d805ad450307776a12e7a9d7985546bef",
+        "visits": 927
+      },
+      "started": 1790874935.9453034,
+      "status": "COMPLETE",
+      "wall_seconds": 355.6697597503662
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "331968d2a1ad6051331cb6cf5552eba593a4a0cd3093d60e5b51d426fe159903",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 373.1160153611563,
+        "model_forwards": 1854,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790875743.110395,
+      "failure": null,
+      "phase": "online:CV_H025_o1",
+      "result": {
+        "identity": {
+          "context_sha256": "ee7941d3dcca67b08c0409f3bf28d9cc7b151dbfc6e0006f97e7275f5baaf305",
+          "job_id": "CV_H025_o1",
+          "prediction_bytes": 2097152,
+          "rows_sha256": "cc4a37c4949d9e76318524a5102589330d1514e748f11bbd3288be3b589ec319"
+        },
+        "prediction_bytes": 1944059904,
+        "prediction_sha256": "78776d49a1f5424e4e667eb2512214d0748e24eba07c12a6f1c5f5cbf38caac9",
+        "schema": "R8_ONLINE_COMPLETE_V1",
+        "trace_bytes": 295015,
+        "trace_sha256": "64f331c8346276aff15edfb789814866b30daf0db068c64cfa935e0eb83406e9",
+        "visits": 927
+      },
+      "started": 1790875369.3361566,
+      "status": "COMPLETE",
+      "wall_seconds": 373.7742383480072
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "9e7751970cd764cb697479a143490d5267913ba633c8efd510b4bf7531ee12f7",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 45.01558948121965,
+        "model_forwards": 192,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790874908.3130383,
+      "failure": null,
+      "phase": "preflight",
+      "result": {
+        "passed": true,
+        "visits": 128
+      },
+      "started": 1790874862.6231549,
+      "status": "COMPLETE",
+      "wall_seconds": 45.68988370895386
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "331968d2a1ad6051331cb6cf5552eba593a4a0cd3093d60e5b51d426fe159903",
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790875367.660757,
+      "failure": null,
+      "phase": "score:CV_H025_o0",
+      "result": {
+        "online_sha256": "f9ed51bae61bec69d819b2a98078ff0cd63bc8de38a7b4e494bedfc3fb188e54",
+        "principal": 807,
+        "scalar_sha256": "ba0e711381bbc7776b4ea33a3cec7f662f253bc6ec8ab382a9930bc8c3f597ba",
+        "schema": "R10_SCORE_COMPLETE_V1",
+        "source_lock_sha256": "afaab4386e1e6d43696b135c99552af491901ef99c94143375602158c9478c6d",
+        "visits": 927
+      },
+      "started": 1790875294.0059273,
+      "status": "COMPLETE",
+      "wall_seconds": 73.65483021736145
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "331968d2a1ad6051331cb6cf5552eba593a4a0cd3093d60e5b51d426fe159903",
+      "cost": {
+        "backward_calls": 0,
+        "gpu_seconds": 0,
+        "model_forwards": 0,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790875822.9590154,
+      "failure": null,
+      "phase": "score:CV_H025_o1",
+      "result": {
+        "online_sha256": "e440bba70506d20590d90582a1e2e6d6ae99b38d89e7258a1dcf89b3c0018e56",
+        "principal": 807,
+        "scalar_sha256": "d88dd20f5ae249fa073d47c72daf052523beb364b0cbff046d948b99aaa0db8a",
+        "schema": "R10_SCORE_COMPLETE_V1",
+        "source_lock_sha256": "afaab4386e1e6d43696b135c99552af491901ef99c94143375602158c9478c6d",
+        "visits": 927
+      },
+      "started": 1790875745.3268743,
+      "status": "COMPLETE",
+      "wall_seconds": 77.63214230537415
+    }
+  ],
+  "authority": "Autonomous independently frozen successor two; fixed quarter weight complement coverage, historical compatible full baselines, no target tuning",
+  "campaign_id": "CTTA_AUTONOMOUS_20261001",
+  "compute_deadline": "2026-10-01T18:49:06.579447+00:00",
+  "disk_bytes": 118936997,
+  "experiment_id": "R13_FULL_COVERAGE_V1",
+  "gpu_worker_seconds": 773.1435101553798,
+  "new_cap_seconds": 7200,
+  "normal_compute_deadline": "2026-10-01T18:34:06.579447+00:00",
+  "operations": {
+    "backward_calls": 0,
+    "model_forwards": 3900,
+    "optimizer_steps": 0,
+    "vjp_calls": 0
+  },
+  "preflight_deadline": "2026-10-01T17:34:06.579447+00:00",
+  "prior_gpu_worker_seconds": 2494.700257684104,
+  "prior_package_charged_seconds": 34222.3884294536,
+  "recovery_used": false,
+  "round": 2,
+  "status": "COMPLETE"
+}

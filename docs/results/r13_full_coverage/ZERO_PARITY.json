@@ -1,0 +1,39 @@
+{
+  "checks": [
+    {
+      "condition": "C0",
+      "immutable": true,
+      "order": 0,
+      "visits": 32
+    },
+    {
+      "condition": "CV_H025",
+      "immutable": true,
+      "order": 0,
+      "visits": 32
+    },
+    {
+      "condition": "C0",
+      "immutable": true,
+      "order": 1,
+      "visits": 32
+    },
+    {
+      "condition": "CV_H025",
+      "immutable": true,
+      "order": 1,
+      "visits": 32
+    }
+  ],
+  "config_sha256": "9e7751970cd764cb697479a143490d5267913ba633c8efd510b4bf7531ee12f7",
+  "logical_visits": 128,
+  "model_forwards": 192,
+  "parameters_BN_unchanged": true,
+  "passed": true,
+  "reverse_order_logits_exact": true,
+  "source_images": 32,
+  "timings": {
+    "C0": 11.204411616548896,
+    "CV_H025": 12.511718889698386
+  }
+}
