@@ -1,0 +1,72 @@
+{
+  "T0": "2026-10-01T19:05:41.496480+00:00",
+  "T0_epoch": 1790881541.49648,
+  "absolute_deadline": "2026-10-01T20:05:41.496480+00:00",
+  "actual_wall_seconds": 697.5827007293701,
+  "attempts": [
+    {
+      "attempt": "0",
+      "config_sha256": "c5dcc20a2afecfde6e6d8ff55adae52f9ba85daca964474dd0dce9b6de44c258",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 31.1465918677859,
+        "model_forwards": 160,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790881923.372211,
+      "failure": null,
+      "phase": "preflight",
+      "result": {
+        "passed": true,
+        "visits": 96
+      },
+      "started": 1790881891.4719489,
+      "status": "COMPLETE",
+      "wall_seconds": 31.900262594223022
+    },
+    {
+      "attempt": "0",
+      "config_sha256": "2d8abc060d67fc4d0a105a938ffb9de710c619b9929f0a36089a771f6d1b245d",
+      "cost": {
+        "backward_calls": 0,
+        "disk_bytes": 0,
+        "gpu_seconds": 85.58398361504078,
+        "model_forwards": 1024,
+        "optimizer_steps": 0,
+        "vjp_calls": 0
+      },
+      "ended": 1790882238.1776896,
+      "failure": null,
+      "phase": "source",
+      "result": {
+        "episodes": 16,
+        "visits": 512
+      },
+      "started": 1790882152.0019512,
+      "status": "COMPLETE",
+      "wall_seconds": 86.17573857307434
+    }
+  ],
+  "authority": "Autonomous final successor four; source-only hard-decision-preserving probability mechanism, no new target access",
+  "campaign_id": "CTTA_AUTONOMOUS_20261001",
+  "compute_deadline": "2026-10-01T19:50:41.496480+00:00",
+  "disk_bytes": 111811918,
+  "experiment_id": "R15_DECISION_SUPPORT_V1",
+  "gpu_worker_seconds": 116.73057548282668,
+  "new_cap_seconds": 3600,
+  "normal_compute_deadline": "2026-10-01T19:35:41.496480+00:00",
+  "operations": {
+    "backward_calls": 0,
+    "model_forwards": 1184,
+    "optimizer_steps": 0,
+    "vjp_calls": 0
+  },
+  "preflight_deadline": "2026-10-01T19:25:41.496480+00:00",
+  "prior_gpu_worker_seconds": 4226.182369450573,
+  "prior_package_charged_seconds": 37672.85992293619,
+  "recovery_used": false,
+  "round": 4,
+  "status": "COMPLETE"
+}

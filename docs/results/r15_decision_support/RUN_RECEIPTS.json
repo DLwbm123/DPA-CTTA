@@ -1,0 +1,23 @@
+{
+  "source_episodes": 16,
+  "new_source_visits": 512,
+  "preflight_logical_visits": 96,
+  "preflight_images": 32,
+  "new_target_visits": 0,
+  "target_scorers": 0,
+  "targets": "NOT_RUN_SOURCE_ONLY",
+  "all_experiment_processes_exited": true,
+  "source_hard_parity": {
+    "episodes": 16,
+    "max_hard_metric_delta": 0.0,
+    "passed": true,
+    "selection": false,
+    "tolerance": 1e-12
+  },
+  "operations": {
+    "backward_calls": 0,
+    "model_forwards": 1184,
+    "optimizer_steps": 0,
+    "vjp_calls": 0
+  }
+}
