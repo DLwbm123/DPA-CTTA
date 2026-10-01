@@ -58,9 +58,9 @@ def comparison(c,guard):
                     host.check_frozen(True);hd=torch.tensor(collected[k],dtype=torch.float64).mean(0);sd=torch.tensor(soft[k],dtype=torch.float64).mean(0)
                     rows.append(dict(condition=k,episode=index,mode=mode,visits=32,hard_OD=float(hd[0]),hard_OC=float(hd[1]),hard_Dice=float(hd.mean()),soft_OD=float(sd[0]),soft_OC=float(sd[1]),soft_Dice=float(sd.mean())))
                 save(root/'SOURCE_COMPARISON.json',dict(status='RUNNING',rows=rows,completed_episodes=sum(modes.values()),planned_episodes=16))
-        if len(rows)!=32 or sorted(modes.values())!=[4]*4:raise ValueError('paired source coverage')
-        save(root/'SOURCE_COMPARISON.json',dict(status='COMPLETE',rows=rows,visits=1024,episodes=16,modes=dict(modes),seed=20260924,indices=c['val_indices'],wall_seconds=time.time()-start))
-        return dict(visits=1024,episodes=16)
+        if len(rows)!=16 or sorted(modes.values())!=[4]*4:raise ValueError('paired source coverage')
+        save(root/'SOURCE_COMPARISON.json',dict(status='COMPLETE',rows=rows,visits=512,episodes=16,modes=dict(modes),seed=20260924,indices=c['val_indices'],wall_seconds=time.time()-start))
+        return dict(visits=512,episodes=16)
     finally:
         for h in handles:h.remove()
         for _,close in hosts.values():close()

@@ -4,7 +4,7 @@ from pathlib import Path
 from ..r10_12h_core.run import read,save,sha,epoch,Guard,launch,terminate_group,OPS
 from .view import construct,VIEWS,AGGREGATION
 ID='R11_CURRENT_VIEW_V1'
-ARMS=SOURCE=('CV_H2','CV_FLIP4')
+ARMS=SOURCE=('CV_H2',)
 def config():
     c=read(os.environ['RUN_CONFIG'])
     if c['experiment_id']!=ID or os.environ.get('RUN_CONFIG_SHA',sha(c))!=sha(c):raise ValueError('current view frozen identity')
@@ -43,7 +43,7 @@ def prepare():
     for k in OPS:costs[k]+=ledger['operations'][k]
     src=read(old/'SOURCE_COMPARISON.json')
     if src['status']!='COMPLETE' or src['indices']!=oc['val_indices']:raise ValueError('source baseline incomplete')
-    c=dict(experiment_id=ID,base_sha=os.environ['BASE_SHA'],code_sha=os.environ['RUN_SHA'],previous_root=str(old),output_root=str(root),origin=origin,bindings=oc['bindings'],gpu_assignments=oc['gpu_assignments'],old_profile_prior_cost=costs,manifests=manifests,val_indices=oc['val_indices'],jobs=[dict(id=f'{a}_o{o}',arm=a,order=o,seed=20260924) for a in ARMS for o in (0,1)],source_conditions=SOURCE,reused_results=reuse,reused_source_C0=[r for r in src['rows'] if r['condition']=='C0'],patient_dependence=oc['patient_dependence'],status='PREFLIGHT',aggregation=AGGREGATION)
+    c=dict(experiment_id=ID,base_sha=os.environ['BASE_SHA'],code_sha=os.environ['RUN_SHA'],previous_root=str(old),output_root=str(root),origin=origin,bindings=oc['bindings'],gpu_assignments=oc['gpu_assignments'],old_profile_prior_cost=costs,manifests=manifests,val_indices=oc['val_indices'],jobs=[dict(id=f'{a}_o{o}',arm=a,order=o,seed=20260924) for a in ARMS for o in (0,1)],source_conditions=SOURCE,reused_results=reuse,reused_source_C0=[r for r in src['rows'] if r['condition']=='C0'],patient_dependence=oc['patient_dependence'],status='PREFLIGHT',preflight_attempt=1,aggregation=AGGREGATION,scope_amendment='CV_FLIP4 deferred before any targets because original full matrix failed measured budget admission; original T0/cap/failed costs retained')
     save(root/'RESOLVED_CONFIG.json',c);save(root/'RESOURCE_LEDGER.json',origin);return c
 def target(c,guard,phase,failure):
     from ..r10_use_write_rl.target import online,score,retire_probabilities
@@ -86,16 +86,16 @@ def worker():
 
 def admit():
     c=config();root=Path(c['output_root']);z=read(root/'ZERO_PARITY.json');old=read(Path(c['previous_root'])/'RESOURCE_LEDGER.json')
-    if read(root/'attempts/preflight.0.json')['status']!='COMPLETE' or not z['passed']:raise ValueError('identity parity incomplete')
+    if read(root/'attempts'/f"preflight.{c.get('preflight_attempt',0)}.json")['status']!='COMPLETE' or not z['passed']:raise ValueError('identity parity incomplete')
     scorer=max(a['wall_seconds'] for a in old['attempts'] if a['phase'].startswith('score:'))
     # Measured fixed-view forward time plus preserved conservative read/fsync/loading margin.
     source_seconds=1.3*(sum(z['timings'][k] for k in SOURCE)*16+120)
-    target_seconds=1.3*(sum(z['timings'][k] for k in ARMS)*64+4096*.13+4*(scorer+30))
+    target_seconds=1.3*(sum(z['timings'][k] for k in ARMS)*64+2048*.13+2*(scorer+30))
     eligible=source_seconds<=900 and target_seconds<=1800 and source_seconds+target_seconds<epoch(c['origin']['normal_compute_deadline'])-time.time()
     c.update(status='FROZEN',admission=dict(source_seconds=source_seconds,target_seconds=target_seconds,safety_factor=1.3,admitted=eligible))
     save(root/'RESOLVED_CONFIG.json',c)
     if not eligible:raise RuntimeError('NOT_RUN_BUDGET: complete fixed matrix does not fit')
-    save(root/'private/authorization.json',dict(experiment_id=ID,code_sha=c['code_sha'],config_sha256=sha(c),zero_parity_sha256=sha(z),scope='two fixed views; four target jobs; no tuning or monitoring; publish anonymous completed results to project GitHub'))
+    save(root/'private/authorization.json',dict(experiment_id=ID,code_sha=c['code_sha'],config_sha256=sha(c),zero_parity_sha256=sha(z),scope='fixed horizontal two-view condition; two target jobs; no tuning or monitoring; publish anonymous completed results to project GitHub'))
     return c['admission']
 def supervise():
     from .report import report
