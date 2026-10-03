@@ -54,17 +54,18 @@ class Tracker:
         self.b=b;self.mask=hard(b);self.editable=editable;self.reliable=reliable
         self.q=None if q is None else q.detach().cpu().numpy()[0]
         self.prob=b.detach().float().sigmoid().cpu().numpy()[0]
-        self.levels=[]
+        self.levels=[];self.level_sizes=[]
         for tau in LEVELS:
             masks=self.prob>=tau
             self.levels.append([ndi.label(a,NEIGHBORS)[0] for a in masks])
+            self.level_sizes.append([np.bincount(lab.ravel()) for lab in self.levels[-1]])
 
     def corresponding(self,parent,channel):
         nparent=int(parent.sum());matches=[]
         if not nparent:return matches
-        for tau,labs in zip(LEVELS,self.levels):
+        for tau,labs,sizes_at_level in zip(LEVELS,self.levels,self.level_sizes):
             lab=labs[channel];ids,intersection=np.unique(lab[parent],return_counts=True)
-            sizes=np.bincount(lab.ravel());options=[]
+            sizes=sizes_at_level[channel];options=[]
             for i,n in zip(ids,intersection):
                 if i:
                     iou=float(n/(nparent+sizes[i]-n));options.append((iou,int(i)))
@@ -79,18 +80,21 @@ class Tracker:
             parents={-1:ndi.label(self.mask[c],NEIGHBORS)[0],1:ndi.label(new[c],NEIGHBORS)[0]}
             for direction in (-1,1):
                 change=(new[c]!=self.mask[c])&self.editable[c]&(new[c]==(direction==1))
-                lab,n=ndi.label(change,NEIGHBORS)
+                lab,n=ndi.label(change,NEIGHBORS);boxes=ndi.find_objects(lab);parent_cache={}
                 for k in range(1,n+1):
-                    support=lab==k;indices=np.flatnonzero(support)
-                    pl=parents[direction];ids,counts=np.unique(pl[support],return_counts=True)
+                    box=boxes[k-1];rr,cc=np.nonzero(lab[box]==k)
+                    indices=(rr+box[0].start)*lab.shape[1]+cc+box[1].start
+                    pl=parents[direction];ids,counts=np.unique(pl.ravel()[indices],return_counts=True)
                     options=[(int(count),int(i)) for i,count in zip(ids,counts) if i]
                     pid=max(options,key=lambda x:(x[0],-x[1]))[1] if options else 0
-                    parent=pl==pid if pid else np.zeros_like(support)
-                    matches=self.corresponding(parent,c)
-                    semantic=float(np.mean(direction*(2*self.q[c][support]-1))) if self.q is not None else -math.inf
+                    if pid not in parent_cache:
+                        parent=pl==pid if pid else np.zeros_like(pl,dtype=bool)
+                        parent_cache[pid]=(int(parent.sum()),self.corresponding(parent,c))
+                    pixels,matches=parent_cache[pid]
+                    semantic=float(np.mean(direction*(2*self.q[c].ravel()[indices]-1))) if self.q is not None else -math.inf
                     values=z[0,c].flatten()[torch.from_numpy(indices)].detach().clone()
                     out.append(Candidate(c,direction,indices,values,
-                        dict(component=pid,pixels=int(parent.sum()),grid=list(support.shape),
+                        dict(component=pid,pixels=pixels,grid=list(lab.shape),
                              origin='proposed_foreground' if direction==1 else 'baseline_foreground'),tau,matches,semantic))
         return out
 

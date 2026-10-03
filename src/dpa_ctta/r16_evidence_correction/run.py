@@ -71,6 +71,7 @@ def prepare():
         for o,rows in enumerate(arr):
             p=root/'private'/f'{tier}_o{o}.json';save(p,rows);manifests[tier].append(dict(path=str(p),sha256=rows_sha(rows),visits=expected[0],principal=expected[1]))
     c=dict(experiment_id=ID,code_sha=os.environ['RUN_SHA'],base_sha=origin['base_sha'],output_root=str(root),origin=origin,bindings=bindings,
+           execution_version=int(os.environ.get('RUN_VERSION','1')),preflight_attempt=int(os.environ.get('RUN_PREFLIGHT_ATTEMPT','0')),
            gpu_assignments=read(root/'private/gpus.json'),manifests=manifests,source_indices=[16*m+i for m in range(4) for i in (0,4,10,13)],
            source_seed=SEED,target_Z_seeds=[SEED,SEED+1],conditions=list(STATIC)+list(KINDS)+['G'],ROI='full_grid',postprocessing='none',
            scientific_parameters=dict(feature='up3',channels=256,grid=[128,128],prototype_temperature=.1,seed_erosion_radius=2,boundary_radius=6,
@@ -288,8 +289,19 @@ def supervise():
         if (root/'execution_started.json').exists():raise ValueError('execution exists; reconcile, do not restart')
         save(root/'execution_started.json',dict(at=time.time(),pid=os.getpid(),config_sha256=sha(c)));state.update(status='SOURCE_PREFLIGHT_RUNNING');save(root/'RUN_STATE.json',state)
         try:
-            a=c['gpu_assignments'][0];r=run_task(c,'preflight',a,3600);state['jobs']['preflight']=r['status'];update_ledger(c,state)
+            a=c['gpu_assignments'][0];r=run_task(c,'preflight',a,max(30,3600-live_charges(c)['preflight']),attempt=c.get('preflight_attempt',0));state['jobs']['preflight']=r['status'];update_ledger(c,state)
             if r['status']!='COMPLETE':raise RuntimeError('qualification failed; no target access')
+            old=root/'history/v1/SOURCE_PRECHECK.json'
+            if old.exists():
+                before=read(old)['rows'];after=read(root/'SOURCE_PRECHECK.json')['rows'];maximum=0.
+                if len(before)!=len(after):raise ValueError('equivalent qualification coverage')
+                for a,b in zip(before,after):
+                    if (a['episode'],a['visit'],a['mode'])!=(b['episode'],b['visit'],b['mode']):raise ValueError('equivalent source role')
+                    for condition in a['metrics']:
+                        for metric,value in a['metrics'][condition].items():maximum=max(maximum,abs(value-b['metrics'][condition][metric]))
+                    if a['prototype']!=b['prototype']:raise ValueError('equivalent prototype evidence changed')
+                save(root/'SOURCE_OPTIMIZATION_PARITY.json',dict(passed=maximum==0,images=32,all_conditions_hard_soft_max_delta=maximum,scientific_rules_changed=False))
+                if maximum!=0:raise ValueError('candidate optimization changed source metrics')
             admission=profile_admit(c)
             if not admission['admitted']:raise RuntimeError('NOT_RUN_BUDGET even short full matrix')
             state.update(status='SOURCE_SELECTION_RUNNING',tier=admission['tier']);save(root/'RUN_STATE.json',state)
