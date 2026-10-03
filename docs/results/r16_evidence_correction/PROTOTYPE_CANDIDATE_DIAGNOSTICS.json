@@ -1,0 +1,87 @@
+{
+  "prototype": {
+    "class_order": [
+      "background",
+      "disc_without_cup",
+      "cup"
+    ],
+    "cosine_pairs": [
+      "background_disc",
+      "background_cup",
+      "disc_cup"
+    ],
+    "counts": {
+      "fallback_None": 1949,
+      "fallback_missing_seed": 2,
+      "visits": 1951
+    },
+    "mean_prototype_cosines": [
+      -0.7653889387555463,
+      -0.9052065588254816,
+      0.9071388337904518
+    ],
+    "mean_seed_coverage": [
+      0.855735264577235,
+      0.024412721196912242,
+      0.017075306449041556
+    ],
+    "valid_prototype_visits": 1949
+  },
+  "scope": "1951 unique online visits including 256 warmup; order1 reused",
+  "selectors": {
+    "D_VERIFY": {
+      "accepted": 168597,
+      "candidates": 399685,
+      "edited_pixels": 367290,
+      "max_spatial_edit_fraction": 0.002056121826171875,
+      "rejections": {
+        "fragments_or_holes": 47728,
+        "semantic": 124090,
+        "stability": 59270
+      },
+      "zero_accept_visits": 2
+    },
+    "P_SIMPLE": {
+      "accepted": 267063,
+      "candidates": 360905,
+      "edited_pixels": 644653,
+      "max_spatial_edit_fraction": 0.00461578369140625,
+      "rejections": {
+        "simple_morphology": 93842
+      },
+      "zero_accept_visits": 2
+    },
+    "P_VERIFY": {
+      "accepted": 226521,
+      "candidates": 360905,
+      "edited_pixels": 436278,
+      "max_spatial_edit_fraction": 0.0027008056640625,
+      "rejections": {
+        "fragments_or_holes": 54112,
+        "semantic": 5728,
+        "stability": 74544
+      },
+      "zero_accept_visits": 2
+    },
+    "S": {
+      "accepted": 316306,
+      "candidates": 1388621,
+      "edited_pixels": 678428,
+      "max_spatial_edit_fraction": 0.004245758056640625,
+      "rejections": {
+        "conflict": 186905,
+        "fragments_or_holes": 84666,
+        "semantic": 645348,
+        "stability": 155396
+      },
+      "zero_accept_visits": 2
+    }
+  },
+  "shared_static_latency": {
+    "max_seconds": 11.995412140153348,
+    "mean_seconds": 4.437700123076486,
+    "median_seconds": 4.127112166956067,
+    "n": 1951,
+    "p95_seconds": 7.069688367657363
+  }
+}

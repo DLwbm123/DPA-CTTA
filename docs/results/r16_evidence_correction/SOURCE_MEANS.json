@@ -1,0 +1,66 @@
+{
+  "all_modes_equal_512_visits": {
+    "C0": {
+      "hard_percent": 86.71222916567918,
+      "n": 512,
+      "soft_percent": 85.43148986970958
+    },
+    "DS": {
+      "hard_percent": 86.85420943394566,
+      "n": 512,
+      "soft_percent": 85.44615329605688
+    },
+    "D_CONTEXT": {
+      "hard_percent": 86.5772381639084,
+      "n": 512,
+      "soft_percent": 85.33069722055077
+    },
+    "D_LOGIT": {
+      "hard_percent": 86.54018305530117,
+      "n": 512,
+      "soft_percent": 85.29419659206661
+    },
+    "D_VERIFY": {
+      "hard_percent": 86.80012064795835,
+      "n": 512,
+      "soft_percent": 85.44412132686699
+    },
+    "H025": {
+      "hard_percent": 86.85420943394566,
+      "n": 512,
+      "soft_percent": 76.9379048843499
+    },
+    "P": {
+      "hard_percent": 86.79162884115014,
+      "n": 512,
+      "soft_percent": 85.33197565500727
+    },
+    "P_SHUFFLED_SOURCE_DIAGNOSTIC": {
+      "hard_percent": 91.15605821929772,
+      "n": 32,
+      "soft_percent": 89.49375426868525
+    },
+    "P_SIMPLE": {
+      "hard_percent": 86.83436750972297,
+      "n": 512,
+      "soft_percent": 85.44817046261258
+    },
+    "P_VERIFY": {
+      "hard_percent": 86.82862766217376,
+      "n": 512,
+      "soft_percent": 85.44709408039746
+    },
+    "S": {
+      "hard_percent": 86.78337188879384,
+      "n": 512,
+      "soft_percent": 85.44334497432541
+    }
+  },
+  "boundary_displacement": "NA: source per-pixel boundary distances not retained; hard edit counts do not measure directed boundary offsets",
+  "shuffled_32_source": {
+    "matched_P_hard_percent": 91.00849139462063,
+    "n": 32,
+    "shuffled_hard_percent": 91.15605821929772,
+    "shuffled_minus_matched_P_pp": 0.1475668246770874
+  }
+}

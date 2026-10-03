@@ -1,0 +1,15 @@
+condition,backbone_forwards_per_image,head_forwards_per_image,new_source_supervision,target_updates_per_visit,target_BP_optimizer_VJP,standalone_wall_latency,peak_VRAM,origin
+C0,1,0,none,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+H025,2,0,none,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+DS,2,0,none,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+P,2,0,none,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+S,2,0,none,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+P_SIMPLE,2,0,none,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+P_VERIFY,2,0,none,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+D_LOGIT,2,1,2000 optimizer/BP steps per fitted head,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+D_CONTEXT,2,1,2000 optimizer/BP steps per fitted head,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+D_VERIFY,2,1,2000 optimizer/BP steps per fitted head,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+Z_PROBE,2,0,none,0,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+Z_CORE,2,0,none,1,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+Z_BOUND,2,0,none,1,0,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,R16 operations; shared campaign elapsed cost not allocatable per method
+G,,,historical reference,,,NA_NOT_SEPARATELY_MEASURED,NA_NOT_INSTRUMENTED,matched historical stateful reference; not charged as a new R16 deployment
