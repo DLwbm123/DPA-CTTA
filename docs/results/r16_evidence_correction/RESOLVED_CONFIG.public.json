@@ -1,0 +1,136 @@
+{
+  "experiment_id": "R16_EVIDENCE_CORRECTION_V1",
+  "code_sha": "da25ef2b150d22774b6afcecd1ed542a044becaf",
+  "base_sha": "726a66ec6062963bf3244285d1a68468bbfae57b",
+  "origin": {
+    "T0": "2026-10-03T16:00:00+00:00",
+    "T0_epoch": 1791043200.0,
+    "T0_note": "Conservatively rounded earlier than first preparation action; no reset",
+    "absolute_deadline_epoch": 1791129600.0,
+    "authority": "User 2026-10-04 explicitly requested execution on GPU4-7 pool, hourly monitoring, repair, stop monitoring at terminal delivery; attached protocol bounds scientific scope and resources",
+    "base_sha": "726a66ec6062963bf3244285d1a68468bbfae57b",
+    "cache_peak_cap_bytes": 8589934592,
+    "compute_deadline_epoch": 1791127800.0,
+    "experiment_id": "R16_EVIDENCE_CORRECTION_V1",
+    "gpu_pool": [
+      4,
+      5,
+      6,
+      7
+    ],
+    "gpu_worker_cap_seconds": 43200,
+    "max_concurrent_gpu_workers": 2,
+    "normal_compute_deadline_epoch": 1791126000.0,
+    "normal_gpu_budget_seconds": 36000,
+    "recovery_gpu_reserve_seconds": 7200,
+    "user_protocol_sha256": "a9ef9d4b294479130379b9459a37a60b4f9d10dc8a926da6a77b341f23f9e0d7",
+    "wall_cap_seconds": 86400
+  },
+  "execution_version": 3,
+  "preflight_attempt": 2,
+  "qualification_reference_code_sha": "3264b40cc4046cc24d38aab7f359b26e5462942a",
+  "source_indices": [
+    0,
+    4,
+    10,
+    13,
+    16,
+    20,
+    26,
+    29,
+    32,
+    36,
+    42,
+    45,
+    48,
+    52,
+    58,
+    61
+  ],
+  "source_seed": 20261003,
+  "target_Z_seeds": [
+    20261003,
+    20261004
+  ],
+  "conditions": [
+    "C0",
+    "H025",
+    "DS",
+    "P",
+    "S",
+    "P_SIMPLE",
+    "P_VERIFY",
+    "D_LOGIT",
+    "D_CONTEXT",
+    "D_VERIFY",
+    "Z_PROBE",
+    "Z_CORE",
+    "Z_BOUND",
+    "G"
+  ],
+  "ROI": "full_grid",
+  "postprocessing": "none",
+  "scientific_parameters": {
+    "Z_loss": "channel RMS scale, stopped shared FG/BG groups, equal groups/channels",
+    "boundary_radius": 6,
+    "channels": 256,
+    "edit_budget_fraction": 0.02,
+    "feature": "up3",
+    "grid": [
+      128,
+      128
+    ],
+    "head_hidden_channels": 32,
+    "head_input_channels": 269,
+    "head_input_rounding": "float16 -> float32 both source/target",
+    "head_updates": 2000,
+    "interpolation": "bilinear align_corners=False, seeds nearest",
+    "matching_IoU": 0.5,
+    "minimum_levels": 3,
+    "mu_eta": [
+      [
+        0.001,
+        0.0001
+      ],
+      [
+        0.001,
+        0.0005
+      ],
+      [
+        0.003,
+        0.0001
+      ],
+      [
+        0.003,
+        0.0005
+      ]
+    ],
+    "prototype_amplitude": 0.25,
+    "prototype_temperature": 0.1,
+    "seed_erosion_radius": 2,
+    "seed_minimum": 16,
+    "semantic_margin": 0.05,
+    "source_augmentations": "fit identity; val existing frozen simulator",
+    "thresholds": [
+      0.4,
+      0.45,
+      0.5,
+      0.55,
+      0.6
+    ]
+  },
+  "probabilities": "source real soft retained; target probability metrics NA, packed hard masks only",
+  "patient_dependence": "unknown image grouping; exposed DEVELOPMENT",
+  "max_concurrent": 2,
+  "recovery": "one evidenced equivalent infrastructure recovery per physical task",
+  "config_sha256": "2be8aaec7b9e0d3c53d0c7077ac90c8f7d81eb936feca17febbed41d52a44d43",
+  "checkpoint_sha256": "88b7d8902d23fb1c15b27668e0bf02599f8298aa45c38ae90279ae5a1d42bdf0",
+  "tier_selected": "FULL",
+  "target_protocol": {
+    "arrivals_per_order": 1951,
+    "principal_per_order": 1695,
+    "static_second_order": "content-verified reordered reuse",
+    "Z_physical_trajectories": 12,
+    "G": "intact historically matched stateful reference"
+  }
+}
