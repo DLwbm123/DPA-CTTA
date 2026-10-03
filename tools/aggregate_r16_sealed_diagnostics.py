@@ -23,7 +23,7 @@ def write(p, rows):
     if not rows:
         return
     with p.open('w', newline='') as f:
-        w = csv.DictWriter(f, fieldnames=list(rows[0])); w.writeheader(); w.writerows(rows)
+        w = csv.DictWriter(f, fieldnames=list(rows[0]),lineterminator="\n"); w.writeheader(); w.writerows(rows)
 
 
 def latency(values):

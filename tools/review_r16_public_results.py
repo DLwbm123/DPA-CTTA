@@ -7,7 +7,7 @@ def rd(n):return json.loads((p/n).read_text())
 def csvrd(n):return list(csv.DictReader((p/n).open()))
 def csvwr(n,rs):
  with (p/n).open('w',newline='') as f:
-  w=csv.DictWriter(f,fieldnames=list(rs[0]));w.writeheader();w.writerows(rs)
+  w=csv.DictWriter(f,fieldnames=list(rs[0]),lineterminator="\n");w.writeheader();w.writerows(rs)
 s=rd('SUMMARY.json');a={r['condition']:r for r in s};ld=rd('RESOURCE_LEDGER.json');src=rd('SOURCE_MEANS.json');pr=rd('PROTOTYPE_CANDIDATE_DIAGNOSTICS.json');z=csvrd('ADAPTER_LATENCY_DIAGNOSTICS.csv');dc=csvrd('DOMAIN_CHANNEL_RESULTS.csv');me=csvrd('MECHANISM_RESULTS.csv')
 # Read-only derived adverse distributions retain every registered order, not best-seed selection.
 pa=csvrd('PAIRED_RESULTS.csv');tails=[]
