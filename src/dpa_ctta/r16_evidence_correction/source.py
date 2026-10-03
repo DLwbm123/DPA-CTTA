@@ -80,6 +80,45 @@ def preflight(c,guard):
                 max_reserved_bytes=torch.cuda.max_memory_reserved()),target_labels_read=0,config_sha256=sha(c))
     save(root/'SOURCE_PRECHECK.json',result);return dict(passed=True,source_images=32)
 
+def equivalent_cost_profile(c,guard):
+    """Source-only timing after bit-exact CPU optimization; reuse native qualification."""
+    root=Path(c['output_root']);reference=root/'history/v2/SOURCE_PRECHECK.json'
+    prior=read(reference);proof=read(root/'TOPOLOGY_OPTIMIZATION_EQUIVALENCE.json')
+    parity=read(root/'history/v2/SOURCE_OPTIMIZATION_PARITY.json')
+    if not prior['passed'] or not proof['passed'] or not parity['passed']:raise ValueError('equivalent implementation evidence missing')
+    chosen=[(i,0) for i in (0,16,32,48)]
+    # Include the four slowest previously measured source identities, before new timing.
+    ranked=sorted(zip(prior['profile']['static_seconds'],prior['rows']),key=lambda x:-x[0])[:4]
+    for _,row in ranked:
+        pair=(row['episode'],row['visit'])
+        if pair not in chosen:chosen.append(pair)
+    torch.manual_seed(SEED);heads={k:ResidualHead().cuda() for k in ('D_LOGIT','D_CONTEXT')}
+    heads['D_CONTEXT'].load_state_dict(heads['D_LOGIT'].state_dict())
+    stats=dict(mean=torch.zeros(1,269,1,1),std=torch.ones(1,269,1,1));timings=[];io=[]
+    with data(c,guard) as src:
+        guard.meter.attach(src.segmenter.model);before=freeze(src.segmenter);engine=Engine(src.segmenter)
+        try:
+            for episode,visit in chosen:
+                guard();image,_,mode=source_item(src,episode,visit,SEED);guard.extra['image_accesses']+=1
+                torch.cuda.synchronize();start=time.perf_counter()
+                out,diag,_=engine.outputs(image,heads,stats);torch.cuda.synchronize();timings.append(time.perf_counter()-start)
+                guard.extra['head_forwards']+=2
+                for k in ('D_LOGIT','D_CONTEXT','D_VERIFY'):
+                    if not torch.equal(out[k],out['DS']):raise ValueError('zero residual cost-check mismatch')
+                start=time.perf_counter();p=root/'private/profile-io.npz'
+                np.savez_compressed(p,**{k:np.packbits(hard(v)) for k,v in out.items()});p.read_bytes();p.unlink()
+                p=root/'private/profile-trace.json';save(p,diag);p.read_bytes();p.unlink();io.append(time.perf_counter()-start)
+            if before!=freeze(src.segmenter):raise ValueError('mechanical timing modified backbone or BN')
+        finally:engine.close()
+    profile=dict(prior['profile']);profile.update(static_seconds=timings,IO_seconds=io,
+        provenance=dict(static='new source-only mechanical timing',qualification='sealed v2 32-image native qualification plus bit-exact CPU optimization proof',
+            z_pair_seconds='unchanged implementation, v2 measurements retained',train_pair_seconds='unchanged implementation, v2 measurements retained',cache_batch_read_seconds='v2 measurement retained'))
+    result=dict(prior,config_sha256=sha(c),profile=profile,qualification_execution='REUSED_EQUIVALENT_IMPL',
+        qualification_reference_sha256=sha(prior),qualification_reference_code_sha=c['qualification_reference_code_sha'],
+        optimization_proof_sha256=sha(proof),cost_profile_images=len(chosen),cost_profile_source_identities=chosen,target_labels_read=0)
+    save(root/'SOURCE_PRECHECK.json',result)
+    return dict(passed=True,qualification_images_reused=32,mechanical_profile_images=len(chosen),target_access=0)
+
 def calibrate(c,guard):
     root=Path(c['output_root']);results=[]
     with data(c,guard) as src:

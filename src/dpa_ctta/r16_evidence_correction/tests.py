@@ -5,7 +5,7 @@ import numpy as np
 import torch
 from torch import nn
 from .methods import Engine,ResidualHead,residual,normalize_input,INPUT_CHANNELS,resize,prototypes
-from .structure import Tracker,Candidate,hard,largest_filled,containment
+from .structure import Tracker,Candidate,hard,largest_filled,containment,fill_holes,topology
 from .zero_order import Adapter,directions,losses,update
 from ..r15_decision_support.view import supported
 
@@ -61,6 +61,16 @@ class Qualification(unittest.TestCase):
         self.assertTrue(torch.equal(torch.flip(torch.flip(a,(-1,)),(-1,)),a))
         self.assertTrue(torch.equal(resize(a,(4,4),'nearest'),a))
 
+    def test_hole_connectivity_equivalence(self):
+        from scipy import ndimage as ndi
+        rng=np.random.default_rng(20261003)
+        for n in (1,4,16,64):
+            for rate in (0.,.1,.5,.9,1.):
+                a=rng.random((n,n))<rate
+                self.assertTrue(np.array_equal(fill_holes(a),ndi.binary_fill_holes(a)))
+                expected=(int(ndi.label(a,np.ones((3,3)))[1]),int(ndi.label(ndi.binary_fill_holes(a)&~a,np.ones((3,3)))[1]))
+                self.assertEqual(topology(np.stack((a,a))),[expected,expected])
+
     def test_empty_and_conflicting_candidates(self):
         z=torch.full((1,2,16,16),-1.);z[:,:,4:12,4:12]=1
         m=np.ones((2,16,16),bool);protected=np.zeros_like(m);q=torch.full_like(z,.8)
@@ -100,5 +110,5 @@ class Qualification(unittest.TestCase):
 if __name__=='__main__':
     suite=unittest.defaultTestLoader.loadTestsFromTestCase(Qualification)
     result=unittest.TextTestRunner(verbosity=2).run(suite)
-    if result.testsRun!=8:raise RuntimeError('test discovery coverage mismatch')
+    if result.testsRun!=9:raise RuntimeError('test discovery coverage mismatch')
     raise SystemExit(0 if result.wasSuccessful() else 1)

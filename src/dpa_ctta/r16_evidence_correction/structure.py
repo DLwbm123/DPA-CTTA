@@ -18,8 +18,18 @@ def boundary_band(mask,radius):
         out.append(ndi.distance_transform_edt(~edge)<=radius)
     return np.stack(out)
 
+def enclosed_background(a):
+    # scipy binary_fill_holes uses four-connected background reachability.
+    # Label once instead of repeatedly propagating a border flood across the image.
+    lab,n=ndi.label(~a);inside=np.ones(n+1,dtype=bool);inside[0]=False
+    border=np.concatenate((lab[0],lab[-1],lab[:,0],lab[:,-1]))
+    inside[np.unique(border)]=False
+    return inside[lab]
+
+def fill_holes(a):return a|enclosed_background(a)
+
 def topology(mask):
-    return [(int(ndi.label(a,NEIGHBORS)[1]),int(ndi.label(ndi.binary_fill_holes(a)&~a,NEIGHBORS)[1])) for a in mask]
+    return [(int(ndi.label(a,NEIGHBORS)[1]),int(ndi.label(enclosed_background(a),NEIGHBORS)[1])) for a in mask]
 
 def containment(mask):return int((mask[1]&~mask[0]).sum())
 
@@ -30,7 +40,7 @@ def largest_filled(mask):
         if not n:out.append(a.copy());continue
         sizes=np.bincount(lab.ravel());sizes[0]=0
         # scipy's raster-order labels fix ties at the first top-left component.
-        out.append(ndi.binary_fill_holes(lab==int(np.argmax(sizes))))
+        out.append(fill_holes(lab==int(np.argmax(sizes))))
     return np.stack(out)
 
 @dataclass
@@ -100,7 +110,7 @@ class Tracker:
 
     def select(self,candidates,kind='VERIFY',simple_reference=None):
         out=self.b.clone();mask=self.mask.copy();occupied=np.zeros_like(mask);accepted=0
-        rejects={};selected=[]
+        rejects={};selected=[];current_topology=None
         order=sorted(candidates,key=lambda x:(-x.semantic,-len(x.matches),x.channel,int(x.indices[0]),-x.direction, x.threshold if x.threshold is not None else .5))
         for candidate in order:
             c=candidate.channel;idx=candidate.indices;reason=None
@@ -114,9 +124,14 @@ class Tracker:
                 trial=mask.copy();trial[c].ravel()[idx]=candidate.direction==1
                 if np.any(trial!=self.mask,axis=0).sum()>.02*trial.shape[-1]*trial.shape[-2]:reason='edit_budget'
                 elif containment(trial)>containment(mask):reason='containment'
-                elif kind=='VERIFY' and any(a>b for nt,ot in zip(topology(trial),topology(mask)) for a,b in zip(nt,ot)):reason='fragments_or_holes'
+                elif kind=='VERIFY':
+                    if current_topology is None:current_topology=topology(mask)
+                    trial_topology=topology(trial)
+                    if any(a>b for nt,ot in zip(trial_topology,current_topology) for a,b in zip(nt,ot)):reason='fragments_or_holes'
             if reason is not None:rejects[reason]=rejects.get(reason,0)+1;continue
-            mask=trial;out[0,c].flatten()[torch.from_numpy(idx)]=candidate.values
+            mask=trial
+            if kind=='VERIFY':current_topology=trial_topology
+            out[0,c].flatten()[torch.from_numpy(idx)]=candidate.values
             occupied[c].ravel()[idx]=True;accepted+=1;selected.append(candidate.record())
         protected=torch.from_numpy(~occupied).unsqueeze(0)
         if not torch.equal(out[protected],self.b[protected]):raise ValueError('unselected raw logits changed')

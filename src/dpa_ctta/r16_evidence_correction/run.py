@@ -72,6 +72,7 @@ def prepare():
             p=root/'private'/f'{tier}_o{o}.json';save(p,rows);manifests[tier].append(dict(path=str(p),sha256=rows_sha(rows),visits=expected[0],principal=expected[1]))
     c=dict(experiment_id=ID,code_sha=os.environ['RUN_SHA'],base_sha=origin['base_sha'],output_root=str(root),origin=origin,bindings=bindings,
            execution_version=int(os.environ.get('RUN_VERSION','1')),preflight_attempt=int(os.environ.get('RUN_PREFLIGHT_ATTEMPT','0')),
+           qualification_reference_code_sha=os.environ.get('RUN_QUALIFICATION_SHA'),
            gpu_assignments=read(root/'private/gpus.json'),manifests=manifests,source_indices=[16*m+i for m in range(4) for i in (0,4,10,13)],
            source_seed=SEED,target_Z_seeds=[SEED,SEED+1],conditions=list(STATIC)+list(KINDS)+['G'],ROI='full_grid',postprocessing='none',
            scientific_parameters=dict(feature='up3',channels=256,grid=[128,128],prototype_temperature=.1,seed_erosion_radius=2,boundary_radius=6,
@@ -91,7 +92,7 @@ def profile_admit(c):
     for tier,n in (('FULL',1951),('SHORT',1024)):
         target=1.3*(n*(static+io+.13)+12*n*(z+.13)+14*60)
         projected=source+target+charged(c)
-        ok=source<=10800 and target<=21600 and projected<=36000 and time.time()+(source+target)/2<c['origin']['normal_compute_deadline_epoch']
+        ok=source<=10800 and target<=21600 and projected<=36000 and time.time()+source+target<c['origin']['normal_compute_deadline_epoch']
         projections.append(dict(tier=tier,source_seconds=source,target_seconds=target,total_gpu_seconds=projected,admitted=ok))
         if ok and chosen is None:chosen=tier
     result=dict(admitted=chosen is not None,tier=chosen,candidates=projections,safety_factor=1.3,measurements=p,charged_before=charged(c),target_access=0)
@@ -150,7 +151,7 @@ def freeze_target(c,admission):
     root=Path(c['output_root']);z=read(root/'SOURCE_Z.json');d=read(root/'SOURCE_D.json')
     if z['status']!='COMPLETE' or d['status']!='COMPLETE':raise ValueError('source selection incomplete')
     target=next(r['target_seconds'] for r in admission['candidates'] if r['tier']==admission['tier'])
-    if charged(c)+target>36000 or time.time()+target/2>c['origin']['normal_compute_deadline_epoch']:raise RuntimeError('NOT_RUN_BUDGET after source costs')
+    if charged(c)+target>36000 or time.time()+target>c['origin']['normal_compute_deadline_epoch']:raise RuntimeError('NOT_RUN_BUDGET after source costs')
     chosen={k:dict(v,sha256=_digest(Path(v['file']))) for k,v in d['selected'].items()}
     p=dict(experiment_id=ID,config_sha256=sha(c),code_sha=c['code_sha'],checkpoint_sha256=c['bindings']['checkpoint_sha256'],
            source_manifest=c['bindings']['refs']['manifest']['sha256'],source_split=c['bindings']['refs']['split']['sha256'],registration=c['bindings']['refs']['target']['sha256'],
@@ -240,7 +241,7 @@ def worker():
                 with Meter(None,guard.observe) as meter:
                     guard.meter=meter
                     from . import source
-                    if phase=='preflight':result=source.preflight(local,guard)
+                    if phase=='preflight':result=(source.equivalent_cost_profile if c['execution_version']>=3 else source.preflight)(local,guard)
                     elif phase=='source_Z':result=source.calibrate(local,guard)
                     elif phase=='source_D':result=source.train_heads(local,guard)
                     elif phase.startswith('online_'):result=online(c,guard,json.loads(os.environ['RUN_JOB']),json.loads(os.environ['RUN_FAILURE']) if os.environ.get('RUN_FAILURE') else None)
@@ -307,7 +308,7 @@ def supervise():
             state.update(status='SOURCE_SELECTION_RUNNING',tier=admission['tier']);save(root/'RUN_STATE.json',state)
             source_estimate=next(x['source_seconds'] for x in admission['candidates'] if x['tier']==admission['tier'])
             with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-                futures={executor.submit(run_task,c,phase,gpu,min(5400,source_estimate)):phase for phase,gpu in zip(('source_Z','source_D'),c['gpu_assignments'][:2])}
+                futures={executor.submit(run_task,c,phase,gpu,max(30,min(10800-live_charges(c)['source'],source_estimate))):phase for phase,gpu in zip(('source_Z','source_D'),c['gpu_assignments'][:2])}
                 for f in concurrent.futures.as_completed(futures):
                     r=f.result();state['jobs'][futures[f]]=r['status'];save(root/'RUN_STATE.json',state);update_ledger(c,state)
             if any(state['jobs'].get(x)!='COMPLETE' for x in ('source_Z','source_D')):raise RuntimeError('source route failed; preserve all evidence before target')
@@ -318,12 +319,12 @@ def supervise():
             lock=freeze_target(c,admission);state.update(status='TARGET_RUNNING',target_lock_sha256=lock['sha256']);save(root/'RUN_STATE.json',state)
             jobs=[dict(id='STATIC_o0',arm='STATIC',order=0,seed=SEED)]+[dict(id=f'{k}_o{o}_s{s}',arm=k,order=o,seed=s) for k in KINDS for o in (0,1) for s in c['target_Z_seeds']]
             state['jobs'].update({j['id']:'NOT_RUN' for j in jobs});save(root/'RUN_STATE.json',state)
-            per=next(x['target_seconds'] for x in admission['candidates'] if x['tier']==admission['tier']);deadline=time.time()+min(per,21600)/2+600
+            per=next(x['target_seconds'] for x in admission['candidates'] if x['tier']==admission['tier']);deadline=min(time.time()+min(per,21600),c['origin']['normal_compute_deadline_epoch'])
             for offset in range(0,len(jobs),2):
                 batch=jobs[offset:offset+2]
                 if charged(c)>36000-120 or time.time()>deadline:raise RuntimeError('target normal budget stop')
                 with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
-                    futures={executor.submit(run_task,c,'online_'+j['id'],gpu,max(60,min(3600,deadline-time.time())),j):j for j,gpu in zip(batch,c['gpu_assignments'][:2])}
+                    futures={executor.submit(run_task,c,'online_'+j['id'],gpu,max(60,min(per,deadline-time.time())),j):j for j,gpu in zip(batch,c['gpu_assignments'][:2])}
                     for f in concurrent.futures.as_completed(futures):
                         j=futures[f];r=f.result()
                         if r['status']=='FAILED' and r['failure']['classification']=='INFRASTRUCTURE' and charged(c)+900<=43200:
