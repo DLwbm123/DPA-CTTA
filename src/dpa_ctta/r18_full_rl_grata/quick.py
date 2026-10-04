@@ -99,7 +99,7 @@ def supervise():
                     fs={pool.submit(run_task,c,'online_'+j['id'],g,c['origin']['normal_compute_deadline_epoch']-time.time(),j):j for j,g in zip(batch,c['gpu_assignments'])}
                     for f in concurrent.futures.as_completed(fs):state['jobs'][fs[f]['id']]=f.result()['status'];save(root/'RUN_STATE.json',state);base.update_ledger(c,state)
             state['jobs']={k:'NOT_RUN_USER_TIME_LIMIT' if v=='NOT_RUN' else v for k,v in state['jobs'].items()};state['status']='TARGET_MATRIX_TERMINAL';save(root/'RUN_STATE.json',state)
-            row=run_task(c,'score',None,1200);state['jobs']['score']=row['status'];state.update(status='COMPLETE' if row['status']=='COMPLETE' and all(state['jobs'][j['id']]=='COMPLETE' for j in jobs) else 'PARTIAL',target_scores_embargoed=False)
+            row=run_task(c,'score',None,max(30,c['origin']['absolute_deadline_epoch']-time.time()-300));state['jobs']['score']=row['status'];state.update(status='COMPLETE' if row['status']=='COMPLETE' and all(state['jobs'][j['id']]=='COMPLETE' for j in jobs) else 'PARTIAL',target_scores_embargoed=False)
         except BaseException as e:state.update(status='STOPPED',stop_reason=str(e))
         state.update(ended=time.time(),delivery='PENDING_LOCAL_GITHUB');save(root/'RUN_STATE.json',state);base.update_ledger(c,state);report(c,state)
 

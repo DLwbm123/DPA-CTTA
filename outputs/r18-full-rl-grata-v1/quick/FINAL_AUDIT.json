@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "all_six_trajectories_complete": true,
+  "new_visits": 11706,
+  "new_principal": 10170,
+  "scored_rows_with_references": 19510,
+  "principal_with_references": 16950,
+  "source_target_isolation": "source refit cancelled; target image-only workers; independent CPU scoring after all online workers retired",
+  "frozen_parameters": "online_complete requires boundary frozen checks; native BN intentionally adapted, actor/carrier/nonBN unchanged",
+  "full_prefix_reused": 10412,
+  "new_CPU_rows": 1294,
+  "no_GPU_rerun": true,
+  "score_first_attempt_timeout_preserved": true,
+  "all_workers_retired": true,
+  "new_operations": {
+    "backward_calls": 15608,
+    "head_forwards": 0,
+    "image_accesses": 11706,
+    "model_forwards": 93648,
+    "optimizer_steps": 7804,
+    "partial_forwards": 0,
+    "vjp_calls": 0,
+    "zero_order_updates": 0
+  },
+  "campaign_gpu_seconds": 6685.602506160736,
+  "wall_from_original_T0_seconds": 6330.278314828873,
+  "quick_wall_seconds": 4755.11576962471,
+  "three_hour_cap_met": true,
+  "exposed_development": true,
+  "patient_dependence": "unknown",
+  "orders_independent": false,
+  "report_prepared_at": 1791120646.0627658
+}
