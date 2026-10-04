@@ -1,5 +1,13 @@
 # R18 quick full-RL + GraTa results
 
+## Model-only CTTA scope correction (2026-10-04)
+
+The user clarified that the available starting asset is the existing segmentation model only: source images and labels are unavailable for any additional method-specific training. Under this constraint, the RL_ORIGINAL and RL_GRATA candidates do not qualify: their reused R10 actor underwent source-supervised warm-up and source-label-reward RL training. FIXED_GRATA removes the learned action choice but still uses the source-trained B carrier, so it also does not establish a model-only method. No new source retraining in this quick stage does not remove inherited source-data dependencies.
+
+The R17 context/logit correction heads likewise required additional source-supervised fitting; its 77.604693% context result is historical evidence for a source-trained auxiliary module, not a qualifying result under the clarified model-only constraint. See the [annotated R17 report](../../../reports/r17-grata-integrated-v1/REPORT.md). Retain all numerical results, denominators, negative outcomes and costs unchanged. This annotation corrects applicability, not execution validity; no experiment was rerun. Future work under this scope may use only the supplied model and permitted unlabeled target observations, without source-trained auxiliary assets added by this research pipeline.
+
+## Recorded experimental results
+
 Status: COMPLETE. All six new full trajectories and independent CPU scoring are complete. Execution `e2da0680a325a38f0947e101cc84eaa00fd53960`. Frozen config `a5e9c7f4f1f847509c62c0a21332d62f2f8eff8fe5d79cb88595382d6e6a6d31`.
 
 The unchanged full RL policy plus GraTa achieved 74.155734% domain/channel-macro Dice versus GraTa 77.229693% (-3.073959 percentage points). The predeclared priority signal requires at least +0.5 points and both orders positive; it was not met.
