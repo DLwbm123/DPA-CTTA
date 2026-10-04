@@ -1,0 +1,27 @@
+{
+  "all_RL_actions_and_memory_preserved": true,
+  "cache_fit_episodes_reused": 4,
+  "checks": [
+    {
+      "arm": "RL_ORIGINAL",
+      "exact_parity": true,
+      "snapshot_next_image_exact": true
+    },
+    {
+      "arm": "FIXED_GRATA",
+      "exact_parity": true,
+      "snapshot_next_image_exact": true
+    }
+  ],
+  "passed": true,
+  "profiles": {
+    "FIXED_GRATA": 0.8006801861338317,
+    "GR_RET_EMA": 1.95520099112764,
+    "RL_ORIGINAL": 0.4366262136027217,
+    "WARM": 1.2305168830789626,
+    "cache_visit": 0.6273605442802364,
+    "validation_visit": 0.07328565053467173
+  },
+  "qualification_training_discarded": true,
+  "target_accesses": 0
+}

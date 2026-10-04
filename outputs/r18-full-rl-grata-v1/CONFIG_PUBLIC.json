@@ -1,0 +1,57 @@
+{
+  "experiment_id": "R18_FULL_RL_GRATA_V1",
+  "code_sha": "a0691319b00ba46dd652bd2b61d0849e98a09416",
+  "base_sha": "d17c2053572cb9d3f1ab405cf46bd179a263677f",
+  "source_seed": 20260924,
+  "target_seed": 20260924,
+  "native_seed": 20260907,
+  "conditions": [
+    "C0",
+    "G",
+    "RL_ORIGINAL",
+    "RL_GRATA",
+    "FIXED_GRATA",
+    "WARM_GRATA"
+  ],
+  "target_arms": [
+    "RL_ORIGINAL",
+    "RL_GRATA",
+    "FIXED_GRATA",
+    "WARM_GRATA"
+  ],
+  "source": {
+    "RL_epochs": 2,
+    "RL_rounds": 1024,
+    "checkpoint_selection": "fixed endpoints",
+    "episodes": [
+      0,
+      16,
+      32,
+      48,
+      4,
+      20,
+      36,
+      52,
+      8,
+      24,
+      40,
+      56,
+      12,
+      28,
+      44,
+      60
+    ],
+    "folds": [
+      "fit",
+      "val"
+    ],
+    "probe_BN": "last query of four-step window, held fixed for both memory branches",
+    "recipe": "GR_RET_EMA",
+    "visits": 32,
+    "warm_updates": 1000
+  },
+  "coupling": "native GraTa update then exact mirrored BN and full use/write FiLM; GraTa trajectory action-independent",
+  "budget_rule": "FULL only; fail closed if 1.3 projection fails; no arm deletion or retuning",
+  "patient_dependence": "unknown; same exposed DEVELOPMENT images across orders",
+  "max_concurrent": 2
+}

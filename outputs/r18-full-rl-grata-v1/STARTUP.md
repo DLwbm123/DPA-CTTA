@@ -5,7 +5,7 @@ The user authorized this single finite combination experiment. The complete orig
 Execution code: `a0691319b00ba46dd652bd2b61d0849e98a09416`.
 Frozen configuration: `467dfb8d3b207ed2281a14b221402273384995fa3e04cb6f988be5c46cdacd7c`.
 
-Three CPU tests passed. The detached GPU source qualification worker started on authorized GPU4; no target scores have been read. Formal source fitting and target streams require exact-parity and 1.3 measured full-matrix cost admission. This startup record is not a completed experiment or a performance result.
+Three CPU tests and real source exact-parity/continuation qualification passed. Measured 1.3 full-matrix admission passed: remaining source5859.522 GPU seconds, target18066.981 GPU seconds; qualification121.595 GPU seconds (1566 backbone forwards,288 backwards,140 optimizer steps). Formal source training is running on GPU4, with GPU4/5 assigned for target concurrency. No target scores have been read. This startup record is not a completed experiment or a performance result.
 
 New full-stream conditions: RL_ORIGINAL, RL_GRATA, FIXED_GRATA (all actions fixed), WARM_GRATA (supervised warmup only). Each has two 1951-visit/1695-primary orders; new total15608 visits/13560 primary. Matching sealed pure GraTa and C0 references are reused. Two orders are the same images, not independent replication. All development data were previously exposed.
 
