@@ -1,0 +1,223 @@
+{
+  "BN_policy": "native train mode; only BN affine trainable; track_running_stats false; running_mean/var None",
+  "CPU_constructor_allowlist": "PASS",
+  "CPU_synthetic_tests": {
+    "passed": 8,
+    "run": 8,
+    "seconds": 5.268
+  },
+  "ROI_provenance": "UNKNOWN original ROI centers; existing 800x800 ROI used by delegated decision; no recrop",
+  "arrivals": {
+    "counts": [
+      1951,
+      1951
+    ],
+    "order_sha256": [
+      "09a0b4fc8a571ca513ce5bbfd0543c3ef24e4b13931382003c775f1ce27b6190",
+      "73fb1868e0918070b8cdcb7af5ada3018206f88b31e50a0b5b2832a94767d10e"
+    ],
+    "other_roles": {
+      "legacy_dev": 128,
+      "p1_extension_dev": 128
+    },
+    "principal": [
+      1695,
+      1695
+    ],
+    "profile": "four first order0 arrivals; no labels"
+  },
+  "billing": "unique physical phase/attempt incl preflight failures/candidates/diagnostics/replays; rollback does not rollback Meter",
+  "caches": {
+    "capacity": 8,
+    "expiry_arrivals": 64,
+    "history_checks": 1,
+    "main_seeds": 20260907,
+    "memory_initial": "empty per trajectory",
+    "optimizer_initial": "empty per trajectory"
+  },
+  "external_asset_allowlist": [
+    "supplied segmentation checkpoint",
+    "pinned architecture and normalization code",
+    "pinned native GraTa optimizer and augmentations",
+    "registered sequential target image only",
+    "R17 exact sealed scalar references only for independent scorer"
+  ],
+  "forbidden": [
+    "source images/labels",
+    "source feature/cache/scaler/Fisher",
+    "Actor",
+    "B carrier",
+    "correction head",
+    "additional pretrained models"
+  ],
+  "formal_target_arrivals": 0,
+  "historical_scalar_reuse": {
+    "all_pairing_roles_match": true,
+    "checkpoint_match": true,
+    "full_manifests_match": true,
+    "lock_sha256": "11da98f2fb5314de2f9c36ca955364c7a77cc002ee87649ecc6960d6d6b11283",
+    "scalar_refs": [
+      {
+        "condition": "C0",
+        "order": 0,
+        "sha256": "216b30f9705c6f9f60594329f21f025daef38202761d90e2742f091badf05cac"
+      },
+      {
+        "condition": "DS",
+        "order": 0,
+        "sha256": "94fbee1f0f1df98abbb74288a45affd1a6f8f4e082fdd6985a6ea4651279f99f"
+      },
+      {
+        "condition": "C0",
+        "order": 1,
+        "sha256": "3c181bbbba72afb99be31538a2aff55a364fa3b23217994fa1ea4d601cb2d8fe"
+      },
+      {
+        "condition": "DS",
+        "order": 1,
+        "sha256": "d6eedcd34bfeaf586ddbfd7232fcfa7be0bf93385b00b3f514843694817b3024"
+      },
+      {
+        "condition": "G",
+        "order": 0,
+        "sha256": "a5241ff1fe935cb2a1d23a1c41faab92c785d9209ec941f63182a70bea3881a3"
+      },
+      {
+        "condition": "G",
+        "order": 1,
+        "sha256": "bd47ad32a7049ed87801ab58736a067064ddec21c937fa3a27d7f49c2de956df"
+      }
+    ]
+  },
+  "initial_checkpoint_sha256": "88b7d8902d23fb1c15b27668e0bf02599f8298aa45c38ae90279ae5a1d42bdf0",
+  "labels": "separate CPU scorer only after all eight full trajectories retired; online capability denies scorer directory",
+  "model_loaded": true,
+  "preprocessing": "fundus PIL resize512 standard normalization, gamma before normalization",
+  "real_mechanical_checks": {
+    "C0_native_initial_exact": true,
+    "DS_no_auxiliary_asset_finite": true,
+    "G_HALF_readonly_exact": true,
+    "G_MEM_readonly_exact": true,
+    "G_VAL_readonly_exact": true,
+    "G_native_logits_0": true,
+    "G_native_logits_1": true,
+    "G_native_logits_2": true,
+    "G_native_logits_3": true,
+    "G_native_state_0": true,
+    "G_native_state_1": true,
+    "G_native_state_2": true,
+    "G_native_state_3": true,
+    "G_readonly_exact": true,
+    "empty_memory_matches_VAL": true,
+    "real_model_synthetic_resume_exact": true
+  },
+  "real_target_arrivals": 4,
+  "source_reads": 0,
+  "target_label_reads": 0,
+  "trainable_count": 19136,
+  "trainable_parameters": [
+    "res.bn1.weight",
+    "res.bn1.bias",
+    "res.layer1.0.bn1.weight",
+    "res.layer1.0.bn1.bias",
+    "res.layer1.0.bn2.weight",
+    "res.layer1.0.bn2.bias",
+    "res.layer1.1.bn1.weight",
+    "res.layer1.1.bn1.bias",
+    "res.layer1.1.bn2.weight",
+    "res.layer1.1.bn2.bias",
+    "res.layer1.2.bn1.weight",
+    "res.layer1.2.bn1.bias",
+    "res.layer1.2.bn2.weight",
+    "res.layer1.2.bn2.bias",
+    "res.layer2.0.bn1.weight",
+    "res.layer2.0.bn1.bias",
+    "res.layer2.0.bn2.weight",
+    "res.layer2.0.bn2.bias",
+    "res.layer2.0.downsample.1.weight",
+    "res.layer2.0.downsample.1.bias",
+    "res.layer2.1.bn1.weight",
+    "res.layer2.1.bn1.bias",
+    "res.layer2.1.bn2.weight",
+    "res.layer2.1.bn2.bias",
+    "res.layer2.2.bn1.weight",
+    "res.layer2.2.bn1.bias",
+    "res.layer2.2.bn2.weight",
+    "res.layer2.2.bn2.bias",
+    "res.layer2.3.bn1.weight",
+    "res.layer2.3.bn1.bias",
+    "res.layer2.3.bn2.weight",
+    "res.layer2.3.bn2.bias",
+    "res.layer3.0.bn1.weight",
+    "res.layer3.0.bn1.bias",
+    "res.layer3.0.bn2.weight",
+    "res.layer3.0.bn2.bias",
+    "res.layer3.0.downsample.1.weight",
+    "res.layer3.0.downsample.1.bias",
+    "res.layer3.1.bn1.weight",
+    "res.layer3.1.bn1.bias",
+    "res.layer3.1.bn2.weight",
+    "res.layer3.1.bn2.bias",
+    "res.layer3.2.bn1.weight",
+    "res.layer3.2.bn1.bias",
+    "res.layer3.2.bn2.weight",
+    "res.layer3.2.bn2.bias",
+    "res.layer3.3.bn1.weight",
+    "res.layer3.3.bn1.bias",
+    "res.layer3.3.bn2.weight",
+    "res.layer3.3.bn2.bias",
+    "res.layer3.4.bn1.weight",
+    "res.layer3.4.bn1.bias",
+    "res.layer3.4.bn2.weight",
+    "res.layer3.4.bn2.bias",
+    "res.layer3.5.bn1.weight",
+    "res.layer3.5.bn1.bias",
+    "res.layer3.5.bn2.weight",
+    "res.layer3.5.bn2.bias",
+    "res.layer4.0.bn1.weight",
+    "res.layer4.0.bn1.bias",
+    "res.layer4.0.bn2.weight",
+    "res.layer4.0.bn2.bias",
+    "res.layer4.0.downsample.1.weight",
+    "res.layer4.0.downsample.1.bias",
+    "res.layer4.1.bn1.weight",
+    "res.layer4.1.bn1.bias",
+    "res.layer4.1.bn2.weight",
+    "res.layer4.1.bn2.bias",
+    "res.layer4.2.bn1.weight",
+    "res.layer4.2.bn1.bias",
+    "res.layer4.2.bn2.weight",
+    "res.layer4.2.bn2.bias",
+    "up1.bn.weight",
+    "up1.bn.bias",
+    "up2.bn.weight",
+    "up2.bn.bias",
+    "up3.bn.weight",
+    "up3.bn.bias",
+    "up4.bn.weight",
+    "up4.bn.bias",
+    "bnout.weight",
+    "bnout.bias"
+  ],
+  "asset_audit": {
+    "unique_open_paths": 74,
+    "segmentation_checkpoint_only": true,
+    "target_image_files": 4,
+    "scorer_directory_access": false,
+    "private_raw_open_list_retained": true
+  },
+  "CPU_engineering_failure": {
+    "attempt": 0,
+    "status": "RESOLVED_BEFORE_GPU",
+    "reason": "filesystem allowlist omitted interpreter dependency directory; corrected exact runtime root",
+    "GPU_seconds": 0,
+    "target_arrivals": 0
+  },
+  "stage_status": {
+    "implemented": true,
+    "CPU_tested": true,
+    "real_mechanical_tested": true,
+    "formal_run": false,
+    "scored": false
+  }
+}
