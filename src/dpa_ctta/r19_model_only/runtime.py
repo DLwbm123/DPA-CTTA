@@ -54,16 +54,20 @@ def amounts(c):
 
 class Guard:
     def __init__(self,c,phase):
-        self.c=c;self.root=Path(c['output_root']);self.phase=phase;self.deadline=float(os.environ['RUN_DEADLINE']);self.last=0;self.meter=None;self.extra=Counter()
+        self.c=c;self.root=Path(c['output_root']);self.phase=phase;self.deadline=None if c.get('time_budget_removed') else float(os.environ['RUN_DEADLINE']);self.last=0;self.meter=None;self.extra=Counter()
     def observe(self,cost=None):
-        if time.time()>self.deadline-10:raise TimeoutError('task hard deadline')
+        if self.deadline is not None and time.time()>self.deadline-10:raise TimeoutError('task hard deadline')
         if time.monotonic()-self.last<10:return
         total,ph=amounts(self.c)
-        if self.phase!='score':
+        if self.phase!='score' and not self.c.get('time_budget_removed'):
             if total>self.c['origin']['gpu_cap_seconds']-30:raise TimeoutError('8 GPU-hour cap')
             if self.phase=='preflight' and ph.get('preflight',0)>1800-30:raise TimeoutError('profile cap')
             if self.phase.startswith('online_') and sum(v for k,v in ph.items() if k.startswith('online_'))>21600-30:raise TimeoutError('trajectory plus diagnostic stage cap')
-        size=sum(p.stat().st_size for p in self.root.rglob('*') if p.is_file() and not p.is_symlink())
+        size=0
+        for p in self.root.rglob('*'):
+            try:
+                if p.is_file() and not p.is_symlink():size+=p.stat().st_size
+            except FileNotFoundError:pass  # Concurrent atomic metadata replacement.
         if size>self.c['origin']['cache_peak_cap_bytes']:raise RuntimeError('private disk cap')
         save(self.root/'live'/(self.phase+'.json'),dict(at=time.time(),pid=os.getpid(),start_ticks=Path('/proc/self/stat').read_text().split()[21],cost=cost or {},extra=dict(self.extra),disk_bytes=size))
         self.last=time.monotonic()
@@ -135,7 +139,9 @@ def online(c,guard,permit,job):
 
 def worker():
     c=config();root=Path(c['output_root']);phase=os.environ['RUN_PHASE'];start=float(os.environ['RUN_STARTED']);guard=Guard(c,phase);cpu=phase=='score';meter=None;failure=None;result=None
-    torch.set_num_threads(2);torch.set_num_interop_threads(2);timer=threading.Timer(max(.1,guard.deadline-time.time()),lambda:os.killpg(os.getpgrp(),signal.SIGTERM));timer.daemon=True;timer.start()
+    torch.set_num_threads(2);torch.set_num_interop_threads(2);timer=None
+    if guard.deadline is not None:
+        timer=threading.Timer(max(.1,guard.deadline-time.time()),lambda:os.killpg(os.getpgrp(),signal.SIGTERM));timer.daemon=True;timer.start()
     try:
         if cpu:
             if os.environ.get('CUDA_VISIBLE_DEVICES')!='':raise ValueError('CPU-only scorer')
@@ -156,13 +162,14 @@ def worker():
                 result=profile(c,guard,permit) if phase=='preflight' else online(c,guard,permit,json.loads(os.environ['RUN_JOB']))
             save(root/'private'/f'{phase}-asset-reads.json',sorted(opened))
     except BaseException as e:failure=dict(reason=str(e),error_type=type(e).__name__);traceback.print_exc()
-    finally:timer.cancel()
+    finally:
+        if timer is not None:timer.cancel()
     cost=meter.cost.copy() if meter else {};cost.update(guard.extra);cost['gpu_seconds']=0 if cpu else time.time()-start
     row=dict(status='FAILED' if failure else 'COMPLETE',phase=phase,attempt=int(os.environ.get('RUN_ATTEMPT',0)),started=start,ended=time.time(),wall_seconds=time.time()-start,cost=cost,failure=failure,result=result,code_sha=c['code_sha'],config_sha256=sha(c));save(root/'attempts'/f'{phase}.{row["attempt"]}.json',row);return row
 
 def ledger(c,state):
     root=Path(c['output_root']);rows=[read(p) for p in sorted((root/'attempts').glob('*.json'))]
-    x=dict(experiment_id=ID,status=state['status'],T0=c['origin']['T0'],wall_seconds=time.time()-c['origin']['T0_epoch'],gpu_seconds=sum(r['cost'].get('gpu_seconds',0) for r in rows),gpu_cap_seconds=28800,attempts=rows)
+    x=dict(experiment_id=ID,status=state['status'],T0=c['origin']['T0'],wall_seconds=time.time()-c['origin']['T0_epoch'],gpu_seconds=sum(r['cost'].get('gpu_seconds',0) for r in rows),gpu_cap_seconds=None if c.get('time_budget_removed') else 28800,attempts=rows)
     save(root/'RESOURCE_LEDGER.json',x);return x
 
 def admission(c):
@@ -171,28 +178,67 @@ def admission(c):
     a['admitted']=a['admitted'] and time.time()+(normal+diagnostic)/2<c['origin']['normal_compute_deadline_epoch']
     save(Path(c['output_root'])/'PROFILE_ADMISSION.json',a);return a
 
+def run_task(c,phase,assignment,seconds,job=None):
+    if not c.get('time_budget_removed'):return base.run_task(c,phase,assignment,seconds,job)
+    root=Path(c['output_root']);start=time.time();path=root/'attempts'/f'{phase}.0.json'
+    if path.exists():raise ValueError('task already attempted')
+    env=dict(os.environ,RUN_MODE='worker',RUN_PHASE=phase,RUN_CONFIG_SHA=sha(c),RUN_STARTED=str(start),RUN_DEADLINE='',RUN_ASSIGNMENT=json.dumps(assignment),RUN_ATTEMPT='0',CUDA_VISIBLE_DEVICES='' if phase=='score' else str(assignment['physical_id']))
+    if job:env['RUN_JOB']=json.dumps(job)
+    with (root/'logs'/f'{phase}.0.log').open('ab') as f:
+        p=subprocess.Popen([sys.executable,os.environ['RUN_ENTRY']],env=env,start_new_session=True,stdout=f,stderr=subprocess.STDOUT)
+        ident=base.process_identity(p);ident.update(phase=phase,assignment=assignment,started=start,deadline=None,attempt=0);save(root/'processes'/f'{phase}.json',ident)
+        p.wait()
+        ident.update(active=False,ended=time.time(),exit_code=p.returncode);save(root/'processes'/f'{phase}.json',ident)
+    if path.exists():return read(path)
+    result=dict(status='FAILED',phase=phase,attempt=0,started=start,ended=time.time(),wall_seconds=time.time()-start,cost=dict(gpu_seconds=0 if phase=='score' else time.time()-start),failure=dict(reason='worker exited without receipt',error_type='MissingReceipt',exit_code=p.returncode),code_sha=c['code_sha'])
+    save(path,result);return result
+
+
+def watch():
+    c=config()
+    if not c.get('time_budget_removed'):base.config=config;return base.watch()
+    root=Path(c['output_root']);p=subprocess.Popen([sys.executable,os.environ['RUN_ENTRY']],env=dict(os.environ,RUN_MODE='supervise'),start_new_session=True)
+    save(root/'watchdog.json',dict(pid=os.getpid(),supervisor_pid=p.pid,absolute_deadline=None,time_budget_removed=True))
+    try:p.wait()
+    finally:
+        for f in (root/'processes').glob('*.json'):
+            a=read(f);stat=Path(f'/proc/{a["pid"]}/stat')
+            if a['active'] and stat.exists() and stat.read_text().split()[21]==a['start_ticks']:
+                try:os.killpg(a['pgid'],signal.SIGTERM)
+                except ProcessLookupError:pass
+
 def supervise():
     c=config();root=Path(c['output_root']);state=read(root/'RUN_STATE.json');jobs=[dict(id=f'{a}_o{o}',arm=a,order=o) for a in ARMS for o in (0,1)]
     with lease(root/'supervisor_control',dict(experiment_id=ID,config=sha(c))):
-        if (root/'execution_started.json').exists():raise ValueError('execution already started')
-        save(root/'execution_started.json',dict(at=time.time(),pid=os.getpid(),config_sha256=sha(c)))
+        resuming=c.get('time_budget_removed',False)
+        marker=root/('user_resumed_execution.json' if resuming else 'execution_started.json')
+        if marker.exists():raise ValueError('execution already started')
+        if resuming:
+            if state['status']!='NOT_RUN_BUDGET' or (root/'target').exists():raise ValueError('only original budget-stop before formal visits may start')
+            pf=read(root/'PREFLIGHT.json')
+            if pf['status']!='PASS' or sha(pf)!=c['reused_preflight_sha256']:raise ValueError('preflight reuse identity')
+        save(marker,dict(at=time.time(),pid=os.getpid(),config_sha256=sha(c)))
         try:
-            state.update(status='PREFLIGHT_RUNNING');save(root/'RUN_STATE.json',state)
-            r=base.run_task(c,'preflight',c['gpu_assignments'][0],1800);state['jobs']['preflight']=r['status'];ledger(c,state)
-            if r['status']!='COMPLETE':raise RuntimeError('NOT_RUN_QUALIFICATION')
-            a=admission(c)
-            if not a['admitted']:raise RuntimeError('NOT_RUN_BUDGET')
+            if not resuming:
+                state.update(status='PREFLIGHT_RUNNING');save(root/'RUN_STATE.json',state)
+                r=run_task(c,'preflight',c['gpu_assignments'][0],1800);state['jobs']['preflight']=r['status'];ledger(c,state)
+                if r['status']!='COMPLETE':raise RuntimeError('NOT_RUN_QUALIFICATION')
+                a=admission(c)
+                if not a['admitted']:raise RuntimeError('NOT_RUN_BUDGET')
+            else:
+                state.update(reason=None,ended=None,delivery='RESULTS_PENDING',online_workers_retired=False,time_budget_removed=True,preflight_reused=True)
+                ledger(c,state)
             state.update(status='TARGET_RUNNING');state['jobs'].update({j['id']:'NOT_RUN' for j in jobs});save(root/'RUN_STATE.json',state)
             for offset in range(0,8,2):
                 for j in jobs[offset:offset+2]:state['jobs'][j['id']]='RUNNING'
                 save(root/'RUN_STATE.json',state)
                 with concurrent.futures.ThreadPoolExecutor(max_workers=2) as ex:
-                    fs={ex.submit(base.run_task,c,'online_'+j['id'],gpu,10800,j):j for j,gpu in zip(jobs[offset:offset+2],c['gpu_assignments'])}
+                    fs={ex.submit(run_task,c,'online_'+j['id'],gpu,10800,j):j for j,gpu in zip(jobs[offset:offset+2],c['gpu_assignments'])}
                     for f in concurrent.futures.as_completed(fs):
                         j=fs[f];r=f.result();state['jobs'][j['id']]=r['status'];save(root/'RUN_STATE.json',state);ledger(c,state)
                 if any(state['jobs'][j['id']]=='FAILED' for j in jobs[offset:offset+2]):raise RuntimeError('target failure; preserve exact evidence before any recovery')
             state.update(status='TARGET_MATRIX_TERMINAL');save(root/'RUN_STATE.json',state)
-            r=base.run_task(c,'score',None,7200);state['jobs']['score']=r['status'];state.update(status='COMPLETE' if r['status']=='COMPLETE' else 'SCORE_FAILED',target_scores_embargoed=r['status']!='COMPLETE')
+            r=run_task(c,'score',None,7200);state['jobs']['score']=r['status'];state.update(status='COMPLETE' if r['status']=='COMPLETE' else 'SCORE_FAILED',target_scores_embargoed=r['status']!='COMPLETE')
         except BaseException as e:
             traceback.print_exc();state.update(status=str(e) if str(e).startswith('NOT_RUN_') else 'STOPPED',reason=str(e));state['jobs']={k:'NOT_RUN_STOPPED' if v in ('NOT_RUN','RUNNING') else v for k,v in state['jobs'].items()}
         state.update(ended=time.time(),delivery='PENDING_LOCAL_GITHUB');save(root/'RUN_STATE.json',state);ledger(c,state)
@@ -203,5 +249,5 @@ def main():
     mode=os.environ['RUN_MODE']
     if mode=='worker':r=worker();sys.exit(0 if r['status']=='COMPLETE' else 1)
     elif mode=='supervise':supervise()
-    elif mode=='watch':base.config=config;base.watch()
+    elif mode=='watch':watch()
     else:raise ValueError('unknown mode')

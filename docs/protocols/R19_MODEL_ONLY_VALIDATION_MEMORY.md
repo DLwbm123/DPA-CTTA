@@ -216,3 +216,9 @@ C0 沿用既有 current-image-statistics BN 的无梯度基线，不是使用源
 本轮仅此矩阵，不启用 R20，也不自动恢复此前已结束的每小时监测。依全局实验交付约定，实际终态后发布脱敏结果与报告。部署状态、测试与运行回执分列，不将实现当作实验完成。
 
 Cost admission assumes a nonempty memory: when mechanical decisions leave it empty, two additional measured read-only forwards are explicitly charged to the profile estimate. Eight generated-input CPU tests passed (5.268 s), including forced rejection output/state and arrival-based memory expiry. Source and target image reads for those tests were zero.
+
+## User amendment: remove time budgets and start (2026-10-04)
+
+The user explicitly instructed “取消时间预算，直接开始”. This overrides all wall-time, GPU-worker-hour, phase and per-worker time caps and the budget-admission stop for this R19 matrix. The run remains exactly the same four arms and eight full trajectories; no added methods, seeds, source data or successor. Existing PASS qualification is reused without another profile. Original T0, 32.58120656013489 GPU seconds, attempts and the already-published budget-stop report remain preserved. The resource estimate is informational, not an admission gate. Actual costs continue accumulating.
+
+A separately recorded, one-time user resumption marker allows the previously budget-stopped matrix to start only if no formal target directory exists and the PASS preflight seal matches. Existing locking, maximum two workers, GPU pool 4–7, actual VRAM/NFS admission, 64 GiB disk cap, model-only restrictions and all-eight-before-labels embargo remain. There is no replacement hidden runtime cutoff. Processes run detached until the finite matrix and independent scoring finish or an actual error occurs. The removal does not authorize repeating failed scientific trials or automatic successors.
