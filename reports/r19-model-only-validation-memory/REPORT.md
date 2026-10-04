@@ -1,3 +1,5 @@
+> **Status update:** The user removed time budgets and the full matrix has now started. The budget-stop account below is historical; see [STARTUP.md](STARTUP.md). New effectiveness results are pending.
+
 # R19: model-only GraTa validation and history checks
 
 **NOT_RUN_BUDGET.** Implementation and mechanical qualification passed. The eight formal trajectories did not start, and no new target labels or scores were read. This is a resource-admission result, not evidence for or against the methods.
