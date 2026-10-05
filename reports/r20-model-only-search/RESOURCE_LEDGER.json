@@ -8,12 +8,13 @@
       "cost": {
         "backward_calls": 24,
         "cpu_seconds": 0,
-        "disk_bytes": 0,
+        "disk_bytes": null,
         "gpu_seconds": 19.430090188980103,
         "image_accesses": 12,
         "model_forwards": 108,
         "optimizer_steps": 12,
-        "vjp_calls": 0
+        "vjp_calls": 0,
+        "disk_measurement": "NA: not measured separately per attempt"
       },
       "ended": 1791175174.0092304,
       "failure": null,
@@ -51,12 +52,13 @@
       "cost": {
         "backward_calls": 12,
         "cpu_seconds": 0,
-        "disk_bytes": 0,
+        "disk_bytes": null,
         "gpu_seconds": 15.394721269607544,
         "image_accesses": 12,
         "model_forwards": 96,
         "optimizer_steps": 12,
-        "vjp_calls": 0
+        "vjp_calls": 0,
+        "disk_measurement": "NA: not measured separately per attempt"
       },
       "ended": 1791175196.7979908,
       "failure": null,
@@ -94,12 +96,13 @@
       "cost": {
         "backward_calls": 48,
         "cpu_seconds": 0,
-        "disk_bytes": 0,
+        "disk_bytes": null,
         "gpu_seconds": 25.8612380027771,
         "image_accesses": 12,
         "model_forwards": 216,
         "optimizer_steps": 24,
-        "vjp_calls": 0
+        "vjp_calls": 0,
+        "disk_measurement": "NA: not measured separately per attempt"
       },
       "ended": 1791175180.4371982,
       "failure": null,
@@ -150,12 +153,13 @@
       "cost": {
         "backward_calls": 24,
         "cpu_seconds": 0,
-        "disk_bytes": 0,
+        "disk_bytes": null,
         "gpu_seconds": 18.22604727745056,
         "image_accesses": 12,
         "model_forwards": 120,
         "optimizer_steps": 12,
-        "vjp_calls": 0
+        "vjp_calls": 0,
+        "disk_measurement": "NA: not measured separately per attempt"
       },
       "ended": 1791175199.6319137,
       "failure": null,
@@ -193,12 +197,13 @@
       "cost": {
         "backward_calls": 48,
         "cpu_seconds": 0,
-        "disk_bytes": 0,
+        "disk_bytes": null,
         "gpu_seconds": 23.45973014831543,
         "image_accesses": 12,
         "model_forwards": 216,
         "optimizer_steps": 24,
-        "vjp_calls": 0
+        "vjp_calls": 0,
+        "disk_measurement": "NA: not measured separately per attempt"
       },
       "ended": 1791175204.8639596,
       "failure": null,
@@ -236,12 +241,13 @@
       "cost": {
         "backward_calls": 24,
         "cpu_seconds": 0,
-        "disk_bytes": 0,
+        "disk_bytes": null,
         "gpu_seconds": 18.97952890396118,
         "image_accesses": 12,
         "model_forwards": 132,
         "optimizer_steps": 12,
-        "vjp_calls": 0
+        "vjp_calls": 0,
+        "disk_measurement": "NA: not measured separately per attempt"
       },
       "ended": 1791175200.3821318,
       "failure": null,
@@ -279,12 +285,13 @@
       "cost": {
         "backward_calls": 24,
         "cpu_seconds": 0,
-        "disk_bytes": 0,
+        "disk_bytes": null,
         "gpu_seconds": 20.2077317237854,
         "image_accesses": 12,
         "model_forwards": 132,
         "optimizer_steps": 12,
-        "vjp_calls": 0
+        "vjp_calls": 0,
+        "disk_measurement": "NA: not measured separately per attempt"
       },
       "ended": 1791175174.7842872,
       "failure": null,
@@ -322,12 +329,13 @@
       "cost": {
         "backward_calls": 24,
         "cpu_seconds": 0,
-        "disk_bytes": 0,
+        "disk_bytes": null,
         "gpu_seconds": 19.7761173248291,
         "image_accesses": 12,
         "model_forwards": 108,
         "optimizer_steps": 12,
-        "vjp_calls": 0
+        "vjp_calls": 0,
+        "disk_measurement": "NA: not measured separately per attempt"
       },
       "ended": 1791175174.3541863,
       "failure": null,
@@ -365,5 +373,8 @@
   "gpu_cap_seconds": 172800,
   "gpu_worker_seconds": 161.33520483970642,
   "status": "TESTED",
-  "wall_seconds": 2339.86905503273
+  "wall_seconds": 2339.86905503273,
+  "disk_measurement": "Actual total campaign directory bytes; per-attempt disk is not separately measured",
+  "mechanical_test_body_seconds": 43.073,
+  "mechanical_test_timing_scope": "Measured unittest bodies including failures; process initialization remains in campaign wall time"
 }
