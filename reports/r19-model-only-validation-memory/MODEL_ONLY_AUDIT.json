@@ -50,7 +50,7 @@
     "correction head",
     "additional pretrained models"
   ],
-  "formal_target_arrivals": 0,
+  "formal_target_arrivals": 15608,
   "historical_scalar_reuse": {
     "all_pairing_roles_match": true,
     "checkpoint_match": true,
@@ -199,25 +199,13 @@
     "bnout.weight",
     "bnout.bias"
   ],
-  "asset_audit": {
-    "unique_open_paths": 74,
-    "segmentation_checkpoint_only": true,
-    "target_image_files": 4,
-    "scorer_directory_access": false,
-    "private_raw_open_list_retained": true
-  },
-  "CPU_engineering_failure": {
-    "attempt": 0,
-    "status": "RESOLVED_BEFORE_GPU",
-    "reason": "filesystem allowlist omitted interpreter dependency directory; corrected exact runtime root",
-    "GPU_seconds": 0,
-    "target_arrivals": 0
-  },
+  "online_target_label_reads": 0,
+  "independent_CPU_scorer_label_visits": 15608,
   "stage_status": {
-    "implemented": true,
-    "CPU_tested": true,
-    "real_mechanical_tested": true,
-    "formal_run": false,
-    "scored": false
-  }
+    "IMPLEMENTED": true,
+    "TESTED": true,
+    "RUN": true,
+    "SCORED": true
+  },
+  "legacy_target_label_reads_field_scope": "online workers only; separate CPU scorer visits recorded above"
 }

@@ -1,53 +1,75 @@
-> **Status update:** The user removed time budgets and the full matrix has now started. The budget-stop account below is historical; see [STARTUP.md](STARTUP.md). New effectiveness results are pending.
+# R19：仅模型 CTTA 的验收与历史检查实验
 
-# R19: model-only GraTa validation and history checks
+**已完成。原生 GraTa 表现最好；本轮三个固定新条件均未超过 GraTa，均未达到继续确认的主要门槛。**
 
-**NOT_RUN_BUDGET.** Implementation and mechanical qualification passed. The eight formal trajectories did not start, and no new target labels or scores were read. This is a resource-admission result, not evidence for or against the methods.
+8 条完整轨迹、15,608 次在线到达和 13,560 个主评价观察全部完成。全部在线 worker 退出后，独立 CPU scorer 才读取标签。GraTa 两条新轨迹与历史逐图 hard Dice、交集及预测/真值像素数完全一致，最大差为 0。
 
-| Stage | Evidence |
-|---|---|
-| Implemented | G, G_HALF, G_VAL and G_MEM; execution commit `bf4db71ad923ffccfc1cca53fd988c6eb7e5c2c2` |
-| CPU tested | 8 generated-input tests passed in 5.268 s |
-| Model-only asset audit | Supplied segmentation checkpoint only; 19,136 trainable BN-affine parameters |
-| Real mechanical qualification | PASS on 4 sequential unlabeled arrivals; all 16 recorded checks true |
-| Formal online matrix | NOT_RUN_BUDGET; 0 / 15,608 visits |
-| Independent scoring | NOT_RUN; 0 / 13,560 principal observations |
-| Worker retirement | Supervisor, watchdog and GPU worker exited; no active R19 worker |
-| Effectiveness | NA for every new method, domain, channel and order |
+本报告替代此前的预算未准入状态。用户随后明确取消全部时间预算，沿用原始 T0 与预检成本，直接启动同一矩阵；没有重复预检、删减条件或缩短流。原始预算停止证据保留在历史提交 `7b3aa45f10371f28d32179b99208260f63384d78`，启动修订见 `STARTUP.md`。保留的 `PROFILE_ADMISSION.json` 仅记录该历史预算判断，当前不再是停止条件。
 
-## Why execution stopped
+## 主结果
 
-The frozen allocation was 0.5 GPU hours for profile, 5 for ordinary full trajectories, 1 for sparse diagnostics, and 1.5 reserved for recovery (8 total). The measured profile, including a 1.3 factor, 0.20 s per arrival for I/O and 60 s per trajectory for startup/closure, projected:
+指标为四域 × OD/OC 八个单元等权宏平均，再对两顺序平均；以下均为百分数或百分点（pp）。C0/DS 是精确匹配的封存参考，其余为本轮新运行。
 
-| Allocation | Projected GPU-worker hours | Frozen allowance |
-|---|---:|---:|
-| Ordinary eight full trajectories | 6.798266 | 5.0 |
-| Additional sparse diagnostics | 0.183131 | 1.0 |
-| Already charged profile | 0.009050 | 0.5 |
-| Total including already charged profile | 6.990447 | 6.5 normal, excluding recovery reserve |
+| 条件 | 顺序 0 Dice % | 顺序 1 Dice % | 两顺序宏平均 % | 较 G pp | 图像加权平均 % | 提交更新比例 % |
+|---|---:|---:|---:|---:|---:|---:|
+| C0：不适配 | 75.079420 | 75.079420 | 75.079420 | -2.150273 | 74.352691 | NA |
+| DS：固定水平翻转融合 | 75.239183 | 75.239183 | 75.239183 | -1.990510 | 74.616456 | NA |
+| G：原生 GraTa | 77.372100 | 77.087285 | 77.229693 | +0.000000 | 76.771082 | 100.000 |
+| G_HALF：动态步长 ×0.5 | 76.500096 | 76.306948 | 76.403522 | -0.826171 | 75.993328 | 100.000 |
+| G_VAL：当前图像验收 | 76.528665 | 76.754806 | 76.641735 | -0.587958 | 76.296852 | 35.161 |
+| G_MEM：验收 + 历史检查 | 75.692235 | 75.758137 | 75.725186 | -1.504507 | 75.137922 | 21.348 |
 
-Although the total projection is below the absolute 8-hour cap, it exceeds both the ordinary-trajectory allocation and the 6.5-hour normal budget. The runner did not silently spend the 1.5-hour recovery reserve or move phase allocations. These are GPU-worker hours, not a wall-clock promise. Profile timing used only four images and is a conservative admission estimate, not a full-run speed benchmark. No shorter stream, removed arm, changed threshold or second profile was used to obtain admission.
+三个新条件相对 G 的两个顺序差值都为负，图像加权差值也为负；主要信号全部为 false。G_VAL 相对 G_HALF 平均 +0.238213 pp（顺序 0 +0.028569，顺序 1 +0.447858），但仍比 G 低 0.587958 pp。G_MEM 相对 G_VAL 平均 −0.916549 pp，两顺序均负，未达到预设 +0.2 pp 的记忆额外价值信号。
 
-## What passed
+## 最差退化与边界指标
 
-Generated-input tests checked faithful native GraTa logits/Adam/random state, read-only state isolation, forced rejection returning the pre-update output and restoring BN/Adam/gradients, exact next-image continuation from a snapshot, empty-memory equivalence, half-step learning-rate scaling, diagnostic isolation, and arrival-based memory expiry. The real-model check matched new G to native G on all four arrivals in logits and persistent state, verified C0 initial native output and finite fixed DS inference, and checked synthetic next-image restoration on the actual model. These tests do not establish full historical G score reproduction; that remains NOT_RUN.
+| 新条件 | 最差单元 | 顺序 | 主评价 n | 相对 G pp | 超过 2 pp 退化风险 |
+|---|---|---:|---:|---:|---|
+| G_HALF | ORIGA / OC | 0 | 586 | -3.042789 | 是 |
+| G_VAL | ORIGA / OC | 0 | 586 | -2.462110 | 是 |
+| G_MEM | ORIGA / OC | 0 | 586 | -5.965244 | 是 |
 
-The first CPU constructor audit encountered an interpreter dependency directory omitted from the filesystem allowlist. The exact runtime directory was added; the CPU-only failure and its zero GPU/target-access cost were retained. No scientific condition changed, no source image qualification was performed, and no GPU qualification was repeated.
+所有新条件都触发了预设的最差单元风险标记。结果并非所有域同向：例如 REFUGE_Valid/OC 的部分差值为正，但不足以抵消 ORIGA 等单元的损失；完整差值保留在 `domain-channel.csv`，未删去负域。
 
-## Model-only and data limits
+每条新轨迹的全部 1,695 个主评价图像、两个通道均有有限 ASSD；各域/通道有效分母分别为 Drishti_GS 37、ORIGA 586、REFUGE 336、REFUGE_Valid 736，未定义分母均为 0。所有新轨迹在线图像的空前景率为 0，主评价 OD/OC 包含违例像素数为 0；连通分量/孔洞均值见 `main.csv`。这些结构检查通过不等于准确率提升或临床安全。
 
-The only learned asset loaded was the supplied segmentation checkpoint (SHA `88b7d8902d23fb1c15b27668e0bf02599f8298aa45c38ae90279ae5a1d42bdf0`). No source images, source labels, source features/scaler/Fisher, actor, B carrier, auxiliary correction head or additional pretrained model were loaded. Native GraTa uses current-image BN statistics and only updates BN affine parameters; all other parameters remain frozen. Every formal trajectory would start from the original checkpoint and empty Adam/memory state.
+| 条件 | OD Dice % | OC Dice % | 真实 soft Dice 宏平均 % | Brier 宏平均 |
+|---|---:|---:|---:|---:|
+| C0 | 83.269851 | 66.888990 | NA | NA |
+| DS | 83.410275 | 67.068091 | NA | NA |
+| G | 85.722465 | 68.736921 | 76.456938 | 0.027817187 |
+| G_HALF | 84.848164 | 67.958879 | 75.682707 | 0.029305021 |
+| G_VAL | 84.945411 | 68.338060 | 75.919189 | 0.028993556 |
+| G_MEM | 84.054704 | 67.395668 | 75.031478 | 0.030456051 |
 
-Existing 800×800 ROI inputs were retained after the user delegated that decision. The original crop-center provenance is **UNKNOWN**. Any later findings are conditional on the provided ROIs; neither this audit nor the code proves the original ROI preparation was label-free. Online inference does no label-derived recropping. The host receives the current image tensor, without domain or role fields; raw file metadata stays in the input capability. The separate scorer directory is denied to online workers.
+soft Dice/Brier 使用独立评分阶段读取的真实 float32 概率与标签；不是从二值 mask 伪造。C0、DS 和历史 G 的概率指标为 NA。逐图配对改善、持平、退化数及分布见 `paired.csv`，每个顺序配对分母均为 1,695。
 
-Each registered order contains 1,951 arrivals: 1,695 remaining_dev, 128 legacy_dev and 128 p1_extension_dev. All were previously exposed development content; both orders use the same images and patient dependence is unknown. They are not independent patient replications. Only the first four order-0 arrivals were accessed for mechanical checks, sequentially, without labels. Historical C0/DS/G scalar seals, checkpoint/manifest identity and exact content/role/order pairing were checked for potential reference reuse. C0 denotes historical current-image-statistics inference, not source-running-statistics inference; DS is fixed horizontal-flip inference. Historical hard-mask metrics cannot supply soft probability metrics.
+## 验收与记忆机制
 
-## Costs and limits
+G_VAL 提交 657/1951 和 715/1951 次更新（合计 35.161%）；G_MEM 提交 427/1951 和 406/1951 次（21.348%）。在 G_MEM 各自轨迹上，历史检查各否决了 365 次已通过当前验证的候选。没有验收不可用或面积规则拒绝；主要拒绝来自验证改善不足以及历史代理损坏。
 
-Actual GPU-worker cost: **32.581206560 seconds**. Physical counts: **286 forwards, 46 backward calls, 23 optimizer steps, 0 VJP calls**. Four real image reads were reused across the four mechanical hosts and native reference; two extra generated-input visits tested actual-model continuation. The profile also measured additional history forwards where memory was empty, avoiding an underestimated G_MEM projection. All candidate, half-diagnostic, rejected-update and mechanical work is included. Formal target visits and target-label reads remain zero.
+G_MEM 每顺序的空记忆次数为 3、1，平均检查条目年龄约 36.35、36.12 次到达，写入 427、406，容量淘汰 338、324，到期移除 81、74。记忆并非长期为空；此固定历史保守规则进一步抑制更新，同时效果变差。不能由此推出所有记忆方法都无效，但本轮不支持保留这个模块。候选被拒绝仍已发生两次反向与一次尝试 Adam 更新，不是节省了候选计算。
 
-The 8-condition rows in `main.csv` and every domain/channel row are explicit NOT_RUN/NA, rather than zero Dice or fabricated performance. Zero scored observations do not mean zero undefined-ASSD cases; the latter is NA. Source-side performance is not applicable. No R20 or other successor was launched.
+## 稀疏反事实诊断
 
-The frozen scientific protocol and configuration accompany the code. The raw checkpoint, images, labels, content identifiers, per-image outputs, memory and machine paths remain private. Public delivery contains code, configuration, aggregated mechanical evidence, cost ledger and this negative resource-admission result.
+每条 G 轨迹固定采样 122 个位置；其中主评价位置为 107、105，总计 212 个。全部标签诊断都在八条轨迹终结之后。原生 full 候选的验证改善与真实单步 Dice 改变量 Spearman 为 0.1596、0.2070；有害更新识别 AUROC 为 0.5556、0.5512。这些数据表明本轮代理识别力较弱，不能将一致性改善当成可靠的正确率改善。
 
-Public source commit: `3461e1a0edb23660a3190c3689437032511c81d7`. Before publication, three private server-directory literal occurrences were replaced with equivalent paths derived from the configured output directory. Path equivalence was checked; scientific and scoring behavior did not change and no computation was repeated. The execution receipt retains the original private commit above. See `SOURCE_EXPORT.json`.
+在这两个主评价诊断集合中，full 候选验收仍接受了 10、13 次有害更新，拒绝了 47、34 次有益更新。半步候选的 AUROC 为 0.5230、0.5261。相同更新前状态下 skip/half/full 的局部最佳相对 full 仅高 0.001986、0.003566 pp；相对 half 高 0.009606、0.009537 pp。它们只是被采样 G 状态上的单步机会，不是整条轨迹的 oracle 上界，更不是对长期 RL 潜力的排除。
+
+## 完整性、数据与资产边界
+
+- 四个条件 × 两完整顺序，每条 1,951 次到达、1,695 主评价；额外 128 legacy_dev 与 128 p1_extension_dev 角色按原登记继承。各条件内容身份、顺序与角色配对完整。
+- 每条轨迹从同一原始 checkpoint、空 Adam 与空记忆开始。native seed 20260907；验证/记忆选择是固定规则，不制造多个独立训练种子。BN affine 按 GraTa 适配，其余参数在 checkpoint 和终结处冻结检查通过。
+- 只加载分割 checkpoint 及必要代码/预处理，没有源图像、源标签、旧 actor、carrier、scaler/Fisher、额外纠错头或新预训练模型。在线标签读取为 0；独立 CPU scorer 标签访问为 15,608 次，完整在线退休时间早于 scorer 启动。
+- 既有 800×800 ROI 的最初裁剪中心来源仍为 UNKNOWN。用户授权沿用，不重新按标签裁剪；结论只适用于提供的 ROI，不能声称从原始图像准备起全流程都已证明无标签。
+- 全部是已多次暴露的开发数据；两个顺序使用同一批图像，患者依赖未知。没有独立确认、患者级显著性或临床效果结论。
+
+## 成本与交付
+
+正式 GPU 轨迹于北京时间 2026-10-04 22:56:19 启动，2026-10-05 02:23:22 全部结束；CPU 独立评分于 02:49:00 完成。正式执行加评分墙钟约 3 小时 53 分钟。原始 T0 后累计墙钟 15,798.403 秒包含前期准备/预算停止过程，不与 GPU-worker 成本混用。
+
+总 GPU-worker 22450.465364218 秒（6.236240 GPU 小时），包含原预检 32.581206560 秒。CPU scorer 墙钟 1536.806767 秒。物理操作为 199,038 F、31,750 BP、15,875 次 optimizer step、0 VJP；历史张量访问 7,796 次另列，真实图像读取 15,612 次含预检 4 次。`cost.csv` 保留各条件每顺序的费用。其旧 Meter 的 disk_bytes=0 表示该计数器未计量，不能解释为没有存储；结束检查时运行目录占用 38,698,392,860 字节。G 自身成本含预注册稀疏诊断，不能直接当成裸 GraTa 部署延迟。拒绝和诊断没有回滚成本账本。
+
+正式运行没有失败或恢复。历史 CPU allowlist 工程修复、预算未准入和用户解除预算均保留；未把这些过程当作方法性能失败。状态汇总中的到达/评分/退休字段曾停留在启动值，现依据完成回执修正；修正不重跑推理、评分或改变任何指标。原始 `SOURCE_EXPORT.json` 仅描述初次预检代码的公开路径去敏；本次八条正式轨迹的执行 SHA 是 `5b62515d9cf433a80993c1f0cc7247e70de91028`，冻结配置 SHA 是 `03d7373078062a18c638b6873cd731ad72c7057d6517f00f8b00b0e147fd8eec`。
+
+交付包括源码、冻结修订、完整聚合表、负结果、审计及资源账本；原始图像、标签、内容标识、逐图概率、记忆及权重保持私有。当前方法组合没有超过 GraTa，记忆没有额外价值；未自动启动后继实验。

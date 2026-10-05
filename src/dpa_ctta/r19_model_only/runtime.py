@@ -241,6 +241,9 @@ def supervise():
             r=run_task(c,'score',None,7200);state['jobs']['score']=r['status'];state.update(status='COMPLETE' if r['status']=='COMPLETE' else 'SCORE_FAILED',target_scores_embargoed=r['status']!='COMPLETE')
         except BaseException as e:
             traceback.print_exc();state.update(status=str(e) if str(e).startswith('NOT_RUN_') else 'STOPPED',reason=str(e));state['jobs']={k:'NOT_RUN_STOPPED' if v in ('NOT_RUN','RUNNING') else v for k,v in state['jobs'].items()}
+        if state['status']=='COMPLETE':
+            receipt=read(root/'SCORER_RECEIPT.json')
+            state.update(formal_target_visits=receipt['new_visits'],formal_principal_scores=receipt['new_principal'],target_labels_read=receipt['new_visits'],online_target_labels_read=0,online_workers_retired=receipt['all_eight_retired_before_labels'])
         state.update(ended=time.time(),delivery='PENDING_LOCAL_GITHUB');save(root/'RUN_STATE.json',state);ledger(c,state)
         from .score import report
         report(c,state)

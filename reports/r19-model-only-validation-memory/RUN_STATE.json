@@ -1,22 +1,27 @@
 {
-  "delivery": "PENDING_GITHUB",
-  "ended": 1791125047.5822523,
+  "delivery": "PENDING_LOCAL_GITHUB",
+  "delivery_commit": "7b3aa45f10371f28d32179b99208260f63384d78",
+  "ended": 1791139740.836084,
   "experiment_id": "R19_MODEL_ONLY_VALIDATION_MEMORY",
+  "formal_principal_scores": 13560,
+  "formal_target_visits": 15608,
   "jobs": {
+    "G_HALF_o0": "COMPLETE",
+    "G_HALF_o1": "COMPLETE",
+    "G_MEM_o0": "COMPLETE",
+    "G_MEM_o1": "COMPLETE",
+    "G_VAL_o0": "COMPLETE",
+    "G_VAL_o1": "COMPLETE",
+    "G_o0": "COMPLETE",
+    "G_o1": "COMPLETE",
     "preflight": "COMPLETE",
-    "G_o0": "NOT_RUN_BUDGET",
-    "G_o1": "NOT_RUN_BUDGET",
-    "G_HALF_o0": "NOT_RUN_BUDGET",
-    "G_HALF_o1": "NOT_RUN_BUDGET",
-    "G_VAL_o0": "NOT_RUN_BUDGET",
-    "G_VAL_o1": "NOT_RUN_BUDGET",
-    "G_MEM_o0": "NOT_RUN_BUDGET",
-    "G_MEM_o1": "NOT_RUN_BUDGET"
+    "score": "COMPLETE"
   },
-  "status": "NOT_RUN_BUDGET",
-  "target_scores_embargoed": true,
-  "formal_target_visits": 0,
-  "formal_principal_scores": 0,
-  "target_labels_read": 0,
-  "online_workers_retired": true
+  "online_workers_retired": true,
+  "preflight_reused": true,
+  "status": "COMPLETE",
+  "target_labels_read": 15608,
+  "target_scores_embargoed": false,
+  "time_budget_removed": true,
+  "online_target_labels_read": 0
 }
