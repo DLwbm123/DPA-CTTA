@@ -1,0 +1,18 @@
+# R20 execution registration
+
+This supplements the supplied R20 prompt without changing its scientific boundaries.
+
+- The user authorized four concurrent workers on physical GPUs 4, 5, 6 and 7. Existing activity does not block admission when free VRAM covers measured peak plus margin. The original 24-hour wall limit, online end at hour 22 and cumulative 48 GPU-worker-hour limit remain unchanged.
+- T0 is 2026-10-05 04:01:05.993950 UTC, conservatively including initial implementation/preflight. It is never reset by profile, stage transitions or recovery.
+- Selection is `dev_labels_separate_scorer`. Seed 43127 hashes content identities within domains; largest-remainder quotas sum to 1017 SEARCH and 678 SEALED_REVIEW. Patient linkage is UNKNOWN. The original 256 non-primary arrivals retain their context roles.
+- The 384-image screen water-fill quotas are Drishti_GS 22, ORIGA 121, REFUGE 121 and REFUGE_Valid 120. Original relative order is retained independently for both registered orders. A compressed score is compared only with the same compressed G trajectory.
+- P uses the verified `up3` feature tensor of the original frozen checkpoint model. Reliable masks use adaptive average pooling equal to one; class probabilities are bilinearly resized to 512 with `align_corners=False`. No feature-dependent source fit is introduced.
+- A reads its actual channel count from `up3.bn.num_features` (256 in the pinned architecture). V uses ordinary PyTorch Conv2d initialization from independent seed `trajectory_seed + 1000003`; U weight/bias are zero. Strong-pass adapter gradients are cleared each arrival; auxiliary entropy does not accumulate adapter gradients.
+- W key ablation removes variance weighting and retains the registered boundary factor. For beta zero this exactly reduces to G. All channels have positive, spatially mean-one weights.
+- Prototype expiry removes entries with current arrival minus write arrival at least 128. Current prototypes are written only after prediction; the history-removal ablation explicitly uses current prototypes instead.
+- Exact next-arrival recovery is required by generated-input tests, including BN, adapter, EMA, Adam, native RNG and prototype FIFO. Physical attempts and failed work remain separate from restored logical counters. Only a recorded transient I/O/network error can recover once; budget deadlines, numerical failures and poor scores cannot trigger retries.
+- Stage 3 is a single optional extension after full SEARCH screening. It is admitted only after retaining full confirmation and key-ablation reserves. Exact G predictions/scalars may be reused only for identical stream, seed, configuration and initialization; no adapted model state crosses stages.
+- Native G is compared with the pinned host during real profile and its final seed-20260907 hard metrics are checked against historical full trajectories after review release. A mismatch invalidates the strong-signal decision.
+- Full new-seed main comparisons save genuine float32 sigmoid probabilities. Other trajectories save bit-packed masks; absent soft metrics remain NA. Hard/soft metric definitions use the existing evaluator, with float64 soft aggregation and epsilon 1e-6.
+- Bootstrap uses 2000 stratified paired content-identity draws with seed 20261005, retaining every order and algorithm seed for a resampled identity. Intervals do not remove historical exposure or selection bias.
+- No continuing monitor or R21 is created. A detached finite controller writes stage progress and enforces deadlines. Source code and deidentified complete results are published under the existing repository delivery policy; pixels, predictions, features, prototypes, adapted weights and private mappings remain private.

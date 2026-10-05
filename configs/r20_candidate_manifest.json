@@ -1,0 +1,354 @@
+{
+  "campaign": "R20_MODEL_ONLY_BUDGETED_SEARCH",
+  "status": "PROPOSED_NOT_EXECUTED",
+  "reference_commit": "c3710769ab821c7f90cfd38ddb4a8d4e5bd81ce0",
+  "mode": "24h",
+  "wall_budget_hours": 24,
+  "max_concurrent_gpu_workers": 2,
+  "max_gpu_worker_hours": 48,
+  "online_label_access": false,
+  "source_data_access": false,
+  "selection_mode": "dev_labels_separate_scorer",
+  "search_fraction": 0.6,
+  "sealed_review_fraction": 0.4,
+  "screen_arrivals_per_order": 384,
+  "native_seed": 20260907,
+  "confirmation_seeds": [
+    17011,
+    29009
+  ],
+  "candidates": [
+    {
+      "id": "G",
+      "family": "control",
+      "host": "native_grata",
+      "params": {}
+    },
+    {
+      "id": "C",
+      "family": "control",
+      "host": "plain_consistency",
+      "params": {}
+    },
+    {
+      "id": "G_LR15",
+      "family": "control",
+      "host": "native_grata",
+      "params": {
+        "final_lr_multiplier": 1.5
+      }
+    },
+    {
+      "id": "G_LR20",
+      "family": "control",
+      "host": "native_grata",
+      "params": {
+        "final_lr_multiplier": 2.0
+      }
+    },
+    {
+      "id": "G_K2",
+      "family": "control",
+      "host": "native_grata",
+      "params": {
+        "online_steps_per_arrival": 2
+      }
+    },
+    {
+      "id": "G_H025",
+      "family": "control",
+      "host": "native_grata_output_ensemble",
+      "params": {
+        "horizontal_output_weight": 0.25
+      }
+    },
+    {
+      "id": "T01",
+      "family": "teacher",
+      "host": "G",
+      "params": {
+        "ema_alpha": 0.9,
+        "teacher_mix": 0.25
+      }
+    },
+    {
+      "id": "T02",
+      "family": "teacher",
+      "host": "G",
+      "params": {
+        "ema_alpha": 0.9,
+        "teacher_mix": 0.5
+      }
+    },
+    {
+      "id": "T03",
+      "family": "teacher",
+      "host": "G",
+      "params": {
+        "ema_alpha": 0.99,
+        "teacher_mix": 0.25
+      }
+    },
+    {
+      "id": "T04",
+      "family": "teacher",
+      "host": "G",
+      "params": {
+        "ema_alpha": 0.99,
+        "teacher_mix": 0.5
+      }
+    },
+    {
+      "id": "T05",
+      "family": "teacher",
+      "host": "G",
+      "params": {
+        "ema_alpha": 0.999,
+        "teacher_mix": 0.25
+      }
+    },
+    {
+      "id": "T06",
+      "family": "teacher",
+      "host": "G",
+      "params": {
+        "ema_alpha": 0.999,
+        "teacher_mix": 0.5
+      }
+    },
+    {
+      "id": "W01",
+      "family": "pixel_weight",
+      "host": "G",
+      "params": {
+        "variance_temperature": 0.01,
+        "boundary_boost": 0.0,
+        "boundary_radius": 3
+      }
+    },
+    {
+      "id": "W02",
+      "family": "pixel_weight",
+      "host": "G",
+      "params": {
+        "variance_temperature": 0.01,
+        "boundary_boost": 2.0,
+        "boundary_radius": 3
+      }
+    },
+    {
+      "id": "W03",
+      "family": "pixel_weight",
+      "host": "G",
+      "params": {
+        "variance_temperature": 0.03,
+        "boundary_boost": 0.0,
+        "boundary_radius": 3
+      }
+    },
+    {
+      "id": "W04",
+      "family": "pixel_weight",
+      "host": "G",
+      "params": {
+        "variance_temperature": 0.03,
+        "boundary_boost": 2.0,
+        "boundary_radius": 3
+      }
+    },
+    {
+      "id": "W05",
+      "family": "pixel_weight",
+      "host": "G",
+      "params": {
+        "variance_temperature": 0.1,
+        "boundary_boost": 0.0,
+        "boundary_radius": 3
+      }
+    },
+    {
+      "id": "W06",
+      "family": "pixel_weight",
+      "host": "G",
+      "params": {
+        "variance_temperature": 0.1,
+        "boundary_boost": 2.0,
+        "boundary_radius": 3
+      }
+    },
+    {
+      "id": "A01",
+      "family": "online_adapter",
+      "host": "G",
+      "params": {
+        "rank": 4,
+        "adapter_lr_multiplier": 0.3,
+        "residual_relative_bound": 0.1
+      }
+    },
+    {
+      "id": "A02",
+      "family": "online_adapter",
+      "host": "G",
+      "params": {
+        "rank": 4,
+        "adapter_lr_multiplier": 1.0,
+        "residual_relative_bound": 0.1
+      }
+    },
+    {
+      "id": "A03",
+      "family": "online_adapter",
+      "host": "G",
+      "params": {
+        "rank": 4,
+        "adapter_lr_multiplier": 3.0,
+        "residual_relative_bound": 0.1
+      }
+    },
+    {
+      "id": "A04",
+      "family": "online_adapter",
+      "host": "G",
+      "params": {
+        "rank": 16,
+        "adapter_lr_multiplier": 0.3,
+        "residual_relative_bound": 0.1
+      }
+    },
+    {
+      "id": "A05",
+      "family": "online_adapter",
+      "host": "G",
+      "params": {
+        "rank": 16,
+        "adapter_lr_multiplier": 1.0,
+        "residual_relative_bound": 0.1
+      }
+    },
+    {
+      "id": "A06",
+      "family": "online_adapter",
+      "host": "G",
+      "params": {
+        "rank": 16,
+        "adapter_lr_multiplier": 3.0,
+        "residual_relative_bound": 0.1
+      }
+    },
+    {
+      "id": "P01",
+      "family": "target_prototype",
+      "host": "G",
+      "params": {
+        "prototype_mix": 0.1,
+        "cosine_temperature": 0.05,
+        "capacity_per_class": 8,
+        "expiry_arrivals": 128,
+        "confidence": 0.9,
+        "min_tokens_per_class": 32
+      }
+    },
+    {
+      "id": "P02",
+      "family": "target_prototype",
+      "host": "G",
+      "params": {
+        "prototype_mix": 0.1,
+        "cosine_temperature": 0.1,
+        "capacity_per_class": 8,
+        "expiry_arrivals": 128,
+        "confidence": 0.9,
+        "min_tokens_per_class": 32
+      }
+    },
+    {
+      "id": "P03",
+      "family": "target_prototype",
+      "host": "G",
+      "params": {
+        "prototype_mix": 0.25,
+        "cosine_temperature": 0.05,
+        "capacity_per_class": 8,
+        "expiry_arrivals": 128,
+        "confidence": 0.9,
+        "min_tokens_per_class": 32
+      }
+    },
+    {
+      "id": "P04",
+      "family": "target_prototype",
+      "host": "G",
+      "params": {
+        "prototype_mix": 0.25,
+        "cosine_temperature": 0.1,
+        "capacity_per_class": 8,
+        "expiry_arrivals": 128,
+        "confidence": 0.9,
+        "min_tokens_per_class": 32
+      }
+    },
+    {
+      "id": "P05",
+      "family": "target_prototype",
+      "host": "G",
+      "params": {
+        "prototype_mix": 0.5,
+        "cosine_temperature": 0.05,
+        "capacity_per_class": 8,
+        "expiry_arrivals": 128,
+        "confidence": 0.9,
+        "min_tokens_per_class": 32
+      }
+    },
+    {
+      "id": "P06",
+      "family": "target_prototype",
+      "host": "G",
+      "params": {
+        "prototype_mix": 0.5,
+        "cosine_temperature": 0.1,
+        "capacity_per_class": 8,
+        "expiry_arrivals": 128,
+        "confidence": 0.9,
+        "min_tokens_per_class": 32
+      }
+    }
+  ],
+  "12h_subset_ids": [
+    "G",
+    "C",
+    "G_LR15",
+    "G_LR20",
+    "G_K2",
+    "G_H025",
+    "T01",
+    "T03",
+    "T06",
+    "W01",
+    "W04",
+    "W05",
+    "A01",
+    "A03",
+    "A05",
+    "P01",
+    "P04",
+    "P06"
+  ],
+  "12h_overrides": {
+    "wall_budget_hours": 12,
+    "max_gpu_worker_hours": 24,
+    "screen_arrivals_per_order": 256,
+    "confirmation_seeds": [
+      17011
+    ]
+  },
+  "schema_note": "Candidate registration draft; requires implementation and binding to the verified project runner. Not an already validated executable runner configuration.",
+  "fixed_matrix_primary": "W04",
+  "fixed_matrix_full_priority": [
+    "W04",
+    "T03",
+    "A05",
+    "P04"
+  ]
+}
