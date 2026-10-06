@@ -1,0 +1,9 @@
+PASS REPEAT5
+PASS RANDOM4
+PASS GREEDY
+PASS PG_CONS
+PASS PG_STRUCT
+PASS PG_RETAIN
+PASS PG_COV
+PASS RN_DPO
+{"status": "PASS", "tests": 12, "checks": ["exact C/ANCHOR parity", "all arms exact resume", "one committed branch", "separate policy optimizer", "reward gradient sign", "positive covariance", "region normalized preference", "spatial OT evidence", "collapse penalty", "causal memory"], "online_labels": false}

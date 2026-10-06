@@ -1,0 +1,66 @@
+{
+  "status": "RUNNING_NOT_COMPLETE",
+  "at": 1791290100.743269,
+  "code_sha": "bacbbf959a0b679f99f45de47b3e0143d80537e6",
+  "formal_registered_trajectories": 60,
+  "seeds": [
+    20260907,
+    17011,
+    29009
+  ],
+  "full_arrivals_per_trajectory": 1951,
+  "profiles_passed": 10,
+  "active": [
+    {
+      "phase": "online_FORMAL_C_s20260907_o0",
+      "pid": 454138,
+      "start_ticks": "329268840",
+      "neutral_argv_verified": true,
+      "physical_gpu": 4
+    },
+    {
+      "phase": "online_FORMAL_C_s20260907_o1",
+      "pid": 454139,
+      "start_ticks": "329268841",
+      "neutral_argv_verified": true,
+      "physical_gpu": 5
+    },
+    {
+      "phase": "online_FORMAL_ANCHOR_s20260907_o0",
+      "pid": 454140,
+      "start_ticks": "329268841",
+      "neutral_argv_verified": true,
+      "physical_gpu": 6
+    },
+    {
+      "phase": "online_FORMAL_ANCHOR_s20260907_o1",
+      "pid": 454141,
+      "start_ticks": "329268841",
+      "neutral_argv_verified": true,
+      "physical_gpu": 7
+    }
+  ],
+  "progress": [
+    {
+      "job": "FORMAL_ANCHOR_s20260907_o0",
+      "arrivals": 93
+    },
+    {
+      "job": "FORMAL_C_s20260907_o0",
+      "arrivals": 94
+    },
+    {
+      "job": "FORMAL_ANCHOR_s20260907_o1",
+      "arrivals": 90
+    },
+    {
+      "job": "FORMAL_C_s20260907_o1",
+      "arrivals": 74
+    }
+  ],
+  "online_label_reads": 0,
+  "review_opened": false,
+  "monitor": "hourly ACTIVE; app readback verified",
+  "hard_cap_hours": 48,
+  "conservative_profile_estimated_hours": 26.959136860569274
+}
