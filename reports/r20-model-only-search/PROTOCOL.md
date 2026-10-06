@@ -358,6 +358,8 @@ LoRA：Hu et al., “LoRA: Low-Rank Adaptation of Large Language Models”, ICLR
 TTAB：Zhao et al., “On Pitfalls of Test-Time Adaptation”, ICML 2023, PMLR 202。用于说明在线批依赖和选参透明性的重要性。
 
 
+## Execution amendments
+
 # R20 execution registration
 
 This supplements the supplied R20 prompt without changing its scientific boundaries.

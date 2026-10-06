@@ -1,17 +1,1 @@
-{
-  "status": "RUNNING",
-  "original_checkpoint_only": true,
-  "source_reads": 0,
-  "online_target_label_reads": 0,
-  "selection_labels_read_at_startup": 0,
-  "SEALED_REVIEW_opened": false,
-  "ROI_crop_center_provenance": "UNKNOWN",
-  "patient_linkage": "UNKNOWN",
-  "native_real_profile_exact": true,
-  "neutral_argv_verified": true,
-  "concurrent_GPU_workers": 4,
-  "mechanical_tests_passed": 12,
-  "real_profiles_passed": 8,
-  "source_code_commit": "5b0bcb0f1b2ab71f6537a7080e0f73c2de74f7c2",
-  "disk_bytes": 9120913
-}
+{"ROI_crop_center_provenance": "UNKNOWN", "access_logs": 114, "disk_bytes": 55556044335, "module_initialization": "fresh original model; BN moments empty; teacher copy; zero-U/random-V adapter; empty prototype FIFO", "native_BN_policy": "current-image statistics; frozen f0 retains checkpoint inference statistics", "online_target_label_reads": 0, "original_checkpoint_sha256": "88b7d8902d23fb1c15b27668e0bf02599f8298aa45c38ae90279ae5a1d42bdf0", "patient_dependence": "UNKNOWN", "permitted_assets": ["original segmentation checkpoint and its BN statistics", "pinned architecture and preprocessing", "current image and causal prior target memory"], "prediction_and_state_assets_private": true, "selection_mode": "dev_labels_separate_scorer", "source_reads": 0}
