@@ -67,7 +67,8 @@ class Guard:
     def observe(self,cost=None):
         if time.time()>self.deadline-10:raise TimeoutError('registered task deadline')
         if time.monotonic()-self.last<10:return
-        if not self.phase.startswith('score_') and amounts(self.c)[0]>=self.c['origin']['gpu_worker_cap_seconds']-30:raise TimeoutError('cumulative GPU-worker cap')
+        cap = self.c['origin']['gpu_worker_cap_seconds']
+        if cap is not None and not self.phase.startswith('score_') and amounts(self.c)[0]>=cap-30:raise TimeoutError('cumulative GPU-worker cap')
         if time.monotonic()-self.disk_last>300:
             self.size=disk_bytes(self.root);self.disk_last=time.monotonic()
             if self.size>self.c['origin']['disk_cap_bytes']:raise OSError('campaign disk cap')
