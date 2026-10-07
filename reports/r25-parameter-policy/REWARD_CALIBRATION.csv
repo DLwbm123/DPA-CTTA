@@ -1,0 +1,15 @@
+condition,role,observations,rank_estimable,mean_within_case_Spearman,mean_proposal_range_pp,mean_selection_regret_pp,diagnostic_resolution,primary_metric_resolution,note
+RANDOM4,SEARCH,6102,543,0.01940294190697279,0.009781192717124887,0.004508897703805335,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+RANDOM4,SEALED_REVIEW,4068,320,0.010163113725747047,0.008015291725268053,0.004342484507421492,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+GREEDY,SEARCH,6102,481,0.05315027902004548,0.009086539526585115,0.00429734871763538,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+GREEDY,SEALED_REVIEW,4068,312,0.08046860423444861,0.00816444338416727,0.0037464471425025982,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+PG_CONS,SEARCH,6102,481,-0.025087366717742518,0.008603167780041597,0.004511343220504948,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+PG_CONS,SEALED_REVIEW,4068,286,0.02389438449063225,0.00748596506531813,0.0035733721847586585,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+PG_STRUCT,SEARCH,6102,470,0.0011503384775258477,0.008489978771658753,0.0042144129838653935,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+PG_STRUCT,SEALED_REVIEW,4068,276,0.03426355812081147,0.007010880697371781,0.0031519141952405048,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+PG_RETAIN,SEARCH,6102,506,-0.025385587610835553,0.008859060195411878,0.0047537766818603775,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+PG_RETAIN,SEALED_REVIEW,4068,294,0.04899792205116767,0.007238261825819188,0.003177223491583266,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+PG_COV,SEARCH,6102,486,0.05675816263592064,0.008927556439557744,0.004169448692807953,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+PG_COV,SEALED_REVIEW,4068,311,0.052211916903424284,0.00804597139072585,0.0035305805490108764,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+RN_DPO,SEARCH,6102,595,0.046759786146099894,0.01188013563402312,0.005650758244267369,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
+RN_DPO,SEALED_REVIEW,4068,353,0.009215537785916874,0.010303739207322984,0.004839450338451076,64,512,Post-hoc only; repeated content/orders/seeds; no online label feedback
