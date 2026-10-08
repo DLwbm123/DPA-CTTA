@@ -145,6 +145,8 @@ def region_preference(logits, reference, winner, loser):
 
 
 class Host(ContextHost):
+    score_reward = staticmethod(reward)
+
     def __init__(self, state, config, seed, identity, device='cuda:0', model=None):
         self.arm = config['id']
         if self.arm not in ARMS:
@@ -214,7 +216,7 @@ class Host(ContextHost):
             # Independent deterministic photometric probe, never used for the C gradient.
             transformed, _ = self._probe(x.clamp(0, 1).pow(1.2))
             past = None if previous is None else small(self._probe(previous['image'], reset_context=True)[0])
-            statistic = reward(small(prediction), small(transformed), reference_small,
+            statistic = self.score_reward(small(prediction), small(transformed), reference_small,
                                past, None if previous is None else previous['prediction'])
             statistics.append(statistic)
             results.append((super().snapshot(), logits, trace))
