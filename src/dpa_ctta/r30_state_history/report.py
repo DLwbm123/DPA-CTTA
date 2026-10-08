@@ -22,7 +22,7 @@ def mask_at(handle, offset):
     return np.unpackbits(np.frombuffer(raw, np.uint8)).reshape(2, 512, 512).astype(bool)
 
 
-def score_streams(c, guard):
+def score_stream_rows(c, guard):
     root = Path(c['output_root']); split = read(root/'scorer/SPLIT.private.json')
     reader = TargetReader(c['target_root'], 256*1024**2, 'mask')
     all_rows = []; pre_rows = []; diagnostics = []
@@ -55,7 +55,7 @@ def score_streams(c, guard):
                                          role=role, delta_pp=100*st.mean(a['dice']-b['dice'] for a, b in zip(values, pre_values))))
             if (dest/'pre.bits').stat().st_size != pre_index*WIDTH:
                 raise ValueError('diagnostic before-mask coverage')
-    expected = 48*(1017+678)
+    expected = len(c['b_jobs'])*(1017+678)
     if len(all_rows) != expected:
         raise ValueError('full-matrix score coverage')
     with (root/'scores/B.private.jsonl').open('x') as f:
@@ -80,6 +80,12 @@ def score_streams(c, guard):
     csvout(root/'public/STATE_DIAGNOSTICS.csv', [dict(condition=k[0], seed=k[1], order=k[2], role=k[3], metric=k[4],
                                                     count=len(v), mean=st.mean(v), minimum=min(v), maximum=max(v))
                                                  for k, v in groups.items()])
+    return all_rows, main
+
+
+def score_streams(c, guard):
+    root = Path(c['output_root'])
+    all_rows, main = score_stream_rows(c, guard)
     pairs = {('S_BATCH', 'S_SOURCE'), ('C_EPISODIC', 'S_BATCH'), ('C_CONT', 'C_EPISODIC')}
     pairs.update((a, b) for a in ARMS for b in ('C_CONT', 'ANCHOR') if a != b)
     contrasts = []; negatives = []; intervals = []

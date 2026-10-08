@@ -41,7 +41,7 @@ def inventory(h):
                 adapter_trainable=0 if isinstance(h, FrozenHost) or h.adapter is None else sum(p.numel() for p in h.adapter.parameters()))
 
 
-def stream(c, job, guard, permit, count=None, parity=False):
+def stream(c, job, guard, permit, count=None, parity=False, host_class=StateHost):
     root = Path(c['output_root']); arm = job['arm']
     rows = read(root/'private'/f'ONLINE_o{job["order"]}.json')
     if len(rows) != 1951:
@@ -52,7 +52,7 @@ def stream(c, job, guard, permit, count=None, parity=False):
         probes = {1, 32, 33}
     initial = weights(c); started = time.perf_counter()
     h = (FrozenHost(initial, arm, job['seed']) if arm in ARMS[:2]
-         else StateHost(initial, arm, job['seed'], job['id']))
+         else host_class(initial, arm, job['seed'], job['id']))
     guard.meter.attach(h.model if arm in ARMS[:2] else h.native.model)
     init_seconds = time.perf_counter() - started
     dest = root/'target'/job['id']; dest.mkdir(exist_ok=False)
