@@ -136,8 +136,9 @@ def worker():
         failure=dict(type=type(e).__name__,reason=str(e));traceback.print_exc()
         if guard.meter:cost=guard.meter.cost.copy()
     cost.update(gpu_seconds=0 if cpu else time.time()-start,cpu_seconds=time.time()-start if cpu else 0)
-    save(root/'attempts'/f'{phase}.0.json',dict(status='COMPLETE' if failure is None else 'FAILED',phase=phase,
-         attempt=0,started=start,ended=time.time(),cost=cost,result=result,failure=failure,code_sha=c['code_sha']))
+    attempt=int(os.environ.get('RUN_ATTEMPT',0))
+    save(root/'attempts'/f'{phase}.{attempt}.json',dict(status='COMPLETE' if failure is None else 'FAILED',phase=phase,
+         attempt=attempt,started=start,ended=time.time(),cost=cost,result=result,failure=failure,code_sha=c['code_sha']))
     return failure is None
 
 
@@ -154,7 +155,8 @@ def supervise():
                     for j in batch:state['jobs'][j['id']]='RUNNING'
                     persist()
                 with concurrent.futures.ThreadPoolExecutor(3) as pool:
-                    futures={pool.submit(base.run_task,c,phase+'_'+j['id'],gpu,1800 if phase=='profile' else 86400,j):j for j,gpu in zip(batch,c['gpu_assignments'])}
+                    attempt=int(os.environ.get('PROFILE_ATTEMPT',0)) if phase=='profile' else 0
+                    futures={pool.submit(base.run_task,c,phase+'_'+j['id'],gpu,1800 if phase=='profile' else 86400,j,attempt):j for j,gpu in zip(batch,c['gpu_assignments'])}
                     failed=False
                     for f in concurrent.futures.as_completed(futures):
                         r=f.result();j=futures[f]
