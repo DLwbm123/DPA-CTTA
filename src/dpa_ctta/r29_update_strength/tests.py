@@ -14,8 +14,9 @@ def main():
     old=Previous(None,c,17,'test',device='cpu',model=copy.deepcopy(m))
     x=torch.linspace(.01,.99,3*512*512).reshape(1,3,512,512)
     h.step(x);old.step(x);before=h.snapshot()
-    z=h.evaluate(x.flip(-1),1.);zold,_=old.step(x.flip(-1))
-    assert torch.equal(z,zold) and equal(before,h.snapshot())
+    z=h.evaluate(x.flip(-1),1.);assert equal(before,h.snapshot())
+    zold,_=old.step(x.flip(-1));assert torch.equal(z,zold)
+    h.restore(before)  # The reference call also advances the process-global RNG.
     calls=[];hook=h.native.base.register_step_pre_hook(lambda *a:calls.append(1))
     h.evaluate(x,0.);assert calls==[] and equal(before,h.snapshot())
     h.strength=1.;h.step(x);full=h.snapshot();h.restore(before)
