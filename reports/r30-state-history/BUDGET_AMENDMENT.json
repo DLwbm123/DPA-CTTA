@@ -1,0 +1,31 @@
+{
+  "id": "20261009_NO_CUMULATIVE_GPU_CAP",
+  "authorized_by": "explicit user request 2026-10-09",
+  "at": 1791476026.522287,
+  "effective_GPU_worker_cap_seconds": null,
+  "applies_to": "new workers and subsequent experiments",
+  "existing_workers_not_restarted": [
+    {
+      "phase": "online_B_C_CONT_s20260907_o1",
+      "pid": 1606147,
+      "existing_in_memory_cap_seconds": 129600
+    },
+    {
+      "phase": "online_B_C_CONT_s20260907_o0",
+      "pid": 1606146,
+      "existing_in_memory_cap_seconds": 129600
+    },
+    {
+      "phase": "online_B_C_CONT_s17011_o0",
+      "pid": 1606148,
+      "existing_in_memory_cap_seconds": 129600
+    }
+  ],
+  "original_T0_preserved": true,
+  "original_config_preserved": true,
+  "scientific_protocol_unchanged": true,
+  "wall_task_storage_guards_retained": true,
+  "hourly_monitor_authorized": true,
+  "evidence_based_followups_authorized": true,
+  "test": "PASS"
+}
