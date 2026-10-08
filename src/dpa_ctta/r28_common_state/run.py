@@ -24,6 +24,7 @@ ID='R28_COMMON_STATE_DIAGNOSTIC'
 
 def access_guard(c):
     root=Path(c['output_root']).resolve();checkpoint=Path(c['checkpoint_path']).resolve()
+    snapshots=Path(c['snapshot_input_root']).resolve() if c.get('snapshot_input_root') else None
     current={'image':None}
     libraries=[Path(sys.base_prefix).resolve(),Path(sys.prefix).resolve()]
     def audit(event,args):
@@ -32,7 +33,8 @@ def access_guard(c):
         if p.is_relative_to(root/'scorer') or p.is_relative_to(root/'scores'):
             raise PermissionError('diagnostic online label/score barrier')
         if p.suffix.lower() in ('.png','.jpg','.jpeg','.pt','.pth','.npy','.npz','.bits'):
-            if p not in (checkpoint,current['image']) and not p.is_relative_to(root/'target') and not any(p.is_relative_to(a) for a in libraries):
+            snapshot_read=snapshots is not None and p.is_relative_to(snapshots) and p.suffix in ('.pt','.bits')
+            if p not in (checkpoint,current['image']) and not snapshot_read and not p.is_relative_to(root/'target') and not any(p.is_relative_to(a) for a in libraries):
                 raise PermissionError('unregistered model or data access')
     sys.addaudithook(audit)
     try:(root/'scorer/denial_probe.json').read_bytes()
