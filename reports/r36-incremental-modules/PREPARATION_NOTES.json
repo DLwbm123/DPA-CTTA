@@ -1,0 +1,33 @@
+{
+  "failures": [
+    {
+      "phase": "copytree",
+      "reason": "NFS copystat errno5; selected copyfile/readback PASS; content transfer succeeded",
+      "T0_started": false
+    },
+    {
+      "phase": "mechanical_import",
+      "reason": "new module absent after aborted deployment",
+      "CPU_seconds": 1.9953534794,
+      "T0_started": false
+    },
+    {
+      "phase": "prepare_system_python",
+      "reason": "system Python3.10 torch._C unavailable; reused verified Python3.12 runtime; no GPU attempt",
+      "T0_started": false
+    },
+    {
+      "phase": "watch_initial_import",
+      "reason": "missing inherited R9 protocol JSON; no supervisor or GPU worker started",
+      "T0_unchanged": true,
+      "T0_started": true
+    },
+    {
+      "phase": "full_runtime_import",
+      "reason": "inherited R10 planning specification missing; restored inherited planning JSON inputs",
+      "GPU_attempt": false,
+      "T0_started": true
+    }
+  ],
+  "scope": "engineering preparation and initial import failures; no failed GPU worker; original T0 retained"
+}
