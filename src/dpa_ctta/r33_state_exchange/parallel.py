@@ -103,7 +103,12 @@ def main():
         try:
             base.watch()
         finally:
-            retire_legacy(plan)
+            if alive(plan['legacy_supervisor']):
+                state = read(root/'RUN_STATE.json')
+                retire_legacy(plan)
+                save(root/'LEGACY_CONTROL_RETIREMENT.json', dict(at=time.time(), state=read(root/'RUN_STATE.json'), reason='replacement watchdog cleanup'))
+                save(root/'RUN_STATE.json', state)
+                base.ledger(c, state); run.report.finish(c, state)
     else:
         raise ValueError('unknown mode')
 
