@@ -58,7 +58,7 @@ def main():
         failed = read(root/'processes'/f'{phase}.json')
         save(root/'private/FAILED_PROCESS_ATTEMPT0.json', failed)
         assert not (root/'target'/request['job']['id']).exists()
-        base.gpu_policy(request['assignment'])
+        # Binding/determinism checks belong to the GPU worker spawned by run_task.
         base.available_memory(request['assignment'], 8*1024**3)
         os.environ['ENTRY_MODULE'] = 'dpa_ctta.r32_history_origin.run'
         state.update(status='RUNNING_COUNTERFACTUALS')
