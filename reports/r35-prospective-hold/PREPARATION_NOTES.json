@@ -1,0 +1,13 @@
+{
+  "status": "REPAIRED_BEFORE_PROFILING",
+  "issue": "First CPU check failed during import because the reused runtime requires its historical protocol JSON outside src.",
+  "repair": "Copied existing runtime historical protocol dependencies from preceding run docs/review.",
+  "initial_CPU_seconds": [
+    3.4789555072784424,
+    3.0311691761016846
+  ],
+  "T0_started": false,
+  "dependency_files": 659,
+  "CPU_test_correction": "RNG endpoint assertion initially compared serialized snapshot dict with native RNG tuple. Compare native RNG tuple with native schedule tuple; action unchanged.",
+  "third_CPU_seconds": 6.946350812911987
+}

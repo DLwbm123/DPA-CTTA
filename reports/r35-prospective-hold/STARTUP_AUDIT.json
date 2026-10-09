@@ -1,0 +1,139 @@
+{
+  "status": "RUNNING_NOT_RESULTS",
+  "checked_at": 1791550757.8065116,
+  "profiles_passed": 6,
+  "all_six_formal_active": true,
+  "all_control_and_worker_commands_neutral": true,
+  "GPU_process_names_neutral": true,
+  "online_labels_closed": true,
+  "workers": [
+    {
+      "phase": "online_s17011_o0",
+      "pid": 2045455,
+      "neutral_command": true,
+      "identity_verified": true,
+      "progress": {
+        "image_accesses": 91,
+        "replay_arrivals": 90
+      },
+      "progress_age_seconds": 6.82278847694397
+    },
+    {
+      "phase": "online_s17011_o1",
+      "pid": 2045456,
+      "neutral_command": true,
+      "identity_verified": true,
+      "progress": {
+        "image_accesses": 95,
+        "replay_arrivals": 94
+      },
+      "progress_age_seconds": 6.911659240722656
+    },
+    {
+      "phase": "online_s20260907_o0",
+      "pid": 2045453,
+      "neutral_command": true,
+      "identity_verified": true,
+      "progress": {
+        "image_accesses": 101,
+        "replay_arrivals": 100
+      },
+      "progress_age_seconds": 6.820386648178101
+    },
+    {
+      "phase": "online_s20260907_o1",
+      "pid": 2045454,
+      "neutral_command": true,
+      "identity_verified": true,
+      "progress": {
+        "image_accesses": 90,
+        "replay_arrivals": 90
+      },
+      "progress_age_seconds": 6.984697341918945
+    },
+    {
+      "phase": "online_s29009_o0",
+      "pid": 2045457,
+      "neutral_command": true,
+      "identity_verified": true,
+      "progress": {
+        "image_accesses": 90,
+        "replay_arrivals": 89
+      },
+      "progress_age_seconds": 7.1105053424835205
+    },
+    {
+      "phase": "online_s29009_o1",
+      "pid": 2045458,
+      "neutral_command": true,
+      "identity_verified": true,
+      "progress": {
+        "image_accesses": 91,
+        "replay_arrivals": 90
+      },
+      "progress_age_seconds": 6.827692747116089
+    }
+  ],
+  "profile_costs": [
+    {
+      "phase": "profile_p2",
+      "backward_calls": 72,
+      "cpu_seconds": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 58.48936057090759,
+      "model_forwards": 584,
+      "optimizer_steps": 72,
+      "vjp_calls": 0
+    },
+    {
+      "phase": "profile_p5",
+      "backward_calls": 72,
+      "cpu_seconds": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 58.49509596824646,
+      "model_forwards": 584,
+      "optimizer_steps": 72,
+      "vjp_calls": 0
+    },
+    {
+      "phase": "profile_p1",
+      "backward_calls": 72,
+      "cpu_seconds": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 58.753692626953125,
+      "model_forwards": 584,
+      "optimizer_steps": 72,
+      "vjp_calls": 0
+    },
+    {
+      "phase": "profile_p4",
+      "backward_calls": 72,
+      "cpu_seconds": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 58.75696301460266,
+      "model_forwards": 584,
+      "optimizer_steps": 72,
+      "vjp_calls": 0
+    },
+    {
+      "phase": "profile_p3",
+      "backward_calls": 72,
+      "cpu_seconds": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 58.54311180114746,
+      "model_forwards": 584,
+      "optimizer_steps": 72,
+      "vjp_calls": 0
+    },
+    {
+      "phase": "profile_p0",
+      "backward_calls": 72,
+      "cpu_seconds": 0,
+      "disk_bytes": 0,
+      "gpu_seconds": 58.555119037628174,
+      "model_forwards": 584,
+      "optimizer_steps": 72,
+      "vjp_calls": 0
+    }
+  ]
+}
