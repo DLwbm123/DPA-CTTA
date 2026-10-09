@@ -1,0 +1,57 @@
+{
+  "cases": [
+    {
+      "case_id": "d0",
+      "order": 0,
+      "domain": "ORIGA",
+      "cross_domain": "REFUGE",
+      "history_length": 64,
+      "query_arrivals": 586,
+      "query_start_within_domain": 65,
+      "original_prefix_updates": 464,
+      "query_SEARCH": 316,
+      "query_REVIEW": 210,
+      "query_CONTEXT": 60
+    },
+    {
+      "case_id": "d1",
+      "order": 0,
+      "domain": "REFUGE_Valid",
+      "cross_domain": "ORIGA",
+      "history_length": 64,
+      "query_arrivals": 736,
+      "query_start_within_domain": 65,
+      "original_prefix_updates": 1114,
+      "query_SEARCH": 406,
+      "query_REVIEW": 269,
+      "query_CONTEXT": 61
+    },
+    {
+      "case_id": "d0",
+      "order": 1,
+      "domain": "ORIGA",
+      "cross_domain": "REFUGE_Valid",
+      "history_length": 64,
+      "query_arrivals": 586,
+      "query_start_within_domain": 65,
+      "original_prefix_updates": 965,
+      "query_SEARCH": 316,
+      "query_REVIEW": 210,
+      "query_CONTEXT": 60
+    },
+    {
+      "case_id": "d1",
+      "order": 1,
+      "domain": "REFUGE_Valid",
+      "cross_domain": "Drishti_GS",
+      "history_length": 64,
+      "query_arrivals": 736,
+      "query_start_within_domain": 65,
+      "original_prefix_updates": 165,
+      "query_SEARCH": 406,
+      "query_REVIEW": 269,
+      "query_CONTEXT": 61
+    }
+  ],
+  "domain_metadata_used_only_for_offline_design": true
+}
