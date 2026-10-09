@@ -1,0 +1,7 @@
+# R32 admission recovery
+
+On 2026-10-09, one second-batch job (seed29009/order1) failed the GPU free-memory admission check before model execution or target output creation. Its failed attempt is retained with3.149629 accounted GPU-worker seconds; this is an engineering failure, not a scientific outcome. The other workers continue unchanged.
+
+A one-shot recovery runner waits for the original supervisor and watchdog to retire normally, preventing the old watchdog from terminating the replacement worker. It requires the other five jobs to be complete and retired, rechecks the assigned GPU memory, preserves the old process receipt, then runs attempt1 of the same job with the original configuration and deadlines. All six workers must retire successfully before the unchanged CPU scorer releases labels. No completed job is rerun. The original T0, online algorithm, seeds, histories, matrix and scoring rules are preserved.
+
+Validation: an assert-based self-check accepts only the observed admission-only failure and rejects completed runs, nonempty results, model operations and unrelated failures. The detached recovery process was verified waiting for original retirement with an empty error log. Recovery completion and scientific results are pending. The original profile ETA is stale. See scripts/recover_r32_admission.py; this is a recovery script addition, not a change to the scientific runtime commit.
