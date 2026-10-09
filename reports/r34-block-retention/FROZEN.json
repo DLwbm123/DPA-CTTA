@@ -1,0 +1,30 @@
+{
+  "jobs": 6,
+  "seeds": [
+    20260907,
+    17011,
+    29009
+  ],
+  "orders": [
+    0,
+    1
+  ],
+  "decisions_per_job": 15,
+  "paired_decisions": 90,
+  "primary_eligible_pairs": 78,
+  "auxiliary_eligible_pairs": 90,
+  "actions": [
+    "KEEP",
+    "ROLLBACK32"
+  ],
+  "primary_horizon": 256,
+  "auxiliary_horizon": 64,
+  "formal_optimizer_steps": 33582,
+  "formal_model_forwards": 268656,
+  "profiles": 6,
+  "profile_optimizer_steps_each": 80,
+  "profile_model_forwards_each": 640,
+  "concurrency": 6,
+  "workers_per_GPU": 2,
+  "all_online_before_scores": true
+}

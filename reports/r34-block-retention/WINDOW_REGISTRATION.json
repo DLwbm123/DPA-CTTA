@@ -1,0 +1,1105 @@
+{
+  "block_length": 32,
+  "decision_interval": 128,
+  "first_decision": 64,
+  "horizons": [
+    64,
+    256
+  ],
+  "primary_horizon": 256,
+  "coverage": [
+    {
+      "order": 0,
+      "pivot": 64,
+      "block_start": 33,
+      "block_end": 64,
+      "origin_domain": "REFUGE",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE": 64
+      },
+      "role_counts": {
+        "CONTEXT": 9,
+        "SEARCH": 32,
+        "SEALED_REVIEW": 23
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 64,
+      "block_start": 33,
+      "block_end": 64,
+      "origin_domain": "REFUGE",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE": 256
+      },
+      "role_counts": {
+        "CONTEXT": 47,
+        "SEARCH": 120,
+        "SEALED_REVIEW": 89
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 192,
+      "block_start": 161,
+      "block_end": 192,
+      "origin_domain": "REFUGE",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 21,
+        "CONTEXT": 15,
+        "SEARCH": 28
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 192,
+      "block_start": 161,
+      "block_end": 192,
+      "origin_domain": "REFUGE",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE": 208,
+        "ORIGA": 48
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 91,
+        "CONTEXT": 46,
+        "SEARCH": 119
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 320,
+      "block_start": 289,
+      "block_end": 320,
+      "origin_domain": "REFUGE",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 25,
+        "CONTEXT": 6,
+        "SEARCH": 33
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 320,
+      "block_start": 289,
+      "block_end": 320,
+      "origin_domain": "REFUGE",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE": 80,
+        "ORIGA": 176
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 89,
+        "CONTEXT": 34,
+        "SEARCH": 133
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 448,
+      "block_start": 417,
+      "block_end": 448,
+      "origin_domain": "ORIGA",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 22,
+        "SEARCH": 35,
+        "CONTEXT": 7
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 448,
+      "block_start": 417,
+      "block_end": 448,
+      "origin_domain": "ORIGA",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 256
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 90,
+        "SEARCH": 137,
+        "CONTEXT": 29
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 576,
+      "block_start": 545,
+      "block_end": 576,
+      "origin_domain": "ORIGA",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 64
+      },
+      "role_counts": {
+        "SEARCH": 38,
+        "SEALED_REVIEW": 24,
+        "CONTEXT": 2
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 576,
+      "block_start": 545,
+      "block_end": 576,
+      "origin_domain": "ORIGA",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 256
+      },
+      "role_counts": {
+        "SEARCH": 140,
+        "SEALED_REVIEW": 95,
+        "CONTEXT": 21
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 704,
+      "block_start": 673,
+      "block_end": 704,
+      "origin_domain": "ORIGA",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 64
+      },
+      "role_counts": {
+        "CONTEXT": 5,
+        "SEALED_REVIEW": 27,
+        "SEARCH": 32
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 704,
+      "block_start": 673,
+      "block_end": 704,
+      "origin_domain": "ORIGA",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 256
+      },
+      "role_counts": {
+        "CONTEXT": 22,
+        "SEALED_REVIEW": 91,
+        "SEARCH": 143
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 832,
+      "block_start": 801,
+      "block_end": 832,
+      "origin_domain": "ORIGA",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 64
+      },
+      "role_counts": {
+        "SEARCH": 38,
+        "SEALED_REVIEW": 20,
+        "CONTEXT": 6
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 832,
+      "block_start": 801,
+      "block_end": 832,
+      "origin_domain": "ORIGA",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 218,
+        "REFUGE_Valid": 38
+      },
+      "role_counts": {
+        "SEARCH": 140,
+        "SEALED_REVIEW": 95,
+        "CONTEXT": 21
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 960,
+      "block_start": 929,
+      "block_end": 960,
+      "origin_domain": "ORIGA",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 24,
+        "SEARCH": 33,
+        "CONTEXT": 7
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 960,
+      "block_start": 929,
+      "block_end": 960,
+      "origin_domain": "ORIGA",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 90,
+        "REFUGE_Valid": 166
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 99,
+        "SEARCH": 137,
+        "CONTEXT": 20
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1088,
+      "block_start": 1057,
+      "block_end": 1088,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEARCH": 37,
+        "SEALED_REVIEW": 22,
+        "CONTEXT": 5
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1088,
+      "block_start": 1057,
+      "block_end": 1088,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 256
+      },
+      "role_counts": {
+        "SEARCH": 130,
+        "SEALED_REVIEW": 104,
+        "CONTEXT": 22
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1216,
+      "block_start": 1185,
+      "block_end": 1216,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEARCH": 31,
+        "SEALED_REVIEW": 27,
+        "CONTEXT": 6
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1216,
+      "block_start": 1185,
+      "block_end": 1216,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 256
+      },
+      "role_counts": {
+        "SEARCH": 127,
+        "SEALED_REVIEW": 104,
+        "CONTEXT": 25
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1344,
+      "block_start": 1313,
+      "block_end": 1344,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEARCH": 37,
+        "SEALED_REVIEW": 21,
+        "CONTEXT": 6
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1344,
+      "block_start": 1313,
+      "block_end": 1344,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 256
+      },
+      "role_counts": {
+        "SEARCH": 134,
+        "SEALED_REVIEW": 100,
+        "CONTEXT": 22
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1472,
+      "block_start": 1441,
+      "block_end": 1472,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 26,
+        "SEARCH": 36,
+        "CONTEXT": 2
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1472,
+      "block_start": 1441,
+      "block_end": 1472,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 256
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 94,
+        "SEARCH": 140,
+        "CONTEXT": 22
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1600,
+      "block_start": 1569,
+      "block_end": 1600,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEARCH": 33,
+        "CONTEXT": 7,
+        "SEALED_REVIEW": 24
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1600,
+      "block_start": 1569,
+      "block_end": 1600,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 250,
+        "Drishti_GS": 6
+      },
+      "role_counts": {
+        "SEARCH": 156,
+        "CONTEXT": 24,
+        "SEALED_REVIEW": 76
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1728,
+      "block_start": 1697,
+      "block_end": 1728,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 223,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEARCH": 46,
+        "CONTEXT": 2,
+        "SEALED_REVIEW": 16
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1728,
+      "block_start": 1697,
+      "block_end": 1728,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 223,
+      "full_horizon": false,
+      "future_domains": {
+        "REFUGE_Valid": 122,
+        "Drishti_GS": 101
+      },
+      "role_counts": {
+        "SEARCH": 105,
+        "CONTEXT": 70,
+        "SEALED_REVIEW": 48
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1856,
+      "block_start": 1825,
+      "block_end": 1856,
+      "origin_domain": "Drishti_GS",
+      "horizon": 64,
+      "available_future": 95,
+      "full_horizon": true,
+      "future_domains": {
+        "Drishti_GS": 64
+      },
+      "role_counts": {
+        "CONTEXT": 40,
+        "SEALED_REVIEW": 10,
+        "SEARCH": 14
+      }
+    },
+    {
+      "order": 0,
+      "pivot": 1856,
+      "block_start": 1825,
+      "block_end": 1856,
+      "origin_domain": "Drishti_GS",
+      "horizon": 256,
+      "available_future": 95,
+      "full_horizon": false,
+      "future_domains": {
+        "Drishti_GS": 95
+      },
+      "role_counts": {
+        "CONTEXT": 59,
+        "SEALED_REVIEW": 15,
+        "SEARCH": 21
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 64,
+      "block_start": 33,
+      "block_end": 64,
+      "origin_domain": "Drishti_GS",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "Drishti_GS": 37,
+        "REFUGE_Valid": 27
+      },
+      "role_counts": {
+        "CONTEXT": 24,
+        "SEALED_REVIEW": 18,
+        "SEARCH": 22
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 64,
+      "block_start": 33,
+      "block_end": 64,
+      "origin_domain": "Drishti_GS",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "Drishti_GS": 37,
+        "REFUGE_Valid": 219
+      },
+      "role_counts": {
+        "CONTEXT": 40,
+        "SEALED_REVIEW": 92,
+        "SEARCH": 124
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 192,
+      "block_start": 161,
+      "block_end": 192,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 27,
+        "SEARCH": 32,
+        "CONTEXT": 5
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 192,
+      "block_start": 161,
+      "block_end": 192,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 256
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 104,
+        "SEARCH": 128,
+        "CONTEXT": 24
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 320,
+      "block_start": 289,
+      "block_end": 320,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEARCH": 31,
+        "SEALED_REVIEW": 28,
+        "CONTEXT": 5
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 320,
+      "block_start": 289,
+      "block_end": 320,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 256
+      },
+      "role_counts": {
+        "SEARCH": 130,
+        "SEALED_REVIEW": 105,
+        "CONTEXT": 21
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 448,
+      "block_start": 417,
+      "block_end": 448,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "CONTEXT": 6,
+        "SEALED_REVIEW": 27,
+        "SEARCH": 31
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 448,
+      "block_start": 417,
+      "block_end": 448,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 256
+      },
+      "role_counts": {
+        "CONTEXT": 21,
+        "SEALED_REVIEW": 102,
+        "SEARCH": 133
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 576,
+      "block_start": 545,
+      "block_end": 576,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEARCH": 34,
+        "SEALED_REVIEW": 26,
+        "CONTEXT": 4
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 576,
+      "block_start": 545,
+      "block_end": 576,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 256
+      },
+      "role_counts": {
+        "SEARCH": 150,
+        "SEALED_REVIEW": 84,
+        "CONTEXT": 22
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 704,
+      "block_start": 673,
+      "block_end": 704,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 20,
+        "CONTEXT": 6,
+        "SEARCH": 38
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 704,
+      "block_start": 673,
+      "block_end": 704,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 197,
+        "ORIGA": 59
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 79,
+        "CONTEXT": 19,
+        "SEARCH": 158
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 832,
+      "block_start": 801,
+      "block_end": 832,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 64
+      },
+      "role_counts": {
+        "SEARCH": 39,
+        "SEALED_REVIEW": 21,
+        "CONTEXT": 4
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 832,
+      "block_start": 801,
+      "block_end": 832,
+      "origin_domain": "REFUGE_Valid",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE_Valid": 69,
+        "ORIGA": 187
+      },
+      "role_counts": {
+        "SEARCH": 145,
+        "SEALED_REVIEW": 84,
+        "CONTEXT": 27
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 960,
+      "block_start": 929,
+      "block_end": 960,
+      "origin_domain": "ORIGA",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 22,
+        "SEARCH": 34,
+        "CONTEXT": 8
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 960,
+      "block_start": 929,
+      "block_end": 960,
+      "origin_domain": "ORIGA",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 256
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 91,
+        "SEARCH": 134,
+        "CONTEXT": 31
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1088,
+      "block_start": 1057,
+      "block_end": 1088,
+      "origin_domain": "ORIGA",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 64
+      },
+      "role_counts": {
+        "SEARCH": 37,
+        "SEALED_REVIEW": 25,
+        "CONTEXT": 2
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1088,
+      "block_start": 1057,
+      "block_end": 1088,
+      "origin_domain": "ORIGA",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 256
+      },
+      "role_counts": {
+        "SEARCH": 142,
+        "SEALED_REVIEW": 93,
+        "CONTEXT": 21
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1216,
+      "block_start": 1185,
+      "block_end": 1216,
+      "origin_domain": "ORIGA",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 24,
+        "CONTEXT": 4,
+        "SEARCH": 36
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1216,
+      "block_start": 1185,
+      "block_end": 1216,
+      "origin_domain": "ORIGA",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 256
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 89,
+        "CONTEXT": 20,
+        "SEARCH": 147
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1344,
+      "block_start": 1313,
+      "block_end": 1344,
+      "origin_domain": "ORIGA",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 64
+      },
+      "role_counts": {
+        "SEARCH": 35,
+        "SEALED_REVIEW": 21,
+        "CONTEXT": 8
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1344,
+      "block_start": 1313,
+      "block_end": 1344,
+      "origin_domain": "ORIGA",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 207,
+        "REFUGE": 49
+      },
+      "role_counts": {
+        "SEARCH": 141,
+        "SEALED_REVIEW": 91,
+        "CONTEXT": 24
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1472,
+      "block_start": 1441,
+      "block_end": 1472,
+      "origin_domain": "ORIGA",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 25,
+        "CONTEXT": 8,
+        "SEARCH": 31
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1472,
+      "block_start": 1441,
+      "block_end": 1472,
+      "origin_domain": "ORIGA",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "ORIGA": 79,
+        "REFUGE": 177
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 88,
+        "CONTEXT": 30,
+        "SEARCH": 138
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1600,
+      "block_start": 1569,
+      "block_end": 1600,
+      "origin_domain": "REFUGE",
+      "horizon": 64,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE": 64
+      },
+      "role_counts": {
+        "SEARCH": 35,
+        "CONTEXT": 10,
+        "SEALED_REVIEW": 19
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1600,
+      "block_start": 1569,
+      "block_end": 1600,
+      "origin_domain": "REFUGE",
+      "horizon": 256,
+      "available_future": 256,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE": 256
+      },
+      "role_counts": {
+        "SEARCH": 125,
+        "CONTEXT": 46,
+        "SEALED_REVIEW": 85
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1728,
+      "block_start": 1697,
+      "block_end": 1728,
+      "origin_domain": "REFUGE",
+      "horizon": 64,
+      "available_future": 223,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE": 64
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 23,
+        "SEARCH": 27,
+        "CONTEXT": 14
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1728,
+      "block_start": 1697,
+      "block_end": 1728,
+      "origin_domain": "REFUGE",
+      "horizon": 256,
+      "available_future": 223,
+      "full_horizon": false,
+      "future_domains": {
+        "REFUGE": 223
+      },
+      "role_counts": {
+        "SEALED_REVIEW": 78,
+        "SEARCH": 102,
+        "CONTEXT": 43
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1856,
+      "block_start": 1825,
+      "block_end": 1856,
+      "origin_domain": "REFUGE",
+      "horizon": 64,
+      "available_future": 95,
+      "full_horizon": true,
+      "future_domains": {
+        "REFUGE": 64
+      },
+      "role_counts": {
+        "CONTEXT": 8,
+        "SEARCH": 31,
+        "SEALED_REVIEW": 25
+      }
+    },
+    {
+      "order": 1,
+      "pivot": 1856,
+      "block_start": 1825,
+      "block_end": 1856,
+      "origin_domain": "REFUGE",
+      "horizon": 256,
+      "available_future": 95,
+      "full_horizon": false,
+      "future_domains": {
+        "REFUGE": 95
+      },
+      "role_counts": {
+        "CONTEXT": 14,
+        "SEARCH": 45,
+        "SEALED_REVIEW": 36
+      }
+    }
+  ],
+  "expected_scored_observations": 38430
+}

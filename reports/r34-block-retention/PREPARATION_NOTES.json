@@ -1,0 +1,18 @@
+{
+  "stage": "PRE_LAUNCH",
+  "GPU_work_started": false,
+  "issues": [
+    {
+      "kind": "NFS_DIRECTORY_METADATA_COPY",
+      "status": "FIXED",
+      "repair": "plain mkdir and file-content copy; no directory copystat"
+    },
+    {
+      "kind": "MECHANICAL_ENV_MISSING",
+      "status": "FIXED",
+      "repair": "provided existing reference roots before rerunning CPU checks"
+    }
+  ],
+  "scientific_retries": 0,
+  "T0_started": false
+}

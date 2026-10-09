@@ -1,0 +1,81 @@
+{
+  "status": "RUNNING",
+  "at": 1791544297.313132,
+  "profiles_passed": 6,
+  "profile_optimizer_steps_total": 480,
+  "profile_forwards_total": 3840,
+  "online_jobs": [
+    {
+      "phase": "online_s17011_o0",
+      "pid": 2036714,
+      "GPU": 2,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "image_accesses": 110,
+        "replay_arrivals": 110
+      }
+    },
+    {
+      "phase": "online_s17011_o1",
+      "pid": 2036715,
+      "GPU": 0,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "image_accesses": 114,
+        "replay_arrivals": 113
+      }
+    },
+    {
+      "phase": "online_s20260907_o0",
+      "pid": 2036712,
+      "GPU": 0,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "image_accesses": 113,
+        "replay_arrivals": 112
+      }
+    },
+    {
+      "phase": "online_s20260907_o1",
+      "pid": 2036713,
+      "GPU": 1,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "image_accesses": 112,
+        "replay_arrivals": 111
+      }
+    },
+    {
+      "phase": "online_s29009_o0",
+      "pid": 2036716,
+      "GPU": 1,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "image_accesses": 111,
+        "replay_arrivals": 110
+      }
+    },
+    {
+      "phase": "online_s29009_o1",
+      "pid": 2036717,
+      "GPU": 2,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "image_accesses": 110,
+        "replay_arrivals": 110
+      }
+    }
+  ],
+  "watchdog_pid": 2036454,
+  "supervisor_pid": 2036458,
+  "labels_released": false,
+  "failed_GPU_receipts": 0,
+  "estimated_online_end_with_reserve_Beijing": "2026-10-09T20:21:08.851467+08:00",
+  "GPU_snapshot": "index, memory.used [MiB], memory.free [MiB], utilization.gpu [%]\n0, 2251 MiB, 38194 MiB, 65 %\n1, 2251 MiB, 38194 MiB, 97 %\n2, 2251 MiB, 38194 MiB, 66 %\n3, 1 MiB, 40445 MiB, 0 %\n"
+}

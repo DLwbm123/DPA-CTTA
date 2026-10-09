@@ -1,0 +1,13 @@
+# R34 sparse block-retention diagnostic: started
+
+Status: **RUNNING_COUNTERFACTUALS**, no scientific results yet. Generated-input state checks and the full synthetic scorer passed; all six real profiles completed with the expected80 Adam updates/640 forwards each. All six formal jobs are active, two per A100 on GPUs0/1/2. Neutral process arguments, process identities and current progress were verified. Online labels remain closed.
+
+The user authorized testing executable sparse action value before observability or RL. Every128 arrivals starting at64, compare retaining the latest32 native-C updates with rolling back the complete learning state to the preceding checkpoint. The already processed32 images share their predictions under both choices. Global image position and exogenous augmentation draws advance; subsequent native updates use paired RNG. KEEP shares a freshly replayed trajectory verified against R30. This is not a source reset or an optimizer-origin swap.
+
+Three seeds and two orders give90 paired decision points. Future256 arrivals are primary (78 fully eligible pairs); future64 are auxiliary (90 pairs). The two tail windows per job have223/95 available future arrivals and remain explicitly in the coverage ledger. Formal work is33,582 Adam updates/268,656 forwards, plus480/3,840 from profiles. Planned scoring covers38,430 action-content observations with reused/overlapping content, not independent patients.
+
+Scientific code:`cc442f773a4e4b80a1cc505bdc75552371971964`. Original T0:2026-10-09 19:09:05 Beijing. Measured peak reserved memory:0.607GiB per profile. Under the same two-worker-per-GPU profile layout, estimated formal cost is5.674 GPU-worker hours and online end with20% wall reserve is2026-10-09 20:21:08 Beijing, followed by CPU scoring. These are estimates; shared host/storage load may change them. No cumulative GPU cap; registered engineering guards and all costs remain in force.
+
+The first question is whether a fixed rollback or conditional selection has enough future value at the frozen endpoint. A gate does not establish label-free predictability, full-policy efficacy, independent generalization or a need for RL. No new recurring monitor was created. Labels release only after all six jobs retire with exit code0. Complete results and negative cells require separate final GitHub delivery after the run finishes.
+
+See [protocol](../../docs/protocols/R34_BLOCK_RETENTION.md), [frozen matrix](FROZEN.json), [window coverage](WINDOW_REGISTRATION.json), [mechanical checks](MECHANICAL_TESTS.json), [profile admission](PROFILE_ADMISSION.json), [startup audit](STARTUP_AUDIT.json) and [preparation repairs](PREPARATION_NOTES.json).
