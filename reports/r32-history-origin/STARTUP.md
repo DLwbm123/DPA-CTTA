@@ -1,0 +1,11 @@
+# R32 verified startup
+
+**RUNNING_COUNTERFACTUALS; no new outcome scores available.** Three A100 real profiles passed; the six-job/96-branch frozen matrix has started in detached workers. Runtime commit2a2015a91051de4fa4b6b6deeeef5aad48682903. Every profile verified8 exact native-C outputs plus8 source-batch outputs, paired64-step histories,8 future rules/history combinations, and physical accounting of176 Adam calls/1472 forwards. Generated-input state/RNG tests and synthetic complete scoring passed before launch. No execution failure at startup. Online labels are closed.
+
+The prior-score audit found stable REFUGE_Valid harm despite aggregate benefit. Its first64-image C_CONT-EPISODIC difference is-5.568614pp in order0 and-0.439253pp in order1, with growing negative differences later. The diagnostic therefore compares SOURCE, matched SAME64/CROSS64, and original NATIVE histories, each with UPDATE/HOLD query futures. Query tails and augmentation draws are shared. Details and caveats are frozen in [R32_HISTORY_ORIGIN.md](../../docs/protocols/R32_HISTORY_ORIGIN.md); previous-score evidence is in [PRIOR_AUDIT.md](PRIOR_AUDIT.md).
+
+This is an offline diagnostic using domain metadata to define interventions, not a deployable domain selector. NATIVE has a different history length and optimizer age; interpret it separately from the matched64-step histories. Per-order CROSS treatments differ. Current-image BN remains active during HOLD. Query tails start at within-domain position65; whole-stream efficacy and independent confirmation are not claimed.
+
+Measured conservative formal projection:7.746GPU-worker hours. Online completion with20%wall reserve around2026-10-09T13:48:47.218981+08:00, followed by CPU scoring. Peak profile reserved memory:0.607GiB. No cumulative GPU cap; engineering wall/storage guards retain failure and original-time accounting. Actual hardware sharing/runtime may change the estimate. Hourly follow-up is being restored under the user's existing authorization; routine healthy progress stays quiet.
+
+Public source, protocol, aggregate prior audit and startup receipts are published. Images, labels, masks, identities, model states/weights and private paths remain excluded. New causal interpretation must wait for all six workers to retire and the registered scorer to complete.
