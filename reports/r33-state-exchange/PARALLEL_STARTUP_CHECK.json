@@ -1,0 +1,88 @@
+{
+  "status": "RUNNING",
+  "at": 1791537970.4102545,
+  "online_jobs": [
+    {
+      "phase": "online_s17011_o0",
+      "pid": 2017487,
+      "GPU": 2,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "history_updates": 256,
+        "image_accesses": 5857,
+        "query_arrivals": 3649,
+        "replay_arrivals": 1951
+      }
+    },
+    {
+      "phase": "online_s17011_o1",
+      "pid": 2021231,
+      "GPU": 0,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "image_accesses": 110,
+        "replay_arrivals": 109
+      }
+    },
+    {
+      "phase": "online_s20260907_o0",
+      "pid": 2017485,
+      "GPU": 0,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "history_updates": 256,
+        "image_accesses": 5788,
+        "query_arrivals": 3580,
+        "replay_arrivals": 1951
+      }
+    },
+    {
+      "phase": "online_s20260907_o1",
+      "pid": 2017486,
+      "GPU": 1,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "history_updates": 256,
+        "image_accesses": 5875,
+        "query_arrivals": 3667,
+        "replay_arrivals": 1951
+      }
+    },
+    {
+      "phase": "online_s29009_o0",
+      "pid": 2021232,
+      "GPU": 1,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "image_accesses": 110,
+        "replay_arrivals": 110
+      }
+    },
+    {
+      "phase": "online_s29009_o1",
+      "pid": 2021233,
+      "GPU": 2,
+      "identity_verified": true,
+      "neutral_arguments": true,
+      "progress": {
+        "image_accesses": 110,
+        "replay_arrivals": 110
+      }
+    }
+  ],
+  "original_workers_preserved": [
+    2017485,
+    2017486,
+    2017487
+  ],
+  "new_watchdog_pid": 2021217,
+  "new_supervisor_pid": 2021224,
+  "labels_released": false,
+  "failed_receipts": 0,
+  "GPU_snapshot": "index, memory.used [MiB], memory.free [MiB], utilization.gpu [%]\n0, 2251 MiB, 38194 MiB, 77 %\n1, 2251 MiB, 38194 MiB, 87 %\n2, 2251 MiB, 38194 MiB, 79 %\n3, 1 MiB, 40445 MiB, 0 %\n"
+}

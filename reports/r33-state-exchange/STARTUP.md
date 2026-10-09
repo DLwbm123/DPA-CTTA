@@ -1,5 +1,7 @@
 # R33 state exchange: started
 
+Update: the user authorized a scheduling handoff, and all six registered jobs are now active, two per GPU. The original three compute processes were preserved. See [scheduling amendment](SCHEDULING.md), [authorization receipt](SCHEDULING_AMENDMENT.json) and [six-worker startup check](PARALLEL_STARTUP_CHECK.json). The profile estimate below predates shared-GPU execution and is retained as a historical estimate.
+
 Status: **RUNNING_COUNTERFACTUALS**, scientific results pending. Three real A100 profiles passed (176 Adam steps/1,440 forwards each), after generated-input mechanical checks and a complete synthetic scorer test. Three of six formal jobs are active; the second batch is queued. Process identities and neutral process arguments were verified.
 
 Scientific code: `0c986726bcd8244e8e873e36b5e126a6b5027db7`. Matrix:3 seeds ×2 orders ×2 query domains ×4 matched-age parameter/Adam combinations =48 branches. All states use native C; no history age reset, controller or LR grid. Diagonal SS/CC must exactly reproduce R32 pre/post outputs; Adam exchange must preserve the first pre-update prediction at fixed parameters. No new labels are released until all six online jobs retire successfully.
