@@ -1,0 +1,171 @@
+{
+  "admitted": true,
+  "estimates": {
+    "C": 2187.444093081638,
+    "W": 3298.06825736808,
+    "W_BAL": 2498.0185293159484,
+    "W_LS": 3455.28971782355,
+    "W_LSM": 3544.1822114947286,
+    "W_LSO": 3629.329457203209,
+    "W_TP": 3459.459946324959
+  },
+  "formal_jobs": 42,
+  "max_concurrent": 3,
+  "profiles": [
+    {
+      "candidate": "C",
+      "family": "control",
+      "initialization_seconds": 7.499929904937744,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 652214272,
+      "seconds": [
+        0.606195917353034,
+        0.6198186739347875,
+        0.8351051500067115,
+        0.648005467839539,
+        0.6185444286093116,
+        0.7670953469350934,
+        0.6711955056525767,
+        0.6368655110709369
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "W",
+      "family": "pixel_weight",
+      "initialization_seconds": 6.129769563674927,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 704643072,
+      "seconds": [
+        0.907960269600153,
+        1.1262973309494555,
+        0.7354247742332518,
+        0.9136125859804451,
+        1.132590458728373,
+        0.746171846985817,
+        0.909936545882374,
+        1.3101898743771017
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "W_TP",
+      "family": "pixel_weight",
+      "initialization_seconds": 6.904888868331909,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 704643072,
+      "seconds": [
+        1.365151571109891,
+        1.119130686391145,
+        1.3787280367687345,
+        0.777655600104481,
+        0.9344538617879152,
+        1.296770540997386,
+        0.9512321213260293,
+        1.3752909800969064
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "W_LSO",
+      "family": "pixel_weight",
+      "initialization_seconds": 5.827213764190674,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 704643072,
+      "seconds": [
+        1.374776717275381,
+        1.0707023087888956,
+        1.4518370069563389,
+        0.8044924307614565,
+        0.9250211231410503,
+        1.2640961077995598,
+        0.9714959529228508,
+        1.391506069805473
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "W_LSM",
+      "family": "pixel_weight",
+      "initialization_seconds": 5.8062074184417725,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 704643072,
+      "seconds": [
+        1.3894515535794199,
+        1.1277419072575867,
+        1.3979048407636583,
+        1.1451519620604813,
+        1.4154787128791213,
+        1.1246178187429905,
+        1.389660444110632,
+        1.1290949410758913
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "W_LS",
+      "family": "pixel_weight",
+      "initialization_seconds": 5.906963109970093,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 706740224,
+      "seconds": [
+        1.3692270647734404,
+        1.1294985520653427,
+        1.3721036980859935,
+        1.1249144608154893,
+        1.3774582957848907,
+        1.1038024020381272,
+        1.3709279992617667,
+        1.1341332788579166
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "W_BAL",
+      "family": "pixel_weight",
+      "initialization_seconds": 5.074537754058838,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 704643072,
+      "seconds": [
+        0.9507597261108458,
+        0.9498898051679134,
+        0.9351132656447589,
+        0.9434610949829221,
+        0.9690043926239014,
+        0.9526819060556591,
+        0.9512634095735848,
+        0.9623016049154103
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    }
+  ],
+  "projected_GPU_seconds": 132430.75327567267
+}

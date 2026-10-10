@@ -1,0 +1,78 @@
+[
+  {
+    "family": "control",
+    "host": "C",
+    "id": "C",
+    "params": {}
+  },
+  {
+    "family": "pixel_weight",
+    "final_lr_multiplier": 1.5,
+    "host": "G",
+    "id": "W",
+    "params": {
+      "boundary_boost": 2.0,
+      "variance_temperature": 0.1
+    }
+  },
+  {
+    "family": "pixel_weight",
+    "final_lr_multiplier": 1.5,
+    "host": "G",
+    "id": "W_TP",
+    "module": "persistence",
+    "module_strength": 0.5,
+    "params": {
+      "boundary_boost": 2.0,
+      "variance_temperature": 0.1
+    }
+  },
+  {
+    "family": "pixel_weight",
+    "final_lr_multiplier": 1.5,
+    "host": "G",
+    "id": "W_LSO",
+    "module": "orientation",
+    "module_strength": 0.1,
+    "params": {
+      "boundary_boost": 2.0,
+      "variance_temperature": 0.1
+    }
+  },
+  {
+    "family": "pixel_weight",
+    "final_lr_multiplier": 1.5,
+    "host": "G",
+    "id": "W_LSM",
+    "module": "magnitude",
+    "module_strength": 0.1,
+    "params": {
+      "boundary_boost": 2.0,
+      "variance_temperature": 0.1
+    }
+  },
+  {
+    "family": "pixel_weight",
+    "final_lr_multiplier": 1.5,
+    "host": "G",
+    "id": "W_LS",
+    "module": "both",
+    "module_strength": 0.1,
+    "params": {
+      "boundary_boost": 2.0,
+      "variance_temperature": 0.1
+    }
+  },
+  {
+    "family": "pixel_weight",
+    "final_lr_multiplier": 1.5,
+    "host": "G",
+    "id": "W_BAL",
+    "module": "balance",
+    "module_strength": 0.1,
+    "params": {
+      "boundary_boost": 2.0,
+      "variance_temperature": 0.1
+    }
+  }
+]

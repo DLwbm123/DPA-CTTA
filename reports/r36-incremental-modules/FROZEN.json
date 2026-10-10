@@ -1,0 +1,100 @@
+{
+  "T0": "2026-10-09T14:18:48.317183+00:00",
+  "arrivals_per_trajectory": 1951,
+  "automatic_retuning": false,
+  "baseline": "W",
+  "candidates": [
+    {
+      "family": "control",
+      "host": "C",
+      "id": "C",
+      "params": {}
+    },
+    {
+      "family": "pixel_weight",
+      "final_lr_multiplier": 1.5,
+      "host": "G",
+      "id": "W",
+      "params": {
+        "boundary_boost": 2.0,
+        "variance_temperature": 0.1
+      }
+    },
+    {
+      "family": "pixel_weight",
+      "final_lr_multiplier": 1.5,
+      "host": "G",
+      "id": "W_TP",
+      "module": "persistence",
+      "module_strength": 0.5,
+      "params": {
+        "boundary_boost": 2.0,
+        "variance_temperature": 0.1
+      }
+    },
+    {
+      "family": "pixel_weight",
+      "final_lr_multiplier": 1.5,
+      "host": "G",
+      "id": "W_LSO",
+      "module": "orientation",
+      "module_strength": 0.1,
+      "params": {
+        "boundary_boost": 2.0,
+        "variance_temperature": 0.1
+      }
+    },
+    {
+      "family": "pixel_weight",
+      "final_lr_multiplier": 1.5,
+      "host": "G",
+      "id": "W_LSM",
+      "module": "magnitude",
+      "module_strength": 0.1,
+      "params": {
+        "boundary_boost": 2.0,
+        "variance_temperature": 0.1
+      }
+    },
+    {
+      "family": "pixel_weight",
+      "final_lr_multiplier": 1.5,
+      "host": "G",
+      "id": "W_LS",
+      "module": "both",
+      "module_strength": 0.1,
+      "params": {
+        "boundary_boost": 2.0,
+        "variance_temperature": 0.1
+      }
+    },
+    {
+      "family": "pixel_weight",
+      "final_lr_multiplier": 1.5,
+      "host": "G",
+      "id": "W_BAL",
+      "module": "balance",
+      "module_strength": 0.1,
+      "params": {
+        "boundary_boost": 2.0,
+        "variance_temperature": 0.1
+      }
+    }
+  ],
+  "code_sha": "0eda9a1b235216b9648435e6458c88fda8ca07d6",
+  "formal_trajectories": 42,
+  "frozen_before_labels": true,
+  "orders": [
+    0,
+    1
+  ],
+  "primary": "W_TP",
+  "review_descriptive_only": true,
+  "seeds": [
+    20260907,
+    17011,
+    29009
+  ],
+  "strong_control": "C",
+  "total_formal_arrivals": 81942
+}
