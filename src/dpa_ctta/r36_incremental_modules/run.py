@@ -149,10 +149,11 @@ def supervise():
             profiles = batch([dict(id=x['id'], candidate=x) for x in c['candidates']], 'profile_', 1200)
             estimates = {x['result']['candidate']: 1.2*(1951*(max(x['result']['seconds'])+.08)+x['result']['initialization_seconds']+30) for x in profiles}
             seconds = sum(estimates[j['candidate']['id']] for j in c['jobs'])
-            admitted = base.amounts(c)[0]+seconds < c['origin']['gpu_worker_cap_seconds']-120 and time.time()+seconds/3+max(estimates.values()) < c['origin']['online_deadline_epoch']-600
+            workers = len(c['gpu_assignments'])
+            admitted = base.amounts(c)[0]+seconds < c['origin']['gpu_worker_cap_seconds']-120 and time.time()+seconds/workers+max(estimates.values()) < c['origin']['online_deadline_epoch']-600
             save(root/'PROFILE_ADMISSION.json', dict(admitted=admitted, profiles=[x['result'] for x in profiles],
                                                     projected_GPU_seconds=seconds, estimates=estimates,
-                                                    formal_jobs=len(c['jobs']), max_concurrent=3))
+                                                    formal_jobs=len(c['jobs']), max_concurrent=workers))
             if not admitted: raise RuntimeError('full frozen matrix exceeds budget; no pruning or retuning')
             state['status']='RUNNING_FIXED_MATRIX'; persist()
             batch(c['jobs'], 'online_', max(1800, 3*max(estimates.values())))
