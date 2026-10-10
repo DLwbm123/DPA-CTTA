@@ -80,3 +80,21 @@ identifiers or hashes, model states, private paths/logs and third-party PDFs.
 Continue authorized hourly necessary checks; notify meaningful changes only.
 Pause only after frozen development gate and verified delivery. Future changes
 need a new concrete evidence-driven separately registered bounded hypothesis.
+
+## User resource amendment, 2026-10-10
+
+The user withdrew physical GPU 2 during the round and restricted this and future
+work to physical GPUs 0 and 1. The GPU-2 worker was terminated with SIGTERM; its
+partial output, original attempt receipt and full cost remain private and retained.
+The two healthy workers on 0/1 retire normally. Completed trajectories are retained.
+After controller/worker retirement, a dedicated resource continuation runs only
+pending frozen jobs on 0/1. The sole user-interrupted job restarts once from its
+original initialization as attempt 1; its old output is archived without deletion.
+No other failed job may retry. No new profiles, method changes, score selection,
+extra trajectories, scoring before retirement, T0 reset or budget extension.
+Remaining full-matrix admission is checked against the original deadlines and
+GPU cost including the interrupted attempt. This is an explicit user-requested
+resource change, not a scientific retry selected by observed performance.
+Original scientific config/provenance remains unchanged; the separate operational
+driver revision and resource amendment are recorded. The final report must include
+the user interruption, one repeat attempt and both costs.
