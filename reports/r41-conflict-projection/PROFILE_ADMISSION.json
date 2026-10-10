@@ -1,0 +1,102 @@
+{
+  "admitted": true,
+  "estimates": {
+    "C": 974.7101883412377,
+    "CW_LSO_GC": 1370.4938327002376,
+    "CW_LSO_GP": 1321.787306555271,
+    "W": 2122.8419992831573
+  },
+  "formal_jobs": 24,
+  "max_concurrent": 3,
+  "profiles": [
+    {
+      "candidate": "C",
+      "family": "control",
+      "initialization_seconds": 7.78013277053833,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 652214272,
+      "seconds": [
+        0.2844080338254571,
+        0.2883959300816059,
+        0.27456924319267273,
+        0.2540610828436911,
+        0.28892724169418216,
+        0.31696481676772237,
+        0.2754629869014025,
+        0.28203001292422414
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "CW_LSO_GC",
+      "family": "pixel_weight",
+      "initialization_seconds": 7.367323398590088,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 721420288,
+      "seconds": [
+        0.46372494101524353,
+        0.468014869838953,
+        0.43929842207580805,
+        0.44335135677829385,
+        0.46995069179683924,
+        0.48622802179306746,
+        0.43736647302284837,
+        0.45773095404729247
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "W",
+      "family": "pixel_weight",
+      "initialization_seconds": 8.002123594284058,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 704643072,
+      "seconds": [
+        0.6517612878233194,
+        0.7952531138435006,
+        0.7660934929735959,
+        0.6462616180069745,
+        0.7948048510588706,
+        0.7627644711174071,
+        0.6771008530631661,
+        0.8072541649453342
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "CW_LSO_GP",
+      "family": "pixel_weight",
+      "initialization_seconds": 5.164514064788818,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 721420288,
+      "seconds": [
+        0.43107460997998714,
+        0.44168184231966734,
+        0.43040382908657193,
+        0.4280734830535948,
+        0.44803512701764703,
+        0.4665530025959015,
+        0.4301001080311835,
+        0.45472954772412777
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    }
+  ],
+  "projected_GPU_seconds": 34738.99996127942
+}
