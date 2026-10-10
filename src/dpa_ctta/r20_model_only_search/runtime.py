@@ -127,6 +127,18 @@ def online(c,guard,permit,job):
         if soft:soft.close()
         h.close()
 
+def worker_peak(c, phase, job):
+    if not c.get('use_profiled_worker_memory') or phase.startswith('profile_'):
+        return int(job.get('peak_bytes', 5*1024**3))
+    candidate = job['candidate']['id']
+    measured = read(Path(c['output_root'])/'profiles'/(candidate+'.json'))
+    peak = measured.get('peak_reserved_bytes')
+    if (measured.get('status') != 'PASS' or measured.get('candidate') != candidate
+            or type(peak) is not int or peak <= 0):
+        raise ValueError('valid same-round profile peak required for worker admission')
+    return peak
+
+
 def worker():
     c=config();root=Path(c['output_root']);phase=os.environ['RUN_PHASE'];start=float(os.environ['RUN_STARTED']);guard=Guard(c,phase);cpu=phase.startswith('score_');meter=None;failure=None;result=None;opened=set();rejections=[]
     torch.set_num_threads(2);torch.set_num_interop_threads(2)
@@ -138,7 +150,7 @@ def worker():
             from .score import score_job
             result=score_job(c,guard,job)
         else:
-            assignment=json.loads(os.environ['RUN_ASSIGNMENT']);gpu_policy(assignment);available_memory(assignment,int(job.get('peak_bytes',5*1024**3)))
+            assignment=json.loads(os.environ['RUN_ASSIGNMENT']);gpu_policy(assignment);available_memory(assignment,worker_peak(c,phase,job))
             if subprocess.check_output(['findmnt','-n','-o','FSTYPE','-T',str(root)],text=True).strip() not in ('nfs','nfs4'):raise OSError('required NAS mount absent')
             disk=shutil.disk_usage(root)
             if disk.free<c['origin']['disk_cap_bytes'] or disk.free/disk.total<.2:raise OSError('NAS free reserve')
