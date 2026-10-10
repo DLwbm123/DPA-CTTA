@@ -34,10 +34,13 @@ class Host(RetainedHost):
         if not torch.isfinite(norm):
             raise ValueError('nonfinite BN displacement')
         radius = float(self.config['bn_trust_radius'])
-        factor = min(1., radius/max(float(norm), 1e-12))
+        factor = self._trust_factor(float(norm), radius)
         if factor < 1:
             for p,before,delta in zip(self.native.params,self.trust_before,deltas):
                 p.copy_(before+factor*delta)
         self.diag.update(BN_trust_raw_norm=float(norm), BN_trust_scale=factor,
                          BN_trust_radius=radius)
         self.trust_before = None
+
+    def _trust_factor(self, norm, radius):
+        return min(1., radius/max(norm, 1e-12))
