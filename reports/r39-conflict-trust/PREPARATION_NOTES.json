@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "CPU_seconds": 33.20613431930542,
+  "failures": [
+    {
+      "reason": "missing inherited DPA_GRATA_ROOT in CPU preparation invocation; corrected environment only before GPU launch",
+      "CPU_seconds": 3.198512554168701,
+      "GPU_seconds": 0
+    },
+    {
+      "reason": "forced-conflict test used stale preceding gradient and did not force negative current cosine; corrected fixture pre-hook only",
+      "CPU_seconds": 9.625227212905884,
+      "GPU_seconds": 0
+    },
+    {
+      "reason": "optimizer hook fixture assumed unsupported prepend argument; corrected to snapshot replay to obtain exact current gradient, method unchanged",
+      "CPU_seconds": 9.060258865356445,
+      "GPU_seconds": 0
+    }
+  ],
+  "T0_started": false,
+  "GPU_started": false
+}
