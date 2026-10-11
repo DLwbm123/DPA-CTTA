@@ -2,7 +2,7 @@
 
 Date: 2026-10-11. Result: **PASS, 15/15 tests**, 7.976 seconds test-body time.
 Scope: implementation and synthetic CPU checks, not a scientific experiment.
-No GPU allocation, remote connection, experiment launch, or R44 modification.
+No GPU allocation, server SSH connection, experiment launch, or R44 modification.
 
 Implementation: `src/dpa_ctta/joint_sensitivity/method.py`.
 Specification: `docs/JOINT_SENSITIVITY_CPU.md`.
