@@ -1,0 +1,84 @@
+{
+  "experiment": "R44_SPECTRAL_ENTROPY",
+  "status": "RUNNING_FIXED_MATRIX",
+  "scientific_results": "PENDING",
+  "code_sha": "1c3de8f0f2d8c2598623303150b47fb96093e29a",
+  "T0": "2026-10-11T12:37:59.865916+00:00",
+  "conditions": [
+    "C",
+    "W",
+    "CW_LSO",
+    "CW_LSO_SE"
+  ],
+  "seeds": [
+    20260907,
+    17011,
+    29009
+  ],
+  "orders": [
+    0,
+    1
+  ],
+  "trajectories": 24,
+  "arrivals_per_trajectory": 1951,
+  "expected_scores": 46824,
+  "allowed_physical_GPUs": [
+    0,
+    1
+  ],
+  "max_GPU_workers": 2,
+  "online_cap_hours": 22,
+  "wall_cap_hours": 24,
+  "GPU_worker_cap_hours": 48,
+  "mechanical_tests": 11,
+  "mechanical_status": "PASS",
+  "preparation_CPU_seconds": 7.033796072006226,
+  "preparation_GPU_seconds": 0,
+  "profile_admitted": true,
+  "profiles": [
+    {
+      "condition": "C",
+      "status": "PASS",
+      "peak_reserved_GiB": 0.607421875,
+      "max_timed_arrival_seconds": 0.3271396839991212,
+      "initialization_seconds": 6.1319286823272705
+    },
+    {
+      "condition": "W",
+      "status": "PASS",
+      "peak_reserved_GiB": 0.65625,
+      "max_timed_arrival_seconds": 0.4536972539499402,
+      "initialization_seconds": 6.005382537841797
+    },
+    {
+      "condition": "CW_LSO",
+      "status": "PASS",
+      "peak_reserved_GiB": 0.609375,
+      "max_timed_arrival_seconds": 0.5034162448719144,
+      "initialization_seconds": 4.937755107879639
+    },
+    {
+      "condition": "CW_LSO_SE",
+      "status": "PASS",
+      "peak_reserved_GiB": 0.61328125,
+      "max_timed_arrival_seconds": 0.4731916137970984,
+      "initialization_seconds": 5.06680965423584
+    }
+  ],
+  "projected_GPU_worker_hours": 8.390473348368294,
+  "closed_prior_rounds": 8,
+  "closed_prior_GPU_worker_hours": 60.8491476114591,
+  "automatic_followup": false,
+  "startup_formal_progress": [
+    {
+      "job": "C_s20260907_o1",
+      "visit": 161
+    },
+    {
+      "job": "C_s20260907_o0",
+      "visit": 166
+    }
+  ],
+  "startup_failures": 0,
+  "neutral_process_commands_verified": true
+}
