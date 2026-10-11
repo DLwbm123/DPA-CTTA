@@ -1,0 +1,72 @@
+{
+  "experiment": "R43_SCNP",
+  "status": "RUNNING_FIXED_MATRIX",
+  "scientific_results": "PENDING",
+  "code_sha": "601b72503955d2ba8b578463f50f9cd1c4ed02e0",
+  "T0": "2026-10-11T07:55:23.774913+00:00",
+  "conditions": [
+    "C",
+    "W",
+    "CW_LSO",
+    "CW_LSO_SCNP"
+  ],
+  "seeds": [
+    20260907,
+    17011,
+    29009
+  ],
+  "orders": [
+    0,
+    1
+  ],
+  "trajectories": 24,
+  "arrivals_per_trajectory": 1951,
+  "expected_scores": 46824,
+  "allowed_physical_GPUs": [
+    0,
+    1
+  ],
+  "max_GPU_workers": 2,
+  "online_cap_hours": 22,
+  "wall_cap_hours": 24,
+  "GPU_worker_cap_hours": 48,
+  "mechanical_tests": 12,
+  "mechanical_status": "PASS",
+  "preparation_CPU_seconds": 33.13669395446777,
+  "preparation_GPU_seconds": 0,
+  "profile_admitted": true,
+  "profiles": [
+    {
+      "condition": "C",
+      "status": "PASS",
+      "peak_reserved_GiB": 0.607421875,
+      "max_timed_arrival_seconds": 0.9505134588107467,
+      "initialization_seconds": 14.28609848022461
+    },
+    {
+      "condition": "W",
+      "status": "PASS",
+      "peak_reserved_GiB": 0.65625,
+      "max_timed_arrival_seconds": 1.7083670860156417,
+      "initialization_seconds": 13.078561782836914
+    },
+    {
+      "condition": "CW_LSO",
+      "status": "PASS",
+      "peak_reserved_GiB": 0.609375,
+      "max_timed_arrival_seconds": 2.443431633990258,
+      "initialization_seconds": 14.571956396102905
+    },
+    {
+      "condition": "CW_LSO_SCNP",
+      "status": "PASS",
+      "peak_reserved_GiB": 0.611328125,
+      "max_timed_arrival_seconds": 2.8194590667262673,
+      "initialization_seconds": 14.35146689414978
+    }
+  ],
+  "projected_GPU_worker_hours": 32.51196756721507,
+  "closed_prior_rounds": 7,
+  "closed_prior_GPU_worker_hours": 52.744737940364416,
+  "automatic_followup": false
+}
