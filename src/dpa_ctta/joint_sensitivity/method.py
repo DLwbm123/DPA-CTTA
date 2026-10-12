@@ -66,8 +66,8 @@ class Sensor:
 
 
 @torch.no_grad()
-def filter_update(delta, metric, acquisition, anatomy, strength=1.):
-    """All eigensystems are at most 2x2; preserve the H-orthogonal complement."""
+def filter_update(delta, metric, acquisition, anatomy, strength=1., shared_span=False):
+    """Preserve the H-orthogonal complement; small eigensystems are 2x2 or 4x4."""
     if not math.isfinite(strength) or strength < 0:
         raise ValueError('finite nonnegative joint strength')
     if delta.ndim != 1 or metric.shape != delta.shape or acquisition.shape != (len(delta), 2) or anatomy.shape != acquisition.shape:
@@ -79,12 +79,18 @@ def filter_update(delta, metric, acquisition, anatomy, strength=1.):
         return delta.clone(), dict(rank=0)
     root = metric.double().sqrt()
     x, y = acquisition.double()/root[:, None], anatomy.double()/root[:, None]
-    values, vectors = torch.linalg.eigh(x.T@x)
+    span = x
+    if shared_span:
+        if x.square().sum() == 0 or y.square().sum() == 0:
+            return delta.clone(), dict(rank=0)
+        # Normalize the two blocks so rank selection cannot erase the smaller one.
+        span = torch.cat((x/x.norm(), y/y.norm()), dim=1)
+    values, vectors = torch.linalg.eigh(span.T@span)
     keep = values > max(1e-12, 1e-6*float(values[-1]))
     rank = int(keep.sum())
     if not rank:
         return delta.clone(), dict(rank=0)
-    q = (x@vectors[:, keep])/values[keep].sqrt()
+    q = (span@vectors[:, keep])/values[keep].sqrt()
     qx, qy = q.T@x, q.T@y
     a = qx@qx.T/x.square().sum()
     s = qy@qy.T/y.square().sum() if y.square().sum() > 0 else torch.zeros_like(a)
@@ -97,8 +103,14 @@ def filter_update(delta, metric, acquisition, anatomy, strength=1.):
     w = root*delta.double()
     result = ((w+q@(k-eye)@(q.T@w))/root).to(delta)
     finite(result)
-    return result, dict(rank=rank, filter_eigenvalues=torch.linalg.eigvalsh(k).tolist(),
-                       proposal_metric_norm=float(w.norm()), filtered_metric_norm=float((root*result.double()).norm()))
+    diagnostic = dict(rank=rank, filter_eigenvalues=torch.linalg.eigvalsh(k).tolist(),
+                      proposal_metric_norm=float(w.norm()), filtered_metric_norm=float((root*result.double()).norm()))
+    if shared_span:
+        diagnostic.update(acquisition_capture_fraction=float(qx.square().sum()/x.square().sum()),
+                          anatomy_capture_fraction=float(qy.square().sum()/y.square().sum()),
+                          proposal_span_energy_fraction=float((q.T@w).square().sum()/w.square().sum()) if w.square().sum() > 0 else 0.,
+                          relative_metric_update_change=float((root*result.double()-w).norm()/w.norm()) if w.norm() > 0 else 0.)
+    return result, diagnostic
 
 
 def flatten(tensors):
@@ -109,6 +121,9 @@ class Host(BaseHost):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.strength = float(self.config.get('joint_strength', 0.))
+        self.basis = self.config.get('joint_basis', 'acquisition')
+        if self.basis not in ('acquisition', 'shared'):
+            raise ValueError('registered joint basis required')
         lso = base_candidates()[3]
         if not math.isfinite(self.strength) or self.strength < 0:
             raise ValueError('finite nonnegative joint strength')
@@ -167,7 +182,11 @@ class Host(BaseHost):
         beta2 = n.base.param_groups[0]['betas'][1]
         eps = n.base.param_groups[0]['eps']
         metric = flatten([(n.base.state[p]['exp_avg_sq']/(1-beta2**int(n.base.state[p]['step']))).sqrt()+eps for p in n.params])
-        filtered, diagnostic = filter_update(delta, metric, torch.stack(acquisition, 1), torch.stack(b, 1), self.strength)
+        arguments = (delta, metric, torch.stack(acquisition, 1), torch.stack(b, 1), self.strength)
+        if self.basis == 'shared':
+            filtered, diagnostic = filter_update(*arguments, shared_span=True)
+        else:
+            filtered, diagnostic = filter_update(*arguments)
         with torch.no_grad():
             # Rank-zero fallback keeps the actual proposal bitwise, without subtraction/addition.
             if diagnostic['rank']:
