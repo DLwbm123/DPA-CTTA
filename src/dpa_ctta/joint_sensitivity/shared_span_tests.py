@@ -1,5 +1,6 @@
 """Synthetic CPU checks for shared sensitivity span and frozen R45 behavior."""
 import copy
+import os
 import subprocess
 import types
 import unittest
@@ -77,7 +78,8 @@ class Tests(unittest.TestCase):
         disabled = self.host(dict(candidates()[-1], joint_strength=0.))
         base = self.host(base_candidates()[3], base=True)
         repo = Path(__file__).resolve().parents[3]
-        source = subprocess.check_output(['git', 'show', '15445741fe17a3fb12dc0397a745389b6c857746:src/dpa_ctta/joint_sensitivity/method.py'], cwd=repo, text=True)
+        fixture = os.environ.get('FROZEN_JS_SOURCE')
+        source = Path(fixture).read_text() if fixture else subprocess.check_output(['git', 'show', '15445741fe17a3fb12dc0397a745389b6c857746:src/dpa_ctta/joint_sensitivity/method.py'], cwd=repo, text=True)
         frozen = types.ModuleType('dpa_ctta.joint_sensitivity._r45_reference')
         exec(compile(source, '<frozen-r45-source>', 'exec'), frozen.__dict__)
         old = frozen.Host(None, frozen.candidates()[-1], 17011, 'synthetic', device='cpu', model=copy.deepcopy(self.model))
