@@ -8,8 +8,8 @@ def report(c, state):
     reporting.report(c, state)
     path = Path(c['output_root'])/'public/REPORT.md'
     text = path.read_text().replace(
-        'RL, extra views, output fusion',
-        'RL or output fusion; only the registered two acquisition probes are added')
+        'RL, extra views, output fusion or scientific retries.',
+        'RL, output fusion or scientific retries. Only the registered two acquisition probes are added.')
     path.write_text(text)
 
 
