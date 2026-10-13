@@ -1,6 +1,7 @@
 """Profile-only queue: wait for R44 retirement, then four bounded real-model jobs."""
 import concurrent.futures
 import json
+import math
 import os
 from pathlib import Path
 import statistics
@@ -42,6 +43,17 @@ def r44_retired(root):
     return not any(alive(pid) for pid in (launch['pid'], watch['supervisor_pid']))
 
 
+def check_joint_update(candidate, diagnostic):
+    if candidate.get('joint_descent_constraint', False):
+        proposal, actual = diagnostic['descent_proposal_dot'], diagnostic['descent_actual_dot']
+        if not all(math.isfinite(v) for v in (proposal, actual)):
+            raise ValueError('nonfinite loss descent diagnostic')
+        if proposal < 0 and actual-proposal > 1e-5*max(abs(proposal), 1e-10):
+            raise ValueError('real-model first-order loss descent violated')
+    elif diagnostic['rank'] and diagnostic['filtered_metric_norm'] > diagnostic['proposal_metric_norm']*1.00001+1e-10:
+        raise ValueError('real-model metric contraction violated')
+
+
 def measured_profile(c, guard, permit, job):
     root = Path(c['output_root'])
     rows = read(root/'private/SCREEN_o0.json')
@@ -77,8 +89,7 @@ def measured_profile(c, guard, permit, job):
                 diagnostic = detail['diagnostics']['joint']
                 ranks.append(diagnostic['rank'])
                 evidence.append(detail['diagnostics']['structure_evidence_mean'])
-                if diagnostic['rank'] and diagnostic['filtered_metric_norm'] > diagnostic['proposal_metric_norm']*1.00001+1e-10:
-                    raise ValueError('real-model metric contraction violated')
+                check_joint_update(job['candidate'], diagnostic)
             del logits
         h.check_frozen(True)
         result = dict(status='PASS', condition=job['candidate']['id'], physical_gpu=job['physical_gpu'],

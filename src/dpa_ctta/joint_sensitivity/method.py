@@ -66,7 +66,7 @@ class Sensor:
 
 
 @torch.no_grad()
-def filter_update(delta, metric, acquisition, anatomy, strength=1., shared_span=False):
+def filter_update(delta, metric, acquisition, anatomy, strength=1., shared_span=False, descent_gradient=None):
     """Preserve the H-orthogonal complement; small eigensystems are 2x2 or 4x4."""
     if not math.isfinite(strength) or strength < 0:
         raise ValueError('finite nonnegative joint strength')
@@ -75,6 +75,16 @@ def filter_update(delta, metric, acquisition, anatomy, strength=1., shared_span=
     finite([delta, metric, acquisition, anatomy])
     if (metric <= 0).any():
         raise ValueError('positive Adam metric required')
+    if descent_gradient is not None:
+        if not shared_span or descent_gradient.shape != delta.shape:
+            raise ValueError('descent constraint requires shared span and matching loss gradient')
+        finite(descent_gradient)
+        proposal_dot = float(descent_gradient.double() @ delta.double())
+        if not math.isfinite(proposal_dot):
+            raise ValueError('finite loss directional derivative required')
+        if strength and proposal_dot >= 0:
+            return delta.clone(), dict(rank=0, descent_fallback='non_descent_proposal',
+                                      descent_proposal_dot=proposal_dot, descent_actual_dot=proposal_dot)
     if strength == 0:
         return delta.clone(), dict(rank=0)
     root = metric.double().sqrt()
@@ -102,6 +112,25 @@ def filter_update(delta, metric, acquisition, anatomy, strength=1., shared_span=
     k = torch.linalg.solve(eye+strength*t, eye)
     w = root*delta.double()
     result = ((w+q@(k-eye)@(q.T@w))/root).to(delta)
+    descent = {}
+    if descent_gradient is not None:
+        va = q.T@w
+        v0 = k@va
+        c = q.T@(descent_gradient.double()/root)
+        violation = float(c@(v0-va))
+        multiplier = 0.
+        if violation > 0:
+            kc = k@c
+            denominator = float(c@kc)
+            if denominator <= 0:
+                return delta.clone(), dict(rank=0, descent_fallback='degenerate_constraint',
+                                          descent_proposal_dot=proposal_dot, descent_actual_dot=proposal_dot)
+            multiplier = violation/denominator
+            result = ((w+q@(v0-multiplier*kc-va))/root).to(delta)
+        descent = dict(descent_constraint_active=violation > 0,
+                       descent_unconstrained_gap=violation, descent_multiplier=multiplier,
+                       descent_proposal_dot=proposal_dot,
+                       descent_filtered_dot=float(descent_gradient.double()@result.double()))
     finite(result)
     diagnostic = dict(rank=rank, filter_eigenvalues=torch.linalg.eigvalsh(k).tolist(),
                       proposal_metric_norm=float(w.norm()), filtered_metric_norm=float((root*result.double()).norm()))
@@ -110,6 +139,7 @@ def filter_update(delta, metric, acquisition, anatomy, strength=1., shared_span=
                           anatomy_capture_fraction=float(qy.square().sum()/y.square().sum()),
                           proposal_span_energy_fraction=float((q.T@w).square().sum()/w.square().sum()) if w.square().sum() > 0 else 0.,
                           relative_metric_update_change=float((root*result.double()-w).norm()/w.norm()) if w.norm() > 0 else 0.)
+    diagnostic.update(descent)
     return result, diagnostic
 
 
@@ -124,6 +154,9 @@ class Host(BaseHost):
         self.basis = self.config.get('joint_basis', 'acquisition')
         if self.basis not in ('acquisition', 'shared'):
             raise ValueError('registered joint basis required')
+        self.descent = self.config.get('joint_descent_constraint', False)
+        if not isinstance(self.descent, bool) or self.descent and self.basis != 'shared':
+            raise ValueError('boolean descent constraint requires shared joint basis')
         lso = base_candidates()[3]
         if not math.isfinite(self.strength) or self.strength < 0:
             raise ValueError('finite nonnegative joint strength')
@@ -177,6 +210,7 @@ class Host(BaseHost):
         loss = self._criterion(n.model(strong)[0], q)
         finite(loss); n.last['cal_consis_loss'] = float(loss.detach())
         loss.backward()
+        loss_gradient = flatten([p.grad for p in n.params]) if self.descent else None
         n.base.step()
         delta = flatten([p-old for p, old in zip(n.params, before)])
         beta2 = n.base.param_groups[0]['betas'][1]
@@ -184,7 +218,10 @@ class Host(BaseHost):
         metric = flatten([(n.base.state[p]['exp_avg_sq']/(1-beta2**int(n.base.state[p]['step']))).sqrt()+eps for p in n.params])
         arguments = (delta, metric, torch.stack(acquisition, 1), torch.stack(b, 1), self.strength)
         if self.basis == 'shared':
-            filtered, diagnostic = filter_update(*arguments, shared_span=True)
+            if self.descent:
+                filtered, diagnostic = filter_update(*arguments, shared_span=True, descent_gradient=loss_gradient)
+            else:
+                filtered, diagnostic = filter_update(*arguments, shared_span=True)
         else:
             filtered, diagnostic = filter_update(*arguments)
         with torch.no_grad():
@@ -194,6 +231,10 @@ class Host(BaseHost):
                 for p, old in zip(n.params, before):
                     p.copy_(old+filtered[offset:offset+p.numel()].view_as(p)); offset += p.numel()
             logits = n.model(native_x)[0].detach()
+        if self.descent:
+            actual = flatten([p-old for p, old in zip(n.params, before)])
+            diagnostic.setdefault('descent_proposal_dot', float(loss_gradient.double()@delta.double()))
+            diagnostic['descent_actual_dot'] = float(loss_gradient.double()@actual.double())
         finite([n.base.state, n.params, self.diag])
         n.steps += 1; n.rng = rng(); self.visits += 1
         if any(int(n.base.state[p]['step']) != n.steps for p in n.params):

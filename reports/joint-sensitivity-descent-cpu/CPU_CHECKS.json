@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "scope": "synthetic CPU implementation qualification only",
+  "tests": 28,
+  "new_tests": 7,
+  "GPU_worker_seconds": 0,
+  "frozen_R46_source": "66097c9f6ed3c37645ca315c009fbd3b9aaa836c",
+  "disabled_R46_bitwise_output_diagnostics_full_snapshot": true,
+  "joint_disabled_CW_LSO_bitwise": true,
+  "independent_KKT_reference": true,
+  "forward_calls_per_enabled_arrival": 10,
+  "auxiliary_VJP_calls_per_enabled_arrival": 4,
+  "loss_backward_calls_per_enabled_arrival": 1,
+  "Adam_steps_per_enabled_arrival": 1,
+  "Adam_moments_and_step_count_unchanged": true,
+  "snapshot_restore_exact": true,
+  "formal_experiment_started": false,
+  "real_model_GPU_profile_started": false,
+  "scientific_gain_evaluated": false,
+  "existing_warning": "base-host tensor-to-scalar conversion; retained",
+  "test_modules": [
+    "dpa_ctta.joint_sensitivity.descent_tests",
+    "dpa_ctta.joint_sensitivity.tests",
+    "dpa_ctta.joint_sensitivity.shared_span_tests",
+    "dpa_ctta.joint_sensitivity.profile_tests",
+    "dpa_ctta.r46_shared_span.tests",
+    "dpa_ctta.r37_cw_orientation.tests",
+    "dpa_ctta.r40_profiled_vram.tests"
+  ],
+  "test_body_elapsed_seconds": 11.928,
+  "earlier_six_test_pass_elapsed_seconds": 5.779,
+  "total_known_test_body_elapsed_seconds": 17.707
+}
