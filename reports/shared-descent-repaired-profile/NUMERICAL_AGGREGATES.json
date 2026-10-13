@@ -1,0 +1,111 @@
+{
+  "status": "PASS_BOUNDED_PROFILE_ONLY",
+  "formal_experiment_started": false,
+  "scope": "Two authorized64-image prefixes on both devices; repeats are not independent subjects.",
+  "all_condition_arrivals": 512,
+  "repaired_arrivals": 256,
+  "negative_native_proposals": 254,
+  "final_violations": 0,
+  "commit_repairs": 16,
+  "commit_repair_fraction": 0.0625,
+  "non_descent_fallbacks": 2,
+  "constraint_triggers": 220,
+  "repair_gap_tolerance_ratio": {
+    "count": 16,
+    "mean": 1.4095198185267381,
+    "min": 1.0019712267750487,
+    "median": 1.399362576504482,
+    "p95": 1.8907397840567528,
+    "max": 1.8907397840567528
+  },
+  "repaired_returned_filter_gap_tolerance_ratio": {
+    "count": 16,
+    "mean": 3.764115329450814e-05,
+    "min": -0.000157443599907377,
+    "median": 1.0596928144077407e-06,
+    "p95": 0.0003203729208353472,
+    "max": 0.0003203729208353472
+  },
+  "derivatives": {
+    "descent_actual_dot": {
+      "count": 256,
+      "mean": -0.00104160546730828,
+      "min": -0.009359533501174374,
+      "median": -0.0004493191399388321,
+      "p95": -7.631786631795495e-05,
+      "max": 5.591407705985793e-06
+    },
+    "descent_candidate_actual_dot": {
+      "count": 256,
+      "mean": -0.0010416052933434057,
+      "min": -0.009359533501174374,
+      "median": -0.0004493191399388321,
+      "p95": -7.631642334569413e-05,
+      "max": 5.591407705985793e-06
+    },
+    "descent_candidate_committed_gap": {
+      "count": 256,
+      "mean": -2.619924042286776e-06,
+      "min": -5.952642189963639e-05,
+      "median": -7.583003186690303e-10,
+      "p95": 4.606531269445418e-09,
+      "max": 1.6181537549134206e-08
+    },
+    "descent_committed_gap": {
+      "count": 256,
+      "mean": -2.6200980071612363e-06,
+      "min": -5.952642189963639e-05,
+      "median": -7.583003186690303e-10,
+      "p95": 3.6013599652353484e-09,
+      "max": 1.6181537549134206e-08
+    },
+    "descent_filtered_dot": {
+      "count": 254,
+      "mean": -0.0010498507749712304,
+      "min": -0.00935954968313881,
+      "median": -0.00045223024618265323,
+      "p95": -7.816222474519189e-05,
+      "max": -1.5163881555334909e-05
+    },
+    "descent_multiplier": {
+      "count": 254,
+      "mean": 0.00019424721413997145,
+      "min": 0.0,
+      "median": 8.939485115516916e-05,
+      "p95": 0.0007546550724850138,
+      "max": 0.0019766993561508143
+    },
+    "descent_proposal_dot": {
+      "count": 256,
+      "mean": -0.0010389853693011188,
+      "min": -0.009359549682711923,
+      "median": -0.00044931716969108396,
+      "p95": -7.352603779516698e-05,
+      "max": 5.591407705985793e-06
+    },
+    "descent_tolerance": {
+      "count": 256,
+      "mean": 1.039072735046525e-08,
+      "min": 5.5914077059857935e-11,
+      "median": 4.49317169691084e-09,
+      "p95": 4.352916026488461e-08,
+      "max": 9.359549682711924e-08
+    },
+    "descent_tolerance_utilization": {
+      "count": 254,
+      "mean": -1643.0126105283045,
+      "min": -56340.18241593244,
+      "median": -0.13595839227502282,
+      "p95": 0.6014709869360128,
+      "max": 0.895652662659693
+    },
+    "descent_unconstrained_gap": {
+      "count": 254,
+      "mean": 0.00013231396719795528,
+      "min": -5.952466937551323e-05,
+      "median": 5.542428789961211e-05,
+      "p95": 0.0005824176322374085,
+      "max": 0.0014323352735755592
+    }
+  }
+}
