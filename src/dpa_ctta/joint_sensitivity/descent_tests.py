@@ -1,5 +1,6 @@
 """CPU-only KKT, frozen-disabled parity and native-call checks."""
 import copy
+import os
 import subprocess
 import types
 import unittest
@@ -108,7 +109,8 @@ class Tests(unittest.TestCase):
 
     def test_disabled_bitwise_frozen_r46_output_diagnostics_full_snapshot(self):
         repo = Path(__file__).resolve().parents[3]
-        source = subprocess.check_output(['git', 'show',
+        fixture = os.environ.get('FROZEN_SHARED_SOURCE')
+        source = Path(fixture).read_text() if fixture else subprocess.check_output(['git', 'show',
             '66097c9f6ed3c37645ca315c009fbd3b9aaa836c:src/dpa_ctta/joint_sensitivity/method.py'], cwd=repo, text=True)
         frozen = types.ModuleType('dpa_ctta.joint_sensitivity._r46_reference')
         exec(compile(source, '<frozen-r46-source>', 'exec'), frozen.__dict__)

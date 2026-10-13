@@ -27,6 +27,11 @@ class Tests(unittest.TestCase):
             state['jobs']['0'] = 'COMPLETE'; save(root/'RUN_STATE.json', state)
             with patch('dpa_ctta.joint_sensitivity.profile.alive', side_effect=lambda pid, *_: pid == 101):
                 self.assertFalse(r44_retired(root))
+            state['jobs'] = {str(i): 'COMPLETE' for i in range(30)}
+            save(root/'RUN_STATE.json', state)
+            with patch('dpa_ctta.joint_sensitivity.profile.alive', return_value=False):
+                self.assertTrue(r44_retired(root, 30))
+                with self.assertRaises(ValueError): r44_retired(root)
             state['status'] = 'INCOMPLETE'; save(root/'RUN_STATE.json', state)
             with self.assertRaises(RuntimeError): r44_retired(root)
 
@@ -45,6 +50,12 @@ class Tests(unittest.TestCase):
         self.assertEqual(ratios[0]['allocated_ratio'], 2.)
         self.assertNotIn('seconds', rows[0])
         self.assertEqual(summaries([dict(status='INCOMPLETE')]), ([], []))
+        shared = dict(base, condition='CW_LSO_JS_SHARED')
+        descent = dict(joint, condition='CW_LSO_JS_SHARED_DESCENT', descent_constraint_triggers=5)
+        rows, ratios = summaries([dict(status='COMPLETE', result=p) for p in (shared, descent)],
+            ('CW_LSO_JS_SHARED', 'CW_LSO_JS_SHARED_DESCENT'))
+        self.assertEqual(ratios[0]['wall_time_ratio'], 2.)
+        self.assertEqual(rows[1]['descent_constraint_triggers'], 5)
 
     def test_missing_pid_is_not_alive(self):
         with patch.object(Path, 'read_text', side_effect=FileNotFoundError):
