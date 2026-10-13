@@ -8,7 +8,7 @@ import statistics
 import subprocess
 import time
 import torch
-from .method import Host
+from .method import Host, descent_tolerance
 from ..r20_model_only_search import runtime as base
 from ..r36_incremental_modules.run import filesystem_guard
 from ..r19_model_only.runtime import weights, image
@@ -43,13 +43,21 @@ def r44_retired(root, expected_jobs=24):
     return not any(alive(pid) for pid in (launch['pid'], watch['supervisor_pid']))
 
 
-def check_joint_update(candidate, diagnostic):
+def check_joint_update(candidate, diagnostic, visit=None):
+    def fail(reason):
+        error = ValueError(reason)
+        error.numerical_diagnostic = {key: (repr(value) if isinstance(value, float) and not math.isfinite(value) else value)
+                                      for key, value in diagnostic.items() if key.startswith('descent_') or key == 'rank'}
+        if visit is not None:
+            error.numerical_diagnostic['visit'] = visit
+        raise error
     if candidate.get('joint_descent_constraint', False):
         proposal, actual = diagnostic['descent_proposal_dot'], diagnostic['descent_actual_dot']
+        diagnostic.update(descent_tolerance=descent_tolerance(proposal), descent_committed_gap=actual-proposal)
         if not all(math.isfinite(v) for v in (proposal, actual)):
-            raise ValueError('nonfinite loss descent diagnostic')
-        if proposal < 0 and actual-proposal > 1e-5*max(abs(proposal), 1e-10):
-            raise ValueError('real-model first-order loss descent violated')
+            fail('nonfinite loss descent diagnostic')
+        if proposal < 0 and actual-proposal > descent_tolerance(proposal):
+            fail('real-model first-order loss descent violated')
     elif diagnostic['rank'] and diagnostic['filtered_metric_norm'] > diagnostic['proposal_metric_norm']*1.00001+1e-10:
         raise ValueError('real-model metric contraction violated')
 
@@ -89,7 +97,7 @@ def measured_profile(c, guard, permit, job):
                 diagnostic = detail['diagnostics']['joint']
                 ranks.append(diagnostic['rank'])
                 evidence.append(detail['diagnostics']['structure_evidence_mean'])
-                check_joint_update(job['candidate'], diagnostic)
+                check_joint_update(job['candidate'], diagnostic, detail['visit'])
                 triggers += bool(diagnostic.get('descent_constraint_active'))
                 fallbacks += bool(diagnostic.get('descent_fallback'))
             del logits

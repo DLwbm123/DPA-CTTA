@@ -144,6 +144,8 @@ class TargetJournal:
     def record_failed_call(self, visit, counts, error):
         record = dict(status="FAILED_CALL", visit=visit, counts=counts,
                       error_type=type(error).__name__, error=str(error)[:3000])
+        if hasattr(error, 'numerical_diagnostic'):
+            record['numerical_diagnostic'] = error.numerical_diagnostic
         with self.physical.open("ab") as stream:
             stream.write((json.dumps(record, sort_keys=True, allow_nan=False) + "\n").encode())
             stream.flush()

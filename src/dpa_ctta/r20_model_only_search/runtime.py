@@ -114,8 +114,9 @@ def online(c,guard,permit,job):
     try:
         for row in rows[h.visits:]:
             guard();x=image(reader,row,permit,guard);start=time.perf_counter()
+            next_visit=h.visits+1
             try:z,t=h.step(x)
-            except BaseException as e:journal.record_failed_call(h.visits+1,guard.meter.cost.copy(),e);raise
+            except BaseException as e:journal.record_failed_call(next_visit,guard.meter.cost.copy(),e);raise
             p=z.float().sigmoid().numpy()[0]
             if soft:soft.write(p.astype('<f4').tobytes());soft.flush()
             t['seconds']=time.perf_counter()-start;t['counts']=guard.meter.cost.copy();journal.append(np.packbits(p>=.5).tobytes(),t)
@@ -157,7 +158,10 @@ def worker():
             permit,opened,rejections=filesystem_guard(c)
             with lease(root/'leases'/f'gpu{assignment["physical_id"]}',dict(experiment_id=ID,GPU=assignment)),Meter(None,guard.observe) as meter:
                 guard.meter=meter;result=profile(c,guard,permit,job) if phase.startswith('profile_') else online(c,guard,permit,job)
-    except BaseException as e:failure=dict(reason=str(e),error_type=type(e).__name__,errno=getattr(e,'errno',None));traceback.print_exc()
+    except BaseException as e:
+        failure=dict(reason=str(e),error_type=type(e).__name__,errno=getattr(e,'errno',None))
+        if hasattr(e,'numerical_diagnostic'):failure['numerical_diagnostic']=e.numerical_diagnostic
+        traceback.print_exc()
     finally:timer.cancel()
     cost=meter.cost.copy() if meter else {};cost.update(guard.extra);cost['gpu_seconds']=0 if cpu else time.time()-start;cost['cpu_seconds']=time.time()-start if cpu else 0
     status='COMPLETE' if failure is None else ('FAILED_NUMERICAL' if failure['error_type'] in ('ValueError','FloatingPointError') else 'INCOMPLETE')

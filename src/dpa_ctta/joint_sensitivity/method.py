@@ -147,6 +147,37 @@ def flatten(tensors):
     return torch.cat([t.detach().reshape(-1) for t in tensors])
 
 
+def descent_tolerance(proposal):
+    return 1e-5*max(abs(proposal), 1e-10)
+
+
+@torch.no_grad()
+def commit_descent(params, before, filtered, gradient, diagnostic):
+    """Audit the representable displacement; native Adam is the exact safe fallback."""
+    proposal_dot = float(gradient.double()@flatten([p-old for p, old in zip(params, before)]).double())
+    native = [p.detach().clone() for p in params] if diagnostic['rank'] else None
+    if diagnostic['rank']:
+        offset = 0
+        for p, old in zip(params, before):
+            p.copy_(old+filtered[offset:offset+p.numel()].view_as(p)); offset += p.numel()
+    candidate_dot = float(gradient.double()@flatten([p-old for p, old in zip(params, before)]).double())
+    tolerance = descent_tolerance(proposal_dot)
+    repaired = native is not None and (not math.isfinite(candidate_dot) or
+                                       proposal_dot < 0 and candidate_dot-proposal_dot > tolerance)
+    if repaired:
+        for p, proposed in zip(params, native):
+            p.copy_(proposed)
+        diagnostic['descent_fallback'] = 'native_adam_after_commit_violation'
+    actual_dot = float(gradient.double()@flatten([p-old for p, old in zip(params, before)]).double())
+    candidate_gap = candidate_dot-proposal_dot
+    diagnostic.update(descent_proposal_dot=proposal_dot,
+                      descent_candidate_actual_dot=candidate_dot if math.isfinite(candidate_dot) else repr(candidate_dot),
+                      descent_candidate_committed_gap=candidate_gap if math.isfinite(candidate_gap) else repr(candidate_gap),
+                      descent_commit_repaired=repaired,
+                      descent_actual_dot=actual_dot, descent_committed_gap=actual_dot-proposal_dot,
+                      descent_tolerance=tolerance)
+
+
 class Host(BaseHost):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -226,15 +257,13 @@ class Host(BaseHost):
             filtered, diagnostic = filter_update(*arguments)
         with torch.no_grad():
             # Rank-zero fallback keeps the actual proposal bitwise, without subtraction/addition.
-            if diagnostic['rank']:
+            if self.descent:
+                commit_descent(n.params, before, filtered, loss_gradient, diagnostic)
+            elif diagnostic['rank']:
                 offset = 0
                 for p, old in zip(n.params, before):
                     p.copy_(old+filtered[offset:offset+p.numel()].view_as(p)); offset += p.numel()
             logits = n.model(native_x)[0].detach()
-        if self.descent:
-            actual = flatten([p-old for p, old in zip(n.params, before)])
-            diagnostic.setdefault('descent_proposal_dot', float(loss_gradient.double()@delta.double()))
-            diagnostic['descent_actual_dot'] = float(loss_gradient.double()@actual.double())
         finite([n.base.state, n.params, self.diag])
         n.steps += 1; n.rng = rng(); self.visits += 1
         if any(int(n.base.state[p]['step']) != n.steps for p in n.params):

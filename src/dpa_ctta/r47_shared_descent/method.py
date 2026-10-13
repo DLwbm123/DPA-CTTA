@@ -10,5 +10,5 @@ class Host(QualifiedHost):
     def step(self, pixels):
         logits, detail = super().step(pixels)
         if self.strength and self.basis == 'shared':
-            check_joint_update(self.config, detail['diagnostics']['joint'])
+            check_joint_update(self.config, detail['diagnostics']['joint'], detail['visit'])
         return logits, detail

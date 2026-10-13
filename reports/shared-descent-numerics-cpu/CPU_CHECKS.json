@@ -1,0 +1,62 @@
+{
+  "status": "PASS",
+  "scope": "Synthetic CPU only; no deployment or GPU work",
+  "GPU_seconds": 0,
+  "full_suite": {
+    "tests": 40,
+    "elapsed_seconds": 20.232
+  },
+  "initial_targeted_suite": {
+    "tests": 29,
+    "elapsed_seconds": 13.224
+  },
+  "final_recheck": {
+    "tests": 16,
+    "elapsed_seconds": 5.971
+  },
+  "new_tests": 9,
+  "total_CPU_test_body_seconds": 39.427,
+  "original_tolerance": "1e-5*max(abs(proposal_dot),1e-10)",
+  "network_calls_enabled": {
+    "forwards": 10,
+    "backwards": 5,
+    "Adam": 1
+  },
+  "network_calls_joint_disabled": {
+    "forwards": 8,
+    "backwards": 1,
+    "Adam": 1
+  },
+  "fixture": {
+    "seed": 0,
+    "coordinates": 128,
+    "dtype": "float32",
+    "proposal_dot": -1.3849359667972294e-06,
+    "filtered_dot": -1.3849359749531945e-06,
+    "legacy_committed_dot": -1.3849081170747013e-06,
+    "post_repair_committed_dot": -1.3849359667972294e-06
+  },
+  "historical_R47_failing_derivatives_recovered": false,
+  "new_experiment": false,
+  "retuned_tolerance": false,
+  "unchanged": [
+    "closed_form",
+    "CW_LSO_loss",
+    "Adam_moments_steps_LR",
+    "RNG",
+    "frozen_parameters",
+    "disabled_bitwise_parity",
+    "historical_R47_receipts_protocol_costs"
+  ],
+  "failure_recording": [
+    "step",
+    "proposal_dot",
+    "filtered_dot_when_available",
+    "candidate_actual_dot_when_available",
+    "final_actual_dot",
+    "committed_gap",
+    "tolerance",
+    "fallback_reason_when_available"
+  ],
+  "warning": "Existing base-host tensor-to-scalar warning; no test failures"
+}
