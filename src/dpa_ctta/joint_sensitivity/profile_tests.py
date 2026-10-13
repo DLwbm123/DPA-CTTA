@@ -61,6 +61,40 @@ class Tests(unittest.TestCase):
         with patch.object(Path, 'read_text', side_effect=FileNotFoundError):
             self.assertFalse(alive(100))
 
+    def test_stopped_predecessor_requires_exact_registered_counts_and_retirement(self):
+        counts = dict(COMPLETE=24, FAILED_NUMERICAL=2, NOT_RUN=4)
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); (root/'processes').mkdir()
+            jobs = {str(i): 'COMPLETE' if i < 24 else 'FAILED_NUMERICAL' if i < 26 else 'NOT_RUN' for i in range(30)}
+            save(root/'RUN_STATE.json', dict(status='INCOMPLETE', jobs=jobs))
+            save(root/'LAUNCH.json', dict(pid=100)); save(root/'watchdog.json', dict(supervisor_pid=101))
+            with patch('dpa_ctta.joint_sensitivity.profile.alive', return_value=False):
+                self.assertTrue(r44_retired(root, 30, counts))
+                with self.assertRaises(RuntimeError): r44_retired(root, 30)
+                with self.assertRaises(ValueError): r44_retired(root, 30, dict(COMPLETE=30))
+            with patch('dpa_ctta.joint_sensitivity.profile.alive', return_value=True):
+                self.assertFalse(r44_retired(root, 30, counts))
+
+    def test_summary_pairs_both_orders_without_overwriting(self):
+        common = dict(physical_gpu=0, initialization_seconds=1., peak_allocated_bytes=1024**2,
+                      peak_reserved_bytes=2*1024**2, trainable_BN_parameters=8,
+                      counts_per_image={}, sensitivity_ranks=[4]*64, evidence_channel_means=[])
+        receipts = []
+        for order, multiplier in ((0, 2.), (1, 3.)):
+            for condition, seconds in (('shared', 1.), ('repaired', multiplier)):
+                result = dict(common, condition=condition, order=order, arrivals=64,
+                              seconds=[seconds]*60, cuda_event_seconds=[seconds]*60,
+                              descent_commit_repairs=2, descent_violations=0,
+                              descent_fallback_reasons={'native_adam_after_commit_violation': 2},
+                              derivative_summary={'descent_actual_dot': {'count': 64, 'min': -1.}})
+                receipts.append(dict(status='COMPLETE', result=result))
+        rows, ratios = summaries(receipts, ('shared', 'repaired'))
+        self.assertEqual(len(rows), 4); self.assertEqual(len(ratios), 2)
+        self.assertEqual([x['wall_time_ratio'] for x in ratios], [2., 3.])
+        self.assertEqual([x['order'] for x in ratios], [0, 1])
+        self.assertEqual(rows[-1]['descent_commit_repairs'], 2)
+        self.assertNotIn('numerical_steps', rows[-1])
+
     def test_formal_worker_and_supervisor_modes_are_rejected(self):
         with patch.dict('os.environ', RUN_MODE='worker', RUN_PHASE='online_CW_LSO_JS'):
             with self.assertRaises(ValueError): main()

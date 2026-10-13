@@ -8,6 +8,7 @@ import statistics
 import subprocess
 import time
 import torch
+from collections import Counter
 from .method import Host, descent_tolerance
 from ..r20_model_only_search import runtime as base
 from ..r36_incremental_modules.run import filesystem_guard
@@ -27,14 +28,17 @@ def alive(pid, start_ticks=None):
         return False
 
 
-def r44_retired(root, expected_jobs=24):
+def r44_retired(root, expected_jobs=24, stopped_counts=None):
     root = Path(root)
     state = read(root/'RUN_STATE.json')
-    if state['status'] in ('INCOMPLETE', 'BLOCKED'):
+    if stopped_counts is not None:
+        if state['status'] != 'INCOMPLETE' or dict(Counter(state['jobs'].values())) != stopped_counts:
+            raise ValueError('registered stopped predecessor coverage mismatch')
+    elif state['status'] in ('INCOMPLETE', 'BLOCKED'):
         raise RuntimeError('preceding experiment stopped unsuccessfully; profile queue will not intervene')
-    if state['status'] != 'COMPLETE':
+    elif state['status'] != 'COMPLETE':
         return False
-    if len(state['jobs']) != expected_jobs or any(v != 'COMPLETE' for v in state['jobs'].values()):
+    if len(state['jobs']) != expected_jobs or stopped_counts is None and any(v != 'COMPLETE' for v in state['jobs'].values()):
         raise ValueError('preceding experiment completion coverage mismatch')
     processes = [read(p) for p in (root/'processes').glob('*.json')]
     if any(p.get('active') or alive(p['pid'], p.get('start_ticks')) for p in processes):
@@ -64,9 +68,12 @@ def check_joint_update(candidate, diagnostic, visit=None):
 
 def measured_profile(c, guard, permit, job):
     root = Path(c['output_root'])
-    rows = read(root/'private/SCREEN_o0.json')
-    if len(rows) != 12:
-        raise ValueError('fixed 12-image profile required')
+    arrivals = c.get('profile_arrivals', 12); warmup = c.get('profile_warmup', 4)
+    if type(arrivals) is not int or type(warmup) is not int or not 0 <= warmup < arrivals:
+        raise ValueError('fixed profile arrivals and warmup required')
+    rows = read(root/'private'/f'SCREEN_o{job.get("order", 0)}.json')
+    if len(rows) != arrivals:
+        raise ValueError('registered profile image count required')
     torch.cuda.reset_peak_memory_stats()
     started = time.perf_counter()
     h = Host(weights(c), job['candidate'], c['native_seed'], sha(job))
@@ -78,6 +85,11 @@ def measured_profile(c, guard, permit, job):
     torch.cuda.reset_peak_memory_stats()
     reader = TargetReader(c['target_root'], 256*1024**2, 'image')
     timings = []; device_timings = []; ranks = []; evidence = []; triggers = 0; fallbacks = 0
+    derivative_values = {}; fallback_reasons = Counter(); violations = 0; repairs = 0
+    trace = None
+    if c.get('record_numerical_steps'):
+        directory = root/'private/numerical_steps'; directory.mkdir(exist_ok=True)
+        trace = (directory/(job['id']+'.jsonl')).open('x')
     enabled = bool(job['candidate'].get('joint_strength', 0))
     expected = dict(forwards=10 if enabled else 8, backwards=5 if enabled else 1,
                     base_adam=1, perturb=0, restore=0)
@@ -97,21 +109,45 @@ def measured_profile(c, guard, permit, job):
                 diagnostic = detail['diagnostics']['joint']
                 ranks.append(diagnostic['rank'])
                 evidence.append(detail['diagnostics']['structure_evidence_mean'])
+                numerical = {k: v for k, v in diagnostic.items() if k.startswith('descent_')}
+                if 'descent_proposal_dot' in numerical:
+                    proposal = numerical['descent_proposal_dot']; actual = numerical['descent_actual_dot']
+                    if proposal < 0:
+                        numerical['descent_tolerance_utilization'] = (actual-proposal)/descent_tolerance(proposal)
+                        violations += not math.isfinite(actual) or actual-proposal > descent_tolerance(proposal)
+                    repairs += bool(numerical.get('descent_commit_repaired'))
+                    fallback_reasons[numerical.get('descent_fallback', 'none')] += 1
+                if trace:
+                    trace.write(json.dumps(dict(visit=detail['visit'], rank=diagnostic['rank'], derivatives=numerical), allow_nan=False)+'\n')
+                    trace.flush()
+                for key, value in numerical.items():
+                    if type(value) in (int, float) and math.isfinite(value):
+                        derivative_values.setdefault(key, []).append(value)
                 check_joint_update(job['candidate'], diagnostic, detail['visit'])
                 triggers += bool(diagnostic.get('descent_constraint_active'))
                 fallbacks += bool(diagnostic.get('descent_fallback'))
             del logits
         h.check_frozen(True)
         result = dict(status='PASS', condition=job['candidate']['id'], physical_gpu=job['physical_gpu'],
-                      warmup_arrivals=4, timed_arrivals=8, seconds=timings[4:], cuda_event_seconds=device_timings[4:],
+                      warmup_arrivals=warmup, timed_arrivals=arrivals-warmup, seconds=timings[warmup:], cuda_event_seconds=device_timings[warmup:],
                       initialization_seconds=initialization, peak_allocated_bytes=max(cold_allocated, torch.cuda.max_memory_allocated()),
                       peak_reserved_bytes=max(cold_reserved, torch.cuda.max_memory_reserved()),
                       trainable_BN_parameters=sum(p.numel() for p in h.native.params), counts_per_image=expected,
                       sensitivity_ranks=ranks, evidence_channel_means=evidence, source_reads=0, label_reads=0,
                       descent_constraint_triggers=triggers, descent_fallbacks=fallbacks)
+        if c.get('record_numerical_steps'):
+            result.update(order=job.get('order', 0), arrivals=arrivals,
+                          descent_commit_repairs=repairs, descent_violations=violations,
+                          descent_fallback_reasons=dict(fallback_reasons),
+                          derivative_summary={key: dict(count=len(values), mean=statistics.mean(values),
+                              min=min(values), median=statistics.median(values),
+                              p95=float(torch.tensor(values, dtype=torch.float64).quantile(.95)), max=max(values))
+                              for key, values in derivative_values.items()})
         save(root/'profiles'/(job['id']+'.json'), result)
         return result
     finally:
+        if trace:
+            trace.close()
         h.close()
 
 
@@ -133,12 +169,15 @@ def summaries(receipts, conditions=('CW_LSO', 'CW_LSO_JS')):
                          mean_evidence_channels=[statistics.mean(a[k] for a in evidence) for k in (0, 1)] if evidence else None,
                          descent_constraint_triggers=p.get('descent_constraint_triggers', 0),
                          descent_fallbacks=p.get('descent_fallbacks', 0)))
+        for key in ('order', 'arrivals', 'descent_commit_repairs', 'descent_violations', 'descent_fallback_reasons', 'derivative_summary'):
+            if key in p:
+                rows[-1][key] = p[key]
     ratios = []
-    for gpu in (0, 1):
-        pair = {r['condition']: r for r in rows if r['physical_gpu'] == gpu}
+    for gpu, order in sorted({(r['physical_gpu'], r.get('order', 0)) for r in rows}):
+        pair = {r['condition']: r for r in rows if r['physical_gpu'] == gpu and r.get('order', 0) == order}
         if set(pair) == set(conditions):
             a, b = (pair[name] for name in conditions)
-            ratios.append(dict(physical_gpu=gpu, wall_time_ratio=b['mean_seconds']/a['mean_seconds'],
+            ratios.append(dict(physical_gpu=gpu, order=order, wall_time_ratio=b['mean_seconds']/a['mean_seconds'],
                                cuda_event_ratio=b['mean_cuda_event_seconds']/a['mean_cuda_event_seconds'],
                                allocated_ratio=b['peak_allocated_MiB']/a['peak_allocated_MiB'],
                                reserved_ratio=b['peak_reserved_MiB']/a['peak_reserved_MiB']))
@@ -153,7 +192,7 @@ def report(c, state):
     result = dict(status=state['status'], formal_experiment_started=False, source_code=c['code_sha'],
                   profiles=rows, paired_ratios=ratios, cost=costs,
                   GPU_worker_seconds=sum(r.get('gpu_seconds', 0) for r in costs),
-                  scope='12 fixed previously authorized images, no scoring; 4 warmup + 8 timed per condition/device',
+                  scope=c.get('profile_description', '12 fixed previously authorized images, no scoring; 4 warmup + 8 timed per condition/device'),
                   timing_limit='shared GPUs; CUDA event elapsed includes host dispatch gaps, not isolated kernel time')
     save(root/'public/RESULTS.json', result)
     lines = [c.get('profile_heading', '# Joint sensitivity: real-model GPU profile only'), '',
@@ -166,11 +205,11 @@ def report(c, state):
     for r in rows:
         lines.append(f"| {r['physical_gpu']} | {r['condition']} | {r['mean_seconds']:.4f} | {r['p95_seconds']:.4f} | {r['peak_allocated_MiB']:.1f} | {r['peak_reserved_MiB']:.1f} |")
     for r in ratios:
-        lines.append(f"\nGPU{r['physical_gpu']}: {c.get('ratio_label', 'JS/base')} wall time {r['wall_time_ratio']:.3f}x; allocated {r['allocated_ratio']:.3f}x; reserved {r['reserved_ratio']:.3f}x.")
+        lines.append(f"\nGPU{r['physical_gpu']}, order{r['order']}: {c.get('ratio_label', 'JS/base')} wall time {r['wall_time_ratio']:.3f}x; allocated {r['allocated_ratio']:.3f}x; reserved {r['reserved_ratio']:.3f}x.")
     lines += ['', f"Charged GPU-worker seconds, including initialization and failures: {result['GPU_worker_seconds']:.3f}.", '',
               f"{c.get('wait_label', 'R44')} must fully retire before this queue initializes CUDA. Its configuration, artifacts, "
               'workers and budget are not modified. Other users may share these GPUs; contention and '
-              'eight timed images limit transfer of the latency estimate. All profiles/failures remain '
+              'bounded timed images limit transfer of the latency estimate. All profiles/failures remain '
               'reported. No efficacy gate, new seed matrix, promotion or automatic formal run.']
     (root/'public/REPORT.md').write_text('\n'.join(lines)+'\n')
 
@@ -184,7 +223,7 @@ def watch():
     state = dict(status=f'WAITING_{label}_RETIREMENT', formal_experiment_started=False)
     save(root/'RUN_STATE.json', state)
     try:
-        while not r44_retired(c['wait_root'], c.get('wait_jobs', 24)):
+        while not r44_retired(c['wait_root'], c.get('wait_jobs', 24), c.get('wait_stopped_counts')):
             if time.time() > c['origin']['absolute_deadline_epoch']-1200:
                 raise TimeoutError('resource wait cap; no GPU profile started')
             time.sleep(30)
@@ -196,7 +235,7 @@ def watch():
                 raise RuntimeError('authorized GPU memory admission failed; no retry')
         save(root/'GPU_START.json', dict(at=time.time(), free_MiB={g: gpus[g][1] for g in (0, 1)}))
         state['status'] = 'PROFILING_ONLY'; save(root/'RUN_STATE.json', state)
-        for offset in (0, 2):
+        for offset in range(0, len(c['jobs']), 2):
             with concurrent.futures.ThreadPoolExecutor(2) as pool:
                 tasks = [pool.submit(base.run_task, c, 'profile_'+j['id'], c['gpu_assignments'][j['physical_gpu']], 450, j)
                          for j in c['jobs'][offset:offset+2]]
