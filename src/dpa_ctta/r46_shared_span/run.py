@@ -8,8 +8,8 @@ from ..r45_joint_sensitivity.run import report as previous_report
 from ..r37_cw_orientation import run as reporting
 
 
-def stage_success(state, pairs):
-    required = {'C': .3, 'W': .3, 'CW_LSO': .1, 'CW_LSO_JS': .1}
+def stage_success(state, pairs, joint_control='CW_LSO_JS'):
+    required = {'C': .3, 'W': .3, 'CW_LSO': .1, joint_control: .1}
     return (state['status'] == 'COMPLETE' and len(pairs) == 4
             and {p['baseline'] for p in pairs} == set(required)
             and all(reporting.passes(p, required[p['baseline']]) for p in pairs))
@@ -21,16 +21,17 @@ def report(c, state):
     jobs = reporting.read(root/'FINAL_JOBS.json') if (root/'FINAL_JOBS.json').exists() else []
     done = [j for j in jobs if (root/'scores/final'/(j['id']+'.complete.json')).exists()]
     rows = reporting.retained.scoring.load_rows(root, 'FINAL', done, final=True)
+    joint_control = c.get('joint_control', 'CW_LSO_JS')
     pairs, intervals, negatives = [], [], []
     for role in ('SEARCH', 'SEALED_REVIEW'):
-        a, b, d = reporting.bootstrap_pair(rows, c['primary'], 'CW_LSO_JS', c['seeds'], role=role)
+        a, b, d = reporting.bootstrap_pair(rows, c['primary'], joint_control, c['seeds'], role=role)
         pairs.append(a); intervals.extend(b); negatives.extend(d)
     for name, extra in [('PAIRED_SUMMARY.csv', pairs), ('CONTENT_BOOTSTRAP_CI.csv', intervals), ('ALL_NEGATIVE_CELLS.csv', negatives)]:
         with (out/name).open() as f: existing = list(csv.DictReader(f))
         reporting.csvout(out/name, existing+extra)
     with (out/'PAIRED_SUMMARY.csv').open() as f: paired = list(csv.DictReader(f))
     tests = [p for p in paired if p['candidate'] == c['primary'] and p['role'] == 'SEARCH']
-    success = stage_success(state, tests)
+    success = stage_success(state, tests, joint_control)
     reporting.save(out/'FINAL_DECISION.json', dict(primary=c['primary'], strong_development_signal=success,
                    comparisons=reporting.public(tests), review_descriptive_only=True,
                    independent_generalization=False, automatic_retuning=False))

@@ -11,7 +11,7 @@ Use the same CW_LSO base loss (including W and LSO0.1), Sensor, six weak views,
 two acquisition probes, four VJPs, Adam metric, shared rank<=4 basis, ridge0.01,
 strength1 and Gram cutoff as R46. The new boolean `joint_descent_constraint`
 defaults to false. The CPU-only candidate factory in `joint_sensitivity/descent.py`
-retains C/W/CW_LSO/original JS/shared JS and adds
+retains C/W/CW_LSO/shared JS and adds
 `CW_LSO_JS_SHARED_DESCENT` with this flag true. It installs no experiment runtime.
 R46's factory and registration are unchanged.
 
