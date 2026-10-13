@@ -1,0 +1,125 @@
+{
+  "admitted": true,
+  "estimates": {
+    "C": 994.4424027693495,
+    "CW_LSO": 1370.3085694178044,
+    "CW_LSO_JS_SHARED": 1864.4364005985706,
+    "CW_LSO_JS_SHARED_DESCENT": 1809.846730938278,
+    "W": 1364.7203715271353
+  },
+  "formal_jobs": 30,
+  "max_concurrent": 2,
+  "profiles": [
+    {
+      "candidate": "C",
+      "family": "control",
+      "initialization_seconds": 7.855261564254761,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 652214272,
+      "seconds": [
+        0.29488620441406965,
+        0.3014669679105282,
+        0.2773951031267643,
+        0.28421765100210905,
+        0.2757627540268004,
+        0.32535455701872706,
+        0.2827360830269754,
+        0.276372283231467
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "W",
+      "family": "pixel_weight",
+      "initialization_seconds": 7.67930269241333,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 704643072,
+      "seconds": [
+        0.4193254760466516,
+        0.42143014119938016,
+        0.40916666528210044,
+        0.41850524581968784,
+        0.4111076919361949,
+        0.483602087944746,
+        0.43333994410932064,
+        0.42366198217496276
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "CW_LSO",
+      "family": "pixel_weight",
+      "initialization_seconds": 5.539785146713257,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 654311424,
+      "seconds": [
+        0.4538745228201151,
+        0.4523419188335538,
+        0.4435355509631336,
+        0.43627960328012705,
+        0.4722127001732588,
+        0.4870856087654829,
+        0.4374520122073591,
+        0.4466873249039054
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "CW_LSO_JS_SHARED",
+      "family": "pixel_weight",
+      "initialization_seconds": 5.576411724090576,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 939524096,
+      "seconds": [
+        0.6446208800189197,
+        0.6383554739877582,
+        0.6357978289015591,
+        0.6722028069198132,
+        0.6981243407353759,
+        0.5818388620391488,
+        0.5406907391734421,
+        0.5527681508101523
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "CW_LSO_JS_SHARED_DESCENT",
+      "family": "pixel_weight",
+      "initialization_seconds": 5.3651933670043945,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 941621248,
+      "seconds": [
+        0.6522826198488474,
+        0.6705687469802797,
+        0.6478363908827305,
+        0.6347314831800759,
+        0.6555342990905046,
+        0.6749156410805881,
+        0.6367705017328262,
+        0.6578797409310937
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    }
+  ],
+  "projected_GPU_seconds": 44422.526851506824
+}

@@ -1,0 +1,34 @@
+{
+  "experiment": "R48_REPAIRED_SHARED_DESCENT",
+  "status": "RUNNING_FIXED_MATRIX",
+  "scientific_results": "PENDING",
+  "source_commit": "b0618bfbd9818c7c19fbe4450a4ace85e7303630",
+  "T0": "2026-10-13T12:37:00.639560+00:00",
+  "snapshot_at": 1791895163.6385763,
+  "allowed_physical_gpus": [
+    0,
+    1
+  ],
+  "formal_trajectories": 30,
+  "expected_scored_rows": 58530,
+  "formal_complete": 0,
+  "scored_jobs": 0,
+  "progress": [
+    {
+      "job": "C_s20260907_o0",
+      "visit": 137
+    },
+    {
+      "job": "C_s20260907_o1",
+      "visit": 137
+    }
+  ],
+  "profiles_PASS": 5,
+  "whole_matrix_admitted": true,
+  "projected_GPU_worker_hours": 12.339590792085229,
+  "original_tolerance": "1e-5*max(abs(proposal_dot),1e-10)",
+  "monitor_interval_minutes": 30,
+  "notify_only_completion_failure_budget_or_action": true,
+  "automatic_followup": false,
+  "automatic_retry": false
+}
