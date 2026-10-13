@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "local_checks": 20,
+  "local_pass_elapsed_seconds": 10.242,
+  "local_failed_check_elapsed_seconds": 9.096,
+  "local_preparation_failures": [
+    {
+      "stage": "CPU_matrix_binding",
+      "reason": "tuple unpack expected6 conditions but qualified factory has5; corrected before launch",
+      "GPU_seconds": 0
+    }
+  ],
+  "server_checks": 31,
+  "server_CPU_elapsed_seconds": 20.887792587280273,
+  "GPU_seconds": 0
+}
