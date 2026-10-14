@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "status": "DATA_READY_NO_EXPERIMENT",
+  "datasets": {
+    "fundus": {
+      "hw": 384,
+      "classes": [
+        0,
+        1,
+        2
+      ],
+      "labels": [
+        "background",
+        "disc_rim",
+        "cup"
+      ],
+      "input": "RGB/255; OD=(label>0), OC=(label==2) for two sigmoid heads",
+      "patients": 660,
+      "image_label_pairs": 660,
+      "domains": {
+        "Drishti_GS": 101,
+        "REFUGE": 400,
+        "RIM_ONE_r3": 159
+      },
+      "evaluation_domains": {
+        "Drishti_GS": 101,
+        "REFUGE": 400,
+        "RIM_ONE_r3": 159
+      },
+      "images_or_slices": 660,
+      "evaluation_eligible_pairs": 660
+    },
+    "prostate": {
+      "hw": 256,
+      "classes": [
+        0,
+        1
+      ],
+      "labels": [
+        "background",
+        "whole_prostate"
+      ],
+      "input": "single channel; preserve frozen MRI normalization",
+      "patients": 116,
+      "image_label_pairs": 116,
+      "domains": {
+        "BIDMC": 12,
+        "BMC": 30,
+        "HK": 12,
+        "I2CVB": 19,
+        "RUNMC": 30,
+        "UCL": 13
+      },
+      "evaluation_domains": {
+        "BIDMC": 12,
+        "BMC": 30,
+        "HK": 12,
+        "I2CVB": 19,
+        "RUNMC": 30,
+        "UCL": 13
+      },
+      "images_or_slices": 3887,
+      "evaluation_eligible_pairs": 116
+    },
+    "mnms": {
+      "hw": 384,
+      "classes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "labels": [
+        "background",
+        "LV",
+        "MYO",
+        "RV"
+      ],
+      "input": "single channel; preserve frozen MRI normalization; ED/ES grouped by patient",
+      "patients": 345,
+      "image_label_pairs": 690,
+      "domains": {
+        "Siemens": 190,
+        "Philips": 250,
+        "Canon": 100,
+        "GE": 150
+      },
+      "evaluation_domains": {
+        "Siemens": 190,
+        "Philips": 250,
+        "Canon": 100,
+        "GE": 100
+      },
+      "images_or_slices": 7908,
+      "evaluation_eligible_pairs": 640
+    }
+  },
+  "seeds": {
+    "0": {
+      "fundus": {
+        "train_labeled": 66,
+        "train_unlabeled": 264,
+        "val": 165,
+        "test": 165
+      },
+      "prostate": {
+        "train_unlabeled": 53,
+        "test": 30,
+        "val": 17,
+        "train_labeled": 16
+      },
+      "mnms": {
+        "train_labeled": 66,
+        "test": 162,
+        "train_unlabeled": 306,
+        "val": 156
+      }
+    },
+    "1": {
+      "fundus": {
+        "test": 165,
+        "train_unlabeled": 264,
+        "val": 165,
+        "train_labeled": 66
+      },
+      "prostate": {
+        "train_unlabeled": 53,
+        "test": 30,
+        "val": 17,
+        "train_labeled": 16
+      },
+      "mnms": {
+        "train_unlabeled": 306,
+        "test": 162,
+        "val": 156,
+        "train_labeled": 66
+      }
+    },
+    "2": {
+      "fundus": {
+        "train_unlabeled": 264,
+        "val": 165,
+        "test": 165,
+        "train_labeled": 66
+      },
+      "prostate": {
+        "val": 17,
+        "train_labeled": 16,
+        "train_unlabeled": 53,
+        "test": 30
+      },
+      "mnms": {
+        "val": 156,
+        "train_labeled": 66,
+        "train_unlabeled": 306,
+        "test": 162
+      }
+    }
+  },
+  "checks": {
+    "patient_split_disjoint": true,
+    "seed_payload_identity": true,
+    "patient_labeled_unlabeled_disjoint": true
+  },
+  "verification": "All paired HDF5 metadata; one decoded middle slice/image per domain and phase. No new full-file hashes.",
+  "payload_files": 2932,
+  "payload_bytes": 1843390563,
+  "decoded_domain_phase_samples": 17,
+  "online_views": 36,
+  "scorer_views": 18
+}
