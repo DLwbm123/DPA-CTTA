@@ -1,0 +1,35 @@
+{
+  "status": "RUNNING_FIXED_MATRIX",
+  "scientific_results": "PENDING",
+  "source_commit": "f5772d68b4bf2962db63877f63b20cb45c49a32c",
+  "T0": "2026-10-14T03:43:38.765480+00:00",
+  "primary": "C_JS_SHARED minus C",
+  "conditions": [
+    "C",
+    "C_LSO",
+    "C_JS_SHARED",
+    "C_LSO_JS_SHARED",
+    "CW_LSO"
+  ],
+  "formal_trajectories": 30,
+  "expected_CPU_scored_rows": 58530,
+  "physical_GPU_ids": [
+    0,
+    1
+  ],
+  "max_concurrent_GPU_workers": 2,
+  "profile_admitted": true,
+  "projected_GPU_worker_hours": 11.60836674017664,
+  "server_CPU_checks": 37,
+  "server_preparation_CPU_seconds": 24.45893144607544,
+  "local_preflight_CPU_elapsed_seconds": 11.82331109046936,
+  "preparation_GPU_seconds": 0,
+  "preparation_failure": {
+    "stage": "NAS fixture copy before T0",
+    "error": "EIO during copytree/copy2; destination content readable; changed to content-only copyfile",
+    "CPU_elapsed_seconds": null,
+    "GPU_seconds": 0
+  },
+  "monitor_created": false,
+  "automatic_followup": false
+}

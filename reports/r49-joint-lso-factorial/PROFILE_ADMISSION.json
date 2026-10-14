@@ -1,0 +1,125 @@
+{
+  "admitted": true,
+  "estimates": {
+    "C": 1029.6423425695896,
+    "CW_LSO": 1376.7268566849677,
+    "C_JS_SHARED": 1580.4054039274379,
+    "C_LSO": 1285.4421644439026,
+    "C_LSO_JS_SHARED": 1692.803276480086
+  },
+  "formal_jobs": 30,
+  "max_concurrent": 2,
+  "profiles": [
+    {
+      "candidate": "C",
+      "family": "control",
+      "initialization_seconds": 4.9936134815216064,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 652214272,
+      "seconds": [
+        0.2948940200731158,
+        0.30373825412243605,
+        0.290067870169878,
+        0.2866480681113899,
+        0.34185631573200226,
+        0.3345318762585521,
+        0.2825737511739135,
+        0.2950460980646312
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "C_LSO",
+      "family": "control",
+      "initialization_seconds": 5.051453113555908,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 654311424,
+      "seconds": [
+        0.44520554412156343,
+        0.40690968791022897,
+        0.4005439430475235,
+        0.4059833437204361,
+        0.42190593713894486,
+        0.4510868019424379,
+        0.3957561352290213,
+        0.40977531392127275
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "C_JS_SHARED",
+      "family": "control",
+      "initialization_seconds": 5.647189617156982,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 939524096,
+      "seconds": [
+        0.5250790230929852,
+        0.5474934452213347,
+        0.5439345589838922,
+        0.5438494090922177,
+        0.5593047798611224,
+        0.5767695098184049,
+        0.5366354081779718,
+        0.5477438671514392
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "C_LSO_JS_SHARED",
+      "family": "control",
+      "initialization_seconds": 5.6943957805633545,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 939524096,
+      "seconds": [
+        0.5716359247453511,
+        0.5807386976666749,
+        0.5823739026673138,
+        0.5882522650063038,
+        0.6191556211560965,
+        0.6247539729811251,
+        0.5827191788703203,
+        0.5752413650043309
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    },
+    {
+      "candidate": "CW_LSO",
+      "family": "pixel_weight",
+      "initialization_seconds": 4.81499171257019,
+      "label_reads": 0,
+      "native_parity": [],
+      "peak_reserved_bytes": 654311424,
+      "seconds": [
+        0.4502705386839807,
+        0.4545264379121363,
+        0.4361061570234597,
+        0.4303380181081593,
+        0.46908451383933425,
+        0.490198559127748,
+        0.4282054849900305,
+        0.45270556304603815
+      ],
+      "source_reads": 0,
+      "status": "PASS",
+      "timed_arrivals": 8,
+      "warmup_arrivals": 4
+    }
+  ],
+  "projected_GPU_seconds": 41790.1202646359
+}
