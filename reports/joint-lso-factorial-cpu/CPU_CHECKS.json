@@ -1,0 +1,67 @@
+{
+  "status": "PASS_CPU_ONLY",
+  "new_tests": 10,
+  "regression_tests": 20,
+  "final_tests": 30,
+  "final_exit_code": 0,
+  "final_test_body_seconds": 12.902,
+  "final_elapsed_seconds": 14.212061166763306,
+  "initial_validation": {
+    "tests": 10,
+    "passed": 9,
+    "failed": 1,
+    "elapsed_seconds": 8.215692043304443,
+    "reason": "test compared tuple RNG to dictionary RNG; fixed matching-representation assertions only"
+  },
+  "total_CPU_subprocess_elapsed_seconds": 22.42775321006775,
+  "GPU_seconds": 0,
+  "private_data_reads": 0,
+  "source_checkpoint_reads": 0,
+  "real_model_profile": false,
+  "formal_experiment_started": false,
+  "monitor_created": false,
+  "five_conditions": [
+    "C",
+    "C_LSO",
+    "C_JS_SHARED",
+    "C_LSO_JS_SHARED",
+    "CW_LSO"
+  ],
+  "J": "R46_SHARED",
+  "LSO_strength": 0.1,
+  "shared_strength": 1.0,
+  "shared_ridge": 0.01,
+  "max_rank": 4,
+  "checks": {
+    "disabled_J_output_diagnostics_full_snapshot_bitwise": true,
+    "C_and_CW_LSO_historical_parity": true,
+    "C_LSO_loss_gradient_reference": true,
+    "physical_F_B_Adam_counts": true,
+    "aux_VJP_no_base_gradient_or_Adam_contamination": true,
+    "global_and_native_RNG_parity": true,
+    "snapshot_restore_all_five": true,
+    "zero_evidence_native_fallback": true,
+    "historical_admission_guard_unchanged": true
+  },
+  "modules": [
+    "dpa_ctta.joint_sensitivity.factorial_tests",
+    "dpa_ctta.joint_sensitivity.tests",
+    "dpa_ctta.joint_sensitivity.shared_span_tests",
+    "dpa_ctta.r37_cw_orientation.tests",
+    "dpa_ctta.joint_sensitivity.profile_tests"
+  ],
+  "environment": {
+    "python": "3.10.20",
+    "torch": "2.14.1",
+    "machine": "arm64",
+    "device": "cpu",
+    "cuda_initialized": false,
+    "model": "synthetic Tiny BN segmentation fixture",
+    "input_shape": [
+      1,
+      3,
+      512,
+      512
+    ]
+  }
+}
