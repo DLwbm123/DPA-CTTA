@@ -66,10 +66,13 @@ class Sensor:
 
 
 @torch.no_grad()
-def filter_update(delta, metric, acquisition, anatomy, strength=1., shared_span=False, descent_gradient=None):
+def filter_update(delta, metric, acquisition, anatomy, strength=1., shared_span=False, descent_gradient=None,
+                  acquisition_weighted=False):
     """Preserve the H-orthogonal complement; small eigensystems are 2x2 or 4x4."""
     if not math.isfinite(strength) or strength < 0:
         raise ValueError('finite nonnegative joint strength')
+    if type(acquisition_weighted) is not bool or acquisition_weighted and (not shared_span or descent_gradient is not None):
+        raise ValueError('acquisition weighting requires shared span without descent constraint')
     if delta.ndim != 1 or metric.shape != delta.shape or acquisition.shape != (len(delta), 2) or anatomy.shape != acquisition.shape:
         raise ValueError('BN vector and two-column sensitivity matrices required')
     finite([delta, metric, acquisition, anatomy])
@@ -106,8 +109,8 @@ def filter_update(delta, metric, acquisition, anatomy, strength=1., shared_span=
     s = qy@qy.T/y.square().sum() if y.square().sum() > 0 else torch.zeros_like(a)
     eye = torch.eye(rank, device=delta.device, dtype=torch.float64)
     eigen, basis = torch.linalg.eigh(a+.01*eye)
-    inverse_root = (basis*eigen.rsqrt())@basis.T
-    t = inverse_root@s@inverse_root
+    factor = (basis*(eigen.sqrt() if acquisition_weighted else eigen.rsqrt()))@basis.T
+    t = factor@s@factor
     t = (t+t.T)/2
     k = torch.linalg.solve(eye+strength*t, eye)
     w = root*delta.double()
@@ -241,7 +244,8 @@ class Host(BaseHost):
         loss = self._criterion(n.model(strong)[0], q)
         finite(loss); n.last['cal_consis_loss'] = float(loss.detach())
         loss.backward()
-        loss_gradient = flatten([p.grad for p in n.params]) if self.descent else None
+        weighted = getattr(self, 'acquisition_weighted', False)
+        loss_gradient = flatten([p.grad for p in n.params]) if self.descent or weighted else None
         n.base.step()
         delta = flatten([p-old for p, old in zip(n.params, before)])
         beta2 = n.base.param_groups[0]['betas'][1]
@@ -249,7 +253,9 @@ class Host(BaseHost):
         metric = flatten([(n.base.state[p]['exp_avg_sq']/(1-beta2**int(n.base.state[p]['step']))).sqrt()+eps for p in n.params])
         arguments = (delta, metric, torch.stack(acquisition, 1), torch.stack(b, 1), self.strength)
         if self.basis == 'shared':
-            if self.descent:
+            if weighted:
+                filtered, diagnostic = filter_update(*arguments, shared_span=True, acquisition_weighted=True)
+            elif self.descent:
                 filtered, diagnostic = filter_update(*arguments, shared_span=True, descent_gradient=loss_gradient)
             else:
                 filtered, diagnostic = filter_update(*arguments, shared_span=True)
@@ -263,6 +269,11 @@ class Host(BaseHost):
                 offset = 0
                 for p, old in zip(n.params, before):
                     p.copy_(old+filtered[offset:offset+p.numel()].view_as(p)); offset += p.numel()
+            if weighted:
+                proposal_dot = float(loss_gradient.double()@delta.double())
+                actual_dot = float(loss_gradient.double()@flatten([p-old for p, old in zip(n.params, before)]).double())
+                diagnostic.update(loss_proposal_dot=proposal_dot, loss_actual_dot=actual_dot,
+                                  loss_dot_change=actual_dot-proposal_dot)
             logits = n.model(native_x)[0].detach()
         finite([n.base.state, n.params, self.diag])
         n.steps += 1; n.rng = rng(); self.visits += 1

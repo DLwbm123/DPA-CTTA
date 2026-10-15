@@ -1,0 +1,80 @@
+{
+  "status": "PASS",
+  "tests": 46,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 36.74889150401577,
+  "device": "cpu",
+  "cuda_visible_devices": "",
+  "cuda_initialized": false,
+  "torch_version": "2.6.0+cu124",
+  "python_version": "3.10.16",
+  "suites": [
+    "acquisition_weighted_tests",
+    "tests",
+    "shared_span_tests",
+    "factorial_tests",
+    "descent_tests",
+    "numerics_tests"
+  ],
+  "failed_tests": [],
+  "real_model_tested": false,
+  "GPU_profile_done": false,
+  "experiment_started": false,
+  "new_tests": 8,
+  "regression_tests": 38,
+  "fixture": "Generated Tiny BN model and synthetic 512x512 inputs; no private images or checkpoint",
+  "implementation": "acquisition-weighted structural filter on C; opt-in only",
+  "formula": "R=A+0.01I; T=R^(1/2) S R^(1/2); K=(I+T)^(-1)",
+  "fixed_parameters": {
+    "strength": 1.0,
+    "ridge": 0.01,
+    "max_rank": 4
+  },
+  "counts_enabled": {
+    "forwards": 10,
+    "reverse_traversals": 5,
+    "auxiliary_VJPs": 4,
+    "Adam_steps": 1
+  },
+  "counts_disabled": {
+    "forwards": 8,
+    "reverse_traversals": 1,
+    "auxiliary_VJPs": 0,
+    "Adam_steps": 1
+  },
+  "verified": [
+    "Disabled vs C bitwise outputs, full snapshots and RNG over two arrivals",
+    "Independent full-dimensional noncommuting quadratic-objective solution, float32 and float64",
+    "H-orthogonal complement, metric contraction, rank-deficient, zero, scale and invalid-mode limits",
+    "Actual parameter write, Adam moments/step, base gradients and RNG preserved",
+    "Snapshot replay and zero-evidence native fallback",
+    "Frozen R45/R46/default/descent regressions and unchanged CW_LSO strong control"
+  ],
+  "diagnostics": [
+    "loss_proposal_dot",
+    "loss_actual_dot",
+    "loss_dot_change"
+  ],
+  "diagnostics_note": "Reuses existing C gradient; actual derivative uses representable parameter displacement; no descent enforcement",
+  "GPU_seconds": 0,
+  "Dice_effect": "NOT_EVALUATED",
+  "reproduction_modules": [
+    "dpa_ctta.joint_sensitivity.acquisition_weighted_tests",
+    "dpa_ctta.joint_sensitivity.tests",
+    "dpa_ctta.joint_sensitivity.shared_span_tests",
+    "dpa_ctta.joint_sensitivity.factorial_tests",
+    "dpa_ctta.joint_sensitivity.descent_tests",
+    "dpa_ctta.joint_sensitivity.numerics_tests"
+  ],
+  "frozen_fixture_revisions": {
+    "FROZEN_JS_SOURCE": "15445741fe17a3fb12dc0397a745389b6c857746",
+    "FROZEN_SHARED_SOURCE": "66097c9f6ed3c37645ca315c009fbd3b9aaa836c"
+  },
+  "limitations": [
+    "Generated CPU fixture qualification only; no cross-host bitwise equivalence claim",
+    "Soft acquisition weighting changes effective penalty strength and directions; not an exact subspace intersection",
+    "No evidence yet of Dice improvement or anatomical protection; no GPU profile or formal experiment"
+  ]
+}

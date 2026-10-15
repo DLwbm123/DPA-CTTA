@@ -19,8 +19,10 @@ def candidates():
 
 
 class Host(JointHost):
+    conditions = staticmethod(candidates)
+
     def __init__(self, state, config, seed, identity, device='cuda:0', model=None):
-        expected = {c['id']: c for c in candidates()}.get(config.get('id'))
+        expected = {c['id']: c for c in self.conditions()}.get(config.get('id'))
         if expected is None:
             raise ValueError('one of the five fixed factorial conditions required')
         expected = copy.deepcopy(expected)
