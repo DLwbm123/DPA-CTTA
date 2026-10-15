@@ -1,0 +1,22 @@
+{
+  "CPU_qualification": {
+    "status": "PASS",
+    "tests": 54,
+    "errors": 0,
+    "failures": 0,
+    "CPU_seconds": 43.01602158299647,
+    "GPU_seconds": 0,
+    "cuda_initialized": false
+  },
+  "prior_CPU_failures": [
+    {
+      "attempt": 0,
+      "CPU_seconds": 0.34593280404806137,
+      "GPU_seconds": 0,
+      "reason": "New report tuple-subscript syntax was not compatible with Python3.10; corrected before GPU work or source freeze"
+    }
+  ],
+  "total_known_CPU_check_seconds": 43.361954387044534,
+  "GPU_seconds": 0,
+  "source_frozen_after_CPU_correction": true
+}
