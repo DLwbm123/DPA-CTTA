@@ -1,0 +1,66 @@
+{
+  "scope": "Real-model resource and update-derivative profile only; no Dice scoring or formal experiment",
+  "method_source_commit": "e734e349d19f4fc6d6b407290f5b3e87647efb63",
+  "conditions": [
+    "C",
+    "C_JS_SHARED",
+    "CW_LSO_JS_SHARED",
+    "C_JS_ACQ_WEIGHTED"
+  ],
+  "comparison_note": "R46 original includes W and LSO; C_JS_SHARED is the matched C-background R46 filter mechanism",
+  "seed": 17011,
+  "orders": [
+    0,
+    1
+  ],
+  "arrivals_per_job": 32,
+  "warmup_arrivals_per_job": 4,
+  "planned_jobs": 8,
+  "planned_total_arrivals": 256,
+  "physical_gpu_allowlist": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "physical_assignments": {
+    "order0": 5,
+    "order1": 7
+  },
+  "max_gpu_workers": 2,
+  "same_gpu_pairs": true,
+  "condition_schedule_order0": [
+    "C",
+    "C_JS_SHARED",
+    "CW_LSO_JS_SHARED",
+    "C_JS_ACQ_WEIGHTED"
+  ],
+  "condition_schedule_order1": [
+    "C_JS_ACQ_WEIGHTED",
+    "CW_LSO_JS_SHARED",
+    "C_JS_SHARED",
+    "C"
+  ],
+  "cold_free_memory_guard_MiB": 5120,
+  "wall_cap_seconds": 1800,
+  "gpu_worker_cap_seconds": 3600,
+  "job_cap_seconds": 420,
+  "output_cap_bytes": 1073741824,
+  "charge_all_initialization_and_failed_attempts": true,
+  "automatic_retry": false,
+  "formal_experiment_authorized": false,
+  "diagnostics": [
+    "native_Adam_loss_directional_derivative",
+    "actual_committed_loss_directional_derivative",
+    "difference",
+    "rank",
+    "filter_eigenvalues",
+    "relative_metric_update_change"
+  ],
+  "measurement": "Synchronized wall time and CUDA events around Host.step; identical read-only Adam observation hooks for all conditions. Derivative aggregation and image decode excluded from per-step timings but included in worker cost.",
+  "checkpoint": "Existing migrated RIM_ONE_r3 Res_Unet source state; no source images or labels",
+  "input_selection": "First 32 arrivals of each original image-only stream, fixed before runtime; no output-based selection",
+  "publication": "Own source/protocol and anonymous aggregates/cost/audit only; raw steps, image identities, predictions, model states and private paths remain private",
+  "limitations": "Short previously exposed prefixes only; shared-GPU timing can be noisy. This qualifies implementation and resource cost, not Dice benefit, anatomical protection or full-stream numerical safety.",
+  "runner_source_commit": "a7b91085c716e3cf2186edaced4fdec70545479e"
+}

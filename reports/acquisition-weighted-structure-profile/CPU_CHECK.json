@@ -5,5 +5,23 @@
   "errors": 0,
   "seconds": 3.1768951899721287,
   "cuda_initialized": false,
-  "scope": "Profile wiring only; prior method CPU qualification has 46 passing tests"
+  "scope": "Profile wiring only; prior method CPU qualification has 46 passing tests",
+  "postprocessing_attempts": [
+    {
+      "phase": "report_postprocess_attempt0",
+      "status": "FAIL",
+      "tests": 5,
+      "errors": 1,
+      "seconds": 2.1713833960238844,
+      "reason": "New test config not copied to CPU staging environment; no scientific/GPU failure"
+    },
+    {
+      "phase": "report_postprocess_attempt1",
+      "status": "PASS",
+      "tests": 5,
+      "errors": 0,
+      "seconds": 2.177727620000951
+    }
+  ],
+  "postprocessing_final_status": "PASS"
 }

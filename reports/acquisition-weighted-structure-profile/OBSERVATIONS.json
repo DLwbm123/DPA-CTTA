@@ -1,0 +1,15 @@
+{
+  "status": "PASS_BOUNDED_PROFILE",
+  "GPU_jobs_passed": 8,
+  "total_arrivals": 256,
+  "weighted_actual_derivative_negative_count": 64,
+  "weighted_updates": 64,
+  "weighted_derivative_less_negative_than_native_count": 53,
+  "weighted_mean_relative_metric_update_change": 0.0052415012987585725,
+  "matched_shared_mean_relative_metric_update_change": 0.1621842845431059,
+  "scientific_efficacy": "NOT_EVALUATED",
+  "conclusion": "Similar cost to matched C-background shared filter, with much weaker measured update modification. Neither unsupervised derivative signs nor weaker filtering establish Dice or anatomical benefit.",
+  "original_R46_comparison": "Original R46 also uses W and LSO, so its larger runtime cannot be attributed solely to the matrix formula.",
+  "no_formal_experiment_started": true,
+  "all_workers_retired": true
+}
