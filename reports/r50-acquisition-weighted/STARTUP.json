@@ -1,0 +1,38 @@
+{
+  "experiment": "R50_ACQUISITION_WEIGHTED",
+  "status": "RUNNING_FIXED_MATRIX",
+  "scientific_results": "PENDING",
+  "T0": "2026-10-15T12:53:27.966761+00:00",
+  "code_sha": "d17cd8dbd73baaf2694b4f56bbe0d852d611faa4",
+  "conditions": [
+    "C",
+    "CW_LSO",
+    "C_JS_SHARED",
+    "C_JS_ACQ_WEIGHTED"
+  ],
+  "formal_trajectories": 24,
+  "expected_score_rows": 46824,
+  "seeds": [
+    20260907,
+    17011,
+    29009
+  ],
+  "orders": [
+    0,
+    1
+  ],
+  "allowed_physical_gpu_ids": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "max_GPU_workers": 4,
+  "CPU_checks": 54,
+  "profiles_passed": 4,
+  "profile_admitted": true,
+  "projected_GPU_worker_hours": 20.567213214740264,
+  "monitor_interval_minutes": 30,
+  "healthy_monitoring_silent": true,
+  "automatic_followup": false
+}
