@@ -1,0 +1,31 @@
+{
+  "source_sha": "fab9798397c129c41109f00f851284af8719f04a",
+  "attempts": [
+    {
+      "mode": "worker",
+      "status": "FAILED",
+      "exit_code": 1,
+      "started": 1792143670.374461,
+      "ended": 1792143672.9323368,
+      "gpu_worker_seconds": 2.554733991622925,
+      "cpu_worker_seconds": 0.0
+    },
+    {
+      "mode": "worker",
+      "status": "FAILED",
+      "exit_code": 1,
+      "started": 1792144443.997431,
+      "ended": 1792144447.2213662,
+      "gpu_worker_seconds": 3.218336820602417,
+      "cpu_worker_seconds": 0.0
+    }
+  ],
+  "gpu_worker_seconds": 5.773336820602417,
+  "gpu_cap_seconds": 1800,
+  "prior_gpu_worker_seconds": 2.555,
+  "user_authorized_retry": 1,
+  "cpu_worker_seconds": 0.0,
+  "all_workers_retired": true,
+  "no_retry": true,
+  "no_replay": true
+}

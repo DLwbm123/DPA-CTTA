@@ -1,0 +1,18 @@
+{
+  "status": "FAIL",
+  "reason": "diagnostic changed native state: parameters",
+  "failed_anchor_order": 0,
+  "anchor1": "NOT_STARTED",
+  "formal_matrix_admitted": false,
+  "evidence_basis": "Traceback at assert_native_equivalence after all preceding fail-closed checks returned; no completed qualification receipt or parameter-difference measurement was saved.",
+  "preceding_checks_anchor0": {
+    "snapshot_restore": "PASSED_BEFORE_FAILURE",
+    "historical_binary_prediction": "PASSED_BEFORE_FAILURE",
+    "native_step_repeatability": "PASSED_BEFORE_FAILURE",
+    "instrumented_native_binary_prediction": "PASSED_BEFORE_FAILURE",
+    "gradient_decomposition_and_committed_matching": "RETURNED_WITHOUT_ERROR_BEFORE_FAILURE"
+  },
+  "native_full_state": "FAIL_AT_PARAMETERS",
+  "later_state_components": "NOT_COMPARED_AFTER_PARAMETER_FAILURE",
+  "matching_measurements": "NOT_SAVED_IN_PUBLIC_RECEIPT"
+}

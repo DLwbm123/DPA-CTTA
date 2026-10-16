@@ -1,0 +1,75 @@
+{
+  "source_sha": "886491b6673caa920eb71080c75c0e6779c1dc65",
+  "attempts": [
+    {
+      "mode": "worker",
+      "status": "FAILED",
+      "exit_code": 1,
+      "started": 1792143670.374461,
+      "ended": 1792143672.9323368,
+      "gpu_worker_seconds": 2.554733991622925,
+      "cpu_worker_seconds": 0.0
+    },
+    {
+      "mode": "worker",
+      "status": "FAILED",
+      "exit_code": 1,
+      "started": 1792144443.997431,
+      "ended": 1792144447.2213662,
+      "gpu_worker_seconds": 3.218336820602417,
+      "cpu_worker_seconds": 0.0
+    },
+    {
+      "mode": "worker",
+      "status": "FAILED",
+      "exit_code": 1,
+      "started": 1792151028.696942,
+      "ended": 1792151053.4604182,
+      "gpu_worker_seconds": 24.761302947998047,
+      "cpu_worker_seconds": 0.0
+    }
+  ],
+  "gpu_worker_seconds": 30.534639768600464,
+  "gpu_cap_seconds": 1800,
+  "prior_gpu_worker_seconds": 5.773336820602417,
+  "user_authorized_retry": 2,
+  "cpu_worker_seconds": 0.0,
+  "all_workers_retired": true,
+  "no_retry": true,
+  "no_replay": true,
+  "preparation_cpu_checks": {
+    "IMPORT_CHECK": {
+      "status": "PASS",
+      "entry": true,
+      "worker": true,
+      "scorer": true,
+      "upstream": true,
+      "cuda_initialized": false,
+      "cpu_seconds": 1.9520008563995361,
+      "gpu_seconds": 0
+    },
+    "PATH_CHECK": {
+      "status": "PASS",
+      "real_private_files": 8,
+      "cpu_anchors": 2,
+      "source_weights_readable": true,
+      "scorer_denied": true,
+      "prior_anchor_denied": true,
+      "escaping_symlink_denied": true,
+      "unregistered_image_denied": true,
+      "registered_image_readable": true,
+      "label_reads": 0,
+      "model_forwards": 0,
+      "cuda_initialized": false,
+      "cpu_seconds": 0.3747134208679199,
+      "gpu_seconds": 0
+    },
+    "CPU_CHECK": {
+      "status": "PASS",
+      "tests": 5,
+      "cpu_seconds": 6.401112727937289,
+      "gpu_seconds": 0
+    }
+  },
+  "other_preparation_cpu_seconds": "NOT_MEASURED"
+}
