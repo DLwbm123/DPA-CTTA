@@ -24,13 +24,15 @@ def reset_episode(h,initial):
 def online(c,job):
     from ..r19_model_only.runtime import weights
     from ..r20_model_only_search.method import Host
-    root=Path(c['output_root']);dest=root/'target'/job['id'];dest.mkdir()
+    torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
+    torch.backends.cudnn.benchmark=False;torch.backends.cudnn.deterministic=True;torch.use_deterministic_algorithms(True)
+    root=Path(c['output_root']);qualify=os.environ.get('RUN_QUALIFY')=='1';dest=root/'target'/('QUAL_'+job['id'] if qualify else job['id']);dest.mkdir()
     ms=read(root/f'images_o{job["order"]}.json');assert len(ms)==1951
     assert all(set(m)=={'image_path','image_sha256','image_size'} for m in ms)
     h=Host(weights(c),dict(family='control',host='C',id='C',params={}),job['seed'],job['id'],device='cuda:0')
     initial=h.snapshot();reader=TargetReader(c['target_root'],256*1024**2,'image');started=time.time()
     with (dest/'predictions.bits').open('xb') as f:
-        for i,m in enumerate(ms):
+        for i,m in enumerate(ms[:2] if qualify else ms):
             if i:reset_episode(h,initial)
             z,detail=h.step(reader.read(m));assert z.shape==(1,2,512,512) and torch.isfinite(z).all() and h.native.steps==1
             bits=np.packbits((z.sigmoid()>=.5).numpy()).tobytes();assert len(bits)==65536
@@ -40,7 +42,7 @@ def online(c,job):
             f.write(bits)
             if (i+1)%50==0:save(dest/'PROGRESS.json',dict(images=i+1,seconds=time.time()-started))
     reader.after_check();h.check_frozen(True);h.close()
-    save(dest/'ONLINE_COMPLETE.json',dict(images=1951,target_label_reads=0,updates=1951,forwards=15608,first_arrival_matches_C=True))
+    save(dest/'ONLINE_COMPLETE.json',dict(images=2 if qualify else 1951,target_label_reads=0,updates=2 if qualify else 1951,forwards=16 if qualify else 15608,first_arrival_matches_C=True,qualification_only=qualify))
 
 
 def score(c):
