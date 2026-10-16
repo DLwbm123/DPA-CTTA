@@ -1,0 +1,9 @@
+# R55 fixed spatial error attribution
+
+R54 attributes the relative REFUGE_Valid OC deficit primarily to excess foreground. ORIGA OC instead remains undersized, so uniform erosion is not justified. Test the narrower hypothesis that disconnected fragments account for most REFUGE_Valid OC false positives without substantial true foreground. This is a label-aware diagnostic of retired predictions, not an online algorithm.
+
+Reuse CW_LSO R50 masks, all3 seeds20260907/17011/29009, both orders, primary remaining_dev1695. Each channel independently: retain the largest8-connected foreground component; ties use the first component in raster label order. Empty mask remains empty. Compare removed pixels with fixed labels; sum TP,FP,GT,removedTP,removedFP per seed/order/domain/channel. No masks are overwritten or published and no new adaptation occurs. Report all48 cells. Check retired source receipt, fixed prediction dimensions,10170 total images, and8-connectivity/empty-mask self-checks.
+
+Primary diagnostic focus REFUGE_Valid OC: support fragment hypothesis only when removedFP/FP>=0.5 and removedTP/GT<=0.01 in at least5/6 paired seed/order cells. All other cells are descriptive. Failure means largest-component filtering does not explain most excess under this definition; it does not prove a specific cause. Do not choose connectivity or thresholds after results. This gate is not a Dice efficacy gate; no causal or independent validation claim. The existing exposed development data require an independent future evaluation for generalization.
+
+One CPU execution with1h hard wall cap,100MiB output,zeroGPU. Read existing masks and labels through the established reader; no derived mask files needed. Publish code/protocol/anonymous aggregate report after completion, preserve all private inputs. Subsequent algorithms require their own registered run.
