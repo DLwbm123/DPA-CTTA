@@ -1,0 +1,7 @@
+# R56 incremental W/LSO error attribution
+
+R54 found excess foreground relative to VPTTA in REFUGE_Valid OC. R55 found that disconnected fragments account for less than2% of those false positives. Before modifying W/LSO, test whether its incremental change over the matched C baseline accounts for a material excess. Reuse the R54 scalar-count diagnostic with baseline=C and both methods' existing R52 reused scoring records. This compares the combined CW_LSO change with C; it cannot isolate W from LSO or prove a biological cause.
+
+Freeze six paired trajectories, seeds20260907/17011/29009 and orders0/1, remaining_dev1695,10170 observations. No new images, labels, predictions or adaptation. Aggregate all96 method/domain/channel/order/seed cells and publish48 paired differences. Primary: REFUGE_Valid OC d=(FP_CW-FP_C)/GT - (FN_CW-FN_C)/GT. Support incremental excess only if mean d>=0.05 and d>0 in at least5/6 cells. Gate failure does not establish equivalence. Report FP and FN separately; pooled-count rates are not mean per-image rates or Dice. No subgroup promotion or new thresholds. This is descriptive historically exposed development evidence, not independent validation.
+
+One CPU run,10-minute hard wall cap,100MiB output,zeroGPU. Reuse count consistency, exact pairing, coverage and normalization self-checks. Existing R54 default remains VPTTA; explicit R56 config uses C. Public code/protocol/aggregates only. Freeze R52-R55 results; use this result to choose a separately registered subsequent experiment.
