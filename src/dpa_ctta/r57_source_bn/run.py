@@ -16,6 +16,18 @@ from ..r24_c_context.run import hard_metrics
 WIDTH=65536
 
 
+def control_fields(mask, label):
+    from ..r16_evidence_correction.structure import containment
+    return dict(metrics=hard_metrics(mask,label), containment_violations=containment(mask), empty_foreground=[not x.any() for x in mask])
+
+
+def scoring_self_check():
+    mask=np.zeros((2,4,4),dtype=bool)
+    row=dict(condition='SOURCE',seed=1,order=0,role='SEARCH',subset='remaining_dev',content='test',domain='test',**control_fields(mask,torch.zeros(1,2,4,4)))
+    result,_=aggregate([row]);assert result[0]['macro_Dice_percent']==100 and result[0]['empty_OD']==1
+
+
+
 def online(c):
     from ..source_pilot import SourceOnlyHost
     from ..b1_host import configure
@@ -60,7 +72,7 @@ def score(c):
         with (root/(method+'.bits')).open('rb') as f:
             for m in manifest:
                 mask=np.unpackbits(np.frombuffer(f.read(WIDTH),dtype=np.uint8)).reshape(2,512,512).astype(bool)
-                values[method][m['image_sha256']]=hard_metrics(mask,reader.read(m))
+                values[method][m['image_sha256']]=control_fields(mask,reader.read(m))
     reader.after_check()
     for seed in (20260907,17011,29009):
         for order in (0,1):
@@ -70,7 +82,7 @@ def score(c):
                 assert (r['content'],r['visit'])==(m['image_sha256'],i+1)
                 allrows.append(r)
                 for method in ('SOURCE','BATCH'):
-                    allrows.append(dict(condition=method,seed=seed,order=order,visit=i+1,content=m['image_sha256'],domain=m['domain'],subset=m['subset'],role=assignment.get(m['image_sha256'],'CONTEXT'),metrics=values[method][m['image_sha256']],diagnostics={}))
+                    allrows.append(dict(condition=method,seed=seed,order=order,visit=i+1,content=m['image_sha256'],domain=m['domain'],subset=m['subset'],role=assignment.get(m['image_sha256'],'CONTEXT'),**values[method][m['image_sha256']],diagnostics={}))
     assert len(allrows)==35118
     with (root/'scores.private.jsonl').open('x') as f:
         for r in allrows:f.write(json.dumps(r)+'\n')
@@ -96,8 +108,17 @@ def score(c):
 
 
 def main():
-    torch.set_num_threads(2);c=read(os.environ['RUN_CONFIG']);root=Path(c['output_root'])
+    torch.set_num_threads(2);scoring_self_check();c=read(os.environ['RUN_CONFIG']);root=Path(c['output_root'])
     if os.environ.get('RUN_PHASE')=='online':online(c);return
+    if os.environ.get('RUN_PHASE')=='score_repair':
+        previous=read(root/'RUN_STATE.json');assert previous['status']=='FAILED' and read(root/'RETIREMENT.json')['returncode']==0
+        save(root/'ORIGINAL_SCORING_FAILURE.json',previous)
+        old=root/'scores.private.jsonl'
+        if old.exists():old.rename(root/'scores.original.private.jsonl')
+        score(c)
+        worker=read(root/'WORKER.json');retired=read(root/'RETIREMENT.json')
+        previous.update(status='COMPLETE',ended=time.time(),scored_rows=35118,GPU_seconds=retired['ended']-worker['started'],wall_seconds=time.time()-previous['started'],scoring_repair=True)
+        save(root/'RUN_STATE.json',previous);save(root/'public/RUN_STATE.json',previous);return
     started=time.time();state=dict(status='ONLINE',started=started);save(root/'RUN_STATE.json',state)
     try:
         env=dict(os.environ,RUN_PHASE='online',CUDA_VISIBLE_DEVICES=str(c['gpu']))
