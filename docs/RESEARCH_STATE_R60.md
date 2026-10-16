@@ -4,6 +4,7 @@ This ledger prevents repeated mechanism tests from being presented as progress. 
 
 | Question already tested | Evidence | Current implication |
 |---|---|---|
+| Historical target prototypes and causal feature-neighbor reliability | [R21](../reports/r21-regional-quick/REPORT.md), [R22](../reports/r22-cut-diagnostic-quick/REPORT.md), [compatibility audit](R61_EVIDENCE_DESIGN.md#compatibility-audit-outcome) | Already implemented with a frozen feature coordinate system and past-only memory. R21 correction failed; R22 cut reliability failed. A historical feature bank alone is not new feedback. |
 | Source versus current-image BN; episodic and periodic resets | [R30](../reports/r30-state-history/REPORT.md), [R59](../reports/r59-episodic-c/REPORT.md) | R59 repeats the episodic mechanism under the current matched pipeline/combined development endpoint. It is confirmation, not a novel direction. Full reset harms macro Dice despite local OC benefit. |
 | Existing head trainability | [R31](../reports/r31-readout/REPORT.md) | Fixed head LR produced only+0.003452pp versus C on SEARCH. No head-LR sweep justified. |
 | Learned parameter versus Adam donor history | [R33](../reports/r33-state-exchange/REPORT.md) | Matched-age donor exchanges do not remove REFUGE_Valid update loss. Do not repeat a generic optimizer-origin/reset hypothesis. |
