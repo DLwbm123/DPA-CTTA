@@ -1,0 +1,49 @@
+{
+  "source_sha": "01c9f07f54dd8fc6e713b614bba7412c78ae68d4",
+  "attempts": [
+    {
+      "mode": "worker",
+      "status": "FAILED",
+      "exit_code": 1,
+      "started": 1792143670.374461,
+      "ended": 1792143672.9323368,
+      "gpu_worker_seconds": 2.554733991622925,
+      "cpu_worker_seconds": 0.0
+    }
+  ],
+  "gpu_worker_seconds": 2.554733991622925,
+  "gpu_cap_seconds": 1800,
+  "cpu_worker_seconds": 0.0,
+  "all_workers_retired": true,
+  "no_retry": true,
+  "no_replay": true,
+  "preparation_cpu_checks": [
+    {
+      "status": "FAIL",
+      "tests": 3,
+      "failures": 1,
+      "errors": 0,
+      "cpu_seconds": 10.33236050605774,
+      "gpu_seconds": 0
+    },
+    {
+      "status": "PASS",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "cpu_seconds": 6.782956838607788,
+      "gpu_seconds": 0
+    },
+    {
+      "status": "PASS",
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "cpu_seconds": 6.427855968475342,
+      "gpu_seconds": 0
+    }
+  ],
+  "preparation_cpu_check_seconds": 23.54317331314087,
+  "other_preparation_cpu_seconds": "NOT_MEASURED",
+  "status": "NOT_EVALUABLE_IMPORT_FAILURE"
+}
