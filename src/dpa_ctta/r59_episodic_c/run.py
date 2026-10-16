@@ -74,7 +74,7 @@ def main():
     torch.set_num_threads(2);scoring_self_check();c=read(os.environ['RUN_CONFIG']);root=Path(c['output_root'])
     if os.environ.get('RUN_JOB'):
         online(c,next(j for j in c['jobs'] if j['id']==os.environ['RUN_JOB']));return
-    started=time.time();state=dict(status='ONLINE',started=started);save(root/'RUN_STATE.json',state);cost=0
+    started=c.get('original_T0',time.time());state=dict(status='ONLINE',started=started);save(root/'RUN_STATE.json',state);cost=c.get('preceding_GPU_seconds',0)
     try:
         for start in (0,3):
             running=[]
