@@ -115,3 +115,18 @@ only `*.py`. Run the neutral entry with `DIAG_MODE=import_check` and
 `CUDA_VISIBLE_DEVICES=` in the actual deployed environment before controller
 admission; it loads both worker and scorer import chains and pinned upstream
 model/augmentation interfaces, without weights, data, model construction or CUDA.
+
+## Second explicitly authorized retry (2026-10-16)
+
+After both preserved failures, the user authorized one additional attempt only
+after CPU checks of actual resolved inputs, the unchanged access boundary and
+full entry. Copy the fixed anchors and manifests as real files inside a fresh
+run root; do not use cross-run symlinks. `DIAG_MODE=preflight` verifies actual
+CPU deserialization, mandatory anchor integrity, source weight readability,
+scorer/old-anchor/escaping-symlink/unregistered-image denial, and registered
+current-image readability without any model forward or label read.
+Both IMPORT_CHECK and PATH_CHECK must pass before controller admission.
+Carry forward the more precise 5.773336821s debit (at least the stated 5.773s);
+the cumulative 1800s cap and all scientific settings remain unchanged. Two
+previous failures remain in the ledger. This allows one new launch, not an
+automatic retry policy. No further retry, replay, tuning or sample expansion.

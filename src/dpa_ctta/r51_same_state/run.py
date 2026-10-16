@@ -21,6 +21,65 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
+
+def load_anchors(c):
+    import torch
+    root=Path(c['output_root'])
+    anchors=[]
+    for order in c['orders']:
+        raw=(root/'private'/f'anchor_o{order}.pt').read_bytes()
+        meta=read(root/'private'/f'anchor_o{order}.json')
+        # Preserve the existing journal's mandatory integrity mechanism.
+        if hashlib.sha256(raw).hexdigest()!=meta['sha256']:
+            raise ValueError('existing anchor integrity mismatch')
+        payload=torch.load(io.BytesIO(raw),map_location='cpu',weights_only=True)
+        anchor=payload['host']
+        if payload['schema']!='R8_TARGET_JOURNAL_V1' or meta['visits']!=1900 or anchor['visits']!=1900 or anchor['steps']!=1900:
+            raise ValueError('only the two frozen visit1900 anchors are admitted')
+        anchors.append(anchor)
+    return anchors
+
+
+def path_check(c):
+    import torch
+    from ..r36_incremental_modules.run import filesystem_guard
+    from ..r19_model_only.runtime import weights
+    root=Path(c['output_root']).resolve();start=time.time()
+    names=['anchor_o0.pt','anchor_o1.pt','anchor_o0.json','anchor_o1.json',
+           'qualification.json','qualification_o0.bits','qualification_o1.bits','images.json']
+    for name in names:
+        p=root/'private'/name
+        if not p.resolve(strict=True).is_relative_to(root) or p.is_symlink():
+            raise ValueError('private inputs must be real files inside this run')
+    old=Path(c['prior_output_root'])/'private/anchor_o0.pt'
+    alias=root/'private/denial_link.pt';alias.symlink_to(old)
+    permit,opened,rejected=filesystem_guard(c)
+    anchors=load_anchors(c)
+    if len(anchors)!=2:raise ValueError('two readable CPU anchors required')
+    state=weights(c)
+    for name in names:
+        if not name.endswith('.pt'):(root/'private'/name).read_bytes()
+    panel=read(root/'private/images.json')
+    if len(panel)!=48 or len(read(root/'private/qualification.json'))!=2:raise ValueError('fixed input coverage')
+    current=Path(panel[0]['image_path']).resolve(strict=True)
+    denied=[root/'scorer/panel.json',old,alias,current]
+    for p in denied:
+        try:
+            with p.open('rb') as f:f.read(1)
+        except PermissionError:continue
+        raise AssertionError('forbidden input became readable')
+    permit['image']=current
+    try:
+        with current.open('rb') as f:
+            if not f.read(1):raise ValueError('empty current-image input')
+    finally:permit['image']=None
+    alias.unlink()
+    if torch.cuda.is_initialized():raise ValueError('CPU boundary check initialized CUDA')
+    save(root/'PATH_CHECK.json',dict(status='PASS',real_private_files=len(names),cpu_anchors=len(anchors),
+         source_weights_readable=True,scorer_denied=True,prior_anchor_denied=True,escaping_symlink_denied=True,
+         unregistered_image_denied=True,registered_image_readable=True,label_reads=0,model_forwards=0,
+         cuda_initialized=False,cpu_seconds=time.time()-start,gpu_seconds=0))
+
 def worker(c, import_only=False):
     import numpy as np
     import torch
@@ -48,18 +107,7 @@ def worker(c, import_only=False):
         gpu_policy(c['gpu'])
         permit,opened,rejected=filesystem_guard(c)
         state=weights(c)
-        anchors=[]
-        for order in c['orders']:
-            raw=(root/'private'/f'anchor_o{order}.pt').read_bytes()
-            meta=read(root/'private'/f'anchor_o{order}.json')
-            # Preserve the existing journal's mandatory integrity mechanism.
-            if hashlib.sha256(raw).hexdigest()!=meta['sha256']:
-                raise ValueError('existing anchor integrity mismatch')
-            payload=torch.load(io.BytesIO(raw),map_location='cpu',weights_only=True)
-            anchor=payload['host']
-            if payload['schema']!='R8_TARGET_JOURNAL_V1' or meta['visits']!=1900 or anchor['visits']!=1900 or anchor['steps']!=1900:
-                raise ValueError('only the two frozen visit1900 anchors are admitted')
-            anchors.append(anchor)
+        anchors=load_anchors(c)
         reader=TargetReader(c['target_root'],256*1024**2,'image')
         qualification=read(root/'private/qualification.json');panel=read(root/'private/images.json')
         if len(panel)!=48 or len(anchors)!=2 or c['total_pairs']!=96:
@@ -169,12 +217,12 @@ def controller(c):
     root=Path(c['output_root'])
     with (root/'started.json').open('x') as f:json.dump(dict(at=time.time(),pid=os.getpid()),f)
     if read(root/'CPU_CHECK.json')['status']!='PASS' or c['source_sha']=='PREPARATION':raise ValueError('frozen source and CPU gate required')
-    if read(root/'IMPORT_CHECK.json')['status']!='PASS':raise ValueError('full entry import gate required')
+    if any(read(root/(name+'.json'))['status']!='PASS' for name in ('IMPORT_CHECK','PATH_CHECK')):raise ValueError('full entry import gate required')
     previous=read(root/'PRIOR_RESOURCE_LEDGER.json')
     prior=c['prior_gpu_worker_seconds']
-    if not previous['all_workers_retired'] or len(previous['attempts'])!=1 or previous['attempts'][0]['status']!='FAILED':
+    if not previous['all_workers_retired'] or len(previous['attempts'])!=2 or any(a['status']!='FAILED' for a in previous['attempts']):
         raise ValueError('only one user-authorized retry of the retired failed attempt')
-    if not previous['gpu_worker_seconds']<=prior<=2.555 or c['gpu_cap_seconds']!=1800:
+    if not max(5.773,previous['gpu_worker_seconds'])<=prior<=5.774 or c['gpu_cap_seconds']!=1800:
         raise ValueError('cumulative budget mismatch')
     raw=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid,memory.free','--format=csv,noheader,nounits'],text=True)
     gpus={int(i):(u.strip(),int(m)) for i,u,m in (line.split(',') for line in raw.splitlines())}
@@ -191,7 +239,7 @@ def controller(c):
     finally:
         save(root/'RESOURCE_LEDGER.json',dict(source_sha=c['source_sha'],attempts=attempts,
              gpu_worker_seconds=prior+sum(a['gpu_worker_seconds'] for a in attempts[previous_count:]),gpu_cap_seconds=c['gpu_cap_seconds'],
-             prior_gpu_worker_seconds=prior,user_authorized_retry=1,
+             prior_gpu_worker_seconds=prior,user_authorized_retry=2,
              cpu_worker_seconds=sum(a['cpu_worker_seconds'] for a in attempts),
              all_workers_retired=True,no_retry=True,no_replay=True))
     return 0 if len(attempts)==previous_count+2 and all(a['status']=='COMPLETE' for a in attempts[previous_count:]) else 1
@@ -199,7 +247,7 @@ def controller(c):
 
 def main():
     c=read(os.environ['DIAG_CONFIG']);mode=os.environ['DIAG_MODE']
-    if mode=='import_check':
+    if mode in ('import_check','preflight'):
         if os.environ.get('CUDA_VISIBLE_DEVICES')!='':raise ValueError('CPU-only import check')
         start=time.time()
         worker(None,import_only=True)
@@ -215,6 +263,7 @@ def main():
         if torch.cuda.is_initialized():raise ValueError('import check initialized CUDA')
         save(Path(c['output_root'])/'IMPORT_CHECK.json',dict(status='PASS',entry=True,worker=True,scorer=True,
              upstream=True,cuda_initialized=False,cpu_seconds=time.time()-start,gpu_seconds=0))
+        if mode=='preflight':path_check(c)
         return 0
     if mode=='worker':return worker(c)
     if mode=='controller':
