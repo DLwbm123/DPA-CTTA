@@ -25,11 +25,12 @@ def csvout(path, rows):
         writer=csv.DictWriter(f,fieldnames=list(rows[0]));writer.writeheader();writer.writerows(rows)
 
 
-def score(c):
+def score(c, import_only=False):
     if os.environ.get('CUDA_VISIBLE_DEVICES')!='':raise ValueError('CPU scorer only')
     from ..r7_target_screen.runner import TargetReader
     from ..r24_c_context.run import hard_metrics
     from .diagnostic import BRANCHES
+    if import_only:return
     root=Path(c['output_root']);start=time.time()
     state=read(root/'RUN_STATE.json');process=read(root/'processes/worker.json')
     if state['status']!='GPU_COMPLETE' or state['formal_pairs']!=96 or process['active'] or process['exit_code']!=0:

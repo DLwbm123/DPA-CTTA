@@ -21,7 +21,7 @@ def read(path):
     return json.loads(Path(path).read_text())
 
 
-def worker(c):
+def worker(c, import_only=False):
     import numpy as np
     import torch
     from ..r37_cw_orientation.method import Host,candidates
@@ -32,8 +32,9 @@ def worker(c):
     from ..r36_incremental_modules.run import filesystem_guard
     from .diagnostic import one_pair,mask,assert_native_equivalence,BRANCHES
 
+    if import_only:return
     root=Path(c['output_root']);start=float(os.environ['DIAG_STARTED'])
-    deadline=start+c['gpu_cap_seconds']-20
+    deadline=start+c['gpu_cap_seconds']-c.get('prior_gpu_worker_seconds',0)-20
     status={'status':'QUALIFYING','formal_pairs':0,'started':start}
     save(root/'RUN_STATE.json',status)
     timer=threading.Timer(max(.1,deadline-time.time()),lambda:os.kill(os.getpid(),signal.SIGTERM));timer.daemon=True;timer.start()
@@ -168,27 +169,53 @@ def controller(c):
     root=Path(c['output_root'])
     with (root/'started.json').open('x') as f:json.dump(dict(at=time.time(),pid=os.getpid()),f)
     if read(root/'CPU_CHECK.json')['status']!='PASS' or c['source_sha']=='PREPARATION':raise ValueError('frozen source and CPU gate required')
+    if read(root/'IMPORT_CHECK.json')['status']!='PASS':raise ValueError('full entry import gate required')
+    previous=read(root/'PRIOR_RESOURCE_LEDGER.json')
+    prior=c['prior_gpu_worker_seconds']
+    if not previous['all_workers_retired'] or len(previous['attempts'])!=1 or previous['attempts'][0]['status']!='FAILED':
+        raise ValueError('only one user-authorized retry of the retired failed attempt')
+    if not previous['gpu_worker_seconds']<=prior<=2.555 or c['gpu_cap_seconds']!=1800:
+        raise ValueError('cumulative budget mismatch')
     raw=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid,memory.free','--format=csv,noheader,nounits'],text=True)
     gpus={int(i):(u.strip(),int(m)) for i,u,m in (line.split(',') for line in raw.splitlines())}
     gpu=c['gpu'];uuid,free=gpus[gpu['physical_id']]
     if gpu['physical_id'] not in (4,5,6,7) or uuid!=gpu['uuid'] or free<6144:raise RuntimeError('GPU admission failed; no fallback/retry')
     save(root/'GPU_ADMISSION.json',dict(physical_id=gpu['physical_id'],free_MiB=free,uuid=uuid))
-    attempts=[]
+    attempts=list(previous['attempts'])
+    previous_count=len(attempts)
     try:
         print('one bounded GPU worker starting; qualification precedes matrix',flush=True)
-        attempts.append(run_child(c,'worker',c['gpu_cap_seconds'],True))
+        attempts.append(run_child(c,'worker',c['gpu_cap_seconds']-prior,True))
         if attempts[-1]['status']=='COMPLETE' and read(root/'RUN_STATE.json')['status']=='GPU_COMPLETE':
             attempts.append(run_child(c,'score',c['cpu_cap_seconds'],False))
     finally:
         save(root/'RESOURCE_LEDGER.json',dict(source_sha=c['source_sha'],attempts=attempts,
-             gpu_worker_seconds=sum(a['gpu_worker_seconds'] for a in attempts),gpu_cap_seconds=c['gpu_cap_seconds'],
+             gpu_worker_seconds=prior+sum(a['gpu_worker_seconds'] for a in attempts[previous_count:]),gpu_cap_seconds=c['gpu_cap_seconds'],
+             prior_gpu_worker_seconds=prior,user_authorized_retry=1,
              cpu_worker_seconds=sum(a['cpu_worker_seconds'] for a in attempts),
              all_workers_retired=True,no_retry=True,no_replay=True))
-    return 0 if len(attempts)==2 and all(a['status']=='COMPLETE' for a in attempts) else 1
+    return 0 if len(attempts)==previous_count+2 and all(a['status']=='COMPLETE' for a in attempts[previous_count:]) else 1
 
 
 def main():
     c=read(os.environ['DIAG_CONFIG']);mode=os.environ['DIAG_MODE']
+    if mode=='import_check':
+        if os.environ.get('CUDA_VISIBLE_DEVICES')!='':raise ValueError('CPU-only import check')
+        start=time.time()
+        worker(None,import_only=True)
+        from .score import score
+        score(None,import_only=True)
+        from ..b1_host import official
+        from ..integrations.ctta_suite import load_reference_interfaces,checkout_root,native_imports
+        import importlib
+        import torch
+        official();load_reference_interfaces()
+        with native_imports(checkout_root()[0],'fundus'):
+            importlib.import_module('networks.ResUnet')
+        if torch.cuda.is_initialized():raise ValueError('import check initialized CUDA')
+        save(Path(c['output_root'])/'IMPORT_CHECK.json',dict(status='PASS',entry=True,worker=True,scorer=True,
+             upstream=True,cuda_initialized=False,cpu_seconds=time.time()-start,gpu_seconds=0))
+        return 0
     if mode=='worker':return worker(c)
     if mode=='controller':
         try:return controller(c)

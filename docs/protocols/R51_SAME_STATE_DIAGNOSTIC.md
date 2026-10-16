@@ -96,3 +96,22 @@ qualification summary, costs and completion audit to the project repository.
 Never publish input images, labels, raw masks, per-content scores or identities,
 full gradients, weights, private paths or raw logs. Failed attempts remain in
 the ledger. No automatic retry or monitoring automation.
+
+## Authorized deployment retry (2026-10-16)
+
+The first worker failed during import before CUDA initialization (2.554733992s,
+charged conservatively as 2.555s). Preserve that attempt and all its receipts.
+The user authorized exactly one retry after restoring missing deployment files
+and passing a CPU-only full entry/worker/scorer/upstream import check. The retry
+gets at most 1797.445 GPU-worker seconds; the cumulative cap remains 1800s.
+All scientific settings, qualification gates, fixed 96 pairs and no replay, tuning
+or expansion rules above remain unchanged. No further automatic retry is allowed.
+
+Deployment must include every tracked file under `src/` (including
+`src/dpa_ctta/r8_ba/protocol.json`) and both imported planning resources:
+`docs/review/r9_current_first/input/R9_SPEC_AND_MATRIX.json` and
+`docs/review/r10_use_write_rl/input/R10_SPEC_AND_MATRIX.json`. Do not package
+only `*.py`. Run the neutral entry with `DIAG_MODE=import_check` and
+`CUDA_VISIBLE_DEVICES=` in the actual deployed environment before controller
+admission; it loads both worker and scorer import chains and pinned upstream
+model/augmentation interfaces, without weights, data, model construction or CUDA.

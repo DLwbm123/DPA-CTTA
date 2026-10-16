@@ -15,6 +15,29 @@ class Tests(unittest.TestCase):
     def setUpClass(cls):
         torch.set_num_threads(2)
 
+    def test_retry_preserves_failure_and_subtracts_budget(self):
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        from .run import controller, save, read
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            prior=dict(mode='worker',status='FAILED',gpu_worker_seconds=2.554733991622925,cpu_worker_seconds=0.)
+            save(root/'PRIOR_RESOURCE_LEDGER.json',dict(attempts=[prior],all_workers_retired=True,gpu_worker_seconds=prior['gpu_worker_seconds']))
+            for name in ('CPU_CHECK','IMPORT_CHECK'):save(root/(name+'.json'),dict(status='PASS'))
+            save(root/'RUN_STATE.json',dict(status='GPU_COMPLETE'))
+            c=dict(output_root=directory,source_sha='frozen',prior_gpu_worker_seconds=2.555,
+                   gpu_cap_seconds=1800,cpu_cap_seconds=900,gpu=dict(physical_id=7,uuid='assigned'))
+            def child(config,mode,cap,gpu):
+                self.assertEqual(cap,1797.445 if gpu else 900)
+                return dict(mode=mode,status='COMPLETE',gpu_worker_seconds=10. if gpu else 0.,cpu_worker_seconds=0. if gpu else 1.)
+            with patch('subprocess.check_output',return_value='7, assigned, 10000'), patch('dpa_ctta.r51_same_state.run.run_child',side_effect=child):
+                self.assertEqual(controller(c),0)
+            ledger=read(root/'RESOURCE_LEDGER.json')
+            self.assertEqual(ledger['attempts'][0],prior)
+            self.assertEqual(ledger['gpu_worker_seconds'],12.555)
+            self.assertEqual(len(ledger['attempts']),3)
+
     def test_matching_double_and_degenerate(self):
         gen=torch.Generator().manual_seed(49)
         n=torch.randn(64,generator=gen,dtype=torch.float64)
