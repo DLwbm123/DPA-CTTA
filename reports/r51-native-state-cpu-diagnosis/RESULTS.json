@@ -1,0 +1,86 @@
+{
+  "status": "CPU_DIAGNOSIS_COMPLETE",
+  "torch_version": "2.6.0+cu124",
+  "model_forwards": 0,
+  "image_reads": 0,
+  "label_reads": 0,
+  "cuda_initialized": false,
+  "gpu_seconds": 0,
+  "saved_evidence": {
+    "parameter_tensors": 82,
+    "parameters": 19136,
+    "cpu_rewrite_delta_vs_saved_actual": {
+      "elements": 19136,
+      "different": 0,
+      "max_abs": 0.0,
+      "l2": 0.0
+    },
+    "saved_native_delta_vs_saved_actual": {
+      "elements": 19136,
+      "different": 0,
+      "max_abs": 0.0,
+      "l2": 0.0
+    },
+    "repeated_write_exact": true,
+    "ambiguous_parameter_coordinates": 1,
+    "ambiguous_up": 1,
+    "ambiguous_down": 1,
+    "rewrite_only_changed_coordinates_upper_bound": 1,
+    "rewrite_only_max_abs_error_upper_bound": 9.094947017729282e-13,
+    "gradient_decomposition_relative_error": 8.369292561831491e-07
+  },
+  "scalar_witness": {
+    "before": 9.999999747378752e-05,
+    "raw_post": -9.999999960041972e-13,
+    "rewritten": 0.0,
+    "delta_exactly_preserved": true,
+    "rewrite_error": {
+      "elements": 1,
+      "different": 1,
+      "max_abs": 9.999999960041972e-13,
+      "l2": 9.999999960041972e-13
+    },
+    "exact_copy_fixed": true
+  },
+  "cpu_adam_arithmetic": {
+    "cpu_delta_vs_saved_gpu_diagnostic_delta": {
+      "elements": 19136,
+      "different": 2,
+      "max_abs": 1.4901161193847656e-08,
+      "l2": 1.490116130486996e-08
+    },
+    "cpu_metric_vs_saved_gpu_diagnostic_metric": {
+      "elements": 19136,
+      "different": 6298,
+      "max_abs": 1.862645149230957e-09,
+      "l2": 1.7643448601178294e-08
+    },
+    "cpu_raw_post_vs_delta_rewrite": {
+      "elements": 19136,
+      "different": 0,
+      "max_abs": 0.0,
+      "l2": 0.0
+    },
+    "delta_before_vs_after_rewrite": {
+      "elements": 19136,
+      "different": 0,
+      "max_abs": 0.0,
+      "l2": 0.0
+    },
+    "rewrite_changed_where_cpu_delta_equals_saved_gpu_delta": 0,
+    "exact_copy_error": {
+      "elements": 19136,
+      "different": 0,
+      "max_abs": 0.0,
+      "l2": 0.0
+    },
+    "optimizer_state_unchanged": true
+  },
+  "missing": [
+    "original native-reference post-step parameters and gradients",
+    "diagnostic raw post-Adam parameters before rewriting",
+    "per-component native-reference versus diagnostic state differences"
+  ],
+  "interpretation": "Roundtrip non-invertibility is proven; CPU Adam arithmetic is not GPU native-reference evidence. Saved deltas alone cannot identify the cause or size of the original failed parameter comparison.",
+  "cpu_seconds": 1.4608822950394824
+}
