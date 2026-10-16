@@ -53,7 +53,7 @@ def one_pair(host, pixels):
     predictions = torch.stack(host.weak).sigmoid()
     target = predictions.mean(0).to(z0).detach()
     sensor = Sensor(z0, predictions.to(z0))
-    outputs = {'no_update': mask(z0)}
+    outputs = {}
     scores = sensor(z0)
     anatomy = [flatten(torch.autograd.grad(scores[c], n.params, retain_graph=c == 0)) for c in range(2)]
     del scores, z0
@@ -98,7 +98,7 @@ def one_pair(host, pixels):
     evaluation_rng = rng()
     buffers = {k:v.clone() for k,v in n.model.named_buffers()}
     modes = {k:m.training for k,m in n.model.named_modules()}
-    candidates = {'native':native,'joint':joint,**controls}
+    candidates = {'no_update':torch.zeros_like(native),'native':native,'joint':joint,**controls}
     match_errors, branch_geometry, actuals = {}, {}, {}
     with torch.no_grad():
         for name,delta in candidates.items():
@@ -108,7 +108,7 @@ def one_pair(host, pixels):
             actual = write_delta(n.params,before,delta)
             if name == 'joint' and not torch.equal(actual,joint):
                 raise ValueError('J displacement did not survive repeated representable write')
-            if name not in ('native','joint'):
+            if name not in ('no_update','native','joint'):
                 match_errors[name] = check_committed(native,joint,actual,metric,g0,gs,radial=name=='radial')
             out = n.model(x.to(host.device))[0]
             outputs[name] = mask(out)
@@ -122,7 +122,7 @@ def one_pair(host, pixels):
     n.steps += 1; host.visits += 1; n.rng = rng()
     finite([n.params,n.base.state,metric,g0,gs])
     counts = {k:n.counts[k]-counts_before[k] for k in n.counts}
-    expected = dict(forwards=16,backwards=7,base_adam=1,perturb=0,restore=0)
+    expected = dict(forwards=17,backwards=7,base_adam=1,perturb=0,restore=0)
     if counts != expected:
         raise ValueError(f'counterfactual physical counts: {counts}')
     host.check_frozen(True)
