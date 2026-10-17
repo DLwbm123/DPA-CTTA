@@ -16,6 +16,8 @@ This ledger prevents repeated mechanism tests from being presented as progress. 
 | Hard-mask union/intersection, fragments, fixed moment anchor | [R53](../reports/r53-mask-complementarity/REPORT.md), [R55](../reports/r55-spatial-error/REPORT.md), [R58 matched replay](../reports/r60-numerical-audit/r58/REPORT.md) | No passed improvement gate; simple fusion/morphology/alpha tuning lacks support. |
 | Numerical policy confound | [R60](../reports/r60-numerical-audit/REPORT.md) | Matched-policy audit passes stability bounds. Use corrected control tables; masks are not bitwise identical. |
 
+| Strong appearance augmentation during the update | [R61](../reports/r61-update-view/REPORT.md) | CLEAN minus NATIVE -0.005391 pp, both anchors negative; allocation gate fails. No strength sweep or CLEAN trajectory. |
+
 ## Next bounded research step
 
 Before registering R61, inspect prior objective/pseudo-target diagnostics (including R23 and R28/R29) and recent primary-source work for a mechanism outside the closed reset/retention/projection families. State exactly which new information or feedback the mechanism introduces, why it could distinguish the observed opposing errors without target labels or domain-specific rules, and which existing evidence would falsify it. A renamed controller, another scalar schedule, or tuning an already tested knob is insufficient.
@@ -23,3 +25,7 @@ Before registering R61, inspect prior objective/pseudo-target diagnostics (inclu
 Select at most one hypothesis with a matched comparator, one fixed configuration, a finite budget and an explicit failure criterion. If current evidence does not support a specific implementation, continue the bounded evidence/literature work on the next scheduled trigger rather than launch a token experiment. Do not claim a new GPU run or a performance result while this is preparation. Current primary/statistical exposure conventions remain fixed; changing from SEARCH to combined development does not create independent evidence.
 
 No new dataset/model, source training, RL fitting, hyperparameter grid or independent-generalization claim is implied. Do not repeat any previous run solely because it is absent from the current context; check this ledger and linked protocols before launch.
+
+## After R61
+
+R61 completed with qualification PASS and allocation gate FALSE. The next preparation is a bounded overlap/feasibility audit of geometric pseudo-target construction against R11 and R20; it is not an approved new GPU matrix. See the R61 report for the rationale and limitations. Earlier R61 feature-bank and image-energy candidates remain closed.
