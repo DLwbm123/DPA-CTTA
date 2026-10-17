@@ -85,6 +85,17 @@ def full_resolution(features, masks):
         raise ValueError('nested boolean512px masks required')
     native = masks[:, 2::4, 2::4]
     _, fields, audit = proposal(features, native)
+    output, veto = apply_fields(masks, fields)
+    audit['full_resolution_nesting_veto_pixels'] = veto
+    return output, fields, audit
+
+
+def apply_fields(masks, fields):
+    if masks.shape != (2, 512, 512) or masks.dtype != bool or (masks[1] & ~masks[0]).any():
+        raise ValueError('nested boolean512px masks required')
+    if fields.shape != (2, 128, 128) or not np.isfinite(fields).all() or np.abs(fields).max() > 1:
+        raise ValueError('finite native fields bounded by one pixel required')
+    native = masks[:, 2::4, 2::4]
     output = masks.copy()
     for ch, mask in enumerate(masks):
         edge = native[ch] & ~binary_erosion(native[ch], border_value=1)
@@ -96,8 +107,7 @@ def full_resolution(features, masks):
         output[ch] = reconstruct(mask, mask & ~binary_erosion(mask, border_value=1), shifted)
     violation = output[1] & ~output[0]
     output[:, violation] = masks[:, violation]
-    audit['full_resolution_nesting_veto_pixels'] = int(violation.sum())
-    return output, fields, audit
+    return output, int(violation.sum())
 
 
 def self_check():
