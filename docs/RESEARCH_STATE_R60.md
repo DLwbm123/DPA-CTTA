@@ -57,3 +57,8 @@ The tested current-mask prototype boundary signal is closed for integration into
 ## R69 reconstruction feasibility audit
 
 [Interface and primary-source audit](R69_RECONSTRUCTION_FEASIBILITY_AUDIT.md): no RGB reconstruction head or measured acquisition operator is supplied by the current segmentation path. MAE/MRI reconstruction prerequisites cannot be assumed. R61 image-energy shorthand was a design exclusion, not an executed reconstruction negative. No experiment registered. Next bounded overlap audit is TeSLA teacher/adversarial augmentation versus native GraTa/R20 T/R61/R62; no augmentation sweep or training is implied.
+
+
+## R70 f-CE component pilot
+
+[Completed report](../reports/r70-flipped-ce/REPORT.md): six 192-step trajectories, 1,152 scored outputs; FCE-NATIVE -0.212879pp and FCE-HARD -0.097069pp, both orders and both conditional intervals negative. HARD-NATIVE -0.115810pp. Allocation gate false; retain CW_LSO, no loss/epsilon/LR rescue. This tested strong-view weighted-BCE replacement, not TeSLA's complete unaugmented-fCE/marginal/teacher/augmentation method. Next distinct candidate is learned entropy-seeking, feature-regularized augmentation; formal transform/control/state specification is still required before launch.
