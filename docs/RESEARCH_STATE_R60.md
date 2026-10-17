@@ -37,3 +37,13 @@ The geometric-target overlap audit led to a distinct registered intervention, no
 ## R63 source-moment audit
 
 [Implementation audit](R63_SOURCE_MOMENT_AUDIT.md): native VPTTA already uses source/current blended moments and input-prompt optimization. A frozen-encoder discrepancy on unchanged input is identical across candidate masks and cannot select between them. An action-dependent alternative is not specified or registered. No new inference or efficacy claim.
+
+
+## After R63–R67: current boundary-feedback family
+
+- R63–R65 reverse-classification/atlas selection and attribution did not establish a useful selector; see the complete reports in `reports/r63-rca-diagnostic`, `r64-rca-attribution`, and `r65-single-atlas`. Do not repackage global atlas selection as local error feedback.
+- [R66](../reports/r66-boundary-direction-v1/REPORT.md): frozen image features plus candidate-derived local prototypes and signed boundary displacement failed the complete efficacy gate (LOCAL minus CW -0.125790pp). Random-sign superiority alone is insufficient; the spatial-shuffle contrast was inconclusive.
+- [R66 attribution](../reports/r66-error-attribution/REPORT.md): expansion introduces mostly incorrect added cup pixels in REFUGE/REFUGE_Valid. This is post-hoc explanation, not permission for domain/channel gates or sign reversal.
+- [R67](../reports/r67-mask-response/REPORT.md): fixed-image candidate-mask perturbations yield IMAGE spread ratio 0.972755 versus MASK_ONLY 1.000000; the registered -0.10 difference criterion fails. OD contracts but OC amplifies perturbation spread. This is label-free response evidence, not Dice efficacy.
+
+The tested current-mask prototype boundary signal is closed for integration into the old method. Continuous research remains active, but no new GPU job is running. The next bounded task is an overlap and feasibility audit of whether the existing augmentation ensemble's disagreement contains *directional error information beyond the mean pseudo-target*, against R14/R23/R28/R29/R62. Read the registered historical diagnostics first: if that information has already been tested or only rescales confidence, close it without a new run. Only a distinct, specified information source with a falsifiable matched control can proceed to finite preregistration. This is a question to audit, not a claimed new method or approved parameter sweep. New source-trained objective research remains in the separate user-designated conversation.
