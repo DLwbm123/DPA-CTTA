@@ -10,6 +10,18 @@ from .geometry import full_resolution, apply_fields
 BRANCHES = ('CW', 'LOCAL', 'SHUFFLE', 'SIGN0', 'SIGN1', 'SIGN2', 'SIGN3')
 
 
+def check_image_files(reader, permit):
+    from ..r7_target_screen.runner import confined, file_identity
+    from ..r7_source_prep.registry import verified
+    for path, (expected, identity) in reader.used.items():
+        permit['image'] = Path(path).resolve(strict=True)
+        try:
+            confined(reader.root, path)
+            if file_identity(path) != identity: raise ValueError('target changed after read')
+            verified(path, expected, reader.limit, reader.counts)
+        finally: permit['image'] = None
+
+
 def outputs(feature, masks, index):
     local, field, audit = full_resolution(feature, masks)
     rng = np.random.default_rng(20261017 + index)
@@ -114,7 +126,7 @@ def worker(c):
         after = model.state_dict()
         if set(before) != set(after) or any(not torch.equal(v, after[n].cpu()) for n, v in before.items()):
             raise ValueError('frozen source state changed')
-        reader.after_check()
+        check_image_files(reader, permit)
         save(root/'private/pairs.json', sorted(traces, key=lambda r:r['pair']))
         save(root/'private/ACCESS_AUDIT.json', dict(opened_paths=sorted(opened), target_label_reads=0,
              source_image_reads=0, source_mask_reads=0, frozen_state_unchanged=True,
@@ -209,9 +221,9 @@ def main():
         attempts.append(run_child(c, 'worker', c['gpu_cap_seconds'], True))
         if attempts[-1]['exit_code'] == 0: attempts.append(run_child(c, 'score', c['cpu_cap_seconds'], False))
     finally:
-        ledger = dict(attempts=attempts, gpu_worker_seconds=sum(a['gpu_worker_seconds'] for a in attempts),
+        ledger = dict(attempts=attempts, gpu_worker_seconds=c.get('prior_gpu_seconds', 0)+sum(a['gpu_worker_seconds'] for a in attempts),
             cpu_worker_seconds=c['prior_cpu_seconds']+sum(a['cpu_worker_seconds'] for a in attempts),
-            all_workers_retired=True, prior_cpu_seconds=c['prior_cpu_seconds'])
+            all_workers_retired=True, prior_cpu_seconds=c['prior_cpu_seconds'], prior_gpu_seconds=c.get('prior_gpu_seconds', 0))
         save(root/'RESOURCE_LEDGER.json', ledger); save(root/'public/RESOURCE_LEDGER.json', ledger)
     return 0 if len(attempts) == 2 and all(a['exit_code'] == 0 for a in attempts) else 1
 
