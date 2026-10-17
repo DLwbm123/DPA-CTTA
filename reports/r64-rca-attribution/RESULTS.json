@@ -1,0 +1,323 @@
+{
+  "status": "COMPLETE",
+  "synthetic_check": "PASS",
+  "overall": {
+    "beneficial_switch": {
+      "count": 15,
+      "advantage_sum_pp": 46.55429698272451,
+      "advantage_mean_pp": 3.1036197988483005
+    },
+    "harmful_switch": {
+      "count": 18,
+      "advantage_sum_pp": -146.33561555073092,
+      "advantage_mean_pp": -8.129756419485052
+    },
+    "correct_hold": {
+      "count": 39,
+      "advantage_sum_pp": -525.6993115923788,
+      "advantage_mean_pp": -13.479469528009712
+    },
+    "missed_switch": {
+      "count": 24,
+      "advantage_sum_pp": 200.65318254196984,
+      "advantage_mean_pp": 8.360549272582077
+    },
+    "target_tie": {
+      "count": 0,
+      "advantage_sum_pp": 0.0,
+      "advantage_mean_pp": null
+    },
+    "pairs": 96,
+    "selector_minus_CW_pp": -1.0393887350834,
+    "oracle_regret_pp": 3.614466646798966,
+    "margin_advantage_pearson": 0.10416232876196932,
+    "correct_abs_margin": 0.08153865768097636,
+    "incorrect_abs_margin": 0.10082576878679748
+  },
+  "cells": [
+    {
+      "order": 0,
+      "domain": "Drishti_GS",
+      "beneficial_switch": {
+        "count": 1,
+        "advantage_sum_pp": 0.6086665009380319,
+        "advantage_mean_pp": 0.6086665009380319
+      },
+      "harmful_switch": {
+        "count": 5,
+        "advantage_sum_pp": -52.75748039185752,
+        "advantage_mean_pp": -10.551496078371503
+      },
+      "correct_hold": {
+        "count": 6,
+        "advantage_sum_pp": -47.22935647087739,
+        "advantage_mean_pp": -7.871559411812899
+      },
+      "missed_switch": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "target_tie": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "pairs": 12,
+      "selector_minus_CW_pp": -4.345734490909957,
+      "oracle_regret_pp": 4.39645669932146,
+      "margin_advantage_pearson": -0.09521020294976655,
+      "correct_abs_margin": 0.07009876288235488,
+      "incorrect_abs_margin": 0.08279525828391114
+    },
+    {
+      "order": 0,
+      "domain": "ORIGA",
+      "beneficial_switch": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "harmful_switch": {
+        "count": 3,
+        "advantage_sum_pp": -58.03077722461292,
+        "advantage_mean_pp": -19.343592408204305
+      },
+      "correct_hold": {
+        "count": 8,
+        "advantage_sum_pp": -147.25048207807924,
+        "advantage_mean_pp": -18.406310259759906
+      },
+      "missed_switch": {
+        "count": 1,
+        "advantage_sum_pp": 1.5664140051929607,
+        "advantage_mean_pp": 1.5664140051929607
+      },
+      "target_tie": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "pairs": 12,
+      "selector_minus_CW_pp": -4.835898102051076,
+      "oracle_regret_pp": 4.966432602483823,
+      "margin_advantage_pearson": 0.2600983706898446,
+      "correct_abs_margin": 0.13311136817675284,
+      "incorrect_abs_margin": 0.02195592617104679
+    },
+    {
+      "order": 0,
+      "domain": "REFUGE",
+      "beneficial_switch": {
+        "count": 2,
+        "advantage_sum_pp": 1.2590263770557044,
+        "advantage_mean_pp": 0.6295131885278522
+      },
+      "harmful_switch": {
+        "count": 5,
+        "advantage_sum_pp": -15.338216903560202,
+        "advantage_mean_pp": -3.0676433807120405
+      },
+      "correct_hold": {
+        "count": 4,
+        "advantage_sum_pp": -5.55459501307066,
+        "advantage_mean_pp": -1.388648753267665
+      },
+      "missed_switch": {
+        "count": 1,
+        "advantage_sum_pp": 5.640798801936526,
+        "advantage_mean_pp": 5.640798801936526
+      },
+      "target_tie": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "pairs": 12,
+      "selector_minus_CW_pp": -1.1732658772087081,
+      "oracle_regret_pp": 1.748251308791394,
+      "margin_advantage_pearson": -0.6623101685164872,
+      "correct_abs_margin": 0.02302561682231799,
+      "incorrect_abs_margin": 0.07107434181182348
+    },
+    {
+      "order": 0,
+      "domain": "REFUGE_Valid",
+      "beneficial_switch": {
+        "count": 2,
+        "advantage_sum_pp": 10.490086135741588,
+        "advantage_mean_pp": 5.245043067870794
+      },
+      "harmful_switch": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "correct_hold": {
+        "count": 2,
+        "advantage_sum_pp": -25.87840563643497,
+        "advantage_mean_pp": -12.939202818217485
+      },
+      "missed_switch": {
+        "count": 8,
+        "advantage_sum_pp": 91.9031514781799,
+        "advantage_mean_pp": 11.487893934772487
+      },
+      "target_tie": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "pairs": 12,
+      "selector_minus_CW_pp": 0.8741738446451324,
+      "oracle_regret_pp": 7.658595956514991,
+      "margin_advantage_pearson": 0.24087823480653375,
+      "correct_abs_margin": 0.17683513059975514,
+      "incorrect_abs_margin": 0.2037572487625377
+    },
+    {
+      "order": 1,
+      "domain": "Drishti_GS",
+      "beneficial_switch": {
+        "count": 4,
+        "advantage_sum_pp": 10.62378512389968,
+        "advantage_mean_pp": 2.65594628097492
+      },
+      "harmful_switch": {
+        "count": 3,
+        "advantage_sum_pp": -11.574388064777963,
+        "advantage_mean_pp": -3.8581293549259876
+      },
+      "correct_hold": {
+        "count": 2,
+        "advantage_sum_pp": -2.7864158267167625,
+        "advantage_mean_pp": -1.3932079133583812
+      },
+      "missed_switch": {
+        "count": 3,
+        "advantage_sum_pp": 6.980215841774857,
+        "advantage_mean_pp": 2.3267386139249524
+      },
+      "target_tie": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "pairs": 12,
+      "selector_minus_CW_pp": -0.07921691173985697,
+      "oracle_regret_pp": 1.5462169922127351,
+      "margin_advantage_pearson": -0.16339749002151138,
+      "correct_abs_margin": 0.05273845367959018,
+      "incorrect_abs_margin": 0.04433012426592022
+    },
+    {
+      "order": 1,
+      "domain": "ORIGA",
+      "beneficial_switch": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "harmful_switch": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "correct_hold": {
+        "count": 11,
+        "advantage_sum_pp": -248.66576529186818,
+        "advantage_mean_pp": -22.605978662897108
+      },
+      "missed_switch": {
+        "count": 1,
+        "advantage_sum_pp": 2.226367239921167,
+        "advantage_mean_pp": 2.226367239921167
+      },
+      "target_tie": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "pairs": 12,
+      "selector_minus_CW_pp": 0.0,
+      "oracle_regret_pp": 0.18553060332676394,
+      "margin_advantage_pearson": 0.5492144150616994,
+      "correct_abs_margin": 0.07968028461409071,
+      "incorrect_abs_margin": 0.05425400579209783
+    },
+    {
+      "order": 1,
+      "domain": "REFUGE",
+      "beneficial_switch": {
+        "count": 4,
+        "advantage_sum_pp": 13.33195508554536,
+        "advantage_mean_pp": 3.33298877138634
+      },
+      "harmful_switch": {
+        "count": 2,
+        "advantage_sum_pp": -8.634752965922296,
+        "advantage_mean_pp": -4.317376482961148
+      },
+      "correct_hold": {
+        "count": 2,
+        "advantage_sum_pp": -15.112124587472636,
+        "advantage_mean_pp": -7.556062293736318
+      },
+      "missed_switch": {
+        "count": 4,
+        "advantage_sum_pp": 24.698218144505805,
+        "advantage_mean_pp": 6.174554536126451
+      },
+      "target_tie": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "pairs": 12,
+      "selector_minus_CW_pp": 0.39143350996858867,
+      "oracle_regret_pp": 2.7777475925356754,
+      "margin_advantage_pearson": -0.16397915260795068,
+      "correct_abs_margin": 0.050140860722322954,
+      "incorrect_abs_margin": 0.04803144492114334
+    },
+    {
+      "order": 1,
+      "domain": "REFUGE_Valid",
+      "beneficial_switch": {
+        "count": 2,
+        "advantage_sum_pp": 10.240777759544144,
+        "advantage_mean_pp": 5.120388879772072
+      },
+      "harmful_switch": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "correct_hold": {
+        "count": 4,
+        "advantage_sum_pp": -33.222166687858916,
+        "advantage_mean_pp": -8.305541671964729
+      },
+      "missed_switch": {
+        "count": 6,
+        "advantage_sum_pp": 67.63801703045863,
+        "advantage_mean_pp": 11.273002838409772
+      },
+      "target_tie": {
+        "count": 0,
+        "advantage_sum_pp": 0.0,
+        "advantage_mean_pp": null
+      },
+      "pairs": 12,
+      "selector_minus_CW_pp": 0.8533981466286787,
+      "oracle_regret_pp": 5.636501419204886,
+      "margin_advantage_pearson": 0.19027005341334707,
+      "correct_abs_margin": 0.08470866478046868,
+      "incorrect_abs_margin": 0.1779924718426716
+    }
+  ],
+  "worker_wall_seconds": 0.008110284805297852,
+  "gpu_seconds": 0,
+  "new_image_or_label_reads": 0,
+  "independent_validation": false
+}

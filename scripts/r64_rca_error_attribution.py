@@ -48,7 +48,7 @@ def main():
     assert np.array_equal(values[:, :, 2], np.take_along_axis(values[:, :, :2], selected[:, :, None, None], axis=2)[:, :, 0])
     margin = scores[:, :, 1] - scores[:, :, 0]
     advantage = (values[:, :, 1] - values[:, :, 0]).mean(2)
-    domains = np.array([r['domain'] for r in json.loads((root/'private/images.json').read_text())])
+    domains = np.array([r['domain'] for r in json.loads((root/'scorer/panel.json').read_text())])
     assert domains.shape == (48,) and len(set(domains)) == 4 and all((domains == d).sum() == 12 for d in set(domains))
     result = dict(status='COMPLETE', synthetic_check='PASS', overall=summarize(margin.ravel(), advantage.ravel(), selected.astype(bool).ravel()), cells=[])
     for order in (0, 1):
