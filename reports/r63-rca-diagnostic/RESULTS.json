@@ -1,0 +1,74 @@
+{
+  "status": "COMPLETE",
+  "allocation_gate": false,
+  "contrasts": [
+    {
+      "contrast": "selector_minus_CW",
+      "mean_pp": -1.0393887350834,
+      "ci95_pp": [
+        -2.040591530430415,
+        -0.1268996314432276
+      ],
+      "order_pp": [
+        -2.370181156381152,
+        0.2914036862143526
+      ]
+    },
+    {
+      "contrast": "selector_minus_VPTTA",
+      "mean_pp": 3.385897177608426,
+      "ci95_pp": [
+        0.6490398678182131,
+        6.536444003975009
+      ],
+      "order_pp": [
+        2.641718227357353,
+        4.1300761278595015
+      ]
+    },
+    {
+      "contrast": "selector_minus_random",
+      "mean_pp": 1.1732542212625134,
+      "ci95_pp": [
+        -0.2606910003091487,
+        2.8597939469910667
+      ],
+      "order_pp": [
+        0.1357685354880999,
+        2.2107399070369262
+      ]
+    },
+    {
+      "contrast": "oracle_minus_CW",
+      "mean_pp": 2.575077911715566,
+      "ci95_pp": [
+        1.6424177192489382,
+        3.5445537598996295
+      ],
+      "order_pp": [
+        2.3222529853967644,
+        2.827902838034367
+      ]
+    },
+    {
+      "contrast": "oracle_minus_selector",
+      "mean_pp": 3.614466646798966,
+      "ci95_pp": [
+        2.3488349246417184,
+        4.952860542328045
+      ],
+      "order_pp": [
+        4.692434141777917,
+        2.536499151820015
+      ]
+    }
+  ],
+  "refuge_valid_OC_pp": 1.4214074154920326,
+  "selected_VPTTA": 33,
+  "selected_CW": 63,
+  "target_non_tied_pairs": 96,
+  "pair_ranking_accuracy": 0.5625,
+  "independent_validation": false,
+  "source_references": 8,
+  "source_free": false
+}
