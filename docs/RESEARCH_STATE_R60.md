@@ -18,6 +18,8 @@ This ledger prevents repeated mechanism tests from being presented as progress. 
 
 | Strong appearance augmentation during the update | [R61](../reports/r61-update-view/REPORT.md) | CLEAN minus NATIVE -0.005391 pp, both anchors negative; allocation gate fails. No strength sweep or CLEAN trajectory. |
 
+| Original-view BCE pseudo-target replacing six-view mean | [R62](../reports/r62-geometric-target/REPORT.md) | Update +0.001350 pp, interval crosses zero; original pseudo-mask quality -0.124533 pp. Both allocation gates fail. No original-only trajectory or view-mixture sweep. |
+
 ## Next bounded research step
 
 Before registering R61, inspect prior objective/pseudo-target diagnostics (including R23 and R28/R29) and recent primary-source work for a mechanism outside the closed reset/retention/projection families. State exactly which new information or feedback the mechanism introduces, why it could distinguish the observed opposing errors without target labels or domain-specific rules, and which existing evidence would falsify it. A renamed controller, another scalar schedule, or tuning an already tested knob is insufficient.
@@ -29,3 +31,7 @@ No new dataset/model, source training, RL fitting, hyperparameter grid or indepe
 ## After R61
 
 R61 completed with qualification PASS and allocation gate FALSE. The next preparation is a bounded overlap/feasibility audit of geometric pseudo-target construction against R11 and R20; it is not an approved new GPU matrix. See the R61 report for the rationale and limitations. Earlier R61 feature-bank and image-energy candidates remain closed.
+
+## After R62
+
+The geometric-target overlap audit led to a distinct registered intervention, now completed. Both its efficacy and target-quality gates failed. R12 frozen horizontal-flip bias does not establish a correction source for the two late adapted states. The next state is an evidence gap, not a running GPU experiment: identify a distinct feedback source before registering another intervention; do not cycle through view subsets or adjust W/LSO after this negative result. Continuous authorization remains active.

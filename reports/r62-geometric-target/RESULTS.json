@@ -1,0 +1,58 @@
+{
+  "status": "COMPLETE",
+  "update_gate": false,
+  "target_quality_gate": false,
+  "allocation_gate": false,
+  "contrasts": [
+    {
+      "contrast": "original_target_minus_native",
+      "mean_pp": 0.001349772893992444,
+      "ci95_pp": [
+        -0.001579779595545582,
+        0.004328559520681233
+      ],
+      "anchor_pp": [
+        0.0025531628283093077,
+        0.0001463829596755802
+      ]
+    },
+    {
+      "contrast": "native_minus_no_update",
+      "mean_pp": 0.0035192282559990593,
+      "ci95_pp": [
+        -0.001515510021128012,
+        0.010212202090095544
+      ],
+      "anchor_pp": [
+        0.0013364231082350075,
+        0.005702033403763111
+      ]
+    },
+    {
+      "contrast": "original_target_minus_no_update",
+      "mean_pp": 0.004869001149991503,
+      "ci95_pp": [
+        -0.0001826903283985382,
+        0.010976568258110499
+      ],
+      "anchor_pp": [
+        0.0038895859365443153,
+        0.005848416363438691
+      ]
+    },
+    {
+      "contrast": "original_view_minus_native_target",
+      "mean_pp": -0.1245327257640352,
+      "ci95_pp": [
+        -0.5019959878875018,
+        0.2695076697252136
+      ],
+      "anchor_pp": [
+        -0.14216935285491442,
+        -0.10689609867315597
+      ]
+    }
+  ],
+  "refuge_valid_OC_pp": -0.0019921290771517755,
+  "independent_validation": false
+}
