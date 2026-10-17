@@ -1,0 +1,359 @@
+{
+  "status": "COMPLETE",
+  "directional_gate": false,
+  "contrasts": [
+    {
+      "contrast": "local_minus_CW",
+      "mean_pp": -0.12578983574285033,
+      "ci95_pp": [
+        -0.2783035484802723,
+        0.030485446115606656
+      ],
+      "order_pp": [
+        -0.068254833747654,
+        -0.18332483773804661
+      ]
+    },
+    {
+      "contrast": "local_minus_shuffle",
+      "mean_pp": 0.0679177140481176,
+      "ci95_pp": [
+        -0.08044900855775092,
+        0.20779316239861487
+      ],
+      "order_pp": [
+        0.08701896624931733,
+        0.04881646184691787
+      ]
+    },
+    {
+      "contrast": "local_minus_random_sign_mean",
+      "mean_pp": 0.18846343093014828,
+      "ci95_pp": [
+        0.045149823597243906,
+        0.338378171463774
+      ],
+      "order_pp": [
+        0.21315359201249348,
+        0.16377326984780316
+      ]
+    }
+  ],
+  "coverage": [
+    {
+      "order": 0,
+      "domain": "Drishti_GS",
+      "channel": "OD",
+      "boundaries": 2034,
+      "accepted": 1727,
+      "positive": 1199,
+      "negative": 528,
+      "shuffle_accepted": 873,
+      "mean_edit_pixels": [
+        0.0,
+        1548.5,
+        879.8333333333334,
+        1541.6666666666667,
+        1568.9166666666667,
+        1591.8333333333333,
+        1569.8333333333333
+      ]
+    },
+    {
+      "order": 0,
+      "domain": "Drishti_GS",
+      "channel": "OC",
+      "boundaries": 1290,
+      "accepted": 814,
+      "positive": 512,
+      "negative": 302,
+      "shuffle_accepted": 533,
+      "mean_edit_pixels": [
+        0.0,
+        935.5833333333334,
+        613.3333333333334,
+        924.5,
+        903.5,
+        925.8333333333334,
+        910.5
+      ]
+    },
+    {
+      "order": 0,
+      "domain": "ORIGA",
+      "channel": "OD",
+      "boundaries": 1946,
+      "accepted": 1580,
+      "positive": 966,
+      "negative": 614,
+      "shuffle_accepted": 813,
+      "mean_edit_pixels": [
+        0.0,
+        1355.1666666666667,
+        787.75,
+        1363.5833333333333,
+        1371.75,
+        1348.25,
+        1330.25
+      ]
+    },
+    {
+      "order": 0,
+      "domain": "ORIGA",
+      "channel": "OC",
+      "boundaries": 1147,
+      "accepted": 737,
+      "positive": 493,
+      "negative": 244,
+      "shuffle_accepted": 496,
+      "mean_edit_pixels": [
+        0.0,
+        905.3333333333334,
+        696.3333333333334,
+        892.5,
+        900.25,
+        891.4166666666666,
+        880.5833333333334
+      ]
+    },
+    {
+      "order": 0,
+      "domain": "REFUGE",
+      "channel": "OD",
+      "boundaries": 1532,
+      "accepted": 1424,
+      "positive": 916,
+      "negative": 508,
+      "shuffle_accepted": 638,
+      "mean_edit_pixels": [
+        0.0,
+        1007.8333333333334,
+        594.5,
+        1010.4166666666666,
+        1008.6666666666666,
+        1006.0833333333334,
+        1003.6666666666666
+      ]
+    },
+    {
+      "order": 0,
+      "domain": "REFUGE",
+      "channel": "OC",
+      "boundaries": 861,
+      "accepted": 519,
+      "positive": 351,
+      "negative": 168,
+      "shuffle_accepted": 354,
+      "mean_edit_pixels": [
+        0.0,
+        581.4166666666666,
+        410.3333333333333,
+        548.8333333333334,
+        561.5,
+        565.9166666666666,
+        565.25
+      ]
+    },
+    {
+      "order": 0,
+      "domain": "REFUGE_Valid",
+      "channel": "OD",
+      "boundaries": 1702,
+      "accepted": 1363,
+      "positive": 583,
+      "negative": 780,
+      "shuffle_accepted": 720,
+      "mean_edit_pixels": [
+        0.0,
+        1268.5833333333333,
+        750.25,
+        1295.0,
+        1301.1666666666667,
+        1297.25,
+        1311.3333333333333
+      ]
+    },
+    {
+      "order": 0,
+      "domain": "REFUGE_Valid",
+      "channel": "OC",
+      "boundaries": 1050,
+      "accepted": 470,
+      "positive": 392,
+      "negative": 78,
+      "shuffle_accepted": 451,
+      "mean_edit_pixels": [
+        0.0,
+        622.9166666666666,
+        525.3333333333334,
+        611.5,
+        605.3333333333334,
+        631.75,
+        619.4166666666666
+      ]
+    },
+    {
+      "order": 1,
+      "domain": "Drishti_GS",
+      "channel": "OD",
+      "boundaries": 1898,
+      "accepted": 1458,
+      "positive": 1183,
+      "negative": 275,
+      "shuffle_accepted": 822,
+      "mean_edit_pixels": [
+        0.0,
+        1456.3333333333333,
+        752.6666666666666,
+        1429.9166666666667,
+        1422.25,
+        1419.5833333333333,
+        1412.3333333333333
+      ]
+    },
+    {
+      "order": 1,
+      "domain": "Drishti_GS",
+      "channel": "OC",
+      "boundaries": 1160,
+      "accepted": 713,
+      "positive": 473,
+      "negative": 240,
+      "shuffle_accepted": 433,
+      "mean_edit_pixels": [
+        0.0,
+        824.0,
+        551.4166666666666,
+        807.8333333333334,
+        809.1666666666666,
+        800.5833333333334,
+        823.9166666666666
+      ]
+    },
+    {
+      "order": 1,
+      "domain": "ORIGA",
+      "channel": "OD",
+      "boundaries": 2088,
+      "accepted": 1706,
+      "positive": 1000,
+      "negative": 706,
+      "shuffle_accepted": 896,
+      "mean_edit_pixels": [
+        0.0,
+        1567.25,
+        968.75,
+        1597.9166666666667,
+        1571.5,
+        1590.75,
+        1566.5833333333333
+      ]
+    },
+    {
+      "order": 1,
+      "domain": "ORIGA",
+      "channel": "OC",
+      "boundaries": 1279,
+      "accepted": 765,
+      "positive": 526,
+      "negative": 239,
+      "shuffle_accepted": 531,
+      "mean_edit_pixels": [
+        0.0,
+        994.5,
+        601.3333333333334,
+        992.0,
+        972.4166666666666,
+        969.5833333333334,
+        1012.4166666666666
+      ]
+    },
+    {
+      "order": 1,
+      "domain": "REFUGE",
+      "channel": "OD",
+      "boundaries": 1827,
+      "accepted": 1518,
+      "positive": 733,
+      "negative": 785,
+      "shuffle_accepted": 752,
+      "mean_edit_pixels": [
+        0.0,
+        1265.4166666666667,
+        753.5833333333334,
+        1306.8333333333333,
+        1290.0,
+        1313.5,
+        1301.1666666666667
+      ]
+    },
+    {
+      "order": 1,
+      "domain": "REFUGE",
+      "channel": "OC",
+      "boundaries": 993,
+      "accepted": 566,
+      "positive": 397,
+      "negative": 169,
+      "shuffle_accepted": 410,
+      "mean_edit_pixels": [
+        0.0,
+        777.5833333333334,
+        484.3333333333333,
+        747.4166666666666,
+        747.4166666666666,
+        745.5833333333334,
+        744.5833333333334
+      ]
+    },
+    {
+      "order": 1,
+      "domain": "REFUGE_Valid",
+      "channel": "OD",
+      "boundaries": 1691,
+      "accepted": 1470,
+      "positive": 740,
+      "negative": 730,
+      "shuffle_accepted": 735,
+      "mean_edit_pixels": [
+        0.0,
+        1224.75,
+        724.5,
+        1255.6666666666667,
+        1242.25,
+        1252.3333333333333,
+        1215.5
+      ]
+    },
+    {
+      "order": 1,
+      "domain": "REFUGE_Valid",
+      "channel": "OC",
+      "boundaries": 976,
+      "accepted": 434,
+      "positive": 346,
+      "negative": 88,
+      "shuffle_accepted": 417,
+      "mean_edit_pixels": [
+        0.0,
+        615.9166666666666,
+        514.0,
+        596.6666666666666,
+        597.1666666666666,
+        598.1666666666666,
+        599.9166666666666
+      ]
+    }
+  ],
+  "independent_validation": false,
+  "output_only": true,
+  "source_training": false,
+  "local_veto_pixels": 0,
+  "shuffle_veto_pixels": 0,
+  "sign_veto_pixels": [
+    0,
+    0,
+    0,
+    0
+  ]
+}
