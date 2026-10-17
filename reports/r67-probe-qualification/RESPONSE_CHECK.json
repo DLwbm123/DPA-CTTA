@@ -1,0 +1,106 @@
+{
+  "status": "PASS",
+  "informative_image_contracts_more_than_mask_control": true,
+  "constant_image_is_identity": true,
+  "empty_denominator_missing_not_stable": true,
+  "straight_fixture": {
+    "input_spread": [
+      508,
+      0
+    ],
+    "arms": {
+      "IMAGE": {
+        "output_spread": [
+          256,
+          0
+        ],
+        "spread_ratio": [
+          0.5039370078740157,
+          null
+        ],
+        "counts": [
+          [
+            {
+              "boundary": 372,
+              "accepted": 124
+            },
+            {
+              "boundary": 0,
+              "accepted": 0
+            }
+          ],
+          [
+            {
+              "boundary": 128,
+              "accepted": 128
+            },
+            {
+              "boundary": 0,
+              "accepted": 0
+            }
+          ],
+          [
+            {
+              "boundary": 128,
+              "accepted": 128
+            },
+            {
+              "boundary": 0,
+              "accepted": 0
+            }
+          ]
+        ],
+        "center_edit_pixels": [
+          0,
+          0
+        ]
+      },
+      "MASK_ONLY": {
+        "output_spread": [
+          508,
+          0
+        ],
+        "spread_ratio": [
+          1.0,
+          null
+        ],
+        "counts": [
+          [
+            {
+              "boundary": 372,
+              "accepted": 124
+            },
+            {
+              "boundary": 0,
+              "accepted": 0
+            }
+          ],
+          [
+            {
+              "boundary": 128,
+              "accepted": 128
+            },
+            {
+              "boundary": 0,
+              "accepted": 0
+            }
+          ],
+          [
+            {
+              "boundary": 128,
+              "accepted": 128
+            },
+            {
+              "boundary": 0,
+              "accepted": 0
+            }
+          ]
+        ],
+        "center_edit_pixels": [
+          0,
+          0
+        ]
+      }
+    }
+  }
+}

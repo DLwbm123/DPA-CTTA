@@ -1,0 +1,5 @@
+# R67 measurement qualification
+
+Generated-array qualification passed without real images, target labels or model forwards. The initially suspected endpoint censoring did not occur in the fixed logistic straight-edge fixture: all128 boundary locations were accepted for each of the three candidate positions. Estimated absolute positions63.485924,63.5,63.514076 stayed close to the known image boundary63.5 under candidate shifts-1,0,+1. This is a mechanical result only, not evidence of a true boundary in real medical images.
+
+The implemented raster response test contracts perturbation spread to0.503937 with informative image features versus1.0 for a mask-only control. The nonzero remainder reflects the image-border strip introduced by square erosion and abstention there; it must not be silently excluded. Constant features yield identity ratio1. Empty input spread remains undefined rather than appearing maximally stable. These checks qualify the measurement for a separately registered real-image response diagnostic; they do not alter R66's failed efficacy gate.

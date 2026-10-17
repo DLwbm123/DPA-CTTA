@@ -60,7 +60,7 @@ def check(c):
     save(Path(c['output_root'])/'CPU_CHECK.json', report)
 
 
-def worker(c):
+def worker(c, produce=outputs):
     import torch
     from ..r19_model_only.runtime import filesystem_guard, weights
     from ..r7_target_screen.runner import TargetReader
@@ -111,7 +111,7 @@ def worker(c):
                 raw = (root/'private/candidates'/f'{pid:03d}.bits').read_bytes()
                 if len(raw) != 65536: raise ValueError('single CW input required')
                 masks = np.unpackbits(np.frombuffer(raw, dtype=np.uint8)).reshape(2, 512, 512).astype(bool)
-                result, audit = outputs(feature, masks, pid)
+                result, audit = produce(feature, masks, pid)
                 with (root/'predictions'/f'{pid:03d}.bits').open('xb') as f:
                     f.write(np.packbits(result).tobytes())
                 traces.append(dict(pair=pid, **audit)); state['formal_pairs'] += 1

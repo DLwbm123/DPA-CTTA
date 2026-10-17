@@ -1,0 +1,39 @@
+{
+  "status": "COMPLETE",
+  "synthetic_only": true,
+  "real_images": 0,
+  "target_labels": 0,
+  "model_forwards": 0,
+  "gpu_seconds": 0,
+  "cpu_wall_seconds": 0.031064680078998208,
+  "fixture": [
+    {
+      "candidate_shift": -1,
+      "candidate_boundary": 62.5,
+      "total_boundary": 128,
+      "accepted": 128,
+      "central_displacement_mean": 0.985924261639635,
+      "central_displacement_nonzero": 112,
+      "inferred_location_if_accepted": 63.48592426163963
+    },
+    {
+      "candidate_shift": 0,
+      "candidate_boundary": 63.5,
+      "total_boundary": 128,
+      "accepted": 128,
+      "central_displacement_mean": -2.220446049250313e-16,
+      "central_displacement_nonzero": 112,
+      "inferred_location_if_accepted": 63.5
+    },
+    {
+      "candidate_shift": 1,
+      "candidate_boundary": 64.5,
+      "total_boundary": 128,
+      "accepted": 128,
+      "central_displacement_mean": -0.9859242616396352,
+      "central_displacement_nonzero": 112,
+      "inferred_location_if_accepted": 63.51407573836036
+    }
+  ],
+  "paired_measurement_admitted": true
+}
