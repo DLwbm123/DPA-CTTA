@@ -28,3 +28,11 @@ Confirm the requested scope exception; check reference manifest/group availabili
 ## Limits
 
 A source-easy reverse prediction can be a bad quality proxy under domain shift. Candidate-label fitting can reward shared mistakes or source appearance similarity. Downsampling can erase thin boundary differences; current ROI provenance and patient linkage remain uncertain. This is an exposed-development pilot. Access to source references changes the deployment contract and must be reported explicitly; it cannot be called model-only or source-free CTTA.
+
+## Preparation completed while source access remains pending
+
+The [array-only scoring core](../src/dpa_ctta/r63_rca/score.py) now implements the fixed feature extraction, per-channel forests, constant-mask handling, maximum joint-reference score and CW_LSO tie fallback. For exact reproducibility, 512-to-128 RGB area resizing uses non-overlapping 4x4 averages; nearest mask sampling uses indices 2,6,...,510 (upper-index tie at each bin centre).
+
+[Generated-data checks](../reports/r63-rca-preparation/SYNTHETIC_CHECK.json) passed in the existing CPU environment: candidate dependence, exact repeatability, tie handling, empty masks, joint-reference versus separate channel maxima, and rejection of malformed/nonfinite inputs. The constructed correct/reversed color segmentation scores are 1.0 and approximately 6.1e-11; these are fixture outcomes, not medical performance. CPU fixture elapsed time was 1.65 seconds and does not estimate full real-image runtime.
+
+There is no data loader or launcher in this core. Source-reference authorization, actual archive/manifest bindings, the process-level target-label denial guard and real-pair resource qualification remain outstanding. The array signature alone is not a security boundary. No source or target images/labels were read and no formal experiment was registered or started.
