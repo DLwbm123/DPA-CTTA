@@ -15,9 +15,7 @@ This ledger prevents repeated mechanism tests from being presented as progress. 
 | Shared/descent/acquisition-weighted structural filters | [R48](../reports/r48-repaired-shared-descent/REPORT.md), [R50](../reports/r50-acquisition-weighted/REPORT.md) | Filters do not beat retained CW_LSO. Proxy descent is not target Dice protection. |
 | Hard-mask union/intersection, fragments, fixed moment anchor | [R53](../reports/r53-mask-complementarity/REPORT.md), [R55](../reports/r55-spatial-error/REPORT.md), [R58 matched replay](../reports/r60-numerical-audit/r58/REPORT.md) | No passed improvement gate; simple fusion/morphology/alpha tuning lacks support. |
 | Numerical policy confound | [R60](../reports/r60-numerical-audit/REPORT.md) | Matched-policy audit passes stability bounds. Use corrected control tables; masks are not bitwise identical. |
-
 | Strong appearance augmentation during the update | [R61](../reports/r61-update-view/REPORT.md) | CLEAN minus NATIVE -0.005391 pp, both anchors negative; allocation gate fails. No strength sweep or CLEAN trajectory. |
-
 | Original-view BCE pseudo-target replacing six-view mean | [R62](../reports/r62-geometric-target/REPORT.md) | Update +0.001350 pp, interval crosses zero; original pseudo-mask quality -0.124533 pp. Both allocation gates fail. No original-only trajectory or view-mixture sweep. |
 
 ## Next bounded research step
@@ -35,3 +33,7 @@ R61 completed with qualification PASS and allocation gate FALSE. The next prepar
 ## After R62
 
 The geometric-target overlap audit led to a distinct registered intervention, now completed. Both its efficacy and target-quality gates failed. R12 frozen horizontal-flip bias does not establish a correction source for the two late adapted states. The next state is an evidence gap, not a running GPU experiment: identify a distinct feedback source before registering another intervention; do not cycle through view subsets or adjust W/LSO after this negative result. Continuous authorization remains active.
+
+## R63 source-moment audit
+
+[Implementation audit](R63_SOURCE_MOMENT_AUDIT.md): native VPTTA already uses source/current blended moments and input-prompt optimization. A frozen-encoder discrepancy on unchanged input is identical across candidate masks and cannot select between them. An action-dependent alternative is not specified or registered. No new inference or efficacy claim.
