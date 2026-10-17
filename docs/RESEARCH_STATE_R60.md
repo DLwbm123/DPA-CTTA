@@ -52,3 +52,8 @@ The tested current-mask prototype boundary signal is closed for integration into
 ## R68 ensemble-information audit
 
 [Protocol/code overlap audit](R68_ENSEMBLE_INFORMATION_AUDIT.md) closes generic augmentation-disagreement weighting as an unspecified/redundant proposal. W already uses variance; R23 conservative disagreement and R62 original-target tests failed. This is not an exhaustive negative for ordered view information and not a closed-loop bound. No experiment was registered. Next bounded evidence task is feasibility of an observable image reconstruction/acquisition residual using only existing inputs/model, checking the prior image-energy rejection first; unavailable operators/decoders or new source fitting disqualify it under current scope.
+
+
+## R69 reconstruction feasibility audit
+
+[Interface and primary-source audit](R69_RECONSTRUCTION_FEASIBILITY_AUDIT.md): no RGB reconstruction head or measured acquisition operator is supplied by the current segmentation path. MAE/MRI reconstruction prerequisites cannot be assumed. R61 image-energy shorthand was a design exclusion, not an executed reconstruction negative. No experiment registered. Next bounded overlap audit is TeSLA teacher/adversarial augmentation versus native GraTa/R20 T/R61/R62; no augmentation sweep or training is implied.
