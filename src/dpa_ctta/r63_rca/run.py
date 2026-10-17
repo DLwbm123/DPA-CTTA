@@ -42,7 +42,7 @@ def guard_check(c):
          scorer_denied=True,unregistered_asset_denied=True,symlink_escape_denied=True))
 
 
-def worker(c):
+def worker(c, features=features, candidate_score=candidate_score):
     import torch
     from ..r7_target_screen.runner import TargetReader,file_identity
     root=Path(c['output_root']);started=time.time()
@@ -156,7 +156,7 @@ def score(c):
     state.update(status='COMPLETE',scored_predictions=288,ended=time.time());save(root/'RUN_STATE.json',state)
 
 
-def main():
+def main(worker=worker):
     if os.environ.get('CUDA_VISIBLE_DEVICES')!='':raise ValueError('CPU-only run required')
     c=read(os.environ['DIAG_CONFIG']);root=Path(c['output_root']);mode=os.environ['DIAG_MODE']
     if not c['source_reference_authorized'] or c['source_references']!=8:raise ValueError('explicit limited source exception required')
