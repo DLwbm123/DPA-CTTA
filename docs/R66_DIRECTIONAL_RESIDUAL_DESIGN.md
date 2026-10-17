@@ -30,3 +30,7 @@ No target-ground-truth gradient enters an online update. Supervised gradients, i
 ## Current disposition
 
 DESIGN_ONLY. No experiment number is marked running. Remaining work: deterministic geometric reconstruction and synthetic checks, bounded state-availability audit, then a complete registration if those prerequisites justify it. Do not start another RCA selector or another JS strength/ridge scan. Continuous30-minute research remains active; report preparation as preparation, without invented scientific evidence.
+
+## Mechanical preparation update
+
+Array-only geometry and generated fixtures are now implemented; see [preparation report](../reports/r66-boundary-preparation/REPORT.md). Still no real-data registration or efficacy result. The previous unresolved reconstruction item is addressed with nearest-boundary ownership, original-resolution signed-distance edits and nesting veto. Bounded state inventory found only1900/1951 slots in inspected R50 trajectories; use archived predictions for an initial output-only diagnostic rather than claim unverified early-state update coverage.
