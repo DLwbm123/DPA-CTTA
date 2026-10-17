@@ -62,3 +62,7 @@ The tested current-mask prototype boundary signal is closed for integration into
 ## R70 f-CE component pilot
 
 [Completed report](../reports/r70-flipped-ce/REPORT.md): six 192-step trajectories, 1,152 scored outputs; FCE-NATIVE -0.212879pp and FCE-HARD -0.097069pp, both orders and both conditional intervals negative. HARD-NATIVE -0.115810pp. Allocation gate false; retain CW_LSO, no loss/epsilon/LR rescue. This tested strong-view weighted-BCE replacement, not TeSLA's complete unaugmented-fCE/marginal/teacher/augmentation method. Next distinct candidate is learned entropy-seeking, feature-regularized augmentation; formal transform/control/state specification is still required before launch.
+
+## R71 finite entropy-seeking view selection
+
+[Completed report](../reports/r71-entropy-view/REPORT.md): 1,152 scored outputs with all qualification and retirement gates passed. SELECT-NATIVE -0.023882pp (CI [-0.069472,+0.024628], orders +0.095153/-0.142918); SELECT-RANDOM +0.231611pp (CI [+0.118083,+0.367471]). Gate false: selection improves on a degraded random-gamma arm but not on retained CW_LSO. SELECT uses nonidentity gamma on 380/384 arrivals, so identity collapse does not explain the outcome. Preserve native augmentation; no gamma/coefficient scans. This is finite selection, not TeSLA's learned policy or full method. No successor is registered yet; require a distinct mechanism and check prior teacher/marginal experiments before further allocation.

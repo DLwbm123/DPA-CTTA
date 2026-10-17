@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "order": 0,
+      "arm": "NATIVE",
+      "repeated_state_exact": true,
+      "retained_parity": true
+    },
+    {
+      "order": 0,
+      "arm": "RANDOM",
+      "repeated_state_exact": true,
+      "retained_parity": null
+    },
+    {
+      "order": 0,
+      "arm": "SELECT",
+      "repeated_state_exact": true,
+      "retained_parity": null
+    },
+    {
+      "order": 1,
+      "arm": "NATIVE",
+      "repeated_state_exact": true,
+      "retained_parity": true
+    },
+    {
+      "order": 1,
+      "arm": "RANDOM",
+      "repeated_state_exact": true,
+      "retained_parity": null
+    },
+    {
+      "order": 1,
+      "arm": "SELECT",
+      "repeated_state_exact": true,
+      "retained_parity": null
+    }
+  ],
+  "estimated_formal_seconds": 4144.989028930664,
+  "peak_reserved_bytes": 1247805440,
+  "online_label_reads": 0
+}

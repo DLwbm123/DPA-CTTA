@@ -1,0 +1,50 @@
+{
+  "status": "COMPLETE",
+  "allocation_gate": false,
+  "contrasts": [
+    {
+      "contrast": "SELECT-NATIVE",
+      "macro_delta_pp": -0.02388230880351428,
+      "order_delta_pp": [
+        0.09515332056269034,
+        -0.1429179381697189
+      ],
+      "ci95_pp": [
+        -0.06947248210778292,
+        0.024627911951502213
+      ],
+      "imageweighted_delta_pp": -0.02331233368223946,
+      "worst_cell_pp": -0.7375318538829453
+    },
+    {
+      "contrast": "SELECT-RANDOM",
+      "macro_delta_pp": 0.23161058613076663,
+      "order_delta_pp": [
+        0.11976276633751283,
+        0.34345840592402044
+      ],
+      "ci95_pp": [
+        0.11808286070943066,
+        0.3674712088065804
+      ],
+      "imageweighted_delta_pp": 0.2914164603007141,
+      "worst_cell_pp": -0.2786758220799657
+    },
+    {
+      "contrast": "RANDOM-NATIVE",
+      "macro_delta_pp": -0.2554928949342809,
+      "order_delta_pp": [
+        -0.024609445774822505,
+        -0.4863763440937393
+      ],
+      "ci95_pp": [
+        -0.4006348264809194,
+        -0.140188617072394
+      ],
+      "imageweighted_delta_pp": -0.3147287939829535,
+      "worst_cell_pp": -2.5501112711798037
+    }
+  ],
+  "independent_validation": false,
+  "full_TeSLA_reproduction": false
+}
