@@ -1,0 +1,37 @@
+{
+  "RUN_STATE.json": {
+    "status": "NOT_EVALUABLE",
+    "formal_pairs": 96,
+    "feature_images": 48,
+    "started": 1792232914.0566976,
+    "reason": "model-only filesystem allowlist rejected external asset",
+    "ended": 1792233013.0651705,
+    "worker_seconds": 99.00847315788269
+  },
+  "RESOURCE_LEDGER.json": {
+    "attempts": [
+      {
+        "mode": "worker",
+        "status": "FAILED",
+        "exit_code": 1,
+        "started": 1792232912.233514,
+        "ended": 1792233013.7361755,
+        "gpu_worker_seconds": 101.49967432022095,
+        "cpu_worker_seconds": 0.0
+      }
+    ],
+    "gpu_worker_seconds": 101.49967432022095,
+    "cpu_worker_seconds": 13.96444034576416,
+    "all_workers_retired": true,
+    "prior_cpu_seconds": 13.96444034576416
+  },
+  "FIX_CHECK_FINAL.json": {
+    "status": "PASS",
+    "two_registered_synthetic_files": true,
+    "permission_reset": true,
+    "scorer_still_denied": true,
+    "real_image_reads": 0,
+    "seconds": 1.6971454620361328,
+    "previous_probe_cleanup_failure_seconds": 3.382766834
+  }
+}
