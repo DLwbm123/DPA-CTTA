@@ -177,7 +177,7 @@ def score(c):
 
 
 def controller(c):
-    root=Path(c['output_root']);attempts=[];status=dict(status='FIXED_MATRIX',started=time.time(),source_commit=c['source_commit'])
+    root=Path(c['output_root']);attempts=list(c.get('prior_attempts',[]));status=dict(status='FIXED_MATRIX',started=time.time(),source_commit=c['source_commit'])
     with (root/'START_ONCE.json').open('x') as f:json.dump(status,f)
     def publish():
         save(root/'RUN_STATE.json',status);save(root/'RESOURCE_LEDGER.json',dict(attempts=attempts,
@@ -199,7 +199,8 @@ def controller(c):
     try:
         if read(root/'CPU_CHECK.json')['status']!='PASS':raise ValueError('CPU admission absent')
         publish()
-        if not group('worker',[0,1],c['gpu_cap_seconds']/2):raise RuntimeError('fixed matrix failed; no automatic retry')
+        remaining=c['gpu_cap_seconds']-sum(x['gpu_process_seconds'] for x in attempts)
+        if not group('worker',[0,1],remaining/2):raise RuntimeError('fixed matrix failed; no automatic retry')
         status['status']='SCORING';publish()
         if not group('score',[0],600):raise RuntimeError('independent scoring failed')
         status.update(status='COMPLETE',scientific_followup=False);return 0
@@ -214,6 +215,11 @@ def main():
         self_check()
         from ..b1_host import official
         from ..integrations.ctta_suite import load_reference_interfaces
+        from ..r19_model_only.runtime import weights,image
+        from ..r7_target_screen.runner import TargetReader,file_identity
+        from ..r9_current_first.assets import gpu_policy
+        from ..r36_incremental_modules.run import filesystem_guard
+        from ..r24_c_context.run import hard_metrics
         official();load_reference_interfaces()
         import torch
         if torch.cuda.is_initialized():raise ValueError('CPU check initialized CUDA')
