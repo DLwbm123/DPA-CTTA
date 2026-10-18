@@ -117,4 +117,35 @@ def score(c):
     result=dict(status='COMPLETE',readouts=EXPECTED,learner_trajectories=40,stream_arrivals=1600,legacy_parity=128,new_source_training=False,primary=primary,prequential=prequential,first_exposure=first,prequential_vs_entropy=pre_vs_entropy,anchor_return=anchor_return,gates=gates,advance_development_gate=all(gates.values()),interval_scope='Descriptive bootstrap of eight previously exposed content groups, binding both orders and repeated conditions; one checkpoint and two short synthetic streams',patient_independence=False,absolute=absolute,contrasts=contrasts)
     save(root/'public/RESULTS.json',result);save(root/'public/DIAGNOSTICS.json',diagnostics)
     for name,rr in (('absolute',absolute),('condition_channel',channels),('contrasts',contrasts),('transitions',transitions),('gate_audit',gate_aggregate),('update_audit',step_summary)):csvout(root/'public'/f'{name}.csv',rr)
+    if c.get('reset_optimizer_per_arrival'):
+        prior=Path(c['state_prior_root'])
+        if not read(prior/'RESOURCE_LEDGER.json')['all_workers_retired'] or read(prior/'SCORE_COMPLETE.json')['readouts']!=EXPECTED:
+            raise ValueError('complete retired prior state comparison required')
+        previous=np.load(prior/'scorer/dice.private.npy',allow_pickle=False)
+        if previous.shape!=dice.shape:raise ValueError('prior paired state matrix mismatch')
+        previous_rows=read(prior/'private/predictions.json')
+        if [key(r) for r in previous_rows]!=[key(r) for r in rows]:raise ValueError('prior row identity mismatch')
+        parity=0
+        for r in rows:
+            if r['policy'] in ('RESET','REFERENCE') or r['arm'] in ('CW1','CW2'):
+                name=f"{r['index']:04d}.bits"
+                if (root/'predictions'/name).read_bytes()!=(prior/'predictions'/name).read_bytes():
+                    raise ValueError('unchanged control parity failed')
+                parity+=1
+        paired=[]
+        def state_summary(name,delta):
+            out=dict(comparison=name,delta_pp=float(delta.mean()),ci95_pp=interval(delta),worst_cell_pp=float(delta.min()),negative_cells=int((delta<0).sum()),total_cells=int(delta.size));paired.append(out);return out
+        def old(a,stage):return previous[:,:,:,LEARNERS.index(a),1,STAGES.index(stage)]
+        primary_state=state_summary('STRAT_AFFINE_ONLY-STRAT_AFFINE_AND_ADAM:RETAIN_PRE',take('STRAT','RETAIN','PRE')-old('STRAT','PRE'))
+        for a in ARMS:
+            for stage in STAGES:
+                if (a,stage)!=('STRAT','PRE'):state_summary(a+'_AFFINE_ONLY-'+a+'_AFFINE_AND_ADAM:RETAIN_'+stage,take(a,'RETAIN',stage)-old(a,stage))
+        state_summary('STRAT_STATE_CHANGE_MINUS_RANDOM_STATE_CHANGE:RETAIN_PRE',(take('STRAT','RETAIN','PRE')-old('STRAT','PRE'))-(take('RANDOM','RETAIN','PRE')-old('RANDOM','PRE')))
+        source_first=state_summary('STRAT_AFFINE_ONLY-SOURCE_EVAL:FIRST_EXPOSURE_PRE',take('STRAT','RETAIN','PRE')[:,0]-take('SOURCE_EVAL')[:,0])
+        source_all=state_summary('STRAT_AFFINE_ONLY-SOURCE_EVAL:ALL_PRE',take('STRAT','RETAIN','PRE')-take('SOURCE_EVAL'))
+        state_summary('STRAT_AFFINE_ONLY-SOURCE_EVAL:RETURN_PRE',take('STRAT','RETAIN','PRE')[:,4]-take('SOURCE_EVAL')[:,4])
+        state_summary('STRAT_AFFINE_ONLY-STRAT_RESET:POST',take('STRAT')-take('STRAT','RESET','POST'))
+        state_gates=dict(primary_mean=primary_state['delta_pp']>=.5,primary_ci=primary_state['ci95_pp'][0]>0,first_exposure_positive=source_first['ci95_pp'][0]>0,source_all_positive=source_all['ci95_pp'][0]>0,source_worst_no_harm=source_all['worst_cell_pp']>=-1,quota_random_positive=primary['ci95_pp'][0]>0,norm_matched=gates['all_primary_updates_norm_matched'],no_new_empty=gates['no_new_empty'],no_new_nesting=gates['no_new_nesting'])
+        save(root/'public/STATE_COMPARISON.json',dict(status='COMPLETE',primary=primary_state,contrasts=paired,gates=state_gates,advance_development_gate=all(state_gates.values()),unchanged_control_exact_parity=parity,core_retained_state='AFFINE_ONLY',native_retained_state='UNCHANGED_NATIVE',legacy_gate_scope='RESULTS.json preserves V2 routing gates; state decision uses this separate frozen gate'))
+        csvout(root/'public/state_contrasts.csv',paired)
     save(root/'SCORE_COMPLETE.json',dict(status='COMPLETE',readouts=EXPECTED,evaluation_label_files=8,cpu_seconds=time.time()-started,unique_metric_evaluations=len(cache)))

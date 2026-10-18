@@ -80,6 +80,19 @@ class RoutingTests(unittest.TestCase):
         host.reset();p2,_,_,_,d3=host.step(x,x*.95,x*1.05,z0,7)
         self.assertTrue(torch.equal(pre,p2));self.assertEqual(d3['optimizer_age'],2)
 
+    def test_optimizer_reset_keeps_adapted_model_and_discards_moments(self):
+        base=Toy().eval().requires_grad_(False);host=Host(base,'STRAT');x=torch.rand(1,3,32,32)
+        with torch.no_grad():z0=base(x)
+        _,post,_,_,_=host.step(x,x*.95,x*1.05,z0,7)
+        params=[p.detach().clone() for p in host.params]
+        self.assertEqual(host.segment_steps,2);self.assertTrue(host.opt.state)
+        host.reset_optimizer()
+        self.assertFalse(host.opt.state);self.assertEqual(host.segment_steps,0)
+        self.assertTrue(all(torch.equal(p,v) for p,v in zip(host.params,params)))
+        pre,_,_,_,d=host.step(x,x*.95,x*1.05,z0,7)
+        self.assertTrue(torch.equal(pre,post));self.assertEqual(d['optimizer_age'],2)
+        self.assertEqual(host.total_steps,4)
+
     def test_no_anchor_and_balanced_full_control(self):
         z0=torch.randn(1,2,32,32);z=(z0+.2).requires_grad_();p=z0.sigmoid();regs=strata(p);mask=select(entropy(p),regs,'STRAT',5)
         a,t=objective(z,p,p,z0,mask,regs,'STRAT');b,_=objective(z,p,p,z0,mask,regs,'NOANCHOR')

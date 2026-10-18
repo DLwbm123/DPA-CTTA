@@ -156,6 +156,10 @@ class Host:
     def reset(self):
         with torch.no_grad():
             for p,x in zip(self.params,self.initial): p.copy_(x);p.grad=None
+        self.reset_optimizer()
+
+    def reset_optimizer(self):
+        """Keep learned affine coordinates; discard only cross-image Adam state."""
         self.opt=torch.optim.Adam(self.params,lr=1e-4,betas=(.9,.999),eps=1e-8,weight_decay=0)
         self.segment_steps=0
 

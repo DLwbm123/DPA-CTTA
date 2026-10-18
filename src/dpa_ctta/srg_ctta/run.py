@@ -31,9 +31,12 @@ def guard_assets(c,panel):
     root=Path(c['output_root']).resolve();data=Path(c['source_root']).resolve()
     images={Path(r['image_path']).resolve() for r in panel};opened=set()
     old=[Path(c[k]).resolve() for k in ('old_head_root','prior_root')]
+    state_prior=Path(c['state_prior_root']).resolve() if c.get('reset_optimizer_per_arrival') else None
     def audit(event,args):
         if event!='open' or not args or not isinstance(args[0],(str,bytes,os.PathLike)):return
         p=Path(os.fsdecode(args[0])).resolve()
+        if state_prior is not None and p.is_relative_to(state_prior):
+            raise PermissionError('previous state experiment is denied to adaptation')
         if p.is_relative_to(root/'scorer') or any(p.is_relative_to(d/f) for d in old for f in ('scorer','public')):
             raise PermissionError('labels and previous outcome scores are denied')
         if p.is_relative_to(data):
@@ -119,6 +122,7 @@ def worker(c):
                     for pos,arrival in enumerate(schedule(order)):
                         guard();case=arrival['case'];k=arrival['condition']
                         if policy=='RESET':host.reset()
+                        elif c.get('reset_optimizer_per_arrival'):host.reset_optimizer()
                         pixels=perturb(images[case],FINAL[k],SEED+case)
                         w,s=intensity_views(pixels,SEED+10000+case*10+k)
                         x,xw,xs=[normalize(p).cuda() for p in (pixels,w,s)]
@@ -178,8 +182,8 @@ def worker(c):
         if any(not torch.equal(b,buffers[n]) for n,b in base.named_buffers()):raise ValueError('source anchor buffers changed')
         save(root/'private/predictions.json',records);save(root/'private/updates.json',step_rows)
         matched=[v for v in norm_checks if v['arm'] in NORMALIZED]
-        save(root/'MECHANISM_AUDIT.json',dict(status='PASS',trajectories=trajectories,stream_arrivals=1600,core_update_events=2560,normalized_update_events=len(matched),normalized_events_matched=sum(v['norm_matched'] for v in matched),zero_proposals=sum(v['zero_proposal'] for v in norm_checks),reset_return_mask_differing_pixels=reset_mismatches,legacy_parity=128,core_adaptation_forwards=core_forwards,native_forwards=native_forwards,native_backwards=native_backwards,core_loss_backward_calls=2560,core_diagnostic_anchor_gradient_calls=2560,source_affine_inventory=normalization_inventory,source_anchor_immutable=True))
-        save(root/'ACCESS_AUDIT.json',dict(source_image_files=len(opened),source_label_reads=0,evaluation_label_reads=0,prior_outcome_score_reads=0,new_source_training=False,method_inputs='Current image and source checkpoint only; retained state consists of affine parameters and optimizer moments',future_images_used_for_update=False,patient_independence=False,previously_exposed_development_contents=True))
+        save(root/'MECHANISM_AUDIT.json',dict(status='PASS',trajectories=trajectories,stream_arrivals=1600,core_update_events=2560,normalized_update_events=len(matched),normalized_events_matched=sum(v['norm_matched'] for v in matched),zero_proposals=sum(v['zero_proposal'] for v in norm_checks),reset_return_mask_differing_pixels=reset_mismatches,legacy_parity=128,core_adaptation_forwards=core_forwards,native_forwards=native_forwards,native_backwards=native_backwards,core_loss_backward_calls=2560,core_diagnostic_anchor_gradient_calls=2560,source_affine_inventory=normalization_inventory,source_anchor_immutable=True,reset_optimizer_per_arrival=bool(c.get('reset_optimizer_per_arrival')),retained_core_state='AFFINE_ONLY' if c.get('reset_optimizer_per_arrival') else 'AFFINE_AND_ADAM'))
+        save(root/'ACCESS_AUDIT.json',dict(source_image_files=len(opened),source_label_reads=0,evaluation_label_reads=0,prior_outcome_score_reads=0,new_source_training=False,method_inputs='Current image and source checkpoint only; retained core state: '+('affine parameters only' if c.get('reset_optimizer_per_arrival') else 'affine parameters and optimizer moments'),future_images_used_for_update=False,patient_independence=False,previously_exposed_development_contents=True))
         used=sum(p.stat().st_size for folder in ('private','predictions','gates','gate_predictions','logs') for p in (root/folder).rglob('*') if p.is_file())
         if used>c['output_cap_bytes']:raise ValueError('output cap')
         status.update(status='GPU_COMPLETE',output_bytes=used,peak_allocated_bytes=torch.cuda.max_memory_allocated())
