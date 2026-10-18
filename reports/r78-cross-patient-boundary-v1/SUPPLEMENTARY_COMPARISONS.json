@@ -1,0 +1,97 @@
+{
+  "X": {
+    "mean_pp": 5.132358282200489e-05,
+    "ci95_pp": [
+      -0.0004799377380708958,
+      0.0006813601927101337
+    ],
+    "condition_delta_pp": [
+      0.00021648235048132847,
+      -0.0006511455179349923,
+      0.001051371728252537,
+      -0.0004114142295108536
+    ],
+    "channel_delta_pp": [
+      -4.317904677364481e-06,
+      0.00010696507032137426
+    ],
+    "worst_content_condition_channel_pp": -0.006403615610523161,
+    "negative_content_condition_channels": 6,
+    "total_content_condition_channels": 64
+  },
+  "F": {
+    "mean_pp": 0.043545019477429614,
+    "ci95_pp": [
+      0.005013432083241221,
+      0.08171513944996929
+    ],
+    "condition_delta_pp": [
+      0.03989074929022207,
+      0.0451432335417441,
+      0.04536997374789342,
+      0.043776121329858864
+    ],
+    "channel_delta_pp": [
+      0.017701577744662966,
+      0.06938846121019626
+    ],
+    "worst_content_condition_channel_pp": -0.16002078946755205,
+    "negative_content_condition_channels": 12,
+    "total_content_condition_channels": 64
+  },
+  "D": {
+    "mean_pp": 0.18862832248319128,
+    "ci95_pp": [
+      0.03644170861965531,
+      0.3448591282294948
+    ],
+    "condition_delta_pp": [
+      0.17998402257881185,
+      0.1948236784418529,
+      0.19408404573575044,
+      0.18562154317634993
+    ],
+    "channel_delta_pp": [
+      0.1320820754304055,
+      0.24517456953597705
+    ],
+    "worst_content_condition_channel_pp": -0.4227756070586395,
+    "negative_content_condition_channels": 13,
+    "total_content_condition_channels": 64
+  },
+  "C_FULL": {
+    "mean_pp": -0.012791299394066091,
+    "ci95_pp": [
+      -0.0452973421549957,
+      0.01793386049206688
+    ],
+    "condition_delta_pp": [
+      -0.01586469988472583,
+      -0.0017131839305748464,
+      -0.02316790793208856,
+      -0.010419405828875128
+    ],
+    "channel_delta_pp": [
+      -0.0008395106665157748,
+      -0.024743088121616408
+    ],
+    "worst_content_condition_channel_pp": -0.26456148233610577,
+    "negative_content_condition_channels": 24,
+    "total_content_condition_channels": 64
+  },
+  "mode_differences_pp": {
+    "X": {
+      "self_minus_match": -2.448889630635165e-06,
+      "match_minus_mismatch": 0.0
+    },
+    "F": {
+      "self_minus_match": -7.343267214943161e-05,
+      "match_minus_mismatch": 2.787145200744412e-05
+    },
+    "C_FULL": {
+      "self_minus_match": -0.21422161151575536,
+      "match_minus_mismatch": -0.0014167228347621297
+    }
+  },
+  "cpu_seconds": 12.180918455123901
+}

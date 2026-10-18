@@ -1,6 +1,6 @@
 # Cross-patient boundary objective: execution notes
 
-Status: implementation and source-development execution preparation. Results are not available yet.
+Status: COMPLETE. The predeclared development gate failed. All 1,000 outer episodes and 736 readouts completed. Primary X-F = -0.043494 Dice pp; no CTTA follow-on was launched. See [Chinese report](REPORT_ZH.md), [results](RESULTS.json), and [execution audit](EXECUTION_AUDIT.json).
 
 The user explicitly authorized content-disjoint development because the official RIM-ONE-r3 release did not establish patient linkage. This does not establish independent patients or absence of source-backbone pretraining exposure. See `PROTOCOL_ZH.md` for the amendment and fixed design. RDC and ENGRAM are disabled.
 
@@ -15,3 +15,5 @@ The CPU check exercises synthetic loss/state/gradient tests, the actual 512px mo
 Public delivery contains only source, protocol, anonymized aggregates, resource summaries, and this report. Official dataset files, model weights, per-image predictions/scores, and identifying metadata remain private. The official archive README permits research use and prohibits redistribution without consent.
 
 Official sources inspected: [release page](https://medimrg.webs.ull.es/), its linked `RIM-ONE-r3.zip` README and file directory, and [the authors' database paper](https://www.researchgate.net/publication/280673617_Interactive_Tool_and_Database_for_Optic_Disc_and_Cup_Segmentation_of_Stereo_and_Monocular_Retinal_Fundus_Images). The paper defines K as an image number, not a patient identifier. This establishes unresolved grouping, not proof that the dataset contains repeated patients.
+
+After completion, `dpa_ctta.r78_cross_patient.analyze` reproduces the aggregate update/pixel-change diagnostics, 25-episode training curves, and explicitly supplementary F/D-versus-B0 comparisons from private output files. It reads no labels and leaves the original primary comparison unchanged.
