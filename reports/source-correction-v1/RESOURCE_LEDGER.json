@@ -1,0 +1,40 @@
+{
+  "attempts": [
+    {
+      "mode": "worker",
+      "status": "FAILED",
+      "exit_code": 1,
+      "started": 1792340371.1999826,
+      "ended": 1792340407.9642177,
+      "gpu_worker_seconds": 36.76208305358887,
+      "cpu_worker_seconds": 0.0
+    },
+    {
+      "mode": "completion",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "started": 1792340618.8099697,
+      "ended": 1792340681.9635055,
+      "gpu_worker_seconds": 63.15097212791443,
+      "cpu_worker_seconds": 0.0
+    },
+    {
+      "mode": "score",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "started": 1792340681.96756,
+      "ended": 1792340764.0071852,
+      "gpu_worker_seconds": 0.0,
+      "cpu_worker_seconds": 82.03671288490295
+    }
+  ],
+  "all_workers_retired": true,
+  "no_scientific_retry": true,
+  "engineering_completion_attempts": 1,
+  "training_replays": 0,
+  "engineering_diagnosis_gpu_seconds": 7.617374420166016,
+  "gpu_worker_seconds": 107.53042960166931,
+  "cpu_worker_seconds": 82.03671288490295,
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900
+}
