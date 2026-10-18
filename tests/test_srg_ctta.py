@@ -14,6 +14,13 @@ class Toy(nn.Module):
 class RoutingTests(unittest.TestCase):
     def setUp(self): torch.set_num_threads(2);torch.manual_seed(20261019)
 
+    def test_tied_fp32_coordinates_need_distributed_rounding(self):
+        before=[torch.ones(19136)];params=[nn.Parameter(before[0]+1e-4)]
+        raw,actual,cosine=normalize_parameters(params,before)
+        self.assertLessEqual(abs(actual-.01),5e-7)
+        self.assertGreaterEqual(cosine,.999999)
+        self.assertGreater(int(torch.unique(params[0].detach()-before[0]).numel()),1)
+
     def test_actual_fp32_radius_and_direction(self):
         before=[torch.randn(10000)*3,torch.randn(9136)*.1]
         params=[nn.Parameter(v.clone()) for v in before]

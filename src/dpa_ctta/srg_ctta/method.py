@@ -83,6 +83,31 @@ def normalize_parameters(params,before,target=.01):
         # Accumulate the correction in the FP64 intended offset so a quantization
         # plateau cannot silently discard each successive radius correction.
         desired=[d*(target/actual) for d in desired]
+    if abs(actual-target)>5e-7:
+        # A uniform scale can jump over the target when many FP32 coordinates
+        # cross a rounding threshold together. Distribute one-ULP corrections.
+        flat=torch.cat([p.detach().flatten() for p in params])
+        origin=torch.cat([v.flatten() for v in before])
+        direction=torch.cat([d.flatten() for d in delta])
+        for _ in range(4):
+            toward=origin if actual>target else torch.where(direction>=0,torch.full_like(flat,float('inf')),torch.full_like(flat,-float('inf')))
+            candidate=torch.nextafter(flat,toward)
+            change=(candidate.double()-origin.double()).square()-(flat.double()-origin.double()).square()
+            wanted=target*target-actual*actual
+            valid=(change*wanted>0)&(direction!=0)&torch.isfinite(candidate)
+            ids=valid.nonzero().flatten()
+            if not len(ids):break
+            order=torch.argsort(change[ids].abs(),stable=True);ids=ids[order]
+            cumulative=change[ids].abs().cumsum(0)
+            k=min(int(torch.searchsorted(cumulative,abs(wanted))),len(ids)-1)
+            counts=(k,k+1)
+            count=min(counts,key=lambda n:abs((float(cumulative[n-1]) if n else 0)-abs(wanted)))
+            flat[ids[:count]]=candidate[ids[:count]]
+            offset=0
+            for p in params:
+                p.copy_(flat[offset:offset+p.numel()].reshape_as(p));offset+=p.numel()
+            actual_delta=[(p-v).double() for p,v in zip(params,before)];actual=l2(actual_delta)
+            if abs(actual-target)<=5e-7:break
     if abs(actual-target)>5e-7:raise ValueError(f'actual affine step budget failed: raw={raw:.12g}, actual={actual:.12g}')
     dot=float(torch.cat([d.flatten() for d in delta]).dot(torch.cat([d.flatten() for d in actual_delta])))
     cosine=dot/(raw*actual)
