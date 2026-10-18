@@ -1,0 +1,189 @@
+{
+  "status": "PASS",
+  "rows": [
+    {
+      "mode": "DEFAULT",
+      "arm": "STRAT",
+      "policy": "RESET",
+      "readouts": 8,
+      "changed_logit_elements": 1355385,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 5.14984130859375e-05,
+      "state_changed_elements": 2214,
+      "exact": false
+    },
+    {
+      "mode": "DEFAULT",
+      "arm": "STRAT",
+      "policy": "RETAIN",
+      "readouts": 8,
+      "changed_logit_elements": 3491289,
+      "changed_prediction_pixels": 10,
+      "max_abs_logit_difference": 0.014486312866210938,
+      "state_changed_elements": 18999,
+      "exact": false
+    },
+    {
+      "mode": "DEFAULT",
+      "arm": "RANDOM",
+      "policy": "RESET",
+      "readouts": 8,
+      "changed_logit_elements": 1510047,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 0.0008535385131835938,
+      "state_changed_elements": 3733,
+      "exact": false
+    },
+    {
+      "mode": "DEFAULT",
+      "arm": "RANDOM",
+      "policy": "RETAIN",
+      "readouts": 8,
+      "changed_logit_elements": 2669525,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 9.262561798095703e-05,
+      "state_changed_elements": 9260,
+      "exact": false
+    },
+    {
+      "mode": "DEFAULT",
+      "arm": "CW1",
+      "policy": "RESET",
+      "readouts": 8,
+      "changed_logit_elements": 1386425,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 2.682209014892578e-05,
+      "state_changed_elements": 26,
+      "exact": false
+    },
+    {
+      "mode": "DEFAULT",
+      "arm": "CW1",
+      "policy": "RETAIN",
+      "readouts": 8,
+      "changed_logit_elements": 2580494,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 4.124641418457031e-05,
+      "state_changed_elements": 6868,
+      "exact": false
+    },
+    {
+      "mode": "DEFAULT",
+      "arm": "CW2",
+      "policy": "RESET",
+      "readouts": 8,
+      "changed_logit_elements": 1519738,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 7.736682891845703e-05,
+      "state_changed_elements": 2335,
+      "exact": false
+    },
+    {
+      "mode": "DEFAULT",
+      "arm": "CW2",
+      "policy": "RETAIN",
+      "readouts": 8,
+      "changed_logit_elements": 3129282,
+      "changed_prediction_pixels": 1,
+      "max_abs_logit_difference": 0.0002281665802001953,
+      "state_changed_elements": 11371,
+      "exact": false
+    },
+    {
+      "mode": "STRICT",
+      "arm": "STRAT",
+      "policy": "RESET",
+      "readouts": 8,
+      "changed_logit_elements": 0,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 0.0,
+      "state_changed_elements": 0,
+      "exact": true
+    },
+    {
+      "mode": "STRICT",
+      "arm": "STRAT",
+      "policy": "RETAIN",
+      "readouts": 8,
+      "changed_logit_elements": 0,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 0.0,
+      "state_changed_elements": 0,
+      "exact": true
+    },
+    {
+      "mode": "STRICT",
+      "arm": "RANDOM",
+      "policy": "RESET",
+      "readouts": 8,
+      "changed_logit_elements": 0,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 0.0,
+      "state_changed_elements": 0,
+      "exact": true
+    },
+    {
+      "mode": "STRICT",
+      "arm": "RANDOM",
+      "policy": "RETAIN",
+      "readouts": 8,
+      "changed_logit_elements": 0,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 0.0,
+      "state_changed_elements": 0,
+      "exact": true
+    },
+    {
+      "mode": "STRICT",
+      "arm": "CW1",
+      "policy": "RESET",
+      "readouts": 8,
+      "changed_logit_elements": 0,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 0.0,
+      "state_changed_elements": 0,
+      "exact": true
+    },
+    {
+      "mode": "STRICT",
+      "arm": "CW1",
+      "policy": "RETAIN",
+      "readouts": 8,
+      "changed_logit_elements": 0,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 0.0,
+      "state_changed_elements": 0,
+      "exact": true
+    },
+    {
+      "mode": "STRICT",
+      "arm": "CW2",
+      "policy": "RESET",
+      "readouts": 8,
+      "changed_logit_elements": 0,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 0.0,
+      "state_changed_elements": 0,
+      "exact": true
+    },
+    {
+      "mode": "STRICT",
+      "arm": "CW2",
+      "policy": "RETAIN",
+      "readouts": 8,
+      "changed_logit_elements": 0,
+      "changed_prediction_pixels": 0,
+      "max_abs_logit_difference": 0.0,
+      "state_changed_elements": 0,
+      "exact": true
+    }
+  ],
+  "arrivals": 128,
+  "paired_readouts": 128,
+  "strict_exact": true,
+  "source_image_files": 2,
+  "label_reads": 0,
+  "previous_predictions_read": 0,
+  "scientific_effect_estimate": false,
+  "scope": "Two reused contents, four arrivals, within-process repeated trajectories only; does not establish cross-process or full-stream reproducibility"
+}
