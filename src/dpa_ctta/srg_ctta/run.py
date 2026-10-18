@@ -31,7 +31,7 @@ def guard_assets(c,panel):
     root=Path(c['output_root']).resolve();data=Path(c['source_root']).resolve()
     images={Path(r['image_path']).resolve() for r in panel};opened=set()
     old=[Path(c[k]).resolve() for k in ('old_head_root','prior_root')]
-    state_prior=Path(c['state_prior_root']).resolve() if c.get('reset_optimizer_per_arrival') else None
+    state_prior=Path(c['state_prior_root']).resolve() if c.get('state_prior_root') else None
     def audit(event,args):
         if event!='open' or not args or not isinstance(args[0],(str,bytes,os.PathLike)):return
         p=Path(os.fsdecode(args[0])).resolve()
