@@ -1,0 +1,40 @@
+{
+  "status": "PASS",
+  "workers": [
+    {
+      "slot": 0,
+      "status": "GPU_COMPLETE",
+      "arrivals": 2304,
+      "completed_jobs": 12,
+      "active": false,
+      "exit_code": 0,
+      "qualification": "PASS",
+      "image_accesses": 2305,
+      "online_label_reads": 0,
+      "source_image_reads": 0,
+      "denial_probe_rejections": 2
+    },
+    {
+      "slot": 1,
+      "status": "GPU_COMPLETE",
+      "arrivals": 2304,
+      "completed_jobs": 12,
+      "active": false,
+      "exit_code": 0,
+      "qualification": "PASS",
+      "image_accesses": 2305,
+      "online_label_reads": 0,
+      "source_image_reads": 0,
+      "denial_probe_rejections": 2
+    }
+  ],
+  "controller_status": "COMPLETE",
+  "ended": 1792329884.4603517,
+  "scorer_active": false,
+  "scorer_exit_code": 0,
+  "scorer_started_after_all_workers_retired": true,
+  "complete_receipts": 24,
+  "formal_updates": 4608,
+  "checkpoint_predictions_private": true,
+  "no_new_model_calls_for_analysis": true
+}

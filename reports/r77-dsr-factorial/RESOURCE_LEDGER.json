@@ -1,0 +1,48 @@
+{
+  "attempts": [
+    {
+      "name": "deployment0/fixed_worker0",
+      "status": "FAILED",
+      "exit_code": 1,
+      "seconds": 5.240190505981445,
+      "gpu_process_seconds": 5.240190505981445,
+      "cpu_process_seconds": 0
+    },
+    {
+      "name": "deployment0/fixed_worker1",
+      "status": "FAILED",
+      "exit_code": 1,
+      "seconds": 5.139470815658569,
+      "gpu_process_seconds": 5.139470815658569,
+      "cpu_process_seconds": 0
+    },
+    {
+      "name": "fixed_worker0",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "seconds": 2067.379800081253,
+      "gpu_process_seconds": 2067.379800081253,
+      "cpu_process_seconds": 0
+    },
+    {
+      "name": "fixed_worker1",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "seconds": 2067.262619495392,
+      "gpu_process_seconds": 2067.262619495392,
+      "cpu_process_seconds": 0
+    },
+    {
+      "name": "fixed_score0",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "seconds": 60.06986999511719,
+      "gpu_process_seconds": 0,
+      "cpu_process_seconds": 60.06986999511719
+    }
+  ],
+  "gpu_process_seconds": 4145.022080898285,
+  "cpu_process_seconds": 75.07613825798035,
+  "gpu_cap_seconds": 7200,
+  "all_workers_retired": true
+}
