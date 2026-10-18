@@ -1,6 +1,6 @@
 # Stratified reliability routing: finite TTA/CTTA mechanism pilot
 
-Status: protocol frozen; see [Chinese route analysis and protocol](PROTOCOL_ZH.md). No scientific result is claimed by preparation checks.
+Status: NOT_EVALUABLE after actual-step numerical qualification failures; no final-label scoring. See [qualification stop report](REPORT_ZH.md) and [execution audit](EXECUTION_AUDIT.json). See [Chinese route analysis and protocol](PROTOCOL_ZH.md). No scientific result is claimed by preparation checks.
 
 The candidate is an explicit adaptation of Reliability-TTA to independent OD/OC Bernoulli outputs. It uses current-image reliability within frozen-source predicted foreground/background/boundary strata, a source-posterior anchor, and BN-affine updates with frozen running statistics. It is neither the author's implementation nor a claim that ordinary gating, balancing or KL anchoring is novel. RDC and ENGRAM are disabled.
 
