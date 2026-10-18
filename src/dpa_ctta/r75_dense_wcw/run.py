@@ -234,7 +234,7 @@ def finish_child(c,item):
 
 
 def controller(c):
-    root=Path(c['output_root']);attempts=[];status=dict(status='SCREEN',started=time.time(),source_commit=c['source_commit'])
+    root=Path(c['output_root']);attempts=list(c.get('prior_attempts',[]));status=dict(status='SCREEN',started=time.time(),source_commit=c['source_commit'])
     with (root/'START_ONCE.json').open('x') as f:json.dump(status,f)
     def publish():
         save(root/'RUN_STATE.json',status)
