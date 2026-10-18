@@ -141,8 +141,9 @@ def worker(c):
                         if arm=='STRAT' and policy=='RESET' and order==0 and pos==1:
                             avg=(time.time()-qualification_start)/2
                             projection=time.time()-started+(1280-2)*avg*1.8+320*.25+60
-                            if projection>c['gpu_cap_seconds']-20:raise TimeoutError('full frozen matrix not admitted')
-                            save(root/'QUALIFICATION.json',dict(status='PASS',projected_worker_seconds=projection,measured_arrival_seconds=avg,affine_parameters=inventory[1],affine_tensors=inventory[0],first_two_arrivals_in_budget=True,legacy_parity=status['legacy_parity'],final_label_reads=0))
+                            admitted=projection<=c['gpu_cap_seconds']-20
+                            save(root/'QUALIFICATION.json',dict(status='PASS' if admitted else 'NOT_ADMITTED',projected_worker_seconds=projection,measured_arrival_seconds=avg,affine_parameters=inventory[1],affine_tensors=inventory[0],first_two_arrivals_in_budget=True,legacy_parity=status['legacy_parity'],final_label_reads=0))
+                            if not admitted:raise TimeoutError('full frozen matrix not admitted')
                             status['status']='GENERATING'
                         if pos%8==7:status.update(current_arm=arm,policy=policy,order=order,position=pos+1);save(root/'RUN_STATE.json',status)
                     trajectories.append(dict(arm=arm,policy=policy,order=order,arrivals=40,optimizer_steps=host.total_steps))

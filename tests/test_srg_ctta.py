@@ -2,7 +2,7 @@ import copy
 import unittest
 import torch
 from torch import nn
-from dpa_ctta.srg_ctta.method import Host,entropy,strata,select,objective
+from dpa_ctta.srg_ctta.method import Host,entropy,strata,select,objective,reduce_region,l2
 
 
 class Toy(nn.Module):
@@ -13,6 +13,19 @@ class Toy(nn.Module):
 
 class RoutingTests(unittest.TestCase):
     def setUp(self): torch.set_num_threads(2);torch.manual_seed(20261019)
+
+    def test_batched_reductions_preserve_value_and_gradient(self):
+        v=torch.randn(1,2,32,32,requires_grad=True);regions=strata(torch.rand_like(v));mask=torch.rand_like(v)>.5
+        terms=[]
+        for c in range(2):
+            for region in regions:
+                keep=mask[0,c]&region[0,c]
+                if keep.any():terms.append(v[0,c][keep].mean())
+        old=torch.stack(terms).mean();new=reduce_region(v,mask,regions,True)
+        self.assertTrue(torch.allclose(old,new,atol=1e-7))
+        a,=torch.autograd.grad(old,v,retain_graph=True);b,=torch.autograd.grad(new,v)
+        self.assertTrue(torch.allclose(a,b,atol=1e-7))
+        self.assertAlmostEqual(l2([v,v[:,:,:4]]),(float(v.double().square().sum())+float(v[:,:,:4].double().square().sum()))**.5,places=10)
 
     def test_independent_bernoulli_entropy(self):
         p=torch.tensor([[[[.5]],[[.5]]]])

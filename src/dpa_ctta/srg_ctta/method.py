@@ -57,12 +57,15 @@ def select(u,regions,arm,seed):
 
 
 def reduce_region(values,mask,regions,balanced):
-    terms=[]
-    for c in range(values.shape[1]):
-        for region in (regions if balanced else (torch.ones_like(mask),)):
-            keep=mask[0,c]&region[0,c]
-            if keep.any(): terms.append(values[0,c][keep].mean())
-    return torch.stack(terms).mean() if terms else values.sum()*0
+    weights=torch.stack(regions if balanced else (torch.ones_like(mask),)).to(values)*mask[None]
+    counts=weights.sum((-2,-1))
+    valid=counts>0
+    means=(values[None]*weights).sum((-2,-1))/counts.clamp_min(1)
+    return (means*valid).sum()/valid.sum().clamp_min(1)
+
+
+def l2(tensors):
+    return float(torch.cat([v.detach().reshape(-1) for v in tensors]).double().norm())
 
 
 def objective(z,pw,ps,z0,mask,regions,arm):
@@ -125,27 +128,28 @@ class Host:
             if int(mask.sum())<128: raise ValueError('fixed keep quota unexpectedly degenerate')
             loss,terms=objective(z,pw,ps,z0,mask,regions,self.arm)
             anchor_grads=torch.autograd.grad(terms['anchor'],self.params,retain_graph=True)
-            anchor_norm=sum(float(g.double().square().sum()) for g in anchor_grads)**.5
+            anchor_norm=l2(anchor_grads)
             if not torch.isfinite(loss): raise ValueError('nonfinite unlabeled objective')
             loss.backward()
-            if any(p.grad is None or not torch.isfinite(p.grad).all() for p in self.params): raise ValueError('invalid affine gradient')
+            if any(p.grad is None for p in self.params) or not bool(torch.stack([torch.isfinite(p.grad).all() for p in self.params]).all()): raise ValueError('invalid affine gradient')
             before=[p.detach().clone() for p in self.params];self.opt.step()
             with torch.no_grad():
                 delta=[p-v for p,v in zip(self.params,before)]
-                raw=sum(float(v.double().square().sum()) for v in delta)**.5
+                raw=l2(delta)
                 if self.arm in NORMALIZED and raw>1e-12:
                     for p,v,d in zip(self.params,before,delta): p.copy_(v+d*(.01/raw))
-                actual=sum(float((p-v).double().square().sum()) for p,v in zip(self.params,before))**.5
+                actual=l2([p-v for p,v in zip(self.params,before)])
                 if self.arm in NORMALIZED and raw>1e-12 and abs(actual-.01)>5e-7: raise ValueError('actual affine step budget failed')
             self.total_steps+=1;self.segment_steps+=1
-            coverage=[]
-            for region in regions:
-                coverage.append([float(mask[0,c][region[0,c]].float().mean()) if region[0,c].any() else None for c in range(z.shape[1])])
+            count=torch.stack(regions).sum((-2,-1))
+            kept=(torch.stack(regions)&mask[None]).sum((-2,-1))
+            fractions=torch.where(count>0,kept/count.clamp_min(1),-1).squeeze(1).cpu().tolist()
+            coverage=[[v if v>=0 else None for v in row] for row in fractions]
             logs.append(dict(loss=float(loss.detach()),**{k:float(v.detach()) for k,v in terms.items()},anchor_gradient_norm=anchor_norm,raw_step_norm=raw,actual_step_norm=actual,norm_matched=bool(abs(actual-.01)<=5e-7) if self.arm in NORMALIZED else None,zero_proposal=bool(raw<=1e-12),gate_fraction=float(mask.float().mean()),stratum_gate_fraction=coverage))
         with torch.no_grad(): post=self.forward(x).detach()
         names=dict(self.model.named_parameters())
         if any(names[n]._version!=v for n,v in self.fixed.items()): raise ValueError('non-affine parameters changed')
-        if any(not torch.equal(v,dict(self.model.named_buffers())[n]) for n,v in self.buffers.items()): raise ValueError('running statistics changed')
+        if not bool(torch.stack([(v==dict(self.model.named_buffers())[n]).all() for n,v in self.buffers.items()]).all()): raise ValueError('running statistics changed')
         if any(int(self.opt.state[p]['step'])!=self.segment_steps for p in self.params): raise ValueError('optimizer persistence failed')
-        total_norm=sum(float((p-v).double().square().sum()) for p,v in zip(self.params,self.initial))**.5
+        total_norm=l2([p-v for p,v in zip(self.params,self.initial)])
         return pre,post,mask.detach(),z.detach(),dict(steps=logs,total_affine_norm=total_norm,optimizer_age=self.segment_steps,forwards=7,optimizer_steps=2,diagnostic_anchor_gradient_calls=2,loss_backward_calls=2)
