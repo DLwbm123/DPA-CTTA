@@ -1,0 +1,49 @@
+{
+  "schema": "R78_CROSS_PATIENT_BOUNDARY_V1",
+  "status": "AUTHORIZED_CONTENT_DEVELOPMENT",
+  "seed": 20261018,
+  "source": "RIM_ONE_r3",
+  "required_patient_groups": 40,
+  "split_groups": {
+    "train": 16,
+    "validation": 8,
+    "evaluation": 16
+  },
+  "train_arms": [
+    "P",
+    "S",
+    "X",
+    "F",
+    "D"
+  ],
+  "reference_arms": [
+    "B0",
+    "C_FULL",
+    "C_A",
+    "H"
+  ],
+  "episodes_per_arm": 200,
+  "validation_episodes": [
+    50,
+    100,
+    150,
+    200
+  ],
+  "inner_step_size": 0.01,
+  "state_l2_radius": 0.05,
+  "outer_adam_lr": 0.001,
+  "virtual_grid": 256,
+  "max_anchors_per_channel": 128,
+  "final_readouts": 736,
+  "primary_comparison": "CROSS_MATCH:X-F",
+  "gpu_worker_wall_cap_seconds": 3600,
+  "cpu_scorer_wall_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "auto_expand": false,
+  "patient_grouping_required": false,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "patient_independence": false,
+  "checkpoint_pretraining_membership": "UNKNOWN"
+}
