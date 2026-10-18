@@ -1,0 +1,41 @@
+{
+  "attempts": [
+    {
+      "mode": "worker",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "started": 1792304776.4989731,
+      "ended": 1792304936.475761,
+      "gpu_worker_seconds": 159.97404265403748,
+      "cpu_worker_seconds": 0.0
+    },
+    {
+      "mode": "score",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "started": 1792304936.4779441,
+      "ended": 1792304944.6969273,
+      "gpu_worker_seconds": 0.0,
+      "cpu_worker_seconds": 8.215628623962402
+    }
+  ],
+  "prior_attempts": [
+    {
+      "mode": "worker",
+      "status": "FAILED",
+      "exit_code": 1,
+      "started": 1792304663.8909445,
+      "ended": 1792304666.1124094,
+      "gpu_worker_seconds": 2.2193443775177,
+      "cpu_worker_seconds": 0.0
+    }
+  ],
+  "gpu_worker_seconds": 162.19338703155518,
+  "prior_gpu_worker_seconds": 2.2193443775177,
+  "cpu_worker_seconds": 15.587932348251343,
+  "preparation_cpu_seconds": 7.37230372428894,
+  "all_workers_retired": true,
+  "gpu_cap_seconds": 1200,
+  "remaining_gpu_cap_seconds": 1197.7806556224823,
+  "scorer_cap_seconds": 300
+}
