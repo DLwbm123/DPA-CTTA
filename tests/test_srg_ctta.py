@@ -1,0 +1,61 @@
+import copy
+import unittest
+import torch
+from torch import nn
+from dpa_ctta.srg_ctta.method import Host,entropy,strata,select,objective
+
+
+class Toy(nn.Module):
+    def __init__(self):
+        super().__init__();self.conv=nn.Conv2d(3,4,3,padding=1);self.bn=nn.BatchNorm2d(4);self.head=nn.Conv2d(4,2,1)
+    def forward(self,x): return self.head(self.bn(self.conv(x)))
+
+
+class RoutingTests(unittest.TestCase):
+    def setUp(self): torch.set_num_threads(2);torch.manual_seed(20261019)
+
+    def test_independent_bernoulli_entropy(self):
+        p=torch.tensor([[[[.5]],[[.5]]]])
+        self.assertTrue(torch.allclose(entropy(p),torch.ones_like(p)))
+        self.assertLess(float(entropy(torch.tensor([0.,1.])).max()),.00003)
+
+    def test_regions_and_exact_random_quota(self):
+        p=torch.zeros(1,2,32,32);p[:,:,8:24,8:24]=1
+        regions=strata(p);self.assertTrue(torch.equal(sum(r.long() for r in regions),torch.ones_like(p,dtype=torch.long)))
+        u=torch.rand_like(p);a=select(u,regions,'STRAT',5);b=select(u,regions,'RANDOM',5)
+        for region in regions:
+            for c in range(2):
+                self.assertEqual(int((a&region)[0,c].sum()),int((b&region)[0,c].sum()))
+        self.assertTrue(torch.equal(b,select(u,regions,'RANDOM',5)))
+        self.assertFalse(a.requires_grad)
+
+    def test_anchor_zero_then_active(self):
+        z0=torch.randn(1,2,16,16);z=z0.clone().requires_grad_();p=z0.sigmoid();mask=torch.zeros_like(p,dtype=torch.bool);mask[:,:,:8]=True;regions=strata(p)
+        _,terms=objective(z,p,p,z0,mask,regions,'STRAT')
+        g,=torch.autograd.grad(terms['anchor'],z)
+        self.assertLess(float(g.abs().max()),1e-7)
+        z=(z0+.1).requires_grad_();_,terms=objective(z,p,p,z0,mask,regions,'STRAT')
+        g,=torch.autograd.grad(terms['anchor'],z)
+        self.assertGreater(float(g.norm()),0)
+
+    def test_real_affine_update_reset_and_retention(self):
+        base=Toy().eval().requires_grad_(False);host=Host(base,'STRAT');x=torch.rand(1,3,32,32)
+        with torch.no_grad():z0=base(x)
+        before={n:b.clone() for n,b in host.model.named_buffers()}
+        pre,post,m,g,d=host.step(x,x*.95,x*1.05,z0,7)
+        self.assertTrue(torch.equal(pre,z0));self.assertEqual(d['optimizer_age'],2)
+        self.assertTrue(all(v['norm_matched'] for v in d['steps']))
+        self.assertGreater(float((post-pre).norm()),0)
+        _,_,_,_,d2=host.step(x,x*.95,x*1.05,z0,7);self.assertEqual(d2['optimizer_age'],4)
+        self.assertTrue(all(torch.equal(b,dict(host.model.named_buffers())[n]) for n,b in before.items()))
+        host.reset();p2,_,_,_,d3=host.step(x,x*.95,x*1.05,z0,7)
+        self.assertTrue(torch.equal(pre,p2));self.assertEqual(d3['optimizer_age'],2)
+
+    def test_no_anchor_and_balanced_full_control(self):
+        z0=torch.randn(1,2,32,32);z=(z0+.2).requires_grad_();p=z0.sigmoid();regs=strata(p);mask=select(entropy(p),regs,'STRAT',5)
+        a,t=objective(z,p,p,z0,mask,regs,'STRAT');b,_=objective(z,p,p,z0,mask,regs,'NOANCHOR')
+        self.assertTrue(torch.allclose(a-b,t['anchor'],atol=1e-7))
+        self.assertTrue(select(entropy(p),regs,'ALL',5).all())
+
+
+if __name__=='__main__':unittest.main()
