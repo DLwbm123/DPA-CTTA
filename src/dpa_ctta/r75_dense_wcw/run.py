@@ -199,6 +199,14 @@ def score(c):
 
 def child(c,mode,stage,slot,cap):
     root=Path(c['output_root']);name=f'{stage}_{mode}{slot}';start=time.time()
+    if mode=='worker':
+        raw=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid,memory.free',
+                                     '--format=csv,noheader,nounits'],text=True)
+        inventory={int(i):(u.strip(),int(m)) for i,u,m in (line.split(',') for line in raw.splitlines())}
+        gpu=c['gpus'][slot];uuid,free=inventory[gpu['physical_id']]
+        if gpu['physical_id'] not in (0,1) or uuid!=gpu['uuid'] or free<6144:
+            raise RuntimeError('GPU memory/UUID admission failed; no other GPU fallback')
+        save(root/'private'/f'{name}_ADMISSION.json',dict(gpu=gpu['physical_id'],uuid=uuid,free_MiB=free,at=start))
     env=dict(os.environ,MODE=mode,STAGE=stage,SLOT=str(slot),CHILD_DEADLINE=str(min(start+cap,c['deadline']-240)),
              CUDA_VISIBLE_DEVICES=str(c['gpus'][slot]['physical_id']) if mode=='worker' else '')
     log=(root/'logs'/f'{name}.log').open('x')
