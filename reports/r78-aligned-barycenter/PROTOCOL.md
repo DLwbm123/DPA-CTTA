@@ -45,3 +45,7 @@ Performance gates apply only after complete frozen terminal scoring. No true-lab
 ## Monitoring and delivery
 
 User-authorized half-hour monitoring; remain quiet for unchanged/non-actionable states. Notify on meaningful progress, failure, reliable stall, completion or required action. On terminal state audit actual process retirement, preserve all costs/failures and publish sanitized source, aggregate results and report to the project's public GitHub repository. Never publish images, labels, per-image identifiers/predictions, model weights, terminal checkpoints, raw logs, credentials or private paths. After delivery pause monitoring. No experiment expansion.
+
+## Explicit continuation authorization
+
+After the recorded qualification PASS/resource stop, the user explicitly authorized an aggregate GPU cap of **18000 seconds**, retaining all prior consumed costs, and a **three-hour wall deadline starting at formal launch**. Reuse the existing successful qualification without additional qualification updates. The original stop records remain preserved. The controller-only continuation path verifies qualification retirement and zero prior formal jobs, inherits the existing qualification attempt into the cumulative ledger, recalculates the same admission formula, and anchors the new wall deadline once at formal launch. The scientific method, dataset, seeds, orders, all performance/harm stopping rules, 1 GiB storage and 8 GiB allocator limits remain unchanged. No automatic further budget increase, retry or scientific expansion is authorized.

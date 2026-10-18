@@ -214,8 +214,10 @@ def score(c):
 
 
 def controller(c):
-    root=Path(c['output_root']);attempts=[];status=dict(status='QUALIFICATION',started=time.time(),source_commit=c['source_commit'])
-    with (root/'START_ONCE.json').open('x') as f:json.dump(status,f)
+    root=Path(c['output_root']);attempts=list(c.get('prior_attempts',[]))
+    reuse=c.get('reuse_passed_qualification',False)
+    status=dict(status='FORMAL_ADMISSION' if reuse else 'QUALIFICATION',started=time.time(),source_commit=c['source_commit'])
+    with (root/('CONTINUE_ONCE.json' if reuse else 'START_ONCE.json')).open('x') as f:json.dump(status,f)
     def publish():
         save(root/'RUN_STATE.json',status);save(root/'RESOURCE_LEDGER.json',dict(attempts=attempts,
             gpu_process_seconds=sum(x['gpu_process_seconds'] for x in attempts),
@@ -242,7 +244,11 @@ def controller(c):
     try:
         if read(root/'CPU_CHECK.json')['status']!='PASS':raise ValueError('CPU check absent')
         publish()
-        if not group('worker','qualify',[0],300):raise RuntimeError('qualification failed; stop without retry')
+        if reuse:
+            prior=read(root/'processes/qualify_worker0.json');qs=read(root/'private/qualify_worker0/RUN_STATE.json')
+            if prior['active'] or prior['exit_code']!=0 or qs['status']!='GPU_COMPLETE':raise ValueError('retired qualification required')
+            if list((root/'jobs').iterdir()):raise ValueError('continuation requires zero prior formal updates')
+        elif not group('worker','qualify',[0],300):raise RuntimeError('qualification failed; stop without retry')
         q=read(root/'public/QUALIFICATION.json');remaining=c['gpu_cap_seconds']-sum(x['gpu_process_seconds'] for x in attempts)
         projection=q['max_measured_step_seconds']*3456*1.3+120
         admitted=q['status']=='PASS' and projection<remaining and time.time()+projection/2+900<c['deadline']
@@ -251,6 +257,14 @@ def controller(c):
             deadline=c['deadline'],automatic_retry=False)
         save(root/'FORMAL_ADMISSION.json',admission);save(root/'public/FORMAL_ADMISSION.json',admission)
         if not admitted:raise RuntimeError('frozen resource admission failed; no automatic extension')
+        if reuse:
+            c['formal_start_epoch']=time.time();c['deadline']=c['formal_start_epoch']+10800
+            save(root/'private/config.json',c)
+            admission.update(formal_start_epoch=c['formal_start_epoch'],deadline=c['deadline'])
+            save(root/'FORMAL_ADMISSION.json',admission);save(root/'public/FORMAL_ADMISSION.json',admission)
+            frozen=read(root/'public/FROZEN.json')
+            frozen.update(formal_start_epoch=c['formal_start_epoch'],deadline=c['deadline'])
+            save(root/'public/FROZEN.json',frozen)
         status['status']='FORMAL';publish()
         # Reserve polling/termination accounting overhead inside the aggregate cap.
         if not group('worker','formal',[0,1],(remaining-30)/2):raise RuntimeError('formal matrix failed; stop without retry')
