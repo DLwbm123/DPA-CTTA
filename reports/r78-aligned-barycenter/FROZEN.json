@@ -1,9 +1,9 @@
 {
-  "source_commit": "6b0e4e9",
-  "gpu_cap_seconds": 7200,
+  "source_commit": "5e28c9f",
+  "gpu_cap_seconds": 18000,
   "wall_cap_seconds": 10800,
   "activated": 1792337279.2879663,
-  "deadline": 1792348079.2870655,
+  "deadline": 1792349460.7751067,
   "output_cap_bytes": 1073741824,
   "allocator_cap_GiB": 8,
   "minimum_free_gpu_MiB": 10240,
@@ -25,7 +25,15 @@
     "O",
     "A"
   ],
-  "preparation_cpu_seconds": 14.662272214889526,
+  "preparation_cpu_seconds": 20.584480047225952,
   "automatic_retry": false,
-  "automatic_extension": false
+  "automatic_extension": false,
+  "qualification_source_commit": "6b0e4e9",
+  "wall_deadline_anchor": "formal_start_epoch; set once by controller",
+  "previous_gpu_process_seconds": 30.262468338012695,
+  "qualification_reused": true,
+  "additional_qualification_updates": 0,
+  "user_authorized_budget_amendment": true,
+  "continued_at": 1792338659.0591629,
+  "formal_start_epoch": 1792338660.7751067
 }
