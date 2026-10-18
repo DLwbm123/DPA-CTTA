@@ -1,0 +1,104 @@
+{
+  "status": "COMPLETE",
+  "stage": "screen",
+  "primary": "WITHIN_STREAM",
+  "selected_for_followup": null,
+  "allocation_gates": {
+    "WITHIN_STREAM": false,
+    "WITHIN_IMAGE": false
+  },
+  "contrasts": [
+    {
+      "role": "SEARCH",
+      "contrast": "DIAGONAL-NATIVE",
+      "macro_delta_pp": -0.2724113702447032,
+      "ci95_pp": [
+        -0.40390809377418885,
+        -0.1380613216756184
+      ],
+      "order_delta_pp": [
+        -0.626344375784516,
+        0.08152163529510964
+      ],
+      "positive_trajectories": 1,
+      "trajectories": 2,
+      "imageweighted_delta_pp": -0.12339975185835354,
+      "worst_cell_pp": -5.927591484962304
+    },
+    {
+      "role": "SEARCH",
+      "contrast": "WITHIN_STREAM-NATIVE",
+      "macro_delta_pp": -39.26724255276967,
+      "ci95_pp": [
+        -41.04313235190839,
+        -37.41139186701191
+      ],
+      "order_delta_pp": [
+        -44.26953343901849,
+        -34.26495166652086
+      ],
+      "positive_trajectories": 0,
+      "trajectories": 2,
+      "imageweighted_delta_pp": -41.47812100356381,
+      "worst_cell_pp": -84.30766389544186
+    },
+    {
+      "role": "SEARCH",
+      "contrast": "WITHIN_IMAGE-NATIVE",
+      "macro_delta_pp": -33.00332439865133,
+      "ci95_pp": [
+        -34.876104084829834,
+        -31.200205354879657
+      ],
+      "order_delta_pp": [
+        -36.62436555551623,
+        -29.382283241786425
+      ],
+      "positive_trajectories": 0,
+      "trajectories": 2,
+      "imageweighted_delta_pp": -35.055139046464454,
+      "worst_cell_pp": -69.54717520127907
+    },
+    {
+      "role": "SEARCH",
+      "contrast": "WITHIN_STREAM-DIAGONAL",
+      "macro_delta_pp": -38.99483118252496,
+      "ci95_pp": [
+        -40.771213333661244,
+        -37.153259627407785
+      ],
+      "order_delta_pp": [
+        -43.64318906323396,
+        -34.34647330181597
+      ],
+      "positive_trajectories": 0,
+      "trajectories": 2,
+      "imageweighted_delta_pp": -41.35472125170545,
+      "worst_cell_pp": -83.43751012969169
+    },
+    {
+      "role": "SEARCH",
+      "contrast": "WITHIN_IMAGE-WITHIN_STREAM",
+      "macro_delta_pp": 6.2639181541183415,
+      "ci95_pp": [
+        4.48860603479727,
+        8.03703165785986
+      ],
+      "order_delta_pp": [
+        7.645167883502256,
+        4.882668424734427
+      ],
+      "positive_trajectories": 2,
+      "trajectories": 2,
+      "imageweighted_delta_pp": 6.422981957099348,
+      "worst_cell_pp": -35.60030878425924
+    }
+  ],
+  "contents": 192,
+  "native_trajectories": 2,
+  "readout_predictions": 1536,
+  "independent_validation": false,
+  "shared_native_state": true,
+  "readout_feedback_to_learning": false,
+  "cpu_seconds": 3.2542355060577393
+}
