@@ -1,0 +1,87 @@
+{
+  "status": "COMPLETE",
+  "stage": "screen",
+  "primary": "MEAN_PRESERVE",
+  "selected_for_followup": null,
+  "allocation_gates": {
+    "MEAN_PRESERVE": false
+  },
+  "contrasts": [
+    {
+      "role": "SEARCH",
+      "contrast": "ORIGINAL_WITHIN-NATIVE",
+      "macro_delta_pp": -39.26724255276967,
+      "ci95_pp": [
+        -41.04313235190839,
+        -37.41139186701191
+      ],
+      "order_delta_pp": [
+        -44.26953343901849,
+        -34.26495166652086
+      ],
+      "positive_trajectories": 0,
+      "trajectories": 2,
+      "imageweighted_delta_pp": -41.47812100356381,
+      "worst_cell_pp": -84.30766389544186
+    },
+    {
+      "role": "SEARCH",
+      "contrast": "SHIFT_ONLY-NATIVE",
+      "macro_delta_pp": -2.9542728973953114,
+      "ci95_pp": [
+        -3.3956701391624966,
+        -2.522127981839763
+      ],
+      "order_delta_pp": [
+        -4.256110009749322,
+        -1.6524357850413005
+      ],
+      "positive_trajectories": 0,
+      "trajectories": 2,
+      "imageweighted_delta_pp": -2.5411888240135347,
+      "worst_cell_pp": -17.548724338223423
+    },
+    {
+      "role": "SEARCH",
+      "contrast": "MEAN_PRESERVE-NATIVE",
+      "macro_delta_pp": -24.34863671098303,
+      "ci95_pp": [
+        -25.73048934566647,
+        -22.957223334288294
+      ],
+      "order_delta_pp": [
+        -29.027878298167042,
+        -19.669395123799013
+      ],
+      "positive_trajectories": 0,
+      "trajectories": 2,
+      "imageweighted_delta_pp": -25.541455653692964,
+      "worst_cell_pp": -57.67303242450474
+    },
+    {
+      "role": "SEARCH",
+      "contrast": "MEAN_PRESERVE-ORIGINAL_WITHIN",
+      "macro_delta_pp": 14.91860584178664,
+      "ci95_pp": [
+        14.256247583599597,
+        15.623628770658254
+      ],
+      "order_delta_pp": [
+        15.241655140851435,
+        14.595556542721845
+      ],
+      "positive_trajectories": 2,
+      "trajectories": 2,
+      "imageweighted_delta_pp": 15.936665349870836,
+      "worst_cell_pp": 0.0
+    }
+  ],
+  "contents": 192,
+  "native_trajectories": 2,
+  "readout_predictions": 1536,
+  "independent_validation": false,
+  "shared_native_state": true,
+  "readout_feedback_to_learning": false,
+  "registered_prior_readout_exact": true,
+  "cpu_seconds": 4.861234188079834
+}
