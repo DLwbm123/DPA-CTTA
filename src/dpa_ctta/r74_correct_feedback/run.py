@@ -44,6 +44,15 @@ def self_check():
     from PIL import Image
     from ..source_io import read_mask
     from ..r72_crop_target.method import delta_loss
+    # Import the connected worker/scorer entry points before GPU admission.
+    from ..r19_model_only.runtime import weights, image
+    from ..r36_incremental_modules.run import filesystem_guard
+    from ..r9_current_first.assets import gpu_policy
+    from ..r7_target_screen.runner import TargetReader
+    from ..r24_c_context.run import hard_metrics
+    from ..r51_same_state.score import csvout
+    from ..b1_host import official
+    official()
     torch.set_num_threads(2)
     z = torch.tensor([[[[-2., .2], [.7, -1.]], [[1., -.3], [-2., .4]]]], requires_grad=True)
     q = torch.full_like(z, .3)
@@ -361,10 +370,13 @@ def main():
         if attempts[-1]['status'] == 'COMPLETE':
             attempts.append(run_child(c, 'score', c['cpu_cap_seconds'], False))
     finally:
-        ledger = dict(attempts=attempts, gpu_worker_seconds=sum(a['gpu_worker_seconds'] for a in attempts),
+        prior = c.get('prior_gpu_worker_seconds', 0.)
+        ledger = dict(attempts=attempts, prior_attempts=c.get('prior_attempts', []),
+                      gpu_worker_seconds=prior+sum(a['gpu_worker_seconds'] for a in attempts),
+                      prior_gpu_worker_seconds=prior,
                       cpu_worker_seconds=c['prior_cpu_seconds']+sum(a['cpu_worker_seconds'] for a in attempts),
                       preparation_cpu_seconds=c['prior_cpu_seconds'], all_workers_retired=True,
-                      gpu_cap_seconds=c['gpu_cap_seconds'], scorer_cap_seconds=c['cpu_cap_seconds'])
+                      gpu_cap_seconds=1200, remaining_gpu_cap_seconds=c['gpu_cap_seconds'], scorer_cap_seconds=c['cpu_cap_seconds'])
         save(root/'RESOURCE_LEDGER.json', ledger)
         save(root/'public/RESOURCE_LEDGER.json', ledger)
     return 0 if len(attempts) == 2 and all(a['status'] == 'COMPLETE' for a in attempts) else 1
