@@ -134,14 +134,26 @@ def score(c):
         if receipt['arrivals']!=len(panel):raise ValueError('incomplete trajectory')
         traces=[json.loads(v) for v in (folder/'diagnostics.jsonl').read_text().splitlines()]
         if [v['visit'] for v in traces]!=list(range(1,len(panel)+1)):raise ValueError('trace coverage')
+        reference=None
+        if stage=='screen' and c.get('reference_native_root'):
+            reference=(Path(c['reference_native_root'])/'jobs'/job['id']/'predictions.bits').open('rb')
         with (folder/'predictions.bits').open('rb') as f:
             for row in rows:
                 raw=f.read(len(ARMS)*WIDTH)
                 if len(raw)!=len(ARMS)*WIDTH:raise ValueError('truncated predictions')
+                if reference is not None:
+                    old=reference.read(4*WIDTH)
+                    for arm,old_index in c['reference_indices'].items():
+                        new_index=ARMS.index(arm)
+                        if raw[new_index*WIDTH:(new_index+1)*WIDTH]!=old[old_index*WIDTH:(old_index+1)*WIDTH]:
+                            raise ValueError('registered prior readout parity failed: '+arm)
                 masks=np.unpackbits(np.frombuffer(raw,dtype=np.uint8)).reshape(len(ARMS),2,512,512).astype(bool)
                 for a in range(len(ARMS)):
                     values[index[row['image_sha256']],j,a]=[100*m['dice'] for m in hard_metrics(masks[a],labels[row['image_sha256']])]
             if f.read(1):raise ValueError('extra predictions')
+        if reference is not None:
+            if reference.read(1):raise ValueError('extra prior predictions')
+            reference.close()
         for a,arm in enumerate(ARMS[1:],1):
             for ch,channel in enumerate(('OD','OC')):
                 active=[t['readouts'][arm][ch] for t in traces if t['readouts'][arm][ch]['active']]
@@ -160,7 +172,7 @@ def score(c):
         for a,arm in enumerate(ARMS):
             scores.append(dict(role=role,arm=arm,macro_Dice_percent=float(np.mean([
                 values[select&(domains==d),:,a].mean() for d in names])),imageweighted_Dice_percent=float(values[select,:,a].mean())))
-        comparisons=[(a,0) for a in range(1,len(ARMS))]+[(2,1),(3,2)]
+        comparisons=c.get('comparisons',[(a,0) for a in range(1,len(ARMS))]+[(2,1),(3,2)])
         for a,b in comparisons:
             delta=values[:,:,a]-values[:,:,b];name=ARMS[a]+'-'+ARMS[b]
             for d in names:
@@ -181,13 +193,16 @@ def score(c):
         return (s['macro_delta_pp']>=.2 and s['ci95_pp'][0]>0 and min(s['order_delta_pp'])>0
                 and s['imageweighted_delta_pp']>=0 and s['worst_cell_pp']>=-2
                 and s['positive_trajectories']>=len(planned)-1)
+    candidate_arms=c.get('candidate_arms',['WITHIN_STREAM','WITHIN_IMAGE'])
     gates={arm:passes(next(x for x in summaries if x['role']=='SEARCH' and x['contrast']==arm+'-NATIVE'))
-           for arm in ('WITHIN_STREAM','WITHIN_IMAGE')}
-    selected=next((a for a in ('WITHIN_STREAM','WITHIN_IMAGE') if gates[a]),None)
-    result=dict(status='COMPLETE',stage=stage,primary='WITHIN_STREAM',selected_for_followup=selected,
+           for arm in candidate_arms}
+    selected=next((a for a in candidate_arms if gates[a]),None)
+    result=dict(status='COMPLETE',stage=stage,primary=c.get('primary','WITHIN_STREAM'),selected_for_followup=selected,
         allocation_gates=gates,contrasts=summaries,contents=len(panel),native_trajectories=len(planned),
         readout_predictions=len(panel)*len(planned)*len(ARMS),independent_validation=False,
-        shared_native_state=True,readout_feedback_to_learning=False,cpu_seconds=time.time()-start)
+        shared_native_state=True,readout_feedback_to_learning=False,
+        registered_prior_readout_exact=True if stage=='screen' and c.get('reference_native_root') else None,
+        cpu_seconds=time.time()-start)
     out=root/'public';save(out/f'{stage.upper()}_RESULTS.json',result)
     csvout(out/f'{stage.upper()}_ARM_SCORES.csv',scores);csvout(out/f'{stage.upper()}_ALL_CELLS.csv',cells)
     csvout(out/f'{stage.upper()}_NEGATIVE_CELLS.csv',[x for x in cells if x['delta_pp']<0])
