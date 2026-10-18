@@ -58,6 +58,8 @@ def worker(c):
         ledger=read(Path(c['old_head_root'])/'RESOURCE_LEDGER.json')
         if not ledger['all_workers_retired'] or any(a['exit_code'] for a in ledger['attempts'][-2:]):raise ValueError('previous run must be complete')
         torch.set_num_threads(2);torch.set_num_interop_threads(2);seed()
+        if c.get('strict_deterministic'):
+            torch.use_deterministic_algorithms(True,warn_only=False);torch.backends.cudnn.deterministic=True
         torch.backends.cudnn.benchmark=False;torch.backends.cuda.matmul.allow_tf32=False;torch.backends.cudnn.allow_tf32=False
         panel=read(root/'private/panel.json')
         if len(panel)!=8 or len({r['group_id'] for r in panel})!=8 or any('mask_path' in r for r in panel):raise ValueError('eight content-only stream records required')
@@ -76,7 +78,8 @@ def worker(c):
             head=Field().cuda().eval().requires_grad_(False);head.load_state_dict(payload['state_dict']);heads[arm]=head
         before={n:p._version for n,p in base.named_parameters()};buffers={n:b.clone() for n,b in base.named_buffers()}
         images=[read_pixels(r['image_path'],'fundus',r['image_size']) for r in panel]
-        oldrows=read(headroot/'private/predictions.json');lookup={(r['pair'],r['condition'],r['arm']):r['index'] for r in oldrows if r['mode']=='DIRECT'}
+        oldrows=read(headroot/'private/predictions.json') if c.get('check_legacy_parity',True) else []
+        lookup={(r['pair'],r['condition'],r['arm']):r['index'] for r in oldrows if r['mode']=='DIRECT'}
         legacy_names=dict(CURRENT_BN='B0',D_OLD='D_OLD',R_OLD='R',R_SHUFFLE_OLD='R_SHUFFLE')
         cache={};diags={};records=[];step_rows=[];reset_predictions={};reset_mismatches=0
         def prediction(z):return z.detach().cpu().numpy()[0]>=0
@@ -98,7 +101,7 @@ def worker(c):
                     outputs=dict(SOURCE_EVAL=ze,CURRENT_BN=zc,D_OLD=direct_logits(zc,ref,heads['D'](ref.inputs)),R_OLD=correction(zc,ref,heads['R'],'R'),R_SHUFFLE_OLD=correction(zc,ref,heads['R'],'R_SHUFFLE'))
                     for arm,z in outputs.items():
                         pred=prediction(z);cache[case,k,arm]=pred;diags[case,k,arm]=diagnostics(z,ze)
-                        if arm in legacy_names:
+                        if arm in legacy_names and c.get('check_legacy_parity',True):
                             ix=lookup[case,k,legacy_names[arm]];old=(headroot/'predictions'/f'{ix:04d}.bits').read_bytes()
                             if np.packbits(pred).tobytes()!=old:raise ValueError('legacy reference parity failed: '+arm)
                             status['legacy_parity']+=1
@@ -110,11 +113,15 @@ def worker(c):
         save(root/'RUN_STATE.json',status)
         normalization_inventory=None;norm_checks=[];core_forwards=0;native_forwards=0;native_backwards=0
         trajectories=[]
-        run_arms=('STRAT','RANDOM','ALL','GLOBAL','NOANCHOR','ENT_NORM','RG','ENT')
+        run_arms=c.get('core_arms',('STRAT','RANDOM','ALL','GLOBAL','NOANCHOR','ENT_NORM','RG','ENT'))
+        expected=c.get('expected_readouts',EXPECTED);core_arrivals=c.get('core_arrivals',1280);native_arrivals=c.get('native_arrivals',320)
+        qualification_arrivals=0;qualification_exact=None
         for arm in run_arms:
-            for policy in POLICIES:
+            for policy in c.get('policies_by_arm',{}).get(arm,POLICIES):
                 for order in range(2):
                     host=Host(base,arm)
+                    repeat_first=bool(c.get('repeat_first_reset')) and (arm,policy,order)==('STRAT','RESET',0)
+                    repeat_logits=[]
                     inventory=(len(host.names),sum(p.numel() for p in host.params))
                     if inventory!=(82,19136):raise ValueError('fixed affine inventory differs')
                     normalization_inventory=inventory
@@ -122,13 +129,14 @@ def worker(c):
                     for pos,arrival in enumerate(schedule(order)):
                         guard();case=arrival['case'];k=arrival['condition']
                         if policy=='RESET':host.reset()
-                        elif c.get('reset_optimizer_per_arrival'):host.reset_optimizer()
+                        elif policy=='FRESH' or c.get('reset_optimizer_per_arrival'):host.reset_optimizer()
                         pixels=perturb(images[case],FINAL[k],SEED+case)
                         w,s=intensity_views(pixels,SEED+10000+case*10+k)
                         x,xw,xs=[normalize(p).cuda() for p in (pixels,w,s)]
                         with torch.no_grad():z0=base(x)[0]
                         pre,post,gate,gate_pred,d=host.step(x,xw,xs,z0,SEED+20000+case*10+k)
                         core_forwards+=d['forwards']+1
+                        if repeat_first:repeat_logits.extend((pre.detach().cpu(),post.detach().cpu()))
                         for stage,z in (('PRE',pre),('POST',post)):
                             pred=prediction(z)
                             if policy=='RESET' and arrival['block'] in (0,4):
@@ -144,12 +152,27 @@ def worker(c):
                         status['arrivals']+=1
                         if arm=='STRAT' and policy=='RESET' and order==0 and pos==1:
                             avg=(time.time()-qualification_start)/2
-                            projection=time.time()-started+(1280-2)*avg*1.8+320*.25+60
+                            if c.get('strict_deterministic'):
+                                projection=time.time()-started+(core_arrivals+40-2)*avg*1.35+native_arrivals+60
+                            else:projection=time.time()-started+(1280-2)*avg*1.8+320*.25+60
                             admitted=projection<=c['gpu_cap_seconds']-20
                             save(root/'QUALIFICATION.json',dict(status='PASS' if admitted else 'NOT_ADMITTED',projected_worker_seconds=projection,measured_arrival_seconds=avg,affine_parameters=inventory[1],affine_tensors=inventory[0],first_two_arrivals_in_budget=True,legacy_parity=status['legacy_parity'],final_label_reads=0))
                             if not admitted:raise TimeoutError('full frozen matrix not admitted')
                             status['status']='GENERATING'
                         if pos%8==7:status.update(current_arm=arm,policy=policy,order=order,position=pos+1);save(root/'RUN_STATE.json',status)
+                    if repeat_first:
+                        probe=Host(base,arm)
+                        for pos,arrival in enumerate(schedule(order)):
+                            guard();case=arrival['case'];k=arrival['condition'];probe.reset()
+                            pixels=perturb(images[case],FINAL[k],SEED+case);w,s=intensity_views(pixels,SEED+10000+case*10+k)
+                            x,xw,xs=[normalize(p).cuda() for p in (pixels,w,s)]
+                            with torch.no_grad():z0=base(x)[0]
+                            ppre,ppost,_,_,pd=probe.step(x,xw,xs,z0,SEED+20000+case*10+k)
+                            if not torch.equal(ppre.cpu(),repeat_logits[2*pos]) or not torch.equal(ppost.cpu(),repeat_logits[2*pos+1]):raise ValueError('strict full RESET trajectory logit repeatability failed')
+                            core_forwards+=pd['forwards']+1;qualification_arrivals+=1
+                        if any(not torch.equal(v,probe.model.state_dict()[n]) for n,v in host.model.state_dict().items()):raise ValueError('strict full RESET model repeatability failed')
+                        qualification_exact=True;del probe,repeat_logits
+                        save(root/'FULL_REPEATABILITY.json',dict(status='PASS',arrivals=40,paired_readouts=80,logits_exact=True,model_state_exact=True,scope='Same-process STRAT RESET forward-order full stream only'))
                     trajectories.append(dict(arm=arm,policy=policy,order=order,arrivals=40,optimizer_steps=host.total_steps))
                     del host
         for steps in (1,2):
@@ -177,13 +200,14 @@ def worker(c):
                             if pos%8==7:status.update(current_arm=arm,policy=policy,order=order,position=pos+1);save(root/'RUN_STATE.json',status)
                         trajectories.append(dict(arm=arm,policy=policy,order=order,arrivals=40,optimizer_steps=40*steps))
                     finally:host.close()
-        if len(records)!=EXPECTED or len(step_rows)!=1280 or status['legacy_parity']!=128 or status['arrivals']!=1600:raise ValueError('fixed matrix incomplete')
+        if len(records)!=expected or len(step_rows)!=core_arrivals or status['legacy_parity']!=c.get('expected_legacy_parity',128) or status['arrivals']!=core_arrivals+native_arrivals:raise ValueError('fixed matrix incomplete')
+        if c.get('repeat_first_reset') and (qualification_exact is not True or qualification_arrivals!=40):raise ValueError('full repeatability qualification missing')
         if any(p._version!=before[n] or p.grad is not None for n,p in base.named_parameters()):raise ValueError('source anchor changed')
         if any(not torch.equal(b,buffers[n]) for n,b in base.named_buffers()):raise ValueError('source anchor buffers changed')
         save(root/'private/predictions.json',records);save(root/'private/updates.json',step_rows)
         matched=[v for v in norm_checks if v['arm'] in NORMALIZED]
-        save(root/'MECHANISM_AUDIT.json',dict(status='PASS',trajectories=trajectories,stream_arrivals=1600,core_update_events=2560,normalized_update_events=len(matched),normalized_events_matched=sum(v['norm_matched'] for v in matched),zero_proposals=sum(v['zero_proposal'] for v in norm_checks),reset_return_mask_differing_pixels=reset_mismatches,legacy_parity=128,core_adaptation_forwards=core_forwards,native_forwards=native_forwards,native_backwards=native_backwards,core_loss_backward_calls=2560,core_diagnostic_anchor_gradient_calls=2560,source_affine_inventory=normalization_inventory,source_anchor_immutable=True,reset_optimizer_per_arrival=bool(c.get('reset_optimizer_per_arrival')),retained_core_state='AFFINE_ONLY' if c.get('reset_optimizer_per_arrival') else 'AFFINE_AND_ADAM'))
-        save(root/'ACCESS_AUDIT.json',dict(source_image_files=len(opened),source_label_reads=0,evaluation_label_reads=0,prior_outcome_score_reads=0,new_source_training=False,method_inputs='Current image and source checkpoint only; retained core state: '+('affine parameters only' if c.get('reset_optimizer_per_arrival') else 'affine parameters and optimizer moments'),future_images_used_for_update=False,patient_independence=False,previously_exposed_development_contents=True))
+        save(root/'MECHANISM_AUDIT.json',dict(status='PASS',trajectories=trajectories,stream_arrivals=core_arrivals+native_arrivals,core_update_events=2*core_arrivals,qualification_arrivals=qualification_arrivals,qualification_exact=qualification_exact,qualification_update_events=2*qualification_arrivals,normalized_update_events=len(matched),normalized_events_matched=sum(v['norm_matched'] for v in matched),zero_proposals=sum(v['zero_proposal'] for v in norm_checks),reset_return_mask_differing_pixels=reset_mismatches,legacy_parity=status['legacy_parity'],core_adaptation_forwards=core_forwards,native_forwards=native_forwards,native_backwards=native_backwards,core_loss_backward_calls=2*(core_arrivals+qualification_arrivals),core_diagnostic_anchor_gradient_calls=2*(core_arrivals+qualification_arrivals),source_affine_inventory=normalization_inventory,source_anchor_immutable=True,reset_optimizer_per_arrival=bool(c.get('reset_optimizer_per_arrival')),retained_core_state='BY_POLICY_RESET_RETAIN_FRESH' if c.get('paired_state') else ('AFFINE_ONLY' if c.get('reset_optimizer_per_arrival') else 'AFFINE_AND_ADAM')))
+        save(root/'ACCESS_AUDIT.json',dict(source_image_files=len(opened),source_label_reads=0,evaluation_label_reads=0,prior_outcome_score_reads=0,new_source_training=False,method_inputs='Current image and source checkpoint only; retained core state: '+('by policy: RESET none, RETAIN affine and Adam, FRESH affine only' if c.get('paired_state') else ('affine parameters only' if c.get('reset_optimizer_per_arrival') else 'affine parameters and optimizer moments')),future_images_used_for_update=False,patient_independence=False,previously_exposed_development_contents=True))
         used=sum(p.stat().st_size for folder in ('private','predictions','gates','gate_predictions','logs') for p in (root/folder).rglob('*') if p.is_file())
         if used>c['output_cap_bytes']:raise ValueError('output cap')
         status.update(status='GPU_COMPLETE',output_bytes=used,peak_allocated_bytes=torch.cuda.max_memory_allocated())

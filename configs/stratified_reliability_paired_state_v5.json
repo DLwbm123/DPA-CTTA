@@ -1,0 +1,87 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "policies": [
+    "RESET",
+    "RETAIN"
+  ],
+  "steps_per_arrival": 2,
+  "adam_lr": 0.0001,
+  "matched_step_l2": 0.01,
+  "keep_fraction": 0.5,
+  "cue_weights": [
+    1,
+    1,
+    1
+  ],
+  "loss_weights": [
+    1,
+    1,
+    1,
+    1
+  ],
+  "expected_readouts": 2960,
+  "expected_legacy_parity": 0,
+  "primary": "STRAT_FRESH-STRAT_RETAIN:PRE",
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "future_rounds": "USER_AUTHORIZED_EVIDENCE_DRIVEN_CONTINUATION",
+  "numerical_projection": "DISTRIBUTED_FP32_ROUNDING",
+  "prior_experiment_status": "ENGINEERING_REPEATABILITY_PASS_WITH_LIMITED_SCOPE",
+  "protocol": "reports/stratified-reliability-paired-state-v5/PROTOCOL_ZH.md",
+  "paired_state": true,
+  "strict_deterministic": true,
+  "repeat_first_reset": true,
+  "reset_optimizer_per_arrival": false,
+  "check_legacy_parity": false,
+  "core_arrivals": 960,
+  "native_arrivals": 320,
+  "core_arms": [
+    "STRAT",
+    "RANDOM",
+    "NOANCHOR",
+    "ENT_NORM",
+    "RG"
+  ],
+  "policies_by_arm": {
+    "STRAT": [
+      "RESET",
+      "RETAIN",
+      "FRESH"
+    ],
+    "RANDOM": [
+      "RESET",
+      "RETAIN",
+      "FRESH"
+    ],
+    "NOANCHOR": [
+      "RESET",
+      "RETAIN"
+    ],
+    "ENT_NORM": [
+      "RESET",
+      "RETAIN"
+    ],
+    "RG": [
+      "RESET",
+      "RETAIN"
+    ]
+  }
+}
