@@ -1,0 +1,209 @@
+{
+  "status": "PASS",
+  "trajectories": [
+    {
+      "arm": "STRAT",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "STRAT",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "STRAT",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "STRAT",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "STRAT",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "STRAT",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "RANDOM",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "RANDOM",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "RANDOM",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "RANDOM",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "RANDOM",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "RANDOM",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "NOANCHOR",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "NOANCHOR",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "ENT_NORM",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "ENT_NORM",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "RG",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "RG",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW1",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW2",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    }
+  ],
+  "stream_arrivals": 1040,
+  "core_update_events": 1440,
+  "qualification_arrivals": 40,
+  "qualification_exact": true,
+  "qualification_update_events": 80,
+  "normalized_update_events": 1280,
+  "normalized_events_matched": 1280,
+  "zero_proposals": 0,
+  "reset_return_mask_differing_pixels": 0,
+  "legacy_parity": 0,
+  "core_adaptation_forwards": 6080,
+  "native_forwards": 4160,
+  "native_backwards": 480,
+  "core_loss_backward_calls": 1520,
+  "core_diagnostic_anchor_gradient_calls": 1520,
+  "source_affine_inventory": [
+    82,
+    19136
+  ],
+  "source_anchor_immutable": true,
+  "reset_optimizer_per_arrival": false,
+  "retained_core_state": "BY_POLICY_RESET_RETAIN_FRESH"
+}
