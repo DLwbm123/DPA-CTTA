@@ -1,0 +1,33 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "patient_independence": false,
+  "query_development_exposed": true,
+  "train_arms": [
+    "D_RETRAIN",
+    "R",
+    "R_BAND",
+    "R_GEOM"
+  ],
+  "episodes_per_arm": 200,
+  "supervised_label_visits_per_arm": 400,
+  "validation_episodes": [
+    50,
+    100,
+    150,
+    200
+  ],
+  "outer_adam_lr": 0.001,
+  "logit_residual_budget": 1.0,
+  "head_parameters": 3649,
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "expected_readouts": 672,
+  "expected_baseline_parity": 448,
+  "primary": "R-D_RETRAIN",
+  "rdc": false,
+  "engram": false,
+  "auto_expand": false,
+  "new_training": true
+}
