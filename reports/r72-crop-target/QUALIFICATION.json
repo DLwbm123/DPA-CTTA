@@ -1,0 +1,44 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "order": 0,
+      "arm": "NATIVE",
+      "repeated_state_exact": true,
+      "retained_parity": true
+    },
+    {
+      "order": 0,
+      "arm": "RESAMPLE",
+      "repeated_state_exact": true,
+      "retained_parity": null
+    },
+    {
+      "order": 0,
+      "arm": "CROP",
+      "repeated_state_exact": true,
+      "retained_parity": null
+    },
+    {
+      "order": 1,
+      "arm": "NATIVE",
+      "repeated_state_exact": true,
+      "retained_parity": true
+    },
+    {
+      "order": 1,
+      "arm": "RESAMPLE",
+      "repeated_state_exact": true,
+      "retained_parity": null
+    },
+    {
+      "order": 1,
+      "arm": "CROP",
+      "repeated_state_exact": true,
+      "retained_parity": null
+    }
+  ],
+  "estimated_formal_seconds": 3997.708511352539,
+  "peak_reserved_bytes": 1319108608,
+  "online_label_reads": 0
+}

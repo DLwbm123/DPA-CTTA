@@ -66,3 +66,7 @@ The tested current-mask prototype boundary signal is closed for integration into
 ## R71 finite entropy-seeking view selection
 
 [Completed report](../reports/r71-entropy-view/REPORT.md): 1,152 scored outputs with all qualification and retirement gates passed. SELECT-NATIVE -0.023882pp (CI [-0.069472,+0.024628], orders +0.095153/-0.142918); SELECT-RANDOM +0.231611pp (CI [+0.118083,+0.367471]). Gate false: selection improves on a degraded random-gamma arm but not on retained CW_LSO. SELECT uses nonidentity gamma on 380/384 arrivals, so identity collapse does not explain the outcome. Preserve native augmentation; no gamma/coefficient scans. This is finite selection, not TeSLA's learned policy or full method. No successor is registered yet; require a distinct mechanism and check prior teacher/marginal experiments before further allocation.
+
+## R72 crop-target transfer
+
+[Completed report](../reports/r72-crop-target/REPORT.md): all 1,152 outputs scored; CROP-NATIVE -0.550385pp (CI [-0.628960,-0.471993]), CROP-RESAMPLE -0.551319pp; both orders negative, worst primary cell -2.898193pp violates the original -2pp floor. RESAMPLE-NATIVE +0.000934pp is tiny. Keep R72 unchanged and closed for promotion. User authorized a fixed same-state target-quality/one-step mechanism diagnostic, retaining the crop settings and avoiding a parameter search; its result cannot retroactively change R72.
