@@ -8,7 +8,7 @@ def load(name):
     with (root/name).open() as f:return list(csv.DictReader(f))
 def write(name,rows):
     with (root/name).open('w',newline='') as f:
-        w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
+        w=csv.DictWriter(f,fieldnames=list(rows[0]),lineterminator="\n");w.writeheader();w.writerows(rows)
 results=json.loads((root/'RESULTS.json').read_text());cells=load('ALL_CELLS.csv');errors=load('DOMAIN_CHANNEL_ERRORS.csv')
 assert results['formal_updates']==3456 and len(cells)==384 and len(errors)==48
 contrasts={s['contrast']:s for s in results['contrasts']};domain=[];worst=[];violations=[];trajectories=[]
