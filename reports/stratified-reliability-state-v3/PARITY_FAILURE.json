@@ -1,0 +1,188 @@
+{
+  "status": "FROZEN_PARITY_FAILURE_DIAGNOSIS",
+  "total_checked": 2320,
+  "mismatched_readouts": 138,
+  "changed_pixels": 238,
+  "first_failure": {
+    "arm": "STRAT",
+    "policy": "RESET",
+    "stage": "POST",
+    "changed_pixels": 1
+  },
+  "groups": {
+    "SOURCE_EVAL:REFERENCE:STATIC": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "CURRENT_BN:REFERENCE:STATIC": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "D_OLD:REFERENCE:STATIC": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "R_OLD:REFERENCE:STATIC": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "R_SHUFFLE_OLD:REFERENCE:STATIC": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "STRAT:RESET:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "STRAT:RESET:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 3,
+      "changed_pixels": 4,
+      "max_changed": 2
+    },
+    "RANDOM:RESET:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "RANDOM:RESET:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 1,
+      "changed_pixels": 1,
+      "max_changed": 1
+    },
+    "ALL:RESET:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "ALL:RESET:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 1,
+      "changed_pixels": 1,
+      "max_changed": 1
+    },
+    "GLOBAL:RESET:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "GLOBAL:RESET:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "NOANCHOR:RESET:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "NOANCHOR:RESET:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "ENT_NORM:RESET:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "ENT_NORM:RESET:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 2,
+      "changed_pixels": 2,
+      "max_changed": 1
+    },
+    "RG:RESET:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "RG:RESET:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "ENT:RESET:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "ENT:RESET:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "CW1:RESET:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "CW1:RESET:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 1,
+      "changed_pixels": 1,
+      "max_changed": 1
+    },
+    "CW1:RETAIN:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 20,
+      "changed_pixels": 25,
+      "max_changed": 3
+    },
+    "CW1:RETAIN:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 25,
+      "changed_pixels": 43,
+      "max_changed": 5
+    },
+    "CW2:RESET:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "CW2:RESET:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 0,
+      "changed_pixels": 0,
+      "max_changed": 0
+    },
+    "CW2:RETAIN:PRE": {
+      "readouts": 80,
+      "mismatched_readouts": 39,
+      "changed_pixels": 78,
+      "max_changed": 7
+    },
+    "CW2:RETAIN:POST": {
+      "readouts": 80,
+      "mismatched_readouts": 46,
+      "changed_pixels": 83,
+      "max_changed": 5
+    }
+  }
+}
