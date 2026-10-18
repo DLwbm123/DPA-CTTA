@@ -2,7 +2,7 @@ import copy
 import unittest
 import torch
 from torch import nn
-from dpa_ctta.srg_ctta.method import Host,entropy,strata,select,objective,reduce_region,l2
+from dpa_ctta.srg_ctta.method import Host,entropy,strata,select,objective,reduce_region,l2,normalize_parameters
 
 
 class Toy(nn.Module):
@@ -13,6 +13,15 @@ class Toy(nn.Module):
 
 class RoutingTests(unittest.TestCase):
     def setUp(self): torch.set_num_threads(2);torch.manual_seed(20261019)
+
+    def test_actual_fp32_radius_and_direction(self):
+        before=[torch.randn(10000)*3,torch.randn(9136)*.1]
+        params=[nn.Parameter(v.clone()) for v in before]
+        with torch.no_grad():
+            for p in params:p.add_(torch.randn_like(p)*1e-4)
+        raw,actual,cosine=normalize_parameters(params,before)
+        self.assertGreater(raw,0);self.assertLessEqual(abs(actual-.01),5e-7);self.assertGreaterEqual(cosine,.999999)
+        self.assertEqual(normalize_parameters([nn.Parameter(torch.zeros(5))],[torch.zeros(5)]),(0.,0.,None))
 
     def test_batched_reductions_preserve_value_and_gradient(self):
         v=torch.randn(1,2,32,32,requires_grad=True);regions=strata(torch.rand_like(v));mask=torch.rand_like(v)>.5

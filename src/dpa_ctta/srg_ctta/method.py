@@ -68,6 +68,28 @@ def l2(tensors):
     return float(torch.cat([v.detach().reshape(-1) for v in tensors]).double().norm())
 
 
+@torch.no_grad()
+def normalize_parameters(params,before,target=.01):
+    delta=[(p-v).double() for p,v in zip(params,before)]
+    raw=l2(delta)
+    if raw<=1e-12:return raw,0.,None
+    desired=[d*(target/raw) for d in delta]
+    for _ in range(8):
+        for p,v,d in zip(params,before,desired):p.copy_(v.double()+d)
+        actual_delta=[(p-v).double() for p,v in zip(params,before)]
+        actual=l2(actual_delta)
+        if abs(actual-target)<=5e-7:break
+        if actual<=1e-12:raise ValueError('nonzero proposal lost to parameter precision')
+        # Accumulate the correction in the FP64 intended offset so a quantization
+        # plateau cannot silently discard each successive radius correction.
+        desired=[d*(target/actual) for d in desired]
+    if abs(actual-target)>5e-7:raise ValueError(f'actual affine step budget failed: raw={raw:.12g}, actual={actual:.12g}')
+    dot=float(torch.cat([d.flatten() for d in delta]).dot(torch.cat([d.flatten() for d in actual_delta])))
+    cosine=dot/(raw*actual)
+    if cosine<.999999:raise ValueError('rounded proposal direction changed')
+    return raw,actual,cosine
+
+
 def objective(z,pw,ps,z0,mask,regions,arm):
     p=z.sigmoid();balanced=arm in ('STRAT','RANDOM','ALL','GLOBAL','NOANCHOR')
     target=(pw+ps).detach()/2
@@ -134,18 +156,14 @@ class Host:
             if any(p.grad is None for p in self.params) or not bool(torch.stack([torch.isfinite(p.grad).all() for p in self.params]).all()): raise ValueError('invalid affine gradient')
             before=[p.detach().clone() for p in self.params];self.opt.step()
             with torch.no_grad():
-                delta=[p-v for p,v in zip(self.params,before)]
-                raw=l2(delta)
-                if self.arm in NORMALIZED and raw>1e-12:
-                    for p,v,d in zip(self.params,before,delta): p.copy_(v+d*(.01/raw))
-                actual=l2([p-v for p,v in zip(self.params,before)])
-                if self.arm in NORMALIZED and raw>1e-12 and abs(actual-.01)>5e-7: raise ValueError('actual affine step budget failed')
+                if self.arm in NORMALIZED:raw,actual,cosine=normalize_parameters(self.params,before)
+                else:raw=actual=l2([p-v for p,v in zip(self.params,before)]);cosine=None
             self.total_steps+=1;self.segment_steps+=1
             count=torch.stack(regions).sum((-2,-1))
             kept=(torch.stack(regions)&mask[None]).sum((-2,-1))
             fractions=torch.where(count>0,kept/count.clamp_min(1),-1).squeeze(1).cpu().tolist()
             coverage=[[v if v>=0 else None for v in row] for row in fractions]
-            logs.append(dict(loss=float(loss.detach()),**{k:float(v.detach()) for k,v in terms.items()},anchor_gradient_norm=anchor_norm,raw_step_norm=raw,actual_step_norm=actual,norm_matched=bool(abs(actual-.01)<=5e-7) if self.arm in NORMALIZED else None,zero_proposal=bool(raw<=1e-12),gate_fraction=float(mask.float().mean()),stratum_gate_fraction=coverage))
+            logs.append(dict(loss=float(loss.detach()),**{k:float(v.detach()) for k,v in terms.items()},anchor_gradient_norm=anchor_norm,raw_step_norm=raw,actual_step_norm=actual,direction_cosine=cosine,norm_matched=bool(abs(actual-.01)<=5e-7) if self.arm in NORMALIZED else None,zero_proposal=bool(raw<=1e-12),gate_fraction=float(mask.float().mean()),stratum_gate_fraction=coverage))
         with torch.no_grad(): post=self.forward(x).detach()
         names=dict(self.model.named_parameters())
         if any(names[n]._version!=v for n,v in self.fixed.items()): raise ValueError('non-affine parameters changed')
