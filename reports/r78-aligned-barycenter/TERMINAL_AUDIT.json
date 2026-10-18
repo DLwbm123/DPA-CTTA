@@ -1,0 +1,59 @@
+{
+  "status": "COMPLETE",
+  "checked_at": 1792341022.7227023,
+  "workers": [
+    {
+      "worker": "qualify_worker0",
+      "arrivals": 0,
+      "qualification_updates": 11,
+      "completed_jobs": 0,
+      "online_label_reads": 0,
+      "source_image_reads": 0,
+      "boundary_denial_probes": 2,
+      "image_accesses": 2,
+      "body_seconds": 24.39681363105774
+    },
+    {
+      "worker": "formal_worker0",
+      "arrivals": 1728,
+      "qualification_updates": 0,
+      "completed_jobs": 9,
+      "online_label_reads": 0,
+      "source_image_reads": 0,
+      "boundary_denial_probes": 2,
+      "image_accesses": 1728,
+      "body_seconds": 1975.704826116562
+    },
+    {
+      "worker": "formal_worker1",
+      "arrivals": 1728,
+      "qualification_updates": 0,
+      "completed_jobs": 9,
+      "online_label_reads": 0,
+      "source_image_reads": 0,
+      "boundary_denial_probes": 2,
+      "image_accesses": 1728,
+      "body_seconds": 1974.5193567276
+    }
+  ],
+  "formal_trajectories": 18,
+  "formal_updates": 3456,
+  "predictions": 6912,
+  "all_registered_children_exit_zero": true,
+  "all_registered_pids_absent": true,
+  "registered_pids_absent_from_gpu": true,
+  "scorer_started_after_all_GPU_children_retired": true,
+  "historical_native_masks_exact": true,
+  "source_image_reads": 0,
+  "online_label_reads": 0,
+  "disk_KiB": 563588,
+  "output_cap_bytes": 1073741824,
+  "within_GPU_budget": true,
+  "within_wall_deadline": true,
+  "gpu_process_seconds": 3994.902447938919,
+  "cpu_process_seconds": 45.61535334587097,
+  "formal_wall_seconds": 2007.6394724845886,
+  "completed_CST": "2026-10-19T00:24:28.414579+08:00",
+  "controller_exit_code_independently_recorded": false,
+  "automatic_followup": false
+}
