@@ -1,0 +1,45 @@
+{
+  "attempts": [
+    {
+      "mode": "worker",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "started": 1792307019.532299,
+      "ended": 1792307830.9377267,
+      "gpu_worker_seconds": 811.4025123119354,
+      "cpu_worker_seconds": 0.0
+    },
+    {
+      "mode": "score",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "started": 1792307830.9403272,
+      "ended": 1792307843.6807048,
+      "gpu_worker_seconds": 0.0,
+      "cpu_worker_seconds": 12.737474918365479
+    }
+  ],
+  "gpu_worker_seconds": 811.4025123119354,
+  "cpu_worker_seconds": 21.615954160690308,
+  "preparation_cpu_seconds": 8.878479242324829,
+  "all_workers_retired": true,
+  "preparation_attempts": [
+    {
+      "kind": "self_check",
+      "exit_code": 0,
+      "seconds": 2.596470832824707
+    },
+    {
+      "kind": "import_check",
+      "exit_code": 1,
+      "seconds": 2.228914976119995,
+      "reason": "Packaging omitted existing R9/R10 specification files; no GPU inference"
+    },
+    {
+      "kind": "import_check_after_packaging_fix",
+      "exit_code": 0,
+      "seconds": 4.053093433380127
+    }
+  ],
+  "source_commit": "c74eda63a2ca0dcd51bc194b507640393f58e377"
+}
