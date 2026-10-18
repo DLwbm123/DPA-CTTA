@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "order": 0,
+      "arm": "NATIVE",
+      "repeated_state_exact": true,
+      "retained_parity": true
+    },
+    {
+      "order": 0,
+      "arm": "ENGRAM",
+      "repeated_state_exact": true,
+      "retained_parity": null
+    },
+    {
+      "order": 1,
+      "arm": "NATIVE",
+      "repeated_state_exact": true,
+      "retained_parity": true
+    },
+    {
+      "order": 1,
+      "arm": "ENGRAM",
+      "repeated_state_exact": true,
+      "retained_parity": null
+    },
+    {
+      "constant_key_12_steps_exact": true,
+      "grown_rank": 1
+    }
+  ],
+  "estimated_formal_seconds": 772.2518005371094,
+  "peak_reserved_bytes": 1249902592,
+  "online_label_reads": 0
+}
