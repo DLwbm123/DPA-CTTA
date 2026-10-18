@@ -70,3 +70,7 @@ The tested current-mask prototype boundary signal is closed for integration into
 ## R72 crop-target transfer
 
 [Completed report](../reports/r72-crop-target/REPORT.md): all 1,152 outputs scored; CROP-NATIVE -0.550385pp (CI [-0.628960,-0.471993]), CROP-RESAMPLE -0.551319pp; both orders negative, worst primary cell -2.898193pp violates the original -2pp floor. RESAMPLE-NATIVE +0.000934pp is tiny. Keep R72 unchanged and closed for promotion. User authorized a fixed same-state target-quality/one-step mechanism diagnostic, retaining the crop settings and avoiding a parameter search; its result cannot retroactively change R72.
+
+## R73 same-state crop mechanism
+
+[Completed diagnostic](../reports/r73-crop-mechanism/REPORT.md):96 pairs,384 scored outputs and288 soft targets; exact COMPUTE_ONLY/full-state qualifications passed. CROP-NATIVE Brier reduction +.000571924(all), -.018870565(foreground), +.019874155(boundary); foreground worsens in all16 cells. Foreground corrected/spoiled fractions .004016%/2.120290%. One-step Dice -.002655742pp (CI[-.005560141,-.000224346]), both anchors negative; CROP-NO_UPDATE interval crosses zero. Target, update and joint gates fail. Mixed local correction is not region-robust improved supervision, so cannot isolate a claim that BN wastes a proven-better target. Combined with unchanged R72 negative result, close this fixed crop route, no automatic scale/count/weight/LR sweep or new trajectory. Late-state diagnostic differs from R72 states and cannot explain every cumulative step.

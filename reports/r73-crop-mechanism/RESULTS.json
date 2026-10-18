@@ -1,0 +1,264 @@
+{
+  "status": "COMPLETE",
+  "target_quality_supported": false,
+  "one_step_supported": false,
+  "joint_mechanism_supported": false,
+  "does_not_reverse_R72": true,
+  "independent_validation": false,
+  "target_brier_reduction": [
+    {
+      "mean": 0.0005719243887059248,
+      "ci95": [
+        0.00022211978101955936,
+        0.0009334847679434044
+      ],
+      "anchor_mean": [
+        0.000525450302778924,
+        0.000618398474632925
+      ],
+      "contrast": "CROP-NATIVE",
+      "region": "all",
+      "corrected_fraction": 0.002089858055114746,
+      "spoiled_fraction": 0.00199584166208903
+    },
+    {
+      "mean": -0.018870565097152504,
+      "ci95": [
+        -0.02044000515003753,
+        -0.017367531451874346
+      ],
+      "anchor_mean": [
+        -0.018624548997143508,
+        -0.019116581197161496
+      ],
+      "contrast": "CROP-NATIVE",
+      "region": "foreground",
+      "corrected_fraction": 4.016086633444577e-05,
+      "spoiled_fraction": 0.02120289760374902
+    },
+    {
+      "mean": 0.01987415469329853,
+      "ci95": [
+        0.01591322926469061,
+        0.02408071079768819
+      ],
+      "anchor_mean": [
+        0.02013510470414367,
+        0.019613204682453398
+      ],
+      "contrast": "CROP-NATIVE",
+      "region": "boundary_r3",
+      "corrected_fraction": 0.024024736265562775,
+      "spoiled_fraction": 0.025000874417067807
+    },
+    {
+      "mean": 0.0005568154189539801,
+      "ci95": [
+        0.00020692911214744813,
+        0.0009191297683017586
+      ],
+      "anchor_mean": [
+        0.0005101946087472998,
+        0.0006034362291606602
+      ],
+      "contrast": "CROP-RESAMPLE",
+      "region": "all",
+      "corrected_fraction": 0.0020867188771565757,
+      "spoiled_fraction": 0.001998643080393473
+    },
+    {
+      "mean": -0.018946806691659452,
+      "ci95": [
+        -0.020518457183034213,
+        -0.01743760920940794
+      ],
+      "anchor_mean": [
+        -0.018699874133602686,
+        -0.019193739249716218
+      ],
+      "contrast": "CROP-RESAMPLE",
+      "region": "foreground",
+      "corrected_fraction": 3.806787972730367e-05,
+      "spoiled_fraction": 0.021240521734445194
+    },
+    {
+      "mean": 0.01967725395551501,
+      "ci95": [
+        0.015724037188760722,
+        0.02387710362127045
+      ],
+      "anchor_mean": [
+        0.01993490097040772,
+        0.019419606940622298
+      ],
+      "contrast": "CROP-RESAMPLE",
+      "region": "boundary_r3",
+      "corrected_fraction": 0.024018288134946525,
+      "spoiled_fraction": 0.024991605596422328
+    },
+    {
+      "mean": 1.5108969751944577e-05,
+      "ci95": [
+        1.4137494758243586e-05,
+        1.604698851327395e-05
+      ],
+      "anchor_mean": [
+        1.525569403162449e-05,
+        1.4962245472264663e-05
+      ],
+      "contrast": "RESAMPLE-NATIVE",
+      "region": "all",
+      "corrected_fraction": 6.628036499023438e-05,
+      "spoiled_fraction": 6.0339768727620445e-05
+    },
+    {
+      "mean": 7.624159450694717e-05,
+      "ci95": [
+        6.673406910981968e-05,
+        8.556898524926635e-05
+      ],
+      "anchor_mean": [
+        7.532513645917767e-05,
+        7.715805255471666e-05
+      ],
+      "contrast": "RESAMPLE-NATIVE",
+      "region": "foreground",
+      "corrected_fraction": 0.00034438327789292116,
+      "spoiled_fraction": 0.0003046661605896129
+    },
+    {
+      "mean": 0.00019690073778352323,
+      "ci95": [
+        0.0001761526613764591,
+        0.00021999944888939315
+      ],
+      "anchor_mean": [
+        0.00020020373373594446,
+        0.00019359774183110197
+      ],
+      "contrast": "RESAMPLE-NATIVE",
+      "region": "boundary_r3",
+      "corrected_fraction": 0.0008734875390322227,
+      "spoiled_fraction": 0.0008763082290614534
+    }
+  ],
+  "dice_contrasts": [
+    {
+      "mean": -0.0026557422962614576,
+      "ci95": [
+        -0.005560140790234425,
+        -0.00022434597156590033
+      ],
+      "anchor_mean": [
+        -0.0016358501826770528,
+        -0.0036756344098458626
+      ],
+      "contrast": "CROP-NATIVE",
+      "endpoint": "update_Dice_pp"
+    },
+    {
+      "mean": 0.1199204846175433,
+      "ci95": [
+        -0.12654145800139868,
+        0.3519822622650906
+      ],
+      "anchor_mean": [
+        0.13865921914297163,
+        0.10118175009211498
+      ],
+      "contrast": "CROP-NATIVE",
+      "endpoint": "target_Dice_pp"
+    },
+    {
+      "mean": -0.00264992610497213,
+      "ci95": [
+        -0.005554470003727329,
+        -0.00022035863639106236
+      ],
+      "anchor_mean": [
+        -0.0016358501826770528,
+        -0.0036640020272672067
+      ],
+      "contrast": "CROP-RESAMPLE",
+      "endpoint": "update_Dice_pp"
+    },
+    {
+      "mean": 0.11456256084350865,
+      "ci95": [
+        -0.13143446823019575,
+        0.34720149299307124
+      ],
+      "anchor_mean": [
+        0.132300816347805,
+        0.09682430533921231
+      ],
+      "contrast": "CROP-RESAMPLE",
+      "endpoint": "target_Dice_pp"
+    },
+    {
+      "mean": -5.81619128932805e-06,
+      "ci95": [
+        -1.7448573867984152e-05,
+        0.0
+      ],
+      "anchor_mean": [
+        0.0,
+        -1.16323825786561e-05
+      ],
+      "contrast": "RESAMPLE-NATIVE",
+      "endpoint": "update_Dice_pp"
+    },
+    {
+      "mean": 0.005357923774034694,
+      "ci95": [
+        0.0028419328247801016,
+        0.007835191815047734
+      ],
+      "anchor_mean": [
+        0.006358402795166714,
+        0.004357444752902673
+      ],
+      "contrast": "RESAMPLE-NATIVE",
+      "endpoint": "target_Dice_pp"
+    },
+    {
+      "mean": 0.0035192282559990593,
+      "ci95": [
+        -0.001515510021128012,
+        0.010212202090095544
+      ],
+      "anchor_mean": [
+        0.0013364231082350075,
+        0.005702033403763111
+      ],
+      "contrast": "NATIVE-NO_UPDATE",
+      "endpoint": "update_Dice_pp"
+    },
+    {
+      "mean": 0.003513412064709731,
+      "ci95": [
+        -0.0015213262124173402,
+        0.010212056685313312
+      ],
+      "anchor_mean": [
+        0.0013364231082350075,
+        0.005690401021184455
+      ],
+      "contrast": "RESAMPLE-NO_UPDATE",
+      "endpoint": "update_Dice_pp"
+    },
+    {
+      "mean": 0.0008634859597376013,
+      "ci95": [
+        -0.0028313478195128093,
+        0.00520454718637126
+      ],
+      "anchor_mean": [
+        -0.00029942707444204536,
+        0.002026398993917248
+      ],
+      "contrast": "CROP-NO_UPDATE",
+      "endpoint": "update_Dice_pp"
+    }
+  ]
+}
