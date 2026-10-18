@@ -10,7 +10,7 @@ from ..r78_cross_patient.score import metric,interval,csvout
 def score(c):
     from ..source_io import read_mask
     root=Path(c['output_root']);started=time.time()
-    retirement=read(root/'processes/worker.json');state=read(root/'RUN_STATE.json')
+    retirement=read(root/'processes'/('completion.json' if c.get('reuse_selected_heads_only') else 'worker.json'));state=read(root/'RUN_STATE.json')
     if os.environ.get('CUDA_VISIBLE_DEVICES')!='' or retirement['active'] or retirement['exit_code']:
         raise ValueError('retired successful GPU worker and CPU-only scoring required')
     if state['status']!='GPU_COMPLETE' or state['predictions']!=672 or state['baseline_parity']!=448:

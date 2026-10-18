@@ -67,44 +67,55 @@ def worker(c):
             with torch.no_grad():
                 x=normalize(pixels).cuda();z=host(x,host.zero());ref=reference(x,z)
             return z,ref
-        training_started=time.time()
-        for i,spec in enumerate(schedule):
-            guard()
-            for opt in opts.values(): opt.zero_grad(set_to_none=True)
-            losses={a:0. for a in TRAIN}
-            for index,noise in zip(spec['pair'],spec['noise_seeds']):
-                z,ref=base(perturb(images['train'][index],spec['appearance'],noise))
-                for arm in TRAIN:
-                    loss=supervision(correction(z,ref,heads[arm],arm),labels['train'][index])/2
-                    if not torch.isfinite(loss): raise ValueError('nonfinite source loss')
-                    loss.backward();losses[arm]+=float(loss.detach())
+        if c.get('reuse_selected_heads_only'):
+            summary=read(root/'TRAINING_SUMMARY.json')
+            if summary['total_training_episodes']!=800 or summary['total_supervised_label_visits']!=1600:
+                raise ValueError('complete original training required')
             for arm in TRAIN:
-                if any(p.grad is None or not torch.isfinite(p.grad).all() for p in heads[arm].parameters()):
-                    raise ValueError('missing/nonfinite source gradient')
-                norm=sum(float(p.grad.square().sum()) for p in heads[arm].parameters())**.5
-                opts[arm].step();history[arm].append(dict(loss=losses[arm],gradient_norm=norm))
-            status['training_episodes']+=4
-            if i==1:
-                projected=time.time()-started+198*(time.time()-training_started)/2*2+300
-                if projected>c['gpu_cap_seconds']-20: raise TimeoutError('training not admitted by measured first episodes')
-                save(root/'QUALIFICATION.json',dict(status='PASS',projected_worker_seconds=projected,head_parameters={a:sum(p.numel() for p in h.parameters()) for a,h in heads.items()},backbone_frozen=True,first_two_episodes_in_budget=True,final_label_reads=0))
-                status['status']='TRAINING'
-            if (i+1)%50==0:
-                validation={a:[] for a in TRAIN}
-                for pair in range(4):
-                    for k,s in enumerate(VALIDATION):
-                        z,ref=base(perturb(images['validation'][pair+4],s,SEED+2000+pair))
-                        with torch.no_grad():
-                            for arm in TRAIN: validation[arm].append(float(dice(correction(z,ref,heads[arm],arm),labels['validation'][pair+4])))
+                payload=torch.load(root/'private'/f'head_{arm}.pt',map_location='cpu',weights_only=True)
+                if payload['selected_episode']!=summary['arms'][arm]['selected_episode']:
+                    raise ValueError('original validation selection changed')
+                heads[arm].load_state_dict(payload['state_dict']);heads[arm].eval().requires_grad_(False)
+            status.update(training_episodes=800,training_episodes_this_process=0,reused_original_selected_heads=True)
+        else:
+            training_started=time.time()
+            for i,spec in enumerate(schedule):
+                guard()
+                for opt in opts.values(): opt.zero_grad(set_to_none=True)
+                losses={a:0. for a in TRAIN}
+                for index,noise in zip(spec['pair'],spec['noise_seeds']):
+                    z,ref=base(perturb(images['train'][index],spec['appearance'],noise))
+                    for arm in TRAIN:
+                        loss=supervision(correction(z,ref,heads[arm],arm),labels['train'][index])/2
+                        if not torch.isfinite(loss): raise ValueError('nonfinite source loss')
+                        loss.backward();losses[arm]+=float(loss.detach())
                 for arm in TRAIN:
-                    value=float(np.mean(validation[arm]))
-                    if value>best[arm][0]: best[arm]=(value,i+1,copy.deepcopy(heads[arm].state_dict()))
-                    save(root/'private'/f'training_{arm}.json',dict(steps=history[arm],validation_episode=i+1,validation_dice=value,selected_episode=best[arm][1]))
-                status['current_episode']=i+1;save(root/'RUN_STATE.json',status)
-        for arm in TRAIN:
-            heads[arm].load_state_dict(best[arm][2]);heads[arm].eval().requires_grad_(False)
-            torch.save(dict(state_dict=best[arm][2],selected_episode=best[arm][1]),root/'private'/f'head_{arm}.pt')
-        save(root/'TRAINING_SUMMARY.json',dict(arms={a:dict(episodes=200,supervised_label_visits=400,validation_readouts=64,selected_episode=best[a][1],validation_dice=best[a][0],first_loss=history[a][0]['loss'],last_loss=history[a][-1]['loss'],first_gradient_norm=history[a][0]['gradient_norm'],last_gradient_norm=history[a][-1]['gradient_norm']) for a in TRAIN},total_training_episodes=800,total_supervised_label_visits=1600,parameter_count_per_head=3649))
+                    if any(p.grad is None or not torch.isfinite(p.grad).all() for p in heads[arm].parameters()):
+                        raise ValueError('missing/nonfinite source gradient')
+                    norm=sum(float(p.grad.square().sum()) for p in heads[arm].parameters())**.5
+                    opts[arm].step();history[arm].append(dict(loss=losses[arm],gradient_norm=norm))
+                status['training_episodes']+=4
+                if i==1:
+                    projected=time.time()-started+198*(time.time()-training_started)/2*2+300
+                    if projected>c['gpu_cap_seconds']-20: raise TimeoutError('training not admitted by measured first episodes')
+                    save(root/'QUALIFICATION.json',dict(status='PASS',projected_worker_seconds=projected,head_parameters={a:sum(p.numel() for p in h.parameters()) for a,h in heads.items()},backbone_frozen=True,first_two_episodes_in_budget=True,final_label_reads=0))
+                    status['status']='TRAINING'
+                if (i+1)%50==0:
+                    validation={a:[] for a in TRAIN}
+                    for pair in range(4):
+                        for k,s in enumerate(VALIDATION):
+                            z,ref=base(perturb(images['validation'][pair+4],s,SEED+2000+pair))
+                            with torch.no_grad():
+                                for arm in TRAIN: validation[arm].append(float(dice(correction(z,ref,heads[arm],arm),labels['validation'][pair+4])))
+                    for arm in TRAIN:
+                        value=float(np.mean(validation[arm]))
+                        if value>best[arm][0]: best[arm]=(value,i+1,copy.deepcopy(heads[arm].state_dict()))
+                        save(root/'private'/f'training_{arm}.json',dict(steps=history[arm],validation_episode=i+1,validation_dice=value,selected_episode=best[arm][1]))
+                    status['current_episode']=i+1;save(root/'RUN_STATE.json',status)
+            for arm in TRAIN:
+                heads[arm].load_state_dict(best[arm][2]);heads[arm].eval().requires_grad_(False)
+                torch.save(dict(state_dict=best[arm][2],selected_episode=best[arm][1]),root/'private'/f'head_{arm}.pt')
+            save(root/'TRAINING_SUMMARY.json',dict(arms={a:dict(episodes=200,supervised_label_visits=400,validation_readouts=64,selected_episode=best[a][1],validation_dice=best[a][0],first_loss=history[a][0]['loss'],last_loss=history[a][-1]['loss'],first_gradient_norm=history[a][0]['gradient_norm'],last_gradient_norm=history[a][-1]['gradient_norm']) for a in TRAIN},total_training_episodes=800,total_supervised_label_visits=1600,parameter_count_per_head=3649))
         frozen={}
         for arm,epoch in dict(X=100,P=100,F=100,D=150).items():
             payload=torch.load(prior/'private'/f'head_{arm}.pt',map_location='cpu',weights_only=True)
@@ -169,10 +180,34 @@ def worker(c):
         status.update(ended=time.time(),gpu_worker_seconds=time.time()-started);save(root/'RUN_STATE.json',status)
 
 
+def complete_controller(c):
+    """One engineering completion using already-trained heads; no training replay."""
+    from ..r51_same_state.run import run_child
+    root=Path(c['output_root'])
+    with (root/'COMPLETE_ONCE.json').open('x') as f:
+        import json
+        json.dump(dict(started=time.time(),pid=os.getpid()),f)
+    first=read(root/'INITIAL_RESOURCE_LEDGER.json')
+    if not first['all_workers_retired'] or len(first['attempts'])!=1 or first['attempts'][0]['exit_code']!=1:
+        raise ValueError('retired original failure required')
+    if not c.get('reuse_selected_heads_only'): raise ValueError('training replay prohibited')
+    attempts=list(first['attempts'])
+    diagnosis=read(root/'ENGINEERING_DIAGNOSIS.json')['seconds']
+    try:
+        remaining=c['gpu_cap_seconds']-first['gpu_worker_seconds']-diagnosis
+        attempts.append(run_child(c,'completion',remaining,True))
+        if attempts[-1]['exit_code']==0 and read(root/'RUN_STATE.json')['status']=='GPU_COMPLETE':
+            attempts.append(run_child(c,'score',c['cpu_cap_seconds'],False))
+    finally:
+        save(root/'RESOURCE_LEDGER.json',dict(attempts=attempts,all_workers_retired=True,no_scientific_retry=True,engineering_completion_attempts=1,training_replays=0,engineering_diagnosis_gpu_seconds=diagnosis,gpu_worker_seconds=sum(a['gpu_worker_seconds'] for a in attempts)+diagnosis,cpu_worker_seconds=sum(a['cpu_worker_seconds'] for a in attempts),gpu_cap_seconds=c['gpu_cap_seconds'],cpu_cap_seconds=c['cpu_cap_seconds']))
+    return 0 if len(attempts)==3 and all(a['exit_code']==0 for a in attempts[1:]) else 1
+
+
 if __name__=='__main__':
     c=read(os.environ['DIAG_CONFIG']);mode=os.environ['DIAG_MODE']
     if mode=='controller': sys.exit(controller(c))
-    elif mode=='worker': worker(c)
+    elif mode in ('worker','completion'): worker(c)
+    elif mode=='completion_controller': sys.exit(complete_controller(c))
     elif mode=='score':
         from .score import score
         score(c)
