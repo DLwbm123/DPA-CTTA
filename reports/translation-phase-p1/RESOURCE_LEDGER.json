@@ -1,0 +1,28 @@
+{
+  "attempts": [
+    {
+      "mode": "worker",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "started": 1792423542.8415203,
+      "ended": 1792423564.050037,
+      "gpu_worker_seconds": 21.197056531906128,
+      "cpu_worker_seconds": 0.0
+    },
+    {
+      "mode": "score",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "started": 1792423564.0723507,
+      "ended": 1792423608.9235442,
+      "gpu_worker_seconds": 0.0,
+      "cpu_worker_seconds": 44.84848475456238
+    }
+  ],
+  "all_workers_retired": true,
+  "no_retry": true,
+  "gpu_worker_seconds": 21.197056531906128,
+  "cpu_worker_seconds": 44.84848475456238,
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900
+}
