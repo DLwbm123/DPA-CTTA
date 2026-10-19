@@ -1,0 +1,69 @@
+{
+  "status": "PASS",
+  "arms": {
+    "NATIVE": {
+      "status": "PASS",
+      "R80_both_diagonal_state_output_exact": true,
+      "PRE_state_exact": true,
+      "initial_reference_state_exact": true,
+      "initial_q_W_oracle_exact": true,
+      "mixed_q_W_provenance_exact": true,
+      "mixed_independent_loss_gradient_Adam_state_exact": true,
+      "initial_mixed_diagonal_step_exact": true,
+      "continuous_Adam_age": true,
+      "one_backward_one_Adam": true,
+      "physical_mixed_forwards_verified": true,
+      "trainable_parameters": 19136
+    },
+    "VERTEX": {
+      "status": "PASS",
+      "R80_both_diagonal_state_output_exact": true,
+      "PRE_state_exact": true,
+      "initial_reference_state_exact": true,
+      "initial_q_W_oracle_exact": true,
+      "mixed_q_W_provenance_exact": true,
+      "mixed_independent_loss_gradient_Adam_state_exact": true,
+      "initial_mixed_diagonal_step_exact": true,
+      "continuous_Adam_age": true,
+      "one_backward_one_Adam": true,
+      "physical_mixed_forwards_verified": true,
+      "trainable_parameters": 19136
+    },
+    "BARY": {
+      "status": "PASS",
+      "R80_both_diagonal_state_output_exact": true,
+      "PRE_state_exact": true,
+      "initial_reference_state_exact": true,
+      "initial_q_W_oracle_exact": true,
+      "mixed_q_W_provenance_exact": true,
+      "mixed_independent_loss_gradient_Adam_state_exact": true,
+      "initial_mixed_diagonal_step_exact": true,
+      "continuous_Adam_age": true,
+      "one_backward_one_Adam": true,
+      "physical_mixed_forwards_verified": true,
+      "trainable_parameters": 19136
+    }
+  },
+  "qualification_physical_updates": 48,
+  "steady_step_seconds": {
+    "NATIVE/10": 1.0928425788879395,
+    "NATIVE/01": 1.0224809646606445,
+    "VERTEX/10": 1.0662446022033691,
+    "VERTEX/01": 1.0353736877441406,
+    "BARY/10": 0.9629712104797363,
+    "BARY/01": 1.0208497047424316
+  },
+  "cold_step_seconds": {
+    "NATIVE/10": 1.0049824714660645,
+    "NATIVE/01": 0.9429895877838135,
+    "VERTEX/10": 1.0913386344909668,
+    "VERTEX/01": 1.0722744464874268,
+    "BARY/10": 0.9165134429931641,
+    "BARY/01": 1.0651235580444336
+  },
+  "physical_forwards": 656,
+  "peak_allocated_MiB": 2122.9921875,
+  "peak_reserved_MiB": 2178.0,
+  "online_label_reads": 0,
+  "source_image_reads": 0
+}
