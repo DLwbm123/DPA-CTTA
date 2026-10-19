@@ -127,7 +127,8 @@ def worker(c, host_factory=Host):
             for policy in c.get('policies_by_arm',{}).get(arm,POLICIES):
                 for order in range(2):
                     host=host_factory(base,arm)
-                    repeat_first=bool(c.get('repeat_first_reset')) and (arm,policy,order)==(qualification_arm,'RESET',0)
+                    repeat_policy=c.get('repeat_policy','RESET')
+                    repeat_first=bool(c.get('repeat_first_reset')) and (arm,policy,order)==(qualification_arm,repeat_policy,0)
                     repeat_logits=[]
                     inventory=(len(host.names),sum(p.numel() for p in host.params))
                     if inventory!=(82,19136):raise ValueError('fixed affine inventory differs')
@@ -157,22 +158,28 @@ def worker(c, host_factory=Host):
                         step_rows.append(dict(index=gi,**arrival,order=order,arm=arm,policy=policy,**d))
                         norm_checks.extend(dict(arm=arm,**v) for v in d['steps'])
                         status['arrivals']+=1
-                        if arm==qualification_arm and policy=='RESET' and order==0 and pos==1:
-                            avg=(time.time()-qualification_start)/2
+                        qualification_count=6 if c.get('design_version')=='IMAGE_REPLAY_V1' else 2
+                        if arm==qualification_arm and policy=='RESET' and order==0 and pos==qualification_count-1:
+                            avg=(time.time()-qualification_start)/qualification_count
                             if c.get('design_version')=='MASKED_CALIBRATION_V1':
                                 projection=time.time()-started+(c['masked_arrivals']+40-2)*avg*1.35+c['plain_arrivals']+native_arrivals+60
+                            elif c.get('design_version')=='IMAGE_REPLAY_V1':
+                                projection=time.time()-started+(core_arrivals+40-qualification_count)*avg*1.35+native_arrivals+60
                             elif c.get('strict_deterministic'):
                                 projection=time.time()-started+(core_arrivals+40-2)*avg*1.35+native_arrivals+60
                             else:projection=time.time()-started+(1280-2)*avg*1.8+320*.25+60
                             admitted=projection<=c['gpu_cap_seconds']-20
-                            save(root/'QUALIFICATION.json',dict(status='PASS' if admitted else 'NOT_ADMITTED',projected_worker_seconds=projection,measured_arrival_seconds=avg,affine_parameters=inventory[1],affine_tensors=inventory[0],first_two_arrivals_in_budget=True,legacy_parity=status['legacy_parity'],final_label_reads=0))
+                            save(root/'QUALIFICATION.json',dict(status='PASS' if admitted else 'NOT_ADMITTED',projected_worker_seconds=projection,measured_arrival_seconds=avg,qualification_arrivals=qualification_count,affine_parameters=inventory[1],affine_tensors=inventory[0],first_two_arrivals_in_budget=True,legacy_parity=status['legacy_parity'],final_label_reads=0))
                             if not admitted:raise TimeoutError('full frozen matrix not admitted')
                             status['status']='GENERATING'
                         if pos%8==7:status.update(current_arm=arm,policy=policy,order=order,position=pos+1);save(root/'RUN_STATE.json',status)
                     if repeat_first:
                         probe=host_factory(base,arm)
                         for pos,arrival in enumerate(schedule(order)):
-                            guard();case=arrival['case'];k=arrival['condition'];probe.reset()
+                            guard();case=arrival['case'];k=arrival['condition']
+                            if repeat_policy=='RESET':probe.reset()
+                            elif repeat_policy=='FRESH':probe.reset_optimizer()
+                            else:raise ValueError('unsupported repeatability policy')
                             pixels=perturb(images[case],FINAL[k],SEED+case);w,s=intensity_views(pixels,SEED+10000+case*10+k)
                             x,xw,xs=[normalize(p).cuda() for p in (pixels,w,s)]
                             with torch.no_grad():z0=base(x)[0]
@@ -180,8 +187,12 @@ def worker(c, host_factory=Host):
                             if not torch.equal(ppre.cpu(),repeat_logits[2*pos]) or not torch.equal(ppost.cpu(),repeat_logits[2*pos+1]):raise ValueError('strict full RESET trajectory logit repeatability failed')
                             core_forwards+=pd['forwards']+1;qualification_arrivals+=1
                         if any(not torch.equal(v,probe.model.state_dict()[n]) for n,v in host.model.state_dict().items()):raise ValueError('strict full RESET model repeatability failed')
+                        extra_state_exact=None
+                        if c.get('design_version')=='IMAGE_REPLAY_V1':
+                            extra_state_exact=host.repeat_state_equal(probe)
+                            if not extra_state_exact:raise ValueError('full replay/Adam/RNG state repeatability failed')
                         qualification_exact=True;del probe,repeat_logits
-                        save(root/'FULL_REPEATABILITY.json',dict(status='PASS',arrivals=40,paired_readouts=80,logits_exact=True,model_state_exact=True,scope='Same-process '+qualification_arm+' RESET forward-order full stream only'))
+                        save(root/'FULL_REPEATABILITY.json',dict(status='PASS',arrivals=40,paired_readouts=80,logits_exact=True,model_state_exact=True,extra_state_exact=extra_state_exact,scope='Same-process '+qualification_arm+' '+repeat_policy+' forward-order full stream only'))
                     trajectories.append(dict(arm=arm,policy=policy,order=order,arrivals=40,optimizer_steps=host.total_steps))
                     del host
         for steps in (1,2):
@@ -217,6 +228,10 @@ def worker(c, host_factory=Host):
         matched=[v for v in norm_checks if v['arm'] in c.get('normalized_arms',NORMALIZED)]
         save(root/'MECHANISM_AUDIT.json',dict(status='PASS',trajectories=trajectories,stream_arrivals=core_arrivals+native_arrivals,core_update_events=steps_per_arrival*core_arrivals,qualification_arrivals=qualification_arrivals,qualification_exact=qualification_exact,qualification_update_events=steps_per_arrival*qualification_arrivals,normalized_update_events=len(matched),normalized_events_matched=sum(v['norm_matched'] for v in matched),zero_proposals=sum(v['zero_proposal'] for v in norm_checks),reset_return_mask_differing_pixels=reset_mismatches,legacy_parity=status['legacy_parity'],core_adaptation_forwards=core_forwards,native_forwards=native_forwards,native_backwards=native_backwards,core_loss_backward_calls=sum(r.get('loss_backward_calls',2) for r in step_rows)+qualification_arrivals*c.get('qualification_backward_calls',2),core_diagnostic_anchor_gradient_calls=sum(r.get('diagnostic_anchor_gradient_calls',2) for r in step_rows)+qualification_arrivals*c.get('qualification_anchor_calls',2),source_affine_inventory=normalization_inventory,source_anchor_immutable=True,reset_optimizer_per_arrival=bool(c.get('reset_optimizer_per_arrival')),retained_core_state='BY_POLICY_RESET_RETAIN_FRESH' if c.get('paired_state') else ('AFFINE_ONLY' if c.get('reset_optimizer_per_arrival') else 'AFFINE_AND_ADAM')))
         save(root/'ACCESS_AUDIT.json',dict(source_image_files=len(opened),source_label_reads=0,evaluation_label_reads=0,prior_outcome_score_reads=0,new_source_training=False,method_inputs='Current image and source checkpoint only; retained core state: '+('by policy: RESET none, RETAIN affine and Adam, FRESH affine only' if c.get('paired_state') else ('affine parameters only' if c.get('reset_optimizer_per_arrival') else 'affine parameters and optimizer moments')),future_images_used_for_update=False,patient_independence=False,previously_exposed_development_contents=True))
+        if c.get('design_version')=='IMAGE_REPLAY_V1':
+            access=read(root/'ACCESS_AUDIT.json')
+            access['method_inputs']='Current image, frozen source for selection only, at most two past normalized RGB inputs and source descriptors; affine history by RESET/FRESH policy'
+            save(root/'ACCESS_AUDIT.json',access)
         used=sum(p.stat().st_size for folder in (('private','predictions','gates','gate_predictions','logs')+(('probabilities',) if c.get('save_probabilities') else ())) for p in (root/folder).rglob('*') if p.is_file())
         if used>c['output_cap_bytes']:raise ValueError('output cap')
         status.update(status='GPU_COMPLETE',output_bytes=used,peak_allocated_bytes=torch.cuda.max_memory_allocated())

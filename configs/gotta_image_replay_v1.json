@@ -1,0 +1,77 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "steps_per_arrival": 1,
+  "adam_lr": 0.0001,
+  "matched_step_l2": 0.01,
+  "expected_readouts": 2000,
+  "expected_legacy_parity": 0,
+  "primary": "DIVERSITY_FRESH-RANDOM_MEMORY_FRESH:OC_PRE",
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "future_rounds": "USER_AUTHORIZED_EVIDENCE_DRIVEN_CONTINUATION",
+  "numerical_projection": "DISTRIBUTED_FP32_ROUNDING",
+  "protocol": "reports/gotta-image-replay-v1/PROTOCOL_ZH.md",
+  "paired_state": true,
+  "strict_deterministic": true,
+  "repeat_first_reset": true,
+  "reset_optimizer_per_arrival": false,
+  "check_legacy_parity": false,
+  "core_arrivals": 480,
+  "native_arrivals": 320,
+  "core_arms": [
+    "DIVERSITY",
+    "RANDOM_MEMORY",
+    "FIFO",
+    "CURRENT"
+  ],
+  "normalized_arms": [
+    "DIVERSITY",
+    "RANDOM_MEMORY",
+    "FIFO",
+    "CURRENT"
+  ],
+  "policies_by_arm": {
+    "DIVERSITY": [
+      "RESET",
+      "FRESH"
+    ],
+    "RANDOM_MEMORY": [
+      "FRESH"
+    ],
+    "FIFO": [
+      "FRESH"
+    ],
+    "CURRENT": [
+      "RESET",
+      "FRESH"
+    ]
+  },
+  "design_version": "IMAGE_REPLAY_V1",
+  "qualification_arm": "DIVERSITY",
+  "qualification_backward_calls": 3,
+  "qualification_anchor_calls": 0,
+  "save_probabilities": false,
+  "repeat_policy": "FRESH",
+  "memory_capacity": 2,
+  "microbatches": 3,
+  "descriptor_quantiles": 16,
+  "memory_admission": "AFTER_POST"
+}
