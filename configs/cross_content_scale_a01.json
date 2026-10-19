@@ -1,0 +1,55 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "design_version": "CROSS_CONTENT_SCALE_A01",
+  "arms": [
+    "SOURCE",
+    "CURRENT_RB",
+    "CROSS_SCALE",
+    "RELATIVE_SCALE"
+  ],
+  "unique_inputs": 32,
+  "expected_readouts": 128,
+  "primary": "CROSS_SCALE-SOURCE:OC_DICE",
+  "parameter_updates": 0,
+  "repeat_all_inputs": true,
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "protocol": "reports/cross-content-scale-a01/PROTOCOL_ZH.md",
+  "bn_layer": "res.bn1",
+  "moment_correction": 0,
+  "support_groups": [
+    [
+      0,
+      1,
+      2,
+      3
+    ],
+    [
+      4,
+      5,
+      6,
+      7
+    ]
+  ],
+  "oracle_same_condition_support": true,
+  "same_content_original_reference": true,
+  "online_ctta": false
+}
