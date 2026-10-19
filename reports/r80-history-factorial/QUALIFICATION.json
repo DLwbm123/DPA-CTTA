@@ -1,0 +1,65 @@
+{
+  "status": "PASS",
+  "arms": {
+    "NATIVE": {
+      "status": "PASS",
+      "R79_11_state_output_exact": true,
+      "PRE_state_exact": true,
+      "initial_donor_q_W_exact": true,
+      "initial_donor_state_restored": true,
+      "Adam_reset_age_moments": true,
+      "empty_state_first_update_exact": true,
+      "one_backward_one_Adam": true,
+      "trainable_parameters": 19136
+    },
+    "VERTEX": {
+      "status": "PASS",
+      "R79_11_state_output_exact": true,
+      "PRE_state_exact": true,
+      "initial_donor_q_W_exact": true,
+      "initial_donor_state_restored": true,
+      "Adam_reset_age_moments": true,
+      "empty_state_first_update_exact": true,
+      "one_backward_one_Adam": true,
+      "trainable_parameters": 19136
+    },
+    "BARY": {
+      "status": "PASS",
+      "R79_11_state_output_exact": true,
+      "PRE_state_exact": true,
+      "initial_donor_q_W_exact": true,
+      "initial_donor_state_restored": true,
+      "Adam_reset_age_moments": true,
+      "empty_state_first_update_exact": true,
+      "one_backward_one_Adam": true,
+      "trainable_parameters": 19136
+    }
+  },
+  "qualification_physical_updates": 30,
+  "steady_step_seconds": {
+    "NATIVE/00": 0.8173370361328125,
+    "NATIVE/10": 0.8057670593261719,
+    "NATIVE/01": 0.9001085758209229,
+    "VERTEX/00": 1.261842966079712,
+    "VERTEX/10": 1.0256423950195312,
+    "VERTEX/01": 2.0334086418151855,
+    "BARY/00": 1.7189390659332275,
+    "BARY/10": 1.0107691287994385,
+    "BARY/01": 0.8129417896270752
+  },
+  "cold_step_seconds": {
+    "NATIVE/00": 0.8279221057891846,
+    "NATIVE/10": 1.5438857078552246,
+    "NATIVE/01": 0.9015452861785889,
+    "VERTEX/00": 0.9904217720031738,
+    "VERTEX/10": 1.5691535472869873,
+    "VERTEX/01": 1.0846219062805176,
+    "BARY/00": 0.8479800224304199,
+    "BARY/10": 0.8603947162628174,
+    "BARY/01": 1.0677740573883057
+  },
+  "peak_allocated_MiB": 2120.7607421875,
+  "peak_reserved_MiB": 2206.0,
+  "online_label_reads": 0,
+  "source_image_reads": 0
+}
