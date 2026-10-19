@@ -1,0 +1,67 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "design_version": "TRANSLATION_PHASE_P1",
+  "arms": [
+    "SOURCE",
+    "PHASE_PROB",
+    "NOALIGN_PROB",
+    "PHASE_LOGIT",
+    "SOURCE_SMOOTH",
+    "SHIFT_X",
+    "SHIFT_Y",
+    "SHIFT_XY"
+  ],
+  "unique_inputs": 32,
+  "expected_readouts": 256,
+  "primary": "PHASE_PROB-NOALIGN_PROB:OC_DICE",
+  "parameter_updates": 0,
+  "repeat_all_inputs": true,
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "protocol": "reports/translation-phase-p1/PROTOCOL_ZH.md",
+  "history": false,
+  "offsets": [
+    [
+      0,
+      0
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      1,
+      1
+    ]
+  ],
+  "input_boundary": "reflect",
+  "output_boundary": "source_on_last_row_and_column",
+  "probability_weights": [
+    0.25,
+    0.25,
+    0.25,
+    0.25
+  ]
+}
