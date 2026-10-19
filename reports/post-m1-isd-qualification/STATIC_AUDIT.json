@@ -1,0 +1,22 @@
+{
+  "status": "STATIC_SOURCE_CHECK_PASS",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "reference_file": "VPTTA/OPTIC/networks/ResUnet_TTA.py",
+  "checks": {
+    "decoder_256_channels": true,
+    "up5_256_to_32": true,
+    "bnout_32": true,
+    "head_32": true,
+    "final_relu_bn": true
+  },
+  "runtime_shape_check": false,
+  "weights_loaded": false,
+  "model_forwards": 0,
+  "model_backwards": 0,
+  "image_reads": 0,
+  "label_reads": 0,
+  "new_gpu_runs": 0,
+  "semantic_compatibility": "UNESTABLISHED",
+  "decision": "NO_GPU_ADMISSION",
+  "scope": "Source construction only, not a runtime or shared-head accuracy certificate"
+}
