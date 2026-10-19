@@ -1,0 +1,34 @@
+{
+  "status": "PASS_NECESSARY_CONDITIONS_ONLY",
+  "caga": {
+    "arrivals_per_trajectory": 40,
+    "paper_window": 50,
+    "monitoring_decisions": [],
+    "restoration_events": 0,
+    "full_trend_data_lower_bound_arrivals": 500,
+    "lower_bound_is_not_first_trigger_guarantee": true
+  },
+  "prism": {
+    "rank_one_positive_variance_examples": 48,
+    "T_N_G_equal_identity": true,
+    "zero_variance_and_numerical_floor_cases_not_certified": true,
+    "common_shift_preserves_softmax_but_changes_sigmoid_masks": true,
+    "remaining_centering_and_fusion_may_still_change_predictions": true
+  },
+  "bernoulli_marginal_entropy": {
+    "perfectly_correct_prevalence_example": [
+      0.2,
+      0.1
+    ],
+    "entropy_ratio": 0.6496430834464968,
+    "no_actual_images_or_patient_claim": true
+  },
+  "new_gpu_runs": 0,
+  "model_forwards": 0,
+  "model_backwards": 0,
+  "image_reads": 0,
+  "label_reads": 0,
+  "weights_loaded": false,
+  "scope": "Paper formula and protocol arithmetic, not empirical utility or full algorithm reproduction",
+  "check_body_seconds": 2.3333122953772545e-05
+}
