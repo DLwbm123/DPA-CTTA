@@ -1,0 +1,76 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "steps_per_arrival": 1,
+  "adam_lr": 0.0001,
+  "matched_step_l2": 0.01,
+  "expected_readouts": 2320,
+  "expected_legacy_parity": 0,
+  "primary": "FLIP_FRESH-ROLL_FRESH:PRE",
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "future_rounds": "USER_AUTHORIZED_EVIDENCE_DRIVEN_CONTINUATION",
+  "numerical_projection": "DISTRIBUTED_FP32_ROUNDING",
+  "protocol": "reports/flip-correspondence-ctta-v1/PROTOCOL_ZH.md",
+  "paired_state": true,
+  "strict_deterministic": true,
+  "repeat_first_reset": true,
+  "reset_optimizer_per_arrival": false,
+  "check_legacy_parity": false,
+  "core_arrivals": 640,
+  "native_arrivals": 320,
+  "core_arms": [
+    "FLIP",
+    "ROLL",
+    "SOURCE_FLIP",
+    "ENT_NORM"
+  ],
+  "normalized_arms": [
+    "FLIP",
+    "ROLL",
+    "SOURCE_FLIP",
+    "ENT_NORM"
+  ],
+  "policies_by_arm": {
+    "FLIP": [
+      "RESET",
+      "FRESH",
+      "RETAIN"
+    ],
+    "ROLL": [
+      "FRESH"
+    ],
+    "SOURCE_FLIP": [
+      "FRESH"
+    ],
+    "ENT_NORM": [
+      "RESET",
+      "RETAIN",
+      "FRESH"
+    ]
+  },
+  "design_version": "FLIP_CORRESPONDENCE_V1",
+  "qualification_arm": "FLIP",
+  "qualification_backward_calls": 1,
+  "qualification_anchor_calls": 0,
+  "save_probabilities": true,
+  "teacher_detached": true,
+  "rolled_shift": "WIDTH_HALF_PLUS_ONE"
+}
