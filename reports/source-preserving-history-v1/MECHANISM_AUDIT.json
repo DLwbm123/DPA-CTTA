@@ -1,0 +1,189 @@
+{
+  "status": "PASS",
+  "trajectories": [
+    {
+      "arm": "FEATURE_Q",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "LOGIT_Q",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "FEATURE_Q",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "LOGIT_Q",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "SHUFFLE_Q",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "FEATURE_R",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "FEATURE_CLIP",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "HALF_Q",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "FEATURE_Q",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "LOGIT_Q",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "FEATURE_Q",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "LOGIT_Q",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "SHUFFLE_Q",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "FEATURE_R",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "FEATURE_CLIP",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "HALF_Q",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "parameter_updates": 0
+    },
+    {
+      "arm": "CW1",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW2",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    }
+  ],
+  "logical_scientific_arrivals": 960,
+  "shared_history_arrivals": 80,
+  "history_state_updates": 400,
+  "history_readout_arrivals": 640,
+  "source_frames": 32,
+  "source_head_reconstruction_exact": true,
+  "encoder_cache_frames": 32,
+  "qualification_arrivals": 40,
+  "qualification_paired_readouts": 80,
+  "source_immutable": true,
+  "history_parameter_updates": 0,
+  "native_forwards": 4160,
+  "native_backwards": 480,
+  "reset_return_mask_differing_pixels": 0,
+  "source_support_paired": true,
+  "scope": "Frozen cached full-resolution features; independent state per head; source-only fractional assignments"
+}
