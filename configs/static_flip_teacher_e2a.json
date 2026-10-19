@@ -1,0 +1,36 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "design_version": "STATIC_TEACHER_E2A",
+  "arms": [
+    "SOURCE",
+    "TEACHER_FLIP",
+    "PROB_AVG"
+  ],
+  "unique_inputs": 32,
+  "expected_readouts": 96,
+  "primary": "PROB_AVG-SOURCE:OC_DICE",
+  "fusion_weight": 0.5,
+  "parameter_updates": 0,
+  "repeat_all_inputs": true,
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "protocol": "reports/static-flip-teacher-e2a/PROTOCOL_ZH.md"
+}
