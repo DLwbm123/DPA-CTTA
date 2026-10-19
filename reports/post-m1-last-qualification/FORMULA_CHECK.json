@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "scope": "data_free_formula_qualification_only",
+  "mask_identity_cases": 84,
+  "b1_constant_stream": {
+    "arrivals": 40,
+    "mean": 1.9704382341171307,
+    "paper_std": 0.28196222838236873,
+    "archive_std": 0.014780882941434608
+  },
+  "spatial_counterexample": {
+    "raw_positive": 1,
+    "centered_positive": 2,
+    "first_example_mean": -2.75
+  },
+  "entropy_gradient_ratios_std1_std2": [
+    1.4506896143021,
+    0.5252191362683215
+  ],
+  "gpu_runs": 0,
+  "model_forwards": 0,
+  "image_label_weight_reads": 0,
+  "body_seconds": 0.00017916597425937653,
+  "limitations": "Algebra/examples only; no Dice, efficacy, or runtime admission evidence."
+}

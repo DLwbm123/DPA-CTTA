@@ -1,0 +1,30 @@
+{
+  "status": "TRANSFER_NOT_QUALIFIED",
+  "paper_id": "TLneD1jSEr",
+  "official_forum": "https://openreview.net/forum?id=TLneD1jSEr",
+  "download": "verified_browser_official_pdf_and_supplementary_links",
+  "pdf_pages": 26,
+  "pdf_bytes": 5083758,
+  "read_scope": "All manuscript scientific text and appendices; references skimmed; visual equations p5 and Algorithm1 p16. No independent table replication.",
+  "supplement_static_scope": [
+    "README",
+    "tta_library/LAST.py",
+    "tta_library/tent.py",
+    "evaluator.py",
+    "factories.py",
+    "main.py reset call sites"
+  ],
+  "third_party_code_executed": false,
+  "b1_recursion_discrepancy": "Paper Eq5/Algorithm1 temporal squared-deviation update; attachment LAST.py lines66-73 zero batch std followed by linear std EMA.",
+  "new_gpu": 0,
+  "new_model_forward": 0,
+  "new_image_label_weight_reads": 0,
+  "scientific_result": null,
+  "formula_result": "FORMULA_CHECK.json",
+  "public_files": [
+    "REPORT_ZH.md",
+    "STATIC_AUDIT.json",
+    "formula_qualification.py",
+    "FORMULA_CHECK.json"
+  ]
+}
