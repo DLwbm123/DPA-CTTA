@@ -1,7 +1,23 @@
 """Adopt monitoring of the registered live worker; never launch another GPU worker."""
-import errno,os,sys,time,stat,select,threading,signal,subprocess,resource,json
+import errno,os,sys,time,stat,select,threading,signal,subprocess,resource,json,ctypes,platform
 from pathlib import Path
 from .run import read,save
+
+def _pidfd_syscall(number,*args):
+    # The deployed interpreter lacks wrappers; kernel UAPI numbers are x86_64.
+    if platform.machine()!='x86_64':raise OSError(errno.ENOTSUP,'pidfd syscall ABI not qualified')
+    libc=ctypes.CDLL(None,use_errno=True);libc.syscall.restype=ctypes.c_long
+    result=libc.syscall(ctypes.c_long(number),*args)
+    if result<0:
+        code=ctypes.get_errno();raise OSError(code,os.strerror(code))
+    return result
+
+def pidfd_open(pid):
+    return os.pidfd_open(pid,0) if hasattr(os,'pidfd_open') else _pidfd_syscall(434,ctypes.c_int(pid),ctypes.c_uint(0))
+
+def pidfd_signal(fd,sig):
+    if hasattr(signal,'pidfd_send_signal'):return signal.pidfd_send_signal(fd,sig)
+    return _pidfd_syscall(424,ctypes.c_int(fd),ctypes.c_int(sig),ctypes.c_void_p(None),ctypes.c_uint(0))
 
 def bytes_used(root):
     total=0
@@ -48,7 +64,7 @@ def controller(c,repair):
     assert initial['pt_fields_readable'] and not (root/'RESOURCE_LEDGER.json').exists() and not (root/'processes/score.json').exists()
     with (root/'RECOVERY_START_ONCE.json').open('x') as f:f.write('{"gpu_relaunch":false}')
     save(root/'ORIGINAL_WORKER_PROCESS.private.json',v)
-    fd=os.pidfd_open(pid,0);assert proc_record(pid)['start_ticks']==ticks
+    fd=pidfd_open(pid);assert proc_record(pid)['start_ticks']==ticks
     done=threading.Event();observed={};space_stopped=False
     hz=os.sysconf('SC_CLK_TCK');start_boot=ticks/hz;guardian_start=time.time()
     def watch_exit():
@@ -63,8 +79,8 @@ def controller(c,repair):
     save(root/'RECOVERY_STATE.json',dict(status='MONITORING_EXISTING_WORKER',gpu_relaunch=False,pidfd_open=True,original_controller_exception='FileNotFoundError during recursive scan of a disappearing temporary directory',registered_storage_cap_bytes=c['output_cap_bytes']))
     while not done.wait(2):
         if bytes_used(root)>c['output_cap_bytes']:
-            signal.pidfd_send_signal(fd,signal.SIGTERM);space_stopped=True
-            if not done.wait(10):signal.pidfd_send_signal(fd,signal.SIGKILL)
+            pidfd_signal(fd,signal.SIGTERM);space_stopped=True
+            if not done.wait(10):pidfd_signal(fd,signal.SIGKILL)
             done.wait();break
     os.close(fd)
     if not observed.get('pidfd_exit_observed'):raise RuntimeError('pidfd watcher failed; no success inference')

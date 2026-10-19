@@ -1,7 +1,7 @@
 import errno,json,os,subprocess,sys,tempfile,unittest,select
 from pathlib import Path
 from unittest.mock import patch
-from dpa_ctta.srg_ctta.storage_recovery import bytes_used,proc_record,exit_code_from_record,completion_certificate
+from dpa_ctta.srg_ctta.storage_recovery import bytes_used,proc_record,exit_code_from_record,completion_certificate,pidfd_open,pidfd_signal
 class TestStorageRecovery(unittest.TestCase):
  def test_missing_directory_and_file_are_tolerated(self):
   with tempfile.TemporaryDirectory() as d:
@@ -41,12 +41,17 @@ class TestStorageRecovery(unittest.TestCase):
   b=b.replace('execution_exit0_certified=False,independent_scoring_reconstruction=True,','')
   self.assertEqual(a,b)
  def test_nonchild_exit_capture_does_not_fabricate_code(self):
-  if not hasattr(os,'pidfd_open'):self.skipTest('pidfd unavailable')
   child="import time,sys;time.sleep(.2);sys.exit(7)"
   launcher="import subprocess,sys;p=subprocess.Popen([sys.executable,'-c',"+repr(child)+"],stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL);print(p.pid)"
   pid=int(subprocess.check_output([sys.executable,'-c',launcher],text=True));v=proc_record(pid)
   if v is None:self.skipTest('orphan already exited')
-  fd=os.pidfd_open(pid);poll=select.poll();poll.register(fd,select.POLLIN);self.assertTrue(poll.poll(3000));os.close(fd)
+  fd=pidfd_open(pid);poll=select.poll();poll.register(fd,select.POLLIN);self.assertTrue(poll.poll(3000));os.close(fd)
   code=exit_code_from_record(proc_record(pid),v['start_ticks'])
   if code is not None:self.assertEqual(code,7)
+  print('nonchild_exit_observation=',code)
+ def test_runtime_kernel_pidfd_and_zero_signal(self):
+  fd=pidfd_open(os.getpid())
+  try:
+   self.assertIn('pidfd',os.readlink('/proc/self/fd/'+str(fd)));pidfd_signal(fd,0)
+  finally:os.close(fd)
 if __name__=='__main__':unittest.main()

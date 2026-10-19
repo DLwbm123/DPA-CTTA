@@ -18,6 +18,6 @@ GPU耗时从原kernel start_ticks到pidfd退出CLOCK_BOOTTIME计算，含已跑�
 
 ## 校验和最终交付
 
-8项CPU：临时路径/文件消失、其它错误不忽略、symlink不跟随、带空格comm解析/身份、运行态0不当成功/信号退出、缺证据拒准入、重建函数仅准入和回执差异、非子进程pidfd退出观察。合成临时文件/中性短子进程，无RGB/标签/权重/模型/CUDA。内核已回收时测试允许unknown而非假设0，不声称保证捕获退出码。
+9项CPU：临时路径/文件消失、其它错误不忽略、symlink不跟随、带空格comm解析/身份、运行态0不当成功/信号退出、缺证据拒准入、重建函数仅准入和回执差异、非子进程pidfd退出观察。合成临时文件/中性短子进程，无RGB/标签/权重/模型/CUDA。当前Python未暴露pidfd wrapper，Linux6.8 x86_64内核已核支持；用系统UAPI头的pidfd_open434/pidfd_send_signal424经ctypes调用，只支持已核x86_64 ABI。增加自身pidfd类型及signal0检查，不向GPU worker发测试信号。初版8项中7通过1因缺Python wrapper跳过，记录保留，不能当完整准入。修复接口后9项须全执行。内核已回收时测试允许unknown而非假设0，不声称保证捕获退出码。
 
 单次中性恢复入口，验证guardian/原worker身份与ps；恢复controller退休后再核完整ledger、原/修复controller和worker/scorer身份。公开自有修复代码、中文审计、匿名回执，不发布原临时目录名字/私有路径/进程身份/逐内容数据。20GB新增硬限/18GB水位/辅助1GB、无源训练/RDC/ENGRAM和已停路线约束全部保留。新空间守卫不回改旧运行失败。
