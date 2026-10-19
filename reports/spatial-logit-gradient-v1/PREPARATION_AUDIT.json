@@ -1,0 +1,25 @@
+{
+  "status": "PREPARED_AND_DISPATCHED",
+  "source_sha": "4c8232a700fb9c0afefe68dba931123c09882411",
+  "local_tests": 4,
+  "local_test_body_seconds_rounded": 0.631,
+  "remote_cpu_process_seconds": 6.301095247268677,
+  "nas_probe": "PASS",
+  "startup_memory_admission": true,
+  "neutral_controller_worker_and_gpu_names_checked": true,
+  "start_snapshot": "QUALIFYING",
+  "budget_qualification_at_snapshot": null,
+  "scientific_results_available": false,
+  "preparation_errors": [
+    "attempted absent files",
+    "server unqualified python command missing, exit127",
+    "initial protocol relative-path mistake",
+    "initial remote preparation string syntax error before execution"
+  ],
+  "preparation_errors_timed": false,
+  "local_early_test_command_contained_test_name_and_retired": true,
+  "prior_gpu_worker_seconds": 2374.4118444919,
+  "prior_cpu_worker_seconds_ledger": 1260.4551422301,
+  "known_cpu_history_base_difference_seconds": 0.0084569158,
+  "unmeasured_reading_import_and_orchestration_cost_preserved": true
+}
