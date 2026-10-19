@@ -1,0 +1,53 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "design_version": "TOPOLOGY_INTEGRITY_P3",
+  "arms": [
+    "SOURCE",
+    "SMOOTH",
+    "FILL_SOURCE",
+    "TOPO_SOURCE",
+    "TOPO_SMOOTH",
+    "CURRENT_BN",
+    "CW1_RESET",
+    "CW2_RESET",
+    "TIB",
+    "PERMUTED",
+    "COR",
+    "INTEGRITY"
+  ],
+  "unique_inputs": 32,
+  "expected_readouts": 384,
+  "primary": "TIB-PERMUTED:OC_DICE",
+  "expected_optimizer_steps": 11880,
+  "steps": 90,
+  "lr": 0.0001,
+  "weight_decay": 0.01,
+  "alpha": 10000,
+  "beta": 1000,
+  "dense_last_step": 30,
+  "refresh_interval": 3,
+  "late_weight": 0.1,
+  "time_gpu_budgets_removed": true,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "history": false,
+  "repeat_first_input_all_optimized": true,
+  "skeleton": "BINARY_SOFT_SKELETON_TO_EROSION_EXHAUSTION_CROSS_SQUARE_ZERO_EXTERIOR",
+  "trainable": "ALL_EXISTING_PARAMETERS_EVAL_BN_BUFFERS_FROZEN",
+  "protocol": "reports/topology-integrity-p3/PROTOCOL_ZH.md"
+}
