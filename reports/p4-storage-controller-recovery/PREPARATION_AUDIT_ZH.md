@@ -1,0 +1,11 @@
+# P4 控制器恢复准备记录（非实验完成）
+
+原controller在rglob扫描临时依赖目录时遇ENOENT崩溃，原worker持续推进；没有重启/修改GPU worker、目标或随机状态。原日志与进程身份完整保留，原退出码未观察不填1。
+
+初修复source5f004c253841b4d1ad22b47bc4ee52ff849ae4da，CPU完整2.2914769649505615秒，8项中7过/1因Python没有os.pidfd_open跳过；该次不构成完整准入。只读检查Linux6.8 x86_64内核支持pidfd，系统UAPI头确认open434/send_signal424，自身fd检查成功。未申请权限或ptrace。
+
+修复source2f24c3b8738bc0d166cdd185388e493c521b2ccd，独立recovery_code_v2，保留初source/archive/entry/CPU日志。9CPU全部执行PASS，完整2.8066017627716064秒/body.729打印精度；含非子进程exit7真实捕获、自身pidfd类型和signal0、未知码不造0、暂存目录消失、其它OS错误不忽略、评分仅退出准入/回执名改变。全部无RGB/GT/权重/模型/CUDA；内核exit记录在PID1回收后仍可能不可得，测试一次捕获不保证未来一定捕获。
+
+恢复控制器接管原worker，独立中性入口，恢复源码不改冻结worker源码e5aba97。原运行root reservation2,684,354,560B覆盖本次额外code/archive/log，不新增GPU或机械查显存。固定384输出/11880核心步骤与全部安全门不改。
+
+两次恢复CPU合计5.098078727722168秒；累计已计CPU从2612.293023318357增至2617.391102046079秒，再加后续CPUscore和guardian单列开销。原worker GPU从原start_ticks测全寿命不清零，当前尚未结束，不提前填完整GPU耗时。阅读/部署/编排等未计时继续披露。
