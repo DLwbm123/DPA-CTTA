@@ -1,0 +1,36 @@
+{
+  "status": "RUNNING",
+  "source_commit": "185e6cb",
+  "qualification_status": "PASS",
+  "qualification_physical_updates": 29,
+  "qualification_GPU_process_seconds": 50.16672396659851,
+  "preparation_CPU_process_seconds": 15.667736291885376,
+  "planned_formal_physical_updates": 8640,
+  "observed_formal_physical_updates": 64,
+  "observed_committed_main_arrivals": 32,
+  "main_workers": {
+    "0": {
+      "status": "RUNNING",
+      "arrivals": 16,
+      "physical_updates": 32,
+      "completed_jobs": 0
+    },
+    "1": {
+      "status": "RUNNING",
+      "arrivals": 16,
+      "physical_updates": 32,
+      "completed_jobs": 0
+    }
+  },
+  "GPU_process_budget_seconds": 18000,
+  "formal_start_epoch": 1792379487.170094,
+  "deadline": 1792390287.170094,
+  "formal_start_CST": "2026-10-19T11:11:27.170094+08:00",
+  "deadline_CST": "2026-10-19T14:11:27.170094+08:00",
+  "neutral_process_arguments_verified": true,
+  "GPU_bindings_verified": true,
+  "scientific_results_available": false,
+  "automatic_retry": false,
+  "automatic_extension": false,
+  "observed_at": 1792379545.7371564
+}

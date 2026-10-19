@@ -1,0 +1,11 @@
+# Mechanism-control campaign: qualified and running
+
+Execution source `185e6cb`. All three targets passed the new GPU qualification: original NATIVE parity, complete PRE/U restoration, committed K parity and next-arrival parity, independent initial-state reset, exact U/K q/W, frozen BN-only scope, and branch-specific gradient diagnostics. **29 qualification updates** completed and are separately counted inside this campaign's GPU budget. Original R78 qualification was not substituted.
+
+The resource projection is **10322.037426 GPU process seconds**, within **17949.833276 seconds remaining** after qualification. Cumulative campaign cap is18000 GPU process seconds; formal wall time starts **2026-10-19 11:11:27 CST**, with deadline **2026-10-19 14:11:27 CST**. Qualification was charged50.166724 GPU process seconds (worker body43.934176 is a subset); CPU preparation15.667736 seconds includes both successful checks. No previous campaign costs or budget balances are carried into this separately authorized round.
+
+At startup verification, both main workers were RUNNING with16 arrivals/32 physical updates each: **64/8640 formal physical updates** and32 committed main arrivals observed. Process arguments were neutral and GPU assignments verified. This is startup evidence, not a scientific result.
+
+The exact plan remains3456 committed K +3456 discarded U +1728 reset R updates. Only K state commits. Main workers execute their original orders continuously; reset workers run after main retirement, sharing one canonical content pass by parity without a duplicate order. All five GPU children must retire successfully before CPU labels. Output cap2GiB and allocator8GiB remain fixed. The controller's resource ledger is an event snapshot; a startup all_workers_retired flag is not live retirement evidence.
+
+Half-hour monitoring is active, quiet on unchanged states. On terminal state analyze CURRENT/HISTORY/EPISODIC/INTERACTION and same-state current RNG effects, focusing D1 OD/OC and D0/D2/D3 OD; retain all negative cells, content distributions, FP/FN, actual position pairing and limits on causal interpretation. Deliver sanitized results/report to this GitHub branch and then pause monitoring. No automatic retry, budget extension or scientific expansion.

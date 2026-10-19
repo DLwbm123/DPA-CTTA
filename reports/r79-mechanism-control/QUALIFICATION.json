@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "arms": {
+    "NATIVE": {
+      "status": "PASS",
+      "pre_observer_exact": true,
+      "U_discard_exact": true,
+      "next_arrival_exact": true,
+      "reset_order_independent": true,
+      "q_W_exact": true,
+      "trainable_parameters": 19136,
+      "one_backward_one_Adam": true,
+      "gradient_sites": [
+        "original"
+      ]
+    },
+    "VERTEX": {
+      "status": "PASS",
+      "pre_observer_exact": true,
+      "U_discard_exact": true,
+      "next_arrival_exact": true,
+      "reset_order_independent": true,
+      "q_W_exact": true,
+      "trainable_parameters": 19136,
+      "one_backward_one_Adam": true,
+      "gradient_sites": [
+        "vertex1",
+        "vertex0"
+      ]
+    },
+    "BARY": {
+      "status": "PASS",
+      "pre_observer_exact": true,
+      "U_discard_exact": true,
+      "next_arrival_exact": true,
+      "reset_order_independent": true,
+      "q_W_exact": true,
+      "trainable_parameters": 19136,
+      "one_backward_one_Adam": true,
+      "gradient_sites": [
+        "barycenter"
+      ]
+    }
+  },
+  "qualification_physical_updates": 29,
+  "max_cycle_seconds": 2.0843966007232666,
+  "cold_cycle_seconds": [
+    1.3979363441467285,
+    3.0120246410369873,
+    2.5139083862304688
+  ],
+  "max_reset_seconds": 0.9348890781402588,
+  "peak_allocated_MiB": 1249.5263671875,
+  "peak_reserved_MiB": 1356.0,
+  "online_label_reads": 0,
+  "source_image_reads": 0
+}
