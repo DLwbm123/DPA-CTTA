@@ -1,0 +1,71 @@
+{
+  "seed": 20261018,
+  "design_version": "SOURCE_PRESERVING_HISTORY_V1",
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "expected_readouts": 2320,
+  "expected_logical_arrivals": 960,
+  "expected_legacy_parity": 0,
+  "primary": "FEATURE_Q_RETAIN-LOGIT_Q_RETAIN:PRE",
+  "history_kappa": 3,
+  "full_resolution_statistics": true,
+  "bootstrap": "FIRST_CURRENT_IMAGE",
+  "active_rule": "FP64_POPULATION_VARIANCE_GT_ZERO_NO_FLOOR",
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "strict_deterministic": true,
+  "check_legacy_parity": false,
+  "save_probabilities": false,
+  "readout_jobs": [
+    [
+      "FEATURE_Q",
+      "RESET"
+    ],
+    [
+      "LOGIT_Q",
+      "RESET"
+    ],
+    [
+      "FEATURE_Q",
+      "RETAIN"
+    ],
+    [
+      "LOGIT_Q",
+      "RETAIN"
+    ],
+    [
+      "SHUFFLE_Q",
+      "RETAIN"
+    ],
+    [
+      "FEATURE_R",
+      "RETAIN"
+    ],
+    [
+      "FEATURE_CLIP",
+      "RETAIN"
+    ],
+    [
+      "HALF_Q",
+      "RETAIN"
+    ]
+  ],
+  "protocol": "reports/source-preserving-history-v1/PROTOCOL_ZH.md",
+  "future_rounds": "USER_AUTHORIZED_EVIDENCE_DRIVEN_CONTINUATION",
+  "same_round_auto_expand": false
+}
