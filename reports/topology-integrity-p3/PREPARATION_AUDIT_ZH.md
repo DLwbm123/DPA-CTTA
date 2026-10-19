@@ -1,0 +1,9 @@
+# P3 准备审计（非最终实验交付）
+
+执行冻结source 4c31711c445490c6999bcc7f12d9405cedf11719。14项CPU全部PASS，完整4.227435827255249秒、body1.935秒打印精度，合成Tiny模型/概率，真实RGB、标签、checkpoint读取0、CUDA不可见。先前PH独立工程6项2.2596287727355957秒继续单列；本轮准备未出现CPU测试失败。
+
+真实NAS挂载容量小写读和累计空间reservation通过。GUDHI3.11.0复用独立工程target，不修改共享env。正式派发前free21360MiB≥8192；中性父子ps与自身GPU条目已采样，约1158MiB。短检worker active、QUALIFYING0输出、无资格PASS/科学结果，不能把启动当完成。
+
+首次启动命令在派发前因继承GPU字段physical_id而控制器需要index触发KeyError。尚未起controller/worker、未读取RGB/标签/权重，无GPU计算；按现场UUID/index只补运行时index=6，未改科学config/源码，保留错误记录。该只读编排耗时未单独计量。正式唯一派发无GPU重试。
+
+历史累计GPU5239.803265571536秒、已计CPU2601.352815598554秒，另工程CPU2.2596287727355957及本轮准备4.227435827255249，后续须加完整worker/scorer ledger；旧近似body和.0084569158秒基数差、未计时阅读编排保持。没有新时间GPU配额，但空间硬限20GB/工作18GB/辅助1GB及本轮root2GiB运行守卫保留。禁止以未读标签的资格进度推断任务有效。
