@@ -1,0 +1,57 @@
+{
+  "status": "PASS",
+  "scope": "INITIAL_SYNTHETIC_CHECK_BEFORE_SOURCE_RELIABILITY_UNIFIED",
+  "source_initialization_cases": 144,
+  "maximum_numeric_error": 7.105427357601002e-15,
+  "literal_history_gauge_counterexample": [
+    {
+      "scale": 1.0,
+      "translation": 0.0,
+      "source": 0.46257015465625045,
+      "proposal": 0.40756512677920453
+    },
+    {
+      "scale": 0.25,
+      "translation": 0.0,
+      "source": 0.46257015465625045,
+      "proposal": 0.48469478147503786
+    },
+    {
+      "scale": 4.0,
+      "translation": 0.0,
+      "source": 0.46257015465625045,
+      "proposal": 0.5902806016232153
+    },
+    {
+      "scale": 1.0,
+      "translation": 2.0,
+      "source": 0.46257015465625045,
+      "proposal": 0.2934450203399643
+    }
+  ],
+  "affine_equivariance_cases": 3,
+  "image_replication_factor": 17,
+  "image_unit_total_support": 0.6052238998249633,
+  "replication_prediction_max_error": 2.220446049250313e-16,
+  "zero_variance_channel_passthrough": true,
+  "orthogonal_history_example": {
+    "source_probability": 0.5,
+    "left_proposal": 0.5253638974746043,
+    "right_proposal": 0.4746361025253957,
+    "left_evaluator": 0.5195089945977012,
+    "right_evaluator": 0.48049100540229883,
+    "same_source_logit_histories": true
+  },
+  "equal_class_support_temperature_example": {
+    "q_logodds": 0.8,
+    "prior_logodds": -0.3,
+    "r_logodds": 0.6166666666666667,
+    "h": 1.2
+  },
+  "new_gpu_runs": 0,
+  "model_forwards": 0,
+  "image_label_weight_reads": 0,
+  "gpu_admission": false,
+  "limitations": "Initial literal counterexample omitted reliability weights; final script unifies reliability convention and repeats the check; neither uses real data",
+  "body_seconds": 0.0005651670508086681
+}

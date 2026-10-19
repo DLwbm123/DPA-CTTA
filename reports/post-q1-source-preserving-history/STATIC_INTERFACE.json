@@ -1,0 +1,21 @@
+{
+  "status": "STATIC_INTERFACE_PASS_ONLY",
+  "reference_commit": "dbff0d985c6c95345d9fb78f5b1daef57b392564",
+  "reference_files": [
+    "VPTTA/OPTIC/networks/ResUnet_TTA.py",
+    "ctta-repro-suite/src/ctta_suite/models.py"
+  ],
+  "bridge_file": "src/dpa_ctta/integrations/ctta_suite.py",
+  "head_channels": 32,
+  "head_outputs": 2,
+  "head_kernel": 1,
+  "head_bias_default": true,
+  "returned_head_input": true,
+  "source_only_standard_bn": true,
+  "runtime_shape_checked": false,
+  "weights_loaded": false,
+  "model_forwards": 0,
+  "new_gpu_runs": 0,
+  "image_label_reads": 0,
+  "decision": "MATHEMATICAL_LEAD_REQUIRES_ENGINEERING_QUALIFICATION"
+}
