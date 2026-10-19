@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "arms": {
+    "VERTEX": {
+      "status": "PASS",
+      "collapsed_second_style_original_core_state_output_exact": true,
+      "independent_two_style_output_gradient_Adam_corestate_exact": true,
+      "current_q_W_exact": true,
+      "PRE_full_state_exact": true,
+      "one_backward_one_Adam": true,
+      "continuous_Adam": true,
+      "trainable_parameters": 19136
+    }
+  },
+  "qualification_physical_updates": 8,
+  "steady_step_seconds": {
+    "VERTEX": 0.6657354831695557
+  },
+  "cold_step_seconds": {
+    "VERTEX": 1.8055942058563232
+  },
+  "physical_forwards": 76,
+  "peak_allocated_MiB": 1251.5263671875,
+  "peak_reserved_MiB": 1348.0,
+  "online_label_reads": 0,
+  "source_image_reads": 0
+}

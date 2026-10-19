@@ -1,0 +1,45 @@
+{
+  "source_commit": "e89a31c",
+  "gpu_cap_seconds": null,
+  "formal_wall_cap_seconds": null,
+  "formal_start_epoch": 1792431435.344691,
+  "qualification_process_cap_seconds": null,
+  "qualification_physical_updates": 8,
+  "planned_new_physical_updates": 1152,
+  "new_trajectories": 6,
+  "reused_endpoint_trajectories": 12,
+  "new_PRE_K_predictions": 2304,
+  "reused_PRE_K_predictions": 4608,
+  "new_cells": [
+    "PAIRED_STYLE"
+  ],
+  "reused_cells": [
+    "VERTEX_ORIGINAL",
+    "NATIVE_ORIGINAL"
+  ],
+  "indices": "CURRENT_q_W_NEXT_EXISTING_SEED_SECOND_STYLE",
+  "continuous_Adam": true,
+  "contents": 192,
+  "orders": [
+    0,
+    1
+  ],
+  "seeds": [
+    20260907,
+    17011,
+    29009
+  ],
+  "training_targets": [
+    "VERTEX"
+  ],
+  "output_cap_bytes": 2147483648,
+  "allocator_cap_GiB": 8,
+  "preparation_cpu_process_seconds": 4.299913644790649,
+  "prior_campaign_costs_inherited": false,
+  "engineering_faults_autonomous": true,
+  "autonomous_window_storage_limit_bytes": 20000000000,
+  "round_reserved_bytes": 2200000000,
+  "automatic_extension": false,
+  "activated_at": 1792431408.2041864,
+  "deadline": null
+}
