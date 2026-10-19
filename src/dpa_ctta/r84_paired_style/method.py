@@ -3,7 +3,7 @@ import torch
 from ..r79_mechanism_control.method import Host as Previous,SEEDS,NEXT,style
 from ..r20_model_only_search.method import weights_for
 from ..r81_qw_factorial.method import loss_parts
-from ..b1_host import finite
+from ..b1_host import finite,official
 ARMS=('VERTEX',)
 CELLS=('01',)
 
@@ -24,7 +24,8 @@ class Host(Previous):
         if self.alternative is None or self.strong is None:raise ValueError('two strong sources required')
         w=weights_for(torch.stack(self.weak).sigmoid(),.1,2.).to(q)
         self.target_cache=(q.detach().cpu().clone(),w.detach().cpu().clone())
-        other_input=torch.as_tensor(self.alternative,device=z.device,dtype=z.dtype)
+        other_input=official().normalize_image_to_0_1(torch.as_tensor(self.alternative,device=z.device,dtype=z.dtype))
+        self.diag['second_style_equals_first_input']=torch.equal(other_input,self.strong)
         self.extra=True
         try:other=torch.flip(self.native.model(torch.flip(other_input,(-1,)))[0],(-1,))
         finally:self.extra=False;self.strong=None
@@ -41,7 +42,7 @@ def reference_criterion(host,alternative):
         from ..r36_incremental_modules.method import local_structure_loss
         w=weights_for(torch.stack(host.weak).sigmoid(),.1,2.).to(q)
         host.extra=True
-        try:other=torch.flip(host.native.model(torch.flip(torch.as_tensor(alternative,device=z.device,dtype=z.dtype),(-1,)))[0],(-1,))
+        try:other=torch.flip(host.native.model(torch.flip(official().normalize_image_to_0_1(torch.as_tensor(alternative,device=z.device,dtype=z.dtype)),(-1,)))[0],(-1,))
         finally:host.extra=False;host.strong=None
         host._tag(z,'vertex0',.5);host._tag(other,'vertex1',.5)
         def one(v):

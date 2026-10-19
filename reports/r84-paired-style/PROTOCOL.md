@@ -27,3 +27,7 @@ CPU先检R79内容样式与RNG隔离、计数及评分代数，然后freshGPU8�
 成功门槛不放宽：候选macro对VERTEXoriginal≥+0.1pp且95%contentbootstrap下界>0；D1 OC对VERTEXoriginal≥−0.2pp；任domain×channel对NATIVEoriginal均值≥−0.5pp，任domain×channel×order跨seed均值≥−2pp。2000按域contentbootstrap六anchors耦合、无多重校正，暴露开发集非独立患者/FULL；已有结果驱动候选选择有开发适应偏差，不称外部验证。梯度历史、BN、Adam和自反馈均内生演化，不能称同H直接作用或证明梯度方差下降。
 
 terminal核6/6、1152attempt=complete、资格8另计、2304新预测、12旧轨迹覆盖、实际PID/GPU退休和评分屏障、access0、全部成本（body不重复）和新增空间一次du。仅匿名public下载，完整负结果/中文报告/源码proxy push新branch，remoteSHA/匿名REPORT200与local+remote新DELIVERY。半小时健康安静监测，窗口后不启动新阶段，健康已运行任务完成后交付。无后续第二style或seed组合穷举。
+
+## v2工程修正
+
+第一attempt的fresh资格在collapsed比较首arrival失败，正式0更新。原因已定位：原strong sampler输出在native cal_consis_loss内还调用原normalize_image_to_0_1，候选第二视图遗漏该既有步骤；不是性能负结果。v2候选与独立公式均调用同一既有归一化函数，collapsed资格额外要求第二输入与第一实际strong exact。保留失败2次已完成物理更新/19F及所有CPU/GPU费用，独立新root/entry/space reservation，完整8更新资格重做。不是新增归一化模块或变换。门槛不变。旧2.2GB预留不删除，v2另2.2GB，含本地/余量共10.8GB<20GB。

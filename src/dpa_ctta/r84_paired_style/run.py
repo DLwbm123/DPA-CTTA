@@ -57,6 +57,7 @@ def worker(c):
                         tick=time.time();forwards=state['physical_forwards'];z,detail=host.intervention_step(x,raw,alternative)
                         torch.cuda.synchronize();duration=time.time()-tick
                         if not collapse:(cold if i==0 else steady)[arm]=duration
+                        if collapse and not detail['diagnostics']['second_style_equals_first_input']:raise ValueError('native post-style normalization mismatch')
                         if state['physical_forwards']-forwards!=9:raise ValueError('nine step forwards')
                         if not collapse:reference._criterion=reference_criterion(reference,alternative)
                         rz,rd=reference.keyed_step(x,raw)
