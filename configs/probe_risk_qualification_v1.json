@@ -1,0 +1,66 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "steps_per_arrival": 1,
+  "adam_lr": 0.0001,
+  "matched_step_l2": 0.01,
+  "expected_readouts": 1520,
+  "expected_legacy_parity": 0,
+  "primary": "FRESH_RANK_UTILITY_MINUS_BEST_CONTROL",
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "future_rounds": "USER_AUTHORIZED_EVIDENCE_DRIVEN_CONTINUATION",
+  "numerical_projection": "DISTRIBUTED_FP32_ROUNDING",
+  "protocol": "reports/probe-risk-qualification-v1/PROTOCOL_ZH.md",
+  "paired_state": true,
+  "strict_deterministic": true,
+  "repeat_first_reset": true,
+  "reset_optimizer_per_arrival": false,
+  "check_legacy_parity": false,
+  "core_arrivals": 240,
+  "native_arrivals": 320,
+  "core_arms": [
+    "ENT_NORM"
+  ],
+  "normalized_arms": [
+    "ENT_NORM"
+  ],
+  "policies_by_arm": {
+    "ENT_NORM": [
+      "RESET",
+      "FRESH",
+      "RETAIN"
+    ]
+  },
+  "design_version": "PROBE_RISK_QUALIFICATION_V1",
+  "qualification_arm": "ENT_NORM",
+  "qualification_backward_calls": 1,
+  "qualification_anchor_calls": 0,
+  "save_probabilities": false,
+  "probes": 4,
+  "probe_gamma": [
+    0.95,
+    1.05
+  ],
+  "probe_noise_std": 0.005,
+  "probe_seed_offset": 700000,
+  "anchor_beta": 1.0,
+  "harm_margin_pp": 0.2
+}
