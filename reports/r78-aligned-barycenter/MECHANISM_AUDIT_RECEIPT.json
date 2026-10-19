@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "new_model_calls": 0,
+  "new_image_reads": 0,
+  "new_label_reads": 0,
+  "inputs": "saved scalar traces, existing manifest metadata and already scored values only",
+  "first_arrival_target_entropy_and_weights_equal_all_anchors": true,
+  "VERTEX_same_target_weights_within_arrival": true,
+  "reconstructed_joint_losses_consistent": true,
+  "regional_logit_gradients_not_compared": "different hook sites/scales; VERTEX top-level writer ambiguous",
+  "anonymity": "only aggregate anonymous domains; no per-content identifiers exported",
+  "scalar_trace_and_distribution_seconds": 1.0445988178253174,
+  "position_analysis": "same existing scored values and manifest positions; no image, raw-label or model reads",
+  "position_comparison_correction": "initial assertion that all contents switch halves failed; actual order pair is not exact reverse. Final table uses actual earlier/later positions and explicitly reports half switching (D0 22/22, D1 21/57, D2 57/57, D3 56/56); no same-position exclusions.",
+  "GPU_or_training_started": false,
+  "monitoring_resumed": false
+}
