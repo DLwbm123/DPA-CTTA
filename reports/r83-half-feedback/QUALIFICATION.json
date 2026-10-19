@@ -1,0 +1,63 @@
+{
+  "status": "PASS",
+  "arms": {
+    "NATIVE": {
+      "status": "PASS",
+      "R80_both_diagonal_state_output_exact": true,
+      "PRE_state_exact": true,
+      "initial_reference_state_exact": true,
+      "initial_q_W_oracle_exact": true,
+      "mixed_q_W_provenance_exact": true,
+      "mixed_independent_loss_gradient_Adam_state_exact": true,
+      "initial_mixed_diagonal_step_exact": true,
+      "continuous_Adam_age": true,
+      "one_backward_one_Adam": true,
+      "physical_mixed_forwards_verified": true,
+      "trainable_parameters": 19136
+    },
+    "VERTEX": {
+      "status": "PASS",
+      "R80_both_diagonal_state_output_exact": true,
+      "PRE_state_exact": true,
+      "initial_reference_state_exact": true,
+      "initial_q_W_oracle_exact": true,
+      "mixed_q_W_provenance_exact": true,
+      "mixed_independent_loss_gradient_Adam_state_exact": true,
+      "initial_mixed_diagonal_step_exact": true,
+      "continuous_Adam_age": true,
+      "one_backward_one_Adam": true,
+      "physical_mixed_forwards_verified": true,
+      "trainable_parameters": 19136
+    },
+    "BARY": {
+      "status": "PASS",
+      "R80_both_diagonal_state_output_exact": true,
+      "PRE_state_exact": true,
+      "initial_reference_state_exact": true,
+      "initial_q_W_oracle_exact": true,
+      "mixed_q_W_provenance_exact": true,
+      "mixed_independent_loss_gradient_Adam_state_exact": true,
+      "initial_mixed_diagonal_step_exact": true,
+      "continuous_Adam_age": true,
+      "one_backward_one_Adam": true,
+      "physical_mixed_forwards_verified": true,
+      "trainable_parameters": 19136
+    }
+  },
+  "qualification_physical_updates": 36,
+  "steady_step_seconds": {
+    "NATIVE/01": 1.142139196395874,
+    "VERTEX/01": 1.044584035873413,
+    "BARY/01": 1.0195181369781494
+  },
+  "cold_step_seconds": {
+    "NATIVE/01": 0.9216949939727783,
+    "VERTEX/01": 1.2314989566802979,
+    "BARY/01": 1.1011624336242676
+  },
+  "physical_forwards": 438,
+  "peak_allocated_MiB": 2122.2890625,
+  "peak_reserved_MiB": 2162.0,
+  "online_label_reads": 0,
+  "source_image_reads": 0
+}
