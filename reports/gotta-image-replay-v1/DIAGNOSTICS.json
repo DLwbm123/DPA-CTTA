@@ -1,0 +1,234 @@
+[
+  {
+    "arm": "SOURCE_EVAL",
+    "policy": "REFERENCE",
+    "stage": "STATIC",
+    "logit_rms_mean": 0.0,
+    "probability_abs_mean_mean": 0.0,
+    "changed_pixels_mean": 0.0
+  },
+  {
+    "arm": "CURRENT_BN",
+    "policy": "REFERENCE",
+    "stage": "STATIC",
+    "logit_rms_mean": 1.4622784107923508,
+    "probability_abs_mean_mean": 0.010004672466311603,
+    "changed_pixels_mean": 5093.675
+  },
+  {
+    "arm": "D_OLD",
+    "policy": "REFERENCE",
+    "stage": "STATIC",
+    "logit_rms_mean": 1.4603836089372635,
+    "probability_abs_mean_mean": 0.009869790019001812,
+    "changed_pixels_mean": 4995.125
+  },
+  {
+    "arm": "R_OLD",
+    "policy": "REFERENCE",
+    "stage": "STATIC",
+    "logit_rms_mean": 1.7038509488105773,
+    "probability_abs_mean_mean": 0.009513493254780769,
+    "changed_pixels_mean": 4905.15
+  },
+  {
+    "arm": "R_SHUFFLE_OLD",
+    "policy": "REFERENCE",
+    "stage": "STATIC",
+    "logit_rms_mean": 1.6883825659751892,
+    "probability_abs_mean_mean": 0.009201704803854228,
+    "changed_pixels_mean": 4708.6
+  },
+  {
+    "arm": "DIVERSITY",
+    "policy": "RESET",
+    "stage": "PRE",
+    "logit_rms_mean": 0.0,
+    "probability_abs_mean_mean": 0.0,
+    "changed_pixels_mean": 0.0,
+    "total_affine_norm_mean": 0.010000002879470322,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "DIVERSITY",
+    "policy": "RESET",
+    "stage": "POST",
+    "logit_rms_mean": 0.0908009048551321,
+    "probability_abs_mean_mean": 0.0007934136701805983,
+    "changed_pixels_mean": 406.025,
+    "total_affine_norm_mean": 0.010000002879470322,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "DIVERSITY",
+    "policy": "FRESH",
+    "stage": "PRE",
+    "logit_rms_mean": 0.6837306359084323,
+    "probability_abs_mean_mean": 0.006355234108195873,
+    "changed_pixels_mean": 3250.55,
+    "total_affine_norm_mean": 0.13624068156455418,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "DIVERSITY",
+    "policy": "FRESH",
+    "stage": "POST",
+    "logit_rms_mean": 0.7180459970608354,
+    "probability_abs_mean_mean": 0.006628248947527027,
+    "changed_pixels_mean": 3390.8125,
+    "total_affine_norm_mean": 0.13624068156455418,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "RANDOM_MEMORY",
+    "policy": "FRESH",
+    "stage": "PRE",
+    "logit_rms_mean": 0.5519587566377595,
+    "probability_abs_mean_mean": 0.004633063350775046,
+    "changed_pixels_mean": 2351.375,
+    "total_affine_norm_mean": 0.12928784866598664,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "RANDOM_MEMORY",
+    "policy": "FRESH",
+    "stage": "POST",
+    "logit_rms_mean": 0.5818367896601557,
+    "probability_abs_mean_mean": 0.004850331180932699,
+    "changed_pixels_mean": 2462.7,
+    "total_affine_norm_mean": 0.12928784866598664,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "FIFO",
+    "policy": "FRESH",
+    "stage": "PRE",
+    "logit_rms_mean": 0.5614627489121631,
+    "probability_abs_mean_mean": 0.004814722575974884,
+    "changed_pixels_mean": 2447.8375,
+    "total_affine_norm_mean": 0.12142504312467187,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "FIFO",
+    "policy": "FRESH",
+    "stage": "POST",
+    "logit_rms_mean": 0.592940479516983,
+    "probability_abs_mean_mean": 0.005061333710182225,
+    "changed_pixels_mean": 2574.375,
+    "total_affine_norm_mean": 0.12142504312467187,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "CURRENT",
+    "policy": "RESET",
+    "stage": "PRE",
+    "logit_rms_mean": 0.0,
+    "probability_abs_mean_mean": 0.0,
+    "changed_pixels_mean": 0.0,
+    "total_affine_norm_mean": 0.010000002879470322,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "CURRENT",
+    "policy": "RESET",
+    "stage": "POST",
+    "logit_rms_mean": 0.0908009048551321,
+    "probability_abs_mean_mean": 0.0007934136701805983,
+    "changed_pixels_mean": 406.025,
+    "total_affine_norm_mean": 0.010000002879470322,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "CURRENT",
+    "policy": "FRESH",
+    "stage": "PRE",
+    "logit_rms_mean": 0.4680562233785167,
+    "probability_abs_mean_mean": 0.00398782547636074,
+    "changed_pixels_mean": 2026.125,
+    "total_affine_norm_mean": 0.0999991183687114,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "CURRENT",
+    "policy": "FRESH",
+    "stage": "POST",
+    "logit_rms_mean": 0.5070220796391368,
+    "probability_abs_mean_mean": 0.004277444410399766,
+    "changed_pixels_mean": 2171.7375,
+    "total_affine_norm_mean": 0.0999991183687114,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "CW1",
+    "policy": "RESET",
+    "stage": "PRE",
+    "logit_rms_mean": 1.4622784107923508,
+    "probability_abs_mean_mean": 0.010004672466311603,
+    "changed_pixels_mean": 5093.675,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "CW1",
+    "policy": "RESET",
+    "stage": "POST",
+    "logit_rms_mean": 1.4737264394760132,
+    "probability_abs_mean_mean": 0.010276998789049686,
+    "changed_pixels_mean": 5255.775,
+    "optimizer_age_mean": 1.0
+  },
+  {
+    "arm": "CW1",
+    "policy": "RETAIN",
+    "stage": "PRE",
+    "logit_rms_mean": 1.4938190147280692,
+    "probability_abs_mean_mean": 0.010626289289211855,
+    "changed_pixels_mean": 5457.425,
+    "optimizer_age_mean": 20.5
+  },
+  {
+    "arm": "CW1",
+    "policy": "RETAIN",
+    "stage": "POST",
+    "logit_rms_mean": 1.4957727059721946,
+    "probability_abs_mean_mean": 0.01066583687788807,
+    "changed_pixels_mean": 5480.35,
+    "optimizer_age_mean": 20.5
+  },
+  {
+    "arm": "CW2",
+    "policy": "RESET",
+    "stage": "PRE",
+    "logit_rms_mean": 1.4622784107923508,
+    "probability_abs_mean_mean": 0.010004672466311603,
+    "changed_pixels_mean": 5093.675,
+    "optimizer_age_mean": 2.0
+  },
+  {
+    "arm": "CW2",
+    "policy": "RESET",
+    "stage": "POST",
+    "logit_rms_mean": 1.490011639893055,
+    "probability_abs_mean_mean": 0.010628533130511642,
+    "changed_pixels_mean": 5469.825,
+    "optimizer_age_mean": 2.0
+  },
+  {
+    "arm": "CW2",
+    "policy": "RETAIN",
+    "stage": "PRE",
+    "logit_rms_mean": 1.5873551078140735,
+    "probability_abs_mean_mean": 0.011942017095861956,
+    "changed_pixels_mean": 6144.7125,
+    "optimizer_age_mean": 41.0
+  },
+  {
+    "arm": "CW2",
+    "policy": "RETAIN",
+    "stage": "POST",
+    "logit_rms_mean": 1.59815236851573,
+    "probability_abs_mean_mean": 0.012093405419727787,
+    "changed_pixels_mean": 6220.6625,
+    "optimizer_age_mean": 41.0
+  }
+]

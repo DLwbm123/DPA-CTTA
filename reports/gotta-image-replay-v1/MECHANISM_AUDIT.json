@@ -1,0 +1,167 @@
+{
+  "status": "PASS",
+  "trajectories": [
+    {
+      "arm": "DIVERSITY",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "DIVERSITY",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "DIVERSITY",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "DIVERSITY",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "RANDOM_MEMORY",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "RANDOM_MEMORY",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "FIFO",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "FIFO",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CURRENT",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CURRENT",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CURRENT",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CURRENT",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW2",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    }
+  ],
+  "stream_arrivals": 800,
+  "core_update_events": 480,
+  "qualification_arrivals": 40,
+  "qualification_exact": true,
+  "qualification_update_events": 40,
+  "normalized_update_events": 480,
+  "normalized_events_matched": 480,
+  "zero_proposals": 0,
+  "reset_return_mask_differing_pixels": 0,
+  "legacy_parity": 0,
+  "core_adaptation_forwards": 2600,
+  "native_forwards": 4160,
+  "native_backwards": 480,
+  "core_loss_backward_calls": 1560,
+  "core_diagnostic_anchor_gradient_calls": 0,
+  "source_affine_inventory": [
+    82,
+    19136
+  ],
+  "source_anchor_immutable": true,
+  "reset_optimizer_per_arrival": false,
+  "retained_core_state": "BY_POLICY_RESET_RETAIN_FRESH"
+}

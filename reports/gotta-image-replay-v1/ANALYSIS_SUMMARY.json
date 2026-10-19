@@ -1,0 +1,66 @@
+{
+  "scope": "Derived only from already public aggregates; no label re-scoring",
+  "return_pre_means": [
+    {
+      "arm": "SOURCE_EVAL",
+      "policy": "REFERENCE",
+      "stage": "STATIC",
+      "OD": 97.66838658379197,
+      "OC": 90.46380213979245,
+      "ALL": 94.06609436179221
+    },
+    {
+      "arm": "DIVERSITY",
+      "policy": "FRESH",
+      "stage": "PRE",
+      "OD": 91.2577240323051,
+      "OC": 87.45453447874296,
+      "ALL": 89.35612925552402
+    },
+    {
+      "arm": "RANDOM_MEMORY",
+      "policy": "FRESH",
+      "stage": "PRE",
+      "OD": 94.82895374844824,
+      "OC": 87.86890470547948,
+      "ALL": 91.34892922696386
+    },
+    {
+      "arm": "FIFO",
+      "policy": "FRESH",
+      "stage": "PRE",
+      "OD": 94.02212924048632,
+      "OC": 89.48878287902815,
+      "ALL": 91.75545605975724
+    },
+    {
+      "arm": "CURRENT",
+      "policy": "FRESH",
+      "stage": "PRE",
+      "OD": 94.79136462676561,
+      "OC": 89.94947943212736,
+      "ALL": 92.37042202944649
+    },
+    {
+      "arm": "DIVERSITY",
+      "policy": "RESET",
+      "stage": "PRE",
+      "OD": 97.66838658379197,
+      "OC": 90.46380213979245,
+      "ALL": 94.06609436179221
+    }
+  ],
+  "cumulative_gpu_seconds": 5143.519649743976,
+  "cumulative_counted_cpu_seconds": 2367.7230074110694,
+  "matched_microbatches_per_core_job": 240,
+  "matched_optimizer_updates_per_core_job": 80,
+  "all_transitions_c_plus_h_equals_d": true,
+  "public_coverage": {
+    "readouts": 2000,
+    "absolute": 25,
+    "condition_channel": 500,
+    "transitions": 150,
+    "core_update_groups": 6
+  },
+  "scientific_gate": false
+}
