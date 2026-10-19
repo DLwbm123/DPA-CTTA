@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "scope": "data_free_transfer_qualification_only",
+  "binary_projection_cases": 175,
+  "maximum_projection_error": 1.6653345369377348e-16,
+  "working_vs_true_gain_example": {
+    "selected": 0.5000000000000001,
+    "working_logrisk_gain": 0.22314355131420982,
+    "true_logrisk_gain": -0.3313741931337463
+  },
+  "classifier_gauge_example": {
+    "source_probability_both": 0.679178699175393,
+    "prototype_proposals": [
+      0.5621765008857981,
+      0.14804719803168948
+    ]
+  },
+  "inverse_support_prior": {
+    "foreground_mass": 10,
+    "background_mass": 90,
+    "foreground_prior": 0.8773584905660377,
+    "kappa0": 3
+  },
+  "repeated_pixel_predictive_h": {
+    "1": 1.2564102564102564,
+    "1024": 1.00108154877785
+  },
+  "new_gpu_runs": 0,
+  "model_forwards": 0,
+  "image_label_weight_reads": 0,
+  "body_seconds": 0.0009411671198904514,
+  "limitations": "No Dice or efficacy estimate; no assertion all valid transfers fail."
+}
