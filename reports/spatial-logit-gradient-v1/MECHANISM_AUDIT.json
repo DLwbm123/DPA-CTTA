@@ -1,0 +1,195 @@
+{
+  "status": "PASS",
+  "trajectories": [
+    {
+      "arm": "TANGENT",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "TANGENT",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "TANGENT",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "TANGENT",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "RADIAL",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "RADIAL",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "RANDOM_ORTH",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "RANDOM_ORTH",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "NORM_ONLY",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "NORM_ONLY",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "ENT_NORM",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "ENT_NORM",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "ENT_NORM",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "ENT_NORM",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "ENT_NORM",
+      "policy": "FRESH",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "ENT_NORM",
+      "policy": "FRESH",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW1",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 40
+    },
+    {
+      "arm": "CW2",
+      "policy": "RESET",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RESET",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RETAIN",
+      "order": 0,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    },
+    {
+      "arm": "CW2",
+      "policy": "RETAIN",
+      "order": 1,
+      "arrivals": 40,
+      "optimizer_steps": 80
+    }
+  ],
+  "stream_arrivals": 960,
+  "core_update_events": 640,
+  "qualification_arrivals": 40,
+  "qualification_exact": true,
+  "qualification_update_events": 40,
+  "normalized_update_events": 640,
+  "normalized_events_matched": 640,
+  "zero_proposals": 0,
+  "reset_return_mask_differing_pixels": 0,
+  "legacy_parity": 0,
+  "core_adaptation_forwards": 2040,
+  "native_forwards": 4160,
+  "native_backwards": 480,
+  "core_loss_backward_calls": 680,
+  "core_diagnostic_anchor_gradient_calls": 0,
+  "source_affine_inventory": [
+    82,
+    19136
+  ],
+  "source_anchor_immutable": true,
+  "reset_optimizer_per_arrival": false,
+  "retained_core_state": "BY_POLICY_RESET_RETAIN_FRESH"
+}

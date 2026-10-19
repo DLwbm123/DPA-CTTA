@@ -1,5 +1,3 @@
-# 空间logit梯度 V1
+# G1空间logit梯度方向：完整完成，科学推进失败
 
-执行源码冻结于4c8232a700fb9c0afefe68dba931123c09882411。已通过4项远程CPU检查和存储/显存/中性进程准入并派发；唯一启动短检为QUALIFYING，未取得预算资格或科学结果。本目录当前交付代码、冻结协议与准备记录，不是实验完成报告。
-
-完成或停止后补全中文结果报告、执行审计和匿名聚合，保留全部失败与成本。主比较、强基线、数据边界、停止条件见PROTOCOL_ZH.md。RDC/ENGRAM关闭。
+执行源4c8232a700fb9c0afefe68dba931123c09882411。2320读出/960科学arrival/24轨迹完整，额外40arrival完整重复性PASS；GPU与评分退出0并退役。主TANGENT−NORM_ONLY PRE −8.1675pp，区间[−11.8050,−4.6379]，advance=false。详细结果见REPORT_ZH.md，执行证据与成本见EXECUTION_AUDIT.md。RDC/ENGRAM关闭。
