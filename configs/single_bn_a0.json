@@ -1,0 +1,38 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "design_version": "SINGLE_BN_A0",
+  "arms": [
+    "SOURCE",
+    "ADABN",
+    "VAR_ONLY",
+    "RB_BN"
+  ],
+  "unique_inputs": 32,
+  "expected_readouts": 128,
+  "primary": "RB_BN-VAR_ONLY:OC_DICE",
+  "parameter_updates": 0,
+  "repeat_all_inputs": true,
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "protocol": "reports/single-bn-rb-a0/PROTOCOL_ZH.md",
+  "bn_layer": "res.bn1",
+  "moment_correction": 0
+}
