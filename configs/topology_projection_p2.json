@@ -1,0 +1,45 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "design_version": "TOPOLOGY_PROJECTION_P2",
+  "arms": [
+    "SOURCE",
+    "SMOOTH",
+    "TOPO_SOURCE",
+    "TOPO_SMOOTH",
+    "LCC_SOURCE",
+    "FILL_SOURCE",
+    "MASS_MATCH_SOURCE",
+    "MASS_MATCH_SMOOTH"
+  ],
+  "unique_inputs": 32,
+  "expected_readouts": 256,
+  "primary": "TOPO_SOURCE-SOURCE:OC_DICE",
+  "parameter_updates": 0,
+  "repeat_all_inputs": true,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "protocol": "reports/topology-projection-p2/PROTOCOL_ZH.md",
+  "history": false,
+  "foreground_connectivity": 8,
+  "background_connectivity": 4,
+  "inputs": "P1_COMPLETED_FROZEN_BITS",
+  "time_gpu_budgets_removed": true,
+  "storage_hard_bytes": 20000000000,
+  "storage_working_bytes": 18000000000
+}
