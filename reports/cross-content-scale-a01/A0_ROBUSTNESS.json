@@ -1,0 +1,83 @@
+{
+  "status": "COMPLETE",
+  "posthoc": true,
+  "source_a0_sha": "21f5ab6a6fcc47f28178ebba32897ab449b217c8",
+  "comparisons": [
+    {
+      "comparison": "RB-VAR:OC",
+      "full_mean_pp": 2.2156304430958373,
+      "full_ci95_pp": [
+        0.13334849597130582,
+        5.24947059361209
+      ],
+      "content_positive": 6,
+      "content_negative": 2,
+      "content_delta_min_pp": -0.5137092701219217,
+      "content_delta_median_pp": 0.4336802641848621,
+      "content_delta_max_pp": 12.097301502350227,
+      "largest_positive_share_of_positive_sum": 0.6506467475334606,
+      "loo_mean_min_pp": 0.8039631489166384,
+      "loo_mean_max_pp": 2.605536116412659,
+      "loo_positive_means": 8,
+      "loo_ci_low_min_pp": -0.06841665709523648,
+      "loo_ci_low_max_pp": 0.3191246847236675,
+      "loo_ci_excluding_zero_positive": 5
+    },
+    {
+      "comparison": "RB-SOURCE:OC",
+      "full_mean_pp": -2.122273831780245,
+      "full_ci95_pp": [
+        -4.620354599681291,
+        0.5178761534521461
+      ],
+      "content_positive": 1,
+      "content_negative": 7,
+      "content_delta_min_pp": -7.87359873481212,
+      "content_delta_median_pp": -2.4709222789580694,
+      "content_delta_max_pp": 5.477244536614839,
+      "largest_positive_share_of_positive_sum": 1.0,
+      "loo_mean_min_pp": -3.2079193129795422,
+      "loo_mean_max_pp": -1.3006559884899769,
+      "loo_positive_means": 0,
+      "loo_ci_low_min_pp": -5.1975904910661965,
+      "loo_ci_low_max_pp": -3.331838331831744,
+      "loo_ci_excluding_zero_positive": 0
+    },
+    {
+      "comparison": "RB-SOURCE:ALL",
+      "full_mean_pp": -1.5187578898575187,
+      "full_ci95_pp": [
+        -2.9573049717658826,
+        -0.03560595833422697
+      ],
+      "content_positive": 2,
+      "content_negative": 6,
+      "content_delta_min_pp": -4.492803452626433,
+      "content_delta_median_pp": -1.4883581015276832,
+      "content_delta_max_pp": 2.079348993398733,
+      "largest_positive_share_of_positive_sum": 0.9752027673430321,
+      "loo_mean_min_pp": -2.032773158894126,
+      "loo_mean_max_pp": -1.093894238033388,
+      "loo_positive_means": 0,
+      "loo_ci_low_min_pp": -3.3086623251310305,
+      "loo_ci_low_max_pp": -2.454222114203282,
+      "loo_ci_excluding_zero_positive": 0
+    }
+  ],
+  "bootstrap_replicates": 2000,
+  "bootstrap_seed": 20261018,
+  "weighting": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "registered_contents": 8,
+  "no_content_excluded": true,
+  "no_label_rgb_weight_reads": true,
+  "model_forwards": 0,
+  "new_gpu_seconds": 0,
+  "body_seconds": 0.04800128936767578,
+  "scope": "Posthoc sensitivity, not eight new tests, not updated A0 primary; per-content rows private only. Future support split fixed first4/last4, not based on these outcomes."
+}
