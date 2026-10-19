@@ -1,0 +1,47 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "design_version": "DIRECT_RIBBON_B1",
+  "arms": [
+    "SOURCE",
+    "RIBBON",
+    "IMAGE_ROLL",
+    "DELTA_ROLL",
+    "REVERSE",
+    "EXPAND_MATCH",
+    "SHRINK_MATCH"
+  ],
+  "unique_inputs": 32,
+  "expected_readouts": 224,
+  "primary": "RIBBON-DELTA_ROLL:OC_DICE",
+  "parameter_updates": 0,
+  "repeat_all_inputs": true,
+  "gpu_cap_seconds": 1200,
+  "cpu_cap_seconds": 900,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "protocol": "reports/direct-ribbon-evidence-v1/PROTOCOL_ZH.md",
+  "virtual_size": 256,
+  "displacements": [
+    0,
+    -1,
+    1
+  ],
+  "attenuation": "positive_score_gap_times_source_boundary_weight",
+  "history": false
+}
