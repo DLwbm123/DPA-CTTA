@@ -44,6 +44,8 @@ class Checks(unittest.TestCase):
                 super().__init__();self.bn=torch.nn.BatchNorm2d(3);self.head=torch.nn.Conv2d(3,2,1)
             def forward(self,x):return (self.head(self.bn(x)),)
         torch.manual_seed(3);base=Model().eval().requires_grad_(False)
+        with torch.no_grad():
+            base.head.weight.fill_(1.);base.head.bias.fill_(-1.5)
         a=Host(base,'ENT_NORM');b=Original(base,'ENT_NORM');x=torch.rand(1,3,8,8)
         with torch.no_grad():z=base(x)[0]
         out=a.step(x,x,x,z,83);old=b.step(x,x,x,z,83)
@@ -62,10 +64,10 @@ class Checks(unittest.TestCase):
             rows=[]
             for j in range(4):
                 y=(j-2)/5
-                rows.append(dict(channel=j%2,gain=y,utility=y,pre_entropy=-y,pre_disagreement=-y,negative_extra_drift=-y,negative_function_change=-y,consistency_gain=-y,full_utility=-y))
+                rows.append(dict(channel=j%2,gain=y,utility=y,pre_entropy=-y,pre_disagreement=-y,negative_extra_drift=-y,negative_function_change=-y,consistency_gain=-y,full_utility=-y,negative_pre_entropy=-y,negative_pre_disagreement=-y,negative_pre_anchor_drift=-y))
             groups.append(rows)
         out,quota=evidence(groups,20);self.assertAlmostEqual(out['primary'],2.);self.assertEqual(out['harm_auroc']['utility'],1.)
-        self.assertEqual(out['n'],32);self.assertEqual(len(quota),16)
+        self.assertEqual(out['n'],32);self.assertEqual(len(quota),22)
         for group in groups:
             for row in group:row['utility']=0.
         self.assertIsNone(evidence(groups,20)[0]['primary'])

@@ -38,6 +38,9 @@ def signals(before,after,anchor,source):
                 pre_entropy=red(h(before).mean(0)),pre_disagreement=db,pre_anchor_drift=ab,
                 negative_function_change=-red((after-before).square().mean(0)).sqrt()).items():
             result[prefix+name]=value.tolist()
+    for prefix in ('','full_'):
+        for name in ('pre_entropy','pre_disagreement','pre_anchor_drift'):
+            result[prefix+'negative_'+name]=[-v for v in result[prefix+name]]
     result['valid_regions']=[int((source[0,c]>=.5).any())+int((source[0,c]<.5).any()) for c in range(2)]
     return result
 
@@ -70,11 +73,14 @@ class Host(EntropyHost):
         return torch.stack(outputs)
 
     def step(self,x,xw,xs,z0,seed):
+        source=z0.sigmoid().double()
+        if any(not (source[0,c]>=.5).any() or not (source[0,c]<.5).any() for c in range(2)):
+            raise ValueError('two nonempty source regions per head required')
         views=probe_views(x,seed)
         before=self.probes(views);anchor=self.probes(views,True)
         out=super().step(x,xw,xs,z0,seed)
         after=self.probes(views)
-        risk=signals(before,after,anchor,z0.sigmoid().double())
+        risk=signals(before,after,anchor,source)
         out[-1]['probe_risk']=risk
         out[-1]['forwards']+=12
         return out

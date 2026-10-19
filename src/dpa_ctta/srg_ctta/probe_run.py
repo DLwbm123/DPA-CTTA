@@ -14,7 +14,7 @@ from ..r78_cross_patient.score import metric,csvout
 PRIMARY='FRESH_RANK_UTILITY_MINUS_BEST_CONTROL'
 POLICIES=('RESET','FRESH','RETAIN')
 JOBS=[('ENT_NORM',p) for p in POLICIES]+[(a,p) for a in ('CW1','CW2') for p in ('RESET','RETAIN')]
-CONTROLS=('pre_entropy','pre_disagreement','negative_extra_drift','negative_function_change','consistency_gain','full_utility')
+CONTROLS=('pre_entropy','pre_disagreement','negative_extra_drift','negative_function_change','consistency_gain','full_utility','negative_pre_entropy','negative_pre_disagreement','negative_pre_anchor_drift')
 
 
 def validate(c):
