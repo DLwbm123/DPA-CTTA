@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 import torch
 import numpy as np
-from dpa_ctta.srg_ctta.static_teacher import outputs,region_counts,validate
+from dpa_ctta.srg_ctta.static_teacher import outputs,region_counts,validate,summary
 from dpa_ctta.r78_cross_patient.score import metric
 
 class Tests(unittest.TestCase):
@@ -28,6 +28,15 @@ class Tests(unittest.TestCase):
         y=np.zeros((2,8,8),bool);y[0,1:7,1:7]=True;y[1,3:5,3:5]=True
         mm,rr=metric(y,y,y);self.assertEqual(mm[1]['dice_percent'],100.);self.assertEqual(mm[1]['hd95_pixel'],0.);self.assertEqual(rr['vcdr_abs_error'],0.)
         p=y.copy();p[1]=False;mm,_=metric(p,y,y);self.assertIsNone(mm[1]['assd_pixel']);self.assertTrue(mm[1]['pred_empty'])
+    def test_static_summary_shapes_and_cluster_binding(self):
+        x=np.arange(80,dtype=float).reshape(8,5,2)/10
+        for d in (x,x[:,:,1],x[:,4]):
+            result=summary('check',d);self.assertEqual(result['total_cells'],d.size)
+            self.assertAlmostEqual(result['delta_pp'],float(d.mean()))
+        from dpa_ctta.r78_cross_patient.score import interval
+        # Duplicating an identical readout order does not add bootstrap units.
+        np.testing.assert_allclose(summary('check',x)['ci95_pp'],interval(np.stack([x,x],axis=2)),atol=1e-12)
+        with self.assertRaises(ValueError):summary('bad',np.zeros((7,5)))
     def test_config_weighting_and_immutability(self):
         c=json.loads((Path(__file__).parents[1]/'configs/static_flip_teacher_e2a.json').read_text());validate(c)
         self.assertEqual(8*len(c['stream_blocks'])*len(c['orders'])*len(c['arms']),240)

@@ -6,13 +6,18 @@ import time
 import numpy as np
 import torch
 from .run import guard_assets, read, save, controller
-from .paired_state import summary
 from ..r78_cross_patient.run import FINAL,SEED,normalize,perturb,seed
-from ..r78_cross_patient.score import metric,csvout
+from ..r78_cross_patient.score import metric,csvout,interval
 from .score import unpack
 
 ARMS=('SOURCE','TEACHER_FLIP','PROB_AVG')
 PRIMARY='PROB_AVG-SOURCE:OC_DICE'
+
+
+def summary(name,delta):
+    if delta.shape not in ((8,5),(8,5,2),(8,2)) or not np.isfinite(delta).all():
+        raise ValueError('eight static content groups; fixed bound conditions/heads required')
+    return dict(comparison=name,delta_pp=float(delta.mean()),ci95_pp=interval(delta),worst_cell_pp=float(delta.min()),negative_cells=int((delta<0).sum()),total_cells=int(delta.size))
 
 
 def validate(c):
