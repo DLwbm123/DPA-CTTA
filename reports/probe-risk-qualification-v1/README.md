@@ -1,11 +1,9 @@
-# Q1 独立探针候选风险资格
+# Q1 独立probe风险辨识：完整完成，推进失败
 
-已派发，尚未完整完成或评分；不是在线控制器或已证持续收益。执行源7b1b7509e5add5dda86fbe3b1328ef715e01f060。
+主FRESH秩相关差−0.244349，描述95%区间[−0.519239,−0.122899]；U相关.125999低于单独负额外源漂移.370348；害AUROC.557292。advance_to_new_controller_protocol=false，不进入闭环，不按标签调probe/beta/阈值。
 
-4个优化隔离的轻增强探针，双Bernoulli/前景背景等权，评价同一熵候选前后的一致性改善减额外源漂移。主检验FRESH的收益秩相关是否超出9个预定强控制；保留源/RESET/RETAIN/真实CW1/CW2及旧冻结参考。1520读出/560科学arrival/14轨迹/19聚合行；另完整40arrival重演。协议见 PROTOCOL_ZH.md。
+1520读出/560科学arrival/14轨迹/19行；240实际步幅匹配zero0，额外40到达/80对logits及末模型精确；worker/score exit0退休，controller原身份不存在。GPU573.666612s、CPU评分126.516659s；未测试在线控制器，未证持续收益。
 
-6项正式CPU检查PASS，完整进程5.0774729252秒；较早版本6项检查也PASS/5.6825993061秒，强化控制/源空区域停止后重新验证。另初次本机解释器缺numpy在导入前失败，无数据/CUDA，未计完整进程。没有安装依赖、GPU重试、削控制或扩预算。
+见[中文报告](REPORT_ZH.md)、[执行审计](EXECUTION_AUDIT.md)、[冻结协议](PROTOCOL_ZH.md)和RESULTS.json。RDC/ENGRAM关闭；8重复开发内容，患者/预训练成员未知。只公开自有源码/匿名聚合/无路径receipt，禁止逐例数据和第三方全文。START_RECEIPT及CPU_CHECK_INITIAL属于历史准备记录。
 
-NAS实际NFS容量/小读写通过；启动前显存23858MiB，主子/GPU中性命令通过。唯一9秒启动短检worker active、RUN_STATE QUALIFYING0arrival/0读出，尚无QUALIFICATION，不能把源码准备提交称实验结果交付。GPU1200/CPU900/输出2GiB。
-
-RDC/ENGRAM关闭，无新源训练、标签或未来图参与更新。8个重复开发内容，患者/预训练成员未知，不称独立患者/临床/TMI证据。完成或停止后另行分析和公开匿名结果。
+附：4行RESET配额诊断有并列顺序偏差，原值保留但不解释；主相关与FRESH/RETAIN无影响。见OFFLINE_QUOTA_SCOPE.json及执行审计。

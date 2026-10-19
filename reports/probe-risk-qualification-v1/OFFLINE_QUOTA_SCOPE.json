@@ -1,0 +1,32 @@
+{
+  "status": "SECONDARY_DIAGNOSTIC_DEVIATION",
+  "reason": "Tie-breaking used grouped case/order/block traversal instead of protocol global arrival order",
+  "affected_rows": [
+    {
+      "policy": "RESET",
+      "channel": "OD",
+      "score": "negative_pre_anchor_drift"
+    },
+    {
+      "policy": "RESET",
+      "channel": "OC",
+      "score": "pre_disagreement"
+    },
+    {
+      "policy": "RESET",
+      "channel": "OC",
+      "score": "negative_pre_disagreement"
+    },
+    {
+      "policy": "RESET",
+      "channel": "OC",
+      "score": "negative_pre_anchor_drift"
+    }
+  ],
+  "affected_rows_not_interpreted": true,
+  "primary_rank_statistics_affected": false,
+  "fresh_half_coverage_affected": false,
+  "retained_half_coverage_affected": false,
+  "raw_rows_preserved": true,
+  "no_rescoring": true
+}
