@@ -19,7 +19,8 @@ class Tests(unittest.TestCase):
         x=self.fixture();z=x[:,:2].double();p,d=outputs(Pointwise(),x)
         for a in ('PHASE_PROB','PHASE_LOGIT','SHIFT_X','SHIFT_Y','SHIFT_XY'):
             torch.testing.assert_close(p[a],z,atol=1e-12,rtol=1e-12)
-        self.assertFalse(torch.equal(p['NOALIGN_PROB']>=0,z>=0))
+        # A threshold tie can leave hard masks equal even when fields are misregistered.
+        self.assertFalse(torch.allclose(p['NOALIGN_PROB'],z,atol=1e-12,rtol=1e-12))
         self.assertEqual(d['source_fallback_pixels'],15)
     def test_stride_aliasing_nontrivial_without_new_weights(self):
         x=self.fixture();x[:,0]+=torch.arange(8)[None,:].remainder(2)*1.7
