@@ -1,7 +1,7 @@
-# E1：已派发，科学结果尚未完成
+# E1 已完整完成：没有真正持续收益
 
-HRAC启发的双Bernoulli翻转对应蒸馏，见[机制分析](ROUTE_REVIEW_ZH.md)与[冻结协议](PROTOCOL_ZH.md)。执行源7fcb34aeb9b2a5c3a737f88937173f20f693f9c9。
+正确翻转对应比打乱对应PRE +11.85520pp，但相对冻结源教师−3.56130pp、相对源−9.23154pp、源返回−19.81260pp；结构与持续门槛失败，advance_development_gate=false。
 
-6项CPU检查PASS，完整4.6277480125秒，只有合成小模型，无真实RGB/标签/权重读取，无CUDA。实际NAS挂载容量小写读、启动前显存23858MiB和中性父子/GPU命令检查通过。唯一9秒启动快照worker active、QUALIFYING0arrival/0读出，无QUALIFICATION；不代表后续实时健康、预算已通过或任何科学效果。
+[完整分析](REPORT_ZH.md) · [执行审计](EXECUTION_AUDIT.md) · [冻结协议](PROTOCOL_ZH.md) · [机制依据](ROUTE_REVIEW_ZH.md)
 
-预定2320读出/960到达/24轨迹/29聚合行，另40到达/80对logits和末model_state完整RESET重演。强源/RESET/打乱对应/固定源教师/原熵/nativeCW均保留。RDC/ENGRAM关闭，模型/数据/seed/流长不扩。完成或停止后再分析匿名交付；准备公开提交不是最终结果。
+2320读出/960科学到达/24轨迹/29行完整；640实际规范更新全匹配无zero，额外40RESET到达/80对logits和末model_state重演PASS，worker/scorer exit0且全部退役。RDC/ENGRAM关闭。8个反复开发内容，患者/预训练成员未知，不称独立患者或TMI成功。保留所有负结果，不调参或换主。
