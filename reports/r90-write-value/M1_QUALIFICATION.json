@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "updates": 7,
+  "forwards": 70,
+  "training_backwards": 7,
+  "original_VV_and_WRITE_replay_exact": true,
+  "restore_learning_pre_RNG_and_visits_post": true,
+  "CPU_zero_gradient_Adam_formula": true,
+  "CPU_clone_optimizer_steps": 1,
+  "physical_GPU_clone_updates": 0,
+  "transaction_seconds": [
+    4.884061098098755,
+    0.8007433414459229,
+    0.8776662349700928,
+    0.8873438835144043,
+    1.0612900257110596,
+    1.0383949279785156,
+    0.9109065532684326
+  ],
+  "max_steady_transaction_seconds": 1.0612900257110596,
+  "online_label_reads": 0,
+  "source_image_reads": 0,
+  "sign_bound_multiplier": 64
+}

@@ -1,0 +1,42 @@
+{
+  "status": "M1_FORMAL_RUNNING_NOT_TERMINAL",
+  "science_commit": "fdf4519",
+  "M0_gate": "PASS",
+  "M0_delivery_commit": "c6b7cdf16666f046bd37d522f54e0c224e9dec82",
+  "M0_remote_SHA_verified": true,
+  "M0_anonymous_report_HTTP": 200,
+  "attempt": 2,
+  "fresh_qualification_worker_exit0_and_PID_retired": true,
+  "qualification_updates": 7,
+  "qualification_forwards": 70,
+  "profile_admitted": true,
+  "formal_workers": 2,
+  "physical_GPU_indices": [
+    0,
+    1
+  ],
+  "registered_process_identities_verified": true,
+  "GPU_UUID_binding_verified": true,
+  "neutral_main_child_argv_verified": true,
+  "independent_shared_deadline_watchdog_alive_identity_verified": true,
+  "shared_started": 1792492974.1323855,
+  "shared_deadline": 1792536174.1323855,
+  "global_max_updates": 5000,
+  "global_max_forwards": 50000,
+  "prior_engineering_failure": {
+    "updates": 7,
+    "forwards": 70,
+    "training_backwards": 7,
+    "GPU_process_seconds": 45.12425899505615,
+    "exit_code": 1,
+    "reason": "final reader revalidation denied previous registered images; not a numerical failure",
+    "old_worker_controller_watchdog_retired": true
+  },
+  "retired_qualification_updates_cumulative": 14,
+  "retired_qualification_forwards_cumulative": 140,
+  "planned_current_M1_updates_including_fresh_qualification": 1927,
+  "planned_R90_cumulative_updates_after_M1": 1934,
+  "planned_R90_cumulative_forwards_after_M1": 19340,
+  "M2_authorized": false,
+  "independent_validation": false
+}
