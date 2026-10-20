@@ -1,0 +1,43 @@
+{
+  "seed": 20261018,
+  "grouping": "CONTENT_DEVELOPMENT_USER_AUTHORIZED",
+  "new_training": false,
+  "patient_independence": false,
+  "stream_blocks": [
+    0,
+    1,
+    2,
+    3,
+    0
+  ],
+  "orders": [
+    "forward",
+    "reverse"
+  ],
+  "design_version": "RGB_AFFINITY_DIFFUSION_E3",
+  "arms": [
+    "SOURCE",
+    "SMOOTH",
+    "FILL_SOURCE",
+    "TOPO_SMOOTH",
+    "EDGE_LOGIT",
+    "ROLL_MATCH",
+    "UNIFORM_MATCH",
+    "UNIFORM_LOGIT"
+  ],
+  "unique_inputs": 32,
+  "expected_readouts": 256,
+  "primary": "EDGE_LOGIT-SOURCE:OC_DICE",
+  "parameter_updates": 0,
+  "repeat_all_inputs": true,
+  "output_cap_bytes": 2147483648,
+  "rdc": false,
+  "engram": false,
+  "same_round_auto_expand": false,
+  "protocol": "reports/rgb-affinity-diffusion-e3/PROTOCOL_ZH.md",
+  "history": false,
+  "time_gpu_budgets_removed": true,
+  "rgb_bandwidth": "positive_adjacent_squared_distance_lower_median",
+  "storage_hard_bytes": 20000000000,
+  "storage_working_bytes": 18000000000
+}
