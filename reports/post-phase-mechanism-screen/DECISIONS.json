@@ -1,0 +1,26 @@
+{
+  "kind": "READ_ONLY_MECHANISM_REVIEW",
+  "candidates": [
+    {
+      "name": "LSACM-SP",
+      "decision": "CLOSED_DUPLICATE_R61"
+    },
+    {
+      "name": "CS-STD",
+      "decision": "HOLD_INFERENCE_TRANSFER_CONTRACT",
+      "postprocessing_allowed_by_paper": true,
+      "current_performance_admitted": false
+    },
+    {
+      "name": "M-Net polar",
+      "decision": "ORIGINAL_SUPERVISED_PIPELINE_NOT_ADMITTED"
+    },
+    {
+      "name": "Graph Cut with Priors 2014",
+      "decision": "FULLTEXT_UNVERIFIED"
+    }
+  ],
+  "new_scientific_execution": false,
+  "performance_protocol_frozen": false,
+  "next": "CS-STD inference contract only; synthetic protocol only after all dependencies resolved; no real reads or GT tuning"
+}
