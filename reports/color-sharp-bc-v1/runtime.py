@@ -72,7 +72,8 @@ def controller(c, root):
     with (root / 'logs/guard.log').open('x') as log:
         g = subprocess.Popen([c['python'], c['entry']], env=guard_env, stdout=log, stderr=log, start_new_session=True)
     stages = []
-    for mode in ('check', 'worker1', 'worker2', 'score'):
+    modes = ('worker1', 'worker2', 'score') if c.get('completed_check_preserved') else ('check', 'worker1', 'worker2', 'score')
+    for mode in modes:
         begin = time.time()
         remaining = 3530 - (time.clock_gettime(time.CLOCK_BOOTTIME) - c['origin_boottime'])
         if remaining <= 0:
@@ -95,9 +96,9 @@ def controller(c, root):
         write(root / 'STATE.json', dict(stages=stages, completed_stages=len(stages)))
         if rc:
             break
-    complete = len(stages) == 4 and all(v['exit_code'] == 0 for v in stages)
+    complete = len(stages) == len(modes) and all(v['exit_code'] == 0 for v in stages)
     write(root / 'public/RESOURCE_LEDGER.json', dict(stages=stages, all_stage_workers_retired=True,
-          source_sha=c['source_sha'], planned_model_calls=2880, elapsed_seconds=time.clock_gettime(time.CLOCK_BOOTTIME) - c['origin_boottime']))
+          source_sha=c['source_sha'], previous_attempts=c.get('previous_attempts', []), planned_model_calls=2880, elapsed_seconds=time.clock_gettime(time.CLOCK_BOOTTIME) - c['origin_boottime']))
     write(root / 'FINAL.json', dict(status='COMPLETE' if complete else 'FAILED', application_exit_code=0 if complete else 1))
     grc = g.wait(timeout=5)
     grec = json.loads((root / 'processes/guard.json').read_text())
