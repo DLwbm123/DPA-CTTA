@@ -1,0 +1,34 @@
+{
+  "status": "GO_TO_R93_QUALIFICATION_ONLY",
+  "R92_complete": true,
+  "pixel_and_Dice_checks": "PASS",
+  "residual_D3_OC_Hid_pp": -0.4035815129524496,
+  "residual_negative_anchors": 6,
+  "residual_negative_contents": 47,
+  "residual_contents": 56,
+  "strict_equivalent_completed_reset_found": false,
+  "scope": "offline domain-boundary reset versus continuous VV and fixed pseudo-groups; no state retrieval in these streams",
+  "domain_metadata_permission": "current user conditional authorization of specified offline diagnostic; existing domain metadata only in CPU preparation; integer bank keys to GPU; not deployed domain routing",
+  "no_new_data_permissions": true,
+  "resource_pre_admission": {
+    "shared_updates_used": 3092,
+    "shared_forwards_used": 32090,
+    "shared_update_limit": 5000,
+    "shared_forward_limit": 50000,
+    "proposed_R93_updates": 1161,
+    "proposed_R93_forwards": 11610,
+    "after_R92_total_reserved_bytes": 19938197504,
+    "proposed_R93_remote_bytes": 33554432,
+    "proposed_R93_local_bytes": 8388608,
+    "total_after_R93_reserved_bytes": 19980140544,
+    "deadline": 1792536174.1323855
+  },
+  "R93_formal_admission": "fresh qualification and timed profile still required",
+  "not_authorized": [
+    "domain-agnostic deployment claim",
+    "new data or labels",
+    "state retrieval claim",
+    "router training",
+    "scientific tuning or matrix expansion"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "orders": [
+    {
+      "order": 0,
+      "runs": [
+        {
+          "domain": "D2",
+          "arrivals": 57
+        },
+        {
+          "domain": "D1",
+          "arrivals": 57
+        },
+        {
+          "domain": "D3",
+          "arrivals": 56
+        },
+        {
+          "domain": "D0",
+          "arrivals": 22
+        }
+      ],
+      "one_contiguous_block_per_domain": true,
+      "domain_retrieval_events": 0
+    },
+    {
+      "order": 1,
+      "runs": [
+        {
+          "domain": "D0",
+          "arrivals": 22
+        },
+        {
+          "domain": "D3",
+          "arrivals": 56
+        },
+        {
+          "domain": "D1",
+          "arrivals": 57
+        },
+        {
+          "domain": "D2",
+          "arrivals": 57
+        }
+      ],
+      "one_contiguous_block_per_domain": true,
+      "domain_retrieval_events": 0
+    }
+  ],
+  "S_equivalent_to_domain_boundary_reset": true,
+  "claim_state_retrieval_identified": false
+}
