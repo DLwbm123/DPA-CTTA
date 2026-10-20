@@ -1,0 +1,32 @@
+{
+  "experiment": "R85_R86_LOSS_AGGREGATION",
+  "status": "FROZEN",
+  "source_commit": "b26cd602b6e2b18aa58db9b5e4188d109276a8b2",
+  "started": 1792472641.1004322,
+  "absolute_deadline": 1792559041.1004322,
+  "wall_cap_seconds": 86400,
+  "output_cap_bytes": 2147483648,
+  "reserved_bytes": 2200000000,
+  "physical_updates": 3616,
+  "physical_forwards": 36204,
+  "diagnostic_backwards": 400,
+  "qualifier_updates": 16,
+  "reference_replay_updates": 1152,
+  "discarded_updates": 144,
+  "candidate_updates": 2304,
+  "new_candidate_trajectories": 12,
+  "probes": 48,
+  "cohort_contents": 192,
+  "seeds": [
+    20260907,
+    17011,
+    29009
+  ],
+  "orders": 2,
+  "online_label_reads": 0,
+  "source_image_reads": 0,
+  "R87": "NOT_AVAILABLE_WITHIN_CURRENT_REGISTERED_COHORT",
+  "multiplicity": "2 comparisons, Bonferroni two-sided 97.5 percent CI",
+  "gradient_algebra_atol": 2e-06,
+  "gradient_algebra_rtol": 0.0001
+}

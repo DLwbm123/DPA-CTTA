@@ -1,0 +1,49 @@
+{
+  "status": "PASS",
+  "cells": {
+    "VV": {
+      "status": "PASS",
+      "output_gradient_corestate_exact": true,
+      "PRE_full_restore": true,
+      "current_q_wholeW_exact": true,
+      "BN_only_parameters": 19136,
+      "continuous_Adam": true
+    },
+    "VB": {
+      "status": "PASS",
+      "output_gradient_corestate_exact": true,
+      "PRE_full_restore": true,
+      "current_q_wholeW_exact": true,
+      "BN_only_parameters": 19136,
+      "continuous_Adam": true
+    },
+    "BV": {
+      "status": "PASS",
+      "output_gradient_corestate_exact": true,
+      "PRE_full_restore": true,
+      "current_q_wholeW_exact": true,
+      "BN_only_parameters": 19136,
+      "continuous_Adam": true
+    },
+    "BB": {
+      "status": "PASS",
+      "output_gradient_corestate_exact": true,
+      "PRE_full_restore": true,
+      "current_q_wholeW_exact": true,
+      "BN_only_parameters": 19136,
+      "continuous_Adam": true
+    }
+  },
+  "physical_updates": 16,
+  "physical_forwards": 156,
+  "diagnostic_backwards": 16,
+  "steady_step_seconds": {
+    "VV": 0.9457454681396484,
+    "VB": 0.7107524871826172,
+    "BV": 0.6092677116394043,
+    "BB": 0.6558938026428223
+  },
+  "peak_allocated_MiB": 1598.091796875,
+  "online_label_reads": 0,
+  "source_image_reads": 0
+}

@@ -1,0 +1,105 @@
+{
+  "status": "REPLAY",
+  "observed_at": 1792472774.9522192,
+  "source_commit": "b26cd602b6e2b18aa58db9b5e4188d109276a8b2",
+  "workers": [
+    {
+      "status": "GPU_COMPLETE",
+      "arrivals": 0,
+      "physical_updates": 16,
+      "completed_physical_updates": 16,
+      "physical_forwards": 156,
+      "diagnostic_backwards": 16,
+      "training_backwards": 16,
+      "name": "qualify_worker0"
+    },
+    {
+      "status": "GPU_COMPLETE",
+      "arrivals": 192,
+      "physical_updates": 0,
+      "completed_physical_updates": 0,
+      "physical_forwards": 192,
+      "diagnostic_backwards": 0,
+      "training_backwards": 0,
+      "name": "source_worker0"
+    },
+    {
+      "status": "RUNNING",
+      "arrivals": 16,
+      "physical_updates": 19,
+      "completed_physical_updates": 19,
+      "physical_forwards": 187,
+      "diagnostic_backwards": 8,
+      "training_backwards": 19,
+      "name": "replay_worker0"
+    },
+    {
+      "status": "RUNNING",
+      "arrivals": 16,
+      "physical_updates": 22,
+      "completed_physical_updates": 22,
+      "physical_forwards": 214,
+      "diagnostic_backwards": 16,
+      "training_backwards": 22,
+      "name": "replay_worker1"
+    }
+  ],
+  "registered_identities": [
+    {
+      "name": "qualify_worker0",
+      "active": false,
+      "pid_identity_live": false,
+      "exit_code": 0
+    },
+    {
+      "name": "source_worker0",
+      "active": false,
+      "pid_identity_live": false,
+      "exit_code": 0
+    },
+    {
+      "name": "replay_worker0",
+      "active": true,
+      "pid_identity_live": true,
+      "exit_code": null,
+      "neutral_argv": true,
+      "active_elapsed_seconds": 29.152162075042725
+    },
+    {
+      "name": "replay_worker1",
+      "active": true,
+      "pid_identity_live": true,
+      "exit_code": null,
+      "neutral_argv": true,
+      "active_elapsed_seconds": 29.026408195495605
+    }
+  ],
+  "ledger": {
+    "attempts": [
+      {
+        "name": "qualify_worker0",
+        "status": "COMPLETE",
+        "exit_code": 0,
+        "seconds": 30.124156951904297,
+        "gpu_process_seconds": 30.124156951904297,
+        "cpu_process_seconds": 0
+      },
+      {
+        "name": "source_worker0",
+        "status": "COMPLETE",
+        "exit_code": 0,
+        "seconds": 30.303330898284912,
+        "gpu_process_seconds": 30.303330898284912,
+        "cpu_process_seconds": 0
+      }
+    ],
+    "gpu_process_seconds": 60.42748785018921,
+    "cpu_process_seconds": 16.241516828536987,
+    "deadline": 1792559041.1004322,
+    "started": 1792472641.1004322,
+    "all_workers_retired": true
+  },
+  "qualification": "PASS",
+  "formal_admitted": true,
+  "startup_only": true
+}
