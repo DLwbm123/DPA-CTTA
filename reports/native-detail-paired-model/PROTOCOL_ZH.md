@@ -6,7 +6,7 @@
 
 三crop输出logits bilinear降256，各自阈值>=0替换SOURCE的两个独立头ROI；ROI外逐位保持SOURCE。不softmax，不做OC嵌套修复、不融合B。B只作独立控制。完整全图指标计入ROI可能带来的损害，不只报告局部变化。
 
-运行前CPU合成25窗几何/常数/边缘以及拼接support与阈值检查。模型生成8×4×2遍=64完整encoder；逐次验证seg_head(feature)==logits，源位图两遍共16次核封存SOURCE，32输出logits及32features同进程exact replay，参数/缓冲全程不变、无梯度、0更新。原文件像素每图加载一次，重演使用同输入，不能冒充独立重新解码重演。只保存第一遍40个最终位图与私有定位/裁剪计数，不保存features/logits。
+运行前CPU合成25窗几何/常数/边缘以及拼接support与阈值检查。模型生成8×4×2遍=64完整encoder；逐次验证seg_head(feature)==logits，源位图两遍共16次核封存SOURCE，32输出logits及32features同进程exact replay，参数/缓冲全程不变、无梯度、0更新。原文件像素每图加载一次，重演使用同输入，不能冒充独立重新解码重演。只保存第一遍32个新位图，另有8个B控制位图保持既有只读与私有定位/裁剪计数，不保存features/logits。
 
 worker禁GT、utility、旧scores/scorer、网络；只可读8RGB、8SOURCE位图、原权重与既有代码/环境。worker exit0且精确身份退休后，scorer读原8GT并核既有登记摘要，另读8静态B位图；评估40mask。GT使用既有nearest512和OD<255/OC==0定义，不反馈到生成。
 

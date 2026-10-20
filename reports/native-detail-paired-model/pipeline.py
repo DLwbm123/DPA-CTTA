@@ -97,7 +97,7 @@ def worker(c):
             first=[]
             for repeat in (False,True):
                 for j,(name,v) in enumerate(zip(('SOURCE','N','R','L'),inputs)):
-                    z,_,f=model(v.cuda());nf+=1
+                    out=model(v.cuda());z,f=out[0],out[2];nf+=1
                     assert torch.equal(model.seg_head(f),z);nh+=1
                     zz,ff=z.cpu(),f.cpu()
                     if repeat:
