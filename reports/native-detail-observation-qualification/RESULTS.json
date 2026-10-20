@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "registered_rgb_decoded": 8,
+  "identity_source_od_reads": 8,
+  "label_reads": 0,
+  "utility_score_reads": 0,
+  "model_weight_reads": 0,
+  "model_calls": 0,
+  "cuda_initialized": false,
+  "access_gate_negative_checks": 2,
+  "exact_replay_views": 24,
+  "conditions": [
+    "identity"
+  ],
+  "roi_count": 8,
+  "native_roi_size": 400,
+  "legacy_roi_size": 256,
+  "output_size": 512,
+  "shared_normalization": true,
+  "clamp_applied": false,
+  "normalization": {
+    "N": {
+      "min": -0.004098923411220312,
+      "max": 1.0088934898376465,
+      "outside_fraction": 4.927317301432292e-06
+    },
+    "R": {
+      "min": 0.00017882221436593682,
+      "max": 0.9997100830078125,
+      "outside_fraction": 0.0
+    },
+    "L": {
+      "min": 0.0,
+      "max": 0.9997351765632629,
+      "outside_fraction": 0.0
+    }
+  },
+  "differences": {
+    "N_R": {
+      "full": {
+        "mean_absolute": 0.0037110916541873125,
+        "rms": 0.004885812144461344,
+        "max_absolute": 0.05319225788116455
+      },
+      "interior": {
+        "mean_absolute": 0.00371008204576055,
+        "rms": 0.004885114390387459,
+        "max_absolute": 0.05319225788116455
+      }
+    },
+    "N_L": {
+      "full": {
+        "mean_absolute": 0.003549530881170035,
+        "rms": 0.004683204841155597,
+        "max_absolute": 0.053007543087005615
+      },
+      "interior": {
+        "mean_absolute": 0.003548192525716294,
+        "rms": 0.00468169280046611,
+        "max_absolute": 0.053007543087005615
+      }
+    },
+    "R_L": {
+      "full": {
+        "mean_absolute": 0.00045366261437503747,
+        "rms": 0.0006940973363306179,
+        "max_absolute": 0.01252371072769165
+      },
+      "interior": {
+        "mean_absolute": 0.0004449823287095597,
+        "rms": 0.0006778349714714338,
+        "max_absolute": 0.00831514596939087
+      }
+    }
+  },
+  "task_benefit_established": false,
+  "sensor_native_resolution_established": false,
+  "source_sha": "f323d16ade55335a0fa1628b5e2c1da3e8a43464"
+}
