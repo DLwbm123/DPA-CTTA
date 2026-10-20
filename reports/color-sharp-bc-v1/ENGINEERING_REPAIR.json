@@ -1,0 +1,31 @@
+{
+  "original_origin_utc": "2026-10-20T18:17:35.161204+00:00",
+  "original_clock_reset": false,
+  "science_protocol_changed": false,
+  "completed_check_repeated": false,
+  "attempts": [
+    {
+      "source_sha": "d77fae641b6b2c62f73bc8a02316b814e63e0c97",
+      "check_exit_code": 0,
+      "check_seconds": 1.3549575805664062,
+      "worker_exit_code": 1,
+      "worker_seconds": 9.952250003814697,
+      "error": "Reference checkout entry did not satisfy the model builder",
+      "original_identities_retired": true,
+      "gt_read": false
+    },
+    {
+      "source_sha": "c4521b1ac705a809de20d7b7323395d1c10118b0",
+      "worker_exit_code": 1,
+      "worker_seconds": 17.494483470916748,
+      "error": "Fixed photometric constants on CPU while input was CUDA",
+      "original_identities_retired": true,
+      "gt_read": false
+    }
+  ],
+  "resume_source_sha": "2a95957d24cabbdc61327344a97abbd89d3dc891",
+  "repair": "Reference environment points to prior valid pinned checkout; constant tensors inherit input device; formulas and scientific gates unchanged",
+  "failed_gpu_designated_process_seconds": 27.446733474731445,
+  "failed_stage_seconds_not_pure_gpu_kernel_time": true,
+  "prior_check_cpu_seconds": 1.3549575805664062
+}
