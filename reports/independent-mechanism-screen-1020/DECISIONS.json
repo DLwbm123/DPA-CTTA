@@ -21,7 +21,7 @@
     {
       "name": "LAME",
       "decision": "NOT_ADMITTED_PIXEL_TRANSFER_AND_OLD_GRAPH_OVERLAP",
-      "upstream_tree_sha": "d2e5f63090bc1c8129bf7cbd781029a5955e1a67",
+      "upstream_tree_sha": "06de920d4019b01c3822a6142495f2f34b3b9080",
       "defaults": {
         "affinity": "rbf",
         "knn": 5,
@@ -31,7 +31,17 @@
         "relative_stop": 1e-08,
         "unary_add": 1e-10
       },
-      "sigma_config_is_actual_bandwidth": false
+      "sigma_config_is_actual_bandwidth": false,
+      "upstream_commit_sha": "d2e5f63090bc1c8129bf7cbd781029a5955e1a67"
+    },
+    {
+      "name": "SPECTRAL_PHASE_CONGRUENCY",
+      "decision": "SELECT_SYNTHETIC_CPU_QUALIFICATION_ONLY",
+      "performance_admitted": false,
+      "protocol": "Phase-Congruency-A-v1",
+      "execution_source_frozen": false,
+      "dispatched": false,
+      "extra_model_or_training": false
     }
   ],
   "duplication_scope": "current checkout src/reports Python keywords plus targeted R3/R4T/R22/E3 source and frozen reports; not exhaustive deleted/unfetched history",
