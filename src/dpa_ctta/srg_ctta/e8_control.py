@@ -39,9 +39,14 @@ def guard(c):
         time.sleep(2)
 
 def controller(c):
-    root=Path(c['output_root']);stages=[]
+    root=Path(c['output_root']);stages=read(root/'STAGE_PROGRESS.private.json')['stages'] if (root/'STAGE_PROGRESS.private.json').exists() else []
     modes=('rebuild','worker','score') if c.get('migration_reconstruction') else ('check','worker','score')
     for mode in modes:
+        prior=[v for v in stages if v['stage']==mode]
+        if prior:
+            assert len(prior)==1 and prior[0]['exit_code']==0
+            rec=read(root/f'processes/{mode}.json');assert not rec['active'] and identity(rec['pid'])!=rec['start_ticks']
+            continue
         if mode in ('rebuild','worker'):
             q=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid,memory.free','--format=csv,noheader,nounits'],text=True)
             selected=[x for x in q.splitlines() if x.split(',')[0].strip()==str(c['gpu']['index'])]
@@ -50,7 +55,7 @@ def controller(c):
                 save(root/'WAITING_GPU.json',dict(status='WAITING_GPU',index=c['gpu']['index']))
                 return
             save(root/'GPU_ADMISSION.private.json',dict(status='PASS',line=selected[0]))
-        start=time.time();env=dict(os.environ,DIAG_MODE=mode,CUDA_VISIBLE_DEVICES=str(c['gpu']['index']) if mode=='worker' else '',OPENBLAS_NUM_THREADS='2')
+        start=time.time();env=dict(os.environ,DIAG_MODE=mode,CUDA_VISIBLE_DEVICES=str(c['gpu']['index']) if mode in ('rebuild','worker') else '',OPENBLAS_NUM_THREADS='2')
         with (root/f'logs/{mode}.log').open('x') as log:
             p=subprocess.Popen([c.get('runtime_python','/tmp/q133r/env/bin/python'),c.get('runtime_entry','/tmp/e379.py')],env=env,stdout=log,stderr=subprocess.STDOUT)
             rec=dict(pid=p.pid,start_ticks=identity(p.pid),active=True,exit_code=None)
