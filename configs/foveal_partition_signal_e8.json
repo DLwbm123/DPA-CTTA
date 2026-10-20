@@ -1,0 +1,10 @@
+{
+ "design_version":"FOVEAL_PARTITION_SIGNAL_E8", "selector_applied":false,"network_updated":false,
+ "unique_inputs":32,"contents":8,"seed":20261018,"bootstrap":2000,
+ "crop_pixels":256,"model_input_pixels":512,"coordinate_rule":"INTEGER_CROP_BILINEAR_ALIGN_CORNERS_FALSE_BACK_TO_256",
+ "scores":["CROP_Q","GLOBAL_Q","RESAMPLE_Q","LOGIT_Q","CROP_LOGIT_Q","E6_FEATURE","RAW_MARGIN","GEOMETRY_ONLY","AREA_DELTA","CROP_Q_SHIFT","STRATIFIED_ROLL"],
+ "primary":"CROP_Q-GLOBAL_Q:BLOCK","minimum_auc":0.6,"minimum_primary_difference":0.05,
+ "minimum_common_space_pp":0.2,"minimum_defined_inputs":24,"minimum_defined_contents":8,
+ "save_stop_after_seconds":86340,"output_cap_bytes":268435456,"reservation_bytes":335544320,
+ "new_source_training":false,"rdc":false,"engram":false
+}

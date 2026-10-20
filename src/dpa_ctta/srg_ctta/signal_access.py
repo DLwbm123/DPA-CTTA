@@ -10,7 +10,7 @@ def callback(c,panel):
         if event=='socket.connect':raise PermissionError('network not permitted in score generation')
         if event!='open' or not args or not isinstance(args[0],(str,bytes,os.PathLike)):return
         p=Path(os.fsdecode(args[0])).resolve()
-        utility=any(p.name==n+'.py' or (p.suffix=='.pyc' and p.name.startswith(n+'.')) for n in ('signal_score','e7_score'))
+        utility=any(p.name==n+'.py' or (p.suffix=='.pyc' and p.name.startswith(n+'.')) for n in ('signal_score','e7_score','e8_score'))
         if utility or any(p.is_relative_to(v) for v in denied):raise PermissionError('labels, outcomes, oracle and scorer denied')
         if p.is_relative_to(data) and p!=checkpoint:
             if p not in images:raise PermissionError('only registered eight RGB')
