@@ -67,20 +67,26 @@ def access_guard(c):
     refs = {Path(p).resolve() for p in c['reference_predictions'].values()}
     libraries = [Path(sys.prefix).resolve(), Path(sys.base_prefix).resolve()]
     code = [Path(os.environ[k]).resolve() for k in ('PYTHONPATH', 'DPA_CTTA_BASE_ROOT', 'DPA_GRATA_ROOT')]
-    permit = {'image': None}; opened = set(); rejected = []
+    permit = {'image': None, 'reverify_images': set(), 'opened_images': set()}; opened = set(); rejected = []
     def audit(event, args):
         if event != 'open' or not args or not isinstance(args[0], (str, bytes, os.PathLike)):
             return
         p = Path(os.fsdecode(args[0])).resolve()
         protected = any(p.is_relative_to(root/d) for d in ('scorer', 'scores', 'reports'))
         mode = args[1] if len(args) > 1 and isinstance(args[1], str) else ''
-        reference_read = p in refs and not any(k in mode for k in ('w', 'a', '+', 'x'))
-        allowed = p in (checkpoint, permit['image']) or reference_read or p.is_relative_to(root) or any(p.is_relative_to(x) for x in libraries+code)
+        flags = args[2] if len(args) > 2 and isinstance(args[2], int) else 0
+        readonly = not any(k in mode for k in ('w', 'a', '+', 'x')) and not flags & (os.O_WRONLY | os.O_RDWR | os.O_CREAT | os.O_TRUNC | os.O_APPEND)
+        reference_read = p in refs and readonly
+        image_read = p == permit['image'] and readonly
+        reverify = p in permit['reverify_images'] and readonly
+        allowed = (p == checkpoint and readonly) or image_read or reverify or reference_read or p.is_relative_to(root) or any(p.is_relative_to(x) for x in libraries+code)
         asset = p.suffix.lower() in ('.png', '.jpg', '.jpeg', '.pt', '.pth', '.npz', '.npy', '.safetensors')
         if protected or (p.is_relative_to(mount) or asset) and not allowed:
             rejected.append(str(p)); raise PermissionError('current-image and label-free metadata boundary')
         if p.is_relative_to(mount):
             opened.add(str(p))
+        if image_read:
+            permit['opened_images'].add(p)
     sys.addaudithook(audit)
     for p in (root/'scorer/denial.json', Path(c['campaign_root'])/'public/M0_GATE.json'):
         try:
@@ -224,7 +230,12 @@ def worker(c):
         hosts = []
         assert state['physical_updates'] == state['completed_physical_updates'] == cap
         assert state['physical_forwards'] == cap*10 and state['training_backwards'] == cap
-        reader.after_check()
+        permit['reverify_images'] = {Path(p).resolve() for p in reader.used}
+        assert permit['reverify_images'] <= permit['opened_images']
+        try:
+            reader.after_check()
+        finally:
+            permit['reverify_images'].clear()
         save(dest/'ACCESS_AUDIT.json', dict(online_label_reads=0, source_image_reads=0,
              image_accesses=guard.extra['image_accesses'], opened_paths=sorted(opened), rejections=rejected))
         state.update(status='GPU_COMPLETE', ended=time.time()); persist()
@@ -269,7 +280,7 @@ def controller(c):
         q = read(root/'public/QUALIFICATION.json')
         projection = q['max_steady_transaction_seconds']*1920*1.5
         admitted = q['status'] == 'PASS' and projection/2+2400 < c['deadline']-time.time()
-        admitted = admitted and 1927 <= c['max_updates'] and 19270 <= c['max_forwards']
+        admitted = admitted and c.get('prior_updates', 0)+1927 <= c['max_updates'] and c.get('prior_forwards', 0)+19270 <= c['max_forwards']
         save(root/'FORMAL_ADMISSION.json', dict(admitted=admitted, projected_serial_GPU_seconds=projection,
                                                parallel_plus_score_headroom_seconds=projection/2+2400,
                                                shared_deadline=c['deadline']))

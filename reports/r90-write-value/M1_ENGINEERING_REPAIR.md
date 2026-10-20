@@ -1,0 +1,7 @@
+# M1首次资格收尾访问衔接修复
+
+首attempt的7updates/70F/7训练反向及所有数值资格通过，但worker在reader.after_check收尾复核先前已读图像时被guard拦截，实际exit1。该attempt记NOT_EVALUABLE工程失败，QUALIFICATION中的PASS仅表示数值部分，不能替代完整worker成功。保留原root、源码、日志及失败场景，不晋级、不覆盖或删除。
+
+根因：current-image capability已移到最后一张图，而after_check按原读取器协议重新核验本进程先前打开的每张图。修复仅在after_check期间加入本进程opened_images的只读子集，结束立即清空；未知图像、标签/M0衍生评分和reference写入仍拒绝。独立合成fixture检查当前读取、非当前拒绝、已打开图像的临时复核、写入拒绝；不因失败放宽科学资格或跳过原读取器完整性检查。
+
+修复后用新attempt重做全部7/70资格，再profile准入。旧attempt已实测GPU进程45.124259秒、7更新/70F，CPU公式clone一次为进程子集，不双算。旧controller和watchdog均收尾、qualifier exit1/PID退休；新attempt与M0/旧attempt共享T0=1792492974.1323855和deadline=1792536174.1323855、5000updates/50000F及同一campaign存储cap，无新预留或时钟重置。若新attempt完整执行M1，累计将为1934更新/19340F；M2仍未准入。

@@ -122,6 +122,9 @@ def run(c):
         probes=48, future_window=16, extra_branch_updates=768, raw_Dice_parity_checks=2304,
         online_label_reads=0, source_image_reads=0, terminal_label_contents=192,
         all_registered_GPU_workers_exit0_absent_before_labels=True, CPU_score_body_seconds=time.time()-START,
+        prior_attempt_updates=c.get('prior_updates', 0), prior_attempt_forwards=c.get('prior_forwards', 0),
+        cumulative_R90_updates=totals['physical_updates']+c.get('prior_updates', 0),
+        cumulative_R90_forwards=totals['physical_forwards']+c.get('prior_forwards', 0),
         shared_started=c['started'], shared_deadline=c['deadline']))
     print(json.dumps(read(public/'M1_GATE.json')), flush=True)
 
