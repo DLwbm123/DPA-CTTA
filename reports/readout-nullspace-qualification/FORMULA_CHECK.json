@@ -1,0 +1,87 @@
+{
+  "status": "COUNTEREXAMPLE_FOUND",
+  "witness": {
+    "trial": 7,
+    "synthetic_features": [
+      [
+        -1,
+        2,
+        0
+      ],
+      [
+        2,
+        0,
+        1
+      ],
+      [
+        2,
+        -2,
+        0
+      ],
+      [
+        0,
+        -1,
+        -2
+      ],
+      [
+        0,
+        2,
+        -3
+      ],
+      [
+        -1,
+        3,
+        0
+      ],
+      [
+        0,
+        -3,
+        2
+      ],
+      [
+        -3,
+        0,
+        1
+      ]
+    ],
+    "before_mask": [
+      true,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false
+    ],
+    "after_mask": [
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "null_coordinate_scales": [
+      1,
+      8
+    ],
+    "partition_deltas": [
+      0.020204673582583155,
+      -0.11847140884664276
+    ],
+    "logits_identical": true,
+    "projection_delta": -0.004561252492017109,
+    "logit_delta": -0.004561252492017109
+  },
+  "trials": 7,
+  "maximum_trials": 2000,
+  "seed": 20261020,
+  "synthetic_only": true,
+  "real_data_model_label_reads": 0,
+  "gpu_forwards": 0,
+  "body_seconds": 0.00027537508867681026,
+  "scope": "Existence only; does not establish frequency or cause of E8 failure"
+}
