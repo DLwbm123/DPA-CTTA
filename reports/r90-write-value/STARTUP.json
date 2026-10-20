@@ -1,0 +1,25 @@
+{
+  "status": "M0_RUNNING_NOT_COMPLETE",
+  "science_commit": "4949834",
+  "shared_started": 1792492974.1323855,
+  "shared_deadline": 1792536174.1323855,
+  "deadline_Asia_Shanghai": "2026-10-21T06:42:54.132385+08:00",
+  "CPU_qualification": "PASS",
+  "actual_stage_last_observed": "SEALING_STATIC_CONTROL",
+  "observed_at_epoch": 1792494360.506565,
+  "transformed_stream_files_last_observed": 7,
+  "expected_stream_files": 13,
+  "model_calls": 0,
+  "GPU_updates": 0,
+  "M1_started": false,
+  "M2_started": false,
+  "automation": "r52 ACTIVE 30min same thread; updated in place",
+  "limits": {
+    "updates": 5000,
+    "forwards": 50000,
+    "shared_hours": 12,
+    "root_cap_bytes": 1610612736,
+    "remote_reservation_bytes": 1800000000,
+    "total_conservative_reserved_bytes": 19602653184
+  }
+}
