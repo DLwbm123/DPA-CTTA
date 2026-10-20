@@ -1,0 +1,254 @@
+{
+  "schema_version": 1,
+  "scope": "Selected current CTTA candidate/operation decisions, not exhaustive literature or all historical experiments",
+  "snapshot_after_commit": "14d586e76e9ddaa519f3891be8005583cd10399a",
+  "new_scientific_execution": false,
+  "launch_eligible_count": 0,
+  "candidate_entries": 27,
+  "entries": [
+    {
+      "id": "P1",
+      "mechanism": "平移相位集成",
+      "status": "SCIENCE_GATE_FAILED",
+      "evidence": "reports/translation-phase-p1/REPORT_ZH.md",
+      "reason": "主门失败；静态平滑有限正证据保留",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "P2",
+      "mechanism": "LCC/填孔拓扑投影",
+      "status": "SCIENCE_GATE_FAILED",
+      "evidence": "reports/topology-projection-p2/REPORT_ZH.md",
+      "reason": "开发正证据未过原合取门；成熟强基线保留",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "P3",
+      "mechanism": "PH/完整性原空域定义",
+      "status": "NOT_EVALUABLE",
+      "evidence": "reports/topology-integrity-p3/REPORT_ZH.md",
+      "reason": "空骨架硬停，未评分；不补称算法阴性",
+      "eligible_for_launch": false,
+      "reopen_requires": "原记录永久保留；不能补分/改原目标，P4另立不回填"
+    },
+    {
+      "id": "P4",
+      "mechanism": "PH/完整性有限空域扩展",
+      "status": "SCIENCE_GATE_FAILED_WITH_EXECUTION_LIMIT",
+      "evidence": "reports/topology-integrity-closed-p4/REPORT_ZH.md",
+      "reason": "任务/边界严重损害；原OS码未知与独立score重建保留",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "P5",
+      "mechanism": "平滑填孔融合",
+      "status": "SCIENCE_GATE_FAILED",
+      "evidence": "reports/smooth-fill-p5/REPORT_ZH.md",
+      "reason": "固定融合门失败；不扫形态参数",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "E8",
+      "mechanism": "冻结特征/裁剪信号",
+      "status": "SCIENCE_GATE_FAILED",
+      "evidence": "reports/foveal-partition-signal-e8/REPORT_ZH.md",
+      "reason": "signal=false；迁移重建不等于旧封存位图parity",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "E8_CPU",
+      "mechanism": "封存CROP正分固定预算selector",
+      "status": "SCIENCE_GATE_FAILED",
+      "evidence": "reports/e8-sealed-decision-audit/REPORT_ZH.md",
+      "reason": "固定操作损害，禁止预算/子组后选",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "NATIVE_CROP",
+      "mechanism": "原文件固定视野crop",
+      "status": "SCIENCE_GATE_FAILED",
+      "evidence": "reports/native-detail-paired-model/REPORT_ZH.md",
+      "reason": "N/R/L共同崩溃，不归因为原文件细节必有害",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "NATIVE800",
+      "mechanism": "全视野800编码",
+      "status": "SCIENCE_GATE_FAILED",
+      "evidence": "reports/full-field-native800-paired/REPORT_ZH.md",
+      "reason": "仅G0过，任务/损害门失败",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "VESSEL",
+      "mechanism": "固定血管弯折U",
+      "status": "SPACE_GATE_FAILED",
+      "evidence": "reports/vessel-bend512-bc/REPORT_ZH.md",
+      "reason": "A算子资格保留；B1失败，B2/C未运行",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "PHASE",
+      "mechanism": "固定相位一致性U",
+      "status": "SPACE_GATE_FAILED",
+      "evidence": "reports/phase-congruency-bc/REPORT_ZH.md",
+      "reason": "A数值资格保留；B1均值未过，B2/C未运行",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "COLORSHARP",
+      "mechanism": "固定ColorSharp策略",
+      "status": "SIGNAL_GATE_FAILED",
+      "evidence": "reports/color-sharp-bc-v1/REPORT_ZH.md",
+      "reason": "A/G0/空间过，辨识失败，C未运行；UNIFORM不后选",
+      "eligible_for_launch": false,
+      "reopen_requires": "不能重复同配置；须有独立新依据与实质不同假设，另立协议，原失败不改"
+    },
+    {
+      "id": "TTA",
+      "mechanism": "普通视图分歧/置信门控",
+      "status": "OVERLAP_NO_NEW_HYPOTHESIS",
+      "evidence": "reports/tta-uncertainty-contract-audit/REPORT_ZH.md",
+      "reason": "R11/R14/R20/R23/R62/R68已覆盖相关统计量；不等同穷尽有序响应",
+      "eligible_for_launch": false,
+      "reopen_requires": "明确不同的有符号任务信息/可证伪假设与同信息强控，不能只换温度/视图"
+    },
+    {
+      "id": "CS_STD",
+      "mechanism": "凸形/有序输出CS-STD迁移",
+      "status": "CONTRACT_INCOMPLETE",
+      "evidence": "reports/cs-std-transfer-contract/REPORT_ZH.md",
+      "reason": "允许预测插入，不能误拒为必需重训；二头/离散参数契约未齐",
+      "eligible_for_launch": false,
+      "reopen_requires": "具体新增实现/勘误或完整且有独立依据的原创设计；不能任意补默认或GT择参"
+    },
+    {
+      "id": "LSACM",
+      "mechanism": "局部统计/偏置场LSACM-SP",
+      "status": "CLOSED_DEPENDENCY_CHAIN",
+      "evidence": "docs/R61_IMAGE_EVIDENCE.md",
+      "reason": "旧R61系数/停止/预处理尺度缺口已关闭",
+      "eligible_for_launch": false,
+      "reopen_requires": "具体新增实现/勘误或完整且有独立依据的原创设计；不能任意补默认或GT择参"
+    },
+    {
+      "id": "GRAY_EDGE",
+      "mechanism": "Gray-Edge光照校正",
+      "status": "TASK_TRANSFER_CONTRACT_INCOMPLETE",
+      "evidence": "reports/gray-edge-dependency-screen/REPORT_ZH.md",
+      "reason": "无运行标签不等于任务颜色校正契约已确定",
+      "eligible_for_launch": false,
+      "reopen_requires": "具体新增实现/勘误或完整且有独立依据的原创设计；不能任意补默认或GT择参"
+    },
+    {
+      "id": "RISK",
+      "mechanism": "SURE/Noise2Self风险反馈",
+      "status": "OBSERVATION_RISK_MISMATCH",
+      "evidence": "reports/self-supervised-risk-screen/REPORT_ZH.md",
+      "reason": "恢复MSE观测前提不等于分割Dice风险；人工加噪不修语义偏差",
+      "eligible_for_launch": false,
+      "reopen_requires": "当前观测到任务风险的具体完整观测模型，不是重命名重建损失"
+    },
+    {
+      "id": "DEPTH_NET",
+      "mechanism": "OCT监督单目深度/引导网络",
+      "status": "OUT_OF_CURRENT_ASSET_SCOPE",
+      "evidence": "reports/depth-cue-dependency-screen/REPORT_ZH.md",
+      "reason": "单RGB推理不等于无额外监督；不新增深度模型训练",
+      "eligible_for_launch": false,
+      "reopen_requires": "现权限内有完整相容设计与独立依据；扩大资产/训练/交互须另有明确授权"
+    },
+    {
+      "id": "STEREO_VR",
+      "mechanism": "真实双目/VR描点",
+      "status": "OUT_OF_CURRENT_OBSERVATION_INTERACTION_SCOPE",
+      "evidence": "reports/depth-cue-dependency-screen/REPORT_ZH.md",
+      "reason": "当前未登记合格配对与人工交互；单图平移不是真视差",
+      "eligible_for_launch": false,
+      "reopen_requires": "现权限内有完整相容设计与独立依据；扩大资产/训练/交互须另有明确授权"
+    },
+    {
+      "id": "TOKENCUT",
+      "mechanism": "TokenCut原版",
+      "status": "OUT_OF_CURRENT_ASSET_SCOPE",
+      "evidence": "reports/independent-mechanism-screen-1020/REPORT_ZH.md",
+      "reason": "原版外DINO特征；换原分割特征不是原版",
+      "eligible_for_launch": false,
+      "reopen_requires": "现权限内有完整相容设计与独立依据；扩大资产/训练/交互须另有明确授权"
+    },
+    {
+      "id": "LGDA",
+      "mechanism": "LGDA边界一致性",
+      "status": "OUT_OF_CURRENT_ASSET_SCOPE",
+      "evidence": "reports/independent-mechanism-screen-1020/REPORT_ZH.md",
+      "reason": "原监督边界头不在当前checkpoint",
+      "eligible_for_launch": false,
+      "reopen_requires": "现权限内有完整相容设计与独立依据；扩大资产/训练/交互须另有明确授权"
+    },
+    {
+      "id": "SPEGC",
+      "mechanism": "SPEGC原版",
+      "status": "ADDITIONAL_COMPONENT_CONTRACT_INCOMPLETE",
+      "evidence": "reports/independent-mechanism-screen-1020/REPORT_ZH.md",
+      "reason": "新增学习/采样/队列迁移未冻；不擅自说必需CLIP/SAM",
+      "eligible_for_launch": false,
+      "reopen_requires": "现权限内有完整相容设计与独立依据；扩大资产/训练/交互须另有明确授权"
+    },
+    {
+      "id": "LAME",
+      "mechanism": "LAME稠密二头迁移",
+      "status": "OVERLAP_AND_CONTRACT_INCOMPLETE",
+      "evidence": "reports/independent-mechanism-screen-1020/REPORT_ZH.md",
+      "reason": "R3/R4T/R22/E3邻近，非严格等价；节点语义资源参数未冻",
+      "eligible_for_launch": false,
+      "reopen_requires": "具体新增实现/勘误或完整且有独立依据的原创设计；不能任意补默认或GT择参"
+    },
+    {
+      "id": "SALIENCY",
+      "mechanism": "显著性候选组",
+      "status": "MIXED_ACCESS_TASK_SCOPE_LIMITS",
+      "evidence": "reports/saliency-task-dependency-screen/REPORT_ZH.md",
+      "reason": "谱残差全文未核、OD证据非OC、新训练网络超范围分别保留",
+      "eligible_for_launch": false,
+      "reopen_requires": "合法新全文/具体OC任务依据与相容契约；不重复失败下载"
+    },
+    {
+      "id": "CLUSTER",
+      "mechanism": "杯缘聚类候选组",
+      "status": "MIXED_CONTRACT_AND_ACCESS_LIMITS",
+      "evidence": "reports/cup-clustering-contract-screen/REPORT_ZH.md",
+      "reason": "SWFCM契约不齐；另两项全文/监督未核；不是性能阴性",
+      "eligible_for_launch": false,
+      "reopen_requires": "具体新增实现/勘误或完整且有独立依据的原创设计；不能任意补默认或GT择参"
+    },
+    {
+      "id": "SFS",
+      "mechanism": "亮度明暗SfS子组件",
+      "status": "CONTRACT_INCOMPLETE_SUPERSEDES_PENDING",
+      "evidence": "reports/shading-numerical-contract/REPORT_ZH.md",
+      "reason": "筛选e345保留的问题已由4806核查终结；旧待契约不再触发执行",
+      "eligible_for_launch": false,
+      "reopen_requires": "具体新增实现/勘误或完整且有独立依据的原创设计；不能任意补默认或GT择参"
+    },
+    {
+      "id": "ISNT",
+      "mechanism": "ISNT缘宽普适纠错",
+      "status": "INDIVIDUAL_APPLICABILITY_UNESTABLISHED",
+      "evidence": "reports/isnt-prior-applicability/REPORT_ZH.md",
+      "reason": "正常倾向/诊断关联不等于逐眼真值；不强制正常化",
+      "eligible_for_launch": false,
+      "reopen_requires": "具体个体适用性与合法观测依据，不是后选IS/IST/诊断分组"
+    }
+  ],
+  "precedence": "Latest explicit human instructions and authoritative handoff/state first; this register indexes frozen evidence, old NEXT proposal is not current action authority."
+}
