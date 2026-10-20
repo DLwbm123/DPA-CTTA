@@ -1,0 +1,42 @@
+{
+  "status": "COMPLETE",
+  "source_sha": "88dff23302a08c16685d53095f634dce9da75cd2",
+  "common_blocks": 2881,
+  "common_edit_pixels": 6997,
+  "all_oc_only_blocks": 3028,
+  "registered_gt_files": 8,
+  "inputs": 32,
+  "base_oc_dice": {
+    "mean": 87.80529246678334,
+    "ci95": [
+      83.87122008786633,
+      91.21932887059697
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "full_common_relaxed_upper_bound_pp": {
+    "mean": 0.4721342181562814,
+    "ci95": [
+      0.33800751918682,
+      0.6152306384927698
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "support_restricted_relaxed_upper_bound_pp": {
+    "mean": 0.046384237486692334,
+    "ci95": [
+      0.029129937240354807,
+      0.06871693094795563
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "oracle_exact_mask_ratio_checks": 64,
+  "topology_constraints_relaxed": true,
+  "space_gate": false,
+  "signal_status": "NOT_RUN_SPACE_GATE",
+  "joint_status": "NOT_RUN_SPACE_GATE",
+  "qualified": false
+}

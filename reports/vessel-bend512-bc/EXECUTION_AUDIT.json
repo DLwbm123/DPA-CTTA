@@ -1,0 +1,58 @@
+{
+  "source_sha": "88dff23302a08c16685d53095f634dce9da75cd2",
+  "stage_exit_codes": {
+    "check": 0,
+    "worker1": 0,
+    "worker2": 0,
+    "score": 0
+  },
+  "retirement": {
+    "score": {
+      "original_identity_retired": true,
+      "exit_code": 0
+    },
+    "worker1": {
+      "original_identity_retired": true,
+      "exit_code": 0
+    },
+    "worker2": {
+      "original_identity_retired": true,
+      "exit_code": 0
+    },
+    "controller": {
+      "original_identity_retired": true,
+      "exit_code": null
+    },
+    "check": {
+      "original_identity_retired": true,
+      "exit_code": 0
+    },
+    "guard": {
+      "original_identity_retired": true,
+      "exit_code": 0
+    }
+  },
+  "cpu_process_seconds": 492.67284083366394,
+  "registered_gt_files": 8,
+  "registered_contents": 8,
+  "views": 32,
+  "common_blocks": 2881,
+  "oracle_exact_mask_ratio_checks": 64,
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "worker_gt_reads": 0,
+  "independent_decode_replay": true,
+  "space_first": true,
+  "storage": {
+    "actual_file_bytes": 13867291,
+    "file_count": 63,
+    "reservation_bytes": 0,
+    "original_reservation_bytes": 268435456,
+    "output_cap_bytes": 134217728,
+    "known_project_actual_file_bytes": 344066057,
+    "auxiliary_reserve_bytes": 1000000000,
+    "old_server_unknown_conservative_reserve_bytes": 335544320,
+    "conservative_total_bytes": 1679610377,
+    "measurement": "logical file sizes, no symlink traversal; includes fixed4096-byte receipt"
+  }
+}
