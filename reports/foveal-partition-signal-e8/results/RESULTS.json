@@ -1,0 +1,1556 @@
+{
+  "signal_qualification_only": true,
+  "selector_trained": false,
+  "selector_applied": false,
+  "network_updated": false,
+  "history_used": false,
+  "continual_benefit_tested": false,
+  "signal_qualified": false,
+  "gates": {
+    "common_oracle": true,
+    "defined_inputs": true,
+    "crop_auc": false,
+    "crop_vs_global": false,
+    "strong_controls": false,
+    "utility_nonreverse": true,
+    "permutation_nonidentity": true
+  },
+  "auc": [
+    {
+      "score": "CROP_Q",
+      "weight": "BLOCK",
+      "mean": 0.5128825447263137,
+      "ci95": [
+        0.37521063888251355,
+        0.6496238390401726
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "CROP_Q",
+      "weight": "UTILITY",
+      "mean": 0.5319049373751555,
+      "ci95": [
+        0.40443462852719825,
+        0.6598504750764238
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "CROP_Q",
+      "weight": "PIXEL",
+      "mean": 0.5024540993206259,
+      "ci95": [
+        0.3786064950363073,
+        0.6343178607834702
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "GLOBAL_Q",
+      "weight": "BLOCK",
+      "mean": 0.4085438175700612,
+      "ci95": [
+        0.29527861052555293,
+        0.5242357298609424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "GLOBAL_Q",
+      "weight": "UTILITY",
+      "mean": 0.3786761146307816,
+      "ci95": [
+        0.26497389186422843,
+        0.505543160467934
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "GLOBAL_Q",
+      "weight": "PIXEL",
+      "mean": 0.3971062323240617,
+      "ci95": [
+        0.28661653414399363,
+        0.5145010850339197
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "RESAMPLE_Q",
+      "weight": "BLOCK",
+      "mean": 0.40537635462254407,
+      "ci95": [
+        0.28722394336978074,
+        0.5290354030883894
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "RESAMPLE_Q",
+      "weight": "UTILITY",
+      "mean": 0.38016775281394855,
+      "ci95": [
+        0.25783607632137195,
+        0.512903426530822
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "RESAMPLE_Q",
+      "weight": "PIXEL",
+      "mean": 0.3952557497667514,
+      "ci95": [
+        0.27570326524795624,
+        0.5203963674441396
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": 0.4682307895800375,
+      "ci95": [
+        0.3695444191860883,
+        0.5585879392705093
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": 0.45121345662896234,
+      "ci95": [
+        0.34226743262333154,
+        0.5512803218906889
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "LOGIT_Q",
+      "weight": "PIXEL",
+      "mean": 0.4867808602036405,
+      "ci95": [
+        0.3709236773672646,
+        0.5849784261075175
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": 0.5053315989649572,
+      "ci95": [
+        0.364193126753157,
+        0.6441155660231506
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": 0.519026975903329,
+      "ci95": [
+        0.384764033526352,
+        0.6520924263147934
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "CROP_LOGIT_Q",
+      "weight": "PIXEL",
+      "mean": 0.49009632603475073,
+      "ci95": [
+        0.36189901090740023,
+        0.6237375595832978
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "E6_FEATURE",
+      "weight": "BLOCK",
+      "mean": 0.5519991432574886,
+      "ci95": [
+        0.42864791332568125,
+        0.6646049470634622
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "E6_FEATURE",
+      "weight": "UTILITY",
+      "mean": 0.5852207349288958,
+      "ci95": [
+        0.46068617369120324,
+        0.6966037826290918
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "E6_FEATURE",
+      "weight": "PIXEL",
+      "mean": 0.5459659777005064,
+      "ci95": [
+        0.42681619576090063,
+        0.6554615724083365
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "RAW_MARGIN",
+      "weight": "BLOCK",
+      "mean": 0.5177397283748333,
+      "ci95": [
+        0.49877201774632324,
+        0.535852400628061
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "RAW_MARGIN",
+      "weight": "UTILITY",
+      "mean": 0.5036393830837932,
+      "ci95": [
+        0.47968336130047246,
+        0.5271495291433218
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "RAW_MARGIN",
+      "weight": "PIXEL",
+      "mean": 0.5031194258699816,
+      "ci95": [
+        0.4608383002550542,
+        0.5411815606351681
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": 0.5998102521285493,
+      "ci95": [
+        0.5503356645148162,
+        0.6539578389874399
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": 0.6023709134483389,
+      "ci95": [
+        0.5398424664761184,
+        0.66589247086775
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "GEOMETRY_ONLY",
+      "weight": "PIXEL",
+      "mean": 0.5987435887347925,
+      "ci95": [
+        0.5422185567902283,
+        0.6528808442149938
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "AREA_DELTA",
+      "weight": "BLOCK",
+      "mean": 0.5515841519578525,
+      "ci95": [
+        0.4297725219221098,
+        0.6652103315708736
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "AREA_DELTA",
+      "weight": "UTILITY",
+      "mean": 0.5769374769225823,
+      "ci95": [
+        0.4470979401659932,
+        0.6950781169762356
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "AREA_DELTA",
+      "weight": "PIXEL",
+      "mean": 0.5463411954256308,
+      "ci95": [
+        0.4192336283415629,
+        0.6666028103891951
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "CROP_Q_SHIFT",
+      "weight": "BLOCK",
+      "mean": 0.47244985421197877,
+      "ci95": [
+        0.4039836113727102,
+        0.5342156995844525
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "CROP_Q_SHIFT",
+      "weight": "UTILITY",
+      "mean": 0.45978291035939767,
+      "ci95": [
+        0.39280497859250507,
+        0.5250770070497031
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "CROP_Q_SHIFT",
+      "weight": "PIXEL",
+      "mean": 0.4878404504587175,
+      "ci95": [
+        0.42773293016426556,
+        0.5460081448330136
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "STRATIFIED_ROLL",
+      "weight": "BLOCK",
+      "mean": 0.5164060061248581,
+      "ci95": [
+        0.412346321269686,
+        0.6120845825433192
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "STRATIFIED_ROLL",
+      "weight": "UTILITY",
+      "mean": 0.5122690818944884,
+      "ci95": [
+        0.42050896584455977,
+        0.5985632768508111
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "STRATIFIED_ROLL",
+      "weight": "PIXEL",
+      "mean": 0.49497877631692067,
+      "ci95": [
+        0.4306855437043744,
+        0.5561852031041639
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  ],
+  "contrasts": [
+    {
+      "comparison": "CROP_Q-GLOBAL_Q",
+      "weight": "BLOCK",
+      "mean": 0.10433872715625239,
+      "ci95": [
+        -0.03259353656204956,
+        0.2653537622774075
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GLOBAL_Q",
+      "weight": "UTILITY",
+      "mean": 0.1532288227443739,
+      "ci95": [
+        0.03253994956285831,
+        0.31357531370687025
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GLOBAL_Q",
+      "weight": "PIXEL",
+      "mean": 0.10534786699656415,
+      "ci95": [
+        -0.007982169374705883,
+        0.26853562592836927
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-RESAMPLE_Q",
+      "weight": "BLOCK",
+      "mean": 0.10750619010376958,
+      "ci95": [
+        -0.05483205165545181,
+        0.28318624376375245
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-RESAMPLE_Q",
+      "weight": "UTILITY",
+      "mean": 0.15173718456120694,
+      "ci95": [
+        0.016258178221876755,
+        0.31752037339638906
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-RESAMPLE_Q",
+      "weight": "PIXEL",
+      "mean": 0.10719834955387456,
+      "ci95": [
+        -0.02082936997566115,
+        0.27962694912896
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": 0.04465175514627613,
+      "ci95": [
+        -0.15937797386803548,
+        0.25673619634215467
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": 0.08069148074619317,
+      "ci95": [
+        -0.09765082606343878,
+        0.28087639555545224
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-LOGIT_Q",
+      "weight": "PIXEL",
+      "mean": 0.015673239116985364,
+      "ci95": [
+        -0.1701050217721356,
+        0.2260324925987401
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": 0.007550945761356366,
+      "ci95": [
+        -0.008184729726130895,
+        0.02454086625998698
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": 0.01287796147182639,
+      "ci95": [
+        -0.005425559281205856,
+        0.03640579799459102
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "PIXEL",
+      "mean": 0.012357773285875208,
+      "ci95": [
+        -0.00526345085337151,
+        0.0330631916369278
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-E6_FEATURE",
+      "weight": "BLOCK",
+      "mean": -0.039116598531174995,
+      "ci95": [
+        -0.12999522375990005,
+        0.038874366810259596
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-E6_FEATURE",
+      "weight": "UTILITY",
+      "mean": -0.05331579755374033,
+      "ci95": [
+        -0.14441028091083674,
+        0.022490441364843503
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-E6_FEATURE",
+      "weight": "PIXEL",
+      "mean": -0.04351187837988052,
+      "ci95": [
+        -0.1283032160763847,
+        0.026292431442723738
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-RAW_MARGIN",
+      "weight": "BLOCK",
+      "mean": -0.00485718364851963,
+      "ci95": [
+        -0.14615102721951842,
+        0.1264413551982171
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-RAW_MARGIN",
+      "weight": "UTILITY",
+      "mean": 0.028265554291362308,
+      "ci95": [
+        -0.09270833802798345,
+        0.15988957669173526
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-RAW_MARGIN",
+      "weight": "PIXEL",
+      "mean": -0.0006653265493557596,
+      "ci95": [
+        -0.13676025382305487,
+        0.14560068626484526
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": -0.08692770740223567,
+      "ci95": [
+        -0.2511089173748561,
+        0.07331215795955746
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": -0.07046597607318339,
+      "ci95": [
+        -0.2391515239289209,
+        0.09313695333714832
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "PIXEL",
+      "mean": -0.09628948941416655,
+      "ci95": [
+        -0.25651405778612835,
+        0.06633631227086448
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-AREA_DELTA",
+      "weight": "BLOCK",
+      "mean": -0.03870160723153888,
+      "ci95": [
+        -0.1399326484083487,
+        0.046016268967318925
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-AREA_DELTA",
+      "weight": "UTILITY",
+      "mean": -0.04503253954742693,
+      "ci95": [
+        -0.1546836597842735,
+        0.040805818321596236
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-AREA_DELTA",
+      "weight": "PIXEL",
+      "mean": -0.04388709610500486,
+      "ci95": [
+        -0.14217548106577263,
+        0.03197609038567369
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_Q_SHIFT",
+      "weight": "BLOCK",
+      "mean": 0.040432690514334825,
+      "ci95": [
+        -0.14494583967125155,
+        0.23278411788435177
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_Q_SHIFT",
+      "weight": "UTILITY",
+      "mean": 0.07212202701575784,
+      "ci95": [
+        -0.10491047485415698,
+        0.25790130526571486
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_Q_SHIFT",
+      "weight": "PIXEL",
+      "mean": 0.014613648861908461,
+      "ci95": [
+        -0.1459525317315415,
+        0.19408255158483087
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-STRATIFIED_ROLL",
+      "weight": "BLOCK",
+      "mean": -0.003523461398544536,
+      "ci95": [
+        -0.05678803022215519,
+        0.04933894746465303
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-STRATIFIED_ROLL",
+      "weight": "UTILITY",
+      "mean": 0.01963585548066716,
+      "ci95": [
+        -0.041556764703993,
+        0.08416901864940349
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-STRATIFIED_ROLL",
+      "weight": "PIXEL",
+      "mean": 0.007475323003705187,
+      "ci95": [
+        -0.06514491547060955,
+        0.0912622356784568
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  ],
+  "primary": {
+    "comparison": "CROP_Q-GLOBAL_Q",
+    "weight": "BLOCK",
+    "mean": 0.10433872715625239,
+    "ci95": [
+      -0.03259353656204956,
+      0.2653537622774075
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "common_oracle_space": {
+    "delta_pp": 0.4721342181562814,
+    "ci95_pp": [
+      0.33800751918682004,
+      0.6152306384927697
+    ]
+  },
+  "full_od_lock_space": {
+    "delta_pp": 0.4957947238135674,
+    "ci95_pp": [
+      0.34311935158310747,
+      0.6703900429451048
+    ]
+  },
+  "coverage": {
+    "all_oc_only_blocks": 3028,
+    "common_blocks": 2881,
+    "all_oc_edit_pixels": 7324,
+    "common_edit_pixels": 6997,
+    "common_positive_utility": 1038,
+    "common_negative_utility": 1575,
+    "common_zero_utility": 268,
+    "reasons": {
+      "COMMON": 2881,
+      "ANCHORS_SHORT": 147
+    },
+    "permutation_positions_moved": 2862,
+    "permutation_values_changed": 2862
+  },
+  "strata": [
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "CROP_Q",
+      "mean": 0.5317349609723004,
+      "ci95": [
+        0.36957443463403666,
+        0.6855526431536814
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "GLOBAL_Q",
+      "mean": 0.4564044471209949,
+      "ci95": [
+        0.3302054373048016,
+        0.5836325208957707
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "RESAMPLE_Q",
+      "mean": 0.45673343806681,
+      "ci95": [
+        0.33165654970008085,
+        0.5872441829261635
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "LOGIT_Q",
+      "mean": 0.4699317750392056,
+      "ci95": [
+        0.3638697504027641,
+        0.5712997234444982
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "CROP_LOGIT_Q",
+      "mean": 0.5258472280564752,
+      "ci95": [
+        0.3670190923557102,
+        0.6721391532346382
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "E6_FEATURE",
+      "mean": 0.5599847046083932,
+      "ci95": [
+        0.43541445357851394,
+        0.6751880801285884
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "RAW_MARGIN",
+      "mean": 0.5385610148896292,
+      "ci95": [
+        0.5113659828623398,
+        0.564515484459726
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.6290656971641315,
+      "ci95": [
+        0.5764012401812203,
+        0.6950843247442504
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "AREA_DELTA",
+      "mean": 0.5621404641366612,
+      "ci95": [
+        0.43913847650772636,
+        0.6802993308641654
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "CROP_Q_SHIFT",
+      "mean": 0.4526475242071901,
+      "ci95": [
+        0.3605076248068576,
+        0.5313679480071595
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.5343831466525206,
+      "ci95": [
+        0.39149503421074683,
+        0.6728122074822029
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "CROP_Q",
+      "mean": 0.48447234944000195,
+      "ci95": [
+        0.35153002636135827,
+        0.6222360089313623
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "GLOBAL_Q",
+      "mean": 0.3455689695245793,
+      "ci95": [
+        0.24732438370026927,
+        0.4615600386298494
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "RESAMPLE_Q",
+      "mean": 0.33557953036624943,
+      "ci95": [
+        0.21993041758758672,
+        0.4663899140333306
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "LOGIT_Q",
+      "mean": 0.4613443040922304,
+      "ci95": [
+        0.36976593308327504,
+        0.5413744177508545
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "CROP_LOGIT_Q",
+      "mean": 0.4845577657893121,
+      "ci95": [
+        0.34423470935897826,
+        0.6211154016292828
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "E6_FEATURE",
+      "mean": 0.5409906235818074,
+      "ci95": [
+        0.4153197918246743,
+        0.6596962064013016
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "RAW_MARGIN",
+      "mean": 0.4988705229669547,
+      "ci95": [
+        0.44324878861986616,
+        0.5537865075223916
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.5279490551734126,
+      "ci95": [
+        0.4748132470708177,
+        0.586986577081667
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "AREA_DELTA",
+      "mean": 0.535167310708013,
+      "ci95": [
+        0.4080855611954381,
+        0.6559476278360084
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "CROP_Q_SHIFT",
+      "mean": 0.5210580817569608,
+      "ci95": [
+        0.44017977618276327,
+        0.5970681319278667
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.5091884351755233,
+      "ci95": [
+        0.3965329458871118,
+        0.6223534283156545
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "CROP_Q",
+      "mean": 0.509234420093795,
+      "ci95": [
+        0.36947887355699854,
+        0.6565678830717893
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "GLOBAL_Q",
+      "mean": 0.4072540885040885,
+      "ci95": [
+        0.26884684080387206,
+        0.5561904611592111
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "RESAMPLE_Q",
+      "mean": 0.39917200276575276,
+      "ci95": [
+        0.25071161766474265,
+        0.556033769615801
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "LOGIT_Q",
+      "mean": 0.5110646269240019,
+      "ci95": [
+        0.3639103253517316,
+        0.650003733390452
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "CROP_LOGIT_Q",
+      "mean": 0.4898013242544492,
+      "ci95": [
+        0.34678853264790765,
+        0.6397499173280423
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "E6_FEATURE",
+      "mean": 0.5341395728114477,
+      "ci95": [
+        0.3727320827320827,
+        0.6952088904295934
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "RAW_MARGIN",
+      "mean": 0.4783546025733526,
+      "ci95": [
+        0.39887318121693127,
+        0.5446073401424962
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.6554639024170275,
+      "ci95": [
+        0.5874376240079364,
+        0.7305079646915584
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "AREA_DELTA",
+      "mean": 0.5477794687950938,
+      "ci95": [
+        0.3850838603670635,
+        0.7104443993506493
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "CROP_Q_SHIFT",
+      "mean": 0.5195278303872054,
+      "ci95": [
+        0.44408192791005296,
+        0.5880561934448654
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.5132538930976431,
+      "ci95": [
+        0.46887734487734484,
+        0.5629688909181098
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "CROP_Q",
+      "mean": 0.49521296423495853,
+      "ci95": [
+        0.36045269653604894,
+        0.6078627569810896
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "GLOBAL_Q",
+      "mean": 0.44711593195013144,
+      "ci95": [
+        0.3827853523787244,
+        0.5152285640239569
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "RESAMPLE_Q",
+      "mean": 0.44234526183758666,
+      "ci95": [
+        0.3651779480885879,
+        0.5116348733801238
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "LOGIT_Q",
+      "mean": 0.4264874643904527,
+      "ci95": [
+        0.3302007979385461,
+        0.5005442562896354
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "CROP_LOGIT_Q",
+      "mean": 0.48039112264816003,
+      "ci95": [
+        0.33392470179557665,
+        0.6088750853949199
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "E6_FEATURE",
+      "mean": 0.5008655592610183,
+      "ci95": [
+        0.43852588151073457,
+        0.56162037576692
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "RAW_MARGIN",
+      "mean": 0.5015860761309852,
+      "ci95": [
+        0.45436823318837094,
+        0.547689803681074
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.6475566598480922,
+      "ci95": [
+        0.5402130178095793,
+        0.7628658747005291
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "AREA_DELTA",
+      "mean": 0.517712757553501,
+      "ci95": [
+        0.4658865627435108,
+        0.5640208866678628
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "CROP_Q_SHIFT",
+      "mean": 0.5125201641187555,
+      "ci95": [
+        0.40389256552299724,
+        0.6374207220959055
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.49499339785054597,
+      "ci95": [
+        0.4376075421124606,
+        0.5657871497083382
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "CROP_Q",
+      "mean": 0.5204384558796324,
+      "ci95": [
+        0.3893222419516078,
+        0.665799148427825
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "GLOBAL_Q",
+      "mean": 0.42482050391057746,
+      "ci95": [
+        0.2921882189076583,
+        0.560233436744696
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "RESAMPLE_Q",
+      "mean": 0.4044901034423093,
+      "ci95": [
+        0.2671680612160851,
+        0.547210318412524
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "LOGIT_Q",
+      "mean": 0.5209110041646806,
+      "ci95": [
+        0.3708221728911067,
+        0.6382640589598308
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "CROP_LOGIT_Q",
+      "mean": 0.5112141517931958,
+      "ci95": [
+        0.3791693981399864,
+        0.6560535088804846
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "E6_FEATURE",
+      "mean": 0.5380190788922408,
+      "ci95": [
+        0.4021429554242054,
+        0.6689680155679696
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "RAW_MARGIN",
+      "mean": 0.48682943486252306,
+      "ci95": [
+        0.4151361062174481,
+        0.5553902623707311
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.5791945398011574,
+      "ci95": [
+        0.5146160239542593,
+        0.6483026524639576
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "AREA_DELTA",
+      "mean": 0.5515201067315036,
+      "ci95": [
+        0.41171272619503324,
+        0.695227176626648
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "CROP_Q_SHIFT",
+      "mean": 0.5008243234162352,
+      "ci95": [
+        0.4293044589448542,
+        0.5672347208891326
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.5223380680457885,
+      "ci95": [
+        0.47856240967638025,
+        0.5711837027266714
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "CROP_Q",
+      "mean": 0.46905156522114927,
+      "ci95": [
+        0.32733772680382184,
+        0.5963627964136508
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "GLOBAL_Q",
+      "mean": 0.4450221519045138,
+      "ci95": [
+        0.343180615091836,
+        0.5537726390967059
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "RESAMPLE_Q",
+      "mean": 0.49019929466201084,
+      "ci95": [
+        0.3735258268279129,
+        0.5994725483338758
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "LOGIT_Q",
+      "mean": 0.5236096772133476,
+      "ci95": [
+        0.43225183335050327,
+        0.6107157153377129
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "CROP_LOGIT_Q",
+      "mean": 0.47972894626356866,
+      "ci95": [
+        0.3405638630347054,
+        0.6040373447054448
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "E6_FEATURE",
+      "mean": 0.5213711782865831,
+      "ci95": [
+        0.43487302175996945,
+        0.6086777562933219
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "RAW_MARGIN",
+      "mean": 0.5370939562818304,
+      "ci95": [
+        0.484263536206029,
+        0.6084609121768669
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.6878324299037777,
+      "ci95": [
+        0.6067782991847501,
+        0.7624109620018512
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "AREA_DELTA",
+      "mean": 0.44213532171347947,
+      "ci95": [
+        0.40120137288354396,
+        0.4800799239036537
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "CROP_Q_SHIFT",
+      "mean": 0.567982106994521,
+      "ci95": [
+        0.49769495442101613,
+        0.6518479809992386
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.45583357279857273,
+      "ci95": [
+        0.3957538051999746,
+        0.5092835606352656
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    }
+  ],
+  "valid_direction_pixel_quantiles": [
+    65536.0,
+    65536.0,
+    65536.0,
+    65536.0,
+    65536.0
+  ]
+}

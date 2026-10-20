@@ -138,3 +138,10 @@ P1/P2/P5 为静态输出操作，P4 是每图 RESET；它们的原条件再次�
 ## E7：冻结源遮挡响应资格（完成）
 
 K8/patch4/[.2,.4]，无训练更新/selector；共同2881块与E6完全一致，oracle+.472134pp。MARS_FD AUC.446478、margin.517740，主差−.071261 CI[−.195738,+.057903]，geometry.599810，对其差CI负。相对response-shift微正+.000803 CI正但不足救主；signal_qualified=false。576完整encoder全输入mask/score/anchor重演、源不变/标签隔离/退休齐全，无新Dice或结构成绩。详见[报告](../masked-response-signal-e7/REPORT_ZH.md)。
+
+
+## E8：迁移重建端点局部重编码信号（完成）
+
+32输入/2881共同块/6997编辑像素，空间+.472134pp保持。CROP_Q AUC.512883，主CROP_Q−GLOBAL_Q +.104339但CI[−.032594,+.265354]跨零，AUC<.60、九强控制BLOCK差CI均跨零，signal_qualified=false。绝对效用加权主差+.153229 CI[+.032540,+.313575]和对纯插值加权差+.151737 CI正为有限阳性，不替主；对crop-logit仅+.007551 CI跨零。全部33AUC/30差/66分层保留，不安装selector或给新Dice/持续成绩。
+
+原封存64端点不可取，预冻迁移重建256encoder/64数组exact和历史块数门PASS，仅说明当前重建端点资格，非原位图parity。信号5826encoder全32/2881crop两遍exact，源/BN不变、标签隔离、独立8GT评分、全部stage exit0和原身份退休齐全。原服务器状态仍未知且未访问。累计GPU39586.616924892s/已计CPU2915.901395291s，本地准备/历史差与未计时项单列；目的root27,359,739B，本轮预留退为actual，旧服务器预留保守保留，总约1.659GB低18/20GB。详见[报告](../foveal-partition-signal-e8/REPORT_ZH.md)。
