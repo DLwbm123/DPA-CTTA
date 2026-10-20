@@ -1,9 +1,8 @@
 {
-  "status": "EVIDENCE_REVIEW_ACTIVE",
+  "status": "WINDOW_CLOSED_ALL_ROUNDS_DELIVERED",
   "scientific_GPU_jobs_running": false,
   "all_launched_rounds_complete": true,
   "all_candidates_passed": false,
-  "monitor_active": true,
   "service_window_end_CST": "2026-10-20T11:33:00+08:00",
   "window_incremental_limit_bytes": 20000000000,
   "NAS_reserved_bytes": 8800000000,
@@ -17,5 +16,11 @@
   "new_physical_forwards": 120779,
   "failure_costs_included": true,
   "old_R75_R81_costs_inherited": false,
-  "observed_at": 1792432971.792792
+  "observed_at": 1792432971.792792,
+  "service_window_closed": true,
+  "new_scientific_stages_authorized": false,
+  "closure_recorded_CST": "2026-10-20T12:00:06.222987+08:00",
+  "monitor_action": "PAUSE_AFTER_VERIFIED_CLOSURE_DELIVERY",
+  "final_conclusion": "No tested candidate met the predefined improvement gate; retain original VERTEX as primary reference",
+  "all_prior_registered_jobs_retired": true
 }
