@@ -1,0 +1,54 @@
+{
+  "status": "COMPLETE_SIGNAL_FAILED",
+  "protocol_sha": "f793b5c5f167ff403e0a727f24f4cc061fef963d",
+  "execution_source_sha": "2a95957d24cabbdc61327344a97abbd89d3dc891",
+  "processes": {
+    "score": {
+      "retired": true,
+      "exit_code": 0
+    },
+    "worker1": {
+      "retired": true,
+      "exit_code": 0
+    },
+    "worker2": {
+      "retired": true,
+      "exit_code": 0
+    },
+    "controller": {
+      "retired": true,
+      "exit_code": null
+    },
+    "guard": {
+      "retired": true,
+      "exit_code": 0
+    }
+  },
+  "historical_check_exit_code": 0,
+  "successful_complete_encoder_calls": 2880,
+  "failed_attempt_encoder_count": null,
+  "failed_attempt_encoder_note": "At least one forward occurred in the second failed attempt; complete count unavailable. Successful calls do not include failures.",
+  "independent_array_comparisons": 320,
+  "source_bit_checks": 64,
+  "registered_gt_files": 8,
+  "oracle_exact_mask_checks": 64,
+  "model_updates": 0,
+  "policy_steps_successful": 1280,
+  "original_start_utc": "2026-10-20T18:17:35.161204+00:00",
+  "elapsed_seconds": 833.9719803109765,
+  "cpu_check_plus_score_seconds": 7.460008144378662,
+  "successful_gpu_designated_worker_process_seconds": 658.3633151054382,
+  "failed_gpu_designated_worker_process_seconds": 27.446733474731445,
+  "all_gpu_designated_worker_process_seconds": 685.8100485801697,
+  "cumulative_counted_cpu_seconds": 4190.548844781776,
+  "cumulative_gpu_designated_process_seconds": 40376.78608645027,
+  "actual_bytes": 359709118,
+  "files": 90,
+  "remaining_current_reservation_bytes": 0,
+  "known_actual_bytes": 937701530,
+  "with_aux_and_old_unknown_reservation_bytes": 2273245850,
+  "untimed_and_unknown_costs": "Preparation, reading, orchestration, reporting, controller/guard overhead and historical unknowns remain separate; no zero-cost claim.",
+  "gpu_timing_note": "Full designated worker process elapsed includes imports/CPU preparation/backward, and the first failed attempt ended before GPU initialization; not pure GPU kernel time.",
+  "joint_masks_evaluated": false,
+  "failed_attempts_preserved": true
+}

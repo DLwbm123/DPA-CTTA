@@ -1,0 +1,204 @@
+{
+  "status": "COMPLETE",
+  "source_sha": "2a95957d24cabbdc61327344a97abbd89d3dc891",
+  "common_blocks": 2881,
+  "common_edit_pixels": 6997,
+  "all_oc_only_blocks": 3028,
+  "registered_gt_files": 8,
+  "inputs": 32,
+  "base_oc_dice": {
+    "mean": 87.80529246678334,
+    "ci95": [
+      83.87122008786633,
+      91.21932887059697
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "full_common_relaxed_upper_bound_pp": {
+    "mean": 0.4721342181562814,
+    "ci95": [
+      0.33800751918682,
+      0.6152306384927698
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "support_restricted_relaxed_upper_bound_pp": {
+    "mean": 0.4721342181562814,
+    "ci95": [
+      0.33800751918682,
+      0.6152306384927698
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "oracle_exact_mask_ratio_checks": 64,
+  "topology_constraints_relaxed": true,
+  "space_gate": true,
+  "signal_status": "FAILED",
+  "joint_status": "NOT_RUN_SIGNAL_GATE",
+  "qualified": false,
+  "signal_gates": {
+    "auc": false,
+    "primary": false,
+    "strong_controls": false,
+    "coverage": true,
+    "utility_nonreverse": true,
+    "shift_positions": true,
+    "shift_scores": true
+  },
+  "auc": {
+    "POLICY": {
+      "mean": 0.5673644529509669,
+      "ci95": [
+        0.5156113654082345,
+        0.6229850543529145
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "CLEAN": {
+      "mean": 0.5177397283748333,
+      "ci95": [
+        0.49877201774632324,
+        0.535852400628061
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "UNIFORM": {
+      "mean": 0.5669105183206509,
+      "ci95": [
+        0.5155914301086013,
+        0.6220155826222767
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "FROZEN": {
+      "mean": 0.5177397283748333,
+      "ci95": [
+        0.49877201774632324,
+        0.535852400628061
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "RANDOM_VIEW": {
+      "mean": 0.5333734977135611,
+      "ci95": [
+        0.5024173739637366,
+        0.5621778627902736
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "SHIFT": {
+      "mean": 0.5244098668989395,
+      "ci95": [
+        0.4835168547146365,
+        0.5589298093187773
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "LOGIT_Q": {
+      "mean": 0.4682307895800375,
+      "ci95": [
+        0.3695444191860883,
+        0.5585879392705093
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "GEOMETRY_ONLY": {
+      "mean": 0.5998102521285493,
+      "ci95": [
+        0.5503356645148162,
+        0.6539578389874399
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  },
+  "contrasts": {
+    "CLEAN": {
+      "mean": 0.04962472457613367,
+      "ci95": [
+        0.0014627588764206008,
+        0.10417574418327451
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "UNIFORM": {
+      "mean": 0.00045393463031601945,
+      "ci95": [
+        -0.00019509236908551094,
+        0.0011754290775219873
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "FROZEN": {
+      "mean": 0.04962472457613367,
+      "ci95": [
+        0.0014627588764206008,
+        0.10417574418327451
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "RANDOM_VIEW": {
+      "mean": 0.033990955237405834,
+      "ci95": [
+        -0.0017287800252815207,
+        0.0740312757586937
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "SHIFT": {
+      "mean": 0.04295458605202742,
+      "ci95": [
+        -0.006550223733403716,
+        0.09068731417641428
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "LOGIT_Q": {
+      "mean": 0.09913366337092944,
+      "ci95": [
+        -0.0032745825272728415,
+        0.2142796950181648
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "GEOMETRY_ONLY": {
+      "mean": -0.03244579917758239,
+      "ci95": [
+        -0.12648618080990645,
+        0.052542403046008754
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  },
+  "utility_primary": {
+    "mean": 0.05297372902836762,
+    "ci95": [
+      -0.004110464476512893,
+      0.11707846398558791
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "utility_labels": {
+    "positive": 1038,
+    "negative": 1575,
+    "zero": 268
+  }
+}
