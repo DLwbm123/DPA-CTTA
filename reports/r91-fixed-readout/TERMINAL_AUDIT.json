@@ -1,0 +1,116 @@
+{
+  "status": "COMPLETE",
+  "scientific_gate": "NOT_PASSED",
+  "promoted": false,
+  "coverage": {
+    "status": "COMPLETE",
+    "physical_updates": 1158,
+    "completed_physical_updates": 1158,
+    "physical_forwards": 12750,
+    "training_backwards": 1158,
+    "main_streams": 6,
+    "main_arrivals": 1152,
+    "Q0_unique_arrivals": 192,
+    "Qt_arrivals": 1152,
+    "PRE_K_reference_exact_all": true,
+    "Q0_P0_identity_exact": true,
+    "online_label_reads": 0,
+    "source_image_reads": 0,
+    "label_contents": 192,
+    "all_registered_GPU_exit0_absent_before_labels": true,
+    "all_raw_post_sealed_before_labels": true,
+    "CPU_body_seconds": 423.0928874015808,
+    "prior_R90_updates": 1934,
+    "prior_R90_forwards": 19340,
+    "shared_total_updates": 3092,
+    "shared_total_forwards": 32090,
+    "deadline": 1792536174.1323855
+  },
+  "ledger": {
+    "attempts": [
+      {
+        "name": "qualify_worker0",
+        "exit_code": 0,
+        "GPU_process_seconds": 36.286056995391846
+      },
+      {
+        "name": "source_worker0",
+        "exit_code": 0,
+        "GPU_process_seconds": 122.13306188583374
+      },
+      {
+        "name": "formal_worker0",
+        "exit_code": 0,
+        "GPU_process_seconds": 817.1245353221893
+      },
+      {
+        "name": "formal_worker1",
+        "exit_code": 0,
+        "GPU_process_seconds": 796.8386099338531
+      },
+      {
+        "name": "final_score0",
+        "exit_code": 0,
+        "CPU_process_seconds": 429.2274663448334
+      }
+    ],
+    "GPU_process_seconds": 1772.382264137268,
+    "CPU_score_process_seconds": 429.2274663448334,
+    "CPU_score_body_seconds_subset": 423.0928874015808
+  },
+  "retirement": {
+    "four_GPU_workers_and_CPU_score_exit0_PID_absent": true,
+    "controller_COMPLETE_PID_absent": true,
+    "controller_independent_numeric_exit_code": "NOT_INDEPENDENTLY_RECORDED",
+    "watchdog_exit_reason": "all_owned_children_retired",
+    "watchdog_PID_absent": true
+  },
+  "storage": {
+    "actual_R91_allocated_bytes": 11610112,
+    "actual_prior_campaign_remainder_bytes": 73944064,
+    "actual_campaign_total_bytes": 85554176,
+    "measurement": "one du invocation with nested roots; parent line excludes already-counted child, total is sum",
+    "R91_cap_bytes": 268435456,
+    "campaign_cap_bytes": 1610612736,
+    "total_conservative_reserved_bytes": 19904643072
+  },
+  "clock": {
+    "shared_started": 1792492974.1323855,
+    "R91_controller_started": 1792501371.3370852,
+    "ended": 1792502780.5188937,
+    "shared_elapsed_seconds": 9806.386508226395,
+    "R91_controller_elapsed_seconds": 1409.1818084716797,
+    "deadline": 1792536174.1323855
+  },
+  "cumulative_shared": {
+    "updates": 3092,
+    "forwards": 32090,
+    "training_backwards": 3092,
+    "GPU_process_seconds": 4150.4675986766815,
+    "measured_CPU_process_seconds_M0_M1_R91": 2768.245574712494
+  },
+  "missingness": {
+    "scientific_metric_NA": 0,
+    "other_preparation_CPU_seconds": "NOT_INDEPENDENTLY_MEASURED",
+    "CPU_selfcheck_wrapper_body_seconds": 7.359001398086548,
+    "CPU_selfcheck_math_body_seconds_subset": 1.562126874923706,
+    "pre_GPU_preparation_issues": [
+      "dynamic class source inspect TypeError",
+      "one missing source path lookup",
+      "shell-quoted preparation SyntaxError before execution"
+    ],
+    "monitoring_parser_NameError": "read-only status extraction failed after printing COMPLETE ledger; corrected; no experiment modification; CPU not separately metered",
+    "old_server_R85_tail_cost_and_coverage": "UNKNOWN_SEPARATE_NOT_INCLUDED"
+  },
+  "privacy": {
+    "online_label_reads": 0,
+    "source_image_reads": 0,
+    "terminal_label_contents": 192,
+    "public_release": "source and anonymous summaries only"
+  },
+  "interpretation": [
+    "body time is process-time subset; do not double count",
+    "process seconds are not energy or CPU core-seconds",
+    "exposed development contents, no independent patient or fresh cohort confirmation"
+  ]
+}
