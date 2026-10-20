@@ -1,0 +1,5584 @@
+{
+  "posthoc_exploratory_only": true,
+  "e8_qualification_changed": false,
+  "new_model_calls": 0,
+  "arms": [
+    "SOURCE",
+    "B",
+    "ALL_COMMON",
+    "CROP_POS10",
+    "LOGIT_POS10",
+    "GEOM_POS10",
+    "LOGIT_MATCH",
+    "GEOM_MATCH",
+    "MARGIN_MATCH",
+    "CYCLE_MATCH"
+  ],
+  "unique_inputs": 32,
+  "union_mask_evaluations": 320,
+  "coverage_unique_inputs_not_repeated_weight_positions": {
+    "SOURCE": {
+      "surface_defined": 64,
+      "vcdr_defined": 32,
+      "empty_heads": 0,
+      "nesting_pixels": 0,
+      "selected_blocks": 0,
+      "selected_pixels": 7324,
+      "zero_edit_frames": 0
+    },
+    "B": {
+      "surface_defined": 64,
+      "vcdr_defined": 32,
+      "empty_heads": 0,
+      "nesting_pixels": 0,
+      "selected_blocks": 0,
+      "selected_pixels": 0,
+      "zero_edit_frames": 32
+    },
+    "ALL_COMMON": {
+      "surface_defined": 64,
+      "vcdr_defined": 32,
+      "empty_heads": 0,
+      "nesting_pixels": 0,
+      "selected_blocks": 2881,
+      "selected_pixels": 6997,
+      "zero_edit_frames": 0
+    },
+    "CROP_POS10": {
+      "surface_defined": 64,
+      "vcdr_defined": 32,
+      "empty_heads": 0,
+      "nesting_pixels": 0,
+      "selected_blocks": 175,
+      "selected_pixels": 685,
+      "zero_edit_frames": 0
+    },
+    "LOGIT_POS10": {
+      "surface_defined": 64,
+      "vcdr_defined": 32,
+      "empty_heads": 0,
+      "nesting_pixels": 0,
+      "selected_blocks": 183,
+      "selected_pixels": 685,
+      "zero_edit_frames": 0
+    },
+    "GEOM_POS10": {
+      "surface_defined": 64,
+      "vcdr_defined": 32,
+      "empty_heads": 0,
+      "nesting_pixels": 0,
+      "selected_blocks": 279,
+      "selected_pixels": 448,
+      "zero_edit_frames": 0
+    },
+    "LOGIT_MATCH": {
+      "surface_defined": 64,
+      "vcdr_defined": 32,
+      "empty_heads": 0,
+      "nesting_pixels": 0,
+      "selected_blocks": 175,
+      "selected_pixels": 685,
+      "zero_edit_frames": 0
+    },
+    "GEOM_MATCH": {
+      "surface_defined": 64,
+      "vcdr_defined": 32,
+      "empty_heads": 0,
+      "nesting_pixels": 0,
+      "selected_blocks": 175,
+      "selected_pixels": 685,
+      "zero_edit_frames": 0
+    },
+    "MARGIN_MATCH": {
+      "surface_defined": 64,
+      "vcdr_defined": 32,
+      "empty_heads": 0,
+      "nesting_pixels": 0,
+      "selected_blocks": 175,
+      "selected_pixels": 685,
+      "zero_edit_frames": 0
+    },
+    "CYCLE_MATCH": {
+      "surface_defined": 64,
+      "vcdr_defined": 32,
+      "empty_heads": 0,
+      "nesting_pixels": 0,
+      "selected_blocks": 175,
+      "selected_pixels": 685,
+      "zero_edit_frames": 0
+    }
+  },
+  "absolute": [
+    {
+      "arm": "SOURCE",
+      "metric": "OD_dice",
+      "mean": 97.03277241563224,
+      "ci95": [
+        96.63873515536704,
+        97.43302528958925
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "OC_dice",
+      "mean": 87.28154306068689,
+      "ci95": [
+        83.13544449596515,
+        90.80558926490481
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "ALL_dice",
+      "mean": 92.15715773815955,
+      "ci95": [
+        89.94793695266321,
+        94.04425613263496
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "ASSD",
+      "mean": 3.289949316574623,
+      "ci95": [
+        2.749473332615188,
+        3.784932685967493
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "HD95",
+      "mean": 7.583103272287695,
+      "ci95": [
+        6.599108911827019,
+        8.486422059094554
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "vCDR",
+      "mean": 0.05687870653869323,
+      "ci95": [
+        0.03303688971647053,
+        0.07792829976143542
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "selected_pixels",
+      "mean": 228.225,
+      "ci95": [
+        216.35000000000002,
+        242.55
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "selected_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "OC_net_all_vs_B_pp",
+      "mean": -0.015668869018554688,
+      "ci95": [
+        -0.023413896560668945,
+        -0.00836229324340821
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": -0.41772415102603966,
+      "ci95": [
+        -0.6683240934895781,
+        -0.17192760282019373
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "OC_net_background_vs_B_pp",
+      "mean": -0.009861945883994992,
+      "ci95": [
+        -0.014751560578312938,
+        -0.005864834392891581
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.22993274595314275,
+      "ci95": [
+        -0.8445815983185279,
+        0.31845522444381763
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "OC_net_all_vs_SOURCE_pp",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "OC_net_foreground_vs_SOURCE_pp",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "OC_net_background_vs_SOURCE_pp",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "OC_net_boundary3px_vs_SOURCE_pp",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "selected_positive_utility_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "selected_negative_utility_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "SOURCE",
+      "metric": "selected_zero_utility_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "OD_dice",
+      "mean": 97.13726162910979,
+      "ci95": [
+        96.7363677956862,
+        97.54921863644277
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "OC_dice",
+      "mean": 87.80529246678334,
+      "ci95": [
+        83.87122008786633,
+        91.21932887059698
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "ALL_dice",
+      "mean": 92.47127704794659,
+      "ci95": [
+        90.36919139310696,
+        94.32580036209507
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "ASSD",
+      "mean": 3.3271345649474853,
+      "ci95": [
+        2.7416605018903204,
+        3.8644766749489716
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "HD95",
+      "mean": 7.22322404754448,
+      "ci95": [
+        6.150479607318059,
+        8.230305919303506
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "vCDR",
+      "mean": 0.051416822775909844,
+      "ci95": [
+        0.03191702978754937,
+        0.07129221638323695
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "selected_pixels",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "selected_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "OC_net_all_vs_B_pp",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "OC_net_background_vs_B_pp",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "OC_net_all_vs_SOURCE_pp",
+      "mean": 0.015668869018554688,
+      "ci95": [
+        0.008362293243408203,
+        0.02341389656066894
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "OC_net_foreground_vs_SOURCE_pp",
+      "mean": 0.41772415102603966,
+      "ci95": [
+        0.1719276028201937,
+        0.668324093489578
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "OC_net_background_vs_SOURCE_pp",
+      "mean": 0.009861945883994992,
+      "ci95": [
+        0.005864834392891575,
+        0.014751560578312931
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "OC_net_boundary3px_vs_SOURCE_pp",
+      "mean": 0.22993274595314275,
+      "ci95": [
+        -0.31845522444381774,
+        0.8445815983185276
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "selected_positive_utility_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "selected_negative_utility_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "B",
+      "metric": "selected_zero_utility_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "OD_dice",
+      "mean": 97.13726162910979,
+      "ci95": [
+        96.7363677956862,
+        97.54921863644277
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "OC_dice",
+      "mean": 87.3932711306287,
+      "ci95": [
+        83.36854517231501,
+        90.83117084325617
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "ALL_dice",
+      "mean": 92.26526637986925,
+      "ci95": [
+        90.12530768191715,
+        94.11986102862592
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "ASSD",
+      "mean": 3.2982176608799483,
+      "ci95": [
+        2.7324830644206948,
+        3.81601601375606
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "HD95",
+      "mean": 7.465984891910473,
+      "ci95": [
+        6.430715123636732,
+        8.401879835978995
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "vCDR",
+      "mean": 0.0560210335208436,
+      "ci95": [
+        0.03154111065929087,
+        0.07755430727495356
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "selected_pixels",
+      "mean": 219.525,
+      "ci95": [
+        203.998125,
+        235.92562499999997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "selected_blocks",
+      "mean": 90.525,
+      "ci95": [
+        81.7475,
+        99.77812499999999
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "OC_net_all_vs_B_pp",
+      "mean": -0.013647079467773438,
+      "ci95": [
+        -0.020542621612548828,
+        -0.007343292236328125
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": -0.3447614058581861,
+      "ci95": [
+        -0.530164949047068,
+        -0.15260549947755214
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "OC_net_background_vs_B_pp",
+      "mean": -0.008710283130284524,
+      "ci95": [
+        -0.013013025484928447,
+        -0.005054775722366276
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.20646997145210247,
+      "ci95": [
+        -0.8211716513848503,
+        0.3291326389029125
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "OC_net_all_vs_SOURCE_pp",
+      "mean": 0.00202178955078125,
+      "ci95": [
+        0.0006103515625,
+        0.0037384033203125
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "OC_net_foreground_vs_SOURCE_pp",
+      "mean": 0.07296274516785356,
+      "ci95": [
+        0.0028331822302810517,
+        0.16673261166499279
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "OC_net_background_vs_SOURCE_pp",
+      "mean": 0.0011516627537104674,
+      "ci95": [
+        0.0003096887364635938,
+        0.0021852047502972276
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "OC_net_boundary3px_vs_SOURCE_pp",
+      "mean": 0.02346277450104023,
+      "ci95": [
+        0.003779289493575208,
+        0.05071952269277092
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "selected_positive_utility_blocks",
+      "mean": 32.0,
+      "ci95": [
+        26.574375000000003,
+        37.45
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "selected_negative_utility_blocks",
+      "mean": 50.075,
+      "ci95": [
+        44.65,
+        55.600625
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "ALL_COMMON",
+      "metric": "selected_zero_utility_blocks",
+      "mean": 8.45,
+      "ci95": [
+        6.625,
+        10.2
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "OD_dice",
+      "mean": 97.13726162910979,
+      "ci95": [
+        96.7363677956862,
+        97.54921863644277
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "OC_dice",
+      "mean": 87.74459418290667,
+      "ci95": [
+        83.75246067749941,
+        91.15661070483648
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "ALL_dice",
+      "mean": 92.44092790600823,
+      "ci95": [
+        90.32154104041656,
+        94.3049771992503
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "ASSD",
+      "mean": 3.3368710545801186,
+      "ci95": [
+        2.744075645159425,
+        3.872024353585073
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "HD95",
+      "mean": 7.282224569105184,
+      "ci95": [
+        6.1503117381574635,
+        8.30518598771135
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "vCDR",
+      "mean": 0.05336336661179542,
+      "ci95": [
+        0.032949363207794374,
+        0.07379165011174099
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "selected_pixels",
+      "mean": 21.5,
+      "ci95": [
+        19.925,
+        23.175624999999997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "selected_blocks",
+      "mean": 5.65,
+      "ci95": [
+        4.75,
+        6.775
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "OC_net_all_vs_B_pp",
+      "mean": -0.002002716064453125,
+      "ci95": [
+        -0.0040912628173828125,
+        0.00041961669921875
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.07734466067744986,
+      "ci95": [
+        0.041393148561737224,
+        0.12175876091762716
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "OC_net_background_vs_B_pp",
+      "mean": -0.004148864223829555,
+      "ci95": [
+        -0.005228356952621394,
+        -0.0030187707505546922
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.011312548848949675,
+      "ci95": [
+        -0.11366917697735403,
+        0.0726488633546887
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "OC_net_all_vs_SOURCE_pp",
+      "mean": 0.013666152954101562,
+      "ci95": [
+        0.007572174072265625,
+        0.02063751220703125
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "OC_net_foreground_vs_SOURCE_pp",
+      "mean": 0.4950688117034895,
+      "ci95": [
+        0.2586873451123642,
+        0.7347941978808993
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "OC_net_background_vs_SOURCE_pp",
+      "mean": 0.005713081660165436,
+      "ci95": [
+        0.0020516973052107862,
+        0.010222539767985338
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "OC_net_boundary3px_vs_SOURCE_pp",
+      "mean": 0.218620197104193,
+      "ci95": [
+        -0.288868657485963,
+        0.8140108493236226
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "selected_positive_utility_blocks",
+      "mean": 2.2,
+      "ci95": [
+        1.0,
+        3.9
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "selected_negative_utility_blocks",
+      "mean": 3.45,
+      "ci95": [
+        2.45,
+        4.525
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CROP_POS10",
+      "metric": "selected_zero_utility_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "OD_dice",
+      "mean": 97.13726162910979,
+      "ci95": [
+        96.7363677956862,
+        97.54921863644277
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "OC_dice",
+      "mean": 87.74129489489144,
+      "ci95": [
+        83.74824051707863,
+        91.15182819914293
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "ALL_dice",
+      "mean": 92.43927826200061,
+      "ci95": [
+        90.31653433940272,
+        94.30676744019216
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "ASSD",
+      "mean": 3.337341025555742,
+      "ci95": [
+        2.74211730924265,
+        3.8762940032520974
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "HD95",
+      "mean": 7.282124624411249,
+      "ci95": [
+        6.167877966381801,
+        8.313623500430316
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "vCDR",
+      "mean": 0.05360846465101111,
+      "ci95": [
+        0.03300440418767121,
+        0.07464381317161424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "selected_pixels",
+      "mean": 21.5,
+      "ci95": [
+        19.925,
+        23.175624999999997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "selected_blocks",
+      "mean": 5.925,
+      "ci95": [
+        5.075,
+        6.825
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "OC_net_all_vs_B_pp",
+      "mean": -0.002193450927734375,
+      "ci95": [
+        -0.0043201446533203125,
+        0.00015282630920410026
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.07249268721098395,
+      "ci95": [
+        0.030066637070818553,
+        0.12395840784844579
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "OC_net_background_vs_B_pp",
+      "mean": -0.004249510369494095,
+      "ci95": [
+        -0.005307145190385166,
+        -0.0031848198896170564
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.04293217313262922,
+      "ci95": [
+        -0.12470087694851442,
+        0.02977829796867714
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "OC_net_all_vs_SOURCE_pp",
+      "mean": 0.013475418090820312,
+      "ci95": [
+        0.007333040237426758,
+        0.0204474925994873
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "OC_net_foreground_vs_SOURCE_pp",
+      "mean": 0.49021683823702356,
+      "ci95": [
+        0.2559348144686488,
+        0.7245432442230371
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "OC_net_background_vs_SOURCE_pp",
+      "mean": 0.005612435514500897,
+      "ci95": [
+        0.0018670408515247456,
+        0.010175944047217458
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "OC_net_boundary3px_vs_SOURCE_pp",
+      "mean": 0.1870005728205135,
+      "ci95": [
+        -0.31667450730626945,
+        0.7794996091099315
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "selected_positive_utility_blocks",
+      "mean": 2.125,
+      "ci95": [
+        0.95,
+        3.5999999999999996
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "selected_negative_utility_blocks",
+      "mean": 3.8,
+      "ci95": [
+        2.7743750000000005,
+        4.924999999999999
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_POS10",
+      "metric": "selected_zero_utility_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "OD_dice",
+      "mean": 97.13726162910979,
+      "ci95": [
+        96.7363677956862,
+        97.54921863644277
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "OC_dice",
+      "mean": 87.8022212414084,
+      "ci95": [
+        83.86610365207454,
+        91.21711513283779
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "ALL_dice",
+      "mean": 92.46974143525911,
+      "ci95": [
+        90.36760541419387,
+        94.3251445938554
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "ASSD",
+      "mean": 3.317027470216484,
+      "ci95": [
+        2.7309634702737986,
+        3.8501555967879866
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "HD95",
+      "mean": 7.209001286466792,
+      "ci95": [
+        6.122114245048158,
+        8.228912842204299
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "vCDR",
+      "mean": 0.051280953210692454,
+      "ci95": [
+        0.03172475706259124,
+        0.07111051500978793
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "selected_pixels",
+      "mean": 13.875,
+      "ci95": [
+        12.6,
+        15.275
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "selected_blocks",
+      "mean": 8.725,
+      "ci95": [
+        7.95,
+        9.65
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "OC_net_all_vs_B_pp",
+      "mean": 9.5367431640625e-06,
+      "ci95": [
+        -0.0004673004150390625,
+        0.000400543212890625
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": -0.020803583044231362,
+      "ci95": [
+        -0.04839334151784716,
+        0.0028200869438477225
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "OC_net_background_vs_B_pp",
+      "mean": 0.0002456282719186459,
+      "ci95": [
+        -0.00020424865180104166,
+        0.0007530157997246958
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.006664036732693805,
+      "ci95": [
+        -0.09612131217870398,
+        0.08276887294104168
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "OC_net_all_vs_SOURCE_pp",
+      "mean": 0.01567840576171875,
+      "ci95": [
+        0.00818181037902832,
+        0.023661613464355462
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "OC_net_foreground_vs_SOURCE_pp",
+      "mean": 0.3969205679818083,
+      "ci95": [
+        0.17057765201754682,
+        0.6322238249607278
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "OC_net_background_vs_SOURCE_pp",
+      "mean": 0.010107574155913637,
+      "ci95": [
+        0.005823739896018299,
+        0.01508630558226771
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "OC_net_boundary3px_vs_SOURCE_pp",
+      "mean": 0.22326870922044892,
+      "ci95": [
+        -0.3607775953721575,
+        0.8896190236789853
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "selected_positive_utility_blocks",
+      "mean": 4.625,
+      "ci95": [
+        3.975,
+        5.324999999999999
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "selected_negative_utility_blocks",
+      "mean": 3.775,
+      "ci95": [
+        3.3,
+        4.25
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_POS10",
+      "metric": "selected_zero_utility_blocks",
+      "mean": 0.325,
+      "ci95": [
+        0.2,
+        0.42500000000000004
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "OD_dice",
+      "mean": 97.13726162910979,
+      "ci95": [
+        96.7363677956862,
+        97.54921863644277
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "OC_dice",
+      "mean": 87.74488429024638,
+      "ci95": [
+        83.75246067749941,
+        91.1568935594927
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "ALL_dice",
+      "mean": 92.44107295967808,
+      "ci95": [
+        90.32182389507278,
+        94.30526368024827
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "ASSD",
+      "mean": 3.3369418442776446,
+      "ci95": [
+        2.743582467105245,
+        3.8720188266592994
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "HD95",
+      "mean": 7.284405319123813,
+      "ci95": [
+        6.152352067832173,
+        8.309599745930827
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "vCDR",
+      "mean": 0.05336336661179542,
+      "ci95": [
+        0.032949363207794374,
+        0.07379165011174099
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "selected_pixels",
+      "mean": 21.5,
+      "ci95": [
+        19.925,
+        23.175624999999997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "selected_blocks",
+      "mean": 5.65,
+      "ci95": [
+        4.75,
+        6.775
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "OC_net_all_vs_B_pp",
+      "mean": -0.001983642578125,
+      "ci95": [
+        -0.0040912628173828125,
+        0.000457763671875
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.07762985346777612,
+      "ci95": [
+        0.04171408386610039,
+        0.12179237717972775
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "OC_net_background_vs_B_pp",
+      "mean": -0.004138997542428644,
+      "ci95": [
+        -0.005228356952621394,
+        -0.0030004924094399177
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.009067375970638046,
+      "ci95": [
+        -0.11218642687239755,
+        0.07624622637822898
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "OC_net_all_vs_SOURCE_pp",
+      "mean": 0.013685226440429688,
+      "ci95": [
+        0.0076100826263427734,
+        0.020656585693359375
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "OC_net_foreground_vs_SOURCE_pp",
+      "mean": 0.4953540044938157,
+      "ci95": [
+        0.2590430576878748,
+        0.7348013277006573
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "OC_net_background_vs_SOURCE_pp",
+      "mean": 0.0057229483415663475,
+      "ci95": [
+        0.0020651751673338987,
+        0.010232159782351227
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "OC_net_boundary3px_vs_SOURCE_pp",
+      "mean": 0.22086536998250467,
+      "ci95": [
+        -0.28656936911414915,
+        0.8140108493236226
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "selected_positive_utility_blocks",
+      "mean": 2.225,
+      "ci95": [
+        1.0,
+        3.9
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "selected_negative_utility_blocks",
+      "mean": 3.425,
+      "ci95": [
+        2.4000000000000004,
+        4.500624999999997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "LOGIT_MATCH",
+      "metric": "selected_zero_utility_blocks",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "OD_dice",
+      "mean": 97.13726162910979,
+      "ci95": [
+        96.7363677956862,
+        97.54921863644277
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "OC_dice",
+      "mean": 87.77072043073736,
+      "ci95": [
+        83.80660270609195,
+        91.17605673001154
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "ALL_dice",
+      "mean": 92.45399102992357,
+      "ci95": [
+        90.35005944631253,
+        94.30981385448173
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "ASSD",
+      "mean": 3.329429592622931,
+      "ci95": [
+        2.74346205824698,
+        3.864807914063004
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "HD95",
+      "mean": 7.245606713275745,
+      "ci95": [
+        6.140485876704949,
+        8.237178901788178
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "vCDR",
+      "mean": 0.053572493371175874,
+      "ci95": [
+        0.03285451835090284,
+        0.07455143041003319
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "selected_pixels",
+      "mean": 21.5,
+      "ci95": [
+        19.925,
+        23.175624999999997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "selected_blocks",
+      "mean": 5.65,
+      "ci95": [
+        4.75,
+        6.775
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "OC_net_all_vs_B_pp",
+      "mean": -0.001621246337890625,
+      "ci95": [
+        -0.003271818161010742,
+        7.700920104980078e-05
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.08753304316613134,
+      "ci95": [
+        0.049421702253097506,
+        0.12564666199118688
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "OC_net_background_vs_B_pp",
+      "mean": -0.0035535144950868446,
+      "ci95": [
+        -0.0043764067919559715,
+        -0.0027560611155259982
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.023054566307964375,
+      "ci95": [
+        -0.1329181515757318,
+        0.05761249817125514
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "OC_net_all_vs_SOURCE_pp",
+      "mean": 0.014047622680664062,
+      "ci95": [
+        0.007295370101928711,
+        0.021725654602050774
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "OC_net_foreground_vs_SOURCE_pp",
+      "mean": 0.5052571941921709,
+      "ci95": [
+        0.2377068276153302,
+        0.7775281880376302
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "OC_net_background_vs_SOURCE_pp",
+      "mean": 0.0063084313889081485,
+      "ci95": [
+        0.00243220216185845,
+        0.011026767205147791
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "OC_net_boundary3px_vs_SOURCE_pp",
+      "mean": 0.20687817964517835,
+      "ci95": [
+        -0.34908941281713163,
+        0.8576507280431532
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "selected_positive_utility_blocks",
+      "mean": 2.375,
+      "ci95": [
+        1.525,
+        3.4000000000000004
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "selected_negative_utility_blocks",
+      "mean": 3.125,
+      "ci95": [
+        2.3,
+        4.025
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "GEOM_MATCH",
+      "metric": "selected_zero_utility_blocks",
+      "mean": 0.15000000000000002,
+      "ci95": [
+        0.025,
+        0.32499999999999996
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "OD_dice",
+      "mean": 97.13726162910979,
+      "ci95": [
+        96.7363677956862,
+        97.54921863644277
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "OC_dice",
+      "mean": 87.74898848081153,
+      "ci95": [
+        83.78307210556383,
+        91.16470708256912
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "ALL_dice",
+      "mean": 92.44312505496066,
+      "ci95": [
+        90.33509472364055,
+        94.30825453230885
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "ASSD",
+      "mean": 3.3329141076798177,
+      "ci95": [
+        2.7446543114276576,
+        3.8712568886065366
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "HD95",
+      "mean": 7.269384411118233,
+      "ci95": [
+        6.1635402955127905,
+        8.270261931257075
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "vCDR",
+      "mean": 0.05458485492465287,
+      "ci95": [
+        0.034602341747024846,
+        0.07303231666469112
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "selected_pixels",
+      "mean": 21.5,
+      "ci95": [
+        19.925,
+        23.175624999999997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "selected_blocks",
+      "mean": 5.65,
+      "ci95": [
+        4.75,
+        6.775
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "OC_net_all_vs_B_pp",
+      "mean": -0.0020599365234375,
+      "ci95": [
+        -0.00324249267578125,
+        -0.000629425048828125
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.058814678408788235,
+      "ci95": [
+        0.03787671260323145,
+        0.08560431082774173
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "OC_net_background_vs_B_pp",
+      "mean": -0.003639063059744961,
+      "ci95": [
+        -0.004278740929712827,
+        -0.0030364141023759175
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.01572744453577795,
+      "ci95": [
+        -0.0651527153483667,
+        0.035669693745333755
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "OC_net_all_vs_SOURCE_pp",
+      "mean": 0.013608932495117188,
+      "ci95": [
+        0.0071048736572265625,
+        0.02081894874572754
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "OC_net_foreground_vs_SOURCE_pp",
+      "mean": 0.47653882943482784,
+      "ci95": [
+        0.22605401122251312,
+        0.7265699072748404
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "OC_net_background_vs_SOURCE_pp",
+      "mean": 0.00622288282425003,
+      "ci95": [
+        0.0025947282564786735,
+        0.010705138564102268
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "OC_net_boundary3px_vs_SOURCE_pp",
+      "mean": 0.21420530141736477,
+      "ci95": [
+        -0.3188037898778058,
+        0.8176318405060371
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "selected_positive_utility_blocks",
+      "mean": 2.025,
+      "ci95": [
+        1.425,
+        2.875
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "selected_negative_utility_blocks",
+      "mean": 3.5,
+      "ci95": [
+        2.95,
+        4.000624999999997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "MARGIN_MATCH",
+      "metric": "selected_zero_utility_blocks",
+      "mean": 0.125,
+      "ci95": [
+        0.0,
+        0.25
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "OD_dice",
+      "mean": 97.13726162910979,
+      "ci95": [
+        96.7363677956862,
+        97.54921863644277
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "OC_dice",
+      "mean": 87.76351822882646,
+      "ci95": [
+        83.81309034911129,
+        91.17594801860494
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "ALL_dice",
+      "mean": 92.45038992896814,
+      "ci95": [
+        90.34950047145705,
+        94.30718433176375
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "ASSD",
+      "mean": 3.3277118994578294,
+      "ci95": [
+        2.742752234723828,
+        3.8644420501500774
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "HD95",
+      "mean": 7.248624626274591,
+      "ci95": [
+        6.128550886626266,
+        8.253762443543847
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "vCDR",
+      "mean": 0.05436700531350869,
+      "ci95": [
+        0.0328920217569305,
+        0.07483322542793897
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "selected_pixels",
+      "mean": 21.5,
+      "ci95": [
+        19.925,
+        23.175624999999997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "selected_blocks",
+      "mean": 5.65,
+      "ci95": [
+        4.75,
+        6.775
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "OC_net_all_vs_B_pp",
+      "mean": -0.001773834228515625,
+      "ci95": [
+        -0.002880096435546875,
+        -0.000352382659912112
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.06615662099454549,
+      "ci95": [
+        0.03960745009035708,
+        0.09269702840391997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "OC_net_background_vs_B_pp",
+      "mean": -0.0032795116987149662,
+      "ci95": [
+        -0.003842463416564365,
+        -0.0027490873782049234
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.0070539513014730975,
+      "ci95": [
+        -0.10765880416410407,
+        0.0852586544379731
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "OC_net_all_vs_SOURCE_pp",
+      "mean": 0.013895034790039062,
+      "ci95": [
+        0.007092952728271484,
+        0.021457672119140625
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "OC_net_foreground_vs_SOURCE_pp",
+      "mean": 0.4838807720205851,
+      "ci95": [
+        0.21883237362870092,
+        0.7540294892791272
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "OC_net_background_vs_SOURCE_pp",
+      "mean": 0.006582434185280025,
+      "ci95": [
+        0.0027295537334045697,
+        0.011252301234830939
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "OC_net_boundary3px_vs_SOURCE_pp",
+      "mean": 0.2228787946516696,
+      "ci95": [
+        -0.2965318550858545,
+        0.8189979033757813
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "selected_positive_utility_blocks",
+      "mean": 2.3,
+      "ci95": [
+        1.55,
+        3.4006249999999967
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "selected_negative_utility_blocks",
+      "mean": 3.25,
+      "ci95": [
+        2.725,
+        3.7750000000000004
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "arm": "CYCLE_MATCH",
+      "metric": "selected_zero_utility_blocks",
+      "mean": 0.1,
+      "ci95": [
+        0.0,
+        0.30000000000000004
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  ],
+  "contrasts": [
+    {
+      "comparison": "ALL_COMMON-B",
+      "metric": "OC_dice",
+      "mean": -0.412021336154648,
+      "ci95": [
+        -0.6266435738329281,
+        -0.20270610943582718
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-B",
+      "metric": "ALL_dice",
+      "mean": -0.20601066807732238,
+      "ci95": [
+        -0.3133217869164613,
+        -0.10135305471790906
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-B",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-B",
+      "metric": "ASSD",
+      "mean": -0.02891690406753731,
+      "ci95": [
+        -0.0889828029759657,
+        0.026773789238255442
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-B",
+      "metric": "HD95",
+      "mean": 0.24276084436599277,
+      "ci95": [
+        0.07651611246831434,
+        0.44022647630940553
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-B",
+      "metric": "vCDR",
+      "mean": 0.0046042107449337675,
+      "ci95": [
+        -0.006380579444822574,
+        0.017526554342622125
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-B",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": -0.3447614058581861,
+      "ci95": [
+        -0.530164949047068,
+        -0.15260549947755214
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-B",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.20646997145210247,
+      "ci95": [
+        -0.8211716513848503,
+        0.3291326389029125
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-SOURCE",
+      "metric": "OC_dice",
+      "mean": 0.1117280699418151,
+      "ci95": [
+        0.017086132579403213,
+        0.23734021061280705
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-SOURCE",
+      "metric": "ALL_dice",
+      "mean": 0.1081086417096854,
+      "ci95": [
+        0.05735207854728275,
+        0.17856835492942286
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-SOURCE",
+      "metric": "OD_dice",
+      "mean": 0.10448921347755374,
+      "ci95": [
+        0.087838915750633,
+        0.12202522363063424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-SOURCE",
+      "metric": "ASSD",
+      "mean": 0.00826834430532532,
+      "ci95": [
+        -0.027325273981586583,
+        0.04291441149854289
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-SOURCE",
+      "metric": "HD95",
+      "mean": -0.11711838037722061,
+      "ci95": [
+        -0.20031025092749175,
+        -0.051274026129504865
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-SOURCE",
+      "metric": "vCDR",
+      "mean": -0.0008576730178496217,
+      "ci95": [
+        -0.00344208280695579,
+        0.0011931745497027106
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-SOURCE",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.07296274516785355,
+      "ci95": [
+        0.0028331822302810512,
+        0.16673261166499276
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "ALL_COMMON-SOURCE",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.023462774501040232,
+      "ci95": [
+        0.0037792894935752093,
+        0.05071952269277093
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-B",
+      "metric": "OC_dice",
+      "mean": -0.06069828387668412,
+      "ci95": [
+        -0.11652380491341115,
+        -0.00797129961671992
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-B",
+      "metric": "ALL_dice",
+      "mean": -0.03034914193834215,
+      "ci95": [
+        -0.05826190245670581,
+        -0.003985649808360137
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-B",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-B",
+      "metric": "ASSD",
+      "mean": 0.009736489632633306,
+      "ci95": [
+        -0.019271412131992627,
+        0.042188467452188134
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-B",
+      "metric": "HD95",
+      "mean": 0.05900052156070301,
+      "ci95": [
+        -0.03748687498737194,
+        0.17092702621040098
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-B",
+      "metric": "vCDR",
+      "mean": 0.0019465438358855806,
+      "ci95": [
+        -0.0008809404510919883,
+        0.005695304350680579
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-B",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.07734466067744986,
+      "ci95": [
+        0.041393148561737224,
+        0.12175876091762716
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-B",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.011312548848949675,
+      "ci95": [
+        -0.11366917697735403,
+        0.0726488633546887
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-SOURCE",
+      "metric": "OC_dice",
+      "mean": 0.46305112221977895,
+      "ci95": [
+        0.21785049400971868,
+        0.7178232596388189
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-SOURCE",
+      "metric": "ALL_dice",
+      "mean": 0.2837701678486656,
+      "ci95": [
+        0.15509760095324512,
+        0.4164655793248785
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-SOURCE",
+      "metric": "OD_dice",
+      "mean": 0.10448921347755374,
+      "ci95": [
+        0.087838915750633,
+        0.12202522363063424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-SOURCE",
+      "metric": "ASSD",
+      "mean": 0.04692173800549593,
+      "ci95": [
+        -0.020382818103361237,
+        0.10591841271761201
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-SOURCE",
+      "metric": "HD95",
+      "mean": -0.30087870318251037,
+      "ci95": [
+        -0.5519351116038127,
+        -0.1272464807749677
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-SOURCE",
+      "metric": "vCDR",
+      "mean": -0.003515339926897809,
+      "ci95": [
+        -0.01193477877292954,
+        0.004018160114826914
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-SOURCE",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.49506881170348943,
+      "ci95": [
+        0.2586873451123642,
+        0.7347941978808993
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-SOURCE",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.218620197104193,
+      "ci95": [
+        -0.28886865748596297,
+        0.8140108493236226
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-B",
+      "metric": "OC_dice",
+      "mean": -0.06399757189191871,
+      "ci95": [
+        -0.12331878611406441,
+        -0.007031615175233638
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-B",
+      "metric": "ALL_dice",
+      "mean": -0.031998785945958556,
+      "ci95": [
+        -0.06165939305702982,
+        -0.0035158075876173043
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-B",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-B",
+      "metric": "ASSD",
+      "mean": 0.010206460608256173,
+      "ci95": [
+        -0.020333993316057286,
+        0.04468280067828024
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-B",
+      "metric": "HD95",
+      "mean": 0.0589005768667689,
+      "ci95": [
+        -0.037485869298054884,
+        0.1692498927219337
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-B",
+      "metric": "vCDR",
+      "mean": 0.002191641875101266,
+      "ci95": [
+        -0.00039480945239194214,
+        0.005890401180760115
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-B",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.07249268721098395,
+      "ci95": [
+        0.030066637070818553,
+        0.12395840784844579
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-B",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.04293217313262922,
+      "ci95": [
+        -0.12470087694851442,
+        0.02977829796867714
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-SOURCE",
+      "metric": "OC_dice",
+      "mean": 0.45975183420454435,
+      "ci95": [
+        0.21621979220759502,
+        0.7147565358078793
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-SOURCE",
+      "metric": "ALL_dice",
+      "mean": 0.28212052384104924,
+      "ci95": [
+        0.15502937976829517,
+        0.4148708508794252
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-SOURCE",
+      "metric": "OD_dice",
+      "mean": 0.10448921347755374,
+      "ci95": [
+        0.087838915750633,
+        0.12202522363063424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-SOURCE",
+      "metric": "ASSD",
+      "mean": 0.0473917089811188,
+      "ci95": [
+        -0.021033547179396477,
+        0.10711318720084251
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-SOURCE",
+      "metric": "HD95",
+      "mean": -0.30097864787644446,
+      "ci95": [
+        -0.5503329605187987,
+        -0.12262386217592565
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-SOURCE",
+      "metric": "vCDR",
+      "mean": -0.0032702418876821237,
+      "ci95": [
+        -0.011898841333270597,
+        0.004463008774099417
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-SOURCE",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.49021683823702356,
+      "ci95": [
+        0.2559348144686488,
+        0.724543244223037
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_POS10-SOURCE",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.18700057282051352,
+      "ci95": [
+        -0.31667450730626934,
+        0.7794996091099315
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-B",
+      "metric": "OC_dice",
+      "mean": -0.00307122537493143,
+      "ci95": [
+        -0.011113154998716226,
+        0.004212864770675135
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-B",
+      "metric": "ALL_dice",
+      "mean": -0.001535612687465715,
+      "ci95": [
+        -0.005556577499358984,
+        0.0021064323853365414
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-B",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-B",
+      "metric": "ASSD",
+      "mean": -0.010107094731001444,
+      "ci95": [
+        -0.019171676981183307,
+        -0.0031468132557248034
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-B",
+      "metric": "HD95",
+      "mean": -0.01422276107768934,
+      "ci95": [
+        -0.04024679863251372,
+        0.015232885350297223
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-B",
+      "metric": "vCDR",
+      "mean": -0.00013586956521739052,
+      "ci95": [
+        -0.00040760869565217156,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-B",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": -0.020803583044231362,
+      "ci95": [
+        -0.04839334151784716,
+        0.0028200869438477225
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-B",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.006664036732693805,
+      "ci95": [
+        -0.09612131217870398,
+        0.08276887294104168
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-SOURCE",
+      "metric": "OC_dice",
+      "mean": 0.5206781807215316,
+      "ci95": [
+        0.23710484991167644,
+        0.8164200238753819
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-SOURCE",
+      "metric": "ALL_dice",
+      "mean": 0.3125836970995421,
+      "ci95": [
+        0.16727469723878452,
+        0.4659470508495382
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-SOURCE",
+      "metric": "OD_dice",
+      "mean": 0.10448921347755374,
+      "ci95": [
+        0.087838915750633,
+        0.12202522363063424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-SOURCE",
+      "metric": "ASSD",
+      "mean": 0.02707815364186118,
+      "ci95": [
+        -0.038790763025872685,
+        0.08277922625538543
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-SOURCE",
+      "metric": "HD95",
+      "mean": -0.3741019858209027,
+      "ci95": [
+        -0.6359033314340523,
+        -0.16450284268142204
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-SOURCE",
+      "metric": "vCDR",
+      "mean": -0.00559775332800078,
+      "ci95": [
+        -0.01673838313603378,
+        0.004120522440750157
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-SOURCE",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.3969205679818083,
+      "ci95": [
+        0.17057765201754682,
+        0.6322238249607278
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_POS10-SOURCE",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.22326870922044892,
+      "ci95": [
+        -0.3607775953721575,
+        0.8896190236789853
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-B",
+      "metric": "OC_dice",
+      "mean": -0.060408176536968304,
+      "ci95": [
+        -0.11652380491341115,
+        -0.007391084937288284
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-B",
+      "metric": "ALL_dice",
+      "mean": -0.030204088268484065,
+      "ci95": [
+        -0.05826190245670581,
+        -0.0036955424686439652
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-B",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-B",
+      "metric": "ASSD",
+      "mean": 0.00980727933015917,
+      "ci95": [
+        -0.019665229075167306,
+        0.04322438989927814
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-B",
+      "metric": "HD95",
+      "mean": 0.06118127157933246,
+      "ci95": [
+        -0.03748461441912314,
+        0.17530310422818793
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-B",
+      "metric": "vCDR",
+      "mean": 0.0019465438358855806,
+      "ci95": [
+        -0.0008809404510919883,
+        0.005695304350680579
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-B",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.07762985346777612,
+      "ci95": [
+        0.04171408386610039,
+        0.12179237717972775
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-B",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.009067375970638046,
+      "ci95": [
+        -0.11218642687239755,
+        0.07624622637822898
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-SOURCE",
+      "metric": "OC_dice",
+      "mean": 0.4633412295594948,
+      "ci95": [
+        0.21918437697006818,
+        0.7181061142950418
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-SOURCE",
+      "metric": "ALL_dice",
+      "mean": 0.2839152215185237,
+      "ci95": [
+        0.15555075626699716,
+        0.41646920566662493
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-SOURCE",
+      "metric": "OD_dice",
+      "mean": 0.10448921347755374,
+      "ci95": [
+        0.087838915750633,
+        0.12202522363063424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-SOURCE",
+      "metric": "ASSD",
+      "mean": 0.04699252770302179,
+      "ci95": [
+        -0.02051596193514912,
+        0.10602293149294044
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-SOURCE",
+      "metric": "HD95",
+      "mean": -0.2986979531638809,
+      "ci95": [
+        -0.5506909007728108,
+        -0.1230768291446685
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-SOURCE",
+      "metric": "vCDR",
+      "mean": -0.003515339926897809,
+      "ci95": [
+        -0.01193477877292954,
+        0.004018160114826914
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-SOURCE",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.4953540044938157,
+      "ci95": [
+        0.2590430576878748,
+        0.7348013277006573
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "LOGIT_MATCH-SOURCE",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.22086536998250467,
+      "ci95": [
+        -0.2865693691141491,
+        0.8140108493236226
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-B",
+      "metric": "OC_dice",
+      "mean": -0.03457203604600014,
+      "ci95": [
+        -0.07253552750311464,
+        -0.0013693975223377714
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-B",
+      "metric": "ALL_dice",
+      "mean": -0.017286018022998027,
+      "ci95": [
+        -0.03626776375155519,
+        -0.0006846987611687728
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-B",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-B",
+      "metric": "ASSD",
+      "mean": 0.0022950276754454364,
+      "ci95": [
+        -0.01653995159681909,
+        0.026439224408102008
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-B",
+      "metric": "HD95",
+      "mean": 0.0223826657312638,
+      "ci95": [
+        -0.03872331085558667,
+        0.10133452482451318
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-B",
+      "metric": "vCDR",
+      "mean": 0.0021556705952660332,
+      "ci95": [
+        -0.0006624835030953985,
+        0.005656526708035763
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-B",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.08753304316613134,
+      "ci95": [
+        0.049421702253097506,
+        0.12564666199118688
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-B",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.023054566307964375,
+      "ci95": [
+        -0.1329181515757318,
+        0.05761249817125514
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-SOURCE",
+      "metric": "OC_dice",
+      "mean": 0.4891773700504629,
+      "ci95": [
+        0.21789433227659125,
+        0.7735532946945909
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-SOURCE",
+      "metric": "ALL_dice",
+      "mean": 0.29683329176400974,
+      "ci95": [
+        0.15613123397627876,
+        0.4453072610473925
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-SOURCE",
+      "metric": "OD_dice",
+      "mean": 0.10448921347755374,
+      "ci95": [
+        0.087838915750633,
+        0.12202522363063424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-SOURCE",
+      "metric": "ASSD",
+      "mean": 0.03948027604830807,
+      "ci95": [
+        -0.026267608738246986,
+        0.0909218666965035
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-SOURCE",
+      "metric": "HD95",
+      "mean": -0.3374965590119496,
+      "ci95": [
+        -0.6093103845437869,
+        -0.15309332825397534
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-SOURCE",
+      "metric": "vCDR",
+      "mean": -0.003306213167517356,
+      "ci95": [
+        -0.011646951230643762,
+        0.004130428423245509
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-SOURCE",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.505257194192171,
+      "ci95": [
+        0.2377068276153302,
+        0.7775281880376304
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "GEOM_MATCH-SOURCE",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.20687817964517835,
+      "ci95": [
+        -0.34908941281713163,
+        0.8576507280431532
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-B",
+      "metric": "OC_dice",
+      "mean": -0.056303985971814366,
+      "ci95": [
+        -0.0893812226822364,
+        -0.022159498945091637
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-B",
+      "metric": "ALL_dice",
+      "mean": -0.028151992985906024,
+      "ci95": [
+        -0.044690611341116515,
+        -0.011079749472545595
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-B",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-B",
+      "metric": "ASSD",
+      "mean": 0.005779542732332111,
+      "ci95": [
+        -0.01592469842773116,
+        0.03144900206525365
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-B",
+      "metric": "HD95",
+      "mean": 0.04616036357375246,
+      "ci95": [
+        -0.023719184667538307,
+        0.12756248517167068
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-B",
+      "metric": "vCDR",
+      "mean": 0.0031680321487430204,
+      "ci95": [
+        -0.0016890807967736329,
+        0.008582315626699984
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-B",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.058814678408788235,
+      "ci95": [
+        0.03787671260323145,
+        0.08560431082774173
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-B",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.01572744453577795,
+      "ci95": [
+        -0.0651527153483667,
+        0.035669693745333755
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-SOURCE",
+      "metric": "OC_dice",
+      "mean": 0.4674454201246487,
+      "ci95": [
+        0.20751858189277808,
+        0.7360195933123943
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-SOURCE",
+      "metric": "ALL_dice",
+      "mean": 0.28596731680110177,
+      "ci95": [
+        0.1514140088573235,
+        0.42649062831160484
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-SOURCE",
+      "metric": "OD_dice",
+      "mean": 0.10448921347755374,
+      "ci95": [
+        0.087838915750633,
+        0.12202522363063424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-SOURCE",
+      "metric": "ASSD",
+      "mean": 0.042964791105194744,
+      "ci95": [
+        -0.02259263421393709,
+        0.09726348073327962
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-SOURCE",
+      "metric": "HD95",
+      "mean": -0.3137188611694609,
+      "ci95": [
+        -0.5628638566618549,
+        -0.13778393299344674
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-SOURCE",
+      "metric": "vCDR",
+      "mean": -0.002293851614040369,
+      "ci95": [
+        -0.008833495107986433,
+        0.003984619590084862
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-SOURCE",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.47653882943482784,
+      "ci95": [
+        0.22605401122251312,
+        0.7265699072748405
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "MARGIN_MATCH-SOURCE",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.21420530141736474,
+      "ci95": [
+        -0.31880378987780583,
+        0.8176318405060371
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-B",
+      "metric": "OC_dice",
+      "mean": -0.041774237956890836,
+      "ci95": [
+        -0.06929856249498437,
+        -0.01695396152589992
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-B",
+      "metric": "ALL_dice",
+      "mean": -0.020887118978444797,
+      "ci95": [
+        -0.034649281247492024,
+        -0.008476980762948168
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-B",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-B",
+      "metric": "ASSD",
+      "mean": 0.0005773345103441186,
+      "ci95": [
+        -0.018821521336571504,
+        0.023257374492966807
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-B",
+      "metric": "HD95",
+      "mean": 0.025400578730109882,
+      "ci95": [
+        -0.04232834608578301,
+        0.10941553368631451
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-B",
+      "metric": "vCDR",
+      "mean": 0.002950182537598843,
+      "ci95": [
+        -0.0011720196070654164,
+        0.00785014797955958
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-B",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.06615662099454549,
+      "ci95": [
+        0.03960745009035708,
+        0.09269702840391997
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-B",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.0070539513014730975,
+      "ci95": [
+        -0.10765880416410407,
+        0.0852586544379731
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-SOURCE",
+      "metric": "OC_dice",
+      "mean": 0.4819751681395722,
+      "ci95": [
+        0.20921968994893542,
+        0.7672255633942118
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-SOURCE",
+      "metric": "ALL_dice",
+      "mean": 0.293232190808563,
+      "ci95": [
+        0.15027378530146787,
+        0.4409175262429331
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-SOURCE",
+      "metric": "OD_dice",
+      "mean": 0.10448921347755374,
+      "ci95": [
+        0.087838915750633,
+        0.12202522363063424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-SOURCE",
+      "metric": "ASSD",
+      "mean": 0.03776258288320674,
+      "ci95": [
+        -0.028382896831815777,
+        0.09036051720714426
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-SOURCE",
+      "metric": "HD95",
+      "mean": -0.3344786460131035,
+      "ci95": [
+        -0.6081904276900816,
+        -0.14372013812784565
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-SOURCE",
+      "metric": "vCDR",
+      "mean": -0.0025117012251845462,
+      "ci95": [
+        -0.009673147265599837,
+        0.004069460756576209
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-SOURCE",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.4838807720205851,
+      "ci95": [
+        0.21883237362870092,
+        0.7540294892791273
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CYCLE_MATCH-SOURCE",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.22287879465166957,
+      "ci95": [
+        -0.2965318550858545,
+        0.818997903375781
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_POS10",
+      "metric": "OC_dice",
+      "mean": 0.0032992880152345806,
+      "ci95": [
+        -0.004827359706240433,
+        0.010523571347928218
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_POS10",
+      "metric": "ALL_dice",
+      "mean": 0.0016496440076164019,
+      "ci95": [
+        -0.0024136798531212912,
+        0.005261785673963022
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_POS10",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_POS10",
+      "metric": "ASSD",
+      "mean": -0.00046997097562286884,
+      "ci95": [
+        -0.007158266476910724,
+        0.0053006377490352075
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_POS10",
+      "metric": "HD95",
+      "mean": 9.994469393410731e-05,
+      "ci95": [
+        -0.022037457415285802,
+        0.024770443912248516
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_POS10",
+      "metric": "vCDR",
+      "mean": -0.0002450980392156854,
+      "ci95": [
+        -0.0007352941176470562,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_POS10",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.004851973466465897,
+      "ci95": [
+        -0.005804997568245478,
+        0.01653132432944884
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_POS10",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.03161962428367955,
+      "ci95": [
+        0.0053292099003470865,
+        0.05459724007006951
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_POS10",
+      "metric": "OC_dice",
+      "mean": -0.05762705850175269,
+      "ci95": [
+        -0.1121389595755997,
+        -0.004842618484916845
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_POS10",
+      "metric": "ALL_dice",
+      "mean": -0.028813529250876435,
+      "ci95": [
+        -0.056069479787799484,
+        -0.0024213092424579764
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_POS10",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_POS10",
+      "metric": "ASSD",
+      "mean": 0.019843584363634748,
+      "ci95": [
+        -0.010518823313730552,
+        0.05363826115124613
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_POS10",
+      "metric": "HD95",
+      "mean": 0.07322328263839235,
+      "ci95": [
+        -0.010591686267214007,
+        0.1763650137446628
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_POS10",
+      "metric": "vCDR",
+      "mean": 0.002082413401102971,
+      "ci95": [
+        -0.0007411074331365562,
+        0.005805511129764619
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_POS10",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.09814824372168122,
+      "ci95": [
+        0.06408005444676894,
+        0.13439235860109192
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_POS10",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.00464851211625587,
+      "ci95": [
+        -0.1520821134038862,
+        0.13019723033811487
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_MATCH",
+      "metric": "OC_dice",
+      "mean": -0.00029010733971581717,
+      "ci95": [
+        -0.0008703220191474515,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_MATCH",
+      "metric": "ALL_dice",
+      "mean": -0.0001450536698580862,
+      "ci95": [
+        -0.0004351610095742586,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_MATCH",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_MATCH",
+      "metric": "ASSD",
+      "mean": -7.078969752586373e-05,
+      "ci95": [
+        -0.0009147952582436059,
+        0.0005732793321495789
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_MATCH",
+      "metric": "HD95",
+      "mean": -0.0021807500186294512,
+      "ci95": [
+        -0.00636140459598411,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_MATCH",
+      "metric": "vCDR",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_MATCH",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": -0.0002851927903262604,
+      "ci95": [
+        -0.0008555783709787812,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-LOGIT_MATCH",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.00224517287831163,
+      "ci95": [
+        -0.0067355186349348905,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_MATCH",
+      "metric": "OC_dice",
+      "mean": -0.026126247830683978,
+      "ci95": [
+        -0.06575578110691431,
+        0.007683524922714538
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_MATCH",
+      "metric": "ALL_dice",
+      "mean": -0.013063123915344121,
+      "ci95": [
+        -0.032877890553457564,
+        0.0038417624613570067
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_MATCH",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_MATCH",
+      "metric": "ASSD",
+      "mean": 0.007441461957187866,
+      "ci95": [
+        -0.005851257967921577,
+        0.022377088516283047
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_MATCH",
+      "metric": "HD95",
+      "mean": 0.036617855829439216,
+      "ci95": [
+        -0.012980403695795237,
+        0.09472537457884082
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_MATCH",
+      "metric": "vCDR",
+      "mean": -0.00020912675938045274,
+      "ci95": [
+        -0.0011040096073302891,
+        0.0005666804563927761
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_MATCH",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": -0.010188382488681466,
+      "ci95": [
+        -0.05628551939632444,
+        0.028542587011046755
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-GEOM_MATCH",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.011742017459014705,
+      "ci95": [
+        -0.08214503055259362,
+        0.09308049367285375
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-MARGIN_MATCH",
+      "metric": "OC_dice",
+      "mean": -0.004394297904869759,
+      "ci95": [
+        -0.031206617668048785,
+        0.020084508486871596
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-MARGIN_MATCH",
+      "metric": "ALL_dice",
+      "mean": -0.0021971489524361225,
+      "ci95": [
+        -0.015603308834026127,
+        0.010042254243434046
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-MARGIN_MATCH",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-MARGIN_MATCH",
+      "metric": "ASSD",
+      "mean": 0.003956946900301194,
+      "ci95": [
+        -0.004406048162623977,
+        0.013002323848973082
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-MARGIN_MATCH",
+      "metric": "HD95",
+      "mean": 0.01284015798695055,
+      "ci95": [
+        -0.02005150485839882,
+        0.05034234142126003
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-MARGIN_MATCH",
+      "metric": "vCDR",
+      "mean": -0.0012214883128574398,
+      "ci95": [
+        -0.00445883545631359,
+        0.0016395071542130407
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-MARGIN_MATCH",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.018529982268661625,
+      "ci95": [
+        -0.001215021502011081,
+        0.03957256628100989
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-MARGIN_MATCH",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": 0.004414895686828277,
+      "ci95": [
+        -0.08752924429902471,
+        0.09776467461026363
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-CYCLE_MATCH",
+      "metric": "OC_dice",
+      "mean": -0.018924045919793284,
+      "ci95": [
+        -0.06399876051386215,
+        0.020762940389976475
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-CYCLE_MATCH",
+      "metric": "ALL_dice",
+      "mean": -0.009462022959897353,
+      "ci95": [
+        -0.03199938025693072,
+        0.010381470194987658
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-CYCLE_MATCH",
+      "metric": "OD_dice",
+      "mean": 0.0,
+      "ci95": [
+        0.0,
+        0.0
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-CYCLE_MATCH",
+      "metric": "ASSD",
+      "mean": 0.009159155122289184,
+      "ci95": [
+        -0.006376569493176475,
+        0.024654305816984492
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-CYCLE_MATCH",
+      "metric": "HD95",
+      "mean": 0.03359994283059313,
+      "ci95": [
+        -0.01466583379789283,
+        0.08039070379224296
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-CYCLE_MATCH",
+      "metric": "vCDR",
+      "mean": -0.0010036387017132622,
+      "ci95": [
+        -0.003986249976481909,
+        0.00114713443499478
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-CYCLE_MATCH",
+      "metric": "OC_net_foreground_vs_B_pp",
+      "mean": 0.011188039682904358,
+      "ci95": [
+        -0.03573815120940683,
+        0.05609495497442285
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_POS10-CYCLE_MATCH",
+      "metric": "OC_net_boundary3px_vs_B_pp",
+      "mean": -0.004258597547476569,
+      "ci95": [
+        -0.11824165610838303,
+        0.12462958478586633
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  ],
+  "weighted_pair_audits": [
+    {
+      "comparison": "CROP_Q-GLOBAL_Q",
+      "weight": "UTILITY",
+      "mean": 0.1532288227443739,
+      "ci95": [
+        0.03253994956285831,
+        0.31357531370687025
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8,
+      "leave_one_content_out_min": 0.08589416738681141,
+      "leave_one_content_out_max": 0.18886738754996113,
+      "leave_one_content_out_positive": 8,
+      "leave_one_content_out_total": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": 0.01287796147182639,
+      "ci95": [
+        -0.005425559281205856,
+        0.03640579799459102
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8,
+      "leave_one_content_out_min": 0.003096171048190821,
+      "leave_one_content_out_max": 0.017943854770067002,
+      "leave_one_content_out_positive": 8,
+      "leave_one_content_out_total": 8
+    },
+    {
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": -0.07046597607318339,
+      "ci95": [
+        -0.2391515239289209,
+        0.09313695333714832
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8,
+      "leave_one_content_out_min": -0.11537962571023981,
+      "leave_one_content_out_max": -0.016565167758397985,
+      "leave_one_content_out_positive": 0,
+      "leave_one_content_out_total": 8
+    }
+  ],
+  "weighted_pair_difference_contributions": [
+    {
+      "comparison": "CROP_Q-GLOBAL_Q",
+      "pair_cell": "HIGH_POS_HIGH_NEG",
+      "mean": 0.07075132706501407,
+      "ci95": [
+        0.02868855797004534,
+        0.1218614565553088
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GLOBAL_Q",
+      "pair_cell": "HIGH_POS_LOW_NEG",
+      "mean": 0.019892598713102123,
+      "ci95": [
+        -0.02360484669576202,
+        0.07113736629210012
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GLOBAL_Q",
+      "pair_cell": "LOW_POS_HIGH_NEG",
+      "mean": 0.04799635684565127,
+      "ci95": [
+        0.02343598074341929,
+        0.08210646081480716
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GLOBAL_Q",
+      "pair_cell": "LOW_POS_LOW_NEG",
+      "mean": 0.014588540120606449,
+      "ci95": [
+        -0.015224155922850454,
+        0.048384650401751016
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "pair_cell": "HIGH_POS_HIGH_NEG",
+      "mean": 0.007842031703671938,
+      "ci95": [
+        -0.00023716350278350936,
+        0.02057438296181064
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "pair_cell": "HIGH_POS_LOW_NEG",
+      "mean": -0.00036919130784388954,
+      "ci95": [
+        -0.004561575640352122,
+        0.0037647086169887442
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "pair_cell": "LOW_POS_HIGH_NEG",
+      "mean": 0.004391997490127446,
+      "ci95": [
+        2.6159471486374937e-06,
+        0.009250226644700219
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "pair_cell": "LOW_POS_LOW_NEG",
+      "mean": 0.001013123585870911,
+      "ci95": [
+        -0.0026171276951343055,
+        0.004955004258363064
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "pair_cell": "HIGH_POS_HIGH_NEG",
+      "mean": -0.014221334756842726,
+      "ci95": [
+        -0.09119963263118232,
+        0.05112545599019343
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "pair_cell": "HIGH_POS_LOW_NEG",
+      "mean": -0.012505006788026104,
+      "ci95": [
+        -0.05655586738474707,
+        0.03090705631452184
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "pair_cell": "LOW_POS_HIGH_NEG",
+      "mean": -0.020707105624958012,
+      "ci95": [
+        -0.056823022897074464,
+        0.01427627636202154
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "pair_cell": "LOW_POS_LOW_NEG",
+      "mean": -0.023032528903356577,
+      "ci95": [
+        -0.04983650660931814,
+        0.0039939934557872364
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  ],
+  "fixed_strata_contrasts": [
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": 0.02707182074224368,
+      "ci95": [
+        -0.011426906364219992,
+        0.07592833996726067
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": 0.027071820742243687,
+      "ci95": [
+        -0.011426906364219967,
+        0.07592833996726064
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": -0.15142054381743453,
+      "ci95": [
+        -0.39861534263067966,
+        0.09664806894756794
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": -0.1514205438174345,
+      "ci95": [
+        -0.39861534263067966,
+        0.09664806894756806
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": -0.009017857142857143,
+      "ci95": [
+        -0.017767857142857144,
+        -0.0012500000000000011
+      ],
+      "defined_inputs": 23,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": -0.01403849100745767,
+      "ci95": [
+        -0.02627090297857753,
+        -0.0011782948526292524
+      ],
+      "defined_inputs": 23,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": -0.09020833333333333,
+      "ci95": [
+        -0.34811904761904766,
+        0.1517857142857143
+      ],
+      "defined_inputs": 23,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": -0.10410344970539502,
+      "ci95": [
+        -0.3621071116354719,
+        0.13477345706169397
+      ],
+      "defined_inputs": 23,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": 0.0,
+      "ci95": null,
+      "defined_inputs": 1,
+      "defined_contents": 1
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": 0.0,
+      "ci95": null,
+      "defined_inputs": 1,
+      "defined_contents": 1
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": 0.0,
+      "ci95": null,
+      "defined_inputs": 1,
+      "defined_contents": 1
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": 0.0,
+      "ci95": null,
+      "defined_inputs": 1,
+      "defined_contents": 1
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "EXPAND",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": -0.010831036776572064,
+      "ci95": [
+        -0.04099925954011998,
+        0.022309243896554778
+      ],
+      "defined_inputs": 30,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": -0.010831036776572071,
+      "ci95": [
+        -0.040999259540119994,
+        0.022309243896554764
+      ],
+      "defined_inputs": 30,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": -0.14764241415856588,
+      "ci95": [
+        -0.3606822759406543,
+        0.05240068496203321
+      ],
+      "defined_inputs": 30,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": -0.14764241415856585,
+      "ci95": [
+        -0.3606822759406543,
+        0.052400684962033206
+      ],
+      "defined_inputs": 30,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": -0.022466517857142848,
+      "ci95": [
+        -0.06519345238095237,
+        0.010621279761904768
+      ],
+      "defined_inputs": 27,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": -0.029622976670589038,
+      "ci95": [
+        -0.08937746330810017,
+        0.010390380182984348
+      ],
+      "defined_inputs": 27,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": -0.22156828703703707,
+      "ci95": [
+        -0.46516458953373013,
+        0.01696345899470899
+      ],
+      "defined_inputs": 27,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": -0.22830931864878087,
+      "ci95": [
+        -0.46731462904382826,
+        0.00276267445010182
+      ],
+      "defined_inputs": 27,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": 0.0,
+      "ci95": null,
+      "defined_inputs": 2,
+      "defined_contents": 2
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": 0.0,
+      "ci95": null,
+      "defined_inputs": 2,
+      "defined_contents": 2
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": -1.0,
+      "ci95": null,
+      "defined_inputs": 2,
+      "defined_contents": 2
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": -1.0,
+      "ci95": null,
+      "defined_inputs": 2,
+      "defined_contents": 2
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "SHRINK",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "1",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": -0.0005905533509700193,
+      "ci95": [
+        -0.023778074018959445,
+        0.022038690476190483
+      ],
+      "defined_inputs": 29,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": 0.00013056630321471065,
+      "ci95": [
+        -0.018591607615239203,
+        0.01817135153719325
+      ],
+      "defined_inputs": 29,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": -0.0206102674331841,
+      "ci95": [
+        -0.17713538963929587,
+        0.14977415399029972
+      ],
+      "defined_inputs": 29,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": 0.01028051102550332,
+      "ci95": [
+        -0.17302581253033916,
+        0.20111650056362612
+      ],
+      "defined_inputs": 29,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "2_4",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": 0.01526627886002886,
+      "ci95": [
+        0.0003779987373737368,
+        0.032522924558080805
+      ],
+      "defined_inputs": 30,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": 0.008444827246456748,
+      "ci95": [
+        -0.0022342015266186557,
+        0.019643351950430748
+      ],
+      "defined_inputs": 30,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": -0.13549997745310247,
+      "ci95": [
+        -0.32666748681006497,
+        0.06278087515782814
+      ],
+      "defined_inputs": 30,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE1",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": -0.12815075584166552,
+      "ci95": [
+        -0.3014229068835847,
+        0.06694745877483063
+      ],
+      "defined_inputs": 30,
+      "defined_contents": 8
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "LE3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-CROP_LOGIT_Q",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    },
+    {
+      "direction_source_to_B": "MIXED",
+      "size_bucket": "GE5",
+      "distance_bucket": "GT3",
+      "comparison": "CROP_Q-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": null,
+      "ci95": null,
+      "defined_inputs": 0,
+      "defined_contents": 0
+    }
+  ]
+}

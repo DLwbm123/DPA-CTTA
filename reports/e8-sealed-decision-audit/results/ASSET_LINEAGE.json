@@ -1,0 +1,38 @@
+{
+  "status": "PASS",
+  "registered_rgb_files": 8,
+  "image_header_reads": 8,
+  "pixel_arrays_decoded": 0,
+  "label_reads": 0,
+  "model_weight_reads": 0,
+  "header_groups": [
+    {
+      "width": 800,
+      "height": 800,
+      "mode": "RGB",
+      "format": "PNG",
+      "count": 8
+    }
+  ],
+  "input_pixels": 512,
+  "resize": "PIL RGB BICUBIC, before appearances and normalization",
+  "appearances": [
+    "identity",
+    "gamma .7",
+    "RGB(1.15,1,.85)",
+    "7x7 Gaussian blur sigma1"
+  ],
+  "normalization": "after appearance/clamp: per-image all-channel min-max; constant image rejected",
+  "e8_crop": "normalized 512-view integer 256 crop, bilinear align_corners=False to512, same model; readout back256",
+  "spatial_qualification_only": true,
+  "inference_with_native_details_performed": false,
+  "original_details_usefulness_established": false,
+  "same_field_native_roi_width_if800": 400,
+  "source_sha": "0f7d520d7f86aaaae620586b2a599dfc11ef088b",
+  "source_files": [
+    "src/dpa_ctta/source_io.py:126",
+    "src/dpa_ctta/r78_cross_patient/run.py:56",
+    "src/dpa_ctta/hosts/vptta.py:15",
+    "src/dpa_ctta/srg_ctta/e8_worker.py:45"
+  ]
+}
