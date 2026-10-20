@@ -1,0 +1,41 @@
+{
+  "review_only": true,
+  "new_performance_protocol": false,
+  "new_scientific_execution": false,
+  "new_remote_root": false,
+  "real_data_or_gt_reads": false,
+  "new_model_calls": false,
+  "candidates": [
+    {
+      "name": "TokenCut",
+      "decision": "EXCLUDE_ORIGINAL_EXTRA_BACKBONE"
+    },
+    {
+      "name": "LGDA",
+      "decision": "EXCLUDE_ORIGINAL_SOURCE_SUPERVISED_BOUNDARY_HEAD"
+    },
+    {
+      "name": "SPEGC",
+      "decision": "NOT_ADMITTED_LEARNED_COMPONENT_AND_SAMPLING_CHANGES"
+    },
+    {
+      "name": "LAME",
+      "decision": "NOT_ADMITTED_PIXEL_TRANSFER_AND_OLD_GRAPH_OVERLAP",
+      "upstream_tree_sha": "d2e5f63090bc1c8129bf7cbd781029a5955e1a67",
+      "defaults": {
+        "affinity": "rbf",
+        "knn": 5,
+        "force_symmetry": false,
+        "lambda_": 1,
+        "max_steps": 100,
+        "relative_stop": 1e-08,
+        "unary_add": 1e-10
+      },
+      "sigma_config_is_actual_bandwidth": false
+    }
+  ],
+  "duplication_scope": "current checkout src/reports Python keywords plus targeted R3/R4T/R22/E3 source and frozen reports; not exhaustive deleted/unfetched history",
+  "scientific_cost_ledger_unchanged": true,
+  "sole_monitor": "ctta",
+  "interval_minutes": 30
+}
