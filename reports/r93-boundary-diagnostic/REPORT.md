@@ -1,6 +1,6 @@
 # R93：域边界历史隔离诊断（启动记录）
 
-R92已完成并交付07646d1，36,864项二值Dice/编辑重建检查通过、CPU exit0退休，重复性/既有元数据权限/预算预准入满足。当前正在fresh GPU资格；正式运行仅在资格及profile通过后自动准入，尚无任务效果结果。源码冻结bd345a5。
+R92已完成并交付07646d1，36,864项二值Dice/编辑重建检查通过、CPU exit0退休，重复性/既有元数据权限/预算预准入满足。fresh GPU资格9updates/90F/9BW已PASS、worker exit0退休，profile3809.745575秒准入，两个正式worker已后台启动；尚无任务效果结果。源码冻结bd345a5。
 
 两order各域只有一个连续块，无重访，S每域状态库等价域边界恢复初态affine+空Adam；本实验不声称检验状态检索或无域部署。未找到严格同更新器/192面板/内容RNG/三臂控制的已完成等价reset，旧R30周期reset/R79逐图一步/R32旧C尾段反例全部保留，不重命名旧失败。CPU用已有域metadata构造匿名整数bank；模型不读域名、标签、旧评分或未来图像。
 
@@ -13,3 +13,5 @@ R92已完成并交付07646d1，36,864项二值Dice/编辑重建检查通过、CP
 CPU state-merge/gate fixture通过，新模型/GPU调用0。首次neutral entry生成因literal newline语法错误，在imports前失败，源码/CPU_PREPARATION_FAILURES.json保留，修复仅入口换行，未改科学run/score/资格，失败短CPU时间未单独量。一次本地相对路径scp仅GO收据同步失败，已按正确repo路径重传，无数据或运行逻辑改变。
 
 当前是STARTUP，不是终态：必须3GPUworker及CPUscore真正exit0/身份退休、全部S/J raw/post先封存再标签、计数/覆盖/parity/全部正负NA/费用/空间核齐后另交付终态。当前192/1951历史暴露、patient/source overlap UNKNOWN，R87NOT_AVAILABLE/R88前置未满足；不宣称独立验证。只发布源码/匿名汇总，私有图像/标签/预测/身份/weights/机器路径及raw logs不公开。
+
+资格GPU进程50.598338秒已退休，活跃formal elapsed另计；原VV重演与bank独立参照fullstate/output exact、global visits/RNG/counters保留、local ages一致，详见QUALIFICATION.json和FORMAL_ADMISSION.json。启动ps及nvidia-smi确认两worker中性argv及原固定GPU0/1 UUID。
