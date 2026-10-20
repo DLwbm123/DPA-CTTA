@@ -1,0 +1,101 @@
+{
+  "status": "COMPLETE",
+  "source_sha": "1c72d30fede699abf536b55109407b8d6542d249",
+  "pass_number": 1,
+  "model_forwards": 24,
+  "head_checks": 24,
+  "source_bits_checks": 8,
+  "registered_rgb_files": 8,
+  "new_decode": true,
+  "label_reads": 0,
+  "utility_or_prior_scores_reads": 0,
+  "access_negative_checks": 2,
+  "model_state_immutable": true,
+  "no_gradients": true,
+  "updates": 0,
+  "raw_input_logit_feature_digests": 24,
+  "independent_process_exact_replays": 0,
+  "exact_masks_compared": 0,
+  "common_clamp": true,
+  "clipped_channel_elements": {
+    "SOURCE": 0,
+    "N": 578,
+    "R": 0
+  },
+  "elements_per_native_branch": 15360000,
+  "physical_gpu_index": 1,
+  "physical_gpu_uuid_verified": true,
+  "peak_gpu_allocated_bytes": 1006253056,
+  "norm_layer_count": 41,
+  "norm_classes": [
+    "BatchNorm2d"
+  ],
+  "norm_training_true": 0,
+  "norm_track_running_stats_false": 0,
+  "norm_track_running_stats_true": 41,
+  "diagnostics": {
+    "SOURCE": {
+      "native_positive_fraction_mean": [
+        0.09803628921508789,
+        0.024642467498779297
+      ],
+      "mapped_positive_fraction_mean": [
+        0.09803628921508789,
+        0.024642467498779297
+      ],
+      "native_empty_heads": [
+        0,
+        0
+      ],
+      "mapped_empty_heads": [
+        0,
+        0
+      ],
+      "logit_min": -17.012542724609375,
+      "logit_max": 47.690242767333984,
+      "logit_mean": -8.109718680381775
+    },
+    "N": {
+      "native_positive_fraction_mean": [
+        0.22587929666042328,
+        0.030735351494513452
+      ],
+      "mapped_positive_fraction_mean": [
+        0.2257857322692871,
+        0.030558109283447266
+      ],
+      "native_empty_heads": [
+        0,
+        0
+      ],
+      "mapped_empty_heads": [
+        0,
+        0
+      ],
+      "logit_min": -17.50177001953125,
+      "logit_max": 35.803077697753906,
+      "logit_mean": -6.645553946495056
+    },
+    "R": {
+      "native_positive_fraction_mean": [
+        0.2350886706262827,
+        0.03222246118821204
+      ],
+      "mapped_positive_fraction_mean": [
+        0.23497533798217773,
+        0.0321354866027832
+      ],
+      "native_empty_heads": [
+        0,
+        0
+      ],
+      "mapped_empty_heads": [
+        0,
+        0
+      ],
+      "logit_min": -16.90976333618164,
+      "logit_max": 36.009368896484375,
+      "logit_mean": -6.391588091850281
+    }
+  }
+}

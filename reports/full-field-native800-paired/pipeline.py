@@ -139,11 +139,11 @@ def summary(v):
     if good.all():result['ci95']=[float(x) for x in np.percentile(a[INDEX].mean(1),[2.5,97.5])]
     return result
 
-def contrast(a,b):
+def contrast(a,b,lower_is_better=False):
     v=[None if x is None or y is None else x-y for x,y in zip(a,b)];r=summary(v)
     if r['defined_contents']==8:
         z=np.array(v);loo=(z.sum()-z)/7
-        r.update(wins=int((z>0).sum()),ties=int((z==0).sum()),losses=int((z<0).sum()),worst_difference=float(z.min()),leave_one_out_mean_range=[float(loo.min()),float(loo.max())])
+        r.update(positive_difference_count=int((z>0).sum()),zero_difference_count=int((z==0).sum()),negative_difference_count=int((z<0).sum()),favorable_count=int((z<0).sum()) if lower_is_better else int((z>0).sum()),unfavorable_count=int((z>0).sum()) if lower_is_better else int((z<0).sum()),minimum_difference=float(z.min()),maximum_difference=float(z.max()),worst_difference=float(z.max()) if lower_is_better else float(z.min()),leave_one_out_mean_range=[float(loo.min()),float(loo.max())])
     return r
 
 def ratio(a,b):
@@ -179,7 +179,7 @@ def score(c):
             cov=coverage[arm];cov['evaluated_masks']+=1;cov['surface_defined_heads']+=sum(x['assd_pixel'] is not None for x in m);cov['vcdr_defined']+=v['vcdr_abs_error'] is not None;cov['empty_heads']+=sum(st['empty']);cov['nesting_pixels']+=st['nesting']
             detail.append(dict(case=i,arm=arm,metrics=row,structure=st))
     comparisons=[('N','R'),('N','SOURCE'),('N','B'),('R','SOURCE'),('R','B')]
-    contrasts=[dict(comparison=a+'-'+b,metric=k,**contrast(vals[a,k],vals[b,k])) for a,b in comparisons for k in ('OC_dice','OD_dice','OD_ASSD','OC_ASSD','OD_HD95','OC_HD95','vCDR_error')]
+    contrasts=[dict(comparison=a+'-'+b,metric=k,**contrast(vals[a,k],vals[b,k],lower_is_better=not k.endswith('_dice'))) for a,b in comparisons for k in ('OC_dice','OD_dice','OD_ASSD','OC_ASSD','OD_HD95','OC_HD95','vCDR_error')]
     lookup={(r['comparison'],r['metric']):r for r in contrasts}
     obs=lookup['N-R','OC_dice'];ns=lookup['N-SOURCE','OC_dice'];nb=lookup['N-B','OC_dice']
     pos=lambda r:r['ci95'] is not None and r['ci95'][0]>0
