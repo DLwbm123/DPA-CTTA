@@ -1,0 +1,859 @@
+{
+  "signal_qualification_only": true,
+  "selector_trained": false,
+  "selector_applied": false,
+  "network_updated": false,
+  "history_used": false,
+  "continual_benefit_tested": false,
+  "signal_qualified": false,
+  "gates": {
+    "common_oracle": true,
+    "defined_inputs": true,
+    "feature_auc": false,
+    "feature_vs_logit": false,
+    "strong_controls": false,
+    "utility_nonreverse": false,
+    "permutation_nonidentity": true
+  },
+  "auc": [
+    {
+      "score": "FEATURE",
+      "weight": "BLOCK",
+      "mean": 0.5519991432574886,
+      "ci95": [
+        0.42864791332568125,
+        0.6646049470634622
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "FEATURE",
+      "weight": "UTILITY",
+      "mean": 0.5852207349288958,
+      "ci95": [
+        0.46068617369120324,
+        0.6966037826290918
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "FEATURE",
+      "weight": "PIXEL",
+      "mean": 0.5459659777005064,
+      "ci95": [
+        0.42681619576090063,
+        0.6554615724083365
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "LOGIT_MATCH",
+      "weight": "BLOCK",
+      "mean": 0.5579136217424738,
+      "ci95": [
+        0.4384679130772003,
+        0.6705387612170064
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "LOGIT_MATCH",
+      "weight": "UTILITY",
+      "mean": 0.5859216007304213,
+      "ci95": [
+        0.4610402097455194,
+        0.7010004190971815
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "LOGIT_MATCH",
+      "weight": "PIXEL",
+      "mean": 0.5543046573831572,
+      "ci95": [
+        0.44043369175797986,
+        0.6621556672224713
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "MARGIN_DIRECT",
+      "weight": "BLOCK",
+      "mean": 0.5177397283748333,
+      "ci95": [
+        0.49877201774632324,
+        0.535852400628061
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "MARGIN_DIRECT",
+      "weight": "UTILITY",
+      "mean": 0.5036393830837932,
+      "ci95": [
+        0.47968336130047246,
+        0.5271495291433218
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "MARGIN_DIRECT",
+      "weight": "PIXEL",
+      "mean": 0.5031194258699816,
+      "ci95": [
+        0.4608383002550542,
+        0.5411815606351681
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": 0.5998102521285493,
+      "ci95": [
+        0.5503356645148162,
+        0.6539578389874399
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": 0.6023709134483389,
+      "ci95": [
+        0.5398424664761184,
+        0.66589247086775
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "GEOMETRY_ONLY",
+      "weight": "PIXEL",
+      "mean": 0.5987435887347925,
+      "ci95": [
+        0.5422185567902283,
+        0.6528808442149938
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "FEATURE_SHIFT",
+      "weight": "BLOCK",
+      "mean": 0.5007951430125659,
+      "ci95": [
+        0.45827136018406117,
+        0.5361753928516705
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "FEATURE_SHIFT",
+      "weight": "UTILITY",
+      "mean": 0.485994770588568,
+      "ci95": [
+        0.4323661633036233,
+        0.5302089327118555
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "FEATURE_SHIFT",
+      "weight": "PIXEL",
+      "mean": 0.4882360241068008,
+      "ci95": [
+        0.4364949551962417,
+        0.5345356109678289
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "STRATIFIED_ROLL",
+      "weight": "BLOCK",
+      "mean": 0.5640218829413248,
+      "ci95": [
+        0.46062684419230054,
+        0.6593349008376517
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "STRATIFIED_ROLL",
+      "weight": "UTILITY",
+      "mean": 0.5782261782498516,
+      "ci95": [
+        0.47488260396237325,
+        0.6717081571619476
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "score": "STRATIFIED_ROLL",
+      "weight": "PIXEL",
+      "mean": 0.5485613553245872,
+      "ci95": [
+        0.46534749407609105,
+        0.6250995525344646
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  ],
+  "contrasts": [
+    {
+      "comparison": "FEATURE-LOGIT_MATCH",
+      "weight": "BLOCK",
+      "mean": -0.00591447848498528,
+      "ci95": [
+        -0.045122599278547774,
+        0.03774365151526707
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-LOGIT_MATCH",
+      "weight": "UTILITY",
+      "mean": -0.0007008658015255024,
+      "ci95": [
+        -0.040809126823807024,
+        0.04633029120778075
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-LOGIT_MATCH",
+      "weight": "PIXEL",
+      "mean": -0.008338679682650719,
+      "ci95": [
+        -0.048996990280094126,
+        0.03828107362789956
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-MARGIN_DIRECT",
+      "weight": "BLOCK",
+      "mean": 0.034259414882655374,
+      "ci95": [
+        -0.08312527102273684,
+        0.14062607809287594
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-MARGIN_DIRECT",
+      "weight": "UTILITY",
+      "mean": 0.08158135184510262,
+      "ci95": [
+        -0.03969246771563237,
+        0.19170864669369952
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-MARGIN_DIRECT",
+      "weight": "PIXEL",
+      "mean": 0.04284655183052478,
+      "ci95": [
+        -0.09026388848747693,
+        0.16614993204593934
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-GEOMETRY_ONLY",
+      "weight": "BLOCK",
+      "mean": -0.04781110887106068,
+      "ci95": [
+        -0.18797555053844556,
+        0.08020373408184951
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-GEOMETRY_ONLY",
+      "weight": "UTILITY",
+      "mean": -0.01715017851944306,
+      "ci95": [
+        -0.16521064202172167,
+        0.1185192062020796
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-GEOMETRY_ONLY",
+      "weight": "PIXEL",
+      "mean": -0.05277761103428602,
+      "ci95": [
+        -0.18760610522833335,
+        0.07665315262023542
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-FEATURE_SHIFT",
+      "weight": "BLOCK",
+      "mean": 0.051204000244922734,
+      "ci95": [
+        -0.08562940248778687,
+        0.18374532121108403
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-FEATURE_SHIFT",
+      "weight": "UTILITY",
+      "mean": 0.09922596434032785,
+      "ci95": [
+        -0.0488302798653354,
+        0.2347004284459117
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-FEATURE_SHIFT",
+      "weight": "PIXEL",
+      "mean": 0.057729953593705655,
+      "ci95": [
+        -0.07876939616043556,
+        0.19062940964355116
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-STRATIFIED_ROLL",
+      "weight": "BLOCK",
+      "mean": -0.012022739683836253,
+      "ci95": [
+        -0.0489569378204447,
+        0.01748978327316454
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-STRATIFIED_ROLL",
+      "weight": "UTILITY",
+      "mean": 0.006994556679044221,
+      "ci95": [
+        -0.02843812669624228,
+        0.037631065520192845
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "comparison": "FEATURE-STRATIFIED_ROLL",
+      "weight": "PIXEL",
+      "mean": -0.0025953776240806824,
+      "ci95": [
+        -0.04819978724678239,
+        0.03808050670349329
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  ],
+  "primary": {
+    "comparison": "FEATURE-LOGIT_MATCH",
+    "weight": "BLOCK",
+    "mean": -0.00591447848498528,
+    "ci95": [
+      -0.045122599278547774,
+      0.03774365151526707
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "common_oracle_space": {
+    "delta_pp": 0.4721342181562814,
+    "ci95_pp": [
+      0.33800751918682004,
+      0.6152306384927697
+    ]
+  },
+  "full_od_lock_space": {
+    "delta_pp": 0.4957947238135674,
+    "ci95_pp": [
+      0.34311935158310747,
+      0.6703900429451048
+    ]
+  },
+  "coverage": {
+    "all_oc_only_blocks": 3028,
+    "common_blocks": 2881,
+    "all_oc_edit_pixels": 7324,
+    "common_edit_pixels": 6997,
+    "common_positive_utility": 1038,
+    "common_negative_utility": 1575,
+    "common_zero_utility": 268,
+    "reasons": {
+      "COMMON": 2881,
+      "ANCHORS_SHORT": 147
+    },
+    "permutation_positions_moved": 2862,
+    "permutation_values_changed": 2862
+  },
+  "strata": [
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "FEATURE",
+      "mean": 0.5599847046083932,
+      "ci95": [
+        0.43541445357851394,
+        0.6751880801285884
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "LOGIT_MATCH",
+      "mean": 0.5711593048587129,
+      "ci95": [
+        0.45295741694708624,
+        0.6855452315723872
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "MARGIN_DIRECT",
+      "mean": 0.5385610148896292,
+      "ci95": [
+        0.5113659828623398,
+        0.564515484459726
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.6290656971641315,
+      "ci95": [
+        0.5764012401812203,
+        0.6950843247442504
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "FEATURE_SHIFT",
+      "mean": 0.5039230845936111,
+      "ci95": [
+        0.4699220054373571,
+        0.535207343370278
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "1",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.5758889159230697,
+      "ci95": [
+        0.4651236405788353,
+        0.6815386451245206
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "FEATURE",
+      "mean": 0.5409906235818074,
+      "ci95": [
+        0.4153197918246743,
+        0.6596962064013016
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "LOGIT_MATCH",
+      "mean": 0.5445971822114225,
+      "ci95": [
+        0.436653982458826,
+        0.65053456294114
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "MARGIN_DIRECT",
+      "mean": 0.4988705229669547,
+      "ci95": [
+        0.44324878861986616,
+        0.5537865075223916
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.5279490551734126,
+      "ci95": [
+        0.4748132470708177,
+        0.586986577081667
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "FEATURE_SHIFT",
+      "mean": 0.47491834411255335,
+      "ci95": [
+        0.41397292105332384,
+        0.5259131283882834
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "2_4",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.5533900303572347,
+      "ci95": [
+        0.43450101398611113,
+        0.6615985032934589
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "FEATURE",
+      "mean": 0.5341395728114477,
+      "ci95": [
+        0.3727320827320827,
+        0.6952088904295934
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "LOGIT_MATCH",
+      "mean": 0.5598793740981242,
+      "ci95": [
+        0.41814825148809526,
+        0.7015635822510822
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "MARGIN_DIRECT",
+      "mean": 0.4783546025733526,
+      "ci95": [
+        0.39887318121693127,
+        0.5446073401424962
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.6554639024170275,
+      "ci95": [
+        0.5874376240079364,
+        0.7305079646915584
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "FEATURE_SHIFT",
+      "mean": 0.5160020592833092,
+      "ci95": [
+        0.43893795845358347,
+        0.5815608089826838
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "size_bucket",
+      "stratum": "GE5",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.5514264294733044,
+      "ci95": [
+        0.45589735243055557,
+        0.6455640078237733
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "FEATURE",
+      "mean": 0.5008655592610183,
+      "ci95": [
+        0.43852588151073457,
+        0.56162037576692
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "LOGIT_MATCH",
+      "mean": 0.4782750865741815,
+      "ci95": [
+        0.38627727105848036,
+        0.5532293293208668
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "MARGIN_DIRECT",
+      "mean": 0.5015860761309852,
+      "ci95": [
+        0.45436823318837094,
+        0.547689803681074
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.6475566598480922,
+      "ci95": [
+        0.5402130178095793,
+        0.7628658747005291
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "FEATURE_SHIFT",
+      "mean": 0.5234847221709683,
+      "ci95": [
+        0.49588296590957703,
+        0.5557491691411238
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "EXPAND",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.5153222131415891,
+      "ci95": [
+        0.44882438118915513,
+        0.5814892923697343
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "FEATURE",
+      "mean": 0.5380190788922408,
+      "ci95": [
+        0.4021429554242054,
+        0.6689680155679696
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "LOGIT_MATCH",
+      "mean": 0.5514085359765506,
+      "ci95": [
+        0.43464068884036716,
+        0.665833053376022
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "MARGIN_DIRECT",
+      "mean": 0.48682943486252306,
+      "ci95": [
+        0.4151361062174481,
+        0.5553902623707311
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.5791945398011574,
+      "ci95": [
+        0.5146160239542593,
+        0.6483026524639576
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "FEATURE_SHIFT",
+      "mean": 0.46097233614696853,
+      "ci95": [
+        0.4005801382033,
+        0.510319966236786
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "MIXED",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.5204230253678783,
+      "ci95": [
+        0.46164666878430666,
+        0.5782295093591049
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "FEATURE",
+      "mean": 0.5213711782865831,
+      "ci95": [
+        0.43487302175996945,
+        0.6086777562933219
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "LOGIT_MATCH",
+      "mean": 0.5449424623268876,
+      "ci95": [
+        0.4919765175338688,
+        0.6027538965558559
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "MARGIN_DIRECT",
+      "mean": 0.5370939562818304,
+      "ci95": [
+        0.484263536206029,
+        0.6084609121768669
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "GEOMETRY_ONLY",
+      "mean": 0.6878324299037777,
+      "ci95": [
+        0.6067782991847501,
+        0.7624109620018512
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "FEATURE_SHIFT",
+      "mean": 0.49483035704151146,
+      "ci95": [
+        0.42528124717904775,
+        0.5602338241050934
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    },
+    {
+      "field": "direction",
+      "stratum": "SHRINK",
+      "score": "STRATIFIED_ROLL",
+      "mean": 0.5293331164643156,
+      "ci95": [
+        0.47162795924117323,
+        0.5915813818696412
+      ],
+      "defined_inputs": 31,
+      "defined_contents": 8
+    }
+  ]
+}

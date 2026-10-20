@@ -128,3 +128,8 @@ P1/P2/P5 为静态输出操作，P4 是每图 RESET；它们的原条件再次�
 - [P3：冻结停止](../topology-integrity-p3/REPORT_ZH.md)
 - [P4：完整优化与独立评分重建](../topology-integrity-closed-p4/REPORT_ZH.md)
 - [P5：平滑后仅填孔](../smooth-fill-p5/REPORT_ZH.md)
+
+
+## E6-B/C：特征信号资格（完成）
+
+共同2881/3028 OC块保留+0.472134pp oracle空间；32/32输入AUC可定义。FEATURE AUC0.551999，logits0.557914，主差−0.005914 CI[−0.045123,+0.037744]；未过0.60/主差0.05/全部强控制/效用不反向门，signal_qualified=false。原margin0.517740、几何0.599810、shift0.500795、分层roll0.564022，FEATURE对全部控制的配对区间均跨零。不安装选择器/更新模型，无新Dice/结构/持续收益成绩。64encoder全输入重演、源不变、标签隔离与退役完整；详见[报告](../feature-logit-signal-e6bc/REPORT_ZH.md)。
