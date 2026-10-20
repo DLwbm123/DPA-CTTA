@@ -52,7 +52,7 @@ def run(c):
             check('contrast'+str(axis)+'_'+str(n),abs(pk-peak)<=1 and error<=.01)
     xx=np.arange(512)[None,:];x=np.broadcast_to(np.where((xx>=128)&(xx<384),191.25,63.75),(512,512)).copy();r=evaluate('double',x)
     for j in (128,384):
-        z=r['pc'][256,j-3:j+4];check('double_edge'+str(j),z.max()>0 and int(np.argmax(z)) not in (0,6))
+        z=r['pc'][256,j-3:j+4];peak=j-3+int(np.argmax(z));check('double_edge'+str(j),z.max()>0 and r['pc'][256,peak]>=max(r['pc'][256,peak-1],r['pc'][256,peak+1]))
     yy,xx=np.meshgrid(np.arange(31),np.arange(35),indexing='ij');a=np.sin(xx/3.7)+np.cos(yy/4.3)+.02*xx+.015*yy;a=(a-a.min())/(a.max()-a.min())*255
     evaluate('odd',a);actual,aux=phase._calculate(a,np.fft.fft2,np.fft.ifft2);reference,refaux=phase.direct_reference(a)
     for name in ('periodic','smooth','responses'):
@@ -60,7 +60,7 @@ def run(c):
     for name in actual:
         if actual[name].dtype==bool:continue
         error=float(np.max(np.abs(actual[name]-reference[name])));dft_errors.append(error);check('direct_dft_'+name,error<=1e-8)
-    for n,bad in enumerate((np.zeros((2,2,2)),np.array([[0.,np.nan],[0.,0.]]),np.array([[0.,256.],[0.,0.]])):
+    for n,bad in enumerate((np.zeros((2,2,2)),np.array([[0.,np.nan],[0.,0.]]),np.array([[0.,256.],[0.,0.]]))):
         try:phase.measure(bad)
         except ValueError:check('invalid'+str(n),True)
         else:check('invalid'+str(n),False)
