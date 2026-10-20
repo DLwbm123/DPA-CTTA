@@ -62,7 +62,7 @@ def signal_for(before, host):
 
 
 def access_guard(c):
-    root = Path(c['output_root']).resolve(); mount = root.parent.parent
+    root = Path(c['output_root']).resolve(); mount = Path(c['campaign_root']).resolve().parent.parent
     checkpoint = Path(c['checkpoint_path']).resolve()
     refs = {Path(p).resolve() for p in c['reference_predictions'].values()}
     libraries = [Path(sys.prefix).resolve(), Path(sys.base_prefix).resolve()]
