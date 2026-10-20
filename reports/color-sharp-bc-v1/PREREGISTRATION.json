@@ -1,0 +1,35 @@
+{
+  "protocol": "ColorSharp-BC-v1",
+  "status": "SCIENCE_PROTOCOL_FROZEN_EXECUTION_SOURCE_PENDING",
+  "data_contents": 8,
+  "inputs": 32,
+  "common_blocks": 2881,
+  "primary": "POLICY minus CLEAN BLOCK AUC >= .05 and CI lower > 0",
+  "gates_order": [
+    "G0 readonly model and replay",
+    "B1 support upper mean >= .30pp",
+    "B2 discrimination strong controls",
+    "C presealed joint benefit and harm"
+  ],
+  "arms": [
+    "POLICY",
+    "CLEAN",
+    "UNIFORM",
+    "FROZEN",
+    "RANDOM_VIEW",
+    "SHIFT",
+    "LOGIT_Q",
+    "GEOMETRY_ONLY"
+  ],
+  "model_updates": 0,
+  "policy_parameters": 4,
+  "policy_steps_per_input": 20,
+  "planned_complete_encoder_calls": 2880,
+  "real_reads_this_registration": false,
+  "gpu_launched": false,
+  "execution_source_frozen": false,
+  "maximum_elapsed_seconds": 3600,
+  "reserved_bytes": 1342177280,
+  "hard_output_cap_bytes": 1073741824,
+  "new_root_registered": false
+}
