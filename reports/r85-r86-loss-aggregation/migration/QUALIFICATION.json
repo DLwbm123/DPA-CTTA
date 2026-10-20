@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "cells": {
+    "VV": {
+      "status": "PASS",
+      "output_gradient_corestate_exact": true,
+      "PRE_full_restore": true,
+      "current_q_wholeW_exact": true,
+      "BN_only_parameters": 19136,
+      "continuous_Adam": true
+    },
+    "VB": {
+      "status": "PASS",
+      "output_gradient_corestate_exact": true,
+      "PRE_full_restore": true,
+      "current_q_wholeW_exact": true,
+      "BN_only_parameters": 19136,
+      "continuous_Adam": true
+    },
+    "BV": {
+      "status": "PASS",
+      "output_gradient_corestate_exact": true,
+      "PRE_full_restore": true,
+      "current_q_wholeW_exact": true,
+      "BN_only_parameters": 19136,
+      "continuous_Adam": true
+    },
+    "BB": {
+      "status": "PASS",
+      "output_gradient_corestate_exact": true,
+      "PRE_full_restore": true,
+      "current_q_wholeW_exact": true,
+      "BN_only_parameters": 19136,
+      "continuous_Adam": true
+    },
+    "NATIVE": {
+      "status": "PASS",
+      "oracle_corestate_output_exact": true,
+      "P0_batchstat_exact": true
+    }
+  },
+  "physical_updates": 20,
+  "physical_forwards": 196,
+  "diagnostic_backwards": 16,
+  "steady_step_seconds": {
+    "VV": 1.1226897239685059,
+    "VB": 0.5957765579223633,
+    "BV": 0.5771431922912598,
+    "BB": 0.5723655223846436
+  },
+  "peak_allocated_MiB": 1598.091796875,
+  "online_label_reads": 0,
+  "source_image_reads": 0
+}
