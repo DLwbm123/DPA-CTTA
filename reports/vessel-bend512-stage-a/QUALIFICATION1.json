@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "source_sha": "dfde5751f4ae63751af158bf5a9705e9ca328eb4",
+  "pass_number": 1,
+  "checks": [
+    "constant_abstention",
+    "straight_path_detected",
+    "straight_has_no_bend",
+    "known_bend_detected",
+    "known_bend_localized",
+    "junction_detected",
+    "junction_support_excluded",
+    "endpoint_support_excluded",
+    "short_path_abstention",
+    "low_contrast_abstention",
+    "correct_energy_direction",
+    "reverse_direction",
+    "identical_zero",
+    "hole_not_outer_boundary",
+    "island_not_outer_boundary",
+    "empty_candidate_abstains",
+    "candidate_does_not_change_evidence",
+    "evidence_arrays_readonly",
+    "shift_preserves_weights",
+    "shift_nontrivial_on_bend",
+    "no_model_import"
+  ],
+  "check_count": 21,
+  "synthetic_families": 6,
+  "real_rgb_reads": 0,
+  "label_reads": 0,
+  "weight_reads": 0,
+  "model_calls": 0,
+  "cuda_initialized": false,
+  "access_negative_checks": 1,
+  "libraries": {
+    "numpy": "1.26.4",
+    "scipy": "1.13.1",
+    "skimage": "0.24.0"
+  },
+  "synthetic_body_seconds": 0.12638320308178663,
+  "task_signal_or_clinical_validity_established": false
+}
