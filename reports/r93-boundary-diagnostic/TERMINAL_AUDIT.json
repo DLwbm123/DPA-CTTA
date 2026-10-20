@@ -1,0 +1,106 @@
+{
+  "status": "COMPLETE",
+  "scientific_gate": "NOT_PASSED",
+  "promoted": false,
+  "coverage": {
+    "status": "COMPLETE",
+    "physical_updates": 1161,
+    "completed_physical_updates": 1161,
+    "physical_forwards": 11610,
+    "training_backwards": 1161,
+    "seed": 20260907,
+    "orders": 2,
+    "arms": 3,
+    "arrivals": 1152,
+    "V_reference_exact": true,
+    "all_GPU_exit0_absent_before_labels": true,
+    "all_raw_post_sealed_before_labels": true,
+    "online_label_reads": 0,
+    "source_image_reads": 0,
+    "terminal_label_contents": 192,
+    "CPU_body_seconds": 479.5056917667389,
+    "shared_total_updates": 4253,
+    "shared_total_forwards": 43700
+  },
+  "retirement": {
+    "three_GPU_workers_and_CPU_score_exit0_PID_absent": true,
+    "controller_COMPLETE_PID_absent": true,
+    "controller_independent_numeric_exit_code": "NOT_INDEPENDENTLY_RECORDED",
+    "watchdog_exit_reason": "all_owned_children_retired",
+    "watchdog_PID_absent": true
+  },
+  "costs": {
+    "qualification_GPU_process_seconds": 50.59833836555481,
+    "formal0_GPU_process_seconds": 768.4686329364777,
+    "formal1_GPU_process_seconds": 874.6489338874817,
+    "GPU_process_seconds": 1693.7159051895142,
+    "CPU_score_process_seconds": 481.61640214920044,
+    "CPU_score_body_seconds_subset": 479.5056917667389,
+    "CPU_fixture_body_seconds": 5.755130290985107,
+    "other_preparation_CPU_seconds": "NOT_INDEPENDENTLY_MEASURED",
+    "GPU_execution_failure_attempts": 0,
+    "pre_import_neutral_entry_SyntaxError_retained": true
+  },
+  "shared": {
+    "started": 1792492974.1323855,
+    "ended": 1792509985.570975,
+    "elapsed_seconds": 17011.438589572906,
+    "deadline": 1792536174.1323855,
+    "physical_updates": 4253,
+    "physical_forwards": 43700,
+    "training_backwards": 4253,
+    "GPU_process_seconds": 5844.183503866197,
+    "measured_CPU_process_seconds_M0_M1_R91_R92_R93": 3780.470234632233,
+    "remaining_update_cap": 747,
+    "remaining_forward_cap": 6300
+  },
+  "storage": {
+    "R93_root_allocated_bytes_snapshot": 12099584,
+    "campaign_excluding_precounted_R93_bytes": 87064576,
+    "campaign_total_allocated_bytes_snapshot": 99164160,
+    "measurement": "one du call nested roots, parent excludes child already counted; sum both rows",
+    "R93_cap_bytes": 33554432,
+    "campaign_cap_bytes": 1610612736,
+    "total_conservative_reserved_bytes": 19980140544,
+    "remaining_total_reservation_bytes": 19859456,
+    "final_small_report_and_receipt_metadata": "within recorded recovery margin, not a repeated du"
+  },
+  "state_audit": {
+    "V_final_age": 192,
+    "S_and_J_final_bank_ages": [
+      22,
+      57,
+      57,
+      56
+    ],
+    "global_visits_each_stream": 192,
+    "V_PRE_K_reference_exact_both_orders": true,
+    "S_equals_domain_boundary_reset_on_current_blocked_orders": true,
+    "domain_retrieval_events": 0,
+    "S_J_global_age_histogram_matched": true,
+    "S_J_per_arrival_age_differences": [
+      189,
+      183
+    ],
+    "domain_metadata_offline_only": true,
+    "CPU_image_manifest_domain_fields": false
+  },
+  "barriers": {
+    "all_GPU_retired_before_labels": true,
+    "all_raw_post_sealed_before_labels": true,
+    "online_label_reads": 0,
+    "source_image_reads": 0,
+    "terminal_label_contents": 192
+  },
+  "missingness": {
+    "scientific_score_NA_count": 0,
+    "old_server_R85_tail": "UNKNOWN_SEPARATE_NOT_INCLUDED",
+    "short_preparation_failures_CPU": "UNMEASURED_NOT_ZERO"
+  },
+  "limitations": [
+    "one model seed and two orders only, not six-anchor confirmation",
+    "all contents development-exposed; no patient-independent inference",
+    "process seconds are not energy or CPU core-hours",
+    "bank partition changes per-arrival optimizer ages, so S-J does not isolate unique domain semantic causality"
+  ]
+}
