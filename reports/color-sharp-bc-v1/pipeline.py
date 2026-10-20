@@ -11,7 +11,7 @@ def write(p,x):Path(p).write_text(json.dumps(x,indent=2,allow_nan=False)+'\n')
 def audit(c,panel):
     root=Path(c['root']).resolve();old=Path(c['sealed_root']).resolve();data=Path(c['source_root']).resolve();models=Path(c['model_root']).resolve();checkpoint=Path(c['checkpoint_path']).resolve()
     allowed={Path(p['image_path']).resolve() for p in panel};bits={(old/'inputs'/f'{i}_{k}_{a}.bits').resolve() for i in range(8) for k in range(4) for a in ('SOURCE','TOPO_SMOOTH')}
-    prefixes=[Path(sys.prefix).resolve(),Path(sys.base_prefix).resolve()]
+    prefixes=[Path(sys.prefix).resolve(),Path(sys.base_prefix).resolve(),Path(os.environ['DPA_CTTA_BASE_ROOT']).resolve()]
     def hook(event,args):
         if event.startswith('socket.'):raise PermissionError('network denied')
         if event!='open' or not isinstance(args[0],(str,bytes,os.PathLike)):return
