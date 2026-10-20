@@ -47,7 +47,7 @@ def run(c):
     check('empty_candidate_abstains',score(unit,b,np.zeros_like(b))[0]==0)
     saved={k:v.copy() for k,v in bend.items() if isinstance(v,np.ndarray)}
     score(bend,b,good);check('candidate_does_not_change_evidence',all(np.array_equal(v,bend[k]) for k,v in saved.items()))
-    check('evidence_arrays_readonly',all(not v.flags.writeable for v in saved.values()) is False and all(not v.flags.writeable for v in bend.values() if isinstance(v,np.ndarray)))
+    check('evidence_arrays_readonly',all(not v.flags.writeable for v in bend.values() if isinstance(v,np.ndarray)))
     check('shift_preserves_weights',np.array_equal(np.sort(bend['bend']),np.sort(bend['shift'])))
     check('shift_nontrivial_on_bend',bend['permuted_weights_changed']>0)
     check('no_model_import','torch' not in sys.modules)
