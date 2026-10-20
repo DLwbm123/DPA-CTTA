@@ -1,0 +1,42 @@
+{
+  "status": "PASS",
+  "checks": {
+    "exhaustive_source_proposal_pairs": 1024,
+    "exhaustive_truth_comparisons": 32768,
+    "deletion_only_cases": 1274,
+    "addition_only_cases": 1470,
+    "binary_search_equals_exact_finite_scan": 6960
+  },
+  "examples": [
+    {
+      "source_area": 100,
+      "removed": 1,
+      "added": 0,
+      "exact_bound": "2/101",
+      "bound_pp": 1.9801980198019802
+    },
+    {
+      "source_area": 100,
+      "removed": 0,
+      "added": 1,
+      "exact_bound": "1/201",
+      "bound_pp": 0.4975124378109453
+    },
+    {
+      "source_area": 100,
+      "removed": 1,
+      "added": 1,
+      "exact_bound": "2/101",
+      "bound_pp": 1.9801980198019802
+    },
+    {
+      "source_area": 6000,
+      "removed": 10,
+      "added": 10,
+      "exact_bound": "2/601",
+      "bound_pp": 0.33277870216306155
+    }
+  ],
+  "no_real_data_labels_weights_model_cuda": true,
+  "body_seconds": 0.15732991602271795
+}
