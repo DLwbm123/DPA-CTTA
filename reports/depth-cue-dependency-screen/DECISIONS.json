@@ -1,0 +1,20 @@
+{
+  "kind": "DEPTH_OBSERVATION_DEPENDENCY_REVIEW",
+  "candidates": [
+    {
+      "name": "Monocular depth FCN and guided segmentation",
+      "decision": "NEW_OCT_SUPERVISED_DEPTH_MODEL_AND_SEGMENTATION_NOT_ADMITTED",
+      "oct_at_inference_required": false
+    },
+    {
+      "name": "Stereo VR cup segmentation",
+      "decision": "STEREO_PAIRS_AND_EXPERT_INTERACTION_NOT_ADMITTED",
+      "oct_required_by_tool": false
+    }
+  ],
+  "current_registered_stereo_pair_available": "NOT_ESTABLISHED_NO_EXTRA_IMAGES_READ",
+  "scientific_execution": false,
+  "performance_protocol": false,
+  "synthetic_protocol": false,
+  "next": "Other bounded current-observation-compatible task mechanism review"
+}
