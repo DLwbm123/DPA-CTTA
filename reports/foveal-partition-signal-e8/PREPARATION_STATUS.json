@@ -1,0 +1,39 @@
+{
+  "status": "BLOCKED_SSH",
+  "remote_launch_acknowledged": false,
+  "remote_state": "UNCONFIRMED",
+  "ssh_diagnostic": "TCP established; server closes during key-exchange before authentication",
+  "scientific_results_available": false,
+  "local_stages": [
+    {
+      "stage": "local_dependency_probe",
+      "seconds": 0.11925697326660156,
+      "exit_code": 0
+    },
+    {
+      "stage": "local_numpy_only_seven_checks",
+      "seconds": 0.1899869441986084,
+      "exit_code": 1
+    },
+    {
+      "stage": "local_pure_module_isolation_seven_checks",
+      "seconds": 5.042744874954224,
+      "exit_code": 0
+    },
+    {
+      "stage": "local_ast_parse",
+      "seconds": 0.025366783142089844,
+      "exit_code": 0
+    }
+  ],
+  "local_math_checks_passed": 7,
+  "full_cpu_admission_passed": false,
+  "local_package_import_failed_missing_torch": true,
+  "torch_coordinate_check_executed": false,
+  "e6_cpu_regressions_executed": false,
+  "gpu_launch_confirmed": false,
+  "conservative_original_utc": "2026-10-20T06:01:44.694525+00:00",
+  "budget_shared_by_recovery": true,
+  "per_process_local_timeout_seconds": 20,
+  "storage_remote_reservation_state": "UNCONFIRMED; inspect before any re-dispatch"
+}
