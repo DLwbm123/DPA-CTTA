@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "unique_inputs": 32,
+  "unique_readouts": 384,
+  "scientific_optimizer_steps": 11520,
+  "repeat_optimizer_steps": 360,
+  "total_optimizer_steps": 11880,
+  "source_parameters_and_buffers_immutable": true,
+  "bn_buffers_changed": false,
+  "training": "target_only_no_source_training",
+  "reset_each_image": true,
+  "trainable": "all_existing_parameters",
+  "steps_per_arm": 90,
+  "skeleton_empty_rule": "zero_structural_similarity_no_epsilon_no_source_fallback",
+  "strict_cuda": true,
+  "static_forwards": 32,
+  "native_arrivals": 64,
+  "native_backwards": 96,
+  "native_forwards": 800,
+  "core_model_forwards": 12176
+}

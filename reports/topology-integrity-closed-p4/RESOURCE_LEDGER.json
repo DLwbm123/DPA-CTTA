@@ -1,0 +1,35 @@
+{
+  "attempts": [
+    {
+      "mode": "worker",
+      "status": "EXITED_CODE_UNOBSERVED",
+      "exit_code": null,
+      "exit_code_observed": false,
+      "gpu_worker_seconds": 28289.74519194197,
+      "cpu_worker_seconds": 0.0,
+      "storage_stop": false,
+      "lifetime_method": "CLOCK_BOOTTIME minus original kernel start_ticks; one clock-tick start resolution",
+      "completion_certificate": true
+    },
+    {
+      "mode": "score_reconstruction",
+      "status": "COMPLETE",
+      "exit_code": 0,
+      "cpu_worker_seconds": 81.31589269638062,
+      "gpu_worker_seconds": 0.0,
+      "storage_stop": false
+    }
+  ],
+  "all_workers_retired": true,
+  "no_gpu_retry": true,
+  "original_controller_failed": true,
+  "original_controller_exit_code_unobserved": true,
+  "recovery_source_sha": "2f24c3b8738bc0d166cdd185388e493c521b2ccd",
+  "gpu_worker_seconds": 28289.74519194197,
+  "cpu_worker_seconds": 81.31589269638062,
+  "guardian_elapsed_seconds": 22796.888897657394,
+  "time_gpu_quotas_removed_by_user": true,
+  "storage_cap_bytes": 2147483648,
+  "original_protocol_exit0_gate_met": false,
+  "reconstruction_only": true
+}
