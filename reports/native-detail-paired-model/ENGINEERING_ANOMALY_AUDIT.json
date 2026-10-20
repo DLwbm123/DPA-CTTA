@@ -1,0 +1,29 @@
+{
+  "status": "PASS",
+  "posthoc_engineering_check": true,
+  "new_model_calls": 0,
+  "label_reads": 0,
+  "roi_centers_recomputed": 8,
+  "outside_roi_exact_checks": 24,
+  "source_od_in_roi_fraction_min": 1.0,
+  "source_oc_in_roi_fraction_min": 1.0,
+  "area_ratios_vs_source": {
+    "N": {
+      "od_mean": 0.29620694299290945,
+      "oc_mean": 0.011375423261053187,
+      "oc_empty": 3
+    },
+    "R": {
+      "od_mean": 0.30752886652517386,
+      "oc_mean": 0.022965637448992722,
+      "oc_empty": 3
+    },
+    "L": {
+      "od_mean": 0.305364689106282,
+      "oc_mean": 0.020689202650186096,
+      "oc_empty": 3
+    }
+  },
+  "mechanism_cause_proven": false,
+  "warning": "All crop branches failed; input context/scale dependence is a hypothesis, not causal attribution to native detail."
+}
