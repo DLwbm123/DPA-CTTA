@@ -1,0 +1,59 @@
+{
+  "gates": [
+    {
+      "cell": "VB",
+      "status": "NOT_PASSED",
+      "macro_delta_pp": -0.03905568070318218,
+      "familywise_ci97_5_pp": [
+        -0.07777672972492967,
+        -0.0039269528944048055
+      ],
+      "legacy_ci95_pp": [
+        -0.07418483937102427,
+        -0.007425099884946762
+      ],
+      "D1_OC_delta_pp": -0.1644469734696203,
+      "domain_harm_pass": true,
+      "order_harm_pass": true,
+      "robustness_pass": false,
+      "positive_anchors": 0,
+      "anchor_macro_delta_pp": [
+        -0.020797620106464642,
+        -0.04039293221189536,
+        -0.014096579463540057,
+        -0.07712349833562776,
+        -0.014205213463209632,
+        -0.06771824063835563
+      ]
+    },
+    {
+      "cell": "BV",
+      "status": "NOT_PASSED",
+      "macro_delta_pp": -0.33258238870657053,
+      "familywise_ci97_5_pp": [
+        -0.510962696539709,
+        -0.16844213689243287
+      ],
+      "legacy_ci95_pp": [
+        -0.48935054690942126,
+        -0.18872674311490784
+      ],
+      "D1_OC_delta_pp": -1.0180660538952333,
+      "domain_harm_pass": false,
+      "order_harm_pass": true,
+      "robustness_pass": false,
+      "positive_anchors": 0,
+      "anchor_macro_delta_pp": [
+        -0.25438541255031755,
+        -0.4547355675971989,
+        -0.2687689919662593,
+        -0.4292402208062411,
+        -0.28348764693343054,
+        -0.304876492385976
+      ]
+    }
+  ],
+  "promoted": null,
+  "multiplicity": "Bonferroni two candidate comparisons; two-sided 97.5 percent content bootstrap intervals",
+  "independent_validation": false
+}

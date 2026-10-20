@@ -1,23 +1,52 @@
-# R85/R86：维修后的同协议迁移
+# R85/R86：损失聚合位置实验终态报告
 
-**fresh qualification PASS，已启动静态基线与后续自动实验；尚无新性能结果。**
+**实验与CPU评分完成；VB、BV均NOT_PASSED，无候选晋级，保留原VV。** 全部8个GPU worker和CPU scorer均exit0且PID退休。不是工程失败，不重试性能结果、不追改门槛。
 
-用户明确要求替代服务器仅GPU0/1，所有数据、模型、环境、日志、中间产物放在remote-home。原服务器维护导致旧结果暂不可取，不记为性能失败，不覆盖旧输出。迁移的共同S0、连续Adam、192内容/两order/三seed、q/W、强增强及损失定义全部保持，科学门槛不变。迁移细则见 [PROTOCOL_AMENDMENT.md](PROTOCOL_AMENDMENT.md)。
+本轮维修迁移使用同硬件fresh五方法对照，原192个已暴露开发内容、两order、三seed、BN affine/连续Adam/q/wholeW/strong和冻结损失全部不变。VV=B_V+.1S_V，VB=B_V+.1S_B，BV=B_B+.1S_V，BB=B_B+.1S_B；V逐视图损失均值，B对齐logits均值后计算损失。NATIVE为原单strong方案。原协议及迁移修订保持有效。
 
-原192队列已依据原R23准备脚本，从历史R20 pool384重建；其SEARCH/REVIEW assignment与保留的历史映射完全一致。域数量22/57/57/56、两order同192集合；只核元数据与路径可读，未据分数重新选样。数据、checkpoint和验证环境直接复用，没有新大副本。
+## 主要结果
 
-由于旧逐预测certificate和端点文件不可取、GPU硬件环境改变，本attempt重新运行VV/BB/NATIVE/VB/BV共同硬件对照。明确不声称跨硬件与旧R79逐预测bit-exact；fresh VV/BB对原代码及VB/BV/NATIVE独立公式的完整核心state/output exact仍强制。旧原服务器至少已观察到2752更新及静态192F，尾部覆盖和费用UNKNOWN，恢复后另取证。迁移重跑不是独立验证，R87仍NOT_AVAILABLE。
+所有Dice为百分数，差值为百分点；主指标为四域等权、OD/OC等权、六anchors等权宏平均。
 
-CPU准备PASS14.563460秒。此前一次系统解释器缺少torch._C，在metadata模块导入处失败、无模型/数据/标签/GPU调用，已改用现存实验环境；失败证据保留，短暂失败CPU时长未计量，不伪造零值。
+|方案|K macro Dice|相对VV|
+|---|---:|---:|
+|VV|76.822123|+0.000000|
+|VB|76.783067|-0.039056|
+|BV|76.489540|-0.332582|
+|BB|75.972087|-0.850036|
+|NATIVE|75.843778|-0.978345|
 
-新GPU资格20/20更新、196F、16次诊断反向遍历全部PASS：四格对原实现/独立公式output/gradient/BN/Adam/RNG核心state exact，PRE完整恢复、q/wholeW来源、19136参数/冻结/连续Adam通过；增加NATIVE原公式core exact、P0 current-stat与native只读输出exact。资格worker body77.077721秒，是GPU进程费用子集，不重复相加。
+NATIVE绝对分数由同硬件VV分数减配对VV−NATIVE差值还原；原始配对结果见CONTRASTS.csv。VV−NATIVE为+0.978345pp。SOURCE_ONLY（stored source BNstats）68.733077，P0（current-stat）74.749237，二者不可混称。上述均为开发集，不能称未暴露确认。
 
-计划本attempt5924新更新、58324F、400额外诊断反向；30连续轨迹，PRE/K11520、同状态探针192预测、SOURCE_ONLY/P0各192预测。自动阶段：fresh资格→静态SOURCE_ONLY/P0→VV+48探针→新BB/NATIVE→VB/BV→所有GPU真实退休→CPU评分。资格后的墙钟规划5571.270098秒，只是估计，不当实测完成时间。
+|候选|相对VV macro|Bonferroni双侧97.5%内容CI|D1 OC|正anchor|域伤害门槛|结论|
+|---|---:|---|---:|---:|---|---|
+|VB|-0.039056|[-0.077777, -0.003927]|-0.164447|0/6|通过|NOT_PASSED|
+|BV|-0.332582|[-0.510963, -0.168442]|-1.018066|0/6|未通过|NOT_PASSED|
 
-原T0与24小时硬截止保留：北京时间2026-10-21 13:04:01.100432。独立watchdog已启动；新root预留4.4GB，cap4GiB及128MiB恢复余量，既有data/model/env只读复用。保守含旧原服务器预留、local和headroom合17.4GB<20GB。allocator固定8GiB，只GPU0/1且UUID绑定，主/子可见argv中性。唯一r52已改为替代服务器半小时跟进，没有增加心跳。
+门槛为macro≥+0.1pp且97.5%CI下界>0、D1 OC≥−0.2pp、相对NATIVE域×通道≥−0.5pp及域×通道×order跨seed≥−2pp、两order均正/至少5个anchor正/每seed两order均值正。两候选的六个anchor全部为负；VB通过伤害限制但未过收益与稳健性门槛，BV另违反D1 OC及域伤害限制。2000次按域content bootstrap，六anchors耦合；不是患者独立或seed总体CI。完整gate及每anchor数值见PERFORMANCE_GATE.json。
 
-scorer启动前修正迁移报告预测计数字段为11520 PRE/K（而非继承的6912），并单列P0静态192；此改动仅修正交付元数据，不改损失、更新、数据、评分数值或门槛。科学方法资格对应6eed982；该报告计数修正单独提交保留。
+## 历史状态、当前更新与机制边界
 
-仅公开源码、协议和匿名资格/准备证据；图像、标签、身份、私有预测、权重、原始日志和机器路径均不发布。此为启动交付，正式结果及TERMINAL_AUDIT/全部成本/真实空间/正负结果报告待本attempt真实终态后补齐。
+H=PRE−P0，C=K−PRE，T=H+C。VV的H=+2.026773pp、C=+0.046112pp；VB−VV的H=−0.038815pp、C=−0.000240pp；BV−VV的H=−0.328453pp、C=−0.004130pp。差距主要呈现在已分化的入站状态上，不能据此断言单一BN/Adam因果。全轨迹factorial T为−0.478398pp，是算法交互效果，不是同H纯梯度因果。
 
-启动现场进一步确认：资格与SOURCE_ONLY/P0静态worker均exit0、注册PID消失；静态共192到达/384F。两个VV参考worker已在GPU0/1实际RUNNING，startticks、中性ps argv及nvidia-smi UUID绑定均通过。已收尾GPU进程上界151.563334秒（资格90.875878、静态60.687456），CPU准备14.563460秒；参考活跃elapsed尚未包含，不能当最终成本。ledger中的all_workers_retired=true仍是上一组收尾的陈旧事件快照，现场活跃核验优先。
+VB相对VV的D1域macro为−0.158572pp，对四域macro贡献−0.039643pp；其余三域平均+0.000783pp，不能将这个事后子集当主收益。BV的D1为−1.152785pp，去掉D1仍−0.059181pp。所有域及leave-one-domain-out见GAIN_CONCENTRATION.csv。
+
+48个冻结同H探针的梯度四格最大残差4.9173832e−7，满足预设代数检查。相对VV的平均梯度余弦：VB 0.984329、BV 0.741387、BB 0.494517；实际Adam delta余弦分别0.997561、0.987825、0.977733，说明梯度差异不等于同幅度参数更新差异。D_B平均0.024294、D_S平均0.087162；D_S无BCE Jensen非负保证。同状态虚拟K−PRE的OD/OC等权探针均值分别VV +0.143540pp、VB +0.138623pp、BV +0.114163pp、BB +0.106268pp，仅描述预设探针，非全流主指标或晋级依据。原始浮点余弦未裁剪，VV自余弦均值1.0000015是数值舍入，不能解释为超出1的真实相似度。
+
+完整正负域×通道×seed×order见ALL_CELLS.csv与NEGATIVE_CELLS.csv；内容median/正负覆盖见CONTENT_DISTRIBUTIONS.csv；整图分母FP/FN/foreground见DOMAIN_CHANNEL_ERRORS.csv与ERROR_COMPONENT_CELLS.csv；按两个顺序真实到达位置配对的earlier/later见POSITION_DECOMPOSITION.csv，不把order号当早晚。MECHANISM.csv含30轨迹摘要；SAME_STATE_PROBES.csv及SAME_STATE_SCORES.csv保留全部匿名探针。
+
+## 终态与资源
+
+物理更新5924/5924、前向58324、训练反向5924、额外诊断反向400；30连续轨迹、48探针、11520 PRE/K预测、192探针预测、SOURCE_ONLY/P0各192。8个GPU状态均GPU_COMPLETE，8个GPU进程与CPU评分均exit0、PID消失。CPU scorer在核全体GPU真实退休后才读标签；online标签/source-image读取均0。controller有COMPLETE状态收据且PID消失，独立数值退出码未记录；watchdog以all_owned_children_retired正常退出。详见COMPLETION.json及TERMINAL_AUDIT.json。
+
+本attempt退休GPU进程墙钟上界12859.413038秒，CPU准备14.563460秒、评分进程180.026107秒，已计量CPU合194.589567秒；评分body170.130256秒是子集，不双计。进程时间不是能耗，退出观察可含约5秒轮询余量。本轮首次系统解释器导入失败CPU时长未计量，保留UNKNOWN。原服务器最后可证退休GPU1132.053968秒及CPU准备16.241517秒，后续尾账仍UNKNOWN；不将上述迁移费用称跨attempt完整总成本。
+
+2026-10-20 16:27:23北京时间完成，自原T0起12202.569061秒，原24小时截止2026-10-21 13:04:01.100432未重置。终态实际分配空间du为1,999,883,264bytes（补交报告前的一次观测），低于4GiB cap及4.4GB reservation。报告同步增加少量文本，保留128MiB恢复余量。保守预留总envelope17.4GB<20GB，各服务器新增严格<50GB。仅批准GPU0/1，数据/模型/环境只读复用，未复制大型资源。
+
+## 研究决定与限制
+
+保留VV，关闭本轮VB/BV晋级；不继续聚合系数扫描，不重复已完成reset或旧负候选。该二因子试验没有支持改为B聚合的证据，也不证明任何数据集上的普适无效。接下来承接匿名结果与历史机制证据的分析，只有出现区别于已否决因素、可证伪且符合资源边界的新假设，才另冻结独立协议与预算。当前不为维持实验活动空跑GPU，持续自主控制与唯一半小时心跳保留。
+
+注册1951内容全部历史暴露，patient/video linkage及source患者重叠UNKNOWN；R87在当前cohort NOT_AVAILABLE，R88条件未满足，换seed不能冒充确认。迁移不声称跨硬件对旧R79逐预测exact；fresh对原代码/独立公式核心state/output exact已严格PASS。原机维修后仅补取尾部收据，不复活旧任务。
+
+只发布源码、协议、匿名汇总/探针统计和失败/资源证据；图像、标签、私有预测、身份映射、权重、私有路径和原始日志不公开。科学版本6eed982，scorer计数元数据修正a7586c8未改公式、评分值或门槛。
