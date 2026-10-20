@@ -1,0 +1,15 @@
+{
+ "design_version":"MASKED_RESPONSE_SIGNAL_E7", "scientific_design_frozen":true,
+ "implementation_qualified":false,"run_started":false,
+ "selector_trained":false,"selector_applied":false,"network_updated":false,
+ "unique_inputs":32,"contents":8,"seed":20261018,"bootstrap":2000,
+ "mask_views":8,"patch":4,"rho_range":[0.2,0.4],
+ "source_forwards_with_repeat":576,"primary":"MARS_FD-RAW_MARGIN:BLOCK",
+ "feature_grid":[512,512],"common_definition":"UNCHANGED_E6BC",
+ "scores":["MARS_FD","RAW_MARGIN","NULL_FUSION","CONSISTENCY_ONLY","MASKED_MEAN_DIRECT","GEOMETRY_ONLY","RESPONSE_SHIFT","STRATIFIED_ROLL"],
+ "minimum_auc":0.6,"minimum_primary_difference":0.05,
+ "minimum_common_space_pp":0.2,"minimum_defined_inputs":24,"minimum_defined_contents":8,
+ "save_stop_after_seconds":86340,"hard_elapsed_seconds":86400,
+ "root_cap_bytes":268435456,"reservation_bytes":335544320,
+ "new_source_training":false,"rdc":false,"engram":false
+}
