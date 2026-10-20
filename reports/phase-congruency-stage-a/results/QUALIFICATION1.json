@@ -1,0 +1,252 @@
+{
+  "status": "PASS",
+  "source_sha": "d21dab3dd816d2fd479f8c3337b78c478d951aba",
+  "pass_number": 1,
+  "checks": [
+    {
+      "check": "constant0_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "constant0_readonly",
+      "passed": true
+    },
+    {
+      "check": "constant_zero0",
+      "passed": true
+    },
+    {
+      "check": "constant1_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "constant1_readonly",
+      "passed": true
+    },
+    {
+      "check": "constant_zero1",
+      "passed": true
+    },
+    {
+      "check": "constant2_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "constant2_readonly",
+      "passed": true
+    },
+    {
+      "check": "constant_zero2",
+      "passed": true
+    },
+    {
+      "check": "step0_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "step0_readonly",
+      "passed": true
+    },
+    {
+      "check": "reverse0_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "reverse0_readonly",
+      "passed": true
+    },
+    {
+      "check": "step_localized0",
+      "passed": true
+    },
+    {
+      "check": "polarity0",
+      "passed": true
+    },
+    {
+      "check": "contrast0_0_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "contrast0_0_readonly",
+      "passed": true
+    },
+    {
+      "check": "contrast0_0",
+      "passed": true
+    },
+    {
+      "check": "contrast0_1_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "contrast0_1_readonly",
+      "passed": true
+    },
+    {
+      "check": "contrast0_1",
+      "passed": true
+    },
+    {
+      "check": "contrast0_2_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "contrast0_2_readonly",
+      "passed": true
+    },
+    {
+      "check": "contrast0_2",
+      "passed": true
+    },
+    {
+      "check": "step1_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "step1_readonly",
+      "passed": true
+    },
+    {
+      "check": "reverse1_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "reverse1_readonly",
+      "passed": true
+    },
+    {
+      "check": "step_localized1",
+      "passed": true
+    },
+    {
+      "check": "polarity1",
+      "passed": true
+    },
+    {
+      "check": "contrast1_0_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "contrast1_0_readonly",
+      "passed": true
+    },
+    {
+      "check": "contrast1_0",
+      "passed": true
+    },
+    {
+      "check": "contrast1_1_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "contrast1_1_readonly",
+      "passed": true
+    },
+    {
+      "check": "contrast1_1",
+      "passed": true
+    },
+    {
+      "check": "contrast1_2_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "contrast1_2_readonly",
+      "passed": true
+    },
+    {
+      "check": "contrast1_2",
+      "passed": true
+    },
+    {
+      "check": "double_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "double_readonly",
+      "passed": true
+    },
+    {
+      "check": "double_edge128",
+      "passed": true
+    },
+    {
+      "check": "double_edge384",
+      "passed": true
+    },
+    {
+      "check": "odd_input_immutable",
+      "passed": true
+    },
+    {
+      "check": "odd_readonly",
+      "passed": true
+    },
+    {
+      "check": "direct_dft_periodic",
+      "passed": true
+    },
+    {
+      "check": "direct_dft_smooth",
+      "passed": true
+    },
+    {
+      "check": "direct_dft_responses",
+      "passed": true
+    },
+    {
+      "check": "direct_dft_pc",
+      "passed": true
+    },
+    {
+      "check": "direct_dft_amplitude",
+      "passed": true
+    },
+    {
+      "check": "direct_dft_energy",
+      "passed": true
+    },
+    {
+      "check": "direct_dft_threshold",
+      "passed": true
+    },
+    {
+      "check": "direct_dft_acos_overshoot",
+      "passed": true
+    },
+    {
+      "check": "invalid0",
+      "passed": true
+    },
+    {
+      "check": "invalid1",
+      "passed": true
+    },
+    {
+      "check": "invalid2",
+      "passed": true
+    },
+    {
+      "check": "no_model_import",
+      "passed": true
+    }
+  ],
+  "check_count": 57,
+  "failures": [],
+  "synthetic_inputs": 15,
+  "synthetic_families": 5,
+  "phase_peak_error_pixels_max": 1,
+  "contrast_pc_error_max": 0.00011896368948431353,
+  "polarity_pc_error_max": 0.0,
+  "direct_dft_error_max": 5.183465560879607e-10,
+  "access_negative_checks": 4,
+  "real_rgb_reads": 0,
+  "label_reads": 0,
+  "model_weight_reads": 0,
+  "model_calls": 0,
+  "gpu_calls": 0,
+  "independent_replay": false,
+  "matlab_parity": false,
+  "body_seconds": 12.752194806933403
+}
