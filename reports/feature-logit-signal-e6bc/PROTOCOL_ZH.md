@@ -63,3 +63,7 @@ score生成后仅允许共同有效块动作的OD_LOCK oracle另算覆盖上界�
 单次从首次CPU实际运行至全部退出总历时≤24h，预留保存/终止余量。启动CPU准备前记录唯一原始CLOCK_BOOTTIME/UTC起点，所有修复/子阶段共享；独立远程守护硬超时（不能依赖心跳或SSH），到86340秒先保存状态/停止，≤86400秒全部退役。工程修复不重置时钟，不杀其它聊天任务。GPU阶段至多一本聊天，健康每半小时一次轻量检查。
 
 完成要求32源输入/64模型forward含全重演、SOURCE32bit parity、32头重构与源全状态不变、score/anchors/uid/coverage全重演、ACCESS0GT旧分数读取；worker/scorer exit0inactive、CPU8GT资格/共同覆盖oracle/定义统计完整、controller最终ledger退休。公开仅源码/冻结协议/匿名聚合无路径回执，经代理核账号branchremote/push/SHA/匿名200；绝不发RGB/GT/权重/features/probs/logits/bits/逐块坐标分数/逐内容值身份或私有路径。
+
+## 执行工程补充（不改科学定义）
+
+独立守护进程自首次 CPU 检查前保存 CLOCK_BOOTTIME 与 UTC 起点，所有子阶段共享该时钟。86340 秒或本轮 256 MiB 空间水位触发保存停止；用 pidfd 绑定已登记的 PID/start_ticks，先 TERM 后 KILL，最迟24小时退役。仅忽略空间扫描中的 ENOENT，不跟随符号链接。守护进程不启动模型或读取标签。所有阶段在同一 NAS root、总 reservation 320 MiB 内；仅已有64端点位图作输入副本，稠密表示不落盘。
