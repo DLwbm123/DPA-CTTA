@@ -18,7 +18,7 @@
 
 两比较均超过预设+0.3pp且满足CI、seed/order方向要求，简单静态控制没有替代VV的任务增量。处理后D1 OD与OC相对P0的全部六anchor均正；D3 OC相对P0仍−0.398002pp，6/6anchor负，56内容中47个跨anchor均值负，满足预定残余问题门槛。没有换残余域/头、静态规则或门槛。
 
-M0只支持“该任务增量与残余损伤仍值得研究”，未证明坏写入存在，更未证明Adam冲突信号能识别它。按照用户条件授权，M1已按[M1冻结协议](M1_PROTOCOL.md)完成新attempt资格/profile并启动两worker。首次资格收尾guard衔接失败的7updates/70F/45.124259秒完整保留，原因与只读复核修复见[M1_ENGINEERING_REPAIR.md](M1_ENGINEERING_REPAIR.md)。新attempt资格worker实际exit0/PID退休后才准入正式，启动核验见M1_STARTUP_AUDIT.json。仍须动作收益与识别增量都稳健通过才进入M2，当前无M1任务效果结论。
+M0只支持“该任务增量与残余损伤仍值得研究”，未证明坏写入存在。后续M1已完整完成但**NOT_PASSED，不进入M2**：G_rule −0.000360181pp（1/6正anchor），G_identify +0.000664594pp（3/6正），仅3/48触发且覆盖不足。完整结果、全部正负与工程失败费用见[M1终态报告](m1/REPORT.md)。关闭该信号路线，不调阈值/窗口/频率挽救结果。
 
 ## 结构指标与完整分母
 

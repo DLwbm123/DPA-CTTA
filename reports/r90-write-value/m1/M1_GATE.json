@@ -1,0 +1,49 @@
+{
+  "status": "NOT_PASSED",
+  "gains": {
+    "G_rule_pp": {
+      "mean_pp": -0.000360180629365404,
+      "positive_anchors": 1,
+      "orders": [
+        -0.0009612123328872624,
+        0.00024085107415645438
+      ],
+      "seeds": [
+        -0.0004513619005021702,
+        0.0003612766112346816,
+        -0.0009904565988287234
+      ],
+      "passed": false
+    },
+    "G_identify_pp": {
+      "mean_pp": 0.0006645937577549029,
+      "positive_anchors": 3,
+      "orders": [
+        0.0009286040272460076,
+        0.0004005834882637981
+      ],
+      "seeds": [
+        0.000688671272666851,
+        0.0006008752323956972,
+        0.0007042347682021605
+      ],
+      "passed": false
+    }
+  },
+  "total_triggers": 3,
+  "trigger_counts": [
+    1,
+    0,
+    0,
+    1,
+    1,
+    0
+  ],
+  "unique_trigger_contents": 3,
+  "trigger_domains": 2,
+  "trigger_coverage_passed": false,
+  "authorize_M2": false,
+  "independent_validation": false,
+  "primary": "raw K double-head arrival-mean 16-window",
+  "comparison": "within-anchor same-frequency random expectation; no independent-probe CI"
+}

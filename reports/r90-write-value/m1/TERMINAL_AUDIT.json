@@ -1,0 +1,76 @@
+{
+  "status": "COMPLETE",
+  "scientific_gate": "NOT_PASSED",
+  "authorize_M2": false,
+  "current_attempt": {
+    "updates": 1927,
+    "forwards": 19270,
+    "training_backwards": 1927,
+    "GPU_process_seconds": 2332.9610755443573,
+    "CPU_score_process_seconds": 1010.277685880661,
+    "CPU_score_body_seconds_subset": 1004.733395576477
+  },
+  "prior_engineering_failure": {
+    "updates": 7,
+    "forwards": 70,
+    "training_backwards": 7,
+    "GPU_process_seconds": 45.12425899505615,
+    "exit_code": 1,
+    "status": "NOT_EVALUABLE",
+    "retained": true
+  },
+  "cumulative_R90": {
+    "updates": 1934,
+    "forwards": 19340,
+    "training_backwards": 1934,
+    "GPU_process_seconds": 2378.0853345394135,
+    "M0_CPU_process_seconds": 1328.740422487,
+    "M1_CPU_score_process_seconds": 1010.277685880661,
+    "M0_selfcheck_body_seconds": 0.406669,
+    "guard_fixture_body_seconds": [
+      4.559313774,
+      4.174231291
+    ],
+    "other_preparation_CPU_seconds": "NOT_INDEPENDENTLY_MEASURED"
+  },
+  "coverage": {
+    "main_streams": 6,
+    "main_arrivals_each": 192,
+    "probes": 48,
+    "future_window_each": 16,
+    "main_PRE_K_reference_exact_all_streams": true,
+    "raw_Dice_parity_checks": 2304,
+    "all_window_metric_rows": 4224,
+    "window_metric_NA_count": 0
+  },
+  "retirement": {
+    "three_GPU_workers_and_CPU_score_exit0_and_PID_absent": true,
+    "controller_COMPLETE_and_PID_absent": true,
+    "controller_numeric_exit_code": "NOT_INDEPENDENTLY_RECORDED",
+    "watchdog_PID_absent": true,
+    "all_GPU_workers_retired_before_terminal_labels": true
+  },
+  "access": {
+    "online_label_reads": 0,
+    "source_image_reads": 0,
+    "terminal_label_contents": 192
+  },
+  "budget": {
+    "shared_started": 1792492974.1323855,
+    "ended": 1792499843.9560838,
+    "elapsed_seconds": 6869.823698282242,
+    "deadline": 1792536174.1323855,
+    "actual_campaign_allocated_bytes_once": 73943040,
+    "actual_cap_bytes": 1610612736,
+    "reserved_remote_bytes": 1800000000,
+    "total_conservative_reservation_bytes": 19602653184,
+    "max_updates": 5000,
+    "max_forwards": 50000
+  },
+  "limitations": [
+    "development contents already exposed; no patient-independent validation",
+    "process seconds are not energy or CPU core-seconds",
+    "48 windows are not independent patients; window effects are not additive full-stream policy effects",
+    "old-server R85 tail remains UNKNOWN and separate"
+  ]
+}
