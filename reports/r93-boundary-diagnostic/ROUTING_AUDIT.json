@@ -1,0 +1,53 @@
+{
+  "status": "PASS",
+  "metadata": "existing domain only in offline preparation; model receives integer bank keys",
+  "pseudo_group_rng_key": 93,
+  "quota": [
+    22,
+    57,
+    57,
+    56
+  ],
+  "orders": [
+    {
+      "order": 0,
+      "S_final_counts": {
+        "2": 57,
+        "1": 57,
+        "3": 56,
+        "0": 22
+      },
+      "J_final_counts": {
+        "3": 56,
+        "0": 22,
+        "2": 57,
+        "1": 57
+      },
+      "S_segments": 4,
+      "J_segments": 137,
+      "global_age_histogram_matched": true,
+      "per_arrival_age_differences": 189
+    },
+    {
+      "order": 1,
+      "S_final_counts": {
+        "0": 22,
+        "3": 56,
+        "1": 57,
+        "2": 57
+      },
+      "J_final_counts": {
+        "3": 56,
+        "1": 57,
+        "2": 57,
+        "0": 22
+      },
+      "S_segments": 4,
+      "J_segments": 139,
+      "global_age_histogram_matched": true,
+      "per_arrival_age_differences": 183
+    }
+  ],
+  "S_is_boundary_reset": true,
+  "state_retrieval_identified": false
+}
