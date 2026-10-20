@@ -36,7 +36,13 @@ def checks():
     y=np.array([True,False,True,False]); b=~y
     assert counts(y,y,b,np.ones(4,bool))['corrected']==4
     assert dice(np.zeros(4,bool),np.zeros(4,bool))==100
-    return dict(status='PASS',tests=5,scope='oracle tie, shared heads, complementarity, singleton, correction and empty Dice')
+    assert checkpoint_link({'input_root':'/x/translation-phase-p1'},{'checkpoint_path':'/x/w'},{'checkpoint_path':'/x/w'})
+    return dict(status='PASS',tests=6,scope='oracle tie, shared heads, complementarity, singleton, correction and empty Dice, CPU-only lineage')
+
+def checkpoint_link(p2,p1,e3):
+    # P2 is CPU-only and references P1 bits; it has no checkpoint field.
+    assert Path(p2['input_root']).name=='translation-phase-p1'
+    return p1['checkpoint_path']==e3['checkpoint_path']
 
 def run(source,out):
     started=time.time(); assert os.environ.get('CUDA_VISIBLE_DEVICES')==''
@@ -109,7 +115,8 @@ def run(source,out):
     gain=ext-base; unique=dict(delta_pp=float(gain[:,BLOCKS].mean()),ci95_pp=interval(gain[:,BLOCKS]),positive_unique_inputs=int((gain>0).sum()),equal_four_condition_delta_pp=float(gain.mean()))
     prior=read(source/'private/config.json'); parent=source.parent
     pc=read(parent/'topology-projection-p2/private/config.json')
-    alignment=dict(same_registered_checkpoint_path_e3_p2=prior['checkpoint_path']==pc['checkpoint_path'],checkpoint_reloaded=False,source_bn='eval, frozen parameters and running buffers per E3 mechanism receipt',threshold='independent heads source logit>=0; sealed candidate bits',input_grid=[512,512],label_resize='nearest',source_label_encoding='OD gray<255; OC gray==0',blocks=BLOCKS,conditions=['identity','gamma .7','rgb 1.15/1/.85','blur 1'],static_parity_arrays=128,patient_independence_verified=False,other_historical_panel_equivalence_verified=False,native_cw_source_bn_equivalent=False)
+    p1=read(Path(pc['input_root'])/'private/config.json')
+    alignment=dict(same_registered_checkpoint_path_e3_p1=checkpoint_link(pc,p1,prior),p2_cpu_only_p1_bit_lineage=True,checkpoint_reloaded=False,source_bn='eval, frozen parameters and running buffers per E3 mechanism receipt',threshold='independent heads source logit>=0; sealed candidate bits',input_grid=[512,512],label_resize='nearest',source_label_encoding='OD gray<255; OC gray==0',blocks=BLOCKS,conditions=['identity','gamma .7','rgb 1.15/1/.85','blur 1'],static_parity_arrays=128,patient_independence_verified=False,other_historical_panel_equivalence_verified=False,native_cw_source_bn_equivalent=False)
     save(out/'private/matrices.json',dict(regions=private_counts,oracle_selections=selections))
     results=dict(posthoc_label_visible=True,deployable_selector=False,continual_benefit_tested=False,regions=region_rows,edit_census=edits,oracles=outputs,e3_unique=unique,whole_candidate_selector_space_at_least_point2=outputs[0]['selection_gap_pp']>=.2,alignment=alignment)
     save(out/'public/RESULTS.json',results)
