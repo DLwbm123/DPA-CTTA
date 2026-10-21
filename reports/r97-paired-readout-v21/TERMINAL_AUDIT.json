@@ -1,0 +1,101 @@
+{
+  "status": "COMPLETE_NO_ACTIVE_OWNED_PROCESS",
+  "registered_processes": [
+    {
+      "stage": "audit",
+      "attempt": 1,
+      "identity_alive": false
+    },
+    {
+      "stage": "formal",
+      "attempt": 1,
+      "identity_alive": false
+    },
+    {
+      "stage": "qualify",
+      "attempt": 1,
+      "identity_alive": false
+    },
+    {
+      "stage": "score",
+      "attempt": 1,
+      "identity_alive": false
+    },
+    {
+      "stage": "audit",
+      "attempt": 1,
+      "identity_alive": false
+    },
+    {
+      "stage": "formal",
+      "attempt": 1,
+      "identity_alive": false
+    },
+    {
+      "stage": "qualify",
+      "attempt": 1,
+      "identity_alive": false
+    },
+    {
+      "stage": "score",
+      "attempt": 1,
+      "identity_alive": false
+    },
+    {
+      "stage": "qualify",
+      "attempt": 0,
+      "identity_alive": false
+    },
+    {
+      "stage": "qualify",
+      "attempt": 0,
+      "identity_alive": false
+    }
+  ],
+  "exact_neutral_entry_processes_remaining": 0,
+  "counts": {
+    "physical_updates": 396,
+    "physical_forwards": 6312,
+    "training_backwards": 396
+  },
+  "costs": {
+    "audit": {
+      "status": "COMPLETE",
+      "wall_seconds": 3.379669189453125,
+      "CPU_process_seconds": 2.8443138610000003
+    },
+    "qualification_attempt0": {
+      "status": "COMPLETE",
+      "wall_seconds": 36.76442813873291,
+      "CPU_process_seconds": 44.443405571999996
+    },
+    "qualification_attempt1": {
+      "status": "COMPLETE",
+      "wall_seconds": 32.21891522407532,
+      "CPU_process_seconds": 39.659074936
+    },
+    "formal": {
+      "status": "COMPLETE",
+      "wall_seconds": 654.2617082595825,
+      "CPU_process_seconds": 1160.480124243
+    },
+    "score": {
+      "status": "COMPLETE",
+      "wall_seconds": 1.7926671504974365,
+      "CPU_process_seconds": 1.708148164
+    }
+  },
+  "formal_and_score_exit0": true,
+  "first_wrapper_exit": "UNRECORDED_ENGINEERING_FAILURE",
+  "T0": 1792575324.965188,
+  "deadline": 1792589724.965188,
+  "completed_at": 1792577451.5711658,
+  "elapsed_from_conservative_T0_seconds": 2126.6059777736664,
+  "remote_logical_or_allocated_snapshot_bytes": 1139059,
+  "snapshot_before_final_exports": true,
+  "remote_cap_bytes": 1572864,
+  "old_clocks_reset": false,
+  "unmetered_preparation_and_git": true,
+  "source_data_reads": 0,
+  "new_label_reads": 0
+}
