@@ -88,6 +88,7 @@ def score(c):
     od=aggregate(values['MSRCP']['OD']-values['B']['OD']);vcdr=aggregate(values['MSRCP']['vCDR']-values['B']['vCDR'])
     ratio={key:aggregate(values['MSRCP'][key]/values['B'][key]) for key in ('OC_ASSD','OC_HD95')}
     gates=dict(primary=contrast['B']['mean']>=.3 and good(contrast['B']),source=good(contrast['SOURCE']),controls=good(contrast['GLOBAL']) and good(contrast['SHIFT']),od_noninferior=od['ci95'] is not None and od['ci95'][0]>=-.1,worst_head_loss=worst>=-1,new_empty=not new_empty,new_nesting=not new_nesting,full_surface=all(np.isfinite(values['MSRCP'][key]).all() for key in ('OD_ASSD','OC_ASSD','OD_HD95','OC_HD95','vCDR')),surface_noninferior=all(z['defined_inputs']==32 and z['ci95'] is not None and z['ci95'][1]<=1.05 for z in ratio.values()),vcdr=vcdr['ci95'] is not None and vcdr['ci95'][1]<=.005,spatial_null=read(root/'public/WORKER2.json')['shift_changed_fraction']>=.5)
+    gates={k:bool(v) for k,v in gates.items()}
     result=dict(status='COMPLETE',qualified=all(gates.values()),gates=gates,metrics={a:{key:aggregate(v) for key,v in data.items()} for a,data in values.items()},oc_contrasts_pp=contrast,od_contrast_b_pp=od,oc_surface_ratios=ratio,vcdr_delta=vcdr,worst_head_delta_pp=worst,empty_heads=empty,nesting_pixels=nest,registered_contents=8,inputs=32,task_scope='Repeatedly used development contents; not independent patient validation.')
     assert abs(result['metrics']['B']['OC']['mean']-87.80529246678334)<1e-8
     write(root/'public/RESULTS.json',result)

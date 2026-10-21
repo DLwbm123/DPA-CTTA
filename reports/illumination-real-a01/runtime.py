@@ -72,7 +72,7 @@ def controller(c, root):
     with (root / 'logs/guard.log').open('x') as log:
         g = subprocess.Popen([c['python'], c['entry']], env=guard_env, stdout=log, stderr=log, start_new_session=True)
     stages = []
-    modes = ('worker1', 'worker2', 'score') if c.get('completed_check_preserved') else ('check', 'worker1', 'worker2', 'score')
+    modes = ('score',) if c.get('completed_generation_preserved') else ('worker1', 'worker2', 'score') if c.get('completed_check_preserved') else ('check', 'worker1', 'worker2', 'score')
     for mode in modes:
         begin = time.time()
         remaining = 3530 - (time.clock_gettime(time.CLOCK_BOOTTIME) - c['origin_boottime'])
