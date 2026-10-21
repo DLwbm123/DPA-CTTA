@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "admitted": true,
+  "projected_additional_bytes": 77426176,
+  "storage_at_admission": 470374584,
+  "checks": [
+    {
+      "check": "horizontal_two_vs_original",
+      "full_W_LSO": true,
+      "seed": 20260907,
+      "order": 0,
+      "prefix": 2,
+      "passed": true
+    },
+    {
+      "check": "horizontal_two_vs_original",
+      "full_W_LSO": true,
+      "seed": 20260907,
+      "order": 1,
+      "prefix": 2,
+      "passed": true
+    },
+    {
+      "check": "horizontal_two_vs_original",
+      "full_W_LSO": true,
+      "seed": 17011,
+      "order": 0,
+      "prefix": 2,
+      "passed": true
+    },
+    {
+      "check": "horizontal_two_vs_original",
+      "full_W_LSO": true,
+      "seed": 17011,
+      "order": 1,
+      "prefix": 2,
+      "passed": true
+    },
+    {
+      "check": "horizontal_two_vs_original",
+      "full_W_LSO": true,
+      "seed": 29009,
+      "order": 0,
+      "prefix": 2,
+      "passed": true
+    },
+    {
+      "check": "horizontal_two_vs_original",
+      "full_W_LSO": true,
+      "seed": 29009,
+      "order": 1,
+      "prefix": 2,
+      "passed": true
+    },
+    {
+      "check": "finite_two_arrivals",
+      "cell": "T2",
+      "passed": true
+    }
+  ],
+  "projected_seconds": 13285.056884765625,
+  "peak_allocated_MiB": 1943.9755859375,
+  "short_prefix_not_full_trajectory_replay": true
+}
