@@ -9,3 +9,5 @@
 SOURCE封存位图一致；原权重BN及无梯度、生成拒绝GT/旧评价/未登记资产/网络；两worker完整logits/masks/diagnostic精确重演后独立GT评分。原合取门全部保留：主−B OC≥.30pp且95%内容CI下界>0；主对SOURCE/LOGIT_MEDIAN/MEAN/SHIFT差下界均>0；OD−B下界≥−.10pp；最差头损失≤1pp；无新增空头/嵌套；全部表面/vCDR定义；OC ASSD/HD95比B的CI上界≤1.05；vCDR差CI上界≤.005；主与SHIFT logit差>1e-3比例≥.1。8内容等权、外观[2,1,1,1]/5、bootstrap2000/seed20261018。失败关闭本配置，不扫探针/层/分位数/空对照位移、换主臂或挑样本。8反复使用开发内容不是独立患者验证。
 
 my-gpu GPU1原UUID，NFS/probe/GPU余量/中性父子argv检查；root基线0预计768MiB预留1280MiB hard1GiB，clock3600/guard3540/stage3530，首输入成本门；项目18GB工作/20GB硬限+aux1GB。阶段wall非GPU kernel。结果自有源码协议聚合公开，原图GT权重张量私有。
+
+工程修复：首worker在CUDA median索引确定性检查处中止，未产出封存预测或GT评分。改为逐元素max(min(a,b),min(max(a,b),c))，对有限实数严格等于三数中位数，无需索引；不关闭确定性。保留原始时钟、首次失败费用和身份回执，方法/阈值不变。
