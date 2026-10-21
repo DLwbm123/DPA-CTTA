@@ -1,0 +1,76 @@
+{
+  "window": {
+    "start_utc": "2026-10-20T13:59:16+00:00",
+    "end_utc": "2026-10-21T01:59:16+00:00",
+    "timezone": "Asia/Shanghai",
+    "start_local": "2026-10-20T21:59:16+08:00",
+    "end_local": "2026-10-21T09:59:16+08:00",
+    "duration_hours": 12,
+    "basis": "Frozen at the first current-time reading for this summary; later report preparation excluded."
+  },
+  "new_execution_rounds_in_window": 3,
+  "real_data_qualification_rounds": 2,
+  "pure_synthetic_rounds": 1,
+  "additional_prior_window_execution_delivered_in_window": {
+    "name": "Phase A",
+    "origin_utc": "2026-10-20T13:58:28.773118+00:00",
+    "end_utc_derived_from_original_elapsed": "2026-10-20T13:58:55.064195+00:00",
+    "cpu_process_seconds_excluded_from_window": 26.08881902694702,
+    "delivery_commit": "9895cf0d3af742d8a374169f74ea7491b84ce7bb"
+  },
+  "scientific_runs": [
+    {
+      "name": "Phase BC",
+      "execution_source": "88d0d1c95de6302bee6a1e51ef88d92ca191ee5c",
+      "delivery": "88aff5afab656db420043a8b9e7e45a07fe33311",
+      "origin_utc": "2026-10-20T14:23:29.384755+00:00",
+      "cpu_full_stage_seconds": 535.0852239131927,
+      "gpu_designated_worker_seconds": 0,
+      "elapsed_seconds": 535.3318471005186,
+      "status": "SPACE_GATE_FAILED",
+      "joint_status": "NOT_RUN_SPACE_GATE",
+      "actual_bytes_final_receipt": 233267978,
+      "files_final_receipt": 64
+    },
+    {
+      "name": "ColorSharp A",
+      "execution_source": "5984f6e39ffb2bea72d1f2b3b70e7bcbdbd60d59",
+      "delivery": "f65882cc56f4a9bd57fa520bf10e1864d98f5c95",
+      "origin_utc": "2026-10-20T17:40:42.465824+00:00",
+      "cpu_full_stage_seconds": 21.23217797279358,
+      "gpu_designated_worker_seconds": 0,
+      "elapsed_seconds": 21.47106311749667,
+      "status": "SYNTHETIC_NUMERICAL_PASS_ONLY",
+      "actual_bytes_final_receipt": 137829,
+      "files_final_receipt": 19
+    },
+    {
+      "name": "ColorSharp BC",
+      "execution_source": "2a95957d24cabbdc61327344a97abbd89d3dc891",
+      "delivery": "11eddd16f4a24a20476bf32fef4bfdd592251968",
+      "origin_utc": "2026-10-20T18:17:35.161204+00:00",
+      "cpu_full_stage_seconds": 7.460008144378662,
+      "gpu_designated_worker_seconds": 685.8100485801697,
+      "elapsed_seconds": 833.9719803109765,
+      "status": "SIGNAL_GATE_FAILED",
+      "joint_status": "NOT_RUN_SIGNAL_GATE",
+      "successful_encoder_calls": 2880,
+      "failed_attempt_encoder_count": null,
+      "actual_bytes_final_receipt": 359709118,
+      "files_final_receipt": 90
+    }
+  ],
+  "counted_window_cpu_process_seconds": 563.777410030365,
+  "counted_window_gpu_designated_process_seconds": 685.8100485801697,
+  "new_run_root_logical_file_bytes": 593114925,
+  "new_run_root_files": 173,
+  "current_cumulative_counted_cpu_seconds": 4190.548844781776,
+  "current_cumulative_gpu_designated_process_seconds": 40376.78608645027,
+  "latest_known_project_actual_bytes": 937701530,
+  "with_aux_and_old_unknown_reserve_bytes": 2273245850,
+  "cost_limitations": "CPU process elapsed is not CPU-core time; GPU-designated worker process elapsed includes CPU/import/backward and failed initialization, not pure GPU kernel time. Untimed preparation, reading, reporting, orchestration and old-server unknown costs retained, not zero. Final receipt storage is not a fresh remote scan.",
+  "review_deliveries": 13,
+  "decision_register_deliveries": 1,
+  "new_clinical_or_generalization_claim": false,
+  "new_scientific_execution_for_summary": false
+}
