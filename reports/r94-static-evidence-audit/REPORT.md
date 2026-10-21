@@ -111,3 +111,5 @@ CPU timeout进程exit0，worker/timeout/wrapper身份实际退休。主要CPU进
 旧campaign T0=1792492974.1323855、deadline=1792536174.1323855已过期，4253updates/43700F不变；R94没有使用旧747/6300账面余额，也没有重置旧时钟。CPU审计完成不解锁GPU或性能路线。详见[TERMINAL_AUDIT.json](TERMINAL_AUDIT.json)、[COMPLETION.json](COMPLETION.json)、[访问审计](ACCESS_AUDIT.json)、[自检与旧聚合核验](SELF_CHECK.json)。
 
 交付仅源码、协议与匿名汇总：5280参照单元、22宏指标、176域头指标/区间、176内容分布、132 anchor宏指标、1056域头/anchor配对单元、8个LODO。未公开或下载逐内容评分、身份、预测、图像、标签、权重与私有机器路径。
+
+发布格式补充：CSV默认CRLF被Git空白检查标记，随后统一为LF并同步导出器设置；数值、区间与原科学协议未变，没有重跑统计。

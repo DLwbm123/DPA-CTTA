@@ -111,7 +111,7 @@ def run(c):
         if table:
             assert value
             f = io.StringIO()
-            writer = csv.DictWriter(f, fieldnames=list(value[0]))
+            writer = csv.DictWriter(f, fieldnames=list(value[0]), lineterminator="\n")
             writer.writeheader()
             for row in value:
                 writer.writerow({k: 'NA' if v is None else v for k, v in row.items()})

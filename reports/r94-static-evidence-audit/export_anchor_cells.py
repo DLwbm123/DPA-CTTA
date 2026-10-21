@@ -31,7 +31,7 @@ with (public / 'DOMAIN_HEAD.csv').open() as f:
     for r in csv.DictReader(f):
         a = [x['K_minus_Q0'] for x in result if all(x[k] == r[k] for k in ('variant','domain','channel','metric'))]
         assert len(a) == 6 and abs(sum(a)/6 - float(r['paired_mean_delta'])) < 1e-10
-s = io.StringIO();w = csv.DictWriter(s,fieldnames=list(result[0]));w.writeheader();w.writerows(result)
+s = io.StringIO();w = csv.DictWriter(s,fieldnames=list(result[0]),lineterminator="\n");w.writeheader();w.writerows(result)
 data=s.getvalue().encode()
 used=sum(max(p.stat().st_size,p.stat().st_blocks*512) for p in (root,*root.rglob('*')) if not p.is_symlink())
 assert used+len(data)+16384 < 7*1024**2
