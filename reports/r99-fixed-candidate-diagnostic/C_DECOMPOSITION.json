@@ -1,0 +1,156 @@
+[
+  {
+    "variant": "raw",
+    "groups": [
+      {
+        "group": "selected_positive",
+        "n": 6,
+        "weighted_contributions_pp": {
+          "r0": 0.01987832030631709,
+          "h": 0.0010588360754668208,
+          "current": 0.00030387089945599333,
+          "g": 0.01851561333139428
+        },
+        "identity_residual": 3.469446951953614e-18
+      },
+      {
+        "group": "selected_negative",
+        "n": 9,
+        "weighted_contributions_pp": {
+          "r0": -0.07700771125488656,
+          "h": 0.002742839029347916,
+          "current": -0.0007270146416622704,
+          "g": -0.07902353564257222
+        },
+        "identity_residual": -2.7755575615628914e-17
+      },
+      {
+        "group": "selected_zero",
+        "n": 0,
+        "weighted_contributions_pp": {
+          "r0": 0.0,
+          "h": 0.0,
+          "current": 0.0,
+          "g": 0.0
+        },
+        "identity_residual": 0.0
+      },
+      {
+        "group": "unselected_positive",
+        "n": 160,
+        "weighted_contributions_pp": {
+          "r0": 1.9969535394173872,
+          "h": 0.682217064014687,
+          "current": 0.02935185458937216,
+          "g": 1.2853846208133284
+        },
+        "identity_residual": 2.220446049250313e-16
+      },
+      {
+        "group": "unselected_nonpositive",
+        "n": 209,
+        "weighted_contributions_pp": {
+          "r0": -0.9321894865894017,
+          "h": 1.2570807984222538,
+          "current": 0.013029769404882985,
+          "g": -2.202300054416538
+        },
+        "identity_residual": 4.440892098500626e-16
+      }
+    ],
+    "tail": [
+      {
+        "k": 1,
+        "loss_pp": 0.01997609993583192,
+        "fraction_of_gross_loss": 0.2527867144060083
+      },
+      {
+        "k": 3,
+        "loss_pp": 0.04334872216473082,
+        "fraction_of_gross_loss": 0.5485545769655191
+      },
+      {
+        "k": 5,
+        "loss_pp": 0.06146353514281337,
+        "fraction_of_gross_loss": 0.7777877140402363
+      }
+    ]
+  },
+  {
+    "variant": "post",
+    "groups": [
+      {
+        "group": "selected_positive",
+        "n": 5,
+        "weighted_contributions_pp": {
+          "r0": 0.019856782948197985,
+          "h": -0.0007715030919260306,
+          "current": 0.0007343115698898115,
+          "g": 0.019893974470234208
+        },
+        "identity_residual": 3.469446951953614e-18
+      },
+      {
+        "group": "selected_negative",
+        "n": 10,
+        "weighted_contributions_pp": {
+          "r0": -0.08152713294670394,
+          "h": 0.0031508989451381085,
+          "current": -0.0019449042578896579,
+          "g": -0.08273312763395238
+        },
+        "identity_residual": 1.3877787807814457e-17
+      },
+      {
+        "group": "selected_zero",
+        "n": 0,
+        "weighted_contributions_pp": {
+          "r0": 0.0,
+          "h": 0.0,
+          "current": 0.0,
+          "g": 0.0
+        },
+        "identity_residual": 0.0
+      },
+      {
+        "group": "unselected_positive",
+        "n": 158,
+        "weighted_contributions_pp": {
+          "r0": 1.9404853686238155,
+          "h": 0.6639315613460816,
+          "current": 0.029151557475751107,
+          "g": 1.2474022498019828
+        },
+        "identity_residual": 0.0
+      },
+      {
+        "group": "unselected_nonpositive",
+        "n": 211,
+        "weighted_contributions_pp": {
+          "r0": -1.029344433216055,
+          "h": 1.2222861556503632,
+          "current": 0.012515640178333346,
+          "g": -2.2641462290447514
+        },
+        "identity_residual": 4.440892098500626e-16
+      }
+    ],
+    "tail": [
+      {
+        "k": 1,
+        "loss_pp": 0.020283153275888796,
+        "fraction_of_gross_loss": 0.24516362255311266
+      },
+      {
+        "k": 3,
+        "loss_pp": 0.043004043965046694,
+        "fraction_of_gross_loss": 0.5197923153022261
+      },
+      {
+        "k": 5,
+        "loss_pp": 0.06140523277680716,
+        "fraction_of_gross_loss": 0.7422085267764905
+      }
+    ]
+  }
+]

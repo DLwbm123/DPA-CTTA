@@ -1,0 +1,61 @@
+{
+  "eligibility": {
+    "both": 190,
+    "one": 2,
+    "neither": 0
+  },
+  "action_patterns": {
+    "00": 178,
+    "01": 9,
+    "10": 4,
+    "11": 1
+  },
+  "variants": [
+    {
+      "variant": "raw",
+      "all": {
+        "n": 192,
+        "pearson": 0.1763043607963047,
+        "spearman": 0.21447996636193478,
+        "same_direction": 108,
+        "opposite_direction": 84,
+        "U_ties": 0,
+        "gain_ties": 0,
+        "both_ties": 0
+      },
+      "both_eligible": {
+        "n": 190,
+        "pearson": 0.1843255062631815,
+        "spearman": 0.21151919939464717,
+        "same_direction": 106,
+        "opposite_direction": 84,
+        "U_ties": 0,
+        "gain_ties": 0,
+        "both_ties": 0
+      }
+    },
+    {
+      "variant": "post",
+      "all": {
+        "n": 192,
+        "pearson": 0.16746911284334953,
+        "spearman": 0.18940570490735972,
+        "same_direction": 109,
+        "opposite_direction": 83,
+        "U_ties": 0,
+        "gain_ties": 0,
+        "both_ties": 0
+      },
+      "both_eligible": {
+        "n": 190,
+        "pearson": 0.1717088899061004,
+        "spearman": 0.1834752675755707,
+        "same_direction": 107,
+        "opposite_direction": 83,
+        "U_ties": 0,
+        "gain_ties": 0,
+        "both_ties": 0
+      }
+    }
+  ]
+}

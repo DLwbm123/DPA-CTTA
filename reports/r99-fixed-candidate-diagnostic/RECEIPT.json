@@ -1,0 +1,23 @@
+{
+  "status": "COMPLETE",
+  "T0": 1792579606.152429,
+  "started_at": 1792580285.4811354,
+  "completed_at": 1792580289.8495085,
+  "wall_seconds": 4.3683741092681885,
+  "CPU_process_seconds": 4.348080883,
+  "elapsed_from_T0": 683.6971004009247,
+  "deadline": 1792581406.152429,
+  "new_model_calls": 0,
+  "new_label_reads": 0,
+  "rows": 384,
+  "output_bytes_before_receipt": 188992,
+  "checks": [
+    "sealed signals and decision reproduction",
+    "main gain reproduction",
+    "score dimensions and domain counts",
+    "endpoint identity",
+    "all groups partition 384",
+    "matched counts and weighted coverage"
+  ],
+  "no_threshold_scan": true
+}

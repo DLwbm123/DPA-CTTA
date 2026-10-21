@@ -1,0 +1,2572 @@
+[
+  {
+    "order": 0,
+    "original_block_counts": [
+      0,
+      3,
+      0,
+      1,
+      0,
+      1
+    ],
+    "unconstrained": {
+      "unlimited": {
+        "raw_pp": 1.4451597631057171,
+        "post_pp": 1.4106555512674879,
+        "actions": 91
+      },
+      "exact": {
+        "raw_pp": 0.15780812322045581,
+        "post_pp": 0.15711899372957416,
+        "actions": 5
+      },
+      "at_most": {
+        "raw_pp": 0.15780812322045581,
+        "post_pp": 0.15711899372957416,
+        "actions": 5
+      }
+    },
+    "all_candidates_finite": true,
+    "constrained": [
+      {
+        "mode": "unlimited",
+        "status": 0,
+        "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "wall_seconds": 0.020893573760986328,
+        "dual_upper_pp": 1.42241821768089,
+        "gap": 0.0,
+        "nodes": 1.0,
+        "feasible": true,
+        "integer_error": 0.0,
+        "min_protection_residual": 0.0,
+        "strict_negative_residual_cells": 0,
+        "raw_pp": 1.42241821768089,
+        "post_pp": 1.3878068599524394,
+        "actions": 87,
+        "block_counts": [
+          17,
+          14,
+          7,
+          19,
+          21,
+          9
+        ],
+        "protection_residuals": [
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 1.6940301756380194
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 1.926381471342233
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 5.340178584097668
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.011463221202668001
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 2.5759904946862675
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 2.5471444336711295
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 5.107821395665584
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.5003734361548565
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.8206248491849519
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 1.7985614231671219
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.01807613261222843
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 1.005972456304298
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.4234077197672873
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.0773269646167614
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 1.1743024805364979
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 4.625466960851447
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 17.206184207856843
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.01821407144264494
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 4.428676698127181
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 2.5572999747205425
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 3.0783770912926105
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 1.6942958184828245
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 1.8597852613212533
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 4.757738729155966
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.005739883859952766
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 2.556174599097778
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 2.3518068127810663
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 4.767131679889188
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.4129825297301143
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.2697282474866981
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.037482712723312654
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0063275241828216295
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.9884730613258108
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.39103662050961463
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.9173935069675154
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.9664129208499136
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.7929513067399023
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 3.4931012723718826
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.03609754951417839
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 4.4841159501330745
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 2.7300441422848287
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 2.952390498495885
+          }
+        ]
+      },
+      {
+        "mode": "exact",
+        "status": 0,
+        "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "wall_seconds": 0.01799297332763672,
+        "dual_upper_pp": 0.15371474915301253,
+        "gap": 0.0,
+        "nodes": 0.0,
+        "feasible": true,
+        "integer_error": 0.0,
+        "min_protection_residual": 0.0,
+        "strict_negative_residual_cells": 0,
+        "raw_pp": 0.15371474915301253,
+        "post_pp": 0.15284397483779977,
+        "actions": 5,
+        "block_counts": [
+          0,
+          3,
+          0,
+          1,
+          0,
+          1
+        ],
+        "protection_residuals": [
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.22919245394821006
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.29134615828394383
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.6483547579996934
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0018576913105750048
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.621434405186133
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.39537497543907896
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.122627223008716
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.05021430398064166
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.027234258380927457
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.013226382289117555
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.001320425432267537
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.05829211132930399
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.023726485480335714
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.06647188621654845
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.08538982700161465
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.07343902789147069
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.33654184852327634
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0010570607553366171
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.185194891778197
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.09492128118322089
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.2710632256099156
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.22831240300352768
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.2445976132466942
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.6105536021481287
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0024383121487302193
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.6155703266876061
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.37094838841688677
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.1142302695598927
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.04912953627355147
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.02903324374792185
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.010793370041517068
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.00040780613149034187
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.06005799601281481
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.020594657726338037
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.059731065181263705
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0864986568231334
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.06526418867371861
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.36936191831316284
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0006555316091954033
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.18318287990176468
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.09537913422512354
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.26645139285496305
+          }
+        ]
+      },
+      {
+        "mode": "at_most",
+        "status": 0,
+        "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "wall_seconds": 0.016097307205200195,
+        "dual_upper_pp": 0.15371474915301253,
+        "gap": 0.0,
+        "nodes": 0.0,
+        "feasible": true,
+        "integer_error": 0.0,
+        "min_protection_residual": 0.0,
+        "strict_negative_residual_cells": 0,
+        "raw_pp": 0.15371474915301253,
+        "post_pp": 0.15284397483779977,
+        "actions": 5,
+        "block_counts": [
+          0,
+          3,
+          0,
+          1,
+          0,
+          1
+        ],
+        "protection_residuals": [
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.22919245394821006
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.29134615828394383
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.6483547579996934
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0018576913105750048
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.621434405186133
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.39537497543907896
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.122627223008716
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.05021430398064166
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.027234258380927457
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.013226382289117555
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.001320425432267537
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.05829211132930399
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.023726485480335714
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.06647188621654845
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.08538982700161465
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.07343902789147069
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.33654184852327634
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0010570607553366171
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.185194891778197
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.09492128118322089
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.2710632256099156
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.22831240300352768
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.2445976132466942
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.6105536021481287
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0024383121487302193
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.6155703266876061
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.37094838841688677
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.1142302695598927
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.04912953627355147
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.02903324374792185
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.010793370041517068
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.00040780613149034187
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.06005799601281481
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.020594657726338037
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.059731065181263705
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0864986568231334
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.06526418867371861
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.36936191831316284
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0006555316091954033
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.18318287990176468
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.09537913422512354
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.26645139285496305
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "order": 1,
+    "original_block_counts": [
+      10,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "unconstrained": {
+      "unlimited": {
+        "raw_pp": 1.1626407051837278,
+        "post_pp": 1.1205161413988973,
+        "actions": 75
+      },
+      "exact": {
+        "raw_pp": 0.18388570383734654,
+        "post_pp": 0.18409682992629345,
+        "actions": 10
+      },
+      "at_most": {
+        "raw_pp": 0.18388570383734654,
+        "post_pp": 0.18409682992629345,
+        "actions": 10
+      }
+    },
+    "all_candidates_finite": true,
+    "constrained": [
+      {
+        "mode": "unlimited",
+        "status": 0,
+        "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "wall_seconds": 0.02304244041442871,
+        "dual_upper_pp": 1.1179459729584047,
+        "gap": 0.0,
+        "nodes": 1.0,
+        "feasible": true,
+        "integer_error": 0.0,
+        "min_protection_residual": 0.003704962104807323,
+        "strict_negative_residual_cells": 0,
+        "raw_pp": 1.117945972958405,
+        "post_pp": 1.0677573719685025,
+        "actions": 70,
+        "block_counts": [
+          13,
+          22,
+          15,
+          6,
+          7,
+          7
+        ],
+        "protection_residuals": [
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.08530167189273641
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.016955312988852722
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.5810668002563905
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0073918330652094555
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.6275036350699914
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.2703555191232405
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.1560732404726852
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.8952827632715598
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 1.155724739205605
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 3.0613086251365447
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.015474538350339429
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 1.8008155620389001
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 1.6320231046984364
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 2.9447766065383125
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.20742804486624028
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.1670904039997499
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.07739149238059322
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.008559441373285018
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.3496441919646035
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.15056112160814705
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.44026900309402994
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 1.0281563700517649
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 6.762446897728043
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 28.111085387588098
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.006055892492782615
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 3.9494355445114424
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 2.269697182145819
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 2.523490051120305
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.06970295083917932
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.020586829175334463
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.5131441072628643
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.003704962104807323
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.5895500247006457
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.25351570239389887
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.0415367679852863
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.8861335730630326
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.9184513354588508
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 1.905071735566256
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.005104991401225984
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 1.8170310731376267
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 1.54079663199412
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 2.7719600502983917
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.2039415652210235
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.14459365948286107
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.005817976503994453
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.004326721403825366
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.3422437509058215
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.14111031967688237
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.41254509704658704
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.6312837783192409
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.5362105265088954
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 2.5000895216308154
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.03833740074357685
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 4.002172259561451
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 2.397371295804561
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 2.439989831021587
+          }
+        ]
+      },
+      {
+        "mode": "exact",
+        "status": 0,
+        "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "wall_seconds": 0.006910085678100586,
+        "dual_upper_pp": 0.17875959842789282,
+        "gap": 0.0,
+        "nodes": 1.0,
+        "feasible": true,
+        "integer_error": 0.0,
+        "min_protection_residual": 0.0,
+        "strict_negative_residual_cells": 0,
+        "raw_pp": 0.17875959842789282,
+        "post_pp": 0.1689521573557935,
+        "actions": 10,
+        "block_counts": [
+          10,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "protection_residuals": [
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.08530167189273641
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.016955312988852722
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.5810668002563905
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0073918330652094555
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.6275036350699914
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.2703555191232405
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.1560732404726852
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.4094067364463472
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.7341020264510255
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 3.6023090127568422
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.002275990598113678
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.3078647440140676
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.20804418341029307
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.5355815393584116
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.06970295083917932
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.020586829175334463
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.5131441072628643
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.003704962104807323
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.5895500247006457
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.25351570239389887
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.0415367679852863
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.38929959133322367
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.2018778824728036
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.7829372554882239
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0044504351658254775
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.3030646919732992
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.19469914251957804
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.5395079919270107
+          }
+        ]
+      },
+      {
+        "mode": "at_most",
+        "status": 0,
+        "message": "Optimization terminated successfully. (HiGHS Status 7: Optimal)",
+        "wall_seconds": 0.006697416305541992,
+        "dual_upper_pp": 0.17875959842789282,
+        "gap": 0.0,
+        "nodes": 1.0,
+        "feasible": true,
+        "integer_error": 0.0,
+        "min_protection_residual": 0.0,
+        "strict_negative_residual_cells": 0,
+        "raw_pp": 0.17875959842789282,
+        "post_pp": 0.1689521573557935,
+        "actions": 10,
+        "block_counts": [
+          10,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "protection_residuals": [
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.08530167189273641
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.016955312988852722
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.5810668002563905
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0073918330652094555
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.6275036350699914
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.2703555191232405
+          },
+          {
+            "variant": "raw",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.1560732404726852
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.4094067364463472
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.7341020264510255
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 3.6023090127568422
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.002275990598113678
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.3078647440140676
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.20804418341029307
+          },
+          {
+            "variant": "raw",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.5355815393584116
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.06970295083917932
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.020586829175334463
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.5131441072628643
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.003704962104807323
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.5895500247006457
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.25351570239389887
+          },
+          {
+            "variant": "post",
+            "domain": 0,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 1.0415367679852863
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 1,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 2,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.0
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 0,
+            "favorable_delta": 0.38929959133322367
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 4,
+            "favorable_delta": 0.2018778824728036
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 5,
+            "favorable_delta": 0.7829372554882239
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 0,
+            "metric": 6,
+            "favorable_delta": 0.0044504351658254775
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 0,
+            "favorable_delta": 0.3030646919732992
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 4,
+            "favorable_delta": 0.19469914251957804
+          },
+          {
+            "variant": "post",
+            "domain": 3,
+            "head": 1,
+            "metric": 5,
+            "favorable_delta": 0.5395079919270107
+          }
+        ]
+      }
+    ]
+  }
+]
