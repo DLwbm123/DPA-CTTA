@@ -1,0 +1,59 @@
+{
+  "status": "FORMAL_RUNNING",
+  "observed_at": 1792595662.3548615,
+  "formal_state": {
+    "status": "RUNNING",
+    "mode": "formal",
+    "started": 1792595216.872932,
+    "physical_updates": 720,
+    "completed_updates": 720,
+    "physical_forwards": 6096,
+    "training_backwards": 720,
+    "completed_jobs": [
+      "C1_s20260907_o0",
+      "C2_s20260907_o0",
+      "C1_s20260907_o1"
+    ],
+    "online_label_reads": 0,
+    "online_score_reads": 0,
+    "job": "C2_s20260907_o1",
+    "arrival": 144
+  },
+  "identity_verified": true,
+  "worker_argv": "/tmp/q85m/bin/python /tmp/e102.py",
+  "allocated_root_bytes": 100491111,
+  "remote_cap_bytes": 1073741824,
+  "deadline": 1792677773.998501,
+  "remaining_wall_seconds": 82111.64363956451,
+  "formal_elapsed_seconds": 445.48192954063416,
+  "score_available": false,
+  "completed_trajectory_receipts": [
+    {
+      "status": "COMPLETE",
+      "cell": "C1",
+      "seed": 20260907,
+      "order": 0,
+      "arrivals": 192,
+      "forwards": 1536,
+      "seconds": 113.02772092819214
+    },
+    {
+      "status": "COMPLETE",
+      "cell": "C2",
+      "seed": 20260907,
+      "order": 0,
+      "arrivals": 192,
+      "forwards": 1728,
+      "seconds": 113.24722242355347
+    },
+    {
+      "status": "COMPLETE",
+      "cell": "C1",
+      "seed": 20260907,
+      "order": 1,
+      "arrivals": 192,
+      "forwards": 1536,
+      "seconds": 106.36387395858765
+    }
+  ]
+}
