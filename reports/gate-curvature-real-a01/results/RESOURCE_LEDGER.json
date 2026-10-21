@@ -1,0 +1,30 @@
+{
+  "stages": [
+    {
+      "stage": "check",
+      "exit_code": 0,
+      "seconds": 0.5306606292724609
+    },
+    {
+      "stage": "worker1",
+      "exit_code": 0,
+      "seconds": 72.65909194946289
+    },
+    {
+      "stage": "worker2",
+      "exit_code": 0,
+      "seconds": 31.7599515914917
+    },
+    {
+      "stage": "score",
+      "exit_code": 0,
+      "seconds": 115.21521186828613
+    }
+  ],
+  "all_stage_workers_retired": true,
+  "source_sha": "96eee2847b0947b35f28f110729dc39cd1355c6b",
+  "previous_attempts": [],
+  "planned_model_calls": 192,
+  "planned_decoder_only_calls": 258,
+  "elapsed_seconds": 220.38613395299762
+}
