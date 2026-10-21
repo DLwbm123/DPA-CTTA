@@ -1,0 +1,159 @@
+{
+  "reviewed_at_utc": "2026-10-21T06:10:17.552013+00:00",
+  "submission_status": "under_review_not_acceptance",
+  "access": "public OpenReview page and attachment downloads after user-completed browser verification",
+  "scientific_execution": false,
+  "third_party_code_executed": false,
+  "new_model_or_dataset_download": false,
+  "launch_eligible": false,
+  "experiments_authorized": false,
+  "implementation_complete": false,
+  "papers": [
+    {
+      "id": "efsBsWqXBY",
+      "name": "P-DORM",
+      "pdf_pages": 28,
+      "pdf_bytes": 811217,
+      "supplement_members": 129,
+      "supplement_zip_bytes": 3013577,
+      "forum": "https://openreview.net/forum?id=efsBsWqXBY",
+      "supplement": "https://openreview.net/attachment?id=efsBsWqXBY&name=supplementary_material",
+      "read_scope": "Main method and selected experiments; Appendix A threshold construction, D optimizer contracts, F setup, H/I scope; not every proof or table audited. Visual formula inspection PDF pages 4 and 20.",
+      "source_files_reviewed": [
+        "methods/Optimizer_AdaTTA/adat_adam.py",
+        "methods/Optimizer_AdaTTA/adat_sgd.py (reset and update branches)",
+        "methods/tent_ours.py",
+        "methods/base.py (setup/reset semantics)",
+        "conf.py",
+        "cfgs/imagenet_c/Ours_compare/tent_ours.yaml",
+        "README.md"
+      ],
+      "findings": [
+        {
+          "id": "P1",
+          "claim": "Adam directional reset, scale retention and distinct bias correction already proposed",
+          "paper": "Appendix D.1, PDF page20 Eq53",
+          "source": "adat_adam.py:320-376",
+          "status": "VERIFIED_STATIC"
+        },
+        {
+          "id": "P2",
+          "claim": "Z denominator differs: sqrt(V+eps) in PDF vs sqrt(V)+eps in released Adam",
+          "paper": "Section3.2 PDF page4 Eq4",
+          "source": "adat_adam.py:295-296",
+          "status": "VERIFIED_STATIC_CONTRACT_DIFFERENCE_NOT_RUNTIME_TEST"
+        },
+        {
+          "id": "P3",
+          "claim": "No equivalent current-gradient norm gate in inspected Adam scoring branch",
+          "paper": "Algorithm1 and AppendixD state-transition prose",
+          "source": "adat_adam.py:280-300",
+          "status": "STATIC_PATH_OBSERVATION_NO_EXECUTION"
+        },
+        {
+          "id": "P4",
+          "claim": "Effective paper-mode config overrides constructor sensor/hysteresis defaults",
+          "paper": "Algorithm1 and AppendixF",
+          "source": "conf.py:129-141; tent_ours.py:optimizer setup; base.py:constructor set_param_names",
+          "status": "VERIFIED_STATIC"
+        },
+        {
+          "id": "P5",
+          "claim": "tau_v default0.5 versus representative ImageNet TENT yaml0.4",
+          "paper": "AppendixF.1",
+          "source": "conf.py:124 and cfgs/imagenet_c/Ours_compare/tent_ours.yaml",
+          "status": "RECIPE_AMBIGUITY_NOT_EMPIRICAL_INVALIDATION"
+        }
+      ]
+    },
+    {
+      "id": "hBGrz9SrlF",
+      "name": "Persistent-State Management / Profiled State Recovery",
+      "pdf_pages": 12,
+      "pdf_bytes": 481960,
+      "supplement_members": 15,
+      "supplement_zip_bytes": 24076,
+      "forum": "https://openreview.net/forum?id=hBGrz9SrlF",
+      "supplement": "https://openreview.net/attachment?id=hBGrz9SrlF&name=supplementary_material",
+      "read_scope": "Sections1-7 and method/experimental appendices A-G; PDF page11 visually checked.",
+      "source_files_reviewed": [
+        "profiling_framework/core.py",
+        "profiles/mlmp_profile_v3.json",
+        "profiles/sar_profile_v3.json",
+        "profiles/tent_profile_v3.json",
+        "README.md",
+        "PACKAGE_MANIFEST.md"
+      ],
+      "findings": [
+        {
+          "id": "S1",
+          "claim": "Labeled calibration followed by unchanged label-free deployment; online parameter restoration preserves optimizer/method history/RNG",
+          "paper": "Sections4.1-4.4 AppendixA",
+          "source": "profiles/*_profile_v3.json",
+          "status": "PAPER_AND_METADATA_VERIFIED"
+        },
+        {
+          "id": "S2",
+          "claim": "Supplement excludes full dataset runners and checkpoints",
+          "source": "README.md Reproduction entry points and PACKAGE_MANIFEST.md",
+          "status": "VERIFIED_PACKAGE_LIMIT"
+        },
+        {
+          "id": "S3",
+          "claim": "Base drift measurement is empty; action function does not implement full patience/cooldown loop",
+          "source": "profiling_framework/core.py:96-97,133-144",
+          "status": "VERIFIED_INTERFACE_NOT_FULL_RUNNER"
+        },
+        {
+          "id": "S4",
+          "claim": "Optimizer-only base method delegates to external canonical restore_source_active_and_clean_optimizer; unavailable implementation prevents optimizer-only certification",
+          "source": "profiling_framework/core.py:102-107",
+          "status": "EXTERNAL_DEPENDENCY_UNVERIFIED"
+        },
+        {
+          "id": "S5",
+          "claim": "Model/optimizer factorial intervention already analyzed; local action ranks can shift between datasets",
+          "paper": "Section3 and AppendixD/E",
+          "status": "PAPER_REPORTED_NOT_REPRODUCED"
+        }
+      ]
+    }
+  ],
+  "novelty_boundary": {
+    "already_covered": [
+      "optimizer reset",
+      "separate Adam moment handling",
+      "layer-selective source restoration",
+      "calibrated profile transfer",
+      "parameter-optimizer factorials",
+      "paired gradient differences and gradient transport"
+    ],
+    "candidate_only": "Restoration-event conditioned, cross-group joint moment transport with separate decay-weighted gradient mean and fixed local applicability gate.",
+    "global_first_claim": false,
+    "efficacy_claim": false,
+    "primary_adam_scope": "ordinary dense Adam, not arbitrary P-DORM/AMSGrad/SAM/EMA host"
+  },
+  "adjacent_primary_sources": [
+    {
+      "name": "IGT",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2019/file/1dba5eed8838571e1c80af145184e515-Paper.pdf",
+      "scope": "Abstract and selected sections on past-gradient transport; not full proof review"
+    },
+    {
+      "name": "MARS",
+      "url": "https://openreview.net/forum?id=NrcKQ3ASLZ",
+      "scope": "Primary implementation README conceptual equations surfaced in search; no complete code review"
+    },
+    {
+      "name": "ASR",
+      "url": "https://arxiv.org/html/2603.03796v1",
+      "scope": "Sections3.3-3.5 selected reset/recovery method text; not full replication"
+    }
+  ],
+  "own_prior": {
+    "report": "../stratified-reliability-paired-state-v6/REPORT_ZH.md",
+    "source": "../../src/dpa_ctta/srg_ctta/method.py:156-164",
+    "scope": "Read-only result and reset implementation; no revival of stopped BN-scale experiments"
+  },
+  "resource_scope": "Small paper/source package downloads only; no scientific stages, SSH, real data, model, GT or GPU. Untimed review and reporting not zero-cost."
+}
