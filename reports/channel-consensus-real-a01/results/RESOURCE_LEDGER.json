@@ -1,0 +1,46 @@
+{
+  "stages": [
+    {
+      "stage": "worker1",
+      "exit_code": 0,
+      "seconds": 66.93450140953064
+    },
+    {
+      "stage": "worker2",
+      "exit_code": 0,
+      "seconds": 31.971046924591064
+    },
+    {
+      "stage": "score",
+      "exit_code": 0,
+      "seconds": 60.06563901901245
+    }
+  ],
+  "all_stage_workers_retired": true,
+  "source_sha": "8f76c0af373d94553708d1ce506d0dd910f68082",
+  "previous_attempts": [
+    {
+      "reason": "CUDA median indices deterministic implementation unavailable",
+      "stages": [
+        {
+          "stage": "check",
+          "exit_code": 0,
+          "seconds": 0.5878429412841797
+        },
+        {
+          "stage": "worker1",
+          "exit_code": 1,
+          "seconds": 17.21722912788391
+        }
+      ],
+      "source_sha": "8fa75f2e92a1749365ee2cb144ea45ea3a1588f6",
+      "identities_retired": true,
+      "predictions_saved": 0,
+      "gt_scored": false
+    }
+  ],
+  "planned_model_calls": 192,
+  "planned_decoder_only_calls": 0,
+  "planned_head_only_calls": 130,
+  "elapsed_seconds": 225.72243682853878
+}
