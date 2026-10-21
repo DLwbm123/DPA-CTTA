@@ -5,7 +5,14 @@ r=Path('/tmp/n97').resolve();c=json.loads((r/'private/config.json').read_text())
 def ticks(pid):
  try:return Path('/proc/'+str(pid)+'/stat').read_text().rsplit(')',1)[1].split()[19]
  except FileNotFoundError:return None
-def usage():return sum(max(p.stat().st_size,p.stat().st_blocks*512) for p in (r,*r.rglob('*')) if not p.is_symlink())
+def usage():
+ total=0
+ for p in (r,*r.rglob('*')):
+  try:
+   st=p.lstat()
+   if not __import__('stat').S_ISLNK(st.st_mode):total+=max(st.st_size,st.st_blocks*512)
+  except FileNotFoundError:pass  # Dependency import creates and removes transient paths.
+ return total
 start=time.time();limit=min(1200 if mode in ('audit','score','qualify') else 10000,int(c['deadline']-start-30));assert limit>10
 if mode in ('qualify','formal'):
  raw=subprocess.check_output(['nvidia-smi','--query-gpu=index,uuid,memory.free','--format=csv,noheader,nounits'],text=True)

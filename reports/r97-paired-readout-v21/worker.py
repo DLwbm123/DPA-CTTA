@@ -22,6 +22,7 @@ def run(c,write,mode):
     canonical={row['image_sha256']:i for i,row in enumerate(panels[0])};assert len(canonical)==192
     cfg=dict(old);cfg.update(c);cfg['reference_predictions']=dict(old['reference_predictions'],q0=str(r91/'jobs/Q0.bits.gz'))
     prior=read(root/'private/qualify_state.json') if mode=='formal' else dict(physical_updates=0,physical_forwards=0,training_backwards=0)
+    prior={k:prior[k]+c.get('earlier_attempt_cost',{}).get(k,0) for k in ('physical_updates','physical_forwards','training_backwards')}
     state=dict(status='RUNNING',mode=mode,started=time.time(),physical_updates=0,completed_updates=0,physical_forwards=0,training_backwards=0,online_label_reads=0,online_score_reads=0)
     def persist():write('private/'+mode+'_state.json',state)
     def guard():

@@ -12,7 +12,14 @@ resource.setrlimit(resource.RLIMIT_FSIZE,(262144,262144))
 seconds=max(1,int(c['deadline']-time.time()-60))
 signal.signal(signal.SIGALRM,lambda *_:(_ for _ in ()).throw(TimeoutError('absolute deadline')))
 signal.alarm(seconds)
-def usage():return sum(max(p.stat().st_size,p.stat().st_blocks*512) for p in (r,*r.rglob('*')) if not p.is_symlink())
+def usage():
+ total=0
+ for p in (r,*r.rglob('*')):
+  try:
+   st=p.lstat()
+   if not __import__('stat').S_ISLNK(st.st_mode):total+=max(st.st_size,st.st_blocks*512)
+  except FileNotFoundError:pass  # Dependency import creates and removes transient paths.
+ return total
 def write(name,obj):
  data=(json.dumps(obj,indent=2,allow_nan=False)+'\n').encode()
  assert len(data)<262144 and usage()+len(data)+8192<c['remote_normal_cap_bytes'],'storage reserve'
