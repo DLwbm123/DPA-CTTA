@@ -38,7 +38,7 @@ def run(c,write,mode):
     def vector(h):return torch.cat([p.detach().flatten().cpu() for p in h.native.params])
     torch.set_num_threads(2);torch.set_num_interop_threads(2);gpu_policy(c['gpus'][0])
     torch.cuda.set_per_process_memory_fraction(8*1024**3/torch.cuda.get_device_properties(0).total_memory,0)
-    helper=runpy.run_path('/tmp/n91/m1_helpers.py');cfg=dict(c);cfg['reference_predictions']={**c['c2_predictions'],**c['vv_predictions']}
+    helper=runpy.run_path('/tmp/n91/m1_helpers.py');cfg=dict(c);cfg['reference_predictions']={**{'C2/'+k:v for k,v in c['c2_predictions'].items()},**{'VV/'+k:v for k,v in c['vv_predictions'].items()}}
     if mode=='formal':cfg['reference_predictions']={}
     permit,opened,rejected=helper['access_guard'](cfg)
     checkpoint=weights(c);reader=TargetReader(c['target_root'],256*1024**2,'image');hosts=[];timings=[];packed_sizes=[]
