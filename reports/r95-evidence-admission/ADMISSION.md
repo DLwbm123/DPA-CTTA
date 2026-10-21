@@ -32,6 +32,7 @@ NATIVE 是冻结其**方法定义**的原适应基线，仍执行逐内容反向
 - [基线合同](BASELINE_CONTRACT.md)：定义静态与动态臂，明确完整状态及输出时点。
 - [确认协议草案](CONFIRMATION_PROTOCOL_DRAFT.md)：只有材料到位、未决项全部解决后才可冻结，不是可执行协议。
 - [门槛草案](GATE_SPECIFICATION.md)：效应要求、局部保护、结构非劣和多重比较待审；不改旧门。
+- [动作价值合同](ACTION_VALUE_CONTRACT.md)：只读动作示例、净收益、非信息性控制和误伤要求，尚未准入。
 - [资源计划](RESOURCE_PLAN.md)：纠正NATIVE动态费用，本次仅本地小文档预留。
 - [机器可读决定](DECISION.json)：明确不可自动GPU推进。
 

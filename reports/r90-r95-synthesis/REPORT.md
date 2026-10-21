@@ -199,13 +199,13 @@ A=6时，动态臂为**18N次更新/训练BW、174N F**，加Q0与独立P0后**1
 
 |拟确认问题|拟合同|当前阻塞|
 |---|---|---|
-|任务价值|K−Q0、K−NATIVE的预定实际增益及校正正下界|效应幅度δ_Q/δ_N、比较族TBD|
+|任务价值|K−Q0、K−NATIVE的预定幅度与声明模式|效应幅度δ_Q/δ_N、比较族TBD|
 |持续价值|同原图更新后K语义的K−E-VV|δ_H依据、E-VV完整字段映射/重复性/资格TBD|
 |局部保护|D1双头及预定风险域头相对指定参照非劣|参照、margin、尾部/覆盖规则、校正TBD|
 |结构非劣|ASSD/HD95/vCDR等误差差值的适当CI上界不超冻结容忍界，空头/NA另定|单位、scope、各界值和多重比较TBD|
 |工程/访问/费用|fresh exact、标签屏障、物理计数、实际硬限与profile全部满足|无实现资格、无新资源准入|
 
-+0.3pp任务增益、−0.5pp局部Dice容忍只是讨论起点，不自动成为新阈值，更不是临床界值；持续δ_H另需依据。若三项收益共同作为主比较，可事前选择98.333...%双侧Bonferroni或固定分层检验，但局部/结构族亦须先定，不能评分后挑选。距离/vCDR不能沿用Dice pp。raw/post角色与NA/共同finite/空头规则在新数据评分前固定。
++0.3pp任务增益、−0.5pp局部Dice容忍只是讨论起点，不自动成为新阈值，更不是临床界值；持续δ_H另需依据。唯一联合声明可事前选择有效分检验全部通过的IUT；若还要单独确认各比较或给同时覆盖区间，则需预定多重控制/固定层级。具体模式、alpha与族未选定，不能评分后择优。点值≥δ且下界>0与下界>δ支持不同强度声明，必须预先选择。距离/vCDR不能沿用Dice pp。raw/post角色与NA/共同finite/空头规则在新数据评分前固定。
 
 ### 8.4 患者、轨迹与一次确认的边界
 
@@ -216,6 +216,16 @@ A=6时，动态臂为**18N次更新/训练BW、174N F**，加Q0与独立P0后**1
 R97的多视图历史编辑可靠性仍是假设。未有概率资产或在线辨识证据，不补跑GPU；“负历史效应辨识”和“切到Q0的动作价值”须分开，且有匹配动作频率的非信息性控制。若只有一份新cohort，优先确认现有VV，不同时开发R97、测试R98。
 
 完整草案：[基线合同](../r95-evidence-admission/BASELINE_CONTRACT.md)、[确认协议](../r95-evidence-admission/CONFIRMATION_PROTOCOL_DRAFT.md)、[门槛结构](../r95-evidence-admission/GATE_SPECIFICATION.md)、[资源计划](../r95-evidence-admission/RESOURCE_PLAN.md)。这些链接指向合同草案，不是可执行确认协议。
+
+### 8.4 统计声明、动作价值与终态修订
+
+本次修订只完善未来合同，不重算任何历史结果、不改旧判定、不新增实验。三项收益唯一合取声明的IUT不要求分检验独立，但要求各分检验有效；不能借IUT弥补流式固定预测bootstrap的估计目标缺陷。联合失败后的单项确认必须预设FWER或固定层级，逐项区间不是同时覆盖区间。研究声明与方案晋级分别记录，后者仍要求所有预定任务、历史、局部、结构、资格与资源条件满足。重要局部/结构保护也应驱动样本量设计，不在macro通过后才附加。
+
+未来只读切换示例定义g_i=Dice(Q0_i,y_i)−Dice(K_i,y_i)、G=Σw_i z_i g_i；权重预定归一，未选内容贡献0，标签仅用于离线评价。要求全体净收益、相对匹配动作频率/时段等因素的非信息性控制增量、D1误切换与全域头/结构保护分别成立。规则识别预测错误不等于识别动作收益。示例须保持VV学习状态/缓存/RNG轨迹；改写入或状态则需真实策略轨迹，不能套此公式。当前无新信号和机制材料，示例不构成selector准入。
+
+终态按多个字段报告：NOT_ADMITTED（前置未满足、未运行）；NOT_EVALUABLE（资格/访问/工程无效）；BENEFIT_NOT_ESTABLISHED（未建立目标收益，不等于无收益）；PROTECTION_NOT_ESTABLISHED（未证非劣，不自动等于损害）；HARM_SUPPORTED（预定区间/比较族支持方向性或超容忍界损害）；最终PROMOTION_PASS或NOT_PROMOTED。收益可以成立而保护失败；有效研究信息不因未晋级而删除。当前未来实验统计结果均NOT_RUN。
+
+具体门槛、声明模式、alpha/比较族、效应/非劣依据、控制设计与功效仍未决，+.3/−.5仅讨论值。详见[统计与终态合同](../r95-evidence-admission/GATE_SPECIFICATION.md)、[动作价值合同](../r95-evidence-admission/ACTION_VALUE_CONTRACT.md)。未来冻结前必须有真实材料；不重新判定R91/R93，不复活已关闭扫描。
 
 ## 9. 完整性、失败与资源总账
 
@@ -314,6 +324,6 @@ R94审计未收到合格新材料；R95只对后来收到的计划和文档授�
 |R92|[归因报告](../r92-residual-audit/RESIDUAL_ATTRIBUTION.md)、[旧干预审计](../r92-residual-audit/PRIOR_INTERVENTION_AUDIT.md)、[终态审计](../r92-residual-audit/TERMINAL_AUDIT.json)|07646d1d8c167eb341d7c8dbb5079b6445fa84d8|
 |R93|[REPORT](../r93-boundary-diagnostic/REPORT.md)、[性能门](../r93-boundary-diagnostic/PERFORMANCE_GATE.json)、[终态审计](../r93-boundary-diagnostic/TERMINAL_AUDIT.json)|9c6648c42ccd632508c34890dc8cf16b11ab60e1|
 |R94|[强静态对照报告](../r94-static-evidence-audit/REPORT.md)、[资产/证据边界](../r94-static-evidence-audit/ASSET_EVIDENCE_BOUNDARY.md)、[决策](../r94-static-evidence-audit/DECISION.md)、[终态审计](../r94-static-evidence-audit/TERMINAL_AUDIT.json)|b38d0078bf9cd118e13e04f32b7a87f17b2ed02d|
-|R95（文档）|[报告](../r95-evidence-admission/REPORT.md)、[基线合同](../r95-evidence-admission/BASELINE_CONTRACT.md)、[确认草案](../r95-evidence-admission/CONFIRMATION_PROTOCOL_DRAFT.md)、[资源计划](../r95-evidence-admission/RESOURCE_PLAN.md)、[准入决定](../r95-evidence-admission/DECISION.json)|afe25f05b23757bbc0850f9833f5c347298aed92|
+|R95（文档）|[报告](../r95-evidence-admission/REPORT.md)、[基线合同](../r95-evidence-admission/BASELINE_CONTRACT.md)、[确认草案](../r95-evidence-admission/CONFIRMATION_PROTOCOL_DRAFT.md)、[资源计划](../r95-evidence-admission/RESOURCE_PLAN.md)、[准入决定](../r95-evidence-admission/DECISION.json)|初版afe25f05b23757bbc0850f9833f5c347298aed92；统计/动作合同随本报告修订|
 
 各目录保留全部匿名正负结果、内容分布、结构/NA、资格、封存与费用记录。本文为跨轮综合，不取代原协议、原门槛或完整结果表。
