@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "observed_at": 1792598790.0918434,
+  "workers": [
+    {
+      "mode": "selfcheck",
+      "pid": 1141147,
+      "alive": false
+    },
+    {
+      "mode": "qualify",
+      "pid": 1141264,
+      "alive": false
+    },
+    {
+      "mode": "formal",
+      "pid": 1141563,
+      "alive": false
+    },
+    {
+      "mode": "score",
+      "pid": 1143961,
+      "alive": false
+    }
+  ],
+  "controller_alive": false,
+  "all_exit_zero": true,
+  "allocated_root_bytes": 324204598,
+  "remote_cap_bytes": 1073741824,
+  "T0": 1792591373.998501,
+  "deadline": 1792677773.998501,
+  "completed_at": 1792597645.0512314,
+  "elapsed_from_budget_T0_seconds": 6271.052730321884,
+  "GPU_wrapper_wall_seconds": 1624.0187146663666,
+  "CPU_score_wrapper_seconds": 927.2291774749756,
+  "all_within_budget": true
+}
