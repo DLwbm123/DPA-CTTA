@@ -14,5 +14,13 @@
     "identities_retired": true
   },
   "repair": "Resolve the pinned reference checkout from the existing execution environment instead of passing the experiment container as the reference repository.",
-  "failed_stage_time_is_gpu_designated_process_wall_time_not_kernel_time": true
+  "failed_stage_time_is_gpu_designated_process_wall_time_not_kernel_time": true,
+  "second_failure": {
+    "stage": "score",
+    "exit_code": 1,
+    "seconds": 42.00379729270935,
+    "error": "NumPy bool gate not JSON serializable",
+    "generation_preserved": true
+  },
+  "scoring_repair_sha": "38b91d9d7dce973c3d68410724daf90ad2ff1f7a"
 }

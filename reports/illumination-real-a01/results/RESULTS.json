@@ -1,0 +1,414 @@
+{
+  "status": "COMPLETE",
+  "qualified": false,
+  "gates": {
+    "primary": false,
+    "source": false,
+    "controls": false,
+    "od_noninferior": false,
+    "worst_head_loss": false,
+    "new_empty": false,
+    "new_nesting": true,
+    "full_surface": false,
+    "surface_noninferior": false,
+    "vcdr": false,
+    "spatial_null": true
+  },
+  "metrics": {
+    "SOURCE": {
+      "OD": {
+        "mean": 97.03277241563224,
+        "ci95": [
+          96.63873515536704,
+          97.43302528958925
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 87.28154306068689,
+        "ci95": [
+          83.13544449596515,
+          90.80558926490481
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 2.3355016203217427,
+        "ci95": [
+          2.041761467472865,
+          2.628549457852806
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 4.244397012827503,
+        "ci95": [
+          3.433663985862815,
+          4.985822601715036
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OD_HD95": {
+        "mean": 5.501094260355746,
+        "ci95": [
+          4.888645793278781,
+          6.124649271392528
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 9.665112284219642,
+        "ci95": [
+          8.274589595960283,
+          10.962534588159432
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "vCDR": {
+        "mean": 0.05687870653869323,
+        "ci95": [
+          0.03303688971647053,
+          0.07792829976143542
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      }
+    },
+    "MSRCP": {
+      "OD": {
+        "mean": 61.98426104168911,
+        "ci95": [
+          45.48617827057554,
+          79.0198911812947
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 22.55829867767741,
+        "ci95": [
+          0.0,
+          45.125770621436644
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 28.699742891023043,
+        "ci95": [
+          16.814104630168966,
+          40.873714992359346
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 36.28109129617339,
+        "ci95": null,
+        "defined_inputs": 16,
+        "defined_contents": 4
+      },
+      "OD_HD95": {
+        "mean": 61.744130376270945,
+        "ci95": [
+          33.6843687633089,
+          94.30591413270368
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 58.288102119743606,
+        "ci95": null,
+        "defined_inputs": 16,
+        "defined_contents": 4
+      },
+      "vCDR": {
+        "mean": 0.3864081948356989,
+        "ci95": [
+          0.3451210897536361,
+          0.42612241045474475
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      }
+    },
+    "GLOBAL": {
+      "OD": {
+        "mean": 81.06712872124538,
+        "ci95": [
+          66.61652047884664,
+          91.65645691730819
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 44.19590606033013,
+        "ci95": [
+          21.56226137571466,
+          64.7796023230619
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 16.375145589860594,
+        "ci95": [
+          9.9968128701013,
+          23.828468920996876
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 14.27780997879674,
+        "ci95": null,
+        "defined_inputs": 23,
+        "defined_contents": 6
+      },
+      "OD_HD95": {
+        "mean": 45.26314969513143,
+        "ci95": [
+          25.073190271293928,
+          69.17392687961329
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 27.490622510306725,
+        "ci95": null,
+        "defined_inputs": 23,
+        "defined_contents": 6
+      },
+      "vCDR": {
+        "mean": 0.2300490233899305,
+        "ci95": [
+          0.1404287790160035,
+          0.3177216150526637
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      }
+    },
+    "SHIFT": {
+      "OD": {
+        "mean": 44.45902301132797,
+        "ci95": [
+          25.929874207658646,
+          65.29449098508825
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 15.208489992162093,
+        "ci95": [
+          0.0,
+          36.12767436030511
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 34.19060315949283,
+        "ci95": [
+          21.963041297126395,
+          48.176741991454314
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 33.83732608337518,
+        "ci95": null,
+        "defined_inputs": 9,
+        "defined_contents": 3
+      },
+      "OD_HD95": {
+        "mean": 71.55827717187626,
+        "ci95": [
+          47.99228623304926,
+          94.70313652833934
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 54.72787255275886,
+        "ci95": null,
+        "defined_inputs": 9,
+        "defined_contents": 3
+      },
+      "vCDR": {
+        "mean": 0.4515947151128718,
+        "ci95": [
+          0.3215193172413296,
+          0.5882620246274012
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      }
+    },
+    "B": {
+      "OD": {
+        "mean": 97.13726162910979,
+        "ci95": [
+          96.7363677956862,
+          97.54921863644277
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 87.80529246678334,
+        "ci95": [
+          83.87122008786633,
+          91.21932887059698
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 2.350047853474006,
+        "ci95": [
+          2.052493496025748,
+          2.6383677341060463
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 4.304221276420964,
+        "ci95": [
+          3.394616342920558,
+          5.1425414018908615
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OD_HD95": {
+        "mean": 5.368008996331698,
+        "ci95": [
+          4.716922362745305,
+          6.034315723719258
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 9.078439098757263,
+        "ci95": [
+          7.453816606260116,
+          10.535655177615283
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      },
+      "vCDR": {
+        "mean": 0.051416822775909844,
+        "ci95": [
+          0.03191702978754937,
+          0.07129221638323695
+        ],
+        "defined_inputs": 32,
+        "defined_contents": 8
+      }
+    }
+  },
+  "oc_contrasts_pp": {
+    "SOURCE": {
+      "mean": -64.72324438300947,
+      "ci95": [
+        -82.95897083394642,
+        -44.5760464203575
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "GLOBAL": {
+      "mean": -21.637607382652718,
+      "ci95": [
+        -41.031378200304,
+        -4.233872289256902
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "SHIFT": {
+      "mean": 7.3498086855153195,
+      "ci95": [
+        -10.072540619118353,
+        27.37773684254867
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    "B": {
+      "mean": -65.24699378910594,
+      "ci95": [
+        -83.69378419392837,
+        -45.074476587045424
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  },
+  "od_contrast_b_pp": {
+    "mean": -35.15300058742068,
+    "ci95": [
+      -51.45279002746302,
+      -18.337568454113686
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "oc_surface_ratios": {
+    "OC_ASSD": {
+      "mean": 7.719187709649875,
+      "ci95": null,
+      "defined_inputs": 16,
+      "defined_contents": 4
+    },
+    "OC_HD95": {
+      "mean": 6.190506298060527,
+      "ci95": null,
+      "defined_inputs": 16,
+      "defined_contents": 4
+    }
+  },
+  "vcdr_delta": {
+    "mean": 0.334991372059789,
+    "ci95": [
+      0.2921222118241087,
+      0.3742033716267167
+    ],
+    "defined_inputs": 32,
+    "defined_contents": 8
+  },
+  "worst_head_delta_pp": -95.78700893534293,
+  "empty_heads": {
+    "SOURCE": 0,
+    "MSRCP": 16,
+    "GLOBAL": 9,
+    "SHIFT": 23,
+    "B": 0
+  },
+  "nesting_pixels": {
+    "SOURCE": 0,
+    "MSRCP": 0,
+    "GLOBAL": 0,
+    "SHIFT": 0,
+    "B": 0
+  },
+  "registered_contents": 8,
+  "inputs": 32,
+  "task_scope": "Repeatedly used development contents; not independent patient validation."
+}

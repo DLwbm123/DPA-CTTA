@@ -1,0 +1,56 @@
+{
+  "stages": [
+    {
+      "stage": "score",
+      "exit_code": 0,
+      "seconds": 35.58871603012085
+    }
+  ],
+  "all_stage_workers_retired": true,
+  "source_sha": "38b91d9d7dce973c3d68410724daf90ad2ff1f7a",
+  "previous_attempts": [
+    {
+      "stages": [
+        {
+          "stage": "check",
+          "exit_code": 0,
+          "seconds": 0.9414036273956299
+        },
+        {
+          "stage": "worker1",
+          "exit_code": 1,
+          "seconds": 5.396646022796631
+        }
+      ],
+      "all_stage_workers_retired": true,
+      "source_sha": "9dad37307ae8b58e98bfd14535331866df209b19",
+      "planned_model_calls": 256,
+      "elapsed_seconds": 6.5485812947154045
+    },
+    {
+      "stages": [
+        {
+          "stage": "worker1",
+          "exit_code": 0,
+          "seconds": 104.91085481643677
+        },
+        {
+          "stage": "worker2",
+          "exit_code": 0,
+          "seconds": 43.79957818984985
+        },
+        {
+          "stage": "score",
+          "exit_code": 1,
+          "seconds": 42.00379729270935
+        }
+      ],
+      "all_stage_workers_retired": true,
+      "source_sha": "9dad37307ae8b58e98bfd14535331866df209b19",
+      "planned_model_calls": 256,
+      "elapsed_seconds": 233.29462921898812
+    }
+  ],
+  "planned_model_calls": 256,
+  "elapsed_seconds": 355.79749985970557
+}
