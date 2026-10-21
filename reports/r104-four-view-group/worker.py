@@ -17,6 +17,7 @@ def run(c,write,mode):
     canonical={r['image_sha256']:i for i,r in enumerate(panels[0])};assert len(canonical)==192
     assert set(canonical)=={r['image_sha256'] for r in panels[1]}
     prior=read(root/'private/qualify_state.json') if mode=='formal' else dict(physical_updates=0,physical_forwards=0,training_backwards=0)
+    for k,v in c.get('failed_qualification_cost',{}).items():prior[k]=prior.get(k,0)+v
     state=dict(status='RUNNING',mode=mode,started=time.time(),physical_updates=0,completed_updates=0,physical_forwards=0,training_backwards=0,completed_jobs=[],online_label_reads=0,online_score_reads=0)
     def persist():write('private/'+mode+'_state.json',state)
     def guard():
@@ -58,6 +59,12 @@ def run(c,write,mode):
                             for visit,row in enumerate(panels[order][:2]):
                                 x=image(reader,row,permit,guard);idx=canonical[row['image_sha256']];raw=style(x,seed,idx)
                                 before=[vector(h) for h in hosts];tick=time.time();za,da=a.keyed_step(x,raw);zb,db=b.keyed_step(x,raw);torch.cuda.synchronize();timings.append(time.time()-tick)
+                                if c.get('diagnostic_only'):
+                                    def delta(a,b):
+                                        d=(a-b).abs()
+                                        return dict(max=float(d.max()),mean=float(d.mean()),norm=float(d.norm()),close=close_enough(a,b))
+                                    write('public/DUPLICATE_DIAGNOSTIC.json',dict(output=delta(za,zb),loss_a=da['diagnostics']['joint_loss'],loss_b=db['diagnostics']['joint_loss'],target=delta(a.target_cache[0],b.target_cache[0]),before=delta(before[0],before[1]),update=delta(vector(a)-before[0],vector(b)-before[1]),parameters=delta(vector(a),vector(b)),gradient=delta(torch.cat([p.grad.flatten().cpu() for p in a.native.params]),torch.cat([p.grad.flatten().cpu() for p in b.native.params])),mask_disagreement=int(((za>=0)!=(zb>=0)).sum())))
+                                    raise RuntimeError('bounded diagnostic complete; no admission')
                                 assert close_enough(za,zb) and close_enough(da['diagnostics']['joint_loss'],db['diagnostics']['joint_loss'])
                                 assert close_enough(vector(a)-before[0],vector(b)-before[1]),'duplicate update mismatch'
                                 aa,bb=a.snapshot()['base'],b.snapshot()['base']
