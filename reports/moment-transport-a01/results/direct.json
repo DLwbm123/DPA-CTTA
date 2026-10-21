@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "checks": {
+    "shared_exact": true,
+    "zero_jump_identity": true,
+    "zero_gate": true,
+    "one_zero_rejected": true,
+    "opposite_rejected": true,
+    "nonfinite_rejected": true,
+    "cross_group_shift_nonzero": true
+  },
+  "cases": [
+    {
+      "case": "shared",
+      "gate_pass": true,
+      "transport_oracle_max_abs_error": 1.1102230246251565e-16,
+      "d": [
+        1.0,
+        0.2
+      ],
+      "nonrestored_coordinate_shift": 0.2,
+      "arms": {
+        "keep": {
+          "mean_pre_loss": 0.2275465486252274,
+          "first_post_loss": 0.5041013415309114,
+          "final_loss": 0.0023522692574771222
+        },
+        "fresh": {
+          "mean_pre_loss": 0.11565435367088966,
+          "first_post_loss": 0.444250000695,
+          "final_loss": 0.007921354918866143
+        },
+        "transport": {
+          "mean_pre_loss": 0.17222156350741133,
+          "first_post_loss": 0.462498991116457,
+          "final_loss": 0.004597511715326269
+        },
+        "first_only": {
+          "mean_pre_loss": 0.11705913120582953,
+          "first_post_loss": 0.44079627027885354,
+          "final_loss": 0.007145357499102851
+        },
+        "historical_oracle": {
+          "mean_pre_loss": 0.17222156350741133,
+          "first_post_loss": 0.462498991116457,
+          "final_loss": 0.004597511715326269
+        }
+      }
+    },
+    {
+      "case": "alternating",
+      "gate_pass": true,
+      "transport_oracle_max_abs_error": 2.8603463765112913,
+      "d": [
+        1.0,
+        0.2
+      ],
+      "nonrestored_coordinate_shift": 0.2,
+      "arms": {
+        "keep": {
+          "mean_pre_loss": 0.2275465486252274,
+          "first_post_loss": 0.5041013415309114,
+          "final_loss": 0.0023522692574771222
+        },
+        "fresh": {
+          "mean_pre_loss": 0.11565435367088966,
+          "first_post_loss": 0.444250000695,
+          "final_loss": 0.007921354918866143
+        },
+        "transport": {
+          "mean_pre_loss": 0.17222156350741133,
+          "first_post_loss": 0.462498991116457,
+          "final_loss": 0.004597511715326269
+        },
+        "first_only": {
+          "mean_pre_loss": 0.11705913120582953,
+          "first_post_loss": 0.44079627027885354,
+          "final_loss": 0.007145357499102851
+        },
+        "historical_oracle": {
+          "mean_pre_loss": 0.20447884898104987,
+          "first_post_loss": 0.45896991981837815,
+          "final_loss": 0.05165842220199389
+        }
+      }
+    },
+    {
+      "case": "adversarial",
+      "gate_pass": true,
+      "transport_oracle_max_abs_error": 2.9809119436765923,
+      "d": [
+        1.0,
+        0.2
+      ],
+      "nonrestored_coordinate_shift": 0.2,
+      "arms": {
+        "keep": {
+          "mean_pre_loss": 0.5523644691743541,
+          "first_post_loss": 0.5355435846894531,
+          "final_loss": 0.2753604786607302
+        },
+        "fresh": {
+          "mean_pre_loss": 0.11565435367088966,
+          "first_post_loss": 0.444250000695,
+          "final_loss": 0.007921354918866143
+        },
+        "transport": {
+          "mean_pre_loss": 0.39513717950264954,
+          "first_post_loss": 0.5329857797514476,
+          "final_loss": 0.06526266799333903
+        },
+        "first_only": {
+          "mean_pre_loss": 0.4437035889628675,
+          "first_post_loss": 0.511381346818213,
+          "final_loss": 0.1784554225379723
+        },
+        "historical_oracle": {
+          "mean_pre_loss": 0.1533899021919439,
+          "first_post_loss": 0.44591482277718364,
+          "final_loss": 0.011172407380215441
+        }
+      }
+    }
+  ],
+  "model_calls": 0,
+  "counterexample_detected": true
+}
