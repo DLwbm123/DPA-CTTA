@@ -1,31 +1,38 @@
 {
   "status": "FORMAL_RUNNING",
-  "observed_at": 1792595662.3548615,
+  "observed_at": 1792596505.6889715,
   "formal_state": {
     "status": "RUNNING",
     "mode": "formal",
     "started": 1792595216.872932,
-    "physical_updates": 720,
-    "completed_updates": 720,
-    "physical_forwards": 6096,
-    "training_backwards": 720,
+    "physical_updates": 1992,
+    "completed_updates": 1992,
+    "physical_forwards": 16896,
+    "training_backwards": 1992,
     "completed_jobs": [
       "C1_s20260907_o0",
       "C2_s20260907_o0",
-      "C1_s20260907_o1"
+      "C1_s20260907_o1",
+      "C2_s20260907_o1",
+      "C1_s17011_o0",
+      "C2_s17011_o0",
+      "C1_s17011_o1",
+      "C2_s17011_o1",
+      "C1_s29009_o0",
+      "C2_s29009_o0"
     ],
     "online_label_reads": 0,
     "online_score_reads": 0,
-    "job": "C2_s20260907_o1",
-    "arrival": 144
+    "job": "C1_s29009_o1",
+    "arrival": 72
   },
   "identity_verified": true,
   "worker_argv": "/tmp/q85m/bin/python /tmp/e102.py",
-  "allocated_root_bytes": 100491111,
+  "allocated_root_bytes": 273314718,
   "remote_cap_bytes": 1073741824,
   "deadline": 1792677773.998501,
-  "remaining_wall_seconds": 82111.64363956451,
-  "formal_elapsed_seconds": 445.48192954063416,
+  "remaining_wall_seconds": 81268.30952954292,
+  "formal_elapsed_seconds": 1288.8160395622253,
   "score_available": false,
   "completed_trajectory_receipts": [
     {
@@ -54,6 +61,69 @@
       "arrivals": 192,
       "forwards": 1536,
       "seconds": 106.36387395858765
+    },
+    {
+      "status": "COMPLETE",
+      "cell": "C2",
+      "seed": 20260907,
+      "order": 1,
+      "arrivals": 192,
+      "forwards": 1728,
+      "seconds": 123.85664582252502
+    },
+    {
+      "status": "COMPLETE",
+      "cell": "C1",
+      "seed": 17011,
+      "order": 0,
+      "arrivals": 192,
+      "forwards": 1536,
+      "seconds": 120.88860011100769
+    },
+    {
+      "status": "COMPLETE",
+      "cell": "C2",
+      "seed": 17011,
+      "order": 0,
+      "arrivals": 192,
+      "forwards": 1728,
+      "seconds": 131.6954267024994
+    },
+    {
+      "status": "COMPLETE",
+      "cell": "C1",
+      "seed": 17011,
+      "order": 1,
+      "arrivals": 192,
+      "forwards": 1536,
+      "seconds": 119.58962917327881
+    },
+    {
+      "status": "COMPLETE",
+      "cell": "C2",
+      "seed": 17011,
+      "order": 1,
+      "arrivals": 192,
+      "forwards": 1728,
+      "seconds": 128.10156059265137
+    },
+    {
+      "status": "COMPLETE",
+      "cell": "C1",
+      "seed": 29009,
+      "order": 0,
+      "arrivals": 192,
+      "forwards": 1536,
+      "seconds": 123.16306638717651
+    },
+    {
+      "status": "COMPLETE",
+      "cell": "C2",
+      "seed": 29009,
+      "order": 0,
+      "arrivals": 192,
+      "forwards": 1728,
+      "seconds": 129.07176852226257
     }
   ]
 }
