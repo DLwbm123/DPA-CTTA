@@ -1,0 +1,166 @@
+{
+  "status": "COMPLETE",
+  "wall_seconds": 112.51021599769592,
+  "CPU_process_seconds": 186.969104171,
+  "result": {
+    "status": "PASS",
+    "admitted": true,
+    "checks": [
+      {
+        "check": "plain_duplicate",
+        "arrival": 1,
+        "passed": true,
+        "max_output_abs": 0.0,
+        "max_update_abs": 0.0
+      },
+      {
+        "check": "plain_duplicate",
+        "arrival": 2,
+        "passed": true,
+        "max_output_abs": 0.0,
+        "max_update_abs": 0.0
+      },
+      {
+        "check": "full_duplicate",
+        "arrival": 1,
+        "passed": true,
+        "max_output_abs": 0.0,
+        "max_update_abs": 0.0
+      },
+      {
+        "check": "full_duplicate",
+        "arrival": 2,
+        "passed": true,
+        "max_output_abs": 0.0,
+        "max_update_abs": 0.0
+      },
+      {
+        "check": "C2_oracle",
+        "arrival": 1,
+        "passed": true,
+        "max_output_abs": 0.0,
+        "max_update_abs": 0.0
+      },
+      {
+        "check": "C2_oracle",
+        "arrival": 2,
+        "passed": true,
+        "max_output_abs": 0.0,
+        "max_update_abs": 0.0
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 20260907,
+        "order": 0,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "NATIVE",
+        "seed": 20260907,
+        "order": 0,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 20260907,
+        "order": 1,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "NATIVE",
+        "seed": 20260907,
+        "order": 1,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 17011,
+        "order": 0,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "NATIVE",
+        "seed": 17011,
+        "order": 0,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 17011,
+        "order": 1,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "NATIVE",
+        "seed": 17011,
+        "order": 1,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 29009,
+        "order": 0,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "NATIVE",
+        "seed": 29009,
+        "order": 0,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 29009,
+        "order": 1,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      },
+      {
+        "check": "reuse",
+        "cell": "NATIVE",
+        "seed": 29009,
+        "order": 1,
+        "prefix": 2,
+        "PRE_K_binary_exact": true
+      }
+    ],
+    "projected_seconds": 8836.750854492188,
+    "peak_allocated_MiB": 1860.14990234375,
+    "qualified_step_seconds": [
+      1.0150291919708252,
+      1.0230443477630615,
+      0.405376672744751,
+      0.41327619552612305,
+      1.442953109741211,
+      1.1060192584991455,
+      0.8693909645080566,
+      1.4431228637695312,
+      1.515263557434082,
+      0.44955921173095703,
+      0.46896982192993164,
+      0.43646669387817383
+    ],
+    "short_prefix_not_full_trajectory_replay": true
+  }
+}
