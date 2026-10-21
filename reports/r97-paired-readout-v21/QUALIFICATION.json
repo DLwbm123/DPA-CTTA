@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "admitted": true,
+  "checks": [
+    {
+      "arrival": 1,
+      "PRE_K_full_state_exact": true,
+      "signal_state_exact": true
+    },
+    {
+      "arrival": 2,
+      "PRE_K_full_state_exact": true,
+      "signal_state_exact": true
+    },
+    {
+      "arrival": 3,
+      "PRE_K_full_state_exact": true,
+      "signal_state_exact": true
+    }
+  ],
+  "static_repeat_exact": true,
+  "epsilon": 1e-07,
+  "projected_formal_and_score_seconds": 3926.7764739990234,
+  "remaining_seconds": 13197.262276649475,
+  "seconds_per_qualified_pair": [
+    5.775653600692749,
+    3.068082094192505,
+    2.913370370864868
+  ],
+  "note": "projection conservatively uses double-host qualification time for each single-host formal arrival"
+}

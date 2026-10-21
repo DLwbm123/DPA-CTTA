@@ -1,0 +1,103 @@
+{
+  "status": "COMPLETE",
+  "wall_seconds": 3.379669189453125,
+  "CPU_process_seconds": 2.8443138610000003,
+  "result": {
+    "status": "PASS_TO_QUALIFICATION",
+    "admitted": true,
+    "minimum_development_space_pp": 0.1,
+    "oracle": [
+      {
+        "order": 0,
+        "variant": "raw",
+        "input_oracle_pp": 1.4451597631057171,
+        "eligible_oracle_pp": 1.4451597631057171,
+        "class_relaxed_oracle_pp": 1.7357128689447556,
+        "eligible_contents": 191,
+        "Q_minus_K_pp": -0.7483603672938729
+      },
+      {
+        "order": 0,
+        "variant": "post",
+        "input_oracle_pp": 1.4124243660872966,
+        "eligible_oracle_pp": 1.4124243660872966,
+        "class_relaxed_oracle_pp": 1.7228621635858294,
+        "eligible_contents": 191,
+        "Q_minus_K_pp": -0.8373974108045217
+      },
+      {
+        "order": 1,
+        "variant": "raw",
+        "input_oracle_pp": 1.162640705183728,
+        "eligible_oracle_pp": 1.162640705183728,
+        "class_relaxed_oracle_pp": 1.4332926916912871,
+        "eligible_contents": 191,
+        "Q_minus_K_pp": -1.2064863445349032
+      },
+      {
+        "order": 1,
+        "variant": "post",
+        "input_oracle_pp": 1.1221680824571372,
+        "eligible_oracle_pp": 1.1221680824571372,
+        "class_relaxed_oracle_pp": 1.4269654381058223,
+        "eligible_contents": 191,
+        "Q_minus_K_pp": -1.3217688540084525
+      }
+    ],
+    "R_count": [
+      [
+        174363,
+        95757
+      ],
+      [
+        161790,
+        93316
+      ]
+    ],
+    "D_count": [
+      [
+        904763,
+        472979
+      ],
+      [
+        843263,
+        454032
+      ]
+    ],
+    "reverse_count": [
+      [
+        307,
+        150
+      ],
+      [
+        404,
+        291
+      ]
+    ],
+    "R_coverage": [
+      [
+        0.1927167667112824,
+        0.20245507728672943
+      ],
+      [
+        0.19186185092906957,
+        0.20552736371004687
+      ]
+    ],
+    "reverse_fraction": [
+      [
+        0.0017606946427854533,
+        0.0015664651148218928
+      ],
+      [
+        0.0024970640954323506,
+        0.0031184362810236185
+      ]
+    ],
+    "candidate_semantics": "Original deterministic six geometric weak views; no new keys; actual GPU endpoints must match every existing bitstream before scoring",
+    "old_scores_reused": true,
+    "new_label_reads": 0,
+    "new_model_calls": 0,
+    "CPU_body_seconds": 3.0736565589904785
+  }
+}
