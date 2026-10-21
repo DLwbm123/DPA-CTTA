@@ -1,0 +1,251 @@
+{
+  "schema": 1,
+  "cases": [
+    {
+      "case": "stationary",
+      "gate_pass": true,
+      "old_point": [
+        -0.04874236186892313,
+        0.004286723150416306
+      ],
+      "restored_point": [
+        1.0,
+        0.0
+      ],
+      "delta": [
+        1.0487423618689231,
+        -0.004286723150416306
+      ],
+      "transport_oracle_max_abs_error": 2.220446049250313e-16,
+      "arms": {
+        "keep": {
+          "mean_pre_loss": 0.15462310045322508,
+          "final_loss": 0.010213866551902259
+        },
+        "fresh": {
+          "mean_pre_loss": 0.11565435367088968,
+          "final_loss": 0.007921354918866143
+        },
+        "transport": {
+          "mean_pre_loss": 0.15411468667840633,
+          "final_loss": 0.0019885669628743694
+        },
+        "first_only": {
+          "mean_pre_loss": 0.10232573412360133,
+          "final_loss": 0.01592544356098551
+        },
+        "historical_oracle": {
+          "mean_pre_loss": 0.15411468667840633,
+          "final_loss": 0.001988566962874368
+        },
+        "native_no_restore": {
+          "mean_pre_loss": 0.0002995937850314123,
+          "final_loss": 2.856233727813174e-06
+        },
+        "fixed_source": {
+          "mean_pre_loss": 0.5,
+          "final_loss": 0.5
+        }
+      },
+      "improvement_over_fresh": -0.03846033300751665
+    },
+    {
+      "case": "abrupt",
+      "gate_pass": true,
+      "old_point": [
+        2.0483796584877467,
+        -1.0483796671956627
+      ],
+      "restored_point": [
+        1.0,
+        0.0
+      ],
+      "delta": [
+        -1.0483796584877467,
+        1.0483796671956627
+      ],
+      "transport_oracle_max_abs_error": 7.908662262119112,
+      "arms": {
+        "keep": {
+          "mean_pre_loss": 0.2371307118320773,
+          "final_loss": 0.03347399527893476
+        },
+        "fresh": {
+          "mean_pre_loss": 0.11565435367088968,
+          "final_loss": 0.007921354918866143
+        },
+        "transport": {
+          "mean_pre_loss": 0.4034985484715726,
+          "final_loss": 0.16757966615386521
+        },
+        "first_only": {
+          "mean_pre_loss": 0.8652385484576754,
+          "final_loss": 0.11853961910866072
+        },
+        "historical_oracle": {
+          "mean_pre_loss": 0.6538168565529058,
+          "final_loss": 0.5463391247620504
+        },
+        "native_no_restore": {
+          "mean_pre_loss": 1.3082817296509135,
+          "final_loss": 0.3189725391409515
+        },
+        "fixed_source": {
+          "mean_pre_loss": 0.5,
+          "final_loss": 0.5
+        }
+      },
+      "improvement_over_fresh": -0.28784419480068296
+    },
+    {
+      "case": "returning",
+      "gate_pass": true,
+      "old_point": [
+        1.2005848250265663,
+        -1.0437591911581656
+      ],
+      "restored_point": [
+        1.0,
+        0.0
+      ],
+      "delta": [
+        -0.20058482502656627,
+        1.0437591911581656
+      ],
+      "transport_oracle_max_abs_error": 2.146396438612949,
+      "arms": {
+        "keep": {
+          "mean_pre_loss": 0.712696539640245,
+          "final_loss": 0.5998050214838677
+        },
+        "fresh": {
+          "mean_pre_loss": 0.11565435367088968,
+          "final_loss": 0.007921354918866143
+        },
+        "transport": {
+          "mean_pre_loss": 0.7472465032752559,
+          "final_loss": 0.6350520762363993
+        },
+        "first_only": {
+          "mean_pre_loss": 1.305763895697929,
+          "final_loss": 0.6469829344943001
+        },
+        "historical_oracle": {
+          "mean_pre_loss": 0.7451058833216172,
+          "final_loss": 0.6621635564192613
+        },
+        "native_no_restore": {
+          "mean_pre_loss": 1.1594566513475828,
+          "final_loss": 0.8147829630207608
+        },
+        "fixed_source": {
+          "mean_pre_loss": 0.5,
+          "final_loss": 0.5
+        }
+      },
+      "improvement_over_fresh": -0.6315921496043662
+    },
+    {
+      "case": "mixed",
+      "gate_pass": true,
+      "old_point": [
+        1.6445012643866475,
+        -0.32460908104198816
+      ],
+      "restored_point": [
+        1.0,
+        0.0
+      ],
+      "delta": [
+        -0.6445012643866475,
+        0.32460908104198816
+      ],
+      "transport_oracle_max_abs_error": 3.0086080200789223,
+      "arms": {
+        "keep": {
+          "mean_pre_loss": 0.32295620274830944,
+          "final_loss": 0.10831344079763586
+        },
+        "fresh": {
+          "mean_pre_loss": 0.11565435367088968,
+          "final_loss": 0.007921354918866143
+        },
+        "transport": {
+          "mean_pre_loss": 0.4056400670911206,
+          "final_loss": 0.1767727405016153
+        },
+        "first_only": {
+          "mean_pre_loss": 0.41240775274897556,
+          "final_loss": 0.1621217430154267
+        },
+        "historical_oracle": {
+          "mean_pre_loss": 0.5155027379709703,
+          "final_loss": 0.3467994197661687
+        },
+        "native_no_restore": {
+          "mean_pre_loss": 0.8805662213765755,
+          "final_loss": 0.3239257492228716
+        },
+        "fixed_source": {
+          "mean_pre_loss": 0.5,
+          "final_loss": 0.5
+        }
+      },
+      "improvement_over_fresh": -0.28998571342023094
+    },
+    {
+      "case": "null",
+      "gate_pass": true,
+      "old_point": [
+        -0.04874236186892313,
+        0.004286723150416306
+      ],
+      "restored_point": [
+        -0.04874236186892313,
+        0.004286723150416306
+      ],
+      "delta": [
+        0.0,
+        0.0
+      ],
+      "transport_oracle_max_abs_error": 0.0,
+      "arms": {
+        "keep": {
+          "mean_pre_loss": 0.0002995937850314123,
+          "final_loss": 2.856233727813174e-06
+        },
+        "fresh": {
+          "mean_pre_loss": 0.0004793824060325828,
+          "final_loss": 8.038471481544341e-06
+        },
+        "transport": {
+          "mean_pre_loss": 0.0002995937850314123,
+          "final_loss": 2.856233727813174e-06
+        },
+        "first_only": {
+          "mean_pre_loss": 0.0002995937850314123,
+          "final_loss": 2.856233727813174e-06
+        },
+        "historical_oracle": {
+          "mean_pre_loss": 0.0002995937850314123,
+          "final_loss": 2.856233727813174e-06
+        },
+        "native_no_restore": {
+          "mean_pre_loss": 0.0002995937850314123,
+          "final_loss": 2.856233727813174e-06
+        },
+        "fixed_source": {
+          "mean_pre_loss": 0.5,
+          "final_loss": 0.5
+        }
+      },
+      "improvement_over_fresh": 0.00017978862100117052
+    }
+  ],
+  "model_calls": 0,
+  "qualified_finite_opportunity": false,
+  "checks": {
+    "stationary_exact": true,
+    "null_identity": true
+  }
+}
