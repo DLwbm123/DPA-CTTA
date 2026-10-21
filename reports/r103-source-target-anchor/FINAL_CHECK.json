@@ -1,0 +1,78 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "arm": "STATIC",
+      "variant": "raw",
+      "passed": true,
+      "error": 0.0
+    },
+    {
+      "arm": "STATIC",
+      "variant": "post",
+      "passed": true,
+      "error": 0.0
+    },
+    {
+      "arm": "HALF",
+      "variant": "raw",
+      "passed": true,
+      "error": 0.0
+    },
+    {
+      "arm": "HALF",
+      "variant": "post",
+      "passed": true,
+      "error": 0.0
+    },
+    {
+      "arm": "RELIABLE",
+      "variant": "raw",
+      "passed": true,
+      "error": 2.842170943040401e-14
+    },
+    {
+      "arm": "RELIABLE",
+      "variant": "post",
+      "passed": true,
+      "error": 0.0
+    },
+    {
+      "arm": "C2",
+      "variant": "raw",
+      "passed": true,
+      "error": 0.0
+    },
+    {
+      "arm": "C2",
+      "variant": "post",
+      "passed": true,
+      "error": 0.0
+    },
+    {
+      "arm": "VV",
+      "variant": "raw",
+      "passed": true,
+      "error": -1.4210854715202004e-14
+    },
+    {
+      "arm": "VV",
+      "variant": "post",
+      "passed": true,
+      "error": -1.4210854715202004e-14
+    },
+    {
+      "arm": "Q0",
+      "variant": "raw",
+      "passed": true,
+      "error": 0.0
+    },
+    {
+      "arm": "Q0",
+      "variant": "post",
+      "passed": true,
+      "error": 1.4210854715202004e-14
+    }
+  ],
+  "verification": "Published equal-weight cell means versus stored absolute summary; no rescoring or bootstrap rerun"
+}
