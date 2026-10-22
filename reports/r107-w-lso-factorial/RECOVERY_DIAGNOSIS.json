@@ -1,0 +1,59 @@
+{
+  "status": "RECOVERY_BLOCKED_WITHIN_ORIGINAL_BUDGET",
+  "diagnostic_date": "2026-10-22",
+  "new_model_forwards": 0,
+  "new_backwards": 0,
+  "new_training_updates": 0,
+  "GPU_launched": false,
+  "runtime_sources_modified": false,
+  "old_assets_deleted": false,
+  "root_cause_proven": false,
+  "proven_trigger": "codec pre-write capacity assertion followed by failure-receipt capacity assertion",
+  "tests": {
+    "CPU_recompression_of_one_retained_stream": {
+      "input_masks": 192,
+      "output_bytes": 184292,
+      "baseline_usage": 4118362,
+      "largest_observed_usage": 4302654,
+      "guard_triggered": false,
+      "scratch_removed": true
+    },
+    "NFS_26KB_open_file_observation": {
+      "seconds": 24,
+      "logical_size": 26479,
+      "blocks_initial": 0,
+      "blocks_after_10_seconds": 65536,
+      "largest_observed_usage": 4183898,
+      "scratch_removed": true
+    },
+    "dependency_import_usage": 4118362,
+    "CPU_Adam_and_CPU_model_initialization_usage": 4124813,
+    "transient_runtime_files_bytes": 6451,
+    "transient_runtime_files_cleaned_by_library": true
+  },
+  "incomplete_stream": {
+    "compressed_bytes": 26479,
+    "decoded_bytes": 2096911,
+    "full_masks": 31,
+    "partial_mask_bytes": 65295,
+    "eof": false,
+    "resume_checkpoint": false
+  },
+  "recovery_cost": {
+    "retained_complete_jobs": 9,
+    "retained_complete_updates": 1728,
+    "original_failed_attempt_updates_inferred": 1793,
+    "qualification_updates": 36,
+    "restart_incomplete_job_updates": 192,
+    "two_unstarted_jobs_updates": 384,
+    "total_updates_and_backwards_after_recovery": 2405,
+    "original_update_and_backward_cap": 2400,
+    "excess_updates_and_backwards": 5,
+    "total_forwards_after_recovery": 21669,
+    "original_forward_cap": 22000,
+    "original_deadline": 1792751614.42385,
+    "remote_cap_bytes": 10485760,
+    "local_cap_bytes": 1048576
+  },
+  "decision": "No training replay, budget expansion, incomplete-subset scoring, or protection bypass. Preserve all old trajectories and failure evidence."
+}
