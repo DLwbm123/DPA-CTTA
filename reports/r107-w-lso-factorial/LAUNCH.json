@@ -1,0 +1,22 @@
+{
+  "status": "RUNNING_POST_AUDIT",
+  "observed_at": 1792666634.807915,
+  "controller_pid": 1239114,
+  "controller_start_ticks": "466911879",
+  "worker_pid": 1239117,
+  "source_commit": "3687a02e41928285d45d01bdc909000bd2471edd",
+  "post_audit_completed_streams": 2,
+  "post_audit_total_streams": 24,
+  "GPU_qualification": "PENDING",
+  "formal": "NOT_STARTED",
+  "neutral_argv_verified": true,
+  "remote_observed_allocated_bytes": 140288,
+  "monitor": "ctta-r107-w-lso-ablations",
+  "monitor_minutes": 30,
+  "sequence": [
+    "post_audit",
+    "qualify",
+    "formal",
+    "score"
+  ]
+}
