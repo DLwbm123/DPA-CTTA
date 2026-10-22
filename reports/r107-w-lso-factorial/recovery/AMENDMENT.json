@@ -1,0 +1,29 @@
+{
+  "authorization": "User explicitly permits update/backward cap 2400 to 2405 only; preserve 9 completed trajectories and original failure; replay interrupted job and finish remaining two.",
+  "config_overrides": {
+    "max_updates": 2405,
+    "max_backwards": 2405
+  },
+  "unchanged": {
+    "remote_cap_bytes": 10485760,
+    "remote_normal_cap_bytes": 9961472,
+    "local_cap_bytes": 1048576,
+    "max_forwards": 22000,
+    "T0": 1792665214.42385,
+    "deadline": 1792751614.42385
+  },
+  "original_failed_attempt_reconstructed": {
+    "updates": 1793,
+    "forwards": 16137,
+    "backwards": 1793
+  },
+  "new_updates": 576,
+  "new_forwards": 5184,
+  "new_backwards": 576,
+  "total_updates": 2405,
+  "total_forwards": 21669,
+  "total_backwards": 2405,
+  "old_incomplete_prediction_retained": true,
+  "original_sources_and_receipts_retained": true,
+  "science_protocol_changed": false
+}
