@@ -29,6 +29,9 @@ for seed in [10223,10224]:
  u=r/f'uniform_{seed}'/'best_metrics.json'
  if u.exists():
   um=json.loads(u.read_text())['metrics']['MATCHED_UNIFORM'];report['seeds'][seed]['matched_uniform_metrics']=um;report['seeds'][seed]['full_minus_matched_uniform_pp']=full['dice']-um['dice']
+ c=r/f'control_{seed}'/'best_metrics.json'
+ if c.exists():
+  cm=json.loads(c.read_text())['metrics']['MATCHED_CONTROL'];report['seeds'][seed]['matched_control_metrics']=cm;report['seeds'][seed]['full_minus_matched_control_pp']=full['dice']-cm['dice']
 report['passed']=all(x.get('pass',False) for x in report['seeds'].values())
 (out/'REPORT.json').write_text(json.dumps(report,indent=2)+'\n')
 s=[f'# {r.parent.name}源开发结果','',f"开发门：{'PASS' if report['passed'] else 'NOT PASSED'}。不是独立患者/真实目标验证。",'', '|种子|FULL−DIRECT pp|FULL−SOURCE pp|FULL−NO_UPDATE pp|FULL−EPISODIC pp|FULL−RANDOM pp|门|','|---|---:|---:|---:|---:|---:|---|']
@@ -39,5 +42,7 @@ for seed,x in report['seeds'].items():
  if 'full_minus_teacher_pp' in x:s.append(f"\n种子{seed} FULL−TEACHER: {x['full_minus_teacher_pp']:.6f}pp；不能把独立视图收益全部归给适应。")
 for seed,x in report['seeds'].items():
  if 'full_minus_matched_uniform_pp' in x:s.append(f"\n种子{seed} FULL−独立训练均匀融合: {x['full_minus_matched_uniform_pp']:.6f}pp；这是区域选择的必要对照。")
+for seed,x in report['seeds'].items():
+ if 'full_minus_matched_control_pp' in x:s.append(f"\n种子{seed} FULL−独立训练固定DIRECT残差对照: {x['full_minus_matched_control_pp']:.6f}pp。")
 s+=['','检查点仅据开发集选取；bootstrap以内容为单位合并顺序和扰动，仅描述性。两个种子共享开发集，不作为独立队列。未通过门时保留负结果，不修改门。历史接口失败与工程重试分别归档，见各轮协议和运行回执。']
 (out/'REPORT_ZH.md').write_text('\n'.join(s)+'\n');print(json.dumps(report,indent=2))
