@@ -1,0 +1,22 @@
+{
+  "attempts": [
+    {
+      "status": "FAILED_PRELAUNCH_TEST",
+      "reason": "score selfcheck still imported old codec; explicit io_adapter import applied",
+      "model_forwards": 0,
+      "updates": 0,
+      "backwards": 0,
+      "old_assets_modified": false
+    },
+    {
+      "status": "REFUSED_TEST_CLEANUP",
+      "reason": "allowlist omitted the test public/validation_result.json; only that explicit fixture name added; no old assets touched",
+      "model_forwards": 0
+    },
+    {
+      "status": "PASS",
+      "reason": "routing, quota refusal, metadata pressure, scorer selfcheck and missing-authorization guard passed after fixes",
+      "model_forwards": 0
+    }
+  ]
+}

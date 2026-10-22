@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "output_routing_roundtrip": true,
+  "metadata_pressure_catalog_objects": 48,
+  "failed_state_retained": true,
+  "score_selfcheck": true,
+  "authorization_blocks_launch": true,
+  "model_forwards": 0,
+  "backwards": 0,
+  "updates": 0,
+  "labels_read": 0,
+  "before": {
+    "generation": 567,
+    "cursor": 43172,
+    "payload_free": 2053980,
+    "objects": {
+      "code/final_bundle.json.gz": {
+        "offset": 32768,
+        "length": 10404
+      }
+    },
+    "state": {
+      "phase": "VALIDATED_EMPTY"
+    },
+    "logical_bytes": 2097152,
+    "allocated_bytes": 4194304,
+    "root_usage": 9481082
+  },
+  "peak": 9481082,
+  "after": {
+    "generation": 624,
+    "cursor": 43172,
+    "payload_free": 2053980,
+    "objects": {
+      "code/final_bundle.json.gz": {
+        "offset": 32768,
+        "length": 10404
+      }
+    },
+    "state": {
+      "phase": "VALIDATED_EMPTY",
+      "validation": {
+        "status": "PASS",
+        "extent": 4194304,
+        "models": 0,
+        "labels": 0,
+        "authorization": "NOT_GRANTED"
+      }
+    },
+    "logical_bytes": 2097152,
+    "allocated_bytes": 4194304,
+    "root_usage": 9481082
+  }
+}
