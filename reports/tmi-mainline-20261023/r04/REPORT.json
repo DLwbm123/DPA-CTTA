@@ -1,0 +1,206 @@
+{
+  "scope": "source development only; patient independence and backbone membership unknown",
+  "seeds": {
+    "10223": {
+      "status": "COMPLETE",
+      "direct_step": 1600,
+      "full_step": 2000,
+      "direct_metrics": {
+        "dice": 90.224122506372,
+        "od": 95.92247705459594,
+        "oc": 84.52576795814805,
+        "empty_heads": 0.0125,
+        "outside_cup": 0.0,
+        "vcdr_error": 0.05403895057585924,
+        "clean_dice": 92.75922870635986
+      },
+      "full_metrics": {
+        "CANON_SOURCE": {
+          "dice": 85.485982916859,
+          "od": 95.39680004119873,
+          "oc": 75.57516579251926,
+          "empty_heads": 0.0625,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.07934526758136702,
+          "clean_dice": 87.9303240060483
+        },
+        "EPISODIC": {
+          "dice": 90.36228962168097,
+          "od": 95.3569483757019,
+          "oc": 85.36763086766004,
+          "empty_heads": 0.0,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.045789549876097256,
+          "clean_dice": 92.93630390167236
+        },
+        "FULL": {
+          "dice": 90.36417858824134,
+          "od": 95.36714539527892,
+          "oc": 85.36121178120375,
+          "empty_heads": 0.0,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.04573672571613024,
+          "clean_dice": 92.93634357452393
+        },
+        "NO_UPDATE": {
+          "dice": 90.41446888446808,
+          "od": 95.47169904708862,
+          "oc": 85.35723872184754,
+          "empty_heads": 0.0,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.04292694892829055,
+          "clean_dice": 92.97095346450806
+        },
+        "RANDOM": {
+          "dice": 90.4221992187202,
+          "od": 95.46447749137879,
+          "oc": 85.37992094606162,
+          "empty_heads": 0.0,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.043474276635929655,
+          "clean_dice": 92.99904313087464
+        },
+        "SOURCE": {
+          "dice": 88.58638053832821,
+          "od": 95.60262022018432,
+          "oc": 81.57014085647211,
+          "empty_heads": 0.025,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.05332424213011464,
+          "clean_dice": 92.14584258794784
+        },
+        "TEACHER": {
+          "dice": 89.160978847734,
+          "od": 95.11855211257935,
+          "oc": 83.20340558288865,
+          "empty_heads": 0.0125,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.061076599307918464,
+          "clean_dice": 90.70834379196167
+        }
+      },
+      "full_minus_direct_pp": 0.14005608186934637,
+      "full_minus_source_pp": 1.7777980499131303,
+      "clean_delta_pp": 0.17711486816406818,
+      "oc_delta_pp": 0.835443823055698,
+      "content_tail5_pp": -1.633768582344055,
+      "content_bootstrap_descriptive_95": [
+        -0.4055564762571082,
+        0.6410374485517079
+      ],
+      "full_minus_episodic_pp": 0.001888966560372296,
+      "full_minus_random_pp": -0.05802063047885042,
+      "full_minus_no_update_pp": -0.0502902962267342,
+      "gates": {
+        "direct_ge_1pp": false,
+        "source_ge_1pp": true,
+        "clean_ge_minus_0_3pp": true,
+        "oc_nonnegative": true,
+        "content_tail5_ge_minus2pp": true
+      },
+      "pass": false,
+      "full_minus_teacher_pp": 1.203199740507344
+    },
+    "10224": {
+      "status": "COMPLETE",
+      "direct_step": 1600,
+      "full_step": 1200,
+      "direct_metrics": {
+        "dice": 90.12008792160324,
+        "od": 95.47252321243286,
+        "oc": 84.76765263077364,
+        "empty_heads": 0.025,
+        "outside_cup": 0.0,
+        "vcdr_error": 0.04497812098599812,
+        "clean_dice": 93.25146799087524
+      },
+      "full_metrics": {
+        "CANON_SOURCE": {
+          "dice": 85.485982916859,
+          "od": 95.39680004119873,
+          "oc": 75.57516579251926,
+          "empty_heads": 0.0625,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.07934526758136702,
+          "clean_dice": 87.9303240060483
+        },
+        "EPISODIC": {
+          "dice": 89.86952686309814,
+          "od": 95.61392421722412,
+          "oc": 84.12512950897217,
+          "empty_heads": 0.0,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.06258038858955806,
+          "clean_dice": 91.88166208267212
+        },
+        "FULL": {
+          "dice": 89.8716684937477,
+          "od": 95.61944470405578,
+          "oc": 84.12389228343963,
+          "empty_heads": 0.0,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.06244983847980014,
+          "clean_dice": 91.87996640205384
+        },
+        "NO_UPDATE": {
+          "dice": 89.83893632888794,
+          "od": 95.62143516540527,
+          "oc": 84.0564374923706,
+          "empty_heads": 0.0,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.06226408665326173,
+          "clean_dice": 91.8861478805542
+        },
+        "RANDOM": {
+          "dice": 89.8609194278717,
+          "od": 95.70918383598328,
+          "oc": 84.01265501976013,
+          "empty_heads": 0.0,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.06228334220809519,
+          "clean_dice": 91.98151726722718
+        },
+        "SOURCE": {
+          "dice": 88.58638053832821,
+          "od": 95.60262022018432,
+          "oc": 81.57014085647211,
+          "empty_heads": 0.025,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.05332424213011464,
+          "clean_dice": 92.14584258794784
+        },
+        "TEACHER": {
+          "dice": 88.42701516562677,
+          "od": 95.75238437652588,
+          "oc": 81.10164595472764,
+          "empty_heads": 0.0125,
+          "outside_cup": 0.0,
+          "vcdr_error": 0.07970111297020169,
+          "clean_dice": 90.08472833633422
+        }
+      },
+      "full_minus_direct_pp": -0.24841942785553783,
+      "full_minus_source_pp": 1.2852879554194914,
+      "clean_delta_pp": -1.3715015888214026,
+      "oc_delta_pp": -0.643760347334009,
+      "content_tail5_pp": -3.515369200706482,
+      "content_bootstrap_descriptive_95": [
+        -1.3630274003744125,
+        1.1455035603535488
+      ],
+      "full_minus_episodic_pp": 0.002141630649560966,
+      "full_minus_random_pp": 0.010749065875998554,
+      "full_minus_no_update_pp": 0.032732164859766044,
+      "gates": {
+        "direct_ge_1pp": false,
+        "source_ge_1pp": true,
+        "clean_ge_minus_0_3pp": false,
+        "oc_nonnegative": false,
+        "content_tail5_ge_minus2pp": false
+      },
+      "pass": false,
+      "full_minus_teacher_pp": 1.4446533281209355
+    }
+  },
+  "passed": false
+}
