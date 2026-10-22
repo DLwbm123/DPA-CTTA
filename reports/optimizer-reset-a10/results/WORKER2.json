@@ -1,0 +1,21 @@
+{
+  "status": "PASS",
+  "inputs": 64,
+  "counts": {
+    "forward": 1216,
+    "backward": 256,
+    "updates": 256
+  },
+  "source_parity": 64,
+  "removed_forced_foreground_by_head": [
+    75452,
+    94360
+  ],
+  "bn_only_exact_a05": 64,
+  "reset_and_memory_exact_a08": 64,
+  "optimizer_step_one_after_every_update": true,
+  "semantic_changed_fraction": 0.9813255369663239,
+  "independent_exact_replay": true,
+  "label_reads": 0,
+  "negative_checks": 4
+}
