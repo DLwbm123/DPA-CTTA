@@ -1,0 +1,197 @@
+{
+  "status": "RESERVED",
+  "capacity": 32768,
+  "storage_trigger": {
+    "usage": 11030589,
+    "largest": [
+      {
+        "path": "jobs/W_ONLY_s29009_o1/K.bits.xz",
+        "size": 185964,
+        "allocated": 2097152,
+        "charged": 2097152
+      },
+      {
+        "path": "jobs/LSO_ONLY_s29009_o1/K.bits.xz",
+        "size": 61549,
+        "allocated": 2097152,
+        "charged": 2097152
+      },
+      {
+        "path": "jobs/LSO_ONLY_s29009_o1/trace.jsonl.gz",
+        "size": 5143,
+        "allocated": 2097152,
+        "charged": 2097152
+      },
+      {
+        "path": "jobs/LSO_ONLY_s20260907_o0/K.bits.xz",
+        "size": 184292,
+        "allocated": 376832,
+        "charged": 376832
+      },
+      {
+        "path": "jobs/W_ONLY_s17011_o1/K.bits.xz",
+        "size": 185168,
+        "allocated": 376832,
+        "charged": 376832
+      },
+      {
+        "path": "jobs/W_ONLY_s20260907_o1/K.bits.xz",
+        "size": 185020,
+        "allocated": 376832,
+        "charged": 376832
+      },
+      {
+        "path": "jobs/LSO_ONLY_s29009_o0_recovery/K.bits.xz",
+        "size": 184852,
+        "allocated": 376832,
+        "charged": 376832
+      },
+      {
+        "path": "jobs/LSO_ONLY_s17011_o1/K.bits.xz",
+        "size": 184580,
+        "allocated": 376832,
+        "charged": 376832
+      },
+      {
+        "path": "jobs/LSO_ONLY_s17011_o0/K.bits.xz",
+        "size": 183140,
+        "allocated": 376832,
+        "charged": 376832
+      },
+      {
+        "path": "jobs/W_ONLY_s29009_o0/K.bits.xz",
+        "size": 185400,
+        "allocated": 376832,
+        "charged": 376832
+      },
+      {
+        "path": "jobs/W_ONLY_s20260907_o0/K.bits.xz",
+        "size": 184864,
+        "allocated": 376832,
+        "charged": 376832
+      },
+      {
+        "path": "jobs/LSO_ONLY_s20260907_o1/K.bits.xz",
+        "size": 183516,
+        "allocated": 376832,
+        "charged": 376832
+      },
+      {
+        "path": "jobs/W_ONLY_s17011_o0/K.bits.xz",
+        "size": 183256,
+        "allocated": 376832,
+        "charged": 376832
+      },
+      {
+        "path": "public/POST_AUDIT_CELLS.csv",
+        "size": 41256,
+        "allocated": 98304,
+        "charged": 98304
+      },
+      {
+        "path": "private/RECOVERY_EMERGENCY.json",
+        "size": 32768,
+        "allocated": 65536,
+        "charged": 65536
+      },
+      {
+        "path": "jobs/LSO_ONLY_s29009_o0/K.bits.xz",
+        "size": 26479,
+        "allocated": 65536,
+        "charged": 65536
+      },
+      {
+        "path": "worker.py",
+        "size": 9658,
+        "allocated": 32768,
+        "charged": 32768
+      },
+      {
+        "path": "score.py",
+        "size": 11218,
+        "allocated": 32768,
+        "charged": 32768
+      },
+      {
+        "path": "recovery/worker.py",
+        "size": 11552,
+        "allocated": 32768,
+        "charged": 32768
+      },
+      {
+        "path": "recovery/score.py",
+        "size": 11627,
+        "allocated": 32768,
+        "charged": 32768
+      },
+      {
+        "path": "jobs/LSO_ONLY_s20260907_o0/trace.jsonl.gz",
+        "size": 13294,
+        "allocated": 32768,
+        "charged": 32768
+      },
+      {
+        "path": "jobs/W_ONLY_s17011_o1/trace.jsonl.gz",
+        "size": 12263,
+        "allocated": 32768,
+        "charged": 32768
+      },
+      {
+        "path": "jobs/W_ONLY_s20260907_o1/trace.jsonl.gz",
+        "size": 12271,
+        "allocated": 32768,
+        "charged": 32768
+      },
+      {
+        "path": "jobs/W_ONLY_s29009_o1/trace.jsonl.gz",
+        "size": 12267,
+        "allocated": 32768,
+        "charged": 32768
+      }
+    ],
+    "next_bytes": 2380,
+    "reserved_growth": 12952,
+    "limit": 9961472,
+    "operation": "public/RECOVERY_FORMAL_EXIT.json"
+  },
+  "at": 1792675564.3517797,
+  "worker_state": {
+    "status": "FAILED",
+    "mode": "formal",
+    "started": 1792675230.8676066,
+    "physical_updates": 456,
+    "completed_updates": 456,
+    "physical_forwards": 4104,
+    "training_backwards": 456,
+    "completed_jobs": [
+      "W_ONLY_s20260907_o0",
+      "LSO_ONLY_s20260907_o0",
+      "W_ONLY_s20260907_o1",
+      "LSO_ONLY_s20260907_o1",
+      "W_ONLY_s17011_o0",
+      "LSO_ONLY_s17011_o0",
+      "W_ONLY_s17011_o1",
+      "LSO_ONLY_s17011_o1",
+      "W_ONLY_s29009_o0",
+      "LSO_ONLY_s29009_o0",
+      "W_ONLY_s29009_o1"
+    ],
+    "online_label_reads": 0,
+    "online_score_reads": 0,
+    "job": "LSO_ONLY_s29009_o1",
+    "arrival": 72,
+    "ended": 1792675564.2909224,
+    "error": "StorageLimit",
+    "reason": "{\"usage\":11030589,\"largest\":[{\"path\":\"jobs/W_ONLY_s29009_o1/K.bits.xz\",\"size\":185964,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s29009_o1/K.bits.xz\",\"size\":61549,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s29009_o1/trace.jsonl.gz\",\"size\":5133,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s20260907_o0/K.bits.xz\",\"size\":184292,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s17011_o1/K.bits.xz\",\"size\":185168,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s20260907_o1/K.bits.xz\",\"size\":185020,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s29009_o0_recovery/K.bits.xz\",\"size\":184852,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s17011_o1/K.bits.xz\",\"size\":184580,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s17011_o0/K.bits.xz\",\"size\":183140,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s29009_o0/K.bits.xz\",\"size\":185400,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s20260907_o0/K.bits.xz\",\"size\":184864,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s20260907_o1/K.bits.xz\",\"size\":183516,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s17011_o0/K.bits.xz\",\"size\":183256,\"allocated\":376832,\"charged\":376832},{\"path\":\"public/POST_AUDIT_CELLS.csv\",\"size\":41256,\"allocated\":98304,\"charged\":98304},{\"path\":\"private/RECOVERY_EMERGENCY.json\",\"size\":32768,\"allocated\":65536,\"charged\":65536},{\"path\":\"jobs/LSO_ONLY_s29009_o0/K.bits.xz\",\"size\":26479,\"allocated\":65536,\"charged\":65536},{\"path\":\"worker.py\",\"size\":9658,\"allocated\":32768,\"charged\":32768},{\"path\":\"score.py\",\"size\":11218,\"allocated\":32768,\"charged\":32768},{\"path\":\"recovery/worker.py\",\"size\":11552,\"allocated\":32768,\"charged\":32768},{\"path\":\"recovery/score.py\",\"size\":11627,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/LSO_ONLY_s20260907_o0/trace.jsonl.gz\",\"size\":13294,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/W_ONLY_s17011_o1/trace.jsonl.gz\",\"size\":12263,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/W_O"
+  },
+  "persist_error": "{\"usage\":11030589,\"largest\":[{\"path\":\"jobs/W_ONLY_s29009_o1/K.bits.xz\",\"size\":185964,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s29009_o1/K.bits.xz\",\"size\":61549,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s29009_o1/trace.jsonl.gz\",\"size\":5143,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s20260907_o0/K.bits.xz\",\"size\":184292,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s17011_o1/K.bits.xz\",\"size\":185168,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s20260907_o1/K.bits.xz\",\"size\":185020,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s29009_o0_recovery/K.bits.xz\",\"size\":184852,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s17011_o1/K.bits.xz\",\"size\":184580,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s17011_o0/K.bits.xz\",\"size\":183140,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s29009_o0/K.bits.xz\",\"size\":185400,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s20260907_o0/K.bits.xz\",\"size\":184864,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s20260907_o1/K.bits.xz\",\"size\":183516,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s17011_o0/K.bits.xz\",\"size\":183256,\"allocated\":376832,\"charged\":376832},{\"path\":\"public/POST_AUDIT_CELLS.csv\",\"size\":41256,\"allocated\":98304,\"charged\":98304},{\"path\":\"private/RECOVERY_EMERGENCY.json\",\"size\":32768,\"allocated\":65536,\"charged\":65536},{\"path\":\"jobs/LSO_ONLY_s29009_o0/K.bits.xz\",\"size\":26479,\"allocated\":65536,\"charged\":65536},{\"path\":\"worker.py\",\"size\":9658,\"allocated\":32768,\"charged\":32768},{\"path\":\"score.py\",\"size\":11218,\"allocated\":32768,\"charged\":32768},{\"path\":\"recovery/worker.py\",\"size\":11552,\"allocated\":32768,\"charged\":32768},{\"path\":\"recovery/score.py\",\"size\":11627,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/LSO_ONLY_s20260907_o0/trace.jsonl.gz\",\"size\":13294,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/W_ONLY_s17011_o1/trace.jsonl.gz\",\"size\":12263,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/W_O",
+  "entry_failure": {
+    "mode": "formal",
+    "status": "FAILED",
+    "wall_seconds": 339.04640555381775,
+    "CPU_process_seconds": 640.393469236,
+    "error": "StorageLimit",
+    "reason": "{\"usage\":11030589,\"largest\":[{\"path\":\"jobs/W_ONLY_s29009_o1/K.bits.xz\",\"size\":185964,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s29009_o1/K.bits.xz\",\"size\":61549,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s29009_o1/trace.jsonl.gz\",\"size\":5133,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s20260907_o0/K.bits.xz\",\"size\":184292,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s17011_o1/K.bits.xz\",\"size\":185168,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s20260907_o1/K.bits.xz\",\"size\":185020,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s29009_o0_recovery/K.bits.xz\",\"size\":184852,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s17011_o1/K.bits.xz\",\"size\":184580,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s17011_o0/K.bits.xz\",\"size\":183140,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s29009_o0/K.bits.xz\",\"size\":185400,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s20260907_o0/K.bits.xz\",\"size\":184864,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s20260907_o1/K.bits.xz\",\"size\":183516,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s17011_o0/K.bits.xz\",\"size\":183256,\"allocated\":376832,\"charged\":376832},{\"path\":\"public/POST_AUDIT_CELLS.csv\",\"size\":41256,\"allocated\":98304,\"charged\":98304},{\"path\":\"private/RECOVERY_EMERGENCY.json\",\"size\":32768,\"allocated\":65536,\"charged\":65536},{\"path\":\"jobs/LSO_ONLY_s29009_o0/K.bits.xz\",\"size\":26479,\"allocated\":65536,\"charged\":65536},{\"path\":\"worker.py\",\"size\":9658,\"allocated\":32768,\"charged\":32768},{\"path\":\"score.py\",\"size\":11218,\"allocated\":32768,\"charged\":32768},{\"path\":\"recovery/worker.py\",\"size\":11552,\"allocated\":32768,\"charged\":32768},{\"path\":\"recovery/score.py\",\"size\":11627,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/LSO_ONLY_s20260907_o0/trace.jsonl.gz\",\"size\":13294,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/W_ONLY_s17011_o1/trace.jsonl.gz\",\"size\":12263,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/W_O"
+  },
+  "receipt_error": "{\"usage\":11030589,\"largest\":[{\"path\":\"jobs/W_ONLY_s29009_o1/K.bits.xz\",\"size\":185964,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s29009_o1/K.bits.xz\",\"size\":61549,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s29009_o1/trace.jsonl.gz\",\"size\":5143,\"allocated\":2097152,\"charged\":2097152},{\"path\":\"jobs/LSO_ONLY_s20260907_o0/K.bits.xz\",\"size\":184292,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s17011_o1/K.bits.xz\",\"size\":185168,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s20260907_o1/K.bits.xz\",\"size\":185020,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s29009_o0_recovery/K.bits.xz\",\"size\":184852,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s17011_o1/K.bits.xz\",\"size\":184580,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s17011_o0/K.bits.xz\",\"size\":183140,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s29009_o0/K.bits.xz\",\"size\":185400,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s20260907_o0/K.bits.xz\",\"size\":184864,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/LSO_ONLY_s20260907_o1/K.bits.xz\",\"size\":183516,\"allocated\":376832,\"charged\":376832},{\"path\":\"jobs/W_ONLY_s17011_o0/K.bits.xz\",\"size\":183256,\"allocated\":376832,\"charged\":376832},{\"path\":\"public/POST_AUDIT_CELLS.csv\",\"size\":41256,\"allocated\":98304,\"charged\":98304},{\"path\":\"private/RECOVERY_EMERGENCY.json\",\"size\":32768,\"allocated\":65536,\"charged\":65536},{\"path\":\"jobs/LSO_ONLY_s29009_o0/K.bits.xz\",\"size\":26479,\"allocated\":65536,\"charged\":65536},{\"path\":\"worker.py\",\"size\":9658,\"allocated\":32768,\"charged\":32768},{\"path\":\"score.py\",\"size\":11218,\"allocated\":32768,\"charged\":32768},{\"path\":\"recovery/worker.py\",\"size\":11552,\"allocated\":32768,\"charged\":32768},{\"path\":\"recovery/score.py\",\"size\":11627,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/LSO_ONLY_s20260907_o0/trace.jsonl.gz\",\"size\":13294,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/W_ONLY_s17011_o1/trace.jsonl.gz\",\"size\":12263,\"allocated\":32768,\"charged\":32768},{\"path\":\"jobs/W_O"
+}

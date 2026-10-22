@@ -1,0 +1,40 @@
+{
+  "status": "OBSERVED_TRANSIENT_ALLOCATION_REPORT",
+  "path": "jobs/LSO_ONLY_s29009_o0_recovery/K.bits.xz",
+  "complete_receipt_present": true,
+  "observations": [
+    {
+      "at": 1792675394.1738405,
+      "logical_bytes": 184852,
+      "allocated_bytes": 2097152,
+      "root_usage_bytes": 6424254
+    },
+    {
+      "at": 1792675419.9312596,
+      "logical_bytes": 184852,
+      "allocated_bytes": 376832
+    },
+    {
+      "at": 1792675419.9355576,
+      "logical_bytes": 184852,
+      "allocated_bytes": 376832,
+      "after_readonly_open": true
+    }
+  ],
+  "content_modified": false,
+  "runtime_code_modified": false,
+  "interpretation": "NFS-reported allocation settled downward without content modification; this is direct evidence of transient allocation accounting, not proof of the exact historical failure cause.",
+  "latest_progress_receipt": {
+    "new_updates": 216,
+    "new_forwards": 1944,
+    "new_backwards": 216,
+    "new_required_updates": 576,
+    "recovery_completed_jobs": 1,
+    "active_job": "W_ONLY_s29009_o1",
+    "arrival": 24,
+    "online_label_reads": 0,
+    "online_score_reads": 0
+  },
+  "emergency_receipt_status": "RESERVED",
+  "new_storage_failure_observed": false
+}
