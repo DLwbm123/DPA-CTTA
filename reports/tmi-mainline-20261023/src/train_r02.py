@@ -44,7 +44,7 @@ class Model(nn.Module):
   b=b+self.state(a)[:,:,None,None]
   u=self.dec(torch.cat([F.interpolate(b,size=m.shape[-2:],mode='bilinear',align_corners=False),m],1))
   h=self.out(torch.cat([F.interpolate(u,size=h.shape[-2:],mode='bilinear',align_corners=False),h],1))
-  out=z+6*torch.tanh(self.delta(h));s=F.adaptive_avg_pool2d(self.score(h),8)
+  out=z+6*torch.tanh(self.delta(h));s=F.avg_pool2d(self.score(h),(h.shape[-2]//8,h.shape[-1]//8))
   f=h.mean((-2,-1));reg=.001+.02*torch.sigmoid(self.reg(f)).mean()
   return out,s,f,reg
 
@@ -152,6 +152,9 @@ def main():
  cfg=json.loads((ROOT/'config.private.json').read_text());torch.set_num_threads(4);device='cuda'
  torch.backends.cudnn.benchmark=False
  torch.backends.cudnn.deterministic=True
+ torch.use_deterministic_algorithms(True)
+ torch.backends.cuda.matmul.allow_tf32=False
+ torch.backends.cudnn.allow_tf32=False
  ck=selfcheck(device);ck['synthetic_calls']=COUNTS.copy();write_json(ROOT/'SELF_CHECK.json',ck);log(ck)
  for key in COUNTS:COUNTS[key]=cfg.get('prior_counts',{}).get(key,0)
  fit,dev=load_data(cfg);log({'fit':len(fit),'dev':len(dev)})
