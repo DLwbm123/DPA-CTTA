@@ -1,0 +1,855 @@
+{
+  "window_start_utc": "2026-10-21T13:54:18+00:00",
+  "window_end_utc": "2026-10-22T01:54:18+00:00",
+  "experiments": [
+    {
+      "name": "illumination-real-a01",
+      "start_utc": "2026-10-21T13:59:14.579914+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": -64.72324438300947,
+          "ci95": [
+            -82.95897083394642,
+            -44.5760464203575
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "GLOBAL": {
+          "mean": -21.637607382652718,
+          "ci95": [
+            -41.031378200304,
+            -4.233872289256902
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "SHIFT": {
+          "mean": 7.3498086855153195,
+          "ci95": [
+            -10.072540619118353,
+            27.37773684254867
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -65.24699378910594,
+          "ci95": [
+            -83.69378419392837,
+            -45.074476587045424
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": false,
+        "new_nesting": true,
+        "full_surface": false,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "spatial_null": true
+      },
+      "worst_head_delta_pp": -95.78700893534293,
+      "cpu_seconds": 78.53391695022583,
+      "gpu_worker_wall_seconds": 154.10707902908325,
+      "elapsed_seconds": 355.79749985970557,
+      "actual_bytes": 458422480,
+      "source_sha": "38b91d9d7dce973c3d68410724daf90ad2ff1f7a",
+      "inputs": 32,
+      "contents": 8
+    },
+    {
+      "name": "guided-real-a01",
+      "start_utc": "2026-10-21T14:28:53.121342+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": 0.18966082606200468,
+          "ci95": [
+            -0.4066316388046159,
+            0.8353082471464846
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "BOX": {
+          "mean": 0.1174040086624819,
+          "ci95": [
+            -0.02745373063501582,
+            0.2520322774379023
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "SHIFT": {
+          "mean": -0.025603003696008916,
+          "ci95": [
+            -0.25520211938997167,
+            0.1631926084754757
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -0.3340885800344584,
+          "ci95": [
+            -1.007394098216725,
+            0.26577042066625756
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": true,
+        "worst_head_loss": false,
+        "new_empty": true,
+        "new_nesting": true,
+        "full_surface": true,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "spatial_null": true
+      },
+      "worst_head_delta_pp": -13.77571497438312,
+      "cpu_seconds": 38.28123879432678,
+      "gpu_worker_wall_seconds": 105.65744137763977,
+      "elapsed_seconds": 144.22521829791367,
+      "actual_bytes": 221932661,
+      "source_sha": "89d38d17c0c7e8c8e9678f3cecab78d3fdfa0957",
+      "inputs": 32,
+      "contents": 8
+    },
+    {
+      "name": "nuisance-subspace-real-a01",
+      "start_utc": "2026-10-21T14:55:06.707788+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": -9.818781028548706,
+          "ci95": [
+            -14.047952558987935,
+            -5.618936415942303
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "PCA": {
+          "mean": 2.1024930758436358,
+          "ci95": [
+            -2.198055896878339,
+            7.0199533986773535
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "RANDOM": {
+          "mean": -6.120086884866184,
+          "ci95": [
+            -10.49635159953636,
+            -2.3250539135260224
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -10.342530434645168,
+          "ci95": [
+            -14.74430309909525,
+            -5.952932475545141
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": true,
+        "new_nesting": true,
+        "full_surface": true,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "direction_null": true
+      },
+      "worst_head_delta_pp": -57.09860352976111,
+      "cpu_seconds": 60.90821552276611,
+      "gpu_worker_wall_seconds": 192.757390499115,
+      "elapsed_seconds": 253.883130392991,
+      "actual_bytes": 229934387,
+      "source_sha": "937b3a1606bb05989e3121563d257a49c68c1078",
+      "inputs": 32,
+      "contents": 8
+    },
+    {
+      "name": "cross-stream-real-a01",
+      "start_utc": "2026-10-21T16:13:35.630402+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": -8.195888986515117,
+          "ci95": [
+            -13.013648322804844,
+            -3.8592038723651707
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "INTACT": {
+          "mean": -0.067059585650152,
+          "ci95": [
+            -0.16895907778014552,
+            0.0478600910920483
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "SHIFT": {
+          "mean": 14.113671069418917,
+          "ci95": [
+            7.446613577188835,
+            21.527456892570424
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -8.71963839261158,
+          "ci95": [
+            -13.67519636243835,
+            -4.312511848856209
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": false,
+        "new_nesting": true,
+        "full_surface": false,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "pairing_null": true
+      },
+      "worst_head_delta_pp": -71.24969110750735,
+      "cpu_seconds": 36.90180993080139,
+      "gpu_worker_wall_seconds": 89.45747709274292,
+      "elapsed_seconds": 126.6186174498871,
+      "actual_bytes": 228066311,
+      "source_sha": "869b3748ced0e86b3a2a86b883908401cc623b1d",
+      "inputs": 32,
+      "contents": 8
+    },
+    {
+      "name": "reciprocal-graph-real-a01",
+      "start_utc": "2026-10-21T16:45:07.227321+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": -0.15572574180298207,
+          "ci95": [
+            -0.9700870702490582,
+            0.6431283398329455
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "UNIFORM": {
+          "mean": 1.1238275155090824,
+          "ci95": [
+            -0.038470820416119884,
+            2.26157663380596
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "PERMUTED": {
+          "mean": 0.6235179194790338,
+          "ci95": [
+            0.03966716402808994,
+            1.0978126482511847
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -0.6794751478994451,
+          "ci95": [
+            -1.5894678120834396,
+            0.14909865908183834
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": true,
+        "new_nesting": true,
+        "full_surface": true,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "graph_null": true
+      },
+      "worst_head_delta_pp": -4.855819606856947,
+      "cpu_seconds": 40.183233976364136,
+      "gpu_worker_wall_seconds": 106.36066913604736,
+      "elapsed_seconds": 147.1758916620165,
+      "actual_bytes": 229269745,
+      "source_sha": "9e4fbff499eae8c8564d4c5d8c99c3c744ed33b1",
+      "inputs": 32,
+      "contents": 8
+    },
+    {
+      "name": "multigrid-context-real-a01",
+      "start_utc": "2026-10-21T17:16:42.568535+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": -9.11554497310253,
+          "ci95": [
+            -14.61865759882741,
+            -5.070351938537379
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "HIGH": {
+          "mean": 52.15638285463588,
+          "ci95": [
+            43.07940491757034,
+            62.41768783328214
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "ENSEMBLE": {
+          "mean": 18.776572072159276,
+          "ci95": [
+            7.751385454832736,
+            30.49343512152876
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "RESAMPLE": {
+          "mean": -0.14762532700826164,
+          "ci95": [
+            -0.2592973431537508,
+            -0.05098069016694732
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "SHIFT": {
+          "mean": 78.16599808758434,
+          "ci95": [
+            69.26693487767692,
+            85.40270772003036
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -9.639294379198994,
+          "ci95": [
+            -15.366504973742952,
+            -5.3801088768262835
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": true,
+        "new_nesting": true,
+        "full_surface": true,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "alignment_null": true
+      },
+      "worst_head_delta_pp": -38.87455962352821,
+      "cpu_seconds": 58.62794017791748,
+      "gpu_worker_wall_seconds": 140.4396858215332,
+      "elapsed_seconds": 199.3124175677076,
+      "actual_bytes": 344872398,
+      "source_sha": "5a2dbbf4ba9cf8986368fb7c4a1e4ec78e16b275",
+      "inputs": 32,
+      "contents": 8
+    },
+    {
+      "name": "gate-curvature-real-a01",
+      "start_utc": "2026-10-21T17:44:55.669950+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": -0.01328990745910623,
+          "ci95": [
+            -0.052144391797162896,
+            0.01688757980038583
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "SMOOTH": {
+          "mean": -0.03257368708731612,
+          "ci95": [
+            -0.10958516237137661,
+            0.02562534652813039
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "ENSEMBLE": {
+          "mean": 0.05433459681344424,
+          "ci95": [
+            -0.5278927687564149,
+            0.5191977022448182
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "RANDOM": {
+          "mean": -0.08445748031549201,
+          "ci95": [
+            -0.17871207319476717,
+            0.00015376655216802263
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -0.5370393135555693,
+          "ci95": [
+            -0.8543219539187061,
+            -0.23977958093161464
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": true,
+        "new_nesting": true,
+        "full_surface": true,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "direction_null": true
+      },
+      "worst_head_delta_pp": -2.5902764814469137,
+      "cpu_seconds": 115.7458724975586,
+      "gpu_worker_wall_seconds": 104.41904354095459,
+      "elapsed_seconds": 220.38613395299762,
+      "actual_bytes": 285970249,
+      "source_sha": "96eee2847b0947b35f28f110729dc39cd1355c6b",
+      "inputs": 32,
+      "contents": 8
+    },
+    {
+      "name": "causal-template-real-a01",
+      "start_utc": "2026-10-21T18:16:40.734539+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": -28.49155260695821,
+          "ci95": [
+            -37.766657911674756,
+            -19.73122649291083
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "CURRENT": {
+          "mean": 4.772265926470963,
+          "ci95": [
+            0.3386146379639306,
+            10.634425104640892
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "SHUFFLED": {
+          "mean": 45.976944925265705,
+          "ci95": [
+            32.97912176778659,
+            60.20931311325529
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -29.015302013054672,
+          "ci95": [
+            -38.469693854293865,
+            -20.021331400143488
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": true,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": true,
+        "new_nesting": true,
+        "full_surface": true,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "semantic_null": true,
+        "both_orders": false
+      },
+      "worst_head_delta_pp": -52.75900235250329,
+      "cpu_seconds": 86.05282354354858,
+      "gpu_worker_wall_seconds": 141.40165829658508,
+      "elapsed_seconds": 227.69209171645343,
+      "actual_bytes": 462781072,
+      "source_sha": "7e7ee731bf67b904832bc4044598a9a5af14f12d",
+      "inputs": 64,
+      "contents": 8
+    },
+    {
+      "name": "layer-reuse-real-a01",
+      "start_utc": "2026-10-21T19:15:04.616897+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": -10.348737365770107,
+          "ci95": [
+            -19.209279445032905,
+            -3.9800343646533447
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "SINGLE": {
+          "mean": 15.576549252100087,
+          "ci95": [
+            8.11884186069044,
+            23.05568613840331
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "REPLAY": {
+          "mean": -2.538205510684648,
+          "ci95": [
+            -5.367489150527652,
+            -0.07540695876172512
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "LATE": {
+          "mean": 4.6016627908348715,
+          "ci95": [
+            -2.81941727860103,
+            12.900722531745622
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "AUGMENT": {
+          "mean": -9.585580619620048,
+          "ci95": [
+            -18.30805918823924,
+            -3.50621328310821
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -10.872486771866573,
+          "ci95": [
+            -19.813076270085254,
+            -4.298021256895201
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": true,
+        "new_nesting": true,
+        "full_surface": true,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "direction_null": true
+      },
+      "worst_head_delta_pp": -73.16364819721996,
+      "cpu_seconds": 50.56766200065613,
+      "gpu_worker_wall_seconds": 111.24225068092346,
+      "elapsed_seconds": 162.22689253184944,
+      "actual_bytes": 344789891,
+      "source_sha": "fbc27b881d6a88684c193adabea885da54eb1bd4",
+      "inputs": 32,
+      "contents": 8
+    },
+    {
+      "name": "channel-consensus-real-a01",
+      "start_utc": "2026-10-21T20:44:17.749678+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": 0.020720093503619284,
+          "ci95": [
+            -0.10781192813283695,
+            0.14274507638321954
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "LOGIT_MEDIAN": {
+          "mean": -0.014812096548295628,
+          "ci95": [
+            -0.04673224322226666,
+            0.016194471394246436
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "MEAN": {
+          "mean": 0.08834459777616972,
+          "ci95": [
+            -0.35251970220461415,
+            0.4426825383571543
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "SHIFT": {
+          "mean": 87.30226315419051,
+          "ci95": [
+            83.1977184136315,
+            90.85074915468635
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -0.5030293125928438,
+          "ci95": [
+            -0.7590769833753072,
+            -0.2596654911173758
+          ],
+          "defined_inputs": 32,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": true,
+        "new_nesting": true,
+        "full_surface": true,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "direction_null": true
+      },
+      "worst_head_delta_pp": -1.5656565656565675,
+      "cpu_seconds": 60.65348196029663,
+      "gpu_worker_wall_seconds": 116.12277746200562,
+      "elapsed_seconds": 225.72243682853878,
+      "actual_bytes": 286149329,
+      "source_sha": "8f76c0af373d94553708d1ce506d0dd910f68082",
+      "inputs": 32,
+      "contents": 8
+    },
+    {
+      "name": "gain-content-real-a01",
+      "start_utc": "2026-10-21T23:15:30.195350+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": -11.918116443852327,
+          "ci95": [
+            -17.403018569084363,
+            -6.160627409884441
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "PROPOSAL": {
+          "mean": 4.360805336064173,
+          "ci95": [
+            0.8567252162901462,
+            8.805951418524433
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "EVALUATOR": {
+          "mean": 5.866966289737664,
+          "ci95": [
+            3.325854425949,
+            8.819418557558853
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "SHUFFLED": {
+          "mean": -11.510573628211693,
+          "ci95": [
+            -16.9670935727951,
+            -5.796997976485413
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -12.44186584994879,
+          "ci95": [
+            -18.12542878872029,
+            -6.481576975089453
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": true,
+        "new_nesting": true,
+        "full_surface": true,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "semantic_null": true,
+        "both_orders": false
+      },
+      "worst_head_delta_pp": -46.811014061521085,
+      "cpu_seconds": 146.71395611763,
+      "gpu_worker_wall_seconds": 167.54385113716125,
+      "elapsed_seconds": 314.5031524784863,
+      "actual_bytes": 570951514,
+      "source_sha": "1811773a6585a0df733458165d408fe9e3125b50",
+      "inputs": 64,
+      "contents": 8
+    },
+    {
+      "name": "context-contrast-real-a01",
+      "start_utc": "2026-10-22T01:44:34.657533+00:00",
+      "qualified": false,
+      "oc_contrasts_pp": {
+        "SOURCE": {
+          "mean": -3.350540066956026,
+          "ci95": [
+            -4.993817881885863,
+            -1.9129202522691962
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "MEAN": {
+          "mean": 6.084299641010103,
+          "ci95": [
+            2.2844508362147993,
+            9.820748218687477
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "REVERSE": {
+          "mean": 75.17202786070646,
+          "ci95": [
+            67.63169836393591,
+            82.1007047818015
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "SHUFFLED": {
+          "mean": -3.3446033873495846,
+          "ci95": [
+            -4.834586995885314,
+            -1.9362238129881522
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        },
+        "B": {
+          "mean": -3.874289473052489,
+          "ci95": [
+            -5.554548688079246,
+            -2.3111288231280307
+          ],
+          "defined_inputs": 64,
+          "defined_contents": 8
+        }
+      },
+      "gates": {
+        "primary": false,
+        "source": false,
+        "controls": false,
+        "od_noninferior": false,
+        "worst_head_loss": false,
+        "new_empty": true,
+        "new_nesting": true,
+        "full_surface": true,
+        "surface_noninferior": false,
+        "vcdr": false,
+        "semantic_null": true,
+        "both_orders": false
+      },
+      "worst_head_delta_pp": -18.11932324925037,
+      "cpu_seconds": 146.95006394386292,
+      "gpu_worker_wall_seconds": 187.69830679893494,
+      "elapsed_seconds": 334.9486932111904,
+      "actual_bytes": 572476593,
+      "source_sha": "ca089f61fa51aa2acb720c608c904b1df61f4851",
+      "inputs": 64,
+      "contents": 8
+    }
+  ],
+  "totals": {
+    "cpu_seconds": 920.1202154159546,
+    "gpu_worker_wall_seconds": 1617.2076308727264,
+    "elapsed_seconds": 2712.4921759497374,
+    "actual_bytes": 4235616630
+  }
+}
