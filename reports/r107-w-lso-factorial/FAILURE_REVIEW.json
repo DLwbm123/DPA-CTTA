@@ -1,0 +1,31 @@
+{
+  "status": "ENGINEERING_STORAGE_GUARD_FAILURE",
+  "complete_jobs": 9,
+  "planned_jobs": 12,
+  "incomplete_job": "LSO_ONLY_s29009_o0",
+  "trace_rows_in_incomplete_job": 64,
+  "last_persisted_formal_updates": 1792,
+  "last_persisted_formal_forwards": 16128,
+  "last_persisted_formal_backwards": 1792,
+  "inferred_formal_updates": 1793,
+  "inferred_formal_forwards": 16137,
+  "inferred_formal_backwards": 1793,
+  "inference_basis": "9 complete jobs of 192 plus 64 trace rows; next keyed_step returns before PackedWriter.write raises. Final counter persistence also failed. These are reconstructed, not final counter receipts.",
+  "qualification_updates": 36,
+  "qualification_forwards": 348,
+  "qualification_backwards": 36,
+  "current_remote_usage_bytes_excluding_root_directory": 4114266,
+  "current_du_allocated_bytes": 4061184,
+  "failure_instant_usage": "not retained",
+  "processes_retired": [
+    1239114,
+    1240260,
+    1240262,
+    1240263
+  ],
+  "score_started": false,
+  "raw_sealed": false,
+  "retry": false,
+  "post_audit_rows_checked": 384,
+  "post_audit_macro_match_tolerance": 1e-12
+}

@@ -1,0 +1,272 @@
+{
+  "status": "COMPLETE",
+  "model_calls": 0,
+  "streams": 24,
+  "contents": 192,
+  "mask_reads": 4608,
+  "retained_raw_post_metric_match": true,
+  "stage_order": [
+    "raw",
+    "largest8",
+    "fill4",
+    "intersect"
+  ],
+  "totals": [
+    {
+      "arm": "E_C2",
+      "stage": "raw",
+      "error": 0.14748507930060195,
+      "n_NA": 0
+    },
+    {
+      "arm": "E_C2",
+      "stage": "largest8",
+      "error": 0.12902049434337423,
+      "n_NA": 0
+    },
+    {
+      "arm": "E_C2",
+      "stage": "fill4",
+      "error": 0.12902049434337423,
+      "n_NA": 0
+    },
+    {
+      "arm": "E_C2",
+      "stage": "intersect",
+      "error": 0.12902049434337423,
+      "n_NA": 0
+    },
+    {
+      "arm": "E_VV",
+      "stage": "raw",
+      "error": 0.14710666084857407,
+      "n_NA": 0
+    },
+    {
+      "arm": "E_VV",
+      "stage": "largest8",
+      "error": 0.1289262251366374,
+      "n_NA": 0
+    },
+    {
+      "arm": "E_VV",
+      "stage": "fill4",
+      "error": 0.1289262251366374,
+      "n_NA": 0
+    },
+    {
+      "arm": "E_VV",
+      "stage": "intersect",
+      "error": 0.1289262251366374,
+      "n_NA": 0
+    },
+    {
+      "arm": "C_C2",
+      "stage": "raw",
+      "error": 0.14448794316045913,
+      "n_NA": 0
+    },
+    {
+      "arm": "C_C2",
+      "stage": "largest8",
+      "error": 0.131749882164218,
+      "n_NA": 0
+    },
+    {
+      "arm": "C_C2",
+      "stage": "fill4",
+      "error": 0.131749882164218,
+      "n_NA": 0
+    },
+    {
+      "arm": "C_C2",
+      "stage": "intersect",
+      "error": 0.131749882164218,
+      "n_NA": 0
+    },
+    {
+      "arm": "C_VV",
+      "stage": "raw",
+      "error": 0.14315705709733192,
+      "n_NA": 0
+    },
+    {
+      "arm": "C_VV",
+      "stage": "largest8",
+      "error": 0.13128468067539611,
+      "n_NA": 0
+    },
+    {
+      "arm": "C_VV",
+      "stage": "fill4",
+      "error": 0.13128468067539611,
+      "n_NA": 0
+    },
+    {
+      "arm": "C_VV",
+      "stage": "intersect",
+      "error": 0.13128468067539611,
+      "n_NA": 0
+    }
+  ],
+  "history": [
+    {
+      "method": "C2",
+      "stage": "raw",
+      "continuous_minus_episodic": -0.002997136140142829
+    },
+    {
+      "method": "C2",
+      "stage": "largest8",
+      "continuous_minus_episodic": 0.0027293878208437994
+    },
+    {
+      "method": "C2",
+      "stage": "fill4",
+      "continuous_minus_episodic": 0.0027293878208437994
+    },
+    {
+      "method": "C2",
+      "stage": "intersect",
+      "continuous_minus_episodic": 0.0027293878208437994
+    },
+    {
+      "method": "VV",
+      "stage": "raw",
+      "continuous_minus_episodic": -0.003949603751242156
+    },
+    {
+      "method": "VV",
+      "stage": "largest8",
+      "continuous_minus_episodic": 0.002358455538758739
+    },
+    {
+      "method": "VV",
+      "stage": "fill4",
+      "continuous_minus_episodic": 0.002358455538758739
+    },
+    {
+      "method": "VV",
+      "stage": "intersect",
+      "continuous_minus_episodic": 0.002358455538758739
+    }
+  ],
+  "transfers": [
+    {
+      "method": "C2",
+      "operation": "largest8",
+      "history_difference_shift": 0.005726523960986628,
+      "domain_shifts": [
+        0.0013878600050597598,
+        0.014688264372096098,
+        0.004406044714852197,
+        0.0024239267519384528
+      ],
+      "content_mean": 0.006534627271749589,
+      "content_median": 0.00191246662007911,
+      "positive_contents": 113,
+      "negative_contents": 79,
+      "unchanged_contents": 0,
+      "top5_absolute_contribution_fraction": 0.17913327238953847,
+      "top5_signed_contribution": 0.0013741326748039455,
+      "interpretation": "descriptive fixed operator transfer, no causal source attribution or selection"
+    },
+    {
+      "method": "C2",
+      "operation": "fill4",
+      "history_difference_shift": 0.0,
+      "domain_shifts": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "content_mean": 0.0,
+      "content_median": 0.0,
+      "positive_contents": 0,
+      "negative_contents": 0,
+      "unchanged_contents": 192,
+      "top5_absolute_contribution_fraction": 0.0,
+      "top5_signed_contribution": 0.0,
+      "interpretation": "descriptive fixed operator transfer, no causal source attribution or selection"
+    },
+    {
+      "method": "C2",
+      "operation": "intersect",
+      "history_difference_shift": 0.0,
+      "domain_shifts": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "content_mean": 0.0,
+      "content_median": 0.0,
+      "positive_contents": 0,
+      "negative_contents": 0,
+      "unchanged_contents": 192,
+      "top5_absolute_contribution_fraction": 0.0,
+      "top5_signed_contribution": 0.0,
+      "interpretation": "descriptive fixed operator transfer, no causal source attribution or selection"
+    },
+    {
+      "method": "VV",
+      "operation": "largest8",
+      "history_difference_shift": 0.0063080592900008935,
+      "domain_shifts": [
+        0.0020931197518531835,
+        0.015339871706989439,
+        0.00414845461285737,
+        0.003650791088303583
+      ],
+      "content_mean": 0.007090247581859576,
+      "content_median": 0.003284575901106303,
+      "positive_contents": 110,
+      "negative_contents": 81,
+      "unchanged_contents": 1,
+      "top5_absolute_contribution_fraction": 0.18486068599473163,
+      "top5_signed_contribution": 0.0015541284334216312,
+      "interpretation": "descriptive fixed operator transfer, no causal source attribution or selection"
+    },
+    {
+      "method": "VV",
+      "operation": "fill4",
+      "history_difference_shift": 0.0,
+      "domain_shifts": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "content_mean": 0.0,
+      "content_median": 0.0,
+      "positive_contents": 0,
+      "negative_contents": 0,
+      "unchanged_contents": 192,
+      "top5_absolute_contribution_fraction": 0.0,
+      "top5_signed_contribution": 0.0,
+      "interpretation": "descriptive fixed operator transfer, no causal source attribution or selection"
+    },
+    {
+      "method": "VV",
+      "operation": "intersect",
+      "history_difference_shift": 0.0,
+      "domain_shifts": [
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "content_mean": 0.0,
+      "content_median": 0.0,
+      "positive_contents": 0,
+      "negative_contents": 0,
+      "unchanged_contents": 192,
+      "top5_absolute_contribution_fraction": 0.0,
+      "top5_signed_contribution": 0.0,
+      "interpretation": "descriptive fixed operator transfer, no causal source attribution or selection"
+    }
+  ],
+  "CPU_body_seconds": 680.0485558509827,
+  "changed_postprocessing": false
+}

@@ -1,0 +1,171 @@
+{
+  "status": "COMPLETE",
+  "wall_seconds": 109.57369828224182,
+  "CPU_process_seconds": 175.422438889,
+  "result": {
+    "status": "PASS",
+    "admitted": true,
+    "checks": [
+      {
+        "check": "reuse",
+        "cell": "C2",
+        "seed": 20260907,
+        "order": 0,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": true
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 20260907,
+        "order": 0,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": true
+      },
+      {
+        "check": "reuse",
+        "cell": "C2",
+        "seed": 20260907,
+        "order": 1,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": false
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 20260907,
+        "order": 1,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": false
+      },
+      {
+        "check": "reuse",
+        "cell": "C2",
+        "seed": 17011,
+        "order": 0,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": false
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 17011,
+        "order": 0,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": false
+      },
+      {
+        "check": "reuse",
+        "cell": "C2",
+        "seed": 17011,
+        "order": 1,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": false
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 17011,
+        "order": 1,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": false
+      },
+      {
+        "check": "reuse",
+        "cell": "C2",
+        "seed": 29009,
+        "order": 0,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": false
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 29009,
+        "order": 0,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": false
+      },
+      {
+        "check": "reuse",
+        "cell": "C2",
+        "seed": 29009,
+        "order": 1,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": false
+      },
+      {
+        "check": "reuse",
+        "cell": "VV",
+        "seed": 29009,
+        "order": 1,
+        "prefix": 2,
+        "exact_masks": true,
+        "paired_state": false
+      },
+      {
+        "check": "direct_oracle",
+        "cell": "W_ONLY",
+        "arrivals": 2,
+        "loss_exact": true,
+        "output_exact": true,
+        "state_close": true,
+        "own_q_W_exact": true
+      },
+      {
+        "check": "direct_oracle",
+        "cell": "LSO_ONLY",
+        "arrivals": 2,
+        "loss_exact": true,
+        "output_exact": true,
+        "state_close": true,
+        "own_q_W_exact": true
+      }
+    ],
+    "projected_seconds": 11742.499786376953,
+    "projected_allocated_bytes": 9315856.0,
+    "peak_allocated_MiB": 2293.8486328125,
+    "qualified_step_seconds": [
+      2.3560473918914795,
+      0.46366238594055176,
+      1.2232344150543213,
+      0.778935432434082,
+      0.8105077743530273,
+      0.49210166931152344,
+      0.7573485374450684,
+      0.6644387245178223,
+      0.492389440536499,
+      0.4768867492675781,
+      0.8597569465637207,
+      0.5802249908447266,
+      0.9287843704223633,
+      0.4874153137207031,
+      0.9273781776428223,
+      0.675992488861084,
+      0.537492036819458,
+      0.47905921936035156,
+      0.6143496036529541,
+      0.5783143043518066,
+      0.4902660846710205,
+      0.4176621437072754,
+      0.6725597381591797,
+      0.6087093353271484,
+      0.8687021732330322,
+      0.5508756637573242,
+      0.502631664276123,
+      0.4243767261505127
+    ],
+    "short_prefix_not_full_trajectory_replay": true
+  }
+}
