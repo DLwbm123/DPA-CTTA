@@ -1,0 +1,62 @@
+{
+  "unique_inputs": 32,
+  "diagnostic_columns": [
+    "conflict_location_fraction",
+    "correction_norm_mean",
+    "main_source_logit_mae",
+    "main_shuffled_logit_mae",
+    "path_decomposition_max_abs_error"
+  ],
+  "diagnostic_mean": [
+    0.2947577238082886,
+    0.07723019469995052,
+    0.05682676227297634,
+    0.029824877448845655,
+    8.791685104370117e-06
+  ],
+  "diagnostic_max": [
+    0.48493194580078125,
+    0.16560325026512146,
+    0.11967311799526215,
+    0.04791368916630745,
+    1.33514404296875e-05
+  ],
+  "changed_pixels_by_arm_OD_OC": {
+    "PROJECT": [
+      679,
+      5
+    ],
+    "RADIAL": [
+      101,
+      1
+    ],
+    "REVERSE": [
+      984,
+      8
+    ],
+    "SHUFFLED": [
+      936,
+      2
+    ]
+  },
+  "nonzero_changed_input_head_counts": {
+    "PROJECT": [
+      24,
+      3
+    ],
+    "RADIAL": [
+      18,
+      1
+    ],
+    "REVERSE": [
+      24,
+      4
+    ],
+    "SHUFFLED": [
+      23,
+      1
+    ]
+  },
+  "new_gt_reads": 0,
+  "new_model_calls": 0
+}

@@ -1,0 +1,535 @@
+{
+  "status": "COMPLETE",
+  "qualified": false,
+  "gates": {
+    "primary": false,
+    "source": false,
+    "controls": false,
+    "od_noninferior": false,
+    "worst_head_loss": false,
+    "new_empty": true,
+    "new_nesting": true,
+    "full_surface": true,
+    "surface_noninferior": false,
+    "vcdr": false,
+    "semantic_null": true,
+    "both_orders": false
+  },
+  "metrics": {
+    "SOURCE": {
+      "OD": {
+        "mean": 97.03277241563225,
+        "ci95": [
+          96.63873515536703,
+          97.43302528958924
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 87.28154306068689,
+        "ci95": [
+          83.13544449596516,
+          90.80558926490481
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 2.3355016203217427,
+        "ci95": [
+          2.041761467472865,
+          2.6285494578528064
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 4.244397012827503,
+        "ci95": [
+          3.433663985862815,
+          4.985822601715036
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_HD95": {
+        "mean": 5.501094260355746,
+        "ci95": [
+          4.888645793278782,
+          6.124649271392529
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 9.665112284219642,
+        "ci95": [
+          8.274589595960283,
+          10.962534588159432
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "vCDR": {
+        "mean": 0.05687870653869323,
+        "ci95": [
+          0.03303688971647053,
+          0.07792829976143542
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      }
+    },
+    "PROJECT": {
+      "OD": {
+        "mean": 97.02751882620564,
+        "ci95": [
+          96.62616032718513,
+          97.43631467766483
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 87.28209439725536,
+        "ci95": [
+          83.13544449596516,
+          90.80831838091878
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 2.335623484252176,
+        "ci95": [
+          2.036302113178207,
+          2.6337592448839096
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 4.244196583058006,
+        "ci95": [
+          3.433663985862815,
+          4.985622171945539
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_HD95": {
+        "mean": 5.510640764971011,
+        "ci95": [
+          4.904890302855089,
+          6.131647320453661
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 9.66478709729627,
+        "ci95": [
+          8.274589595960283,
+          10.962526458486348
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "vCDR": {
+        "mean": 0.056971375904151945,
+        "ci95": [
+          0.033037321358307184,
+          0.07815975622603862
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      }
+    },
+    "RADIAL": {
+      "OD": {
+        "mean": 97.03224895579224,
+        "ci95": [
+          96.63566423836603,
+          97.43326351689242
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 87.28163886765279,
+        "ci95": [
+          83.13544449596516,
+          90.80606350938602
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 2.335882223013752,
+        "ci95": [
+          2.039126421857607,
+          2.6306014382034832
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 4.244406619441215,
+        "ci95": [
+          3.433663985862815,
+          4.985832208328748
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_HD95": {
+        "mean": 5.501094260355746,
+        "ci95": [
+          4.888645793278782,
+          6.124649271392529
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 9.665112284219642,
+        "ci95": [
+          8.274589595960283,
+          10.962534588159432
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "vCDR": {
+        "mean": 0.05687870653869323,
+        "ci95": [
+          0.03303688971647053,
+          0.07792829976143542
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      }
+    },
+    "REVERSE": {
+      "OD": {
+        "mean": 97.0297772316519,
+        "ci95": [
+          96.64787123796687,
+          97.4220400302615
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 87.28071107052511,
+        "ci95": [
+          83.13544449596516,
+          90.801470913604
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 2.336305755785867,
+        "ci95": [
+          2.050198776312327,
+          2.6309924444855524
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 4.244650070142385,
+        "ci95": [
+          3.433663985862815,
+          4.986075659029918
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_HD95": {
+        "mean": 5.48220913070697,
+        "ci95": [
+          4.879160749498663,
+          6.14466224767957
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 9.667063405759887,
+        "ci95": [
+          8.274589595960283,
+          10.962583366197938
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "vCDR": {
+        "mean": 0.05687870653869323,
+        "ci95": [
+          0.03303688971647053,
+          0.07792829976143542
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      }
+    },
+    "SHUFFLED": {
+      "OD": {
+        "mean": 97.02740921030463,
+        "ci95": [
+          96.6404482595702,
+          97.42041534094285
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 87.28135142673412,
+        "ci95": [
+          83.13544449596516,
+          90.80464067683864
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 2.345203612519425,
+        "ci95": [
+          2.053567315385306,
+          2.647997502125718
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 4.24447785182882,
+        "ci95": [
+          3.433663985862815,
+          4.985903440716353
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_HD95": {
+        "mean": 5.554498397498421,
+        "ci95": [
+          4.929298638158409,
+          6.222726962748125
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 9.665762658066392,
+        "ci95": [
+          8.274589595960283,
+          10.9625508475056
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "vCDR": {
+        "mean": 0.06337504244679384,
+        "ci95": [
+          0.036403361046891625,
+          0.08890075025205645
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      }
+    },
+    "B": {
+      "OD": {
+        "mean": 97.1372616291098,
+        "ci95": [
+          96.7363677956862,
+          97.54921863644277
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC": {
+        "mean": 87.80529246678334,
+        "ci95": [
+          83.87122008786633,
+          91.21932887059698
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_ASSD": {
+        "mean": 2.350047853474006,
+        "ci95": [
+          2.052493496025748,
+          2.6383677341060463
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_ASSD": {
+        "mean": 4.304221276420964,
+        "ci95": [
+          3.394616342920558,
+          5.1425414018908615
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OD_HD95": {
+        "mean": 5.368008996331698,
+        "ci95": [
+          4.716922362745305,
+          6.034315723719258
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "OC_HD95": {
+        "mean": 9.078439098757263,
+        "ci95": [
+          7.453816606260116,
+          10.535655177615283
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      },
+      "vCDR": {
+        "mean": 0.051416822775909844,
+        "ci95": [
+          0.03191702978754937,
+          0.07129221638323695
+        ],
+        "defined_inputs": 64,
+        "defined_contents": 8
+      }
+    }
+  },
+  "oc_contrasts_pp": {
+    "SOURCE": {
+      "mean": 0.0005513365684784333,
+      "ci95": [
+        0.0,
+        0.0016540097054353
+      ],
+      "defined_inputs": 64,
+      "defined_contents": 8
+    },
+    "RADIAL": {
+      "mean": 0.00045552960257779775,
+      "ci95": [
+        0.0,
+        0.0013665888077333934
+      ],
+      "defined_inputs": 64,
+      "defined_contents": 8
+    },
+    "REVERSE": {
+      "mean": 0.0013833267302565844,
+      "ci95": [
+        0.0,
+        0.0041499801907697535
+      ],
+      "defined_inputs": 64,
+      "defined_contents": 8
+    },
+    "SHUFFLED": {
+      "mean": 0.000742970521239883,
+      "ci95": [
+        0.0,
+        0.002228911563719649
+      ],
+      "defined_inputs": 64,
+      "defined_contents": 8
+    },
+    "B": {
+      "mean": -0.5231980695279846,
+      "ci95": [
+        -0.8154512526386372,
+        -0.2365381107572464
+      ],
+      "defined_inputs": 64,
+      "defined_contents": 8
+    }
+  },
+  "order_contrasts_b_pp": [
+    {
+      "mean": -0.5231980695279846,
+      "ci95": [
+        -0.8154512526386372,
+        -0.2365381107572464
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    },
+    {
+      "mean": -0.5231980695279846,
+      "ci95": [
+        -0.8154512526386372,
+        -0.2365381107572464
+      ],
+      "defined_inputs": 32,
+      "defined_contents": 8
+    }
+  ],
+  "od_contrast_b_pp": {
+    "mean": -0.10974280290416587,
+    "ci95": [
+      -0.13053870717090715,
+      -0.08953978423104984
+    ],
+    "defined_inputs": 64,
+    "defined_contents": 8
+  },
+  "oc_surface_ratios": {
+    "OC_ASSD": {
+      "mean": 1.002356213903532,
+      "ci95": [
+        0.9708799069751359,
+        1.0427789103315275
+      ],
+      "defined_inputs": 64,
+      "defined_contents": 8
+    },
+    "OC_HD95": {
+      "mean": 1.093707226651968,
+      "ci95": [
+        1.0290940221814688,
+        1.1921434097078931
+      ],
+      "defined_inputs": 64,
+      "defined_contents": 8
+    }
+  },
+  "vcdr_delta": {
+    "mean": 0.005554553128242103,
+    "ci95": [
+      -0.004189476807084966,
+      0.016739095304659855
+    ],
+    "defined_inputs": 64,
+    "defined_contents": 8
+  },
+  "worst_head_delta_pp": -2.024230030364997,
+  "empty_heads": {
+    "SOURCE": 0,
+    "PROJECT": 0,
+    "RADIAL": 0,
+    "REVERSE": 0,
+    "SHUFFLED": 0,
+    "B": 0
+  },
+  "nesting_pixels": {
+    "SOURCE": 0,
+    "PROJECT": 0,
+    "RADIAL": 0,
+    "REVERSE": 0,
+    "SHUFFLED": 0,
+    "B": 0
+  },
+  "registered_contents": 8,
+  "inputs": 64,
+  "task_scope": "Repeatedly used development contents; not independent patient validation."
+}
