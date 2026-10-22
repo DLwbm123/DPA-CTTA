@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "inputs": 64,
+  "counts": {
+    "forward": 2496,
+    "backward": 576,
+    "updates": 576
+  },
+  "source_bit_parity": 64,
+  "source_immutable": true,
+  "domain_state_equality": 64,
+  "independent_exact_replay": false,
+  "access_negative_checks": 4,
+  "label_reads": 0,
+  "neutral_nvidia": true,
+  "semantic_changed_fraction": 0.9806471765041351,
+  "pixel_queue_commits": "pre-refinement observations, except ALL_RESET",
+  "randomness": "input/phase keyed, not arm keyed; physical counters never restored"
+}
