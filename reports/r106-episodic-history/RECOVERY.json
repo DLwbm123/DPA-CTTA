@@ -1,0 +1,27 @@
+{
+  "at": 1792636775.6986325,
+  "source_restored": "1c22ee650465c8be1c795c137845f64ae0d8c208",
+  "original_clock_restored": true,
+  "original_limits_restored": true,
+  "formal_worker_already_loaded_original_code": true,
+  "no_new_GPU_worker_launched": true,
+  "diagnostic_selfcheck_only": true,
+  "qualification_receipts_unchanged": true,
+  "issue": "duplicate preparation overwrote files during active formal worker; restored before scoring",
+  "formal_PID": 1197573,
+  "targeted_restore_verification_at": 1792637180.978749,
+  "targeted_comparisons": {
+    "PROTOCOL.md": true,
+    "controller.py": true,
+    "entry.py": true,
+    "method.py": true,
+    "score.py": true,
+    "worker.py": true,
+    "wrapper.py": true,
+    "/tmp/e106.py": true,
+    "/tmp/l106.py": true,
+    "/tmp/c106.py": true
+  },
+  "comparison_reason": "Observed accidental overwrite; scoped comparison with frozen source",
+  "selfcheck_receipt": "Overwritten by duplicate preparation CPU selfcheck; not original qualification evidence"
+}

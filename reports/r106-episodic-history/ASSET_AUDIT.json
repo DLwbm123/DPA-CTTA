@@ -1,0 +1,175 @@
+{
+  "checked_at": 1792636553.4460754,
+  "scope": "existing mounted Fundus/Polyp CSV metadata and registered 192-content panel; no global-server inventory or pixel reads",
+  "manifests": [
+    {
+      "task": "Fundus",
+      "manifest": "Drishti_GS_test.csv",
+      "rows": 51,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Fundus",
+      "manifest": "Drishti_GS_train.csv",
+      "rows": 50,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Fundus",
+      "manifest": "ORIGA_test.csv",
+      "rows": 150,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Fundus",
+      "manifest": "ORIGA_train.csv",
+      "rows": 500,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Fundus",
+      "manifest": "REFUGE_Valid.csv",
+      "rows": 800,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Fundus",
+      "manifest": "REFUGE_test.csv",
+      "rows": 80,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Fundus",
+      "manifest": "REFUGE_train.csv",
+      "rows": 320,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Fundus",
+      "manifest": "RIM_ONE_r3_test.csv",
+      "rows": 60,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Fundus",
+      "manifest": "RIM_ONE_r3_train.csv",
+      "rows": 99,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Polyp",
+      "manifest": "BKAI_test.csv",
+      "rows": 200,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Polyp",
+      "manifest": "BKAI_train.csv",
+      "rows": 800,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Polyp",
+      "manifest": "CVC-ClinicDB_test.csv",
+      "rows": 134,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Polyp",
+      "manifest": "CVC-ClinicDB_train.csv",
+      "rows": 478,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Polyp",
+      "manifest": "ETIS-LaribPolypDB_test.csv",
+      "rows": 44,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Polyp",
+      "manifest": "ETIS-LaribPolypDB_train.csv",
+      "rows": 152,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Polyp",
+      "manifest": "Kvasir-SEG_test.csv",
+      "rows": 200,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    },
+    {
+      "task": "Polyp",
+      "manifest": "Kvasir-SEG_train.csv",
+      "rows": 800,
+      "fields": [
+        "image",
+        "mask"
+      ]
+    }
+  ],
+  "fundus_target_manifest_unique_paths": 1951,
+  "registered_panel_unique_paths": 192,
+  "panel_paths_subset": true,
+  "duplicate_detection": "path-level only; no new hashes, no claim of content or patient independence",
+  "patient_eye_keys_present": false,
+  "source_membership_record_in_inspected_model_tree": false,
+  "historical_exposure_evidence": "reports/r85-r86-loss-aggregation/DATA_AUDIT.json; reports/r102-c1-c2-falsification/PROTOCOL.md",
+  "target_exposure": "all 1951 historically exposed per retained audit; 192 is a subset",
+  "patient_eye_linkage": "UNKNOWN",
+  "source_pretraining_overlap": "UNKNOWN",
+  "independent_confirmation": "NOT_ADMITTED",
+  "polyp": "present but exposure/identity/compatible study contract not established; not admitted or used",
+  "development_mechanism": "192 registered contents permitted by current explicit request",
+  "new_downloads": 0,
+  "image_reads": 0,
+  "label_pixel_reads": 0
+}
