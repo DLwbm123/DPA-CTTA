@@ -1,0 +1,171 @@
+{
+  "public": {
+    "public/RAW_SEALED.json": {
+      "status": "SEALED",
+      "jobs": 12,
+      "arrivals": 2304,
+      "online_label_reads": 0,
+      "online_score_reads": 0,
+      "reused_jobs": 11,
+      "new_jobs": 1,
+      "replayed_trace_rows": 72,
+      "replayed_prefix_bytes": 4193901
+    },
+    "public/FINAL_FORMAL_ACCESS.json": {
+      "online_labels": 0,
+      "online_scores": 0,
+      "source_images": 0,
+      "unique_images": 192,
+      "denial_probes": 2
+    },
+    "public/FINAL_FORMAL_EXIT.json": {
+      "status": "COMPLETE",
+      "seconds": 182.44886589050293,
+      "result": {
+        "status": "SEALED",
+        "jobs": 12,
+        "arrivals": 2304,
+        "online_label_reads": 0,
+        "online_score_reads": 0,
+        "reused_jobs": 11,
+        "new_jobs": 1,
+        "replayed_trace_rows": 72,
+        "replayed_prefix_bytes": 4193901
+      }
+    },
+    "public/FINAL_FORMAL_WRAPPER.json": {
+      "exit_code": 0,
+      "ended": 1792682549.6679568,
+      "timeout_absent": true
+    },
+    "public/SEALED.json": {
+      "status": "ALL_RAW_POST_SEALED",
+      "streams": 12,
+      "labels_read_before_seal": 0,
+      "at": 1792682718.88937,
+      "encoding": "post_bits = raw_bits XOR decoded_post_xor; fixed post unchanged"
+    },
+    "public/FINAL_SCORE_WRAPPER.json": {
+      "exit_code": 1,
+      "ended": 1792683088.093199,
+      "timeout_absent": true
+    },
+    "public/FINAL_CONTROLLER_EXIT.json": {
+      "status": "FAILED",
+      "stage": "score",
+      "exit_code": 1
+    }
+  },
+  "state": {
+    "phase": "VALIDATED_EMPTY",
+    "validation": {
+      "status": "PASS",
+      "extent": 4194304,
+      "models": 0,
+      "labels": 0,
+      "authorization": "NOT_GRANTED"
+    },
+    "source": {
+      "commit": "7ccc345",
+      "status": "VALIDATED_NOT_AUTHORIZED",
+      "deadline": 1792751614.42385
+    },
+    "authorization": {
+      "user_approved": true,
+      "max_updates": 2477,
+      "max_backwards": 2477,
+      "max_forwards": 22317,
+      "deadline": 1792751614.42385,
+      "remote_cap_bytes": 10485760,
+      "approved_at": 1792682361.298902,
+      "scope": "Replay only final trajectory; preserve 11 complete and all failures; frozen scoring and report push"
+    },
+    "controller_process": {
+      "pid": 1261450,
+      "started": 1792682361.303274,
+      "start_ticks": "468495825"
+    },
+    "final_started": {
+      "at": 1792682362.3380897,
+      "deadline": 1792751614.42385
+    },
+    "json:private/final_formal_timeout.json": {
+      "pid": 1261452,
+      "started": 1792682362.6106508,
+      "timeout_seconds": 3600
+    },
+    "json:private/final_formal_process.json": {
+      "pid": 1261453,
+      "start_ticks": "468495956",
+      "started": 1792682362.9785256
+    },
+    "json:private/final_formal_state.json": {
+      "status": "COMPLETE",
+      "mode": "formal",
+      "started": 1792682368.0351336,
+      "physical_updates": 192,
+      "completed_updates": 192,
+      "physical_forwards": 1728,
+      "training_backwards": 192,
+      "completed_jobs": [
+        "W_ONLY_s20260907_o0",
+        "LSO_ONLY_s20260907_o0",
+        "W_ONLY_s20260907_o1",
+        "LSO_ONLY_s20260907_o1",
+        "W_ONLY_s17011_o0",
+        "LSO_ONLY_s17011_o0",
+        "W_ONLY_s17011_o1",
+        "LSO_ONLY_s17011_o1",
+        "W_ONLY_s29009_o0",
+        "LSO_ONLY_s29009_o0",
+        "W_ONLY_s29009_o1",
+        "LSO_ONLY_s29009_o1"
+      ],
+      "online_label_reads": 0,
+      "online_score_reads": 0,
+      "job": "LSO_ONLY_s29009_o1",
+      "arrival": 192,
+      "ended": 1792682545.386072,
+      "image_accesses": 192
+    },
+    "json:private/final_score_timeout.json": {
+      "pid": 1261942,
+      "started": 1792682549.7071056,
+      "timeout_seconds": 3600
+    },
+    "json:private/final_score_process.json": {
+      "pid": 1261943,
+      "start_ticks": "468514666",
+      "started": 1792682550.0629396
+    },
+    "json:public/SCORE_PROGRESS.json": {
+      "completed_arm": "LSO_ONLY",
+      "seed": 29009,
+      "order": 1,
+      "at": 1792683084.0449429
+    },
+    "failure": {
+      "stage": "score",
+      "error": "CapacityError",
+      "reason": "reserved metrics payload limit; no bytes written",
+      "traceback": "Traceback (most recent call last):\n  File \"<runtime>\", line 33, in stage\n  File \"<score>\", line 73, in run\n  File \"<io_adapter>\", line 39, in put\narena.CapacityError: reserved metrics payload limit; no bytes written\n"
+    },
+    "log:score": "Traceback (most recent call last):\n  File \"<stdin>\", line 1, in <module>\n  File \"<runtime>\", line 33, in stage\n  File \"<score>\", line 73, in run\n  File \"<io_adapter>\", line 39, in put\narena.CapacityError: reserved metrics payload limit; no bytes written\n",
+    "score_resume_supervisor": {
+      "pid": 1264206,
+      "at": 1792684313.7314296
+    },
+    "score_resume_started": {
+      "at": 1792684313.847153,
+      "new_model_calls": 0
+    },
+    "score_resume_process": {
+      "pid": 1264207,
+      "started": 1792684313.8515897,
+      "timeout_seconds": 1800
+    }
+  },
+  "root_usage": 9476986,
+  "payload_free": 714079,
+  "allocated_bytes": 4194304
+}
