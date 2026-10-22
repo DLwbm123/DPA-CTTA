@@ -1,0 +1,15 @@
+# Source-trained regional adaptation: development experiment
+
+r01 completed, but neither seed passed the preregistered development gate. FULL beats the frozen SOURCE by +1.665738/+1.211942 Dice points, yet versus independently trained DIRECT it is +0.650746/-0.349613. FULL minus its own NO_UPDATE is +0.000294/-0.023497: the improvement cannot be attributed to test-time adaptation, regional selection, or memory. r02 is a registered follow-up changing only the projected-gradient scale; its results are pending.
+
+This is source-development evidence on a 79/20 content split of the 99-image source training partition. Filename grouping is not verified patient identity. The inherited backbone training membership is unknown and may include development images. No target-domain images or labels are used. No novelty or TMI readiness is claimed.
+
+## Files and use
+
+`src/train.py` is r01; `src/train_r02.py` is the prospective follow-up. Python dependencies: torch, numpy, Pillow; the external ResUnet module and licensed source data/checkpoint must be supplied separately. Fill config.example.json and save it as config.private.json in a new run directory; set WORK_ROOT via environment and CUDA_VISIBLE_DEVICES. Use a neutral worker entry and start runtime.py detached. Its absolute window_end_utc must be explicitly set for a newly authorized reproduction; a retry must retain the existing RUNTIME_RECEIPT.json. This historical experiment's deadline must not be silently extended.
+
+The controller enforces per-run time/storage bounds. It does not alone enforce a multi-run window budget: reserve each run against the shared budget before launch. `src/analyze.py <run>/runs` aggregates both completed seeds and matched controls. It uses only the standard library. r02 reuses the completed r01 DIRECT metrics without retraining; disclose the additional mainline development budget.
+
+The first 256-input attempt was invalid because the inherited backbone required 512 input. Its 1685 optimizer steps and 5695 backbone/10750 refiner image-forwards remain in total cost. Four source-fit diagnostic forwards are included. A stale-entry restart was immediately stopped with zero real training calls. The valid source interface uses 512 BICUBIC/minmax, then 256 logits/RGB for the refiner and NEAREST labels. A two-image fit-only check was used to confirm interface function, never as performance evidence. The diagnostic attempt's bool-Dice calculation was invalid and is not reported.
+
+Only code, configuration template, protocols, aggregate results and runtime totals are published. Private rows, images/masks, checkpoints, identifiers, host configuration and third-party full text are excluded. Reading levels in the matrix distinguish checked method sections from partial reading.

@@ -1,0 +1,18 @@
+{
+  "data_root": "/path/to/Fundus",
+  "backbone_code": "/path/to/OPTIC",
+  "checkpoint": "/path/to/source.pth",
+  "steps": 2000,
+  "warmup": 200,
+  "eval_every": 400,
+  "seeds": [
+    10223,
+    10224
+  ],
+  "hard_seconds": 14400,
+  "run_storage_limit_bytes": 8000000000,
+  "window_end_utc": "2026-10-23T04:00:43.211518+00:00",
+  "python": "/path/to/python",
+  "neutral_train": "/tmp/worker.py",
+  "prior_counts": {}
+}
