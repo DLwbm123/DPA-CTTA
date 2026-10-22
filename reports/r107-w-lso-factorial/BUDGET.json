@@ -1,0 +1,42 @@
+{
+  "T0": 1792665214.42385,
+  "T0_basis": "conservative 15 minute backdate covering inspection and compression preflight",
+  "deadline": 1792751614.42385,
+  "prior_reservation_bytes": 21987966976,
+  "remote_cap_bytes": 10485760,
+  "remote_normal_cap_bytes": 9961472,
+  "local_cap_bytes": 1048576,
+  "cumulative_cap_bytes": 22000000000,
+  "total_reservation_bytes": 21999501312,
+  "formal_updates": 2304,
+  "formal_forwards": 20736,
+  "formal_backwards": 2304,
+  "no_scientific_retry": true,
+  "candidates": [
+    "W_ONLY",
+    "LSO_ONLY"
+  ],
+  "status": "FROZEN_PENDING_QUALIFICATION",
+  "qualification_updates": 36,
+  "qualification_forwards": 348,
+  "qualification_backwards": 36,
+  "expected_updates": 2340,
+  "expected_forwards": 21084,
+  "expected_backwards": 2340,
+  "max_updates": 2400,
+  "max_forwards": 22000,
+  "max_backwards": 2400,
+  "post_analysis_model_calls": 0,
+  "post_analysis_streams": 24,
+  "post_analysis_label_contents": 192,
+  "encoding": "raw LZMA6; post XOR raw LZMA6; lossless packed bits",
+  "storage_projection": {
+    "baseline_raw_xz": 184476,
+    "baseline_post_xor_xz": 95084,
+    "streams": 12,
+    "allocation_multiplier": 2,
+    "compression_margin": 1.15,
+    "nonprediction_allowance_bytes": 1600000,
+    "estimated_total_bytes": 9315856.0
+  }
+}

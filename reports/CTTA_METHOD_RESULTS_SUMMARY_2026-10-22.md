@@ -70,6 +70,7 @@ R106含资格共2,336 updates、21,048 forwards、2,336 backwards；12正式轨�
 | 批次 | 主要发现 | 不能据此声称 |
 |---|---|---|
 | R80 历史因素拆解 | 关闭Adam历史及q/W自反馈后，D1逐视图相对优势仍存在；反馈可放大收益也可加重损害，Adam在部分域缓解相对损害 | Adam统一导致伤害，或已分离q、W、LSO各自作用 |
+| R81 q×W来源四格 | 已分开当前/初态q和W来源：D1相对优势主要由q自反馈放大，W效应较小且依赖q；各域损害不能统一归因 | 项目尚未拆过q/W来源，或来源切换等于W/LSO组件删项 |
 | R85/R86 聚合位置 | VB−VV约−0.039056 pp，BV−VV约−0.332582 pp，均未晋级 | 调换聚合位置已经解决主线问题 |
 | R91 固定六弱读出 | Qt−K +0.452540 pp，但校正CI跨零且D0 OD保护失败；Qt−Q0 +1.517790 pp | 读出替换已通过，或静态读出收益属于新的持续机制 |
 | R103 静态/混合/可靠锚定 | 三候选相对VV分别−0.484758/−0.282279/−0.217870 pp | 锚定改善已获支持 |
@@ -99,6 +100,7 @@ R106含资格共2,336 updates、21,048 forwards、2,336 backwards；12正式轨�
 ## 7. 证据入口
 
 - [R80历史因素报告](r80-history-factorial/REPORT.md)
+- [R81 q/W来源四格报告](r81-qw-factorial/REPORT.md)
 - [R85/R86冻结协议](r85-r86-loss-aggregation/PROTOCOL.md)（其中PREPARED/待执行表述为历史预注册状态，不代表当前进度）
 - [R91固定读出报告](r91-fixed-readout/REPORT.md)
 - [R102完整结果与结构代价](r102-c1-c2-falsification/REPORT.md)
@@ -106,3 +108,7 @@ R106含资格共2,336 updates、21,048 forwards、2,336 backwards；12正式轨�
 - [R106最终报告](r106-episodic-history/REPORT.md)、[资产审计](r106-episodic-history/ASSET_AUDIT.json)、[原始判定](r106-episodic-history/RESULT.json)、[完整聚合单元](r106-episodic-history/ALL_CELLS.csv)
 
 本次总结只使用已公开聚合和自有协议/实现，不新增模型调用、标签读取或重评分，不发布患者图像、身份、逐图预测或模型权重。
+
+## R107启动前补记
+
+用户随后明确授权R107两个组件删项臂及固定后处理分析。R81来源四格已补入；R107研究的是功能开关，不重复来源切换。具体冻结协议与预算见[r107-w-lso-factorial/PROTOCOL.md](r107-w-lso-factorial/PROTOCOL.md)。本总结此前“尚未冻结下一实验”的表述保留为当时状态，当前进度以R107回执为准。
