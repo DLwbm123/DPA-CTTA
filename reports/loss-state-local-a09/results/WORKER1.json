@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "inputs": 64,
+  "selected_positions": 16,
+  "counts": {
+    "forward": 720,
+    "backward": 128,
+    "updates": 128
+  },
+  "source_parity": 64,
+  "a08_pre_post_loss_parity": 64,
+  "a08_source_bn_output_parity": 64,
+  "full_update_state_replay": 16,
+  "zero_current_gradient": 16,
+  "probe_full_state_restoration": 16,
+  "independent_exact_replay": false,
+  "label_reads": 0,
+  "negative_checks": 4
+}
