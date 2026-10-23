@@ -1,0 +1,16 @@
+{
+  "data_root": "$SOURCE_DATA_ROOT",
+  "parent_root": "$FROZEN_R01_ROOT",
+  "python": "python",
+  "remote_root": "$WORK_ROOT",
+  "hard_seconds": 900,
+  "stop_margin": 60,
+  "storage_soft": 50000000,
+  "storage_hard": 100000000,
+  "neutral_train": "/tmp/worker.py",
+  "neutral_supervisor": "/tmp/controller.py",
+  "probe_count": 12,
+  "selection_seed": 28417,
+  "ridge": 0.001,
+  "size": 256
+}
