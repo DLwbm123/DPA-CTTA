@@ -1,3 +1,5 @@
+[r13 frozen diagnostic results](r13/REPORT_ZH.md) — diagnostics complete; r14 awaits a user decision.
+
 [Final 12-hour window summary](FINAL_WINDOW_SUMMARY_ZH.md) — all training ended before the original deadline; no follow-up experiments.
 
 # Source-trained regional adaptation: development experiment
