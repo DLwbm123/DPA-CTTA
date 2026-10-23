@@ -1,0 +1,38 @@
+{
+  "status": "INCOMPLETE_INFRASTRUCTURE_STOP",
+  "scientific_outcome": "UNKNOWN",
+  "effect_gates": "NOT_EVALUATED",
+  "reason": "Two bounded storage probe timeouts; no further retry",
+  "seeds_planned": [
+    10225,
+    10226
+  ],
+  "partial_seed": 10225,
+  "completed_steps_per_arm": {
+    "INVARIANT": 400,
+    "SHARED": 400,
+    "SHUFFLED": 400
+  },
+  "second_seed_started": false,
+  "counts": {
+    "updates": 1200,
+    "training_encoder_images": 19200,
+    "evaluation_encoder_images": 0,
+    "synthetic_forwards": 2,
+    "synthetic_backward": 1
+  },
+  "final_evaluation_images": 0,
+  "original_clock_elapsed_to_final_exit_seconds": 1869.209145596251,
+  "within_original_deadline": true,
+  "all_processes_retired": true,
+  "first_attempt_step": 300,
+  "resume_first_step": 301,
+  "resume_replayed_steps": 0,
+  "all_saved_rng_restored": true,
+  "bitwise_equivalence_claimed": false,
+  "last_successful_campaign_storage_bytes": 1737842688,
+  "final_storage_scan_available": false,
+  "storage_cap_bytes": 30000000000,
+  "underlying_storage_timeout_cause": "UNKNOWN",
+  "automatic_further_resume_allowed": false
+}

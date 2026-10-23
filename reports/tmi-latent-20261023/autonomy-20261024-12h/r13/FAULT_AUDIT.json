@@ -1,0 +1,19 @@
+{
+  "status": "INCOMPLETE_ATTEMPT_PRESERVED",
+  "reason": "STORAGE_PROBE_TIMEOUT",
+  "source_of_reason": "independent control EXIT and SIGNALS",
+  "worker_exception": "InterruptedError: Budget stop; no replay",
+  "updates": 900,
+  "training_encoder_images": 14400,
+  "evaluation_encoder_images": 0,
+  "seed": 10225,
+  "step_per_arm": 300,
+  "exit_within_original_deadline": true,
+  "worker_and_probe_terminated": true,
+  "underlying_storage_latency_cause": "UNKNOWN",
+  "later_probe_seconds": 0.3432432133704424,
+  "later_campaign_allocated_bytes": 1737842688,
+  "storage_limit_triggered": false,
+  "scientific_outcome": "UNKNOWN_NOT_EVALUATED",
+  "resume_policy": "one strict checkpoint/RNG restore only, same origin/deadline, no threshold changes"
+}
