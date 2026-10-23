@@ -1,0 +1,20 @@
+{
+  "synthetic_only": true,
+  "identity_at_initialization": true,
+  "nonzero_trainable_gradient": true,
+  "finite_changed_output": true,
+  "extra_counts": {
+    "optimizer_steps": 0,
+    "correction_forwards": 0,
+    "synthetic_optimizer_steps": 1,
+    "synthetic_forwards": 2
+  },
+  "base_counts": {
+    "encoder_images": 0,
+    "renderer_images": 0,
+    "head_images": 0,
+    "outer_updates": 0,
+    "latent_gradient_calls": 0,
+    "target_domain_images": 0
+  }
+}
