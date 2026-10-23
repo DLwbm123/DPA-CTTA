@@ -1,0 +1,66 @@
+{
+  "status": "PASS",
+  "static_checks": "PASS",
+  "checkpoints": [
+    {
+      "seed": 10223,
+      "arm": "CONTROL",
+      "checkpoint": "last",
+      "step": 4000,
+      "max_metric_error": 6.938893903907228e-18
+    },
+    {
+      "seed": 10223,
+      "arm": "CONTROL",
+      "checkpoint": "best",
+      "step": 4000,
+      "max_metric_error": 6.938893903907228e-18
+    },
+    {
+      "seed": 10223,
+      "arm": "FULL",
+      "checkpoint": "last",
+      "step": 4000,
+      "max_metric_error": 0.0
+    },
+    {
+      "seed": 10223,
+      "arm": "FULL",
+      "checkpoint": "best",
+      "step": 4000,
+      "max_metric_error": 0.0
+    },
+    {
+      "seed": 10224,
+      "arm": "CONTROL",
+      "checkpoint": "last",
+      "step": 4000,
+      "max_metric_error": 0.0
+    },
+    {
+      "seed": 10224,
+      "arm": "CONTROL",
+      "checkpoint": "best",
+      "step": 2000,
+      "max_metric_error": 0.0
+    },
+    {
+      "seed": 10224,
+      "arm": "FULL",
+      "checkpoint": "last",
+      "step": 4000,
+      "max_metric_error": 0.0
+    },
+    {
+      "seed": 10224,
+      "arm": "FULL",
+      "checkpoint": "best",
+      "step": 3600,
+      "max_metric_error": 6.938893903907228e-18
+    }
+  ],
+  "label_scope": "source fit training; repeated source dev evaluation only",
+  "target_reads": 0,
+  "r12_retraining": false,
+  "extra_readout_conditions": 320
+}
