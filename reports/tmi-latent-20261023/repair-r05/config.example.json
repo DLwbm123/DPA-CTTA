@@ -1,0 +1,27 @@
+{
+  "origin_unix": 0,
+  "hard_seconds": 900,
+  "stop_margin": 60,
+  "kill_reserve": 5,
+  "probe_timeout": 5,
+  "probe_interval": 10,
+  "failure_grace": 10,
+  "stdout_cap": 1000000,
+  "storage_soft": 50000000,
+  "storage_hard": 100000000,
+  "expected_peak_bytes": 10000000,
+  "worker_argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-S",
+    "/tmp/e701.py"
+  ],
+  "probe_argv": [
+    "/usr/bin/python3",
+    "-I",
+    "-S",
+    "/tmp/e696.py"
+  ],
+  "work_root": "/REPLACE/PRIVATE/WORK/ROOT",
+  "worker_env": {}
+}

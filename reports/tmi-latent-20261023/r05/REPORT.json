@@ -43,6 +43,6 @@
   "operations": "Original process identities retired; post-run result-reader processes observed in RPC wait; causal kill reason unknown",
   "decision": "Close without replay, clock reset or renamed continuation; preserve observability hypothesis as untested",
   "data_receipt_is_plan_metadata": true,
-  "remote_state_reconciliation_pending": true,
+  "remote_state_reconciliation_pending": false,
   "budget_enforcement_gap": "Controller storage scan and receipt I/O depend on network filesystem; no independent local worker stop receipt"
 }

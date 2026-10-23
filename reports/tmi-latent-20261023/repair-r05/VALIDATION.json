@@ -1,0 +1,151 @@
+{
+  "synthetic_only": true,
+  "scientific_data_reads": 0,
+  "model_calls": 0,
+  "tests": {
+    "normal_exit": {
+      "error": null,
+      "reason": "NORMAL_EXIT",
+      "wrapper_exit_code": 0,
+      "worker_started": true,
+      "termination_confirmed": true,
+      "probe_termination_confirmed": true,
+      "observed_monotonic": 4769078.531969712,
+      "deadline_monotonic": 4769082.320909977,
+      "within_deadline": true,
+      "stdout_saved_bytes": 0,
+      "stdout_may_be_truncated": false,
+      "scientific_evidence": false
+    },
+    "term_ignored_descendant_killed": {
+      "error": null,
+      "reason": "TIME_SOFT_STOP",
+      "wrapper_exit_code": -9,
+      "worker_started": true,
+      "termination_confirmed": true,
+      "probe_termination_confirmed": true,
+      "observed_monotonic": 4769082.169146585,
+      "deadline_monotonic": 4769082.554133415,
+      "within_deadline": true,
+      "stdout_saved_bytes": 0,
+      "stdout_may_be_truncated": false,
+      "scientific_evidence": false
+    },
+    "saving_grace_window_preserved": {
+      "error": null,
+      "reason": "TIME_SOFT_STOP",
+      "wrapper_exit_code": 124,
+      "worker_started": true,
+      "termination_confirmed": true,
+      "probe_termination_confirmed": true,
+      "observed_monotonic": 4769085.277323339,
+      "deadline_monotonic": 4769086.185662985,
+      "within_deadline": true,
+      "stdout_saved_bytes": 0,
+      "stdout_may_be_truncated": false,
+      "scientific_evidence": false
+    },
+    "blocked_preflight_does_not_launch": {
+      "error": null,
+      "reason": "STORAGE_PROBE_TIMEOUT",
+      "wrapper_exit_code": null,
+      "worker_started": false,
+      "termination_confirmed": true,
+      "probe_termination_confirmed": true,
+      "observed_monotonic": 4769085.869945333,
+      "deadline_monotonic": 4769089.294443846,
+      "within_deadline": true,
+      "stdout_saved_bytes": 0,
+      "stdout_may_be_truncated": false,
+      "scientific_evidence": false
+    },
+    "blocked_postlaunch_check_fails_closed": {
+      "error": null,
+      "reason": "STORAGE_PROBE_TIMEOUT",
+      "wrapper_exit_code": -9,
+      "worker_started": true,
+      "termination_confirmed": true,
+      "probe_termination_confirmed": true,
+      "observed_monotonic": 4769086.971163478,
+      "deadline_monotonic": 4769089.884147882,
+      "within_deadline": true,
+      "stdout_saved_bytes": 0,
+      "stdout_may_be_truncated": false,
+      "scientific_evidence": false
+    },
+    "storage_limit_preflight_refused": {
+      "error": null,
+      "reason": "STORAGE_SOFT_STOP",
+      "wrapper_exit_code": null,
+      "worker_started": false,
+      "termination_confirmed": true,
+      "probe_termination_confirmed": true,
+      "observed_monotonic": 4769087.157852143,
+      "deadline_monotonic": 4769090.99380374,
+      "within_deadline": true,
+      "stdout_saved_bytes": 0,
+      "stdout_may_be_truncated": false,
+      "scientific_evidence": false
+    },
+    "storage_growth_stops_worker": {
+      "error": null,
+      "reason": "STORAGE_SOFT_STOP",
+      "wrapper_exit_code": -15,
+      "worker_started": true,
+      "termination_confirmed": true,
+      "probe_termination_confirmed": true,
+      "observed_monotonic": 4769087.543472193,
+      "deadline_monotonic": 4769091.177385807,
+      "within_deadline": true,
+      "stdout_saved_bytes": 0,
+      "stdout_may_be_truncated": false,
+      "scientific_evidence": false
+    },
+    "expired_clock_refused": {
+      "error": null,
+      "reason": "ABSOLUTE_DEADLINE",
+      "wrapper_exit_code": null,
+      "worker_started": false,
+      "termination_confirmed": true,
+      "probe_termination_confirmed": true,
+      "observed_monotonic": 4769087.612378076,
+      "deadline_monotonic": 4769081.560181856,
+      "within_deadline": false,
+      "stdout_saved_bytes": 0,
+      "stdout_may_be_truncated": false,
+      "scientific_evidence": false
+    },
+    "bounded_stdout_does_not_starve_timer": {
+      "error": null,
+      "reason": "NORMAL_EXIT",
+      "wrapper_exit_code": 0,
+      "worker_started": true,
+      "termination_confirmed": true,
+      "probe_termination_confirmed": true,
+      "observed_monotonic": 4769088.470542419,
+      "deadline_monotonic": 4769091.625536919,
+      "within_deadline": true,
+      "stdout_saved_bytes": 8192,
+      "stdout_may_be_truncated": true,
+      "scientific_evidence": false
+    },
+    "reuse_cannot_reset_clock": {
+      "refused": true,
+      "original_exit_preserved": true
+    },
+    "guardian_sigkill_native_timeout_survives": {
+      "termination_confirmed": true,
+      "before_original_deadline": true
+    },
+    "guardian_sigkill_probe_timeout_survives": {
+      "probe_termination_confirmed": true,
+      "worker_started": false
+    },
+    "legacy_timeout_can_return_minus9": {
+      "exit_code": -9,
+      "elapsed_seconds": 0.8170023187994957,
+      "historical_cause_proven": false
+    }
+  },
+  "passed": true
+}

@@ -1,0 +1,30 @@
+{
+  "historical_exit_code": -9,
+  "historical_kill_reason": "UNKNOWN: no kernel/journal access",
+  "kernel_log_access": "dmesg: Operation not permitted",
+  "journal": "No journal files found",
+  "observed_NFS_reader_wait": "rpc_wait_bit_killable",
+  "no_completion_or_partial_result_files_verified": true,
+  "calibration_receipt_present": false,
+  "controller_log": "empty",
+  "worker_log": "empty",
+  "exit_receipt_seconds": 989.1865828037262,
+  "exit_receipt_end_to_end_seconds": 1173.2566542625427,
+  "exit_storage_scan_path_seconds": 184.07007145881653,
+  "root_causes_in_code": [
+    "Relative timeout computed before filesystem writes and launch",
+    "Synchronous storage scan before acting on time-stop reason",
+    "Synchronous network-filesystem writes during start/exit",
+    "No local independent worker stop receipt",
+    "Native timeout exit mapped to generic FAILED with reason=null"
+  ],
+  "no_r05_replay": true,
+  "new_scientific_experiments": 0,
+  "captured_unix": 1792765643.544533,
+  "cgroup_v1_oom_kill_counter": 0,
+  "cgroup_counter_excludes_global_oom": false,
+  "wrapper_launch_delay_seconds": 4.17,
+  "native_kill_after_seconds": 60,
+  "save_margin_seconds": 60,
+  "startup_delay_exceeds_hard_deadline_in_native_chain_without_reserve": true
+}
