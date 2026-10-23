@@ -1,0 +1,68 @@
+{
+  "scope": "Source-only finite anatomy likelihood ranking, no segmentation adaptation or target validation",
+  "qualified_contents": 12,
+  "planned_contents": 12,
+  "views": 24,
+  "heads": {
+    "OD": {
+      "mean_margin": 0.0009567834995993091,
+      "median_margin": 0.001045302640107132,
+      "q05_margin": -0.0021020346111934427,
+      "content_win_tie_loss": [
+        10,
+        0,
+        2
+      ],
+      "view_mean_margin": {
+        "original": 0.0008094223930968925,
+        "photometric": 0.0011041446061017257
+      },
+      "direction_mean_margin": {
+        "OD_SHRINK": 0.030067088378542366,
+        "OD_EXPAND": -0.028153521379343748
+      },
+      "ranking_gate": true
+    },
+    "OC": {
+      "mean_margin": 0.0010901697787022574,
+      "median_margin": 0.00024152222251205835,
+      "q05_margin": -1.3256704184255728e-06,
+      "content_win_tie_loss": [
+        10,
+        1,
+        1
+      ],
+      "view_mean_margin": {
+        "original": 0.0011676912745702817,
+        "photometric": 0.0010126482828342331
+      },
+      "direction_mean_margin": {
+        "OC_SHRINK": -9.068638016260233e-05,
+        "OC_EXPAND": 0.002271025937567117
+      },
+      "ranking_gate": true
+    }
+  },
+  "negative_control_candidate_independent_by_construction": true,
+  "truth_rank_aggregate": {
+    "1": 0,
+    "2": 7,
+    "3": 16,
+    "4": 1,
+    "5": 0
+  },
+  "observability_gate": true,
+  "decision": "Retain only for a separately controlled method study; not efficacy evidence",
+  "counts": {
+    "source_images_read": 79,
+    "source_masks_read": 79,
+    "dev_images_read": 0,
+    "target_images_read": 0,
+    "neural_model_calls": 0,
+    "network_training_updates": 0,
+    "synthetic_solves": 6,
+    "calibration_solves": 67,
+    "probe_solves": 144,
+    "completed_probe_views": 24
+  }
+}
