@@ -1,0 +1,101 @@
+{
+  "scope": "Frozen source-fit diagnosis, no development or target images; label-assisted candidate is not a deployable method",
+  "seeds": [
+    {
+      "seed": 10225,
+      "probes": 12,
+      "alignment": {
+        "joint": {
+          "mean_cosine": 0.012791786536884805,
+          "non_descent_fraction": 0.16666666666666666
+        },
+        "od": {
+          "mean_cosine": -0.00010708595315615337,
+          "non_descent_fraction": 0.4166666666666667
+        },
+        "oc": {
+          "mean_cosine": 0.014126222017997256,
+          "non_descent_fraction": 0.16666666666666666
+        }
+      },
+      "style_renderer_change_ratio": {
+        "mean": 0.3270224739073073,
+        "median": 0.29833448538988094
+      },
+      "style_swap_observation_gain": {
+        "mean": 0.005307343710834782,
+        "median": 0.005856448784470558
+      },
+      "cross_observation_error": {
+        "mean": 0.042279309748361506,
+        "median": 0.04250380024313927
+      },
+      "observation_error": {
+        "mean": 0.035916425830995045,
+        "median": 0.03220868483185768
+      },
+      "content_difference": {
+        "mean": 0.020895285661228825,
+        "median": 0.016455419594421983
+      },
+      "actual_infer_dice_delta": 0.10917606096137551,
+      "source_label_candidate_dice_delta": 3.90089644170772,
+      "source_label_candidate_loss_delta": -0.04292663435141245
+    },
+    {
+      "seed": 10226,
+      "probes": 12,
+      "alignment": {
+        "joint": {
+          "mean_cosine": -0.001429162827359202,
+          "non_descent_fraction": 0.3333333333333333
+        },
+        "od": {
+          "mean_cosine": 0.00015978195006027818,
+          "non_descent_fraction": 0.4166666666666667
+        },
+        "oc": {
+          "mean_cosine": -0.0013200431033813704,
+          "non_descent_fraction": 0.4166666666666667
+        }
+      },
+      "style_renderer_change_ratio": {
+        "mean": 0.5458509994707598,
+        "median": 0.5035839754819635
+      },
+      "style_swap_observation_gain": {
+        "mean": 0.00827430048957467,
+        "median": 0.005943730473518372
+      },
+      "cross_observation_error": {
+        "mean": 0.0349796872275571,
+        "median": 0.02989906631410122
+      },
+      "observation_error": {
+        "mean": 0.03125514059017102,
+        "median": 0.02641449123620987
+      },
+      "content_difference": {
+        "mean": 0.02810978120477457,
+        "median": 0.02338437099630634
+      },
+      "actual_infer_dice_delta": -0.04170682961254002,
+      "source_label_candidate_dice_delta": 3.8006888312456333,
+      "source_label_candidate_loss_delta": -0.041715907864272594
+    }
+  ],
+  "counts": {
+    "encoder_images": 206,
+    "renderer_images": 258,
+    "head_images": 120,
+    "outer_updates": 0,
+    "latent_gradient_calls": 69,
+    "target_domain_images": 0
+  },
+  "gradient_accounting": {
+    "adaptation_latent_gradient_calls": 69,
+    "diagnostic_observation_gradient_calls": 24,
+    "diagnostic_medical_gradient_calls": 72,
+    "total_gradient_calls": 165
+  }
+}

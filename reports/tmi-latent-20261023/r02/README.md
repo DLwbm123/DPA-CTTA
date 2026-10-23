@@ -1,0 +1,1 @@
+Frozen source-fit gradient and representation diagnostic. Reuse the frozen r01 Model implementation and an authorized local source split; set parent_root in a private config. No model training, development images or target images. Label-assisted candidates are diagnostic only, not deployable results. Raw per-probe records, models and paths remain private.
