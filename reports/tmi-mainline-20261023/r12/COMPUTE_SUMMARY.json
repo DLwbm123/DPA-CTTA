@@ -1,0 +1,17 @@
+{
+  "note": "New r12 calls only; frozen DIRECT completion records are reused from r03 and excluded from timing. No deployment gradient or persistent state. Earlier rounds remain in cumulative handoff costs.",
+  "incremental_counts": {
+    "backbone_forward_images": 204802,
+    "refiner_forward_images": 204800,
+    "inner_grad": 0,
+    "outer_updates": 16000,
+    "fusion_forward_images": 102400
+  },
+  "training_arm_seconds": {
+    "full_10223": 1096.2743372917175,
+    "full_10224": 1042.0679252147675,
+    "control_10224": 1038.8586010932922,
+    "control_10223": 1052.4399206638336
+  },
+  "training_evaluation_arm_seconds": 4229.640784263611
+}
