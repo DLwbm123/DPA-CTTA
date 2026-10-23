@@ -1,0 +1,83 @@
+{
+  "status": "COMPLETE",
+  "seeds": [
+    {
+      "seed": 10225,
+      "status": "COMPLETE",
+      "steps": 2500,
+      "metrics": {
+        "ZERO": {
+          "dice": 86.33491765210708,
+          "od": 93.896720971652,
+          "oc": 78.77311433256217,
+          "vcdr_error": 0.09029452382044496
+        },
+        "INDEPENDENT": {
+          "dice": 86.35279112367196,
+          "od": 93.85414556332563,
+          "oc": 78.8514366840183,
+          "vcdr_error": 0.08992196663192967
+        },
+        "CONTINUAL": {
+          "dice": 86.3530458490555,
+          "od": 93.8525939158429,
+          "oc": 78.8534977822681,
+          "vcdr_error": 0.08992196663192967
+        },
+        "coverage": 80,
+        "network_unchanged": true,
+        "prior_final": {
+          "components": 4,
+          "style_dimension": 32,
+          "variance_min": 0.005485803820192814,
+          "weight_min": 0.09464220702648163,
+          "rate": 0.03125
+        }
+      }
+    },
+    {
+      "seed": 10226,
+      "status": "COMPLETE",
+      "steps": 2500,
+      "metrics": {
+        "ZERO": {
+          "dice": 86.12026218468881,
+          "od": 94.09959591139781,
+          "oc": 78.14092845797981,
+          "vcdr_error": 0.08671964661126323
+        },
+        "INDEPENDENT": {
+          "dice": 86.13501416439026,
+          "od": 94.08423775956771,
+          "oc": 78.18579056921278,
+          "vcdr_error": 0.08659589818996868
+        },
+        "CONTINUAL": {
+          "dice": 86.13508656188908,
+          "od": 94.08398693024716,
+          "oc": 78.186186193531,
+          "vcdr_error": 0.08659589818996868
+        },
+        "coverage": 80,
+        "network_unchanged": true,
+        "prior_final": {
+          "components": 4,
+          "style_dimension": 32,
+          "variance_min": 0.0050298236310482025,
+          "weight_min": 0.10000000149011612,
+          "rate": 0.03125
+        }
+      }
+    }
+  ],
+  "counts": {
+    "encoder_images": 36955,
+    "renderer_images": 103173,
+    "head_images": 40801,
+    "outer_updates": 5000,
+    "latent_gradient_calls": 6541,
+    "target_domain_images": 0
+  },
+  "peak_cuda_allocated": 1528846848,
+  "ended_unix": 1792754547.9950228
+}

@@ -1,0 +1,28 @@
+{
+  "size": 256,
+  "batch": 4,
+  "meta_batch": 2,
+  "warm_steps": 2000,
+  "meta_steps": 500,
+  "seeds": [
+    10225,
+    10226
+  ],
+  "lr": 0.0003,
+  "meta_lr": 0.0001,
+  "hard_seconds": 21600,
+  "stop_margin": 300,
+  "storage_soft": 3000000000,
+  "storage_hard": 4000000000,
+  "content_lr": 0.02,
+  "style_lr": 0.1,
+  "content_radius": 0.25,
+  "lambda_content": 0.1,
+  "lambda_prior": 0.001,
+  "mixture_rate": 0.03125,
+  "gate_min_source_dice": 75.0,
+  "data_root": "/path/to/authorized/Fundus",
+  "python": "/path/to/python",
+  "neutral_train": "/tmp/worker.py",
+  "neutral_supervisor": "/tmp/controller.py"
+}
