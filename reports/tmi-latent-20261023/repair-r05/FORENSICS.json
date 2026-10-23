@@ -26,5 +26,6 @@
   "wrapper_launch_delay_seconds": 4.17,
   "native_kill_after_seconds": 60,
   "save_margin_seconds": 60,
-  "startup_delay_exceeds_hard_deadline_in_native_chain_without_reserve": true
+  "native_chain_had_no_separate_kill_reserve": true,
+  "wrapper_launch_delay_measurement_basis": "Controller-to-wrapper process start ticks; not a measurement of all delay after remaining-duration calculation"
 }
