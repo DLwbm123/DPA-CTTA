@@ -1,0 +1,179 @@
+{
+  "status": "COMPLETE",
+  "seeds": [
+    {
+      "seed": 10225,
+      "episodes_per_arm": 500,
+      "optimizer_updates": {
+        "DIAGONAL3": 500,
+        "COUPLED3": 500
+      },
+      "skipped": {
+        "DIAGONAL3": 0,
+        "COUPLED3": 0
+      },
+      "frozen_base_unchanged": true,
+      "metric_unchanged_during_readout": true,
+      "allocated_metric_parameters": 768,
+      "unmasked_raw_parameters": {
+        "DIAGONAL3": 48,
+        "COUPLED3": 768
+      },
+      "matrix_receipt": {
+        "DIAGONAL3": [
+          {
+            "eig_min": 0.8556342720985413,
+            "eig_max": 1.026986837387085,
+            "off_diagonal_norm": 0.0
+          },
+          {
+            "eig_min": 0.8784130811691284,
+            "eig_max": 1.0662504434585571,
+            "off_diagonal_norm": 0.0
+          },
+          {
+            "eig_min": 0.919093906879425,
+            "eig_max": 1.0696395635604858,
+            "off_diagonal_norm": 0.0
+          }
+        ],
+        "COUPLED3": [
+          {
+            "eig_min": 0.4610072374343872,
+            "eig_max": 1.3936032056808472,
+            "off_diagonal_norm": 0.7088293433189392
+          },
+          {
+            "eig_min": 0.5306228399276733,
+            "eig_max": 1.4065114259719849,
+            "off_diagonal_norm": 0.7216276526451111
+          },
+          {
+            "eig_min": 0.730176568031311,
+            "eig_max": 1.3239095211029053,
+            "off_diagonal_norm": 0.6085655093193054
+          }
+        ]
+      },
+      "metrics": {
+        "ZERO": {
+          "dice": 86.33491765210708,
+          "od": 93.896720971652,
+          "oc": 78.77311433256217,
+          "vcdr_error": 0.09029452382044496
+        },
+        "FIXED3": {
+          "dice": 86.35279112367196,
+          "od": 93.85414556332563,
+          "oc": 78.8514366840183,
+          "vcdr_error": 0.08992196663192967
+        },
+        "DIAGONAL3": {
+          "dice": 86.35065122624853,
+          "od": 93.85188548301544,
+          "oc": 78.84941696948162,
+          "vcdr_error": 0.09004193490436987
+        },
+        "COUPLED3": {
+          "dice": 86.33912926381547,
+          "od": 93.90296296970917,
+          "oc": 78.77529555792178,
+          "vcdr_error": 0.08986199729345959
+        },
+        "coverage": 80
+      }
+    },
+    {
+      "seed": 10226,
+      "episodes_per_arm": 500,
+      "optimizer_updates": {
+        "DIAGONAL3": 480,
+        "COUPLED3": 480
+      },
+      "skipped": {
+        "DIAGONAL3": 20,
+        "COUPLED3": 20
+      },
+      "frozen_base_unchanged": true,
+      "metric_unchanged_during_readout": true,
+      "allocated_metric_parameters": 768,
+      "unmasked_raw_parameters": {
+        "DIAGONAL3": 48,
+        "COUPLED3": 768
+      },
+      "matrix_receipt": {
+        "DIAGONAL3": [
+          {
+            "eig_min": 0.8861950635910034,
+            "eig_max": 1.0362260341644287,
+            "off_diagonal_norm": 0.0
+          },
+          {
+            "eig_min": 0.9691982865333557,
+            "eig_max": 1.0764721632003784,
+            "off_diagonal_norm": 0.0
+          },
+          {
+            "eig_min": 0.9288879036903381,
+            "eig_max": 1.0520628690719604,
+            "off_diagonal_norm": 0.0
+          }
+        ],
+        "COUPLED3": [
+          {
+            "eig_min": 0.5836928486824036,
+            "eig_max": 1.3724685907363892,
+            "off_diagonal_norm": 0.5932265520095825
+          },
+          {
+            "eig_min": 0.7710833549499512,
+            "eig_max": 1.3765087127685547,
+            "off_diagonal_norm": 0.5727243423461914
+          },
+          {
+            "eig_min": 0.714103639125824,
+            "eig_max": 1.3419033288955688,
+            "off_diagonal_norm": 0.6077830195426941
+          }
+        ]
+      },
+      "metrics": {
+        "ZERO": {
+          "dice": 86.12026218468881,
+          "od": 94.09959591139781,
+          "oc": 78.14092845797981,
+          "vcdr_error": 0.08671964661126323
+        },
+        "FIXED3": {
+          "dice": 86.13501416439026,
+          "od": 94.08423775956771,
+          "oc": 78.18579056921278,
+          "vcdr_error": 0.08659589818996868
+        },
+        "DIAGONAL3": {
+          "dice": 86.1341163015064,
+          "od": 94.08467962551101,
+          "oc": 78.18355297750179,
+          "vcdr_error": 0.08659589818996868
+        },
+        "COUPLED3": {
+          "dice": 86.12084541403624,
+          "od": 94.08486890506383,
+          "oc": 78.15682192300865,
+          "vcdr_error": 0.08634056619407683
+        },
+        "coverage": 80
+      }
+    }
+  ],
+  "counts": {
+    "encoder_images": 4319,
+    "renderer_images": 61486,
+    "head_images": 10641,
+    "outer_updates": 1960,
+    "latent_gradient_calls": 12695,
+    "target_domain_images": 0
+  },
+  "ended_unix": 1792757960.4221883,
+  "peak_cuda_allocated": 558478848
+}

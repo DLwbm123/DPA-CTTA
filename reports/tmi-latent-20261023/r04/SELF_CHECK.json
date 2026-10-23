@@ -1,0 +1,19 @@
+{
+  "synthetic_only": true,
+  "identity_matches_original": true,
+  "executed_path_metric_gradient_nonzero": true,
+  "frozen_network_no_grad": true,
+  "positive_metric_eigenvalue_bounds": [
+    0.1,
+    8.2
+  ],
+  "cross_channel_coupling_nonzero": true,
+  "counts": {
+    "encoder_images": 1,
+    "renderer_images": 18,
+    "head_images": 1,
+    "outer_updates": 0,
+    "latent_gradient_calls": 9,
+    "target_domain_images": 0
+  }
+}
