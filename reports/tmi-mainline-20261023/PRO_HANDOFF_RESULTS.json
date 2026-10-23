@@ -1,6 +1,6 @@
 {
-  "snapshot_utc": "2026-10-23T03:13:29.915858+00:00",
-  "snapshot_beijing": "2026-10-23 11:13",
+  "snapshot_utc": "2026-10-23T04:12:05.160555+00:00",
+  "snapshot_beijing": "2026-10-23 12:12:05",
   "window_start_utc": "2026-10-22T16:00:43Z",
   "window_end_utc": "2026-10-23T04:00:43Z",
   "complete_runs": {
@@ -2793,7 +2793,7 @@
       "training_evaluation_arm_seconds": 4229.640784263611
     }
   ],
-  "scope": "Content-level source development only; patient independence and backbone training membership unknown. r01-r12 complete; original 12-hour window remains open until 04:00:43Z; no new experiments.",
+  "scope": "Final closed 12-hour window. Content-level source development only; patient independence and backbone training membership unknown. All experiments completed before original deadline; no new experiments.",
   "r12_exit": {
     "code": 0,
     "reason": null,
@@ -2801,5 +2801,6 @@
     "allocated_bytes": 22412288,
     "ended_unix": 1792723613.7358143
   },
-  "window_status": "ALL_EXPERIMENTS_COMPLETE_AWAITING_ORIGINAL_DEADLINE"
+  "window_status": "CLOSED",
+  "closed_at_utc": "2026-10-23T04:12:05.160555+00:00"
 }
