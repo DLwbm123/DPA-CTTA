@@ -1,0 +1,68 @@
+{
+  "contents": 79,
+  "valid": 79,
+  "heads": {
+    "od": {
+      "mean": 99.75334404280771,
+      "median": 99.75516449885234,
+      "q05": 99.69889090395483,
+      "min": 99.67671603638824,
+      "passed": true,
+      "hd95": {
+        "finite": 79,
+        "total": 79,
+        "mean": 1.0,
+        "q95": 1.0,
+        "max": 1.0
+      },
+      "assd": {
+        "finite": 79,
+        "total": 79,
+        "mean": 0.123492069244741,
+        "q95": 0.15820325851657738,
+        "max": 0.16906474820143885
+      }
+    },
+    "oc": {
+      "mean": 99.82126227854651,
+      "median": 99.7971602434077,
+      "q05": 99.65390481627527,
+      "min": 99.57734573119188,
+      "passed": true,
+      "hd95": {
+        "finite": 79,
+        "total": 79,
+        "mean": 0.529113924050632,
+        "q95": 1.0,
+        "max": 1.0
+      },
+      "assd": {
+        "finite": 79,
+        "total": 79,
+        "mean": 0.05094679358139916,
+        "q95": 0.11451513758673583,
+        "max": 0.13043478260869565
+      }
+    }
+  },
+  "counts": {
+    "source_masks": 79,
+    "source_images": 0,
+    "dev": 0,
+    "target": 0,
+    "neural": 0,
+    "training": 0,
+    "synthetic_contents": 2,
+    "processed_contents": 79
+  },
+  "truth_center_not_deployment": true,
+  "vcdr": {
+    "mean": 0.001581479723807956,
+    "max": 0.011904761904761918,
+    "over_005": 0
+  },
+  "empty_or_outside": 0,
+  "corrected_rays": 0,
+  "representation_gate": true,
+  "decision": "Eligible only for separate prediction-initialized study"
+}
