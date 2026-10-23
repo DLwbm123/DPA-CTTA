@@ -1,0 +1,16 @@
+{
+  "note": "r11 EXIT.seconds includes the original r10 clock and idle gap; do not sum these EXIT wall times. Counts below are new r11 calls only. Full lineage also includes r10 and frozen expert development.",
+  "incremental_counts": {
+    "backbone_forward_images": 102402,
+    "refiner_forward_images": 102400,
+    "inner_grad": 0,
+    "outer_updates": 8000,
+    "fusion_forward_images": 51200
+  },
+  "training_arm_seconds": {
+    "full_10223": 513.4137895107269,
+    "full_10224": 514.1307890415192,
+    "control_10224": 498.881552696228,
+    "control_10223": 498.9324836730957
+  }
+}
