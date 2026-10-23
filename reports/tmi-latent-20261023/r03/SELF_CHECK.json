@@ -1,0 +1,18 @@
+{
+  "synthetic_only": true,
+  "identity_matches_original": true,
+  "executed_path_metric_gradient_nonzero": true,
+  "frozen_network_no_grad": true,
+  "positive_metric_bounds": [
+    0.1,
+    10
+  ],
+  "counts": {
+    "encoder_images": 1,
+    "renderer_images": 18,
+    "head_images": 5,
+    "outer_updates": 0,
+    "latent_gradient_calls": 9,
+    "target_domain_images": 0
+  }
+}

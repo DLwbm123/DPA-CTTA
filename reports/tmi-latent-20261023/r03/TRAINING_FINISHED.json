@@ -1,0 +1,75 @@
+{
+  "status": "COMPLETE",
+  "seeds": [
+    {
+      "seed": 10225,
+      "episodes": 500,
+      "optimizer_updates": 500,
+      "skipped": 0,
+      "frozen_base_unchanged": true,
+      "metric_unchanged_during_readout": true,
+      "metric_parameters": 161,
+      "metrics": {
+        "ZERO": {
+          "dice": 86.33491765210708,
+          "od": 93.896720971652,
+          "oc": 78.77311433256217,
+          "vcdr_error": 0.09029452382044496
+        },
+        "FIXED3": {
+          "dice": 86.35279112367196,
+          "od": 93.85414556332563,
+          "oc": 78.8514366840183,
+          "vcdr_error": 0.08992196663192967
+        },
+        "LEARNED3": {
+          "dice": 86.38525282747403,
+          "od": 93.90698414929834,
+          "oc": 78.86352150564971,
+          "vcdr_error": 0.08959734434071655
+        },
+        "coverage": 80
+      }
+    },
+    {
+      "seed": 10226,
+      "episodes": 500,
+      "optimizer_updates": 479,
+      "skipped": 21,
+      "frozen_base_unchanged": true,
+      "metric_unchanged_during_readout": true,
+      "metric_parameters": 161,
+      "metrics": {
+        "ZERO": {
+          "dice": 86.12026218468881,
+          "od": 94.09959591139781,
+          "oc": 78.14092845797981,
+          "vcdr_error": 0.08671964661126323
+        },
+        "FIXED3": {
+          "dice": 86.13501416439026,
+          "od": 94.08423775956771,
+          "oc": 78.18579056921278,
+          "vcdr_error": 0.08659589818996868
+        },
+        "LEARNED3": {
+          "dice": 86.1390247123927,
+          "od": 94.10056711303473,
+          "oc": 78.17748231175067,
+          "vcdr_error": 0.08674447785977138
+        },
+        "coverage": 80
+      }
+    }
+  ],
+  "counts": {
+    "encoder_images": 4319,
+    "renderer_images": 31261,
+    "head_images": 14107,
+    "outer_updates": 979,
+    "latent_gradient_calls": 6576,
+    "target_domain_images": 0
+  },
+  "ended_unix": 1792756564.2925196,
+  "peak_cuda_allocated": 658499584
+}

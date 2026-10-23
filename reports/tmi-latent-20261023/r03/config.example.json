@@ -1,0 +1,28 @@
+{
+  "data_root": "$SOURCE_DATA_ROOT",
+  "python": "python",
+  "remote_root": "$WORK_ROOT",
+  "size": 256,
+  "seeds": [
+    10225,
+    10226
+  ],
+  "hard_seconds": 10800,
+  "stop_margin": 300,
+  "storage_soft": 500000000,
+  "storage_hard": 1000000000,
+  "neutral_train": "/tmp/worker.py",
+  "neutral_supervisor": "/tmp/controller.py",
+  "device": 1,
+  "content_lr": 0.02,
+  "style_lr": 0.1,
+  "content_radius": 0.25,
+  "lambda_content": 0.1,
+  "lambda_prior": 0.001,
+  "mixture_rate": 0.03125,
+  "gate_min_source_dice": 75.0,
+  "parent_root": "$FROZEN_R01_ROOT",
+  "episodes": 500,
+  "metric_batch": 2,
+  "metric_lr": 0.001
+}
