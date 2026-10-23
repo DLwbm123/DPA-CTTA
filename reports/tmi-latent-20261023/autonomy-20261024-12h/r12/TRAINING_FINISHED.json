@@ -1,0 +1,27 @@
+{
+  "status": "COMPLETE",
+  "completed_seeds": [
+    10225,
+    10226
+  ],
+  "counts": {
+    "updates": 4000,
+    "forwards": 4960,
+    "synthetic_forwards": 1,
+    "synthetic_backward": 1,
+    "train_anchor_fallback": 0,
+    "eval_anchor_fallback": 0,
+    "decode_clipped_coordinates": 0,
+    "encode_clipped_coordinates": 0
+  },
+  "base_counts": {
+    "encoder_images": 8160,
+    "renderer_images": 0,
+    "head_images": 8160,
+    "outer_updates": 0,
+    "latent_gradient_calls": 0,
+    "target_domain_images": 0
+  },
+  "ended_unix": 1792785746.1710205,
+  "peak_cuda_allocated": 268853760
+}
