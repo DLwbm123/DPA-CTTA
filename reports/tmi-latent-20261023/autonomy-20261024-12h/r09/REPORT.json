@@ -1,0 +1,84 @@
+{
+  "qualified_contents": 12,
+  "planned_contents": 12,
+  "views": 24,
+  "heads": {
+    "OD": {
+      "worst_direction_content_mean": -0.007200747184980088,
+      "median": -0.0073564947357811815,
+      "q05": -0.013417957694364303,
+      "win_tie_loss": [
+        0,
+        0,
+        12
+      ],
+      "average_margin_not_gate": -0.0010851058252011332,
+      "direction_view_margins": {
+        "original": {
+          "OD_SHRINK": 0.004330379848997738,
+          "OD_EXPAND": -0.006438824427501581
+        },
+        "photometric": {
+          "OD_SHRINK": 0.004921707894568064,
+          "OD_EXPAND": -0.007153686616868751
+        }
+      },
+      "true_normal_minus_tangent": {
+        "original": 0.003082248572104629,
+        "photometric": 0.004354833812880254
+      },
+      "ranking_gate": false,
+      "truth_rank_counts": {
+        "1": 0,
+        "2": 22,
+        "3": 2
+      }
+    },
+    "OC": {
+      "worst_direction_content_mean": -0.0009610590943500384,
+      "median": -0.0011619536472957737,
+      "q05": -0.0034055482654790597,
+      "win_tie_loss": [
+        2,
+        0,
+        10
+      ],
+      "average_margin_not_gate": 0.0008017087593367918,
+      "direction_view_margins": {
+        "original": {
+          "OC_SHRINK": -0.00011077511191505002,
+          "OC_EXPAND": 0.001806287828257894
+        },
+        "photometric": {
+          "OC_SHRINK": -0.0002467510014636854,
+          "OC_EXPAND": 0.0017580733224680089
+        }
+      },
+      "true_normal_minus_tangent": {
+        "original": 0.0025304791727566796,
+        "photometric": 0.0024044351720628183
+      },
+      "ranking_gate": false,
+      "truth_rank_counts": {
+        "1": 5,
+        "2": 16,
+        "3": 3
+      }
+    }
+  },
+  "diagnostic_only": true,
+  "counts": {
+    "source_images_read": 12,
+    "source_masks_read": 12,
+    "dev_images_read": 0,
+    "target_images_read": 0,
+    "neural_model_calls": 0,
+    "network_training_updates": 0,
+    "synthetic_scores": 10,
+    "probe_scores": 240,
+    "completed_probe_views": 24
+  },
+  "local_boundary_gate": false,
+  "orientation_support": true,
+  "decision": "Reject fixed local-gradient observation; no sigma/bandwidth/weight search"
+}
