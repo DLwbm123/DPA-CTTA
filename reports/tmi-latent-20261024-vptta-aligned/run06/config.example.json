@@ -1,0 +1,20 @@
+{
+  "data_root": "${FUNDUS_ROOT}",
+  "seed": 0,
+  "epochs": 200,
+  "warm_epochs": 180,
+  "batch": 8,
+  "lr": 0.0003,
+  "meta_lr": 0.0001,
+  "content_lr": 0.02,
+  "style_lr": 0.1,
+  "content_radius": 0.25,
+  "lambda_content": 0.1,
+  "lambda_prior": 0.001,
+  "mixture_rate": 0.03125,
+  "size": 512,
+  "hard_seconds": 82800,
+  "storage_soft": 8000000000,
+  "storage_hard": 10000000000,
+  "base_root": "${RUN01_ROOT}"
+}
