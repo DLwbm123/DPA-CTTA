@@ -1,0 +1,205 @@
+{
+  "snapshot_utc": "2026-10-24T00:51:19.918Z",
+  "window_still_open": false,
+  "global_deadline_unix": 1792815004,
+  "rounds": [
+    {
+      "round": "r06",
+      "status": "CLOSED_COMPLETE_NEGATIVE",
+      "original_clock_seconds_to_final_exit": 202.90722043532878,
+      "within_deadline": true,
+      "delivered_commit": "2a6375036595ac95474642f501ec338dcbecf919",
+      "kind": "completed_method_test",
+      "main_arm": "DENOISE3",
+      "mechanism_control": "DIRECT3",
+      "gates": {
+        "medical_primary": false,
+        "structure_safety": true,
+        "versus_equal_capacity_direct3": true,
+        "iteration": false,
+        "extra_image_diagnostic": true
+      },
+      "seed_effects": [
+        {
+          "seed": 10225,
+          "versus_zero_pp": 0.2598125350453415,
+          "versus_mechanism_control_pp": 2.496698890253356
+        },
+        {
+          "seed": 10226,
+          "versus_zero_pp": -0.16908736916528255,
+          "versus_mechanism_control_pp": 3.8398850858140747
+        }
+      ],
+      "mean_versus_zero_pp": 0.04536258294002948,
+      "mean_versus_mechanism_control_pp": 3.1682919880337153
+    },
+    {
+      "round": "r07",
+      "status": "CLOSED_COMPLETE_NEGATIVE",
+      "original_clock_seconds_to_final_exit": 283.47584399208426,
+      "within_deadline": true,
+      "delivered_commit": "1dda02090decec3b9e969179b82529b2c9fbf689",
+      "kind": "completed_method_test",
+      "main_arm": "FULL3",
+      "mechanism_control": "DETACHED3",
+      "gates": {
+        "medical_primary": false,
+        "structure_safety": true,
+        "trajectory_gradient": false,
+        "iteration": false,
+        "extra_image_diagnostic": true
+      },
+      "seed_effects": [
+        {
+          "seed": 10225,
+          "versus_zero_pp": 0.34766860304709724,
+          "versus_mechanism_control_pp": 0.04068681575778044
+        },
+        {
+          "seed": 10226,
+          "versus_zero_pp": 0.022217472891540524,
+          "versus_mechanism_control_pp": 0.15696361897941813
+        }
+      ],
+      "mean_versus_zero_pp": 0.18494303796931888,
+      "mean_versus_mechanism_control_pp": 0.09882521736859928
+    },
+    {
+      "round": "r08",
+      "status": "CLOSED_COMPLETE_DIAGNOSTIC_NEGATIVE",
+      "original_clock_seconds_to_final_exit": 109.86966494098306,
+      "within_deadline": true,
+      "delivered_commit": "4391503df0e378f81bdb523351d991f248426f7e",
+      "kind": "diagnostic",
+      "registered_gate": false
+    },
+    {
+      "round": "r09",
+      "status": "CLOSED_COMPLETE_NEGATIVE",
+      "original_clock_seconds_to_final_exit": 9.684214856475592,
+      "within_deadline": true,
+      "delivered_commit": "45c9c416a5164529334b45b5f3a257bf002582c1",
+      "kind": "diagnostic",
+      "registered_gate": false
+    },
+    {
+      "round": "r10",
+      "status": "CLOSED_COMPLETE_NEGATIVE",
+      "original_clock_seconds_to_final_exit": 139.76345402002335,
+      "within_deadline": true,
+      "delivered_commit": "ea62df4016c6a7c7b36049e3d1141aa4545616e7",
+      "kind": "completed_method_test",
+      "main_arm": "CHAIN3",
+      "mechanism_control": "ENSEMBLE3",
+      "gates": {
+        "medical_primary": false,
+        "structure_safety": true,
+        "equal_call_mechanism": false,
+        "beyond_structure": false
+      },
+      "seed_effects": [
+        {
+          "seed": 10225,
+          "versus_zero_pp": -0.2555742752796135,
+          "versus_mechanism_control_pp": -0.5242668818861631
+        },
+        {
+          "seed": 10226,
+          "versus_zero_pp": -1.743073720672598,
+          "versus_mechanism_control_pp": -1.297742721684017
+        }
+      ],
+      "mean_versus_zero_pp": -0.9993239979761057,
+      "mean_versus_mechanism_control_pp": -0.91100480178509
+    },
+    {
+      "round": "r11",
+      "status": "CLOSED_COMPLETE_REPRESENTATION_QUALIFIED",
+      "original_clock_seconds_to_final_exit": 7.781121184118092,
+      "within_deadline": true,
+      "delivered_commit": "48167377e76b37c45712c865f8972a4e9498d2ec",
+      "kind": "diagnostic",
+      "registered_gate": true
+    },
+    {
+      "round": "r12",
+      "status": "CLOSED_COMPLETE_NEGATIVE",
+      "original_clock_seconds_to_final_exit": 547.0423955414444,
+      "within_deadline": true,
+      "delivered_commit": "522b2b12acb0a5b724e82d84eb4d2e7fe1fc3790",
+      "kind": "completed_method_test",
+      "main_arm": "FLOW3",
+      "mechanism_control": "DIRECT3",
+      "gates": {
+        "medical_primary": false,
+        "structure_safety": true,
+        "equal_call_mechanism": false,
+        "beyond_structure": false
+      },
+      "seed_effects": [
+        {
+          "seed": 10225,
+          "versus_zero_pp": -12.73712111711211,
+          "versus_mechanism_control_pp": -12.777655520642014
+        },
+        {
+          "seed": 10226,
+          "versus_zero_pp": -12.322949893393982,
+          "versus_mechanism_control_pp": -11.521288618396156
+        }
+      ],
+      "mean_versus_zero_pp": -12.530035505253046,
+      "mean_versus_mechanism_control_pp": -12.149472069519085
+    },
+    {
+      "round": "r13",
+      "status": "CLOSED_INCOMPLETE",
+      "original_clock_seconds_to_final_exit": 1869.209145596251,
+      "within_deadline": true,
+      "delivered_commit": "a1ebc36d1fea0b39cabb0a729f8489e60ef609b1",
+      "kind": "incomplete_method_test",
+      "medical_result": null,
+      "updates": 1200,
+      "final_evaluation_images": 0
+    }
+  ],
+  "completed_method_tests": 4,
+  "completed_primary_passes": 0,
+  "incomplete_method_tests": 1,
+  "completed_diagnostics": 3,
+  "diagnostic_passes": 1,
+  "scientific_optimizer_updates_complete": 14000,
+  "scientific_optimizer_updates_incomplete": 1200,
+  "synthetic_optimizer_updates": 2,
+  "sum_round_clock_seconds_including_wait_and_resume": 3169.7330605667084,
+  "not_gpu_compute_seconds": true,
+  "last_storage_measurement_bytes": 1737842688,
+  "final_storage_unavailable": false,
+  "new_local_literature_bytes": 18278478,
+  "new_model_calls_for_this_synthesis": 0,
+  "new_scientific_data_reads_for_this_synthesis": 0,
+  "cross_round_effect_meta_analysis_performed": false,
+  "closed_unix": 1792815744.0565639,
+  "status": "WINDOW_EXPIRED_CLOSED",
+  "new_training_allowed": false,
+  "final_storage_audit": {
+    "remote_scan_exit": 0,
+    "remote_scan_success": true,
+    "last_known_remote_bytes": 1737842688,
+    "historical_peak_proven": false,
+    "campaign_allocated_bytes": 1737890816,
+    "files": 170,
+    "small_spool_allocated_bytes": 225280,
+    "observed_unix": 1792815705.1940355,
+    "read_model_or_image_contents": false,
+    "local_campaign_allocated_bytes": 4603904,
+    "new_local_literature_bytes": 18278478,
+    "public_campaign_copy_allocated_bytes_before_final_report": 761856,
+    "known_current_path_bytes": 1761760334,
+    "not_full_git_or_temp_accounting": true
+  },
+  "monitor_deletion_pending": false,
+  "autonomous_execution_shortfall": "After r13 technical stop, subsequent work became repeated analysis/status checks rather than the requested experimental progression; not an authorization shortage or scientific achievement.",
+  "monitor_deleted": true
+}
