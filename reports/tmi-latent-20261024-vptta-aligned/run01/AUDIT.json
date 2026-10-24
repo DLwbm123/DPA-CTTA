@@ -1,0 +1,225 @@
+{
+  "status": "PASS",
+  "counts": {
+    "RIM_ONE_r3": 1951,
+    "REFUGE": 1710,
+    "ORIGA": 1460,
+    "REFUGE_Valid": 1310,
+    "Drishti_GS": 2009
+  },
+  "case_source_pairs_per_arm": 8440,
+  "five_sources_200_epochs": true,
+  "all_metrics_finite": true,
+  "aggregates_match": true,
+  "case_pairing": "same frozen manifest order; domain sequence matched",
+  "patient_identity": "not established; image-source pairs are not independent patients",
+  "source_details": {
+    "RIM_ONE_r3": {
+      "n": 1951,
+      "continual_minus_zero": -0.4285082789318202,
+      "decline_count": 1182,
+      "decline_fraction": 0.6058431573552024,
+      "delta_p10": -1.6620629179455904,
+      "targets": {
+        "Drishti_GS": {
+          "n": 101,
+          "mean_dice": {
+            "ZERO": 71.24158315536475,
+            "INDEPENDENT": 71.41900350240358,
+            "CONTINUAL": 71.42302217026037
+          }
+        },
+        "ORIGA": {
+          "n": 650,
+          "mean_dice": {
+            "ZERO": 81.84337280658255,
+            "INDEPENDENT": 81.96107058541503,
+            "CONTINUAL": 81.96072471193568
+          }
+        },
+        "REFUGE": {
+          "n": 400,
+          "mean_dice": {
+            "ZERO": 81.14950130271596,
+            "INDEPENDENT": 81.12038823783438,
+            "CONTINUAL": 81.12228286356957
+          }
+        },
+        "REFUGE_Valid": {
+          "n": 800,
+          "mean_dice": {
+            "ZERO": 76.1798042259278,
+            "INDEPENDENT": 75.03038811569304,
+            "CONTINUAL": 75.030133781526
+          }
+        }
+      }
+    },
+    "REFUGE": {
+      "n": 1710,
+      "continual_minus_zero": 0.14545979370236037,
+      "decline_count": 719,
+      "decline_fraction": 0.42046783625730993,
+      "delta_p10": -0.21172152765938143,
+      "targets": {
+        "Drishti_GS": {
+          "n": 101,
+          "mean_dice": {
+            "ZERO": 75.86314855518627,
+            "INDEPENDENT": 75.85059331438532,
+            "CONTINUAL": 75.8577055483326
+          }
+        },
+        "ORIGA": {
+          "n": 650,
+          "mean_dice": {
+            "ZERO": 67.4125063226926,
+            "INDEPENDENT": 67.83270201338215,
+            "CONTINUAL": 67.8334185702235
+          }
+        },
+        "REFUGE_Valid": {
+          "n": 800,
+          "mean_dice": {
+            "ZERO": 79.7992785895316,
+            "INDEPENDENT": 79.75531697416463,
+            "CONTINUAL": 79.7557763579939
+          }
+        },
+        "RIM_ONE_r3": {
+          "n": 159,
+          "mean_dice": {
+            "ZERO": 68.20619925241847,
+            "INDEPENDENT": 68.26995209958439,
+            "CONTINUAL": 68.27220437982928
+          }
+        }
+      }
+    },
+    "ORIGA": {
+      "n": 1460,
+      "continual_minus_zero": 0.015363878509326261,
+      "decline_count": 500,
+      "decline_fraction": 0.3424657534246575,
+      "delta_p10": -0.03542990900367257,
+      "targets": {
+        "Drishti_GS": {
+          "n": 101,
+          "mean_dice": {
+            "ZERO": 88.16242762529505,
+            "INDEPENDENT": 88.16123050851583,
+            "CONTINUAL": 88.161312358185
+          }
+        },
+        "REFUGE": {
+          "n": 400,
+          "mean_dice": {
+            "ZERO": 85.13807141860642,
+            "INDEPENDENT": 85.13771431896494,
+            "CONTINUAL": 85.13758069620954
+          }
+        },
+        "REFUGE_Valid": {
+          "n": 800,
+          "mean_dice": {
+            "ZERO": 67.1056780935984,
+            "INDEPENDENT": 67.12887995358767,
+            "CONTINUAL": 67.12885407479246
+          }
+        },
+        "RIM_ONE_r3": {
+          "n": 159,
+          "mean_dice": {
+            "ZERO": 77.81679838760851,
+            "INDEPENDENT": 77.84320976248421,
+            "CONTINUAL": 77.84320976248421
+          }
+        }
+      }
+    },
+    "REFUGE_Valid": {
+      "n": 1310,
+      "continual_minus_zero": 0.006908785260758105,
+      "decline_count": 388,
+      "decline_fraction": 0.2961832061068702,
+      "delta_p10": -0.004398788276803599,
+      "targets": {
+        "Drishti_GS": {
+          "n": 101,
+          "mean_dice": {
+            "ZERO": 69.38650952469796,
+            "INDEPENDENT": 69.39478761691149,
+            "CONTINUAL": 69.39478761691149
+          }
+        },
+        "ORIGA": {
+          "n": 650,
+          "mean_dice": {
+            "ZERO": 75.45047181182647,
+            "INDEPENDENT": 75.46553753735672,
+            "CONTINUAL": 75.46553753735672
+          }
+        },
+        "REFUGE": {
+          "n": 400,
+          "mean_dice": {
+            "ZERO": 86.61832094419358,
+            "INDEPENDENT": 86.61920073551482,
+            "CONTINUAL": 86.61921471052621
+          }
+        },
+        "RIM_ONE_r3": {
+          "n": 159,
+          "mean_dice": {
+            "ZERO": 74.79712056595852,
+            "INDEPENDENT": 74.78494568074035,
+            "CONTINUAL": 74.78494568074035
+          }
+        }
+      }
+    },
+    "Drishti_GS": {
+      "n": 2009,
+      "continual_minus_zero": -0.36738304262753324,
+      "decline_count": 1446,
+      "decline_fraction": 0.719761075161772,
+      "delta_p10": -1.3898628126399146,
+      "targets": {
+        "ORIGA": {
+          "n": 650,
+          "mean_dice": {
+            "ZERO": 83.72186886614388,
+            "INDEPENDENT": 83.64101729440608,
+            "CONTINUAL": 83.64158023416091
+          }
+        },
+        "REFUGE": {
+          "n": 400,
+          "mean_dice": {
+            "ZERO": 81.54429697368148,
+            "INDEPENDENT": 81.40140319630774,
+            "CONTINUAL": 81.40229516950922
+          }
+        },
+        "REFUGE_Valid": {
+          "n": 800,
+          "mean_dice": {
+            "ZERO": 63.414252714972115,
+            "INDEPENDENT": 62.59601861335696,
+            "CONTINUAL": 62.594389611220635
+          }
+        },
+        "RIM_ONE_r3": {
+          "n": 159,
+          "mean_dice": {
+            "ZERO": 66.61814604267747,
+            "INDEPENDENT": 66.78838963802083,
+            "CONTINUAL": 66.7867390163901
+          }
+        }
+      }
+    }
+  },
+  "allocated_bytes": 2603186176,
+  "zero_forward_verification": true
+}
