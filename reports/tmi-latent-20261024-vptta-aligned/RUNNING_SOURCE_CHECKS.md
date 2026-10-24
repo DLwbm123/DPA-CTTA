@@ -1,0 +1,3 @@
+# Running the source-gated follow-ups
+
+run03–run06 each require the run01 `src/` tree and completed source checkpoints under RUN01_ROOT. Their example configs contain only required paths. Training counts, losses, optimizer settings and gates are fixed in each worker.py and documented in its PROTOCOL_ZH.md; unused inherited run01 settings were removed from the examples to avoid implying that the follow-ups train for 200 epochs. Copy the example to the new private WORK_ROOT/config.private.json and set actual private paths; run the worker with an independent bounded guardian. Do not publish data or checkpoints.
